@@ -6,31 +6,55 @@
 #'
 #' @param lesson a github user/repo pattern to point to the lesson
 #' @param path a directory to write the lesson to
+#' @param overwrite if the `path` exists, setting this to `TRUE` will overwrite
+#'   the path, otherwise, the contents of the path will be returned if it is a
+#'   lesson repository.
 #'
 #' @return a list of xml objects, one element per episode.
-get_lesson <- function(lesson = "swcarpentry/python-novice-gapminder", path = tempdir(), overwrite = FALSE) {
+#' @export
+#' @examples
+#'
+#' png <- get_lesson("swcarpentry/python-novice-gapminder")
+#' str(png, max.level = 1)
+#'
+get_lesson <- function(lesson = NULL, path = tempdir(), overwrite = FALSE) {
 
-  the_path  <- file.path(path, gsub("[/]", "--", lesson))
 
+  if (is.null(lesson) && fs::dir_exists(fs::path(path, "_episodes"))) {
+    # user provides path to lesson on computer
+    the_path <- normalizePath(path)
+  } else if (!is.null(lesson)) {
+    # user provides lesson name and path on computer to write to
+    the_path <- fs::path(path, gsub("[/]", "--", lesson))
+  } else {
+    stop("please provide a lesson")
+  }
+
+  # Only download the lesson if it exists, otherwise, find it from the path
   if (fs::dir_exists(the_path)) {
     if (overwrite) {
       fs::dir_delete(the_path)
-    } else {
-      lpath <- git2r::repository(the_path)
     }
   } else {
-    stopifnot(dir.create(the_path) == 1)
+    fs::dir_create(the_path)
+  }
+
+  # If the directory contains episodes, then use that, otherwise, download the
+  if (!fs::dir_exists(fs::path(the_path, "_episodes"))) {
     lpath <- git2r::clone(
       glue::glue("https://github.com/{lesson}.git"),
       local_path = the_path
     )
   }
 
+  # list all the files
+  the_files <- fs::dir_ls(fs::path(the_path, "_episodes"))
 
-  the_files <- fs::dir_ls(file.path(fs::path_dir(lpath$path), "_episodes"))
+  if (!any(grepl("\\.R?md$", the_files))) {
+    stop("The _episodes directory must have markdown files")
+  }
 
-  stopifnot(length(the_files) > 0)
-
+  # convert to xml
   xmls <- purrr::map(the_files, tinkr::to_xml)
   xmls
 }

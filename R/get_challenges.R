@@ -5,7 +5,7 @@
 #' challenge blockquotes from the carpentries lessons.
 #'
 #' @param body the XML body of a carpentries lesson (an xml2 object)
-#' @param list \[boolean\] if `TRUE`, the result will be converted to
+#' @param as_list \[boolean\] if `TRUE`, the result will be converted to
 #'   a list via [xml2::as_list()]. A `FALSE` (default) value will keep it as an
 #'   xml object.
 #'

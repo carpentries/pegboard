@@ -18,6 +18,9 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN status](https://www.r-pkg.org/badges/version/up2code)](https://CRAN.R-project.org/package=up2code)
+[![Travis build status](https://travis-ci.com/zkamvar/up2code.svg?branch=master)](https://travis-ci.com/zkamvar/up2code)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/zkamvar/up2code?branch=master&svg=true)](https://ci.appveyor.com/project/zkamvar/up2code)
+[![Codecov test coverage](https://codecov.io/gh/zkamvar/up2code/branch/master/graph/badge.svg)](https://codecov.io/gh/zkamvar/up2code?branch=master)
 <!-- badges: end -->
 
 The goal of up2code is to ...
