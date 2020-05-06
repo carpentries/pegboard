@@ -6,20 +6,43 @@
 #'
 #' @param body the XML body of a carpentries lesson (an xml2 object)
 #' @param list \[boolean\] if `TRUE`, the result will be converted to
-#'   a list via [xml2::as_list()]. A `FALSE` (default) value will keep it as an xml object.
+#'   a list via [xml2::as_list()]. A `FALSE` (default) value will keep it as an
+#'   xml object.
 #'
 #' @return a list or xml object.
 get_challenges <- function(body, as_list = FALSE) {
-  # Setting up the XPATH search string
-  challenge <- "d1:text[text()='{: .challenge}']"       # Find the end of the challenge block
-  axis      <- "ancestor-or-self"                       # Then look behind at all of the ancestors
-  ancestor  <- "d1:block_quote"                         # That are blockquotes
-  predicate <- "d1:heading/d1:text[not(contains(text(),'Solution'))]" # But exclude the Solution blocks (because they are included anyways)
 
-  challenge_string <- glue::glue(".//{challenge}/{axis}::{ancestor}[{predicate}]")
+  # Namespace for the document is listed in the attributes
+  ns <- attr(xml2::xml_ns(body), "names")[[1]]
+
+  # Find the end of the challenge block ----------------------------------------
+  challenge <- glue::glue("<ns>:text[text()='{: .challenge}']",
+    .open = "<",
+    .close = ">"
+  )
+
+  # Then look behind at all of the ancestors -----------------------------------
+  axis <- "ancestor-or-self"
+
+  # That are blockquotes -------------------------------------------------------
+  ancestor <- glue::glue("{ns}:block_quote")
+
+  # But exclude the Solution blocks (because they are included anyways) --------
+  predicate <- glue::glue(
+    "{ns}:heading/{ns}:text[not(contains(text(),'Solution'))]"
+  )
+
+
+  # Combine and search ---------------------------------------------------------
+  challenge_string <- glue::glue(
+    ".//{challenge}/{axis}::{ancestor}[{predicate}]"
+  )
+
   examples <- xml2::xml_find_all(body, challenge_string)
+
   if (as_list) {
     examples <- xml2::as_list(examples)
   }
+
   examples
 }

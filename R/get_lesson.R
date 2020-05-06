@@ -12,15 +12,20 @@ get_lesson <- function(lesson = "swcarpentry/python-novice-gapminder", path = te
 
   the_path  <- file.path(path, gsub("[/]", "--", lesson))
 
-  if (overwrite && fs::dir_exists(the_path) && the_path != "/") {
-    fs::dir_delete(the_path)
+  if (fs::dir_exists(the_path)) {
+    if (overwrite) {
+      fs::dir_delete(the_path)
+    } else {
+      lpath <- git2r::repository(the_path)
+    }
+  } else {
+    stopifnot(dir.create(the_path) == 1)
+    lpath <- git2r::clone(
+      glue::glue("https://github.com/{lesson}.git"),
+      local_path = the_path
+    )
   }
-  stopifnot(dir.create(the_path) == 1)
 
-  lpath <- git2r::clone(
-    glue::glue("https://github.com/{lesson}.git"),
-    local_path = the_path
-  )
 
   the_files <- fs::dir_ls(file.path(fs::path_dir(lpath$path), "_episodes"))
 
