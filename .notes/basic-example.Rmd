@@ -1,0 +1,127 @@
+---
+title: Basic Examples
+output:
+  rmarkdown::md_document:
+    variant: gfm
+---
+
+```{r}
+knitr::opts_chunk$set(error = TRUE)
+```
+
+
+These are some basic examples of syntax we might expect for learner.
+
+On the face of it, one should be able to construct blocks with a single
+rmarkdown chunk that has special tags embedded. This way, the RMarkdown is valid
+no matter what.
+
+## The default
+
+This example will use the default settings from the document to render the
+exercise.
+
+```{r exercise-default}
+#' @exercise Test Exercise
+#' This is the text for an exercise.
+#'
+#' There might be some text and code blocks explaining things
+#'
+#' ```bash
+#' Rscript -e 'plot(rnorm(100))'
+#' ```
+## there might be code as part of the exercise.
+plot(rnorm(100))
+
+#' @solution
+#' the solution might include text like this line
+#’
+## or code
+
+plot(rnorm(100), type = "b")
+```
+
+## Unworkable examples
+
+Sometimes the example shown should not be worked. If we run this normally, R
+will throw an error and it will look very messy. However, if we were to specify
+`eval = FALSE` for the whole chunk, then the solution would not be run. To
+alleviate this, we try to introduce tag-level evaluation by combining roxygen
+syntax with chunk syntax.
+
+```{r exercise}
+#' @exercise {eval=FALSE}
+#' This is the text for an exercise.
+
+## there might be code as part of the exercise.
+## but that is not working
+plot(some_undefined_variable)
+
+#' @solution {eval=TRUE}
+#' the solution might include text like this that would explain
+#’ why the code doesn’t work
+## or code
+
+exists("some_defined_variable")
+```
+
+## Wizard behind the curtain
+
+On persistant form from R-novice gapminder is to include the solution in the
+example, but only show the output or the last line.
+
+```{r, wizard}
+#' @exercise {echo=-1}
+#' Using `seq`, write a function that prints the first **N** natural numbers, one per line:
+#'
+print_N <- function(N) {
+ nseq <- seq(N)
+ for (num in nseq) {
+   print(num)
+ }
+}
+print_N(3)
+#'
+#' @solution
+#'
+print_N <- function(N) {
+ nseq <- seq(N)
+ for (num in nseq) {
+   print(num)
+ }
+}
+```
+
+## Multiple examples
+
+However, there is a catch that happens whenever there are multiple examples per
+block: some of them need to be echoed and others don't necessarily need it.
+
+In these cases, we can have the user re-add the tag to specify new options that
+would be persistent until the next tag.
+
+```{r, multi-wizard}
+#' @exercise
+#' R has a built-in function called `seq` that creates a list of numbers:
+#'
+seq(3)
+#'
+#' Using `seq`, write a function that prints the first **N** natural numbers, one per line:
+#' @exercise {echo=-1}
+## This example only shows the very last line
+print_N <- function(N) {
+ nseq <- seq(N)
+ for (num in nseq) {
+   print(num)
+ }
+}
+print_N(3)
+#'
+#' @solution
+print_N <- function(N) {
+ nseq <- seq(N)
+ for (num in nseq) {
+   print(num)
+ }
+}
+```

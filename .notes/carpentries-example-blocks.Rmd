@@ -1,0 +1,233 @@
+---
+title: "Example Blocks from Carpentries Lessons"
+authors: ["Zhian N. Kamvar", "François Michonneau"]
+---
+
+This document contains example/solution blocks from carpentries lessons found in
+the wild. A companion document to this, [lessondown-example-blocks.Rmd] should
+contain RMarkdown blocks that ideally should be able to translate to these
+markdown blocks.
+
+The way the blocks are currently set up (the `{: .challenge}` tag always appears
+after block quotes), makes it relatively straightforward to grab them using
+XPATH syntax:
+
+```{r, eval = FALSE}
+library("magrittr")
+library("xml2")
+library("tinkr") # https://github.com/ropenscilabs/tinkr
+library("tibble")
+library("purrr")
+library("stringr")
+library("git2r")
+library("fs")
+
+
+lesson <- to_xml("/path/to/_episodes/lesson.md")
+lesson$body %>%
+  xml_find_all(".//d1:text[text()='{: .challenge}']/ancestor-or-self::d1:block_quote")
+```
+
+At the moment, I'm not quite sure how to extract this information in a useable
+manner since XML is represented as pointers. using `xml_text()` will collapse
+all child nodes a single text field, delimted by nothing, so it comes out weird:
+
+```{r, eval = FALSE}
+lesson$body %>%
+  xml_find_first(".//d1:text[text()='{: .challenge}']/ancestor-or-self::d1:block_quote") %>%
+  xml_text()
+# [1] "Fill in the BlanksFill in the blanks so that the program below produces the output shown.values = ____\nvalues.____(1)\nvalues.____(3)\nvalues.____(5)\nprint('first time:', values)\nvalues = values[____]\nprint('second time:', values)\n{: .language-python}first time: [1, 3, 5]\nsecond time: [3, 5]\n{: .output}Solutionvalues = []\nvalues.append(1)\nvalues.append(3)\nvalues.append(5)\nprint('first time:', values)\nvalues = values[1:]\nprint('second time:', values)\n{: .language-python}{: .solution}{: .challenge}"
+```
+
+However, if we unnest things with `xml_contents()`, then we get printing of child nodes:
+
+```{r, eval = FALSE}
+lesson$body %>%
+  xml_find_first(".//d1:text[text()='{: .challenge}']/ancestor-or-self::d1:block_quote") %>%
+  xml_contents() -> blocks
+xml_text(blocks)
+# [1] "Fill in the Blanks"
+# [2] "Fill in the blanks so that the program below produces the output shown."
+# [3] "values = ____\nvalues.____(1)\nvalues.____(3)\nvalues.____(5)\nprint('first time:', values)\nvalues = values[____]\nprint('second time:', values)\n"
+# [4] "{: .language-python}"
+# [5] "first time: [1, 3, 5]\nsecond time: [3, 5]\n"
+# [6] "{: .output}"
+# [7] "Solutionvalues = []\nvalues.append(1)\nvalues.append(3)\nvalues.append(5)\nprint('first time:', values)\nvalues = values[1:]\nprint('second time:', values)\n{: .language-python}{: .solution}{: .challenge}"
+```
+
+Here, we are missing the names of the nodes, but we can get those with `xml_name()`:
+```{r, eval = FALSE}
+xml_name(blocks)
+# [1] "heading"     "paragraph"   "code_block"  "paragraph"   "code_block"  "paragraph"
+# [7] "block_quote"
+tibble(node = xml_name(blocks), text = xml_text(blocks))
+```
+
+Update: there was a problem in my thinking because I realized that this search
+was also including block quote children of the top-level block quotes (that is,
+it was including the solutions twice). What we want are simply all of the
+challenge block quotes.
+
+I've written a functon that will search exactly for these block quotes and return
+a nested list of the contents of said block quotes!
+
+```{r, eval = TRUE}
+peek <- function(x, n = 1, ...) str(x, max.level = n, ...)
+carpentries_examples <- function(body, list = TRUE) {
+  # Setting up the XPATH search string
+  challenge <- "d1:text[text()='{: .challenge}']"       # Find the end of the challenge block
+  axis      <- "ancestor-or-self"                       # Then look behind at all of the ancestors
+  ancestor  <- "d1:block_quote"                         # That are blockquotes
+  predicate <- "d1:heading/d1:text[text()!='Solution']" # But exclude the Solution blocks (because they are included anyways)
+
+  challenge_string <- glue::glue(".//{challenge}/{axis}::{ancestor}[{predicate}]")
+  examples <- xml2::xml_find_all(body, challenge_string)
+  if (list) {
+    examples <- xml2::as_list(examples)
+  }
+  examples
+}
+```
+
+Now, if we peek at these examples, we can find out a couple of things:
+
+1. How are they structured from a broad level (paragraph, code block, paragraph,
+   list, solution (block_quote))
+2. What are the text types that we need to look for at the elemental level?
+
+```{r, eval = FALSE}
+# Broad level
+examples <- carpentries_examples(lesson$body)
+lesson_names <- lapply(examples, names)
+lesson_names
+table(unlist(lesson_names))
+
+# elemental level
+element_names <- names(unlist(examples))
+str_extract(element_names, "[_a-z]+?$") %>% table()
+```
+
+The question is: what happens when we do this for an entire lesson:
+
+```{r}
+lesson <- "https://github.com/swcarpentry/python-novice-gapminder.git"
+
+if (!fs::dir_exists("swc--png")) {
+  x <- git2r::clone(lesson, "swc--png")
+}
+episodes <- fs::dir_ls("swc--png/_episodes")
+
+bodies <- map(episodes, ~to_xml(.x)$body %>% carpentries_examples(list = FALSE))
+bodies <- bodies[lengths(bodies) > 0]
+elist  <- map(bodies, as_list)
+
+# How deep are the tags?
+map_int(elist, vec_depth)
+#          swc--png/_episodes/01-run-quit.md         swc--png/_episodes/02-variables.md
+#                                          6                                          8
+#  swc--png/_episodes/03-types-conversion.md          swc--png/_episodes/04-built-in.md
+#                                          9                                         10
+#         swc--png/_episodes/06-libraries.md   swc--png/_episodes/07-reading-tabular.md
+#                                          8                                          8
+#       swc--png/_episodes/08-data-frames.md          swc--png/_episodes/09-plotting.md
+#                                          8                                          7
+#             swc--png/_episodes/11-lists.md         swc--png/_episodes/12-for-loops.md
+#                                          9                                          8
+#      swc--png/_episodes/13-conditionals.md swc--png/_episodes/14-looping-data-sets.md
+#                                          6                                          7
+# swc--png/_episodes/16-writing-functions.md             swc--png/_episodes/17-scope.md
+#                                          9                                          7
+#             swc--png/_episodes/18-style.md
+#                                          7
+
+# What top level tags are there in the challenges?
+map_depth(elist, .depth = 2, .f = names) %>% unlist() %>% table()
+# .
+# block_quote  code_block     heading  html_block        list   paragraph
+#          76          78          76           1          28         179
+
+# What top level tags are in the solutions?
+map_depth(elist, .depth = 2, .f = ~names(.x[["block_quote"]])) %>% unlist() %>% table()
+# .
+# code_block    heading       list  paragraph      table
+#         89         72         19        149          1
+
+# What are the common patterns among the solutions (excluding duplicated)?
+
+nodup <- function(x) x[c(x[-length(x)] != x[seq_along(x)[-1]], TRUE)]
+
+patterns <- map(elist, ~map_chr(.x, .f = ~paste(nodup(names(.x[["block_quote"]])), collapse = "."))) %>%
+  unlist() %>%
+  unique() %>%
+  str_remove(r"{^heading\.}")
+
+patterns[order(nchar(patterns))]
+#  [1] ""
+#  [2] "list"
+#  [3] "table"
+#  [4] "paragraph"
+#  [5] "paragraph.list"
+#  [6] "code_block.paragraph"
+#  [7] "paragraph.list.paragraph"
+#  [8] "paragraph.code_block.paragraph"
+#  [9] "code_block.paragraph.code_block"
+# [10] "paragraph.code_block.paragraph.list"
+# [11] "code_block.paragraph.code_block.paragraph"
+# [12] "paragraph.code_block.paragraph.code_block.paragraph"
+# [13] "code_block.paragraph.code_block.paragraph.code_block.paragraph"
+# [14] "paragraph.code_block.paragraph.code_block.paragraph.code_block.paragraph"
+# [15] "list.code_block.paragraph.list.code_block.paragraph.list.code_block.paragraph"
+# [16] "paragraph.code_block.paragraph.code_block.paragraph.code_block.paragraph.code_block.paragraph"
+# [17] "paragraph.code_block.paragraph.code_block.paragraph.code_block.paragraph.code_block.paragraph.code_block.paragraph"
+# [18] "list.code_block.paragraph.list.code_block.paragraph.list.paragraph.code_block.paragraph.code_block.paragraph.code_block.paragraph"
+# [19] "list.code_block.paragraph.code_block.paragraph.code_block.paragraph.code_block.paragraph.code_block.paragraph.code_block.paragraph"
+# [20] "code_block.paragraph.code_block.paragraph.code_block.paragraph.code_block.paragraph.code_block.paragraph.code_block.paragraph.code_block.paragraph"
+
+# This makes me wonder what this would look like in graph form.
+
+make_edges <- function(nms, src = "CHALLENGE", sink = "LESSON") {
+  nms <- nms[nms != "heading"]
+  data.frame(
+    from = c(src, nms),
+    to   = c(nms, sink)
+  )
+}
+
+solution_graph <- map_dfr(elist,
+  .f = ~map_dfr(.x, ~make_edges(names(.x[["block_quote"]]), src = "SOLUTION", sink = "CHALLENGE"), .id = "block"),
+  .id = "episode"
+) %>%
+  dplyr::select(from, to, everything())
+
+challenge_graph <- map_dfr(elist,
+  .f = ~map_dfr(.x, ~make_edges(names(.x)), .id = "block"),
+  .id = "episode"
+) %>%
+  dplyr::select(from, to, everything()) %>%
+  dplyr::mutate(to = dplyr::if_else(to == "block_quote", "SOLUTION", to)) %>%
+  dplyr::mutate(from = dplyr::if_else(from == "block_quote", "SOLUTION", from))
+
+solution_graph %>% graph_from_data_frame() %>% simplify() %>%
+  plot(layout = layout_in_circle(.), edge.curved = -0.25)
+challenge_graph %>% graph_from_data_frame() %>% simplify() %>%
+  plot(layout = layout_in_circle(.), edge.curved = -0.25)
+
+dplyr::bind_rows(challenge_graph, solution_graph) %>%
+  graph_from_data_frame() %>%
+  set_edge_attr("weight", value = 1) %>%
+  delete_edge_attr("episode") %>%
+  delete_edge_attr("block") %>%
+  simplify(remove.loops = FALSE, edge.attr.comb = sum) %>%
+  plot(layout = layout_in_circle(.), edge.curved = -0.25, edge.width = sqrt(E(.)$weight))
+
+# Now that we know the overal structure of a given lesson, what are the text-like attributes?
+elist %>% unlist() %>% names() %>% str_extract("[_a-z]+?$") %>% table()
+# .
+#        code  code_block  html_block html_inline        text
+#         304         170           1          18        1307
+
+# Note that the only thing about this that it removes all of the softbreaks that exist.
+```
+
+
+
