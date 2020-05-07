@@ -8,8 +8,13 @@
 #' @param as_list \[boolean\] if `TRUE`, the result will be converted to
 #'   a list via [xml2::as_list()]. A `FALSE` (default) value will keep it as an
 #'   xml object.
+#' @export
 #'
 #' @return a list or xml object.
+#' 
+#' @examples
+#' png <- get_lesson("swcarpentry/python-novice-gapminder")
+#' get_challenges(png[[1]]$body)
 get_challenges <- function(body, as_list = FALSE) {
 
   # Namespace for the document is listed in the attributes

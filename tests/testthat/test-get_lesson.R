@@ -85,7 +85,7 @@ test_that("overwriting is possible", {
 
 test_that("lessons can be read from local files", {
 
-  frg <- get_lesson(path = fs::path(test_path(), "lesson-fragment"))
+  frg <- get_lesson(path = lesson_fragment())
 
   expect_length(frg, 3)
   expect_equal(

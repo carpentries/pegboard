@@ -19,3 +19,9 @@ a list of XML block quotes for each episode
 \description{
 Process downloaded lessons
 }
+\examples{
+
+png <- get_lesson("swcarpentry/python-novice-gapminder")
+get_challenges(png[[1]]$body)
+
+}
