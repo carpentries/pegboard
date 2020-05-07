@@ -11,7 +11,7 @@
 #' @export
 #'
 #' @return a list or xml object.
-#' 
+#'
 #' @examples
 #' frg <- get_lesson(path = lesson_fragment())
 #' get_challenges(frg[[2]]$body)
