@@ -28,4 +28,5 @@ Imports:
     xml2,
     purrr,
     dplyr,
-    glue
+    glue,
+    R6
