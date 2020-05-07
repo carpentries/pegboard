@@ -22,6 +22,6 @@ the block quotes that are ancestral to that marker so that we can extract the
 challenge blockquotes from the carpentries lessons.
 }
 \examples{
-png <- get_lesson("swcarpentry/python-novice-gapminder")
-get_challenges(png[[1]]$body)
+frg <- get_lesson(path = lesson_fragment())
+get_challenges(frg[[2]]$body)
 }

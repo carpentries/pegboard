@@ -21,7 +21,6 @@ Process downloaded lessons
 }
 \examples{
 
-png <- get_lesson("swcarpentry/python-novice-gapminder")
-get_challenges(png[[1]]$body)
-
+frg <- get_lesson(path = lesson_fragment())
+process_lesson(frg)
 }
