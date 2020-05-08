@@ -75,6 +75,10 @@ Lesson <- R6::R6Class("Lesson",
       }
       src <- if (rmd) "_episodes_rmd" else "_episodes"
       the_episodes <- fs::dir_ls(fs::path(path, src))
+
+      if (!any(grepl("\\.R?md$", the_episodes))) {
+        stop(glue::glue("The {src} directory must have (R)markdown files"))
+      }
       self$episodes <- purrr::map(the_episodes, Episode$new)
       # Names of the episodes will be the filename, not the basename
       names(self$episodes) <- fs::path_file(the_episodes)

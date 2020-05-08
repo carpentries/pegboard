@@ -44,14 +44,6 @@ get_lesson <- function(lesson = NULL, path = tempdir(), overwrite = FALSE) {
     )
   }
 
-  # list all the files
-  the_files <- fs::dir_ls(fs::path(the_path, "_episodes"))
-
-  if (!any(grepl("\\.R?md$", the_files))) {
-    stop("The _episodes directory must have markdown files")
-  }
-
-  # convert to xml
-  xmls <- purrr::map(the_files, tinkr::to_xml)
-  xmls
+  # Return a new lesson object
+  return(Lesson$new(the_path))
 }

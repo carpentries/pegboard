@@ -21,12 +21,17 @@ test_that("errors are okay", {
   })
 
   expect_error(get_lesson(), "please provide a lesson")
-  expect_error(get_lesson(path = dd), "The _episodes directory must have markdown files")
+  expect_error(
+    get_lesson(path = dd),
+    "The _episodes directory must have (R)markdown files",
+    fixed = TRUE
+  )
   expect_error(get_lesson("swcarpentry/python-novice-gapminder", path = locked_dir))
 
 })
 
 test_that("lessons can be downloaded", {
+
   testthat::skip_if_offline()
 
   expect_length(fs::dir_ls(d), 0)
@@ -36,12 +41,15 @@ test_that("lessons can be downloaded", {
     "cloning into"
   )
 
+  # the output is a Lesson object
+  expect_is(png, "Lesson")
+
   # the directory exists
   expect_true(fs::dir_exists(fs::path(d, "swcarpentry--python-novice-gapminder", "_episodes")))
 
   episodes <- fs::dir_ls(fs::path(d, "swcarpentry--python-novice-gapminder", "_episodes"))
 
-  expect_equal(episodes, names(png))
+  expect_equal(episodes, unname(png$files))
 
 })
 
@@ -54,12 +62,15 @@ test_that("lessons are accessed without re-downloading", {
     png <- get_lesson("swcarpentry/python-novice-gapminder", path = d)
   )
 
+  # the output is a Lesson object
+  expect_is(png, "Lesson")
+
   # the directory exists
   expect_true(fs::dir_exists(fs::path(d, "swcarpentry--python-novice-gapminder", "_episodes")))
 
   episodes <- fs::dir_ls(fs::path(d, "swcarpentry--python-novice-gapminder", "_episodes"))
 
-  expect_equal(episodes, names(png))
+  expect_equal(episodes, unname(png$files))
 
 
 })
@@ -74,12 +85,15 @@ test_that("overwriting is possible", {
     "cloning into"
   )
 
+  # the output is a Lesson object
+  expect_is(png, "Lesson")
+
   # the directory exists
   expect_true(fs::dir_exists(fs::path(d, "swcarpentry--python-novice-gapminder", "_episodes")))
 
   episodes <- fs::dir_ls(fs::path(d, "swcarpentry--python-novice-gapminder", "_episodes"))
 
-  expect_equal(episodes, names(png))
+  expect_equal(episodes, unname(png$files))
 
 })
 
@@ -87,9 +101,9 @@ test_that("lessons can be read from local files", {
 
   frg <- get_lesson(path = lesson_fragment())
 
-  expect_length(frg, 3)
+  expect_is(frg, "Lesson")
   expect_equal(
-    fs::path_file(names(frg)),
+    names(frg$episodes),
     c("10-lunch.md", "14-looping-data-sets.md", "17-scope.md")
   )
 
