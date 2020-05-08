@@ -74,7 +74,7 @@ Lesson <- R6::R6Class("Lesson",
         stop(glue::glue("the directory '{path}' does not exist or is not a directory"))
       }
       src <- if (rmd) "_episodes_rmd" else "_episodes"
-      the_episodes <- fs::dir_ls(fs::path(path, src))
+      the_episodes <- fs::dir_ls(fs::path(path, src), glob = "*md")
 
       if (!any(grepl("\\.R?md$", the_episodes))) {
         stop(glue::glue("The {src} directory must have (R)markdown files"))

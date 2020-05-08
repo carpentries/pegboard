@@ -31,7 +31,16 @@ Episode <- R6::R6Class("Episode",
       if (!file.exists(path)) {
         stop(glue::glue("the file '{path}' does not exist"))
       }
-      lsn <- tinkr::to_xml(path)
+      safe_to_xml <- purrr::possibly(
+        tinkr::to_xml,
+        otherwise =
+          list(
+            yaml = NULL,
+            body = xml2::xml_missing()
+          ),
+        quiet = TRUE
+      )
+      lsn <- safe_to_xml(path)
       self$path <- path
       self$yaml <- lsn$yaml
       self$body <- lsn$body
