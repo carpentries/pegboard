@@ -4,17 +4,13 @@
 \alias{get_challenges}
 \title{Gather challenges from the XML body of a carpentries lesson}
 \usage{
-get_challenges(body, as_list = FALSE)
+get_challenges(body)
 }
 \arguments{
 \item{body}{the XML body of a carpentries lesson (an xml2 object)}
-
-\item{as_list}{[boolean] if \code{TRUE}, the result will be converted to
-a list via \code{\link[xml2:as_list]{xml2::as_list()}}. A \code{FALSE} (default) value will keep it as an
-xml object.}
 }
 \value{
-a list or xml object.
+an xml object.
 }
 \description{
 This will search an XML document for a challenge marker and extract all of
@@ -22,6 +18,6 @@ the block quotes that are ancestral to that marker so that we can extract the
 challenge blockquotes from the carpentries lessons.
 }
 \examples{
-frg <- get_lesson(path = lesson_fragment())
-get_challenges(frg[[2]]$body)
+frg <- Lesson$new(lesson_fragment())
+get_challenges(frg$episodes[["17-scope.md"]]$body)
 }

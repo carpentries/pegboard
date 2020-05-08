@@ -3,5 +3,6 @@
 export(Episode)
 export(Lesson)
 export(get_challenges)
+export(get_code)
 export(get_lesson)
 export(lesson_fragment)

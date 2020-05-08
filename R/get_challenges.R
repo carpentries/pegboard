@@ -5,17 +5,14 @@
 #' challenge blockquotes from the carpentries lessons.
 #'
 #' @param body the XML body of a carpentries lesson (an xml2 object)
-#' @param as_list \[boolean\] if `TRUE`, the result will be converted to
-#'   a list via [xml2::as_list()]. A `FALSE` (default) value will keep it as an
-#'   xml object.
 #' @export
 #'
-#' @return a list or xml object.
+#' @return an xml object.
 #'
 #' @examples
-#' frg <- get_lesson(path = lesson_fragment())
-#' get_challenges(frg[[2]]$body)
-get_challenges <- function(body, as_list = FALSE) {
+#' frg <- Lesson$new(lesson_fragment())
+#' get_challenges(frg$episodes[["17-scope.md"]]$body)
+get_challenges <- function(body) {
 
   # Namespace for the document is listed in the attributes
   ns <- attr(xml2::xml_ns(body), "names")[[1]]
@@ -34,7 +31,7 @@ get_challenges <- function(body, as_list = FALSE) {
 
   # But exclude the Solution blocks (because they are included anyways) --------
   predicate <- glue::glue(
-    "{ns}:heading/{ns}:text[not(contains(text(),'Solution'))]"
+    "{ns}:heading/{ns}:text[not(starts-with(text(),'Solution'))]"
   )
 
 
@@ -43,11 +40,5 @@ get_challenges <- function(body, as_list = FALSE) {
     ".//{challenge}/{axis}::{ancestor}[{predicate}]"
   )
 
-  examples <- xml2::xml_find_all(body, challenge_string)
-
-  if (as_list) {
-    examples <- xml2::as_list(examples)
-  }
-
-  examples
+  xml2::xml_find_all(body, challenge_string)
 }

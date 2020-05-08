@@ -37,6 +37,12 @@ scope$challenges
 \describe{
 \item{\code{challenges}}{[\code{xml_nodeset}] all the challenges blocks from the episode}
 
+\item{\code{output}}{[\code{xml_nodeset}] all the output blocks from the episode}
+
+\item{\code{error}}{[\code{xml_nodeset}] all the error blocks from the episode}
+
+\item{\code{code}}{[\code{xml_nodeset}] all the code blocks from the episode}
+
 \item{\code{name}}{[\code{character}] the name of the source file without the path}
 
 \item{\code{lesson}}{[\code{character}] the path to the lesson where the episode is from}

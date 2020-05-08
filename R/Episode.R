@@ -43,6 +43,21 @@ Episode <- R6::R6Class("Episode",
       get_challenges(self$body)
     },
 
+    #' @field output \[`xml_nodeset`\] all the output blocks from the episode
+    output = function() {
+      get_code(self$body, ".output")
+    },
+
+    #' @field error \[`xml_nodeset`\] all the error blocks from the episode
+    error = function() {
+      get_code(self$body, ".error")
+    },
+
+    #' @field code \[`xml_nodeset`\] all the code blocks from the episode
+    code = function() {
+      get_code(self$body)
+    },
+
     #' @field name \[`character`\] the name of the source file without the path
     name = function() {
       fs::path_file(self$path)

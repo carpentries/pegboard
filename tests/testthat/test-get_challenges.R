@@ -13,7 +13,6 @@ test_that("get_challenges() returns the right number of block quotes", {
 
 })
 
-test_that("get_challenges() will return a list", {
+test_that("get_challenges() returns a", {
   expect_is(get_challenges(frg$episodes[[expected[1]]]$body), "xml_nodeset")
-  expect_is(get_challenges(frg$episodes[[expected[1]]]$body, as_list = TRUE), "list")
 })

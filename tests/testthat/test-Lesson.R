@@ -42,11 +42,14 @@ test_that("Lesson class can remove episodes with $thin()", {
   expect_message(frg2$thin(), "Removing 1 episode: 10-lunch.md", fixed = TRUE)
   expect_length(frg2$episodes, 2)
   expect_named(frg2$episodes, c("14-looping-data-sets.md", "17-scope.md"))
+  expect_message(frg2$thin(), "Nothing to remove!")
 
   expect_length(frg$episodes, 3)
   expect_silent(frg$thin(verbose = FALSE))
   expect_length(frg$episodes, 2)
   expect_named(frg$episodes, c("14-looping-data-sets.md", "17-scope.md"))
+  expect_message(frg2$thin(), "Nothing to remove!")
+  expect_silent(frg$thin(verbose = FALSE))
 
 
 })
