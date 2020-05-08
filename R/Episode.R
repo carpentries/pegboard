@@ -18,41 +18,15 @@ Episode <- R6::R6Class("Episode",
     #' @field body \[`xml_document`\] an xml document of the episode
     body = NULL,
 
-
-    #' @description
-    #' Extract all challenge blocks from the Episode
-    #' @return an `xml_nodeset` object with each node being a `block_quote`.
-    #' @examples
-    #' scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
-    #' scope$challenges()
-    challenges = function() {
-      get_challenges(self$body)
-    },
-
-    #' @description
-    #' name of the file without the path.
-    #' @return a character
-    #' @examples
-    #' scope$name()
-    name = function() {
-      fs::path_file(self$path)
-    },
-
-    #' @description
-    #' path to the lesson
-    #' @return a character
-    #' @examples
-    #' scope$lesson()
-    lesson = function() {
-      fs::path_dir(fs::path_dir(self$path))
-    },
-
     #' @description
     #' Create a new Episode
     #' @param path \[`character`\] path to a markdown episod file on disk
     #' @return A new Episode object with extraced XML data
     #' @examples
     #' scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
+    #' scope$name
+    #' scope$lesson
+    #' scope$challenges
     initialize = function(path = NULL) {
       if (!file.exists(path)) {
         stop(glue::glue("the file '{path}' does not exist"))
@@ -61,6 +35,22 @@ Episode <- R6::R6Class("Episode",
       self$path <- path
       self$yaml <- lsn$yaml
       self$body <- lsn$body
+    }
+  ),
+  active = list(
+    #' @field challenges \[`xml_nodeset`\] all the challenges blocks from the episode
+    challenges = function() {
+      get_challenges(self$body)
+    },
+
+    #' @field name \[`character`\] the name of the source file without the path
+    name = function() {
+      fs::path_file(self$path)
+    },
+
+    #' @field lesson \[`character`\] the path to the lesson where the episode is from
+    lesson = function() {
+      fs::path_dir(fs::path_dir(self$path))
     }
   )
 )

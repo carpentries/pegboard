@@ -27,5 +27,4 @@ directory and extracts the lesson in \verb{_episodes/} using \code{\link[tinkr:t
 
 png <- get_lesson("swcarpentry/python-novice-gapminder")
 str(png, max.level = 1)
-
 }
