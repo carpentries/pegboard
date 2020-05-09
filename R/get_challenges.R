@@ -17,6 +17,7 @@ get_challenges <- function(body) {
   # Namespace for the document is listed in the attributes
   ns <- attr(xml2::xml_ns(body), "names")[[1]]
 
+
   # Find the end of the challenge block ----------------------------------------
   challenge <- glue::glue("<ns>:text[text()='{: .challenge}']",
     .open = "<",

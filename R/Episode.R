@@ -52,6 +52,11 @@ Episode <- R6::R6Class("Episode",
       get_challenges(self$body)
     },
 
+    #' @field solutions \[`xml_nodeset`\] all the solutions blocks from the episode
+    solutions = function(parent) {
+      get_solutions(self$body)
+    },
+
     #' @field output \[`xml_nodeset`\] all the output blocks from the episode
     output = function() {
       get_code(self$body, ".output")

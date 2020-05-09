@@ -34,6 +34,16 @@ test_that("Lesson class can get the challenges", {
 
 })
 
+test_that("Lesson class can get the solutions", {
+
+
+  expected <- c("10-lunch.md" = 0, "14-looping-data-sets.md" = 3, "17-scope.md" = 0)
+  chal <- frg$solutions()
+  expect_length(chal, 3)
+  expect_equal(lengths(chal), expected)
+  expect_is(chal[["14-looping-data-sets.md"]], "xml_nodeset")
+
+})
 test_that("Lesson class can remove episodes with $thin()", {
 
   frg2 <- frg$clone(deep = TRUE)

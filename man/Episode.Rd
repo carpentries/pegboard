@@ -37,6 +37,8 @@ scope$challenges
 \describe{
 \item{\code{challenges}}{[\code{xml_nodeset}] all the challenges blocks from the episode}
 
+\item{\code{solutions}}{[\code{xml_nodeset}] all the solutions blocks from the episode}
+
 \item{\code{output}}{[\code{xml_nodeset}] all the output blocks from the episode}
 
 \item{\code{error}}{[\code{xml_nodeset}] all the error blocks from the episode}

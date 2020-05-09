@@ -33,6 +33,18 @@ Lesson <- R6::R6Class("Lesson",
     },
 
     #' @description
+    #' Gather all of the solutions from the lesson in a list of xml_nodeset objects
+    #' @param path \[`logical`\] if `TRUE`, the names of each element
+    #'   will be equivalent to the path. The default is `FALSE`, which gives the
+    #'   name of each episode.
+    solutions = function(path = FALSE) {
+      nms <-  if (path) purrr::map(self$episodes, "path") else names(self$episodes)
+      res <- purrr::map(self$episodes, "solutions")
+      names(res) <- nms
+      return(res)
+    },
+
+    #' @description
     #' Remove episodes that have no challenges
     #' @param verbose \[`logical`\] if `TRUE` (default), the names of each
     #'   episode removed is reported. Set to `FALSE` to remove this behavior.
@@ -70,15 +82,33 @@ Lesson <- R6::R6Class("Lesson",
     #' frg$path
     #' frg$episodes
     initialize = function(path = NULL, rmd = FALSE) {
+
       if (!fs::dir_exists(path)) {
         stop(glue::glue("the directory '{path}' does not exist or is not a directory"))
       }
-      src <- if (rmd) "_episodes_rmd" else "_episodes"
-      the_episodes <- fs::dir_ls(fs::path(path, src), glob = "*md")
+
+      md_src <- fs::path(path, "_episodes")
+      rmd_src <- fs::path(path, "_episodes_rmd")
+
+      if (!rmd && fs::dir_exists(md_src)) {
+        src <- md_src
+      } else if (fs::dir_exists(rmd_src) && (rmd || !fs::dir_exists(md_src))) {
+        if (!rmd) {
+          message("could not find _episodes/, using _episodes_rmd/ as the source")
+          rmd <- TRUE
+        }
+        src <- rmd_src
+      } else {
+        stop(glue::glue("could not find either _episodes/ or _episodes_rmd/ in {path}"))
+      }
+
+      # Grabbing ONLY the markdown files (there are other sources of detritus)
+      the_episodes <- fs::dir_ls(src, glob = "*md")
 
       if (!any(grepl("\\.R?md$", the_episodes))) {
         stop(glue::glue("The {src} directory must have (R)markdown files"))
       }
+
       self$episodes <- purrr::map(the_episodes, Episode$new)
       # Names of the episodes will be the filename, not the basename
       names(self$episodes) <- fs::path_file(the_episodes)

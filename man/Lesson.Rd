@@ -51,6 +51,7 @@ files, default is \code{FALSE} for markdown files.}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-challenges}{\code{Lesson$challenges()}}
+\item \href{#method-solutions}{\code{Lesson$solutions()}}
 \item \href{#method-thin}{\code{Lesson$thin()}}
 \item \href{#method-new}{\code{Lesson$new()}}
 \item \href{#method-clone}{\code{Lesson$clone()}}
@@ -63,6 +64,25 @@ files, default is \code{FALSE} for markdown files.}
 Gather all of the challenges from the lesson in a list of xml_nodeset objects
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Lesson$challenges(path = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{path}}{[\code{logical}] if \code{TRUE}, the names of each element
+will be equivalent to the path. The default is \code{FALSE}, which gives the
+name of each episode.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-solutions"></a>}}
+\if{latex}{\out{\hypertarget{method-solutions}{}}}
+\subsection{Method \code{solutions()}}{
+Gather all of the solutions from the lesson in a list of xml_nodeset objects
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Lesson$solutions(path = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

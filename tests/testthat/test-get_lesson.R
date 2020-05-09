@@ -21,11 +21,8 @@ test_that("errors are okay", {
   })
 
   expect_error(get_lesson(), "please provide a lesson")
-  expect_error(
-    get_lesson(path = dd),
-    "The _episodes directory must have (R)markdown files",
-    fixed = TRUE
-  )
+  msg <- glue::glue("The {fs::path(dd, '_episodes')} directory must have (R)markdown files")
+  expect_error(get_lesson(path = dd), msg, fixed = TRUE)
   expect_error(get_lesson("swcarpentry/python-novice-gapminder", path = locked_dir))
 
 })
