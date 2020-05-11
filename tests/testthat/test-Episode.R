@@ -11,6 +11,9 @@ test_that("Episodes can be created and are valid", {
 
   expect_is(e$challenges, "xml_nodeset")
   expect_length(e$challenges, 2)
+  expect_identical(e$challenges, e$get_blocks())
+
+  expect_length(e$get_blocks(".discussion"), 0L)
 
   expect_is(e$code, "xml_nodeset")
   expect_length(e$code, 3)
@@ -24,6 +27,7 @@ test_that("Episodes can be created and are valid", {
 })
 
 test_that("An error will be thrown if a file does not exist", {
+
   sunshine <- fs::path(lesson_fragment(), "_episodes", "sunshine.md")
   msg <- glue::glue("the file '{sunshine}' does not exist")
   expect_error(Episode$new(sunshine), msg)

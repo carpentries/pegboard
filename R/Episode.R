@@ -18,6 +18,40 @@ Episode <- R6::R6Class("Episode",
     #' @field body \[`xml_document`\] an xml document of the episode
     body = NULL,
 
+    #' @description return all `block_quote` elements within the Episode
+    #' @param type the type of block quote in the Jekyll syntax like ".challenge",
+    #'   ".discussion", or ".solution"
+    #' @param level the level of the block within the document. Defaults to `1`,
+    #'   which represents all of the block_quotes are not nested within any other
+    #'   block quotes. Increase the nubmer to increase the level of nesting.
+    #' @return \[`xml_nodeset`\] all the blocks from the episode with the given
+    #'   tag and level.
+    #' @examples
+    #' scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
+    #' # get all the challenges
+    #' scope$get_blocks(".challenge")
+    #' # get the solutions
+    #' scope$get_blocks(".solution", level = 2)
+    #' \dontrun{
+    #'
+    #'   # download the source files for r-novice-gampinder into a Lesson object
+    #'   rng <- get_lesson("swcarpentry/r-novice-gapminder")
+    #'   dsp1 <- rng$episodes[["04-data-structures-part1.md"]]
+    #'   # There are 9 blocks in total
+    #'   dsp1$get_blocks()
+    #'   # One is a callout block
+    #'   dsp1$get_blocks(".callout")
+    #'   # One is a discussion block
+    #'   dsp1$get_blocks(".discussion")
+    #'   # Seven are Challenge blocks
+    #'   dsp1$get_blocks(".challenge")
+    #'   # There are eight solution blocks:
+    #'   dsp1$get_blocks(".solution", level = 2L)
+    #' }
+    get_blocks = function(type = NULL, level = 1L) {
+      get_blocks(self$body, type = type, level = level)
+    },
+
     #' @description
     #' Create a new Episode
     #' @param path \[`character`\] path to a markdown episod file on disk
@@ -53,7 +87,7 @@ Episode <- R6::R6Class("Episode",
     },
 
     #' @field solutions \[`xml_nodeset`\] all the solutions blocks from the episode
-    solutions = function(parent) {
+    solutions = function() {
       get_solutions(self$body)
     },
 

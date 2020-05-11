@@ -37,7 +37,10 @@ get_lesson <- function(lesson = NULL, path = tempdir(), overwrite = FALSE) {
   }
 
   # If the directory contains episodes, then use that, otherwise, download the
-  if (!fs::dir_exists(fs::path(the_path, "_episodes"))) {
+  episodes     <- fs::path(the_path, "_episodes")
+  episodes_rmd <- fs::path(the_path, "_episodes_rmd")
+
+  if (!fs::dir_exists(episodes) && !fs::dir_exists(episodes_rmd)) {
     lpath <- git2r::clone(
       glue::glue("https://github.com/{lesson}.git"),
       local_path = the_path

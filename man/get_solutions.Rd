@@ -4,7 +4,7 @@
 \alias{get_solutions}
 \title{Gather solutions from the XML body of a carpentries lesson}
 \usage{
-get_solutions(body, parent = ".challenge")
+get_solutions(body, parent = NULL)
 }
 \arguments{
 \item{body}{the XML body of a carpentries lesson (an xml2 object)}

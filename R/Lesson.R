@@ -21,6 +21,24 @@ Lesson <- R6::R6Class("Lesson",
     rmd = FALSE,
 
     #' @description
+    #' Gather all of the blocks from the lesson in a list of xml_nodeset objects
+    #' @param body the XML body of a carpentries lesson (an xml2 object)
+    #' @param type the type of block quote in the Jekyll syntax like ".challenge",
+    #'   ".discussion", or ".solution"
+    #' @param level the level of the block within the document. Defaults to `1`,
+    #'   which represents all of the block_quotes are not nested within any other
+    #'   block quotes. Increase the nubmer to increase the level of nesting.
+    #' @param path \[`logical`\] if `TRUE`, the names of each element
+    #'   will be equivalent to the path. The default is `FALSE`, which gives the
+    #'   name of each episode.
+    blocks = function(type = NULL, level = 1L, path = FALSE) {
+      nms <-  if (path) purrr::map(self$episodes, "path") else names(self$episodes)
+      res <- purrr::map(self$episodes, ~.x$get_blocks(type = type, level = level))
+      names(res) <- nms
+      return(res)
+    },
+
+    #' @description
     #' Gather all of the challenges from the lesson in a list of xml_nodeset objects
     #' @param path \[`logical`\] if `TRUE`, the names of each element
     #'   will be equivalent to the path. The default is `FALSE`, which gives the
@@ -56,7 +74,7 @@ Lesson <- R6::R6Class("Lesson",
       if (verbose) {
         to_remove <- lengths(self$challenges()) == 0
         if (sum(to_remove) > 0) {
-          nms <- glue::glue_collapse(names(to_remove)[to_remove], sep = ", ", last = ", and")
+          nms <- glue::glue_collapse(names(to_remove)[to_remove], sep = ", ", last = ", and ")
           epis <- if (sum(to_remove) > 1) "episodes" else "episode"
           message(glue::glue("Removing {sum(to_remove)} {epis}: {nms}"))
           self$episodes[to_remove] <- NULL
