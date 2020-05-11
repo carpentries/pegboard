@@ -179,3 +179,34 @@ test_that("Lesson methods work as expected", {
   expect_is(lex$episodes[[2]], "Episode")
 
 })
+
+test_that("Lessons with Rmd sources can be downloaded", {
+
+  skip_if_offline()
+  expect_false(fs::dir_exists(fs::path(d, "swcarpentry--r-novice-inflammation")))
+
+  expect_output({
+    expect_message(
+      rni <- get_lesson("swcarpentry/r-novice-inflammation", path = d),
+      "could not find _episodes/, using _episodes_rmd/ as the source",
+      fixed = TRUE
+    )},
+    "cloning into"
+  )
+
+  expect_is(rni, "Lesson")
+  expect_is(rni$episodes[[1]], "Episode")
+  expect_true(rni$rmd)
+
+})
+
+test_that("Non-lessons will be downloaded but rejected", {
+
+  skip_if_offline()
+
+  expect_error(
+    capture.output(get_lesson("zkamvar/notes-template", path = d)),
+    "could not find either _episodes/ or _episodes_rmd/",
+    fixed = TRUE
+  )
+})
