@@ -1,0 +1,52 @@
+---
+title: "swc-survey"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{swc-survey}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction
+
+I wrote this package to help me parse the Carpentries' markdown files so that
+I can understand how I want to update the lesson templates. 
+
+```{r setup}
+library(up2code)
+library(purrr)
+library(glue)
+library(xml2)
+```
+
+
+```{r download_swc_lessons, results = "hide"}
+swc_path <- fs::file_temp(pattern = "SWC")
+swc_core_lessons <- c(
+  "shell-novice",
+  "shell-novice-es",
+  "git-novice",
+  "git-novice-es",
+  "python-novice-inflammation",
+  "python-novice-gapminder",
+  "r-novice-inflammation",
+  "r-novice-gapminder",
+  "r-novice-gapminder-es",
+  NULL
+)
+SWC <- map(glue("swcarpentry/{swc_core_lessons}"), get_lesson, path = swc_path)
+names(SWC) <- swc_core_lessons
+```
+
+```{r swc_explore}
+map_int(SWC, ~length(.x$episodes))
+map(SWC, ~.x$challenges() %>% lengths())
+```
+

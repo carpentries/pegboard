@@ -12,7 +12,9 @@ License: MIT + file LICENSE
 Suggests:
     testthat,
     withr,
-    covr
+    covr,
+    knitr,
+    rmarkdown
 Remotes:
   ropenscilabs/tinkr
 Encoding: UTF-8
@@ -29,4 +31,7 @@ Imports:
     purrr,
     dplyr,
     glue,
-    R6
+    R6,
+    lifecycle
+VignetteBuilder: knitr
+RdMacros: lifecycle
