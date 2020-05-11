@@ -20,6 +20,7 @@ I wrote this package to help me parse the Carpentries' markdown files so that
 I can understand how I want to update the lesson templates. 
 
 ```{r setup}
+library(magrittr)
 library(up2code)
 library(purrr)
 library(glue)
@@ -50,3 +51,4 @@ map_int(SWC, ~length(.x$episodes))
 map(SWC, ~.x$challenges() %>% lengths())
 ```
 
+One of the things I like to look at is what unique 
