@@ -24,6 +24,7 @@ library(tidygraph)
 library(magrittr)
 library(up2code)
 library(ggraph)
+library(dplyr)
 library(purrr)
 library(glue)
 library(xml2)
@@ -48,18 +49,17 @@ SWC <- map(glue("swcarpentry/{swc_core_lessons}"), get_lesson, path = swc_path)
 names(SWC) <- swc_core_lessons
 ```
 
-```{r swc_explore}
-map_int(SWC, ~length(.x$episodes))
-map(SWC, ~.x$challenges() %>% lengths())
-```
-
 One of the things I like to look at is what unique patterns we find with the
 block elements in the challenges. We can use the `graph = TRUE` element to check
 this across our curricula. Setting `recurse = TRUE` dips into the block elements
 that are nested within block elements.
 
 ```{r curr-graph}
-curr_graph <- map_dfr(SWC, ~.x$challenges(graph = TRUE, recurse = TRUE), .id = "Lesson") %>%
+relationships <- map_dfr(SWC, ~.x$challenges(graph = TRUE, recurse = TRUE), .id = "Lesson") 
+
+relationships
+
+curr_graph <- relationships %>%
   dplyr::mutate(level = dplyr::case_when(
     level == 1 ~ "Challenge", 
     level == 2 ~ "Solution"
@@ -69,7 +69,7 @@ curr_graph <- map_dfr(SWC, ~.x$challenges(graph = TRUE, recurse = TRUE), .id = "
   dplyr::distinct(Lesson, Episode, from, to, level) %>%
   dplyr::group_map(~as_tbl_graph(.x))
 
-curr_graph
+curr_graph[[1]]
 ```
 
 ```{r, show-graph, fig.width = 12, fig.height = 12}
@@ -88,5 +88,41 @@ walk(
       NULL
   )
 )
+```
+
+
+I wasnt to examine the relationships in a bit finer detail. The way the graph
+works is that the solution nodes will either point to the contents inside the
+solution block (normally the header), or the exit point from the solution block
+(either an element from the challenge block or out to the lesson itself).
+
+How many ways do we enter and exit solutions?
+
+```{r solutions}
+n_blocks <-  relationships %>%
+  group_by(Lesson, Episode, Block) %>%
+  count() %>%
+  nrow()
+
+relationships %>%
+  filter(from == "solution") %>%
+  count(from, to, level) %>%
+  arrange(level) %>%
+  mutate(fraction = n/n_blocks)
+```
+
+What I can tell from here is that ~70% of the time, solutions will dump out into
+the lessons, but other times the challenge block may continue. There is the 
+weird bit where there are solutions that go to solutions. What's going on there?
+
+```{r to_solutions}
+relationships %>%
+  filter(from == "solution", to == "solution") %>%
+  select(Lesson, Episode, pos, everything())
+
+# Adding ten lines to the range and the length of the yaml
+readLines(SWC$`python-novice-inflammation`$files[2])[(615:(638 + 10)) + 23]
+readLines(SWC$`python-novice-inflammation`$files[3])[(129:(137 + 10)) + 13]
+readLines(SWC$`python-novice-inflammation`$files[7])[(291:(302 + 10)) + 20]
 ```
 
