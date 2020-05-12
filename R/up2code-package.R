@@ -7,7 +7,7 @@
 #' @importFrom R6 R6Class
 #' @importFrom tinkr to_xml
 #' @importFrom glue glue
-#' @importFrom purrr map map_chr walk possibly
+#' @importFrom purrr map map_chr walk possibly map_dfr
 #' @importFrom xml2 xml_ns xml_find_all xml_missing xml_name xml_text
 #' @importFrom lifecycle deprecate_soft
 ## usethis namespace: end

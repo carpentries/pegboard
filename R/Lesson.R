@@ -43,10 +43,20 @@ Lesson <- R6::R6Class("Lesson",
     #' @param path \[`logical`\] if `TRUE`, the names of each element
     #'   will be equivalent to the path. The default is `FALSE`, which gives the
     #'   name of each episode.
-    challenges = function(path = FALSE) {
+    #' @param graph \[`logical`\] if `TRUE`, the output will be a data frame
+    #'   representing the directed graph of elements within the challenges. See
+    #'   the `get_challenge_graph()` method in [Episode].
+    #' @param recurse \[`logical`\] when `graph = TRUE`, this will include the
+    #'   solutions in the output. See [Episode] for more details.
+    challenges = function(path = FALSE, graph = FALSE, recurse = TRUE) {
       nms <-  if (path) purrr::map(self$episodes, "path") else names(self$episodes)
-      res <- purrr::map(self$episodes, "challenges")
-      names(res) <- nms
+      eps <- self$episodes
+      names(eps) <- nms
+      if (graph) {
+        res <- purrr::map_dfr(eps, ~.x$get_challenge_graph(recurse), .id = "Episode")
+      } else {
+        res <- purrr::map(eps, "challenges")
+      }
       return(res)
     },
 

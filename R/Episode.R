@@ -53,6 +53,30 @@ Episode <- R6::R6Class("Episode",
     },
 
     #' @description
+    #' Create a graph of the top-level elements for the challenges.
+    #'
+    #' @param recurse if `TRUE` (default), the content of the solutions will be
+    #'   included in the graph; `FALSE` will keep the solutions as `block_quote`
+    #'   elements.
+    #' @return a data frame with four columns representing all the elements
+    #'   within the challenges in the Episode:
+    #'   - Block: The sequential number of the challenge block
+    #'   - from: the inward elements
+    #'   - to: the outward elements
+    #'   - pos: the position in the markdown document
+    #'
+    #'   Note that there are three special node names:
+    #'   - challenge: start or end of the challenge block
+    #'   - solution: start of the solution block
+    #'   - lesson: start of the lesson block
+    #' @examples
+    #' scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
+    #' scope$get_challenge_graph()
+    get_challenge_graph = function(recurse = TRUE) {
+      purrr::map_dfr(self$challenges, feature_graph, recurse = recurse, .id = "Block")
+    },
+
+    #' @description
     #' Create a new Episode
     #' @param path \[`character`\] path to a markdown episod file on disk
     #' @return A new Episode object with extraced XML data
@@ -72,9 +96,9 @@ Episode <- R6::R6Class("Episode",
             yaml = NULL,
             body = xml2::xml_missing()
           ),
-        quiet = TRUE
+        quiet = FALSE
       )
-      lsn <- safe_to_xml(path)
+      lsn <- safe_to_xml(path, sourcepos = TRUE)
       self$path <- path
       self$yaml <- lsn$yaml
       self$body <- lsn$body

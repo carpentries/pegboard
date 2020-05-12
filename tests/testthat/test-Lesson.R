@@ -34,6 +34,24 @@ test_that("Lesson class can get the challenges", {
 
 })
 
+test_that("Lesson class can get challenge graphs", {
+
+  # The number of nodes is equal to the contents + fenceposts
+  n <- sum(purrr::map_int(
+    frg$challenges()[-1],
+    ~length(xml2::xml_contents(.x)) + length(.x)
+  ))
+  chal <- frg$challenges(graph = TRUE, recurse = FALSE)
+  expect_is(chal, "data.frame")
+  expect_named(chal, c("Episode", "Block", "from", "to", "pos"))
+  expect_equal(nrow(chal), n)
+  chalr <- frg$challenges(graph = TRUE, recurse = TRUE)
+  expect_is(chalr, "data.frame")
+  expect_named(chalr, c("Episode", "Block", "from", "to", "pos"))
+  expect_gt(nrow(chalr), n)
+
+})
+
 test_that("Lesson class can get the solutions", {
 
 

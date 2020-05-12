@@ -16,7 +16,7 @@ Suggests:
     knitr,
     rmarkdown
 Remotes:
-  ropenscilabs/tinkr
+  ropenscilabs/tinkr#13
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
