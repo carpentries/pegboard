@@ -43,11 +43,13 @@ test_that("Lesson class can get challenge graphs", {
   ))
   chal <- frg$challenges(graph = TRUE, recurse = FALSE)
   expect_is(chal, "data.frame")
-  expect_named(chal, c("Episode", "Block", "from", "to", "pos"))
+  expect_named(chal, c("Episode", "Block", "from", "to", "pos", "level"))
   expect_equal(nrow(chal), n)
+  # all of the elements should be top level
+  expect_equal(sum(chal$level), n)
   chalr <- frg$challenges(graph = TRUE, recurse = TRUE)
   expect_is(chalr, "data.frame")
-  expect_named(chalr, c("Episode", "Block", "from", "to", "pos"))
+  expect_named(chalr, c("Episode", "Block", "from", "to", "pos", "level"))
   expect_gt(nrow(chalr), n)
 
 })

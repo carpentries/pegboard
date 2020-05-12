@@ -9,12 +9,26 @@ Authors@R:
            comment = c(ORCID = "0000-0003-1458-7108"))
 Description: What the package does (one paragraph).
 License: MIT + file LICENSE
+Imports:
+    fs,
+    git2r,
+    tinkr,
+    xml2,
+    purrr,
+    glue,
+    R6,
+    lifecycle
 Suggests:
     testthat,
     withr,
     covr,
     knitr,
-    rmarkdown
+    rmarkdown,
+    magrittr,
+    ggraph,
+    crayon,
+    tidygraph,
+    dplyr
 Remotes:
   ropenscilabs/tinkr#13
 Encoding: UTF-8
@@ -23,16 +37,5 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0
 URL: https://github.com/zkamvar/up2code
 BugReports: https://github.com/zkamvar/up2code/issues
-Imports:
-    fs,
-    git2r,
-    tinkr,
-    xml2,
-    purrr,
-    dplyr,
-    glue,
-    R6,
-    lifecycle,
-    crayon
 VignetteBuilder: knitr
 RdMacros: lifecycle

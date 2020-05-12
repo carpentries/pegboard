@@ -20,8 +20,10 @@ I wrote this package to help me parse the Carpentries' markdown files so that
 I can understand how I want to update the lesson templates. 
 
 ```{r setup}
+library(tidygraph)
 library(magrittr)
 library(up2code)
+library(ggraph)
 library(purrr)
 library(glue)
 library(xml2)
@@ -51,4 +53,40 @@ map_int(SWC, ~length(.x$episodes))
 map(SWC, ~.x$challenges() %>% lengths())
 ```
 
-One of the things I like to look at is what unique 
+One of the things I like to look at is what unique patterns we find with the
+block elements in the challenges. We can use the `graph = TRUE` element to check
+this across our curricula. Setting `recurse = TRUE` dips into the block elements
+that are nested within block elements.
+
+```{r curr-graph}
+curr_graph <- map_dfr(SWC, ~.x$challenges(graph = TRUE, recurse = TRUE), .id = "Lesson") %>%
+  dplyr::mutate(level = dplyr::case_when(
+    level == 1 ~ "Challenge", 
+    level == 2 ~ "Solution"
+  )) %>%
+  dplyr::mutate(grp = Lesson) %>%
+  dplyr::group_by(grp) %>% 
+  dplyr::distinct(Lesson, Episode, from, to, level) %>%
+  dplyr::group_map(~as_tbl_graph(.x))
+
+curr_graph
+```
+
+```{r, show-graph, fig.width = 12, fig.height = 12}
+walk(
+  curr_graph, 
+  ~print(
+    ggraph(.x, layout = 'kk') + 
+      geom_edge_fan(
+        aes(alpha = stat(index), color = level), 
+        arrow = grid::arrow(length = ggplot2::unit(0.125, "inches"))
+      ) + 
+      geom_node_label(aes(label = name)) +
+      facet_edges(~Episode) + 
+      theme_graph(foreground = 'steelblue', fg_text_colour = 'white') +
+      ggtitle(as_tibble(activate(.x, edges))$Lesson[1]) +
+      NULL
+  )
+)
+```
+

@@ -92,7 +92,7 @@ name of each episode.}
 \subsection{Method \code{challenges()}}{
 Gather all of the challenges from the lesson in a list of xml_nodeset objects
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Lesson$challenges(path = FALSE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Lesson$challenges(path = FALSE, graph = FALSE, recurse = TRUE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -101,6 +101,13 @@ Gather all of the challenges from the lesson in a list of xml_nodeset objects
 \item{\code{path}}{[\code{logical}] if \code{TRUE}, the names of each element
 will be equivalent to the path. The default is \code{FALSE}, which gives the
 name of each episode.}
+
+\item{\code{graph}}{[\code{logical}] if \code{TRUE}, the output will be a data frame
+representing the directed graph of elements within the challenges. See
+the \code{get_challenge_graph()} method in \link{Episode}.}
+
+\item{\code{recurse}}{[\code{logical}] when \code{graph = TRUE}, this will include the
+solutions in the output. See \link{Episode} for more details.}
 }
 \if{html}{\out{</div>}}
 }

@@ -3,11 +3,14 @@ feature_graph <- function(blocks, src = "challenge", snk = "lesson", recurse = T
   feat   <- xml2::xml_contents(blocks)
   pos    <- xml2::xml_attr(feat, "sourcepos")
   fnames <- xml2::xml_name(feat)
+  # Find the level of the current node
+  level <- find_node_level(blocks)
   # place them in a data frame, bookended by source and sink
   res    <- data.frame(
-    from = c(src, fnames),
-    to   = c(fnames, snk),
-    pos  = c(xml2::xml_attr(blocks, "sourcepos"), pos)
+    from  = c(src, fnames),
+    to    = c(fnames, snk),
+    pos   = c(xml2::xml_attr(blocks, "sourcepos"), pos),
+    level = level
   )
   # any nested block quotes go thorugh the same process and are appended
   if (recurse && any(fnames == "block_quote")) {

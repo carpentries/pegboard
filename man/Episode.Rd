@@ -39,6 +39,13 @@ scope$get_blocks(".solution", level = 2)
 }
 
 ## ------------------------------------------------
+## Method `Episode$get_challenge_graph`
+## ------------------------------------------------
+
+scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
+scope$get_challenge_graph()
+
+## ------------------------------------------------
 ## Method `Episode$new`
 ## ------------------------------------------------
 
@@ -81,6 +88,7 @@ scope$challenges
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-get_blocks}{\code{Episode$get_blocks()}}
+\item \href{#method-get_challenge_graph}{\code{Episode$get_challenge_graph()}}
 \item \href{#method-new}{\code{Episode$new()}}
 \item \href{#method-clone}{\code{Episode$clone()}}
 }
@@ -133,6 +141,51 @@ scope$get_blocks(".solution", level = 2)
   # There are eight solution blocks:
   dsp1$get_blocks(".solution", level = 2L)
 }
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get_challenge_graph"></a>}}
+\if{latex}{\out{\hypertarget{method-get_challenge_graph}{}}}
+\subsection{Method \code{get_challenge_graph()}}{
+Create a graph of the top-level elements for the challenges.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Episode$get_challenge_graph(recurse = TRUE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{recurse}}{if \code{TRUE} (default), the content of the solutions will be
+included in the graph; \code{FALSE} will keep the solutions as \code{block_quote}
+elements.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+a data frame with four columns representing all the elements
+within the challenges in the Episode:
+\itemize{
+\item Block: The sequential number of the challenge block
+\item from: the inward elements
+\item to: the outward elements
+\item pos: the position in the markdown document
+}
+
+Note that there are three special node names:
+\itemize{
+\item challenge: start or end of the challenge block
+\item solution: start of the solution block
+\item lesson: start of the lesson block
+}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
+scope$get_challenge_graph()
 }
 \if{html}{\out{</div>}}
 
