@@ -25,12 +25,12 @@ Suggests:
     knitr,
     rmarkdown,
     magrittr,
-    ggraph,
+    dplyr,
     crayon,
     tidygraph,
-    dplyr
+    ggraph
 Remotes:
-  ropenscilabs/tinkr#13
+  ropenscilabs/tinkr
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
