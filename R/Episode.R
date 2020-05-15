@@ -157,7 +157,8 @@ Episode <- R6::R6Class("Episode",
 
       # Process the kramdown tags
       tags <- kramdown_tags(lsn$body)
-      purrr::walk(tags[are_blocks(tags)], set_ktag)
+      purrr::walk(tags[are_blocks(tags)], set_ktag_block)
+      purrr::walk(tags[!are_blocks(tags)], set_ktag_code)
 
       # Initialize the object
       self$path <- path

@@ -56,7 +56,7 @@ kramdown_tags <- function(body) {
 #'
 #' @param tags tags from the function `kramdown_tags()`
 #' @keywords internal
-set_ktag <- function(tags) {
+set_ktag_block <- function(tags) {
 
   parents      <- xml2::xml_parents(tags)
   parent_names <- xml2::xml_name(parents)
@@ -84,7 +84,12 @@ set_ktag <- function(tags) {
 
   # exclude the first tag if it's after a code block
   after_code <- after_thing(tags, "code_block")
-  are_tags <- if (after_code) are_tags[-1] else are_tags
+
+  if (after_code) {
+    ctag <- children[are_tags[1]]
+    are_tags <- are_tags[-1]
+    set_ktag_code(ctag)
+  }
 
   # Sometimes the tags are mis-aligned by the interpreter
   # when this happens, we need to find the nested block quote and
@@ -115,4 +120,24 @@ set_ktag <- function(tags) {
 
   return(tags)
 
+}
+
+
+set_ktag_code <- function(tag) {
+
+  ns <- NS(tag)
+
+  # Find the end of the challenge block --------------------------------------
+  code_block_sib <- glue::glue("preceding-sibling::{ns}:code_block[1]")
+
+  # Combine and search -------------------------------------------------------
+  the_block <- xml2::xml_find_first(tag, code_block_sib)
+  tag_text <- gsub("[:{}. ]", "", xml2::xml_text(tag))
+  xml2::xml_set_attr(the_block, "ktag", xml2::xml_text(tag))
+  if (grepl("language", tag_text)) {
+    xml2::xml_set_attr(the_block, "language", gsub("language-", "", tag_text))
+  } else {
+    xml2::xml_set_attr(the_block, "info", tag_text)
+  }
+  xml2::xml_remove(tag)
 }
