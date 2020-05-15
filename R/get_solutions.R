@@ -23,18 +23,22 @@ get_solutions <- function(body, parent = NULL) {
   bq <- glue::glue("{ns}:block_quote")
 
   parent_tag <- block_type(ns = ns, type = parent)
+  solution_tag <- block_type(ns = ns, type = ".solution")
 
-  # Two-part predicate:
-  #   1. The block either starts with a Solution
-  solution_head <- glue::glue("{ns}:text[starts-with(text(),'Solution')]")
+  # Finding blocks that are missing tags
+  #   1. The block starts with a Solution
+  solution_head <- glue::glue("{ns}:text[starts-with(text(),'Solu')]")
   has_header    <- glue::glue("[{ns}:heading[{solution_head}] ")
-  #   2. or it ends with a solution tag.
-  solution_tag  <- block_type(ns = ns, type = ".solution", start = "| ")
-
+  #   2. and does not have a solution tag
+  no_solution_tag  <- "and not(@ktag)]"
+  # Find and tag
+  notags <- glue::glue(".//{bq}{parent_tag}/{bq}{has_header}{no_solution_tag}")
+  all_head_no_tail <- xml2::xml_find_all(body, notags)
+  xml2::xml_attr(all_head_no_tail, "ktag") <- "{: .solution}"
 
   # The solution will be in a challenge blockquote and either start with
   # "Solution" or have the solution tag.
-  solution <- glue::glue(".//{bq}{parent_tag}/{bq}{has_header}{solution_tag}")
+  solution <- glue::glue(".//{bq}{parent_tag}/{bq}{solution_tag}")
   safe_xml <- purrr::possibly(xml2::xml_find_all, otherwise = solution)
   safe_xml(body, solution)
 }

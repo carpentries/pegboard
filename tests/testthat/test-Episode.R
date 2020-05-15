@@ -46,23 +46,6 @@ test_that("Episodes can be reset if needed", {
 
 })
 
-test_that("Kramdown tags can be modified", {
-
-  lp <- fs::path(lesson_fragment(), "_episodes", "14-looping-data-sets.md")
-  e <- Episode$new(lp)
-  expect_length(e$tags, 12L)
-  expect_is(e$tags, "xml_nodeset")
-  has_tags <- xml2::xml_find_lgl(
-    xml2::xml_contents(e$tags),
-    "boolean(starts-with(text(), '{:'))"
-  )
-  expect_equal(sum(has_tags), 17L)
-  expect_length(e$fix_tags()$tags, 17L)
-  expect_length(e$tags, 17L)
-  expect_length(e$reset()$fix_tags()$reset()$tags, 12L)
-
-})
-
 test_that("the write() method works", {
 
   scope <- fs::path(lesson_fragment(), "_episodes", "17-scope.md")
@@ -89,12 +72,12 @@ test_that("the write() method works", {
   expect_equal(fs::path_file(fs::dir_ls(d)), e$name)
   f <- readLines(fs::dir_ls(d))
   f <- f[f != '']
-  expect_equal(f[length(f)], "> {: .challenge}")
+  expect_equal(f[length(f)], "{: .challenge}")
+  expect_equal(f[length(f) - 2L], "> {: .error}")
 
   # Writing after modification works
   expect_silent(
     e$
-      fix_tags()$
       write(d)$
       write(d, format = "xml")$
       write(d, format = "html")

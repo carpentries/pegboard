@@ -135,36 +135,6 @@ Episode <- R6::R6Class("Episode",
       return(invisible(self))
     },
 
-    #' @description modify the kramdown tags to behave with commonmark
-    #' @return The Episode object, invisibly
-    #' @note this is a destructive modification. Please be careful with it.
-    #' @examples
-    #' loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
-    #' loop$tags # There are 12 tag groups here
-    #' loop$fix_tags()$tags # After fixing, there are 17 tags in total.
-    #' loop$reset()$tags # reset the object.
-    fix_tags = function() {
-      blocks <- are_blocks(self$tags)
-      purrr::walk(self$tags[blocks], fix_kramdown_tag)
-      return(invisible(self))
-    },
-
-    #' @description modify the kramdown tags to behave with commonmark
-    #' @return The Episode object, invisibly
-    #' @note this is a destructive modification. Please be careful with it.
-    #' @examples
-    #' loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
-    #' loop$tags # There are 12 tag groups here
-    #' loop$tag_attributes()$get_blocks() # After fixing, there are 17 tags in total.
-    #' loop$reset()$tags # reset the object.
-    tag_attributes = function() {
-      blocks <- are_blocks(self$tags)
-      purrr::walk(self$tags[blocks], kramdown_attribute)
-      return(invisible(self))
-    },
-
-
-
     #' @description
     #' Create a new Episode
     #' @param path \[`character`\] path to a markdown episod file on disk
@@ -178,16 +148,18 @@ Episode <- R6::R6Class("Episode",
       if (!file.exists(path)) {
         stop(glue::glue("the file '{path}' does not exist"))
       }
-      safe_to_xml <- purrr::possibly(
-        tinkr::to_xml,
-        otherwise =
-          list(
-            yaml = NULL,
-            body = xml2::xml_missing()
-          ),
-        quiet = FALSE
+      default <- list(
+        yaml = NULL,
+        body = xml2::xml_missing()
       )
-      lsn <- safe_to_xml(path, sourcepos = TRUE)
+      TOX <- purrr::possibly(tinkr::to_xml, otherwise = default, quiet = FALSE)
+      lsn <- TOX(path, sourcepos = TRUE)
+
+      # Process the kramdown tags
+      tags <- kramdown_tags(lsn$body)
+      purrr::walk(tags[are_blocks(tags)], set_ktag)
+
+      # Initialize the object
       self$path <- path
       self$yaml <- lsn$yaml
       self$body <- lsn$body

@@ -4,7 +4,7 @@
 \alias{get_blocks}
 \title{Gather blocks from the XML body of a carpentries lesson}
 \usage{
-get_blocks(body, type = NULL, level = 1)
+get_blocks(body, type = NULL, level = 0)
 }
 \arguments{
 \item{body}{the XML body of a carpentries lesson (an xml2 object)}

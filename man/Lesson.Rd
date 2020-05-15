@@ -64,7 +64,7 @@ files, default is \code{FALSE} for markdown files.}
 \subsection{Method \code{blocks()}}{
 Gather all of the blocks from the lesson in a list of xml_nodeset objects
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Lesson$blocks(type = NULL, level = 1L, path = FALSE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Lesson$blocks(type = NULL, level = 0, path = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -73,9 +73,9 @@ Gather all of the blocks from the lesson in a list of xml_nodeset objects
 \item{\code{type}}{the type of block quote in the Jekyll syntax like ".challenge",
 ".discussion", or ".solution"}
 
-\item{\code{level}}{the level of the block within the document. Defaults to \code{1},
-which represents all of the block_quotes are not nested within any other
-block quotes. Increase the nubmer to increase the level of nesting.}
+\item{\code{level}}{the level of the block within the document. Defaults to \code{0},
+which represents all of the block_quotes within the document regardless
+of nesting level.}
 
 \item{\code{path}}{[\code{logical}] if \code{TRUE}, the names of each element
 will be equivalent to the path. The default is \code{FALSE}, which gives the

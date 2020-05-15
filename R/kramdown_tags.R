@@ -7,15 +7,17 @@
 kramdown_tags <- function(body) {
   # Namespace for the document is listed in the attributes
   ns <- NS(body)
-  srch <- glue::glue(".//<ns>:paragraph[<ns>:text[starts-with(text(), '{:')]]",
+  tag <- "starts-with(text(), '{:') and contains(text(), '}')"
+  srch <- glue::glue(".//<ns>:paragraph[<ns>:text[<tag>]]",
     .open  = "<",
     .close = ">"
   )
   xml2::xml_find_all(body, srch)
 }
 
-#' Place kramdown tags in the correct part of the document
+#' add the kramdown tags as attributes of special blocks
 #'
+#' @details
 #' Kramdown is a bit weird in that it uses tags that trail elements like code
 #' blocks or block quotes. If these follow block quotes, commonmark will parse
 #' them being part of that block quote. This is not problematic per-se until you
@@ -48,80 +50,13 @@ kramdown_tags <- function(body) {
 #' > > {: .challenge}
 #' ```
 #'
-#' This function will force these text nodes into their respective blocks
+#' This function will take the block quote elements and add a "ktag" attribute
+#' that represents the value of the tag. This will then be parsed by the xslt
+#' style sheet and the tags will be properly appended.
 #'
-#'
-#' @note There is a better way of doing this by just adding the kramdown tags
-#' as attributes of the blocks and adding a style sheet conditional that looks
-#' for these attributes and appends them to the end of the blocks. The same
-#' could be said for code blocks.
-#'
-#' @param para a paragraph text node containing the kramdown tags
-#'
-#' @return the modified paragraph text node
+#' @param tags tags from the function `kramdown_tags()`
 #' @keywords internal
-fix_kramdown_tag <- function(para) {
-
-  parents      <- xml2::xml_parents(para)
-  parent_names <- xml2::xml_name(parents)
-
-  ns <- NS(xml2::xml_root(parents))
-
-  # only working in block quotes
-  if (all(parent_names != "block_quote")) {
-    return(invisible(parents))
-  }
-
-  parents <- parents[parent_names == "block_quote"]
-
-  children <- xml2::xml_children(para)
-  nc <- length(children)
-
-  # Find out which children are tags
-
-  are_tags <- which(
-    xml2::xml_find_lgl(
-      children,
-      "boolean(starts-with(text(), '{:'))"
-    )
-  )
-
-  # exclude the first tag if it's after a code block
-  after_code <- after_thing(para, "code_block")
-  are_tags <- if (after_code) are_tags[-1] else are_tags
-
-
-  if (sum(are_tags) < length(parents)) {
-    stop("not enough parents")
-  }
-
-  this_node <- para
-
-  for (tag in seq_along(are_tags)) {
-
-    # Grab the correct parent from the list
-    the_parent <- parents[tag]
-
-    # copy the current node (this_node) to be the sibling of the parent node
-    next_node <- xml2::xml_add_sibling(the_parent, this_node, ns, .where = "after")[[1]]
-
-    # remove the irrelevant children of the current node
-    the_children <- xml2::xml_children(this_node)
-    purrr::walk(seq(3, length(the_children)), ~xml2::xml_remove(the_children[[.x]]))
-
-    # remove the old children of this node
-    these_children <- xml2::xml_children(next_node)
-    purrr::walk(1:2, ~xml2::xml_remove(these_children[[.x]]))
-
-    # The next node is now this node
-    this_node <- next_node
-  }
-
-  return(para)
-
-}
-
-kramdown_attribute <- function(tags) {
+set_ktag <- function(tags) {
 
   parents      <- xml2::xml_parents(tags)
   parent_names <- xml2::xml_name(parents)
@@ -151,9 +86,18 @@ kramdown_attribute <- function(tags) {
   after_code <- after_thing(tags, "code_block")
   are_tags <- if (after_code) are_tags[-1] else are_tags
 
-
-  if (sum(are_tags) < length(parents)) {
-    stop("not enough parents")
+  # Sometimes the tags are mis-aligned by the interpreter
+  # when this happens, we need to find the nested block quote and
+  # get its parents
+  if (length(parents) < length(are_tags) && length(parents) == 1) {
+    blq <- glue::glue(".//{ns}:block_quote/*")
+    if (xml2::xml_find_lgl(parents, glue::glue("boolean({blq})"))) {
+      parents <- xml2::xml_parents(
+        xml2::xml_find_first(parents, blq)
+      )
+    } else {
+      stop("something's wrong with the kids")
+    }
   }
 
   this_node <- tags

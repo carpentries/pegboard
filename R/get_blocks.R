@@ -24,7 +24,7 @@
 #' frg <- Lesson$new(lesson_fragment())
 #' # Find all the blocks in the
 #' get_blocks(frg$episodes[["17-scope.md"]]$body)
-get_blocks <- function(body, type = NULL, level = 1) {
+get_blocks <- function(body, type = NULL, level = 0) {
 
   # Namespace for the document is listed in the attributes
   ns <- NS(body)
@@ -34,13 +34,15 @@ get_blocks <- function(body, type = NULL, level = 1) {
   IS_TYPE     <- block_type(ns = ns, type = type)
   # "chip off the ol' block"
   OL_BLOCK    <- glue::glue("ancestor::{BLOCK_QUOTE}")
-  LEVEL       <- glue::glue(switch(level,
+  LEVEL       <- glue::glue(switch(if (level > 0) level else "all",
     # Level 1: not nested in another block
     "1" = "[ not({OL_BLOCK}) ]",
     # Level 2: nested in one block, but not another
     "2" = "[ {OL_BLOCK}[not({OL_BLOCK})] ]",
     # Level 3: nested within two blocks (not expected)
-    "3" = "[ {OL_BLOCK}[{OL_BLOCK}[not({OL_BLOCK})]] ]"
+    "3" = "[ {OL_BLOCK}[{OL_BLOCK}[not({OL_BLOCK})]] ]",
+    # Default: all
+    ""
   ))
 
   # Now we can search with the two predicates.

@@ -25,13 +25,13 @@ Lesson <- R6::R6Class("Lesson",
     #' @param body the XML body of a carpentries lesson (an xml2 object)
     #' @param type the type of block quote in the Jekyll syntax like ".challenge",
     #'   ".discussion", or ".solution"
-    #' @param level the level of the block within the document. Defaults to `1`,
-    #'   which represents all of the block_quotes are not nested within any other
-    #'   block quotes. Increase the nubmer to increase the level of nesting.
+    #' @param level the level of the block within the document. Defaults to `0`,
+    #'   which represents all of the block_quotes within the document regardless
+    #'   of nesting level.
     #' @param path \[`logical`\] if `TRUE`, the names of each element
     #'   will be equivalent to the path. The default is `FALSE`, which gives the
     #'   name of each episode.
-    blocks = function(type = NULL, level = 1L, path = FALSE) {
+    blocks = function(type = NULL, level = 0, path = FALSE) {
       nms <-  if (path) purrr::map(self$episodes, "path") else names(self$episodes)
       res <- purrr::map(self$episodes, ~.x$get_blocks(type = type, level = level))
       names(res) <- nms

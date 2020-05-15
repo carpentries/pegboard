@@ -14,10 +14,6 @@ has method specific to the Carpentries episodes.
 The current XLST spec for {tinkr} does not support kramdown, which
 the Carpentries Episodes are styled with, thus some block tags will be
 destructively modified in the conversion.
-
-this is a destructive modification. Please be careful with it.
-
-this is a destructive modification. Please be careful with it.
 }
 \examples{
 
@@ -73,24 +69,6 @@ scope$reset()
 xml2::xml_text(scope$tags[1])
 
 ## ------------------------------------------------
-## Method `Episode$fix_tags`
-## ------------------------------------------------
-
-loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
-loop$tags # There are 12 tag groups here
-loop$fix_tags()$tags # After fixing, there are 17 tags in total.
-loop$reset()$tags # reset the object.
-
-## ------------------------------------------------
-## Method `Episode$tag_attributes`
-## ------------------------------------------------
-
-loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
-loop$tags # There are 12 tag groups here
-loop$tag_attributes()$get_blocks() # After fixing, there are 17 tags in total.
-loop$reset()$tags # reset the object.
-
-## ------------------------------------------------
 ## Method `Episode$new`
 ## ------------------------------------------------
 
@@ -140,8 +118,6 @@ scope$challenges
 \item \href{#method-get_challenge_graph}{\code{Episode$get_challenge_graph()}}
 \item \href{#method-write}{\code{Episode$write()}}
 \item \href{#method-reset}{\code{Episode$reset()}}
-\item \href{#method-fix_tags}{\code{Episode$fix_tags()}}
-\item \href{#method-tag_attributes}{\code{Episode$tag_attributes()}}
 \item \href{#method-new}{\code{Episode$new()}}
 \item \href{#method-clone}{\code{Episode$clone()}}
 }
@@ -301,54 +277,6 @@ xml2::xml_set_text(scope$tags[1], "{: .code}")
 xml2::xml_text(scope$tags[1])
 scope$reset()
 xml2::xml_text(scope$tags[1])
-}
-\if{html}{\out{</div>}}
-
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-fix_tags"></a>}}
-\if{latex}{\out{\hypertarget{method-fix_tags}{}}}
-\subsection{Method \code{fix_tags()}}{
-modify the kramdown tags to behave with commonmark
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Episode$fix_tags()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-The Episode object, invisibly
-}
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
-loop$tags # There are 12 tag groups here
-loop$fix_tags()$tags # After fixing, there are 17 tags in total.
-loop$reset()$tags # reset the object.
-}
-\if{html}{\out{</div>}}
-
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-tag_attributes"></a>}}
-\if{latex}{\out{\hypertarget{method-tag_attributes}{}}}
-\subsection{Method \code{tag_attributes()}}{
-modify the kramdown tags to behave with commonmark
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Episode$tag_attributes()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-The Episode object, invisibly
-}
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
-loop$tags # There are 12 tag groups here
-loop$tag_attributes()$get_blocks() # After fixing, there are 17 tags in total.
-loop$reset()$tags # reset the object.
 }
 \if{html}{\out{</div>}}
 

@@ -23,6 +23,9 @@ test_that("errors are okay", {
   expect_error(get_lesson(), "please provide a lesson")
   msg <- glue::glue("directory must have \\(R\\)markdown files")
   expect_error(get_lesson(path = dd), msg)
+
+  # The locked dir thing apparently doesn't work in windows
+  testthat::skip_on_os("windows")
   expect_error(get_lesson("carpentries/lesson-example", path = locked_dir))
 
 })

@@ -14,17 +14,15 @@ pretty_tag <- function(x, hl = NULL) {
 
 block_type <- function(ns, type = NULL, start = "[", end = "]") {
 
-  p   <- glue::glue("{ns}:paragraph")
-  txt <- glue::glue("{ns}:text")
-
   if (is.null(type)) {
     res <- ""
   } else {
-    res <- glue::glue("<start>descendant::<p>/<txt>[text()='{: <type>}']<end>",
+    res <- glue::glue("<start>@ktag='{: <type>}'<end>",
       .open  = "<",
       .close = ">"
     )
   }
+
   res
 }
 
