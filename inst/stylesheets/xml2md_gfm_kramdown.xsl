@@ -17,4 +17,26 @@
 <xsl:output method="text" encoding="utf-8"/>
 
 
+<!-- kramdown tags -->
+ <xsl:template match="md:*/md:block_quote[not(ancestor::md:block_quote)][@ktag]">
+    <xsl:text>&#10;&gt; </xsl:text>
+    <xsl:apply-templates select="./md:block_quote" mode="indent"/>
+    <xsl:apply-templates select="md:*"/>
+    <xsl:value-of select="@ktag"/>
+    <xsl:text>&#10;&#10;</xsl:text>
+</xsl:template>
+
+<xsl:template match="md:*/md:block_quote[md:block_quote[1]/@ktag]">
+    <xsl:text>&#10;</xsl:text>
+    <xsl:apply-templates select="./md:block_quote" mode="indent"/>
+    <xsl:apply-templates select="md:*"/>
+    <xsl:text>&gt; </xsl:text>
+    <xsl:value-of select="md:block_quote/@ktag"/>
+    <xsl:text>&#10;</xsl:text>
+    <xsl:value-of select="@ktag"/>
+    <xsl:text>&#10;&#10;</xsl:text>
+</xsl:template>
+
+
+
 </xsl:stylesheet>

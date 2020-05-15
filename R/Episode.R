@@ -149,6 +149,22 @@ Episode <- R6::R6Class("Episode",
       return(invisible(self))
     },
 
+    #' @description modify the kramdown tags to behave with commonmark
+    #' @return The Episode object, invisibly
+    #' @note this is a destructive modification. Please be careful with it.
+    #' @examples
+    #' loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
+    #' loop$tags # There are 12 tag groups here
+    #' loop$tag_attributes()$get_blocks() # After fixing, there are 17 tags in total.
+    #' loop$reset()$tags # reset the object.
+    tag_attributes = function() {
+      blocks <- are_blocks(self$tags)
+      purrr::walk(self$tags[blocks], kramdown_attribute)
+      return(invisible(self))
+    },
+
+
+
     #' @description
     #' Create a new Episode
     #' @param path \[`character`\] path to a markdown episod file on disk

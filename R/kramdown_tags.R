@@ -120,3 +120,55 @@ fix_kramdown_tag <- function(para) {
   return(para)
 
 }
+
+kramdown_attribute <- function(tags) {
+
+  parents      <- xml2::xml_parents(tags)
+  parent_names <- xml2::xml_name(parents)
+
+  ns <- NS(xml2::xml_root(parents))
+
+  # only working in block quotes
+  if (all(parent_names != "block_quote")) {
+    return(invisible(parents))
+  }
+
+  parents <- parents[parent_names == "block_quote"]
+
+  children <- xml2::xml_children(tags)
+  nc <- length(children)
+
+  # Find out which children are tags
+
+  are_tags <- which(
+    xml2::xml_find_lgl(
+      children,
+      "boolean(starts-with(text(), '{:'))"
+    )
+  )
+
+  # exclude the first tag if it's after a code block
+  after_code <- after_thing(tags, "code_block")
+  are_tags <- if (after_code) are_tags[-1] else are_tags
+
+
+  if (sum(are_tags) < length(parents)) {
+    stop("not enough parents")
+  }
+
+  this_node <- tags
+
+
+  for (tag in seq_along(are_tags)) {
+
+    # Grab the correct parent from the list
+    the_parent <- parents[tag]
+    this_tag   <- xml2::xml_text(children[are_tags[tag]])
+    xml2::xml_attr(the_parent, "ktag") <-this_tag
+
+  }
+  xml2::xml_remove(children[are_tags])
+
+  return(tags)
+
+}
