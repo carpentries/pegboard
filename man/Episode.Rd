@@ -10,6 +10,13 @@ Wrapper around an xml document to manipulate and inspect Carpentries episodes
 This class is a fancy wrapper around the results of \code{\link[tinkr:to_xml]{tinkr::to_xml()}} and
 has method specific to the Carpentries episodes.
 }
+\note{
+The current XLST spec for {tinkr} does not support kramdown, which
+the Carpentries Episodes are styled with, thus some block tags will be
+destructively modified in the conversion.
+
+this is a destructive modification. Please be careful with it.
+}
 \examples{
 
 ## ------------------------------------------------
@@ -46,6 +53,33 @@ scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
 scope$get_challenge_graph()
 
 ## ------------------------------------------------
+## Method `Episode$write`
+## ------------------------------------------------
+
+scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
+scope$write()
+
+## ------------------------------------------------
+## Method `Episode$reset`
+## ------------------------------------------------
+
+scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
+xml2::xml_text(scope$tags[1])
+xml2::xml_set_text(scope$tags[1], "{: .code}")
+xml2::xml_text(scope$tags[1])
+scope$reset()
+xml2::xml_text(scope$tags[1])
+
+## ------------------------------------------------
+## Method `Episode$fix_tags`
+## ------------------------------------------------
+
+loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
+loop$tags # There are 12 tag groups here
+loop$fix_tags()$tags # After fixing, there are 17 tags in total.
+loop$reset()$tags # reset the object.
+
+## ------------------------------------------------
 ## Method `Episode$new`
 ## ------------------------------------------------
 
@@ -62,12 +96,16 @@ scope$challenges
 \item{\code{yaml}}{[\code{character}] text block at head of file}
 
 \item{\code{body}}{[\code{xml_document}] an xml document of the episode}
+
+\item{\code{ns}}{[\code{xml_document}] an xml namespace set to the file name}
 }
 \if{html}{\out{</div>}}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
+\item{\code{tags}}{[\code{xml_nodeset}] all the kramdown tags from the episode}
+
 \item{\code{challenges}}{[\code{xml_nodeset}] all the challenges blocks from the episode}
 
 \item{\code{solutions}}{[\code{xml_nodeset}] all the solutions blocks from the episode}
@@ -89,6 +127,9 @@ scope$challenges
 \itemize{
 \item \href{#method-get_blocks}{\code{Episode$get_blocks()}}
 \item \href{#method-get_challenge_graph}{\code{Episode$get_challenge_graph()}}
+\item \href{#method-write}{\code{Episode$write()}}
+\item \href{#method-reset}{\code{Episode$reset()}}
+\item \href{#method-fix_tags}{\code{Episode$fix_tags()}}
 \item \href{#method-new}{\code{Episode$new()}}
 \item \href{#method-clone}{\code{Episode$clone()}}
 }
@@ -186,6 +227,92 @@ Note that there are three special node names:
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
 scope$get_challenge_graph()
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-write"></a>}}
+\if{latex}{\out{\hypertarget{method-write}{}}}
+\subsection{Method \code{write()}}{
+write the episode to disk as markdown
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Episode$write(path = NULL, format = "md", edit = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{path}}{the path to write your file to. Defaults to an empty
+directory in your temporary folder}
+
+\item{\code{format}}{one of "md" (default) or "xml". This will
+create a file with the correct extension in the path}
+
+\item{\code{edit}}{if \code{TRUE}, the file will open in an editor. Defaults to
+\code{FALSE}.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+the episode object
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
+scope$write()
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-reset"></a>}}
+\if{latex}{\out{\hypertarget{method-reset}{}}}
+\subsection{Method \code{reset()}}{
+Re-read episode from disk
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Episode$reset()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+the episode object
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
+xml2::xml_text(scope$tags[1])
+xml2::xml_set_text(scope$tags[1], "{: .code}")
+xml2::xml_text(scope$tags[1])
+scope$reset()
+xml2::xml_text(scope$tags[1])
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-fix_tags"></a>}}
+\if{latex}{\out{\hypertarget{method-fix_tags}{}}}
+\subsection{Method \code{fix_tags()}}{
+modify the kramdown tags to behave with commonmark
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Episode$fix_tags()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+The Episode object, invisibly
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
+loop$tags # There are 12 tag groups here
+loop$fix_tags()$tags # After fixing, there are 17 tags in total.
+loop$reset()$tags # reset the object.
 }
 \if{html}{\out{</div>}}
 

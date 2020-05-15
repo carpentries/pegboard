@@ -27,7 +27,7 @@
 get_blocks <- function(body, type = NULL, level = 1) {
 
   # Namespace for the document is listed in the attributes
-  ns <- attr(xml2::xml_ns(body), "names")[[1]]
+  ns <- NS(body)
 
   # Gather all block quotes with increasing nesting levels
   BLOCK_QUOTE <- glue::glue("{ns}:block_quote")

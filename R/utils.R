@@ -39,9 +39,9 @@ block_type <- function(ns, type = NULL, start = "[", end = "]") {
 #' @keywords internal
 find_node_level <- function(node) {
   parent_name <- ""
-  level  <- 0
+  level  <- 0L
   while (parent_name != "document") {
-    level <- level + 1
+    level <- level + 1L
     node <- xml2::xml_parent(node)
     parent_name <- xml2::xml_name(node)
   }
@@ -69,10 +69,59 @@ elevate_children <- function(parent, remove = TRUE) {
   children <- xml2::xml_contents(parent)
   purrr::walk(
     children,
-    ~xml2::xml_add_sibling(parent, .x, .where = "before")
+    ~xml2::xml_add_sibling(parent, .x, .where = "before", .copy = FALSE)
   )
   if (remove) {
     xml2::xml_remove(parent)
   }
   invisible(children)
+}
+
+# Get a character vector of the namespace
+NS <- function(x) attr(xml2::xml_ns(x), "names")[[1]]
+
+
+#' Check if a node is after another node
+#'
+#' @param body an XML node
+#' @param thing the name of the XML node for the node to be after,
+#'   defaults to "code_block"
+#'
+#' @return a single boolean value indicating if the node has a
+#'   single sibling that is a code block
+#' @keywords internal
+#'
+after_thing <- function(body, thing = "code_block") {
+  ns <- NS(body)
+  xml2::xml_find_lgl(
+    body,
+    glue::glue("boolean(.//preceding-sibling::{ns}:{thing})")
+  )
+}
+
+#' test if the children of a given nodeset are kramdown blocks
+#'
+#' @param krams a nodeset
+#'
+#' @return a boolean vector equal to the length of the nodeset
+#' @keywords internal
+are_blocks <- function(krams) {
+  tags <- c(
+    "contains(text(),'callout}')",
+    "contains(text(),'objectives}')",
+    "contains(text(),'challenge}')",
+    "contains(text(),'prereq}')",
+    "contains(text(),'checklist}')",
+    "contains(text(),'solution}')",
+    "contains(text(),'discussion}')",
+    "contains(text(),'testimonial}')",
+    "contains(text(),'keypoints}')",
+    NULL
+  )
+  tags <- glue::glue_collapse(tags, sep = " or ")
+
+  purrr::map_lgl(
+    krams,
+    ~any(xml2::xml_find_lgl(xml2::xml_children(.x), glue::glue("boolean({tags})")))
+  )
 }

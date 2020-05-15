@@ -18,6 +18,9 @@ Episode <- R6::R6Class("Episode",
     #' @field body \[`xml_document`\] an xml document of the episode
     body = NULL,
 
+    #' @field ns \[`xml_document`\] an xml namespace set to the file name
+    ns = NULL,
+
     #' @description return all `block_quote` elements within the Episode
     #' @param type the type of block quote in the Jekyll syntax like ".challenge",
     #'   ".discussion", or ".solution"
@@ -76,6 +79,76 @@ Episode <- R6::R6Class("Episode",
       purrr::map_dfr(self$challenges, feature_graph, recurse = recurse, .id = "Block")
     },
 
+    #' @description write the episode to disk as markdown
+    #'
+    #' @param path the path to write your file to. Defaults to an empty
+    #'   directory in your temporary folder
+    #' @param format one of "md" (default) or "xml". This will
+    #'   create a file with the correct extension in the path
+    #' @param edit if `TRUE`, the file will open in an editor. Defaults to
+    #'   `FALSE`.
+    #' @return the episode object
+    #' @note The current XLST spec for {tinkr} does not support kramdown, which
+    #'   the Carpentries Episodes are styled with, thus some block tags will be
+    #'   destructively modified in the conversion.
+    #' @examples
+    #' scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
+    #' scope$write()
+    write = function(path = NULL, format = "md", edit = FALSE) {
+      if (is.null(path)) {
+        path <- fs::file_temp(pattern = "dir")
+        message(glue::glue("Creating temporary directory '{path}'"))
+        fs::dir_create(path)
+      }
+      if (!fs::dir_exists(path)) {
+        stop(glue::glue("the directory '{path}' does not exist"), call. = FALSE)
+      }
+      the_file <- fs::path(path, self$name)
+      fs::path_ext(the_file) <- format
+      if (format == "md") {
+        stylesheet <- get_stylesheet()
+        on.exit(fs::file_delete(stylesheet))
+        tinkr::to_md(self, path = the_file, stylesheet_path = stylesheet)
+      } else if (format == "xml") {
+        xml2::write_xml(self$body, file = the_file, options = c("format", "as_xml"))
+      } else if (format == "html") {
+        xml2::write_html(self$body, file = the_file, options = c("format", "as_html"))
+      } else {
+        stop(glue::glue("format = '{format}' is not a valid option"), call. = FALSE)
+      }
+      if (fs::file_exists(the_file) && edit) file.edit(the_file)
+      return(invisible(self))
+    },
+
+    #' @description
+    #' Re-read episode from disk
+    #' @return the episode object
+    #' @examples
+    #' scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
+    #' xml2::xml_text(scope$tags[1])
+    #' xml2::xml_set_text(scope$tags[1], "{: .code}")
+    #' xml2::xml_text(scope$tags[1])
+    #' scope$reset()
+    #' xml2::xml_text(scope$tags[1])
+    reset = function() {
+      self$initialize(self$path)
+      return(invisible(self))
+    },
+
+    #' @description modify the kramdown tags to behave with commonmark
+    #' @return The Episode object, invisibly
+    #' @note this is a destructive modification. Please be careful with it.
+    #' @examples
+    #' loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
+    #' loop$tags # There are 12 tag groups here
+    #' loop$fix_tags()$tags # After fixing, there are 17 tags in total.
+    #' loop$reset()$tags # reset the object.
+    fix_tags = function() {
+      blocks <- are_blocks(self$tags)
+      purrr::walk(self$tags[blocks], fix_kramdown_tag)
+      return(invisible(self))
+    },
+
     #' @description
     #' Create a new Episode
     #' @param path \[`character`\] path to a markdown episod file on disk
@@ -102,9 +175,15 @@ Episode <- R6::R6Class("Episode",
       self$path <- path
       self$yaml <- lsn$yaml
       self$body <- lsn$body
+      self$ns   <- xml2::xml_ns(lsn$body)
     }
   ),
   active = list(
+    #' @field tags \[`xml_nodeset`\] all the kramdown tags from the episode
+    tags = function() {
+      kramdown_tags(self$body)
+    },
+
     #' @field challenges \[`xml_nodeset`\] all the challenges blocks from the episode
     challenges = function() {
       get_challenges(self$body)
