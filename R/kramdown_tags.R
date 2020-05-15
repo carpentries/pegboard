@@ -133,11 +133,13 @@ set_ktag_code <- function(tag) {
   # Combine and search -------------------------------------------------------
   the_block <- xml2::xml_find_first(tag, code_block_sib)
   tag_text <- gsub("[:{}. ]", "", xml2::xml_text(tag))
-  xml2::xml_set_attr(the_block, "ktag", xml2::xml_text(tag))
+  if (!xml2::xml_has_attr(the_block, "name")) {
+    xml2::xml_set_attr(the_block, "name", "")
+  }
   if (grepl("language", tag_text)) {
     xml2::xml_set_attr(the_block, "language", gsub("language-", "", tag_text))
   } else {
-    xml2::xml_set_attr(the_block, "info", tag_text)
+    xml2::xml_set_attr(the_block, "ktag", xml2::xml_text(tag))
   }
   xml2::xml_remove(tag)
 }
