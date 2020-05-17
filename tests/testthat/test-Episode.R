@@ -25,7 +25,7 @@ test_that("Episodes can be created and are valid", {
   expect_length(e$error, 2)
 
   expect_is(e$tags, "xml_nodeset")
-  expect_length(e$tags, 6)
+  expect_length(e$tags, 8)
 
 
 
@@ -38,8 +38,8 @@ test_that("Episodes can be reset if needed", {
 
   # If we edit a part of the XML, the object itself will be modified
   expect_equal(xml2::xml_text(e$tags[1]), "{: .language-python}")
-  expect_is(xml2::xml_set_text(e$tags[[1]], "{: .code}"), "xml_node")
-  expect_equal(xml2::xml_text(e$tags[1]), "{: .code}")
+  expect_equal(xml2::xml_set_attr(xml2::xml_parent(e$tags[1]), "ktag", "{: .source}"), "{: .source}")
+  expect_equal(xml2::xml_text(e$tags[1]), "{: .source}")
 
   # When we use $reset(), then everything goes back to the initial state
   expect_equal(xml2::xml_text(e$reset()$tags[1]), "{: .language-python}")
@@ -73,7 +73,6 @@ test_that("the write() method works", {
   f <- readLines(fs::dir_ls(d))
   f <- f[f != '']
   expect_equal(f[length(f)], "{: .challenge}")
-  expect_equal(f[length(f) - 2L], "> {: .error}")
 
   # Writing after modification works
   expect_silent(

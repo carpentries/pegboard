@@ -289,18 +289,22 @@ xml2::xml_text(scope$tags[1])
 \subsection{Method \code{new()}}{
 Create a new Episode
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Episode$new(path = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Episode$new(path = NULL, process_tags = TRUE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{path}}{[\code{character}] path to a markdown episod file on disk}
+\item{\code{path}}{[\code{character}] path to a markdown episode file on disk}
+
+\item{\code{process_tags}}{[\code{logical}] if \code{TRUE} (default), kramdown tags will
+be processed into attributes of the parent nodes. If \code{FALSE}, these
+tags will be treated as text}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A new Episode object with extraced XML data
+A new Episode object with extracted XML data
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}

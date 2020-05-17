@@ -58,6 +58,7 @@ kramdown_tags <- function(body) {
 #' @keywords internal
 set_ktag_block <- function(tags) {
 
+  problems     <- list()
   parents      <- xml2::xml_parents(tags)
   parent_names <- xml2::xml_name(parents)
 
@@ -84,12 +85,19 @@ set_ktag_block <- function(tags) {
 
   # exclude the first tag if it's after a code block
   after_code <- after_thing(tags, "code_block")
+  is_output <- xml2::xml_text(children[[are_tags[1]]]) == "{: .output}"
 
-  if (after_code) {
-    ctag <- children[are_tags[1]]
+
+  if (after_code || is_output) {
+    ctag <- children[[are_tags[1]]]
     are_tags <- are_tags[-1]
-    set_ktag_code(ctag)
+    if (after_code) {
+      set_ktag_code(ctag)
+    } else {
+      problems <- list(element = ctag, reason = "not after code_block")
+    }
   }
+
 
   # Sometimes the tags are mis-aligned by the interpreter
   # when this happens, we need to find the nested block quote and
@@ -118,7 +126,7 @@ set_ktag_block <- function(tags) {
   }
   xml2::xml_remove(children[are_tags])
 
-  return(tags)
+  return(problems)
 
 }
 
@@ -126,20 +134,22 @@ set_ktag_block <- function(tags) {
 set_ktag_code <- function(tag) {
 
   ns <- NS(tag)
+  problems <- list()
 
   # Find the end of the challenge block --------------------------------------
-  code_block_sib <- glue::glue("preceding-sibling::{ns}:code_block[1]")
+  code_block_sib <- glue::glue(".//preceding-sibling::{ns}:code_block[1]")
 
   # Combine and search -------------------------------------------------------
+  kram_tag <- xml2::xml_text(tag)
+
+  if (xml2::xml_name(tag) == "text") {
+    tag <- xml2::xml_parent(tag)
+  }
+
   the_block <- xml2::xml_find_first(tag, code_block_sib)
-  tag_text <- gsub("[:{}. ]", "", xml2::xml_text(tag))
-  if (!xml2::xml_has_attr(the_block, "name")) {
-    xml2::xml_set_attr(the_block, "name", "")
-  }
-  if (grepl("language", tag_text)) {
-    xml2::xml_set_attr(the_block, "language", gsub("language-", "", tag_text))
-  } else {
-    xml2::xml_set_attr(the_block, "ktag", xml2::xml_text(tag))
-  }
+
+  xml2::xml_attr(the_block, "ktag") <- kram_tag
+
   xml2::xml_remove(tag)
+  return(problems)
 }

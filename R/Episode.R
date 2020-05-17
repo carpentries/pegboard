@@ -7,6 +7,9 @@
 #' has method specific to the Carpentries episodes.
 #' @export
 Episode <- R6::R6Class("Episode",
+  private = list(
+    problems = list()
+  ),
   public = list(
 
     #' @field path \[`character`\] path to file on disk
@@ -135,16 +138,18 @@ Episode <- R6::R6Class("Episode",
       return(invisible(self))
     },
 
-    #' @description
-    #' Create a new Episode
-    #' @param path \[`character`\] path to a markdown episod file on disk
-    #' @return A new Episode object with extraced XML data
+    #' @description Create a new Episode
+    #' @param path \[`character`\] path to a markdown episode file on disk
+    #' @param process_tags \[`logical`\] if `TRUE` (default), kramdown tags will
+    #'   be processed into attributes of the parent nodes. If `FALSE`, these
+    #'   tags will be treated as text
+    #' @return A new Episode object with extracted XML data
     #' @examples
     #' scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
     #' scope$name
     #' scope$lesson
     #' scope$challenges
-    initialize = function(path = NULL) {
+    initialize = function(path = NULL, process_tags = TRUE) {
       if (!file.exists(path)) {
         stop(glue::glue("the file '{path}' does not exist"))
       }
@@ -156,9 +161,15 @@ Episode <- R6::R6Class("Episode",
       lsn <- TOX(path, sourcepos = TRUE)
 
       # Process the kramdown tags
-      tags <- kramdown_tags(lsn$body)
-      purrr::walk(tags[are_blocks(tags)], set_ktag_block)
-      purrr::walk(tags[!are_blocks(tags)], set_ktag_code)
+      if (process_tags) {
+        tags <- kramdown_tags(lsn$body)
+        blocks <- tags[are_blocks(tags)]
+        tags   <- tags[!are_blocks(tags)]
+        # recording problems to inspect later
+        bproblem <- purrr::map(blocks, set_ktag_block)
+        cproblem <- purrr::map(tags, set_ktag_code)
+        private$problems <- list(blocks = bproblem, code = cproblem)
+      }
 
       # Initialize the object
       self$path <- path
@@ -170,7 +181,7 @@ Episode <- R6::R6Class("Episode",
   active = list(
     #' @field tags \[`xml_nodeset`\] all the kramdown tags from the episode
     tags = function() {
-      kramdown_tags(self$body)
+      xml2::xml_find_all(self$body, ".//@ktag")
     },
 
     #' @field challenges \[`xml_nodeset`\] all the challenges blocks from the episode

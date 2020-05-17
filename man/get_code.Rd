@@ -4,13 +4,16 @@
 \alias{get_code}
 \title{Get code blocks from xml document}
 \usage{
-get_code(body, type = ".language-")
+get_code(body, type = ".language-", attr = "@ktag")
 }
 \arguments{
 \item{body}{an xml document from a jekyll site}
 
 \item{type}{a full or partial string of a code block attribute from Jekyll
 without parenthesis.}
+
+\item{attr}{what attribute to query in search of code blocks. Default is
+@ktag, which will search for "\{: \<type\>".}
 }
 \value{
 an xml nodeset object

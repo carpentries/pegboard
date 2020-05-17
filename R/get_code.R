@@ -3,6 +3,8 @@
 #' @param body an xml document from a jekyll site
 #' @param type a full or partial string of a code block attribute from Jekyll
 #'   without parenthesis.
+#' @param attr what attribute to query in search of code blocks. Default is
+#'   @@ktag, which will search for "\{: \<type\>".
 #'
 #' @details This uses the XPath function `fn:starts-with()` to  search for the
 #'   code block and automatically includes the opening brace, so regular
@@ -19,7 +21,7 @@
 #' get_code(e$body)
 #' get_code(e$body, ".output")
 #' get_code(e$body, ".error")
-get_code <- function(body, type = ".language-") {
+get_code <- function(body, type = ".language-", attr = "@ktag") {
 
   # TODO: the code blocks for pure Jekyll lessons and the Rmarkdown lessons
   # (python-novice-gapminder and r-novice-inflammation, respectively) will be
@@ -31,17 +33,18 @@ get_code <- function(body, type = ".language-") {
   ns <- attr(xml2::xml_ns(body), "names")[[1]]
 
   # Find the end of the challenge block ----------------------------------------
-  predicate <- glue::glue("<ns>:text[starts-with(text(),'{: <type>')]",
-    .open = "<",
-    .close = ">"
-  )
-  challenge <- glue::glue("{ns}:paragraph[{predicate}]")
-
-  axis <- "preceding-sibling"
+  block <- glue::glue(".//{ns}:code_block")
+  if (is.null(attr)) {
+    type <- NULL
+  } else if (is.null(type)) {
+    challenge <- glue::glue("{block}[{attr}]")
+  } else {
+    type <- if (attr == "@ktag") glue::glue("{: <type>", .open = "<", .close = ">") else type
+    predicate <- glue::glue("starts-with({attr},'{type}')")
+    challenge <- glue::glue("{block}[{predicate}]")
+  }
 
   # Combine and search ---------------------------------------------------------
-  challenge_string <- glue::glue(".//{challenge}/{axis}::{ns}:code_block[1]")
-
-  xml2::xml_find_all(body, challenge_string)
+  xml2::xml_find_all(body, challenge)
 
 }
