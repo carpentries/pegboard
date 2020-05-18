@@ -123,3 +123,51 @@ are_blocks <- function(krams) {
     ~any(xml2::xml_find_lgl(xml2::xml_children(.x), glue::glue("boolean({tags})")))
   )
 }
+
+
+get_sibling_block <- function(tags) {
+
+  # There are situations where the tags are parsed outside of the block quotes
+  # In this case, we look behind our tag and test if it appears right after
+  # the block. Note that this result has to be a nodeset
+  ns <- NS(tags)
+  block <- xml2::xml_find_all(
+    tags,
+    glue::glue("preceding-sibling::{ns}:block_quote[1]")
+  )
+  if (inherits(block, "xml_missing")) {
+    return(xml2::xml_missing())
+  }
+  block_line <- get_lineend(block[[1]])
+  tag_line   <- get_linestart(tags)
+
+  if (block_line == tag_line - 1L) {
+    return(block)
+  } else {
+    return(xml2::xml_missing())
+  }
+}
+
+challenge_is_sibling <- function(node) {
+  ns <- NS(node)
+  predicate <- "text()='{: .challenge}'"
+  xml2::xml_find_lgl(
+    node,
+    glue::glue("boolean(following-sibling::{ns}:paragraph/{ns}:text[{predicate}])")
+  )
+}
+
+get_pos <- function(x, e = 1) {
+  as.integer(
+    gsub(
+      "^(\\d+?):(\\d+?)[-](\\d+?):(\\d)+?$",
+      glue::glue("\\{e}"),
+      xml2::xml_attr(x, "sourcepos")
+    )
+  )
+}
+
+get_linestart <- function(x) get_pos(x, e = 1)
+get_lineend   <- function(x) get_pos(x, e = 3)
+get_colstart  <- function(x) get_pos(x, e = 2)
+get_colend    <- function(x) get_pos(x, e = 4)

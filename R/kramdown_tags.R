@@ -66,10 +66,16 @@ set_ktag_block <- function(tags) {
 
   # only working in block quotes
   if (all(parent_names != "block_quote")) {
-    return(invisible(parents))
+    # There are situations where the tags are parsed outside of the block quotes
+    # In this case, we look behind our tag and test if it appears right after
+    # the block. Note that this result has to be a nodeset
+    parents      <- get_sibling_block(tags)
+    parent_names <- xml2::xml_name(parents)
   }
 
-  parents <- parents[parent_names == "block_quote"]
+  if (inherits(parents, "xml_nodeset")) {
+    parents <- parents[parent_names == "block_quote"]
+  }
 
   children <- xml2::xml_children(tags)
   nc <- length(children)
@@ -84,14 +90,19 @@ set_ktag_block <- function(tags) {
   )
 
   # exclude the first tag if it's after a code block
-  after_code <- after_thing(tags, "code_block")
+  # In Rmarkdown documents, all code blocks are tagged with a language attribute
+  #
+  # Unfortunately, kramdown blocks are also allowed, which creates a weird
+  # situation where we have language="NA" with a {: .language-r} tag trailing
+  after_code <- after_thing(tags, "code_block[not(@language)]")
+  is_language <- grepl("\\{: \\.language\\-", xml2::xml_text(children[[are_tags[1]]]))
   is_output <- xml2::xml_text(children[[are_tags[1]]]) == "{: .output}"
 
 
-  if (after_code || is_output) {
+  if (after_code || is_language || is_output) {
     ctag <- children[[are_tags[1]]]
     are_tags <- are_tags[-1]
-    if (after_code) {
+    if (after_code || is_language) {
       set_ktag_code(ctag)
     } else {
       problems <- list(element = ctag, reason = "not after code_block")
@@ -110,6 +121,17 @@ set_ktag_block <- function(tags) {
       )
     } else {
       stop("something's wrong with the kids")
+    }
+  }
+
+  child <- children[[are_tags[1]]]
+
+  if (length(parents) == 1 && length(are_tags) == 1 && challenge_is_sibling(tags)) {
+    if (xml2::xml_text(child) == "{: .solution}") {
+      parents <- get_sibling_block(tags)
+    }
+    if (inherits(parents, "xml_missing")) {
+      problems <- list(element = tags, problem = "solution block")
     }
   }
 
