@@ -146,6 +146,17 @@ Lesson <- R6::R6Class("Lesson",
   ),
   active = list(
 
+    #' @field number of problems per episode
+    n_problems = function() {
+      purrr::map_int(self$episodes, ~length(.x$show_problems))
+    },
+
+    #' @field contents of the problems per episode
+    show_problems = function() {
+      res <- purrr::map(self$episodes, "show_problems")
+      res[!purrr::map_lgl(res, is.null)]
+    },
+
     #' @field files the source files for each episode
     files = function() {
       purrr::map_chr(self$episodes, "path")

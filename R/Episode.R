@@ -8,6 +8,9 @@
 #' @export
 Episode <- R6::R6Class("Episode",
   private = list(
+    record_problem = function(x) {
+      private$problems <- c(private$problems, x)
+    },
     problems = list()
   ),
   public = list(
@@ -157,8 +160,12 @@ Episode <- R6::R6Class("Episode",
         yaml = NULL,
         body = xml2::xml_missing()
       )
-      TOX <- purrr::possibly(tinkr::to_xml, otherwise = default, quiet = FALSE)
+      TOX <- purrr::safely(tinkr::to_xml, otherwise = default, quiet = FALSE)
       lsn <- TOX(path, sourcepos = TRUE)
+      if (!is.null(lsn$error)) {
+        private$record_problem(lsn$error)
+      }
+      lsn <- lsn$result
 
       # Process the kramdown tags
       if (process_tags) {
@@ -168,7 +175,11 @@ Episode <- R6::R6Class("Episode",
         # recording problems to inspect later
         bproblem <- purrr::map(blocks, set_ktag_block)
         cproblem <- purrr::map(tags, set_ktag_code)
-        private$problems <- list(blocks = bproblem, code = cproblem)
+        bproblem <- bproblem[!purrr::map_lgl(bproblem, is.null)]
+        cproblem <- cproblem[!purrr::map_lgl(cproblem, is.null)]
+        if (length(bproblem) > 0 || length(cproblem) > 0) {
+          private$record_problem(list(blocks = bproblem, code = cproblem))
+        }
       }
 
       # Initialize the object
@@ -179,6 +190,13 @@ Episode <- R6::R6Class("Episode",
     }
   ),
   active = list(
+    #' @field n_problems \[`integer`\] number of problems in the episode
+    #' @field problems \[`list`\] a list of all the problems that occurred in
+    #'   parsing the episode
+    show_problems = function() {
+      private$problems
+    },
+
     #' @field tags \[`xml_nodeset`\] all the kramdown tags from the episode
     tags = function() {
       xml2::xml_find_all(self$body, ".//@ktag")

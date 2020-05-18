@@ -155,7 +155,7 @@ set_ktag_block <- function(tags) {
   }
   xml2::xml_remove(children[are_tags])
 
-  return(problems)
+  return(if (length(problems)) problems else NULL)
 
 }
 
@@ -180,5 +180,5 @@ set_ktag_code <- function(tag) {
   xml2::xml_attr(the_block, "ktag") <- kram_tag
 
   xml2::xml_remove(tag)
-  return(problems)
+  return(if (length(problems)) problems else NULL)
 }
