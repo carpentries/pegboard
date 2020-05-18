@@ -5,11 +5,11 @@
     xmlns:md="http://commonmark.org/xml/1.0">
 
 
-<!-- Import commonmark XSL -->
-
+<!-- Import tinkr XSL -->
+<!-- NOTE: the FIXME is replaced dynamically in R by the path to tinkr's stylesheet -->
 <xsl:import href="FIXME"/>
 <xsl:template match="/">
-  <xsl:apply-imports/>
+    <xsl:apply-imports/>
 </xsl:template>
 
 <!-- params -->
@@ -20,6 +20,7 @@
 <!-- kramdown tags -->
 
 <xsl:template match="md:*[@ktag]">
+    <!-- <xsl:apply-templates select="*" mode="indent"/> -->
     <!-- Apply all the templates from the commonmark and tinkr stylesheet -->
     <!-- https://stackoverflow.com/a/647932/2752888 -->
     <xsl:apply-imports select="md:*"/>
@@ -27,11 +28,18 @@
     <!-- Add the kramdown tag and prepend "> " for each block quote level -->
     <xsl:if test="ancestor::md:block_quote">&gt; </xsl:if>
     <xsl:if test="ancestor::md:block_quote/ancestor::md:block_quote">&gt; </xsl:if>
+
     <xsl:value-of select="@ktag"/>
     <xsl:text>&#10;</xsl:text>
 </xsl:template>
 
+<!--
+This overrides the indent mode and replaces the > symbols with #' (except for
+the headers for some weird reason)
 
-
+<xsl:template match="*[@ktag]" mode="indent">
+    <xsl:text>&#35;&#39; </xsl:text>
+</xsl:template>
+-->
 
 </xsl:stylesheet>
