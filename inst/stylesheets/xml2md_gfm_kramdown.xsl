@@ -19,8 +19,12 @@
 
 <!-- kramdown tags -->
 
- <xsl:template match="md:*[@ktag]">
+<xsl:template match="md:*[@ktag]">
+    <!-- Apply all the templates from the commonmark and tinkr stylesheet -->
+    <!-- https://stackoverflow.com/a/647932/2752888 -->
     <xsl:apply-imports select="md:*"/>
+
+    <!-- Add the kramdown tag and prepend "> " for each block quote level -->
     <xsl:if test="ancestor::md:block_quote">&gt; </xsl:if>
     <xsl:if test="ancestor::md:block_quote/ancestor::md:block_quote">&gt; </xsl:if>
     <xsl:value-of select="@ktag"/>
