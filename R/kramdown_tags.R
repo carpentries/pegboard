@@ -124,14 +124,21 @@ set_ktag_block <- function(tags) {
     }
   }
 
+  # There are situations where the solution tag is included in the body of the
+  # challenge block. In this case, we need to check:
+  #  - a single block quote parent
+  #  - a single tag
+  #  - the challenge tag is a sibling (solutions can be top blocks)
+  #
+  #  In these cases, we need to fetch the preceeding sibling block quote,
+  #  because that's what the solution tag originally belonged to.
   child <- children[[are_tags[1]]]
-
   if (length(parents) == 1 && length(are_tags) == 1 && challenge_is_sibling(tags)) {
     if (xml2::xml_text(child) == "{: .solution}") {
       parents <- get_sibling_block(tags)
     }
     if (inherits(parents, "xml_missing")) {
-      problems <- list(element = tags, problem = "solution block")
+      problems <- list(element = tags, problem = "solution block is out of place")
     }
   }
 
