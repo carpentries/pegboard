@@ -1,3 +1,4 @@
+# nocov start
 nodeprint <- function(x) {
   purrr::walk(x, ~cat(pretty_tag(.x), xml2::xml_text(.x), "\n"))
 }
@@ -11,7 +12,7 @@ pretty_tag <- function(x, hl = NULL) {
   nm <- glue::glue("<{xml2::xml_name(x)}>")
   glue::glue("\n{hl(nm)}:\n")
 }
-
+# nocov end
 block_type <- function(ns, type = NULL, start = "[", end = "]") {
 
   if (is.null(type)) {
@@ -46,6 +47,7 @@ find_node_level <- function(node) {
   level
 }
 
+# nocov start
 #' elevate all children of a node
 #'
 #' @param parent an xml node (notably a block quote)
@@ -74,6 +76,29 @@ elevate_children <- function(parent, remove = TRUE) {
   }
   invisible(children)
 }
+
+roxy_challenge <- function(block, remove = TRUE) {
+  # Thoughts on this:
+  #
+  # xslt::xml_xslt(thing, stylesheet) acts on a document and will parse the
+  # markdown text FO FREE. The only catch is that it needs a document, but we
+  # can simply just copy the document and remove all the elements but what we
+  # want to act on.
+  #
+  # steps:
+  #
+  # 1. copy document
+  # 2. remove all but the block we are focusing on
+  # 3. elevate the children in the document (removing block quotes)
+  # 4. parse the document with xslt
+  # 5. rename the challenge node to be a code_block
+  # 6. remove the children of that node
+  # 7. add the parsed text as the text of the challenge code block
+}
+
+# nocov end
+
+
 
 isolate_kram_blocks <- function(body) {
   ns <- NS(body)
