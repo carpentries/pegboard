@@ -35,7 +35,7 @@ get_code <- function(body, type = ".language-", attr = "@ktag") {
   # Find the end of the challenge block ----------------------------------------
   block <- glue::glue(".//{ns}:code_block")
   if (is.null(attr)) {
-    type <- NULL
+    challenge <- block
   } else if (is.null(type)) {
     challenge <- glue::glue("{block}[{attr}]")
   } else {

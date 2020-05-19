@@ -16,7 +16,7 @@ test_that("Episodes can be created and are valid", {
   expect_length(e$get_blocks(".discussion"), 0L)
 
   expect_is(e$code, "xml_nodeset")
-  expect_length(e$code, 3)
+  expect_length(e$code, 6)
 
   expect_is(e$output, "xml_nodeset")
   expect_length(e$output, 1)

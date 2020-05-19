@@ -224,7 +224,7 @@ Episode <- R6::R6Class("Episode",
 
     #' @field code \[`xml_nodeset`\] all the code blocks from the episode
     code = function() {
-      get_code(self$body)
+      get_code(self$body, type = NULL, attr = NULL)
     },
 
     #' @field name \[`character`\] the name of the source file without the path
