@@ -64,6 +64,17 @@ test_that("Lesson class can get the solutions", {
   expect_is(chal[["14-looping-data-sets.md"]], "xml_nodeset")
 
 })
+
+test_that("Lessons can isolate code", {
+
+  frg2 <- frg$clone(deep = TRUE)
+  expect_equal(xml2::xml_length(frg2$episodes[[1]]$body), 2)
+  expect_equal(xml2::xml_length(frg2$isolate_blocks()$episodes[[1]]$body), 0)
+  # The deep cloning does not affect the original data
+  expect_equal(xml2::xml_length(frg$episodes[[1]]$body), 2)
+
+})
+
 test_that("Lesson class can remove episodes with $thin()", {
 
   frg2 <- frg$clone(deep = TRUE)

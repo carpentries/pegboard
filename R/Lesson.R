@@ -97,6 +97,31 @@ Lesson <- R6::R6Class("Lesson",
       invisible(self)
     },
 
+    #' @description
+    #' Re-read all Episodes from disk
+    #' @return the Lesson object
+    #' @examples
+    #' frg <- Lesson$new(lesson_fragment())
+    #' frg$episodes[[1]]$body
+    #' frg$isolate_blocks()$episodes[[1]]$body # empty
+    #' frg$reset()$episodes[[1]]$body # reset
+    reset = function() {
+      self$initialize(self$path)
+      return(invisible(self))
+    },
+
+    #' @description
+    #' Remove all elements except for those within block quotes that have a
+    #' kramdown tag. Note that this is a destructive process.
+    #' @return the Episode object, invisibly
+    #' @examples
+    #' frg <- Lesson$new(lesson_fragment())
+    #' frg$isolate_blocks()$body # only one challenge block_quote
+    isolate_blocks = function() {
+      purrr::walk(self$episodes, ~.x$isolate_blocks())
+      invisible(self)
+    },
+
     #' @description create a new Lesson object from a directory
     #' @param path \[`character`\] path to a lesson directory. This must have a
     #'   folder called `_episodes` within that contains markdown episodes
@@ -146,21 +171,29 @@ Lesson <- R6::R6Class("Lesson",
   ),
   active = list(
 
-    #' @field number of problems per episode
+    #' @field n_problems number of problems per episode
     n_problems = function() {
       purrr::map_int(self$episodes, ~length(.x$show_problems))
     },
 
-    #' @field contents of the problems per episode
+    #' @field show_problems contents of the problems per episode
     show_problems = function() {
       res <- purrr::map(self$episodes, "show_problems")
-      res[!purrr::map_lgl(res, is.null)]
+      res[purrr::map_lgl(res, ~length(.x) > 0)]
     },
 
     #' @field files the source files for each episode
     files = function() {
       purrr::map_chr(self$episodes, "path")
     }
-
+  ),
+  private = list(
+    deep_clone = function(name, value) {
+      if (name == "episodes") {
+        purrr::map(value, ~.x$clone(deep = TRUE))
+      } else {
+        value
+      }
+    }
   )
 )

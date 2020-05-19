@@ -43,6 +43,10 @@ files, default is \code{FALSE} for markdown files.}
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
+\item{\code{n_problems}}{number of problems per episode}
+
+\item{\code{show_problems}}{contents of the problems per episode}
+
 \item{\code{files}}{the source files for each episode}
 }
 \if{html}{\out{</div>}}

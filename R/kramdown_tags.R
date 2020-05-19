@@ -71,6 +71,7 @@ set_ktag_block <- function(tags) {
     # the block. Note that this result has to be a nodeset
     parents      <- get_sibling_block(tags)
     parent_names <- xml2::xml_name(parents)
+    problems <- list(element = tags, reason = "not inside block quote")
   }
 
   if (inherits(parents, "xml_nodeset")) {
@@ -94,9 +95,17 @@ set_ktag_block <- function(tags) {
   #
   # Unfortunately, kramdown blocks are also allowed, which creates a weird
   # situation where we have language="NA" with a {: .language-r} tag trailing
-  after_code <- after_thing(tags, "code_block[not(@language)]")
-  is_language <- grepl("\\{: \\.language\\-", xml2::xml_text(children[[are_tags[1]]]))
-  is_output <- xml2::xml_text(children[[are_tags[1]]]) == "{: .output}"
+  if (length(problems) > 0L && problems$reason == "not inside block quote") {
+    # If we've already determined that it wasn't in a code block, then all these
+    # do not matter
+    after_code  <- FALSE
+    is_language <- FALSE
+    is_output   <- FALSE
+  } else {
+    after_code  <- after_thing(tags, "code_block[not(@language)]")
+    is_language <- grepl("\\{: \\.language\\-", xml2::xml_text(children[[are_tags[1]]]))
+    is_output   <- xml2::xml_text(children[[are_tags[1]]]) == "{: .output}"
+  }
 
 
   if (after_code || is_language || is_output) {
@@ -105,7 +114,7 @@ set_ktag_block <- function(tags) {
     if (after_code || is_language) {
       set_ktag_code(ctag)
     } else {
-      problems <- list(element = ctag, reason = "not after code_block")
+      problems <- c(problems, list(element = ctag, reason = "not after code_block"))
     }
   }
 
@@ -120,7 +129,13 @@ set_ktag_block <- function(tags) {
         xml2::xml_find_first(parents, blq)
       )
     } else {
-      stop("something's wrong with the kids")
+      problems <- c(
+        problems,
+        list(
+          element = list(parents = parents, tags = tags),
+          reason  = "tag is mis-alinged with parents"
+        )
+      )
     }
   }
 
@@ -138,7 +153,13 @@ set_ktag_block <- function(tags) {
       parents <- get_sibling_block(tags)
     }
     if (inherits(parents, "xml_missing")) {
-      problems <- list(element = tags, problem = "solution block is out of place")
+      problems <- c(problems,
+        list(element = tags, problem = "solution block is out of place")
+      )
+    } else {
+      problems <- c(problems,
+        list(element = tags, problem = "solution block out-of-place")
+      )
     }
   }
 

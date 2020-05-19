@@ -7,12 +7,6 @@
 #' has method specific to the Carpentries episodes.
 #' @export
 Episode <- R6::R6Class("Episode",
-  private = list(
-    record_problem = function(x) {
-      private$problems <- c(private$problems, x)
-    },
-    problems = list()
-  ),
   public = list(
 
     #' @field path \[`character`\] path to file on disk
@@ -141,6 +135,19 @@ Episode <- R6::R6Class("Episode",
       return(invisible(self))
     },
 
+    #' @description
+    #' Remove all elements except for those within block quotes that have a
+    #' kramdown tag. Note that this is a destructive process.
+    #' @return the Episode object, invisibly
+    #' @examples
+    #' scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
+    #' scope$body # a full document with block quotes and code blocks, etc
+    #' scope$isolate_blocks()$body # only one challenge block_quote
+    isolate_blocks = function() {
+      isolate_kram_blocks(self$body)
+      invisible(self)
+    },
+
     #' @description Create a new Episode
     #' @param path \[`character`\] path to a markdown episode file on disk
     #' @param process_tags \[`logical`\] if `TRUE` (default), kramdown tags will
@@ -190,9 +197,7 @@ Episode <- R6::R6Class("Episode",
     }
   ),
   active = list(
-    #' @field n_problems \[`integer`\] number of problems in the episode
-    #' @field problems \[`list`\] a list of all the problems that occurred in
-    #'   parsing the episode
+    #' @field show_problems \[`list`\] a list of all the problems that occurred in parsing the episode
     show_problems = function() {
       private$problems
     },
@@ -235,6 +240,23 @@ Episode <- R6::R6Class("Episode",
     #' @field lesson \[`character`\] the path to the lesson where the episode is from
     lesson = function() {
       fs::path_dir(fs::path_dir(self$path))
+    }
+  ),
+  private = list(
+    record_problem = function(x) {
+      private$problems <- c(private$problems, x)
+    },
+    problems = list(),
+
+    deep_clone = function(name, value) {
+      if (name == "body") {
+        f <- fs::file_temp(pattern = "EPISODE", ext = ".xml")
+        on.exit(fs::file_delete(f))
+        xml2::write_xml(value, file = f)
+        xml2::read_xml(f, encoding = "utf-8")
+      } else {
+        value
+      }
     }
   )
 )

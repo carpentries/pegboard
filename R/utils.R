@@ -75,9 +75,44 @@ elevate_children <- function(parent, remove = TRUE) {
   invisible(children)
 }
 
+isolate_kram_blocks <- function(body) {
+  ns <- NS(body)
+  txt <- xml2::xml_find_all(
+    body,
+    glue::glue(".//text()[not(ancestor-or-self::{ns}:block_quote[@ktag])]")
+  )
+  parents <- xml2::xml_parents(txt)
+  parents <- parents[xml2::xml_name(parents) != "document"]
+  xml2::xml_remove(parents)
+  invisible(body)
+}
+
 # Get a character vector of the namespace
 NS <- function(x) attr(xml2::xml_ns(x), "names")[[1]]
 
+# Get the position of an element
+get_pos <- function(x, e = 1) {
+  as.integer(
+    gsub(
+      "^(\\d+?):(\\d+?)[-](\\d+?):(\\d)+?$",
+      glue::glue("\\{e}"),
+      xml2::xml_attr(x, "sourcepos")
+    )
+  )
+}
+
+# helpers for get_pos
+get_linestart <- function(x) get_pos(x, e = 1)
+get_colstart  <- function(x) get_pos(x, e = 2)
+get_lineend   <- function(x) get_pos(x, e = 3)
+get_colend    <- function(x) get_pos(x, e = 4)
+
+# check if two elements are adjacent
+are_adjacent <- function(first = xml2::xml_missing(), second = first) {
+  !inherits(first,  "xml_missing") &&
+  !inherits(second, "xml_missing") &&
+  get_lineend(first) + 1 == get_linestart(second)
+}
 
 #' Check if a node is after another node
 #'
@@ -91,10 +126,14 @@ NS <- function(x) attr(xml2::xml_ns(x), "names")[[1]]
 #'
 after_thing <- function(body, thing = "code_block") {
   ns <- NS(body)
-  xml2::xml_find_lgl(
+  tng <- xml2::xml_find_first(
     body,
-    glue::glue("boolean(.//preceding-sibling::{ns}:{thing})")
+    glue::glue(".//preceding-sibling::{ns}:{thing}[1]")
   )
+
+  # Returns TRUE if the last line of the thing is adjacent to the first line of
+  # the tags
+  are_adjacent(tng, body)
 }
 
 #' test if the children of a given nodeset are kramdown blocks
@@ -135,13 +174,8 @@ get_sibling_block <- function(tags) {
     tags,
     glue::glue("preceding-sibling::{ns}:block_quote[1]")
   )
-  if (inherits(block, "xml_missing")) {
-    return(xml2::xml_missing())
-  }
-  block_line <- get_lineend(block[[1]])
-  tag_line   <- get_linestart(tags)
 
-  if (block_line == tag_line - 1L) {
+  if (are_adjacent(block[[1]], tags)) {
     return(block)
   } else {
     return(xml2::xml_missing())
@@ -157,17 +191,3 @@ challenge_is_sibling <- function(node) {
   )
 }
 
-get_pos <- function(x, e = 1) {
-  as.integer(
-    gsub(
-      "^(\\d+?):(\\d+?)[-](\\d+?):(\\d)+?$",
-      glue::glue("\\{e}"),
-      xml2::xml_attr(x, "sourcepos")
-    )
-  )
-}
-
-get_linestart <- function(x) get_pos(x, e = 1)
-get_lineend   <- function(x) get_pos(x, e = 3)
-get_colstart  <- function(x) get_pos(x, e = 2)
-get_colend    <- function(x) get_pos(x, e = 4)

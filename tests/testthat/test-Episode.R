@@ -92,8 +92,76 @@ test_that("the write() method works", {
   f <- readLines(fs::path(d, e$name))
   f <- f[f != '']
   expect_equal(f[length(f)], "{: .challenge}")
+  expect_equal(f[length(f) - 1], "> {: .error}")
 
 })
+
+test_that("isolate_blocks() method works as expected", {
+  scope <- fs::path(lesson_fragment(), "_episodes", "17-scope.md")
+  e <- Episode$new(scope)
+
+  d <- fs::dir_create(fs::file_temp())
+  # Burn it to the ground when we done.
+  withr::defer({
+    fs::dir_delete(d)
+  })
+
+  # Starts off with 9 elements
+  expect_equal(xml2::xml_length(e$body), 9)
+  # ends up with 2 elements
+  expect_equal(xml2::xml_length(e$isolate_blocks()$body), 2)
+  # can be reset
+  expect_equal(xml2::xml_length(e$reset()$isolate_blocks()$reset()$body), 9)
+
+  expect_silent(e$isolate_blocks()$write(d))
+  expect_true(fs::file_exists(fs::path(d, e$name)))
+
+  f <- readLines(fs::path(d, e$name))
+  f <- f[f != '']
+  expect_equal(f[length(f)], "{: .challenge}")
+  expect_equal(f[length(f) - 1], "> {: .error}")
+
+  # The first thing in the episode is a block quote
+  expect_true(grepl("^>", f[length(e$yaml) + 2]))
+  # There are only 50 lines beyond the yaml
+  expect_equal(length(f[-seq(length(e$yaml))]), 50)
+
+})
+
+test_that("An episode can be cloned deeply", {
+
+  scope <- fs::path(lesson_fragment(), "_episodes", "17-scope.md")
+  e <- Episode$new(scope)
+  ec <- e$clone()
+  ed <- e$clone(deep = TRUE)
+
+  expect_equal(e, ec)
+  expect_equal(e, ed)
+
+  expect_identical(xml2::as_list(e$body), xml2::as_list(ed$body))
+  expect_identical(xml2::as_list(ec$body), xml2::as_list(ed$body))
+
+  expect_equal(xml2::xml_text(e$tags[1]), "{: .language-python}")
+  expect_equal(xml2::xml_text(ec$tags[1]), "{: .language-python}")
+  expect_equal(xml2::xml_text(ed$tags[1]), "{: .language-python}")
+
+  # modifying the original does not affect the deep clone
+  expect_equal(xml2::xml_set_attr(xml2::xml_parent(e$tags[1]), "ktag", "{: .source}"), "{: .source}")
+  expect_equal(xml2::xml_text(e$tags[1]), "{: .source}")
+  expect_equal(xml2::xml_text(ec$tags[1]), "{: .source}")
+  expect_equal(xml2::xml_text(ed$tags[1]), "{: .language-python}")
+
+})
+
+
+test_that("An error will be thrown if a file does not exist", {
+
+  sunshine <- fs::path(lesson_fragment(), "_episodes", "sunshine.md")
+  msg <- glue::glue("the file '{sunshine}' does not exist")
+  expect_error(Episode$new(sunshine), msg)
+
+})
+
 
 test_that("An error will be thrown if a file does not exist", {
 

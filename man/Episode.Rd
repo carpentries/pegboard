@@ -69,6 +69,14 @@ scope$reset()
 xml2::xml_text(scope$tags[1])
 
 ## ------------------------------------------------
+## Method `Episode$isolate_blocks`
+## ------------------------------------------------
+
+scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
+scope$body # a full document with block quotes and code blocks, etc
+scope$isolate_blocks()$body # only one challenge block_quote
+
+## ------------------------------------------------
 ## Method `Episode$new`
 ## ------------------------------------------------
 
@@ -93,6 +101,8 @@ scope$challenges
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
+\item{\code{show_problems}}{[\code{list}] a list of all the problems that occurred in parsing the episode}
+
 \item{\code{tags}}{[\code{xml_nodeset}] all the kramdown tags from the episode}
 
 \item{\code{challenges}}{[\code{xml_nodeset}] all the challenges blocks from the episode}
@@ -118,6 +128,7 @@ scope$challenges
 \item \href{#method-get_challenge_graph}{\code{Episode$get_challenge_graph()}}
 \item \href{#method-write}{\code{Episode$write()}}
 \item \href{#method-reset}{\code{Episode$reset()}}
+\item \href{#method-isolate_blocks}{\code{Episode$isolate_blocks()}}
 \item \href{#method-new}{\code{Episode$new()}}
 \item \href{#method-clone}{\code{Episode$clone()}}
 }
@@ -277,6 +288,30 @@ xml2::xml_set_text(scope$tags[1], "{: .code}")
 xml2::xml_text(scope$tags[1])
 scope$reset()
 xml2::xml_text(scope$tags[1])
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-isolate_blocks"></a>}}
+\if{latex}{\out{\hypertarget{method-isolate_blocks}{}}}
+\subsection{Method \code{isolate_blocks()}}{
+Remove all elements except for those within block quotes that have a
+kramdown tag. Note that this is a destructive process.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Episode$isolate_blocks()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+the Episode object, invisibly
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
+scope$body # a full document with block quotes and code blocks, etc
+scope$isolate_blocks()$body # only one challenge block_quote
 }
 \if{html}{\out{</div>}}
 
