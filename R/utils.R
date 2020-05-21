@@ -81,7 +81,7 @@ elevate_children <- function(parent, remove = TRUE) {
 #' frg <- Lesson$new(lesson_fragment())
 #' blo <- frg$episodes$`14-looping-data-sets.md`$get_blocks()[[2]]
 #' roxy_challenge(blo)
-roxy_challenge <- function(block, remove = TRUE, token = "#| ") {
+convert_to_roxygen <- function(block, remove = TRUE, token = "#| ") {
   # Thoughts on this:
   #
   # xslt::xml_xslt(thing, stylesheet) acts on a document and will parse the
@@ -98,10 +98,12 @@ roxy_challenge <- function(block, remove = TRUE, token = "#| ") {
   isolate_kram_blocks(cpy, glue::glue("[@sourcepos='{xml2::xml_attr(block, 'sourcepos')}']"))
   # 3. elevate the children in the document (removing block quotes)
   solutions <- elevate_children(
-    xml2::xml_find_all(cpy, glue::glue(".//{ns}:block_quote/{ns}:block_quote"))
+    xml2::xml_find_all(cpy, ".//*[@ktag='{: .solution}']")
   )
-  xml2::xml_set_attr(solutions[[1]],                 "ktag", "solution---start")
-  xml2::xml_set_attr(solutions[[length(solutions)]], "ktag", "solution---end")
+  if (sum(xml2::xml_length(solutions)) > 0) {
+    xml2::xml_set_attr(solutions[[1]],                 "soln", "start")
+    xml2::xml_set_attr(solutions[[length(solutions)]], "soln", "end")
+  }
   # 4. parse the document with xslt
   stysh <- xml2::read_xml(get_stylesheet("xml2md_roxy.xsl"))
   elevate_children(xml2::xml_children(cpy))
@@ -117,14 +119,14 @@ roxy_challenge <- function(block, remove = TRUE, token = "#| ") {
     paste0("[", glue::glue_collapse(strsplit(glue::glue("{x}"), "")[[1]], sep = "]["), "]")
   }
   txt <- gsub(glue::glue("```\\n{splinter(token)}"), token, txt)
-  txt <- gsub("\n```(?!$)", glue::glue("\n#+\\1"), txt, perl = TRUE)
-  txt <- gsub("\n```", "", txt)
-  cat(txt)
+  txt <- gsub("\\n\\n?```(?!(\\n(?>\\@)|$))", "\n#+\\1", txt, perl = TRUE)
+  txt <- gsub("```(\\n?)", glue::glue("{token}"), txt)
+  block_type <- gsub("[{: .}]", "", xml2::xml_attr(block, "ktag"))
+  txt <- glue::glue("{token}@{block_type}\n{txt}")
 
   # 5. rename the challenge node to be a code_block
   xml2::xml_set_name(block, "code_block")
-  xml2::xml_set_attr(block, "info", "r")
-  xml2::xml_set_attr(block, "ktag", NULL)
+  xml2::xml_set_attr(block, "info", block_type)
   # 6. remove the children of that node
   xml2::xml_remove(xml2::xml_children(block))
   # 7. add the parsed text as the text of the challenge code block

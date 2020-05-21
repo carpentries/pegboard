@@ -148,6 +148,22 @@ Episode <- R6::R6Class("Episode",
       invisible(self)
     },
 
+    #' @description convert challenge blocks to roxygen-like code blocks
+    #' @param tag the tag to use to indicate a roxygen-like block, Defaults to
+    #'   '#| '
+    #' @return the Episode object, invisibly
+    #' @examples
+    #' scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
+    #' scope$body # a full document with block quotes and code blocks, etc
+    #' scope$get_blocks() # all the blocks in the episode
+    #' scope$unblock()
+    #' scope$get_blocks() # no blocks
+    #' scope$code # now there are two blocks with challenge tags
+    unblock = function() {
+      purrr::walk(self$get_blocks(), convert_to_roxygen)
+      invisible(self)
+    },
+
     #' @description Create a new Episode
     #' @param path \[`character`\] path to a markdown episode file on disk
     #' @param process_tags \[`logical`\] if `TRUE` (default), kramdown tags will

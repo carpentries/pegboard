@@ -24,6 +24,18 @@
     <xsl:value-of select="@comment" />
 </xsl:template>
 
+<xsl:template match="md:*[@soln]">
+    <xsl:if test="@soln='end'">
+        <xsl:apply-imports select="md:*" />
+    </xsl:if>
+    <xsl:value-of select="@comment"/>
+    <xsl:text>&#64;solution:</xsl:text>
+    <xsl:value-of select="@soln"/>
+    <xsl:text>&#10;</xsl:text>
+    <xsl:if test="@soln='start'">
+        <xsl:apply-imports select="md:*" />
+    </xsl:if>
+</xsl:template>
 <!-- Code block -->
 
 
