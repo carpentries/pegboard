@@ -77,7 +77,11 @@ elevate_children <- function(parent, remove = TRUE) {
   invisible(children)
 }
 
-roxy_challenge <- function(block, remove = TRUE) {
+#' @examples
+#' frg <- Lesson$new(lesson_fragment())
+#' blo <- frg$episodes$`14-looping-data-sets.md`$get_blocks()[[2]]
+#' roxy_challenge(blo)
+roxy_challenge <- function(block, remove = TRUE, token = "#| ") {
   # Thoughts on this:
   #
   # xslt::xml_xslt(thing, stylesheet) acts on a document and will parse the
@@ -89,22 +93,66 @@ roxy_challenge <- function(block, remove = TRUE) {
   #
   # 1. copy document
   # 2. remove all but the block we are focusing on
+  ns  <- NS(block)
+  cpy <- xml2::xml_new_root(xml2::xml_root(block))
+  isolate_kram_blocks(cpy, glue::glue("[@sourcepos='{xml2::xml_attr(block, 'sourcepos')}']"))
   # 3. elevate the children in the document (removing block quotes)
+  solutions <- elevate_children(
+    xml2::xml_find_all(cpy, glue::glue(".//{ns}:block_quote/{ns}:block_quote"))
+  )
+  xml2::xml_set_attr(solutions[[1]],                 "ktag", "solution---start")
+  xml2::xml_set_attr(solutions[[length(solutions)]], "ktag", "solution---end")
   # 4. parse the document with xslt
+  stysh <- xml2::read_xml(get_stylesheet("xml2md_roxy.xsl"))
+  elevate_children(xml2::xml_children(cpy))
+
+  to_comment <- glue::glue(".//{ns}:*[parent::{ns}:document]")
+  not_code   <- glue::glue("[not(ancestor-or-self::{ns}:code_block)]")
+  nblks <- xml2::xml_find_all(cpy, glue::glue("{to_comment}{not_code}"))
+  xml2::xml_set_attr(nblks, "comment", token)
+
+  txt <- xslt::xml_xslt(cpy, stysh)
+  txt <- gsub(glue::glue("{token}{token}"), token, txt, fixed = TRUE)
+  splinter <- function(x) {
+    paste0("[", glue::glue_collapse(strsplit(glue::glue("{x}"), "")[[1]], sep = "]["), "]")
+  }
+  txt <- gsub(glue::glue("```\\n{splinter(token)}"), token, txt)
+  txt <- gsub("\n```(?!$)", glue::glue("\n#+\\1"), txt, perl = TRUE)
+  txt <- gsub("\n```", "", txt)
+  cat(txt)
+
   # 5. rename the challenge node to be a code_block
+  xml2::xml_set_name(block, "code_block")
+  xml2::xml_set_attr(block, "info", "r")
+  xml2::xml_set_attr(block, "ktag", NULL)
   # 6. remove the children of that node
+  xml2::xml_remove(xml2::xml_children(block))
   # 7. add the parsed text as the text of the challenge code block
+  xml2::xml_set_text(block, txt)
+  invisible(block)
+}
+
+
+element_df <- function(node) {
+  children <- xml2::xml_children(node)
+  start <- get_linestart(children[[1]]) - 1L
+  data.frame(
+    node  = xml2::xml_name(children),
+    start = get_linestart(children) - start,
+    end   = get_lineend(children) - start
+  )
 }
 
 # nocov end
 
 
 
-isolate_kram_blocks <- function(body) {
+isolate_kram_blocks <- function(body, predicate = "") {
   ns <- NS(body)
+  kblock <- glue::glue("{ns}:block_quote[@ktag]{predicate}")
   txt <- xml2::xml_find_all(
     body,
-    glue::glue(".//text()[not(ancestor-or-self::{ns}:block_quote[@ktag])]")
+    glue::glue(".//text()[not(ancestor-or-self::{kblock})]")
   )
   parents <- xml2::xml_parents(txt)
   parents <- parents[xml2::xml_name(parents) != "document"]
