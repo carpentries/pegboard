@@ -153,12 +153,12 @@ Episode <- R6::R6Class("Episode",
     #'   '#| '
     #' @return the Episode object, invisibly
     #' @examples
-    #' scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
-    #' scope$body # a full document with block quotes and code blocks, etc
-    #' scope$get_blocks() # all the blocks in the episode
-    #' scope$unblock()
-    #' scope$get_blocks() # no blocks
-    #' scope$code # now there are two blocks with challenge tags
+    #' loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
+    #' loop$body # a full document with block quotes and code blocks, etc
+    #' loop$get_blocks() # all the blocks in the episode
+    #' loop$unblock()
+    #' loop$get_blocks() # no blocks
+    #' loop$code # now there are two blocks with challenge tags
     unblock = function() {
       purrr::walk(self$get_blocks(), convert_to_roxygen)
       invisible(self)
