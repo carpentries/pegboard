@@ -18,25 +18,29 @@
     <xsl:value-of select="@comment" />
 </xsl:template>
 
-<!-- This part prefixes all of the internal elements of blocks
-     (any newlines as part of the paragraph or secondary list elements) -->
+<!--
+This part prefixes all of the internal elements of blocks
+(any newlines as part of the paragraph or secondary list elements)
+-->
 <xsl:template match="md:*[@comment]" mode="indent">
     <xsl:value-of select="@comment" />
 </xsl:template>
 
-<xsl:template match="md:*[@soln]">
-    <xsl:if test="@soln='end'">
-        <xsl:apply-imports select="md:*" />
-    </xsl:if>
+<!--
+When there is a "xygen" tag, this adds the tag before the text like so:
+<comment>
+<comment> @<xygen>
+...stuff here ...
+-->
+<xsl:template match="md:*[@xygen]">
     <xsl:value-of select="@comment"/>
-    <xsl:text>&#64;solution:</xsl:text>
-    <xsl:value-of select="@soln"/>
     <xsl:text>&#10;</xsl:text>
-    <xsl:if test="@soln='start'">
-        <xsl:apply-imports select="md:*" />
-    </xsl:if>
+    <xsl:value-of select="@comment"/>
+    <xsl:text>&#64;</xsl:text>
+    <xsl:value-of select="@xygen"/>
+    <xsl:text> &#10;</xsl:text>
+    <xsl:apply-imports select="." mode = "indent-block"/>
 </xsl:template>
-<!-- Code block -->
 
 
 <xsl:output method="text" encoding="utf-8"/>

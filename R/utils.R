@@ -12,6 +12,15 @@ pretty_tag <- function(x, hl = NULL) {
   nm <- glue::glue("<{xml2::xml_name(x)}>")
   glue::glue("\n{hl(nm)}:\n")
 }
+element_df <- function(node) {
+  children <- xml2::xml_children(node)
+  start <- get_linestart(children[[1]]) - 1L
+  data.frame(
+    node  = xml2::xml_name(children),
+    start = get_linestart(children) - start,
+    end   = get_lineend(children) - start
+  )
+}
 # nocov end
 block_type <- function(ns, type = NULL, start = "[", end = "]") {
 
@@ -47,7 +56,6 @@ find_node_level <- function(node) {
   level
 }
 
-# nocov start
 #' elevate all children of a node
 #'
 #' @param parent an xml node (notably a block quote)
@@ -80,8 +88,8 @@ elevate_children <- function(parent, remove = TRUE) {
 #' @examples
 #' frg <- Lesson$new(lesson_fragment())
 #' blo <- frg$episodes$`14-looping-data-sets.md`$get_blocks()[[2]]
-#' roxy_challenge(blo)
-convert_to_roxygen <- function(block, remove = TRUE, token = "#| ") {
+#' convert_to_roxygen(blo)
+convert_to_roxygen <- function(block, remove = TRUE, token = "#'") {
   # Thoughts on this:
   #
   # xslt::xml_xslt(thing, stylesheet) acts on a document and will parse the
@@ -101,8 +109,7 @@ convert_to_roxygen <- function(block, remove = TRUE, token = "#| ") {
     xml2::xml_find_all(cpy, ".//*[@ktag='{: .solution}']")
   )
   if (sum(xml2::xml_length(solutions)) > 0) {
-    xml2::xml_set_attr(solutions[[1]],                 "soln", "start")
-    xml2::xml_set_attr(solutions[[length(solutions)]], "soln", "end")
+    xml2::xml_set_attr(solutions[[1]], "xygen", "solution")
   }
   # 4. parse the document with xslt
   stysh <- xml2::read_xml(get_stylesheet("xml2md_roxy.xsl"))
@@ -115,12 +122,13 @@ convert_to_roxygen <- function(block, remove = TRUE, token = "#| ") {
 
   txt <- xslt::xml_xslt(cpy, stysh)
   txt <- gsub(glue::glue("{token}{token}"), token, txt, fixed = TRUE)
-  splinter <- function(x) {
-    paste0("[", glue::glue_collapse(strsplit(glue::glue("{x}"), "")[[1]], sep = "]["), "]")
-  }
+  # fix closing code fences
   txt <- gsub(glue::glue("```\\n{splinter(token)}"), token, txt)
-  txt <- gsub("\\n\\n?```(?!(\\n(?>\\@)|$))", "\n#+\\1", txt, perl = TRUE)
+  # fix code fence before code
+  txt <- gsub("\\n\\n?```(?!$)", "\n#+\\1", txt, perl = TRUE)
+  # fix all remaing code fences
   txt <- gsub("```(\\n?)", glue::glue("{token}"), txt)
+  # add challenge roxygen tag
   block_type <- gsub("[{: .}]", "", xml2::xml_attr(block, "ktag"))
   txt <- glue::glue("{token}@{block_type}\n{txt}")
 
@@ -134,20 +142,11 @@ convert_to_roxygen <- function(block, remove = TRUE, token = "#| ") {
   invisible(block)
 }
 
-
-element_df <- function(node) {
-  children <- xml2::xml_children(node)
-  start <- get_linestart(children[[1]]) - 1L
-  data.frame(
-    node  = xml2::xml_name(children),
-    start = get_linestart(children) - start,
-    end   = get_lineend(children) - start
-  )
+splinter <- function(x) {
+  chars      <- strsplit(x, "")[[1]]
+  char_class <- glue::glue_collapse(chars, sep = "][")
+  glue::glue("[{char_class}]")
 }
-
-# nocov end
-
-
 
 isolate_kram_blocks <- function(body, predicate = "") {
   ns <- NS(body)
