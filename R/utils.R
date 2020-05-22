@@ -121,7 +121,7 @@ convert_to_roxygen <- function(block, remove = TRUE, token = "#'") {
   xml2::xml_set_attr(nblks, "comment", token)
 
   txt <- xslt::xml_xslt(cpy, stysh)
-  txt <- gsub(glue::glue("{token}{token}"), token, txt, fixed = TRUE)
+  txt <- gsub(glue::glue("{token} {token}"), token, txt, fixed = TRUE)
   # fix closing code fences
   txt <- gsub(glue::glue("```\\n{splinter(token)}"), token, txt)
   # fix code fence before code
@@ -130,7 +130,7 @@ convert_to_roxygen <- function(block, remove = TRUE, token = "#'") {
   txt <- gsub("```(\\n?)", glue::glue("{token}"), txt)
   # add challenge roxygen tag
   block_type <- gsub("[{: .}]", "", xml2::xml_attr(block, "ktag"))
-  txt <- glue::glue("{token}@{block_type}\n{txt}")
+  txt <- glue::glue("{token} @{block_type}\n{txt}")
 
   # 5. rename the challenge node to be a code_block
   xml2::xml_set_name(block, "code_block")

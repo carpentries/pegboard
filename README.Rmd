@@ -49,8 +49,10 @@ The first way to get started is to use the `get_lesson()` function, which will
 use [{git2r}](https://cran.r-project.org/package=git2r) to clone a lesson 
 repository to your computer. 
 
-```{r example}
+```{r example, message = FALSE}
 library(up2code)
+library(purrr)
+library(xml2)
 library(fs)
 
 d <- fs::file_temp(pattern = "U2CREADME")
@@ -58,12 +60,52 @@ rng <- get_lesson("swcarpentry/r-novice-gapminder", path = d)
 rng
 
 # Find all challenges
-rng$challenges()
+head(rng$challenges())
 
 # Find all solutions
-rng$solutions()
+head(rng$solutions())
 
 # Find all discussion blocks
-rng$blocks(".discussion")
+head(rng$blocks(".discussion"))
+```
+
+## Lesson Manipulation
+
+You can isolate all of the specialized block quotes in the lesson with
+`isolate_blocks()`. 
+
+```{r isolate_blocks}
+fun <- rng$episodes$`10-functions.md`
+fun$body %>% xml_length()
+fun$isolate_blocks()$body %>% xml_length()
+fun$write(d)
+cat(readLines(fs::path(d, fun$name), n = 50)[(2 + length(fun$yaml)):50], sep = "\n")
+```
+
+## Roxygen-style blocks
+
+One experiment we are trying is to create a new formatting for challenge blocks
+that we think may be easier to write for folks. To convert lessons to this new
+format, we can use `$unblock()`, for example, here's a challenge block that 
+was reformatted to remove the 
+
+```{r unblock}
+cat(readLines(fs::path(d, fun$name), n = 70)[(27 + length(fun$yaml)):70], sep = "\n")
+fun$challenges
+fun$unblock(token = "#'")
+fun$challenges
+fun$code
+fun$code[3] %>% xml_text() %>% cat()
+```
+
+
+## Reset
+
+All changes can be reset to the initial state with the `$reset()` method:
+
+```{r reset}
+fun$reset()
+fun$write(d)
+cat(readLines(fs::path(d, fun$name), n = 50)[(2 + length(fun$yaml)):50], sep = "\n")
 ```
 

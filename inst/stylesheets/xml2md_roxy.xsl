@@ -14,8 +14,10 @@
 <!-- This part handles the top-level elements starting an indent block (headers/lists) -->
 <xsl:template match="md:*[@comment]" mode="indent-block">
     <xsl:value-of select="@comment" />
+    <xsl:text> </xsl:text>
     <xsl:apply-imports select="md:*" mode="indent-block"/>
     <xsl:value-of select="@comment" />
+    <xsl:text> </xsl:text>
 </xsl:template>
 
 <!--
@@ -24,6 +26,7 @@ This part prefixes all of the internal elements of blocks
 -->
 <xsl:template match="md:*[@comment]" mode="indent">
     <xsl:value-of select="@comment" />
+    <xsl:text> </xsl:text>
 </xsl:template>
 
 <!--
@@ -36,9 +39,9 @@ When there is a "xygen" tag, this adds the tag before the text like so:
     <xsl:value-of select="@comment"/>
     <xsl:text>&#10;</xsl:text>
     <xsl:value-of select="@comment"/>
-    <xsl:text>&#64;</xsl:text>
+    <xsl:text> &#64;</xsl:text>
     <xsl:value-of select="@xygen"/>
-    <xsl:text> &#10;</xsl:text>
+    <xsl:text>&#10;</xsl:text>
     <xsl:apply-imports select="." mode = "indent-block"/>
 </xsl:template>
 
