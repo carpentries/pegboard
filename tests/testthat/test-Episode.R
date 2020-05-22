@@ -26,7 +26,7 @@ test_that("Episodes can be created and are valid", {
 
   expect_is(e$tags, "xml_nodeset")
   expect_length(e$tags, 8)
-
+  expect_match(xml2::xml_text(e$tags), "^[{][:] [.][-a-z]+?[}]$")
 
 
 })
@@ -128,6 +128,62 @@ test_that("isolate_blocks() method works as expected", {
 
 })
 
+test_that("blocks can be converted to code blocks", {
+
+  loop <- fs::path(lesson_fragment(), "_episodes", "14-looping-data-sets.md")
+  e <- Episode$new(loop)
+  tags <- c(
+    "{: .language-python}",
+    "{: .output}",
+    "{: .language-python}",
+    "{: .output}",
+    "{: .language-python}",
+    "{: .output}",
+    "{: .language-python}",
+    "{: .output}",
+    "{: .language-python}",
+    "{: .language-python}",
+    "{: .language-python}"
+  )
+  challenge_tags <- tags
+  challenge_tags[9:11] <- "{: .challenge}"
+  expect_length(e$get_blocks(), 3)
+
+  expect_length(e$code, 11)
+  expect_identical(xml2::xml_attr(e$code, "ktag"), tags)
+  expect_length(e$reset()$unblock()$get_blocks(), 0)
+  expect_length(e$reset()$unblock()$code, 11)
+  expect_identical(xml2::xml_attr(e$reset()$unblock()$code, "ktag"), challenge_tags)
+
+  cb <- xml2::xml_text(e$reset()$unblock()$code[11])
+  # All lines will either start with code or comment
+  expect_match(strsplit(cb, "\n")[[1]], "^([#]['+]|import|fig|for|    |plt)")
+
+  # A solution block will exist
+  expect_match(cb, "[@]solution")
+  expect_match(cb, "[@]challenge")
+
+  # code is presented unmodified
+
+  # final challenge block is one code block
+  expect_match(cb, xml2::xml_text(e$reset()$code[11]), fixed = TRUE)
+
+  # middle challenge block is two code blocks
+  expect_match(
+    xml2::xml_text(e$reset()$unblock()$code[10]),
+    xml2::xml_text(e$reset()$code[10]),
+    fixed = TRUE
+  )
+
+  expect_match(
+    xml2::xml_text(e$reset()$unblock()$code[10]),
+    xml2::xml_text(e$reset()$code[9]),
+    fixed = TRUE
+  )
+
+})
+
+
 test_that("An episode can be cloned deeply", {
 
   scope <- fs::path(lesson_fragment(), "_episodes", "17-scope.md")
@@ -152,7 +208,6 @@ test_that("An episode can be cloned deeply", {
   expect_equal(xml2::xml_text(ed$tags[1]), "{: .language-python}")
 
 })
-
 
 test_that("An error will be thrown if a file does not exist", {
 

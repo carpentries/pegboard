@@ -136,6 +136,24 @@ test_that("Lesson methods work as expected", {
   expect_length(lex$files, length(episodes))
   expect_named(lex$files, episodes)
 
+  # $n_problems ----------------------------------------------------------------
+  problems <- rep(0, 8)
+  names(problems) <- episodes
+  problems[4] <- 1
+  expect_equal(lex$n_problems, problems)
+
+  # $show_problems -------------------------------------------------------------
+  ele <- xml2::xml_find_first(
+    lex$episodes$`04-formatting.md`$body,
+    ".//d1:paragraph[d1:text[text()='do_something']]"
+  )
+  prob_expect <- list(
+    "04-formatting.md" = list(
+      code = list(list(element = ele, reason = "orphan code tag"))
+    )
+  )
+  expect_equal(lex$show_problems, prob_expect)
+
   # $blocks --------------------------------------------------------------------
   # No level three blocks
   expect_equal(sum(lengths(lex$blocks(level = 3))), 0)

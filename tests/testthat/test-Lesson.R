@@ -20,6 +20,8 @@ test_that("Lesson class contains the right stuff", {
   expect_true(all(purrr::map_lgl(frg$files, fs::file_exists)))
   expect_equal(names(frg$episodes), unname(purrr::map_chr(frg$episodes, "name")))
   expect_equal(frg$path, unique(purrr::map_chr(frg$episodes, "lesson")))
+  expect_equal(frg$n_problems, c("10-lunch.md" = 0, "14-looping-data-sets.md" = 0, "17-scope.md" = 0))
+  expect_length(frg$show_problems, 0)
 
 })
 
@@ -84,6 +86,8 @@ test_that("Lesson class can remove episodes with $thin()", {
   expect_length(frg2$episodes, 2)
   expect_named(frg2$episodes, c("14-looping-data-sets.md", "17-scope.md"))
   expect_message(frg2$thin(), "Nothing to remove!")
+  # resetting is possible
+  expect_message(frg2$reset()$thin(), "Removing 1 episode: 10-lunch.md", fixed = TRUE)
 
   expect_length(frg$episodes, 3)
   expect_silent(frg$thin(verbose = FALSE))
