@@ -55,7 +55,7 @@ this across our curricula. Setting `recurse = TRUE` dips into the block elements
 that are nested within block elements.
 
 ```{r curr-graph}
-relationships <- map_dfr(SWC, ~.x$challenges(graph = TRUE, recurse = TRUE), .id = "Lesson") 
+relationships <- map_dfr(SWC, ~.x$challenges(graph = TRUE, recurse = TRUE), .id = "Lesson") %>% as_tibble()
 
 relationships
 
@@ -98,20 +98,61 @@ solution block (normally the header), or the exit point from the solution block
 
 How many ways do we enter and exit solutions?
 
-```{r solutions}
+```{r solutions, warn = FALSE}
 n_blocks <-  relationships %>%
   group_by(Lesson, Episode, Block) %>%
   count() %>%
   nrow()
 
-relationships %>%
+res <- relationships %>%
   filter(from == "solution") %>%
   count(from, to, level) %>%
-  arrange(level) %>%
+  arrange(level, desc(n)) %>%
   mutate(fraction = n/n_blocks)
+
+res %>%
+  select(level, exit = to, n, percent = fraction) %>%
+  mutate(exit = gsub("_", " ", exit)) %>%
+  mutate(exit = `substring<-`(exit, 1, 1, toupper(substr(exit, 1, 1)))) %>%
+  gt() %>%
+  tab_row_group(
+    "...enters at",
+    rows = level == 2
+  ) %>%
+  tab_row_group(
+    "...exits to",
+    rows = level == 1
+  ) %>%
+  fmt_percent(
+    columns = vars(percent),
+    decimals = 2
+  ) %>%
+  fmt_number(
+    columns = vars(n),
+    decimals = 0
+  ) %>%
+  cols_hide(columns = vars(level)) %>%
+  cols_align(
+    columns = vars(exit),
+    align = "left"
+  ) %>%
+  cols_align(
+    columns = vars(n),
+    align = "right"
+  ) %>%
+  cols_width(
+    vars(exit) ~ px(140),
+    everything() ~ px(80)
+  ) %>%
+  cols_label(
+    exit    = md("A **solution block**"),
+    n       = md("**n**"),
+    percent = md("**%**")
+  ) %>% 
+  opt_row_striping() 
 ```
 
-What I can tell from here is that ~70% of the time, solutions will dump out into
+What I can tell from here is that % of the time, solutions will dump out into
 the lessons, but other times the challenge block may continue. There is the 
 weird bit where there are solutions that go to solutions. What's going on there?
 
@@ -124,5 +165,28 @@ relationships %>%
 readLines(SWC$`python-novice-inflammation`$files[2])[(615:(638 + 10)) + 23]
 readLines(SWC$`python-novice-inflammation`$files[3])[(129:(137 + 10)) + 13]
 readLines(SWC$`python-novice-inflammation`$files[7])[(291:(302 + 10)) + 20]
+```
+
+```{r non-lesson-exits}
+relationships %>%
+  filter(
+    from == "solution",
+    to != "solution",
+    to != "lesson",
+    level == 1
+  ) %>% 
+  select(-level, -from) %>%
+  mutate(Block = as.integer(Block)) %>% 
+  distinct(Lesson, Episode, Block) -> odd_blocks
+odd_blocks 
+odd_blocks %<>%
+  dplyr::rowwise() %>%
+  mutate(src = list(SWC[[Lesson]]$challenges()[[Episode]][[Block]]))
+
+names(odd_blocks$src) <- glue_data(odd_blocks, 
+  "{Lesson}/{Episode} (Block {Block})"
+)
+purrr::walk(SWC, ~map(.x$episodes, ~.x$unblock()))
+purrr::walk2(names(odd_blocks$src), odd_blocks$src, ~cat(.x, xml_text(.y), sep = "\n---\n"))
 ```
 
