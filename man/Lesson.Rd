@@ -21,6 +21,22 @@ frg <- Lesson$new(lesson_fragment())
 frg$thin()
 
 ## ------------------------------------------------
+## Method `Lesson$reset`
+## ------------------------------------------------
+
+frg <- Lesson$new(lesson_fragment())
+frg$episodes[[1]]$body
+frg$isolate_blocks()$episodes[[1]]$body # empty
+frg$reset()$episodes[[1]]$body # reset
+
+## ------------------------------------------------
+## Method `Lesson$isolate_blocks`
+## ------------------------------------------------
+
+frg <- Lesson$new(lesson_fragment())
+frg$isolate_blocks()$body # only one challenge block_quote
+
+## ------------------------------------------------
 ## Method `Lesson$new`
 ## ------------------------------------------------
 
@@ -58,6 +74,8 @@ files, default is \code{FALSE} for markdown files.}
 \item \href{#method-challenges}{\code{Lesson$challenges()}}
 \item \href{#method-solutions}{\code{Lesson$solutions()}}
 \item \href{#method-thin}{\code{Lesson$thin()}}
+\item \href{#method-reset}{\code{Lesson$reset()}}
+\item \href{#method-isolate_blocks}{\code{Lesson$isolate_blocks()}}
 \item \href{#method-new}{\code{Lesson$new()}}
 \item \href{#method-clone}{\code{Lesson$clone()}}
 }
@@ -159,6 +177,53 @@ the Lesson object, invisibly
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{frg <- Lesson$new(lesson_fragment())
 frg$thin()
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-reset"></a>}}
+\if{latex}{\out{\hypertarget{method-reset}{}}}
+\subsection{Method \code{reset()}}{
+Re-read all Episodes from disk
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Lesson$reset()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+the Lesson object
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{frg <- Lesson$new(lesson_fragment())
+frg$episodes[[1]]$body
+frg$isolate_blocks()$episodes[[1]]$body # empty
+frg$reset()$episodes[[1]]$body # reset
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-isolate_blocks"></a>}}
+\if{latex}{\out{\hypertarget{method-isolate_blocks}{}}}
+\subsection{Method \code{isolate_blocks()}}{
+Remove all elements except for those within block quotes that have a
+kramdown tag. Note that this is a destructive process.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Lesson$isolate_blocks()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+the Episode object, invisibly
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{frg <- Lesson$new(lesson_fragment())
+frg$isolate_blocks()$body # only one challenge block_quote
 }
 \if{html}{\out{</div>}}
 

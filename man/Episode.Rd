@@ -77,6 +77,17 @@ scope$body # a full document with block quotes and code blocks, etc
 scope$isolate_blocks()$body # only one challenge block_quote
 
 ## ------------------------------------------------
+## Method `Episode$unblock`
+## ------------------------------------------------
+
+loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
+loop$body # a full document with block quotes and code blocks, etc
+loop$get_blocks() # all the blocks in the episode
+loop$unblock()
+loop$get_blocks() # no blocks
+loop$code # now there are two blocks with challenge tags
+
+## ------------------------------------------------
 ## Method `Episode$new`
 ## ------------------------------------------------
 
@@ -129,6 +140,7 @@ scope$challenges
 \item \href{#method-write}{\code{Episode$write()}}
 \item \href{#method-reset}{\code{Episode$reset()}}
 \item \href{#method-isolate_blocks}{\code{Episode$isolate_blocks()}}
+\item \href{#method-unblock}{\code{Episode$unblock()}}
 \item \href{#method-new}{\code{Episode$new()}}
 \item \href{#method-clone}{\code{Episode$clone()}}
 }
@@ -312,6 +324,39 @@ the Episode object, invisibly
 \preformatted{scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
 scope$body # a full document with block quotes and code blocks, etc
 scope$isolate_blocks()$body # only one challenge block_quote
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-unblock"></a>}}
+\if{latex}{\out{\hypertarget{method-unblock}{}}}
+\subsection{Method \code{unblock()}}{
+convert challenge blocks to roxygen-like code blocks
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Episode$unblock(token = "#'")}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{token}}{the token to use to indicate non-code, Defaults to "#'"}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+the Episode object, invisibly
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
+loop$body # a full document with block quotes and code blocks, etc
+loop$get_blocks() # all the blocks in the episode
+loop$unblock()
+loop$get_blocks() # no blocks
+loop$code # now there are two blocks with challenge tags
 }
 \if{html}{\out{</div>}}
 
