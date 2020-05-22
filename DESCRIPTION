@@ -17,7 +17,8 @@ Imports:
     purrr,
     glue,
     R6,
-    lifecycle
+    lifecycle,
+    xslt
 Suggests:
     testthat,
     withr,
@@ -28,7 +29,8 @@ Suggests:
     dplyr,
     crayon,
     tidygraph,
-    ggraph
+    ggraph,
+    ggplot2
 Remotes:
   ropenscilabs/tinkr
 Encoding: UTF-8
