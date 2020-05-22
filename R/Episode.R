@@ -116,7 +116,9 @@ Episode <- R6::R6Class("Episode",
       } else {
         stop(glue::glue("format = '{format}' is not a valid option"), call. = FALSE)
       }
+      # nocov start
       if (fs::file_exists(the_file) && edit) file.edit(the_file)
+      # nocov end
       return(invisible(self))
     },
 
@@ -149,8 +151,7 @@ Episode <- R6::R6Class("Episode",
     },
 
     #' @description convert challenge blocks to roxygen-like code blocks
-    #' @param tag the tag to use to indicate a roxygen-like block, Defaults to
-    #'   '#| '
+    #' @param token the token to use to indicate non-code, Defaults to "#'"
     #' @return the Episode object, invisibly
     #' @examples
     #' loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
@@ -159,8 +160,8 @@ Episode <- R6::R6Class("Episode",
     #' loop$unblock()
     #' loop$get_blocks() # no blocks
     #' loop$code # now there are two blocks with challenge tags
-    unblock = function() {
-      purrr::walk(self$get_blocks(), convert_to_roxygen)
+    unblock = function(token = "#'") {
+      purrr::walk(self$get_blocks(), convert_to_roxygen, token = token)
       invisible(self)
     },
 
@@ -200,8 +201,11 @@ Episode <- R6::R6Class("Episode",
         cproblem <- purrr::map(tags, set_ktag_code)
         bproblem <- bproblem[!purrr::map_lgl(bproblem, is.null)]
         cproblem <- cproblem[!purrr::map_lgl(cproblem, is.null)]
-        if (length(bproblem) > 0 || length(cproblem) > 0) {
-          private$record_problem(list(blocks = bproblem, code = cproblem))
+        if (length(bproblem) > 0) {
+          private$record_problem(list(blocks = bproblem))
+        }
+        if (length(cproblem) > 0) {
+          private$record_problem(list(code = cproblem))
         }
       }
 

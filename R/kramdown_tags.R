@@ -79,7 +79,7 @@ set_ktag_block <- function(tags) {
   }
 
   children <- xml2::xml_children(tags)
-  nc <- length(children)
+  nc       <- length(children)
 
   # Find out which children are tags
 
@@ -112,7 +112,7 @@ set_ktag_block <- function(tags) {
     ctag <- children[[are_tags[1]]]
     are_tags <- are_tags[-1]
     if (after_code || is_language) {
-      set_ktag_code(ctag)
+      problems <- c(problems, set_ktag_code(ctag))
     } else {
       problems <- c(problems, list(element = ctag, reason = "not after code_block"))
     }
@@ -152,15 +152,9 @@ set_ktag_block <- function(tags) {
     if (xml2::xml_text(child) == "{: .solution}") {
       parents <- get_sibling_block(tags)
     }
-    if (inherits(parents, "xml_missing")) {
-      problems <- c(problems,
-        list(element = tags, problem = "solution block is out of place")
-      )
-    } else {
-      problems <- c(problems,
-        list(element = tags, problem = "solution block out-of-place")
-      )
-    }
+    problems <- c(problems,
+      list(element = tags, problem = "solution block out-of-place")
+    )
   }
 
   this_node <- tags
@@ -176,6 +170,12 @@ set_ktag_block <- function(tags) {
   }
   xml2::xml_remove(children[are_tags])
 
+  # If there is nothing left to the paragraph after all the tags are pruned,
+  # remove it
+  if (xml2::xml_text(tags) == "") {
+    xml2::xml_remove(tags)
+  }
+
   return(if (length(problems)) problems else NULL)
 
 }
@@ -183,23 +183,44 @@ set_ktag_block <- function(tags) {
 
 set_ktag_code <- function(tag) {
 
-  ns <- NS(tag)
+  ns       <- NS(tag)
   problems <- list()
 
-  # Find the end of the challenge block --------------------------------------
-  code_block_sib <- glue::glue(".//preceding-sibling::{ns}:code_block[1]")
-
-  # Combine and search -------------------------------------------------------
-  kram_tag <- xml2::xml_text(tag)
-
-  if (xml2::xml_name(tag) == "text") {
+  # Situation: tag is a text element -----------------------------------------
+  if (!after_thing(tag, "code_block") && xml2::xml_name(tag) == "text") {
     tag <- xml2::xml_parent(tag)
   }
 
-  the_block <- xml2::xml_find_first(tag, code_block_sib)
+  # Get the tag and check its validity ---------------------------------------
+  kram_tag <- xml2::xml_text(xml2::xml_child(tag, 1))
+  is_a_tag <- grepl("^[{][:] ?[.].+?[}]$", kram_tag)
 
-  xml2::xml_attr(the_block, "ktag") <- kram_tag
+  # Situation: tag is not what it seems --------------------------------------
+  if (!is_a_tag) {
+    msg <- if (!after_thing(tag, "code_block")) "orphan code tag" else "unknown code tag"
+    problems <- c(problems, list(element = tag, reason = msg))
+  } else {
+    # Find the end of the challenge block ------------------------------------
+    code_block_sib <- glue::glue(".//preceding-sibling::{ns}:code_block[1]")
+    the_block      <- xml2::xml_find_first(tag, code_block_sib)
 
-  xml2::xml_remove(tag)
+    # Assign the tag attribute -----------------------------------------------
+    xml2::xml_attr(the_block, "ktag") <- kram_tag
+
+    # Remove any softbreaks --------------------------------------------------
+    n <- xml2::xml_length(tag)
+    if (n > 1 && xml2::xml_text(xml2::xml_child(tag, 2)) == "") {
+      xml2::xml_remove(xml2::xml_child(tag, 2))
+    }
+
+    # Remove the tag ---------------------------------------------------------
+    xml2::xml_remove(xml2::xml_child(tag, 1))
+
+    # If there is nothing left, remove the paragraph element -----------------
+    if (xml2::xml_text(tag) == "") {
+      xml2::xml_remove(tag)
+    }
+  }
+
   return(if (length(problems)) problems else NULL)
 }
