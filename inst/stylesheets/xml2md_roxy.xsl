@@ -25,7 +25,6 @@
 </xsl:template>
 
 <xsl:template match="md:*[@soln]">
-    <!-- TODO: this is missing some key text information -_- -->
     <xsl:if test="@soln='end'">
         <xsl:apply-imports select="md:*" />
     </xsl:if>
