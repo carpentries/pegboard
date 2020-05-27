@@ -30,7 +30,8 @@ Suggests:
     crayon,
     tidygraph,
     ggraph,
-    ggplot2
+    ggplot2,
+    gt
 Remotes:
   ropenscilabs/tinkr
 Encoding: UTF-8

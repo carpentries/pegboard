@@ -2,7 +2,6 @@
 
 export(Episode)
 export(Lesson)
-export(elevate_children)
 export(get_blocks)
 export(get_challenges)
 export(get_code)

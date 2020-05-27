@@ -28,6 +28,7 @@ library(dplyr)
 library(purrr)
 library(glue)
 library(xml2)
+library(gt)
 ```
 
 

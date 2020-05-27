@@ -31,7 +31,7 @@ convert_to_roxygen <- function(block, token = "#'") {
     glue::glue("[@sourcepos='{xml2::xml_attr(block, 'sourcepos')}']")
   )
 
-  # 3. Tag the first child with xygen challenge
+  # 3. Tag the first child as a solution
   sln <- glue::glue(".//<ns>:block_quote[@ktag='{: .solution}']",
     .open  = "<",
     .close = ">"
@@ -41,7 +41,7 @@ convert_to_roxygen <- function(block, token = "#'") {
     purrr::walk(stags, xml2::xml_set_attr, "xygen", "solution")
   }
 
-  # 4. Tag the first sibling with xygen challenge
+  # 4. Tag the first sibling as a  challenge
   ctags <- xml2::xml_find_all(cpy, glue::glue("{sln}/following-sibling::*[1]"))
   if (length(ctags) > 0) {
     purrr::walk(ctags, xml2::xml_set_attr, "xygen", "challenge")
