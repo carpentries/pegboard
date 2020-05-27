@@ -12,6 +12,7 @@ pretty_tag <- function(x, hl = NULL) {
   nm <- glue::glue("<{xml2::xml_name(x)}>")
   glue::glue("\n{hl(nm)}:\n")
 }
+
 element_df <- function(node) {
   children <- xml2::xml_children(node)
   start <- get_linestart(children[[1]]) - 1L
@@ -22,6 +23,7 @@ element_df <- function(node) {
   )
 }
 # nocov end
+
 block_type <- function(ns, type = NULL, start = "[", end = "]") {
 
   if (is.null(type)) {
@@ -56,91 +58,7 @@ find_node_level <- function(node) {
   level
 }
 
-#' elevate all children of a node
-#'
-#' @param parent an xml node (notably a block quote)
-#' @param remove a logical value. If `TRUE` (default), the parent node is
-#'   removed from the document.
-#'
-#' @return the elevated nodes, invisibly
-#' @export
-#'
-#' @examples
-#' scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
-#' # get all the challenges (2 blocks)
-#' scope$get_blocks(".challenge")
-#' b1 <- scope$get_blocks(".challenge")[[1]]
-#' elevate_children(b1)
-#' # now there is only one block:
-#' scope$get_blocks(".challenge")
-elevate_children <- function(parent, remove = TRUE) {
-  children <- xml2::xml_contents(parent)
-  purrr::walk(
-    children,
-    ~xml2::xml_add_sibling(parent, .x, .where = "before", .copy = FALSE)
-  )
-  if (remove) {
-    xml2::xml_remove(parent)
-  }
-  invisible(children)
-}
 
-#' @examples
-#' frg <- Lesson$new(lesson_fragment())
-#' blo <- frg$episodes$`14-looping-data-sets.md`$get_blocks()[[2]]
-#' convert_to_roxygen(blo)
-convert_to_roxygen <- function(block, remove = TRUE, token = "#'") {
-  # Thoughts on this:
-  #
-  # xslt::xml_xslt(thing, stylesheet) acts on a document and will parse the
-  # markdown text FO FREE. The only catch is that it needs a document, but we
-  # can simply just copy the document and remove all the elements but what we
-  # want to act on.
-  #
-  # steps:
-  #
-  # 1. copy document
-  # 2. remove all but the block we are focusing on
-  ns  <- NS(block)
-  cpy <- xml2::xml_new_root(xml2::xml_root(block))
-  isolate_kram_blocks(cpy, glue::glue("[@sourcepos='{xml2::xml_attr(block, 'sourcepos')}']"))
-  # 3. elevate the children in the document (removing block quotes)
-  solutions <- elevate_children(
-    xml2::xml_find_all(cpy, ".//*[@ktag='{: .solution}']")
-  )
-  if (sum(xml2::xml_length(solutions)) > 0) {
-    xml2::xml_set_attr(solutions[[1]], "xygen", "solution")
-  }
-  # 4. parse the document with xslt
-  stysh <- xml2::read_xml(get_stylesheet("xml2md_roxy.xsl"))
-  elevate_children(xml2::xml_children(cpy))
-
-  to_comment <- glue::glue(".//{ns}:*[parent::{ns}:document]")
-  not_code   <- glue::glue("[not(ancestor-or-self::{ns}:code_block)]")
-  nblks <- xml2::xml_find_all(cpy, glue::glue("{to_comment}{not_code}"))
-  xml2::xml_set_attr(nblks, "comment", token)
-
-  txt <- xslt::xml_xslt(cpy, stysh)
-  txt <- gsub(glue::glue("{token} {token}"), token, txt, fixed = TRUE)
-  # fix closing code fences
-  txt <- gsub(glue::glue("```\\n{splinter(token)}"), token, txt)
-  # fix code fence before code
-  txt <- gsub("\\n\\n?```(?!$)", "\n#+\\1", txt, perl = TRUE)
-  # fix all remaing code fences
-  txt <- gsub("```(\\n?)", glue::glue("{token}"), txt)
-  # add challenge roxygen tag
-  block_type <- gsub("[{: .}]", "", xml2::xml_attr(block, "ktag"))
-  txt <- glue::glue("{token} @{block_type}\n{txt}")
-
-  # 5. rename the challenge node to be a code_block
-  xml2::xml_set_name(block, "code_block")
-  xml2::xml_set_attr(block, "info", block_type)
-  # 6. remove the children of that node
-  xml2::xml_remove(xml2::xml_children(block))
-  # 7. add the parsed text as the text of the challenge code block
-  xml2::xml_set_text(block, txt)
-  invisible(block)
-}
 
 splinter <- function(x) {
   chars      <- strsplit(x, "")[[1]]
@@ -148,18 +66,6 @@ splinter <- function(x) {
   glue::glue("[{char_class}]")
 }
 
-isolate_kram_blocks <- function(body, predicate = "") {
-  ns <- NS(body)
-  kblock <- glue::glue("{ns}:block_quote[@ktag]{predicate}")
-  txt <- xml2::xml_find_all(
-    body,
-    glue::glue(".//text()[not(ancestor-or-self::{kblock})]")
-  )
-  parents <- xml2::xml_parents(txt)
-  parents <- parents[xml2::xml_name(parents) != "document"]
-  xml2::xml_remove(parents)
-  invisible(body)
-}
 
 # Get a character vector of the namespace
 NS <- function(x) attr(xml2::xml_ns(x), "names")[[1]]
