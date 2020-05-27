@@ -8,9 +8,11 @@
 #' @keywords internal
 #'
 #' @examples
+#' \dontrun{
 #' frg <- Lesson$new(lesson_fragment())
 #' blo <- frg$episodes$`14-looping-data-sets.md`$get_blocks()[[2]]
 #' convert_to_roxygen(blo)
+#' }
 convert_to_roxygen <- function(block, token = "#'") {
   # Thoughts on this:
   #

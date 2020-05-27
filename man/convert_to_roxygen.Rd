@@ -18,8 +18,10 @@ the block, converted to a code block
 Convert a given block quote to roxygen template
 }
 \examples{
+\dontrun{
 frg <- Lesson$new(lesson_fragment())
 blo <- frg$episodes$`14-looping-data-sets.md`$get_blocks()[[2]]
 convert_to_roxygen(blo)
+}
 }
 \keyword{internal}
