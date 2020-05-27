@@ -19,6 +19,7 @@ the elevated nodes, invisibly
 elevate all children of a node
 }
 \examples{
+\dontrun{
 scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
 # get all the challenges (2 blocks)
 scope$get_blocks(".challenge")
@@ -26,5 +27,6 @@ b1 <- scope$get_blocks(".challenge")[[1]]
 elevate_children(b1)
 # now there is only one block:
 scope$get_blocks(".challenge")
+}
 }
 \keyword{internal}

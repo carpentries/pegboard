@@ -8,6 +8,7 @@
 #' @keywords internal
 #'
 #' @examples
+#' \dontrun{
 #' scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
 #' # get all the challenges (2 blocks)
 #' scope$get_blocks(".challenge")
@@ -15,6 +16,7 @@
 #' elevate_children(b1)
 #' # now there is only one block:
 #' scope$get_blocks(".challenge")
+#' }
 elevate_children <- function(parent, remove = TRUE) {
   children <- xml2::xml_contents(parent)
   purrr::walk(
