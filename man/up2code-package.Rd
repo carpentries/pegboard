@@ -4,9 +4,15 @@
 \name{up2code-package}
 \alias{up2code}
 \alias{up2code-package}
-\title{up2code: What the Package Does (One Line, Title Case)}
+\title{up2code: Explore and Manipulate Markdown Curricula from the Carpentries}
 \description{
-What the package does (one paragraph).
+The Carpentries (https://carpentries.org>) curricula is made of of
+    lessons that are hosted as websites. Each lesson represents between a half
+    day to two days of instruction and contains several episodes, which are
+    written as 'kramdown'-flavored 'markdown' documents and converted to HTML
+    using the 'Jekyll' static website generator. This package reads in these 
+    markdown documents to 'XML' and stores them in R6 classes for convenient
+    exploration and manipulation of sections within episodes.
 }
 \seealso{
 Useful links:

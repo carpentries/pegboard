@@ -1,5 +1,5 @@
 Package: up2code
-Title: What the Package Does (One Line, Title Case)
+Title: Explore and Manipulate Markdown Curricula from the Carpentries
 Version: 0.0.0.9000
 Authors@R:
     person(given = "Zhian N.",
@@ -7,7 +7,13 @@ Authors@R:
            role = c("aut", "cre"),
            email = "zkamvar@gmail.com",
            comment = c(ORCID = "0000-0003-1458-7108"))
-Description: What the package does (one paragraph).
+Description: The Carpentries (https://carpentries.org>) curricula is made of of
+    lessons that are hosted as websites. Each lesson represents between a half
+    day to two days of instruction and contains several episodes, which are
+    written as 'kramdown'-flavored 'markdown' documents and converted to HTML
+    using the 'Jekyll' static website generator. This package reads in these 
+    markdown documents to 'XML' and stores them in R6 classes for convenient
+    exploration and manipulation of sections within episodes.
 License: MIT + file LICENSE
 Imports:
     fs,
@@ -33,7 +39,7 @@ Suggests:
     ggplot2,
     gt
 Remotes:
-  ropenscilabs/tinkr
+  ropenscilabs/tinkr#15
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
