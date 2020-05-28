@@ -58,7 +58,14 @@ find_node_level <- function(node) {
   level
 }
 
-
+xml_new_paragraph <- function(text = "", ns) {
+  pgp <- glue::glue(
+    "<document><paragraph><text>{text}</text></paragraph></document>"
+  )
+  pgp <- xml2::read_xml(pgp)
+  xml2::xml_set_attr(pgp, "xmlns", ns)
+  xml2::xml_child(pgp, 1)
+}
 
 splinter <- function(x) {
   chars      <- strsplit(x, "")[[1]]

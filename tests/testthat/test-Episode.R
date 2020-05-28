@@ -130,6 +130,7 @@ test_that("isolate_blocks() method works as expected", {
 
 test_that("blocks can be converted to code blocks", {
 
+
   loop <- fs::path(lesson_fragment(), "_episodes", "14-looping-data-sets.md")
   e <- Episode$new(loop)
   tags <- c(
@@ -180,6 +181,30 @@ test_that("blocks can be converted to code blocks", {
     xml2::xml_text(e$reset()$code[9]),
     fixed = TRUE
   )
+
+})
+
+test_that("challenges with multiple solution blocks will be rendered appropriately", {
+
+  floop <- fs::path(lesson_fragment(), "_episodes", "12-for-loops.md")
+  e     <- Episode$new(floop)
+  expect_length(e$challenges, 7)
+  expect_length(e$solutions, 10)
+  chlng <- e$challenges[4]
+  # The challenge is a block quote
+  expect_true(xml2::xml_find_lgl(chlng, "boolean(self::d1:block_quote)"))
+  sltns <- xml2::xml_find_all(chlng, ".//d1:block_quote[@ktag='{: .solution}']")
+  # There should be four solutions within this single challenge
+  expect_length(sltns, 4)
+  e$unblock()
+  # The challenge is now a code block
+  expect_false(xml2::xml_find_lgl(chlng, "boolean(self::d1:block_quote)"))
+  expect_true(xml2::xml_find_lgl(chlng, "boolean(self::d1:code_block)"))
+
+  # There will be four solution blocks and four challenge blocks
+  ctxt <- strsplit(xml2::xml_text(chlng), "\n")[[1]]
+  expect_equal(sum(grepl("@solution", ctxt)), 4)
+  expect_equal(sum(grepl("@challenge", ctxt)), 4)
 
 })
 

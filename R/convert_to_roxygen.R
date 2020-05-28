@@ -43,7 +43,7 @@ convert_to_roxygen <- function(block, token = "#'") {
     purrr::walk(stags, xml2::xml_set_attr, "xygen", "solution")
   }
 
-  # 4. Tag the first sibling as a  challenge
+  # 4. Tag the first sibling as a challenge
   ctags <- xml2::xml_find_all(cpy, glue::glue("{sln}/following-sibling::*[1]"))
   if (length(ctags) > 0) {
     purrr::walk(ctags, xml2::xml_set_attr, "xygen", "challenge")
@@ -53,13 +53,63 @@ convert_to_roxygen <- function(block, token = "#'") {
   purrr::walk(xml2::xml_find_all(cpy, sln), elevate_children)
   elevate_children(xml2::xml_children(cpy))
 
-  # 6. parse the document with xslt
-  stysh <- xml2::read_xml(get_stylesheet("xml2md_roxy.xsl"))
 
+  # 6. Add tokens as comment attribute
+  # Find code blocks that are tagged with xygen tags.
+  #
+  # This will address the situation where the challenge is only a code block
+  # # #' @solution
+  # #'
+  # #' ## Solution
+  # #+
+  # total = 0
+  # for word in ["red", "green", "blue"]:
+  #     total = total + len(word)
+  # print(total)
+  # #'
+  # #' @challenge
+  # #+
+  # # List of word lengths: ["red", "green", "blue"] => [3, 5, 4]
+  # lengths = ____
+  # for word in ["red", "green", "blue"]:
+  #     lengths.____(____)
+  # print(lengths)
+  # #'
+  # #' @solution
+  # #'
+  # #' ## Solution
+  # #+
+  # lengths = []
+  # for word in ["red", "green", "blue"]:
+  #     lengths.append(len(word))
+  # print(lengths)
+  # #'
+  # Because we don't comment code blocks with the token, we have to add a dummy
+  # paragraph before the code block
+  oxy_code <- xml2::xml_find_all(cpy, glue::glue(".//{ns}:code_block[@xygen]"))
+  if (length(oxy_code) > 0) {
+    oxy_tags <- glue::glue("@{xml2::xml_attr(oxy_code, 'xygen')}")
+    oxy_tags <- purrr::map(oxy_tags, xml_new_paragraph, xml2::xml_ns(cpy))
+    # add the paragraphs before the code blocks
+    purrr::walk2(
+      .x = oxy_code,
+      .y = oxy_tags,
+      xml2::xml_add_sibling,
+      .where = "before"
+    )
+    # remove the tag from the code block
+    purrr::walk(oxy_code, xml2::xml_set_attr, "xygen", NULL)
+  }
+  # parent is the document
   to_comment <- glue::glue(".//{ns}:*[parent::{ns}:document]")
+  # but skip code blocks
   not_code   <- glue::glue("[not(ancestor-or-self::{ns}:code_block)]")
-  nblks     <- xml2::xml_find_all(cpy, glue::glue("{to_comment}{not_code}"))
+  nblks      <- xml2::xml_find_all(cpy, glue::glue("{to_comment}{not_code}"))
+  # set the token as the comment attribute
   xml2::xml_set_attr(nblks, "comment", token)
+
+  # 7. parse the document with xslt
+  stysh <- xml2::read_xml(get_stylesheet("xml2md_roxy.xsl"))
 
   txt <- xslt::xml_xslt(cpy, stysh)
   txt <- gsub(glue::glue("{token} {token}"), token, txt, fixed = TRUE)
@@ -67,18 +117,18 @@ convert_to_roxygen <- function(block, token = "#'") {
   txt <- gsub(glue::glue("```\\n{splinter(token)}"), token, txt)
   # fix code fence before code
   txt <- gsub("\\n\\n?```(?!$)", "\n#+\\1", txt, perl = TRUE)
-  # fix all remaing code fences
+  # fix all remaining code fences
   txt <- gsub("```(\\n?)", glue::glue("{token}"), txt)
   # add challenge roxygen tag
   block_type <- gsub("[{: .}]", "", xml2::xml_attr(block, "ktag"))
   txt <- glue::glue("{token} @{block_type}\n{txt}")
 
-  # 7. rename the challenge node to be a code_block
+  # 8. rename the challenge node to be a code_block
   xml2::xml_set_name(block, "code_block")
   xml2::xml_set_attr(block, "info", block_type)
-  # 8. remove the children of that node
+  # 9. remove the children of that node
   xml2::xml_remove(xml2::xml_children(block))
-  # 9. add the parsed text as the text of the challenge code block
+  # 10. add the parsed text as the text of the challenge code block
   xml2::xml_set_text(block, txt)
   invisible(block)
 }

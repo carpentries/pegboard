@@ -37,7 +37,7 @@ test_that("lessons can be read from local files", {
   expect_is(frg, "Lesson")
   expect_equal(
     names(frg$episodes),
-    c("10-lunch.md", "14-looping-data-sets.md", "17-scope.md")
+    c("10-lunch.md", "12-for-loops.md", "14-looping-data-sets.md", "17-scope.md")
   )
 
 })

@@ -45,7 +45,6 @@ When there is a "xygen" tag, this adds the tag before the text like so:
     <xsl:apply-imports select="." mode = "indent-block"/>
 </xsl:template>
 
-
 <xsl:output method="text" encoding="utf-8"/>
 
 </xsl:stylesheet>
