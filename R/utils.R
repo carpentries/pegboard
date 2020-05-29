@@ -178,3 +178,9 @@ challenge_is_sibling <- function(node) {
   )
 }
 
+# Shamelessly taken from base so that I can use tinkr internals.
+`%:%` <- function (pkg, name) {
+  pkg <- as.character(substitute(pkg))
+  name <- as.character(substitute(name))
+  get(name, envir = asNamespace(pkg), inherits = FALSE)
+}

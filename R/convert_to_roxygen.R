@@ -23,9 +23,13 @@ convert_to_roxygen <- function(block, token = "#'") {
   #
   # steps:
   #
-  # 1. copy document
+  # 1. copy document and process Rmd code blocks
   ns  <- NS(block)
-  cpy <- xml2::xml_new_root(xml2::xml_root(block))
+  copy_xml <- "tinkr" %:% "copy_xml"
+  cpy <- copy_xml(xml2::xml_root(block))
+  rcd <- xml2::xml_find_all(cpy, glue::glue(".//{ns}:code_block[@language]"))
+  purrr::walk(rcd, "tinkr" %:% "to_info")
+
 
   # 2. remove all but the block we are focusing on
   isolate_kram_blocks(
@@ -125,7 +129,11 @@ convert_to_roxygen <- function(block, token = "#'") {
 
   # 8. rename the challenge node to be a code_block
   xml2::xml_set_name(block, "code_block")
-  xml2::xml_set_attr(block, "info", block_type)
+  xml2::xml_set_attr(block, "language", block_type)
+  srcpos <- xml2::xml_attr(block, "sourcepos")
+  xml2::xml_set_attr(block, "name", glue::glue('"{srcpos}"'))
+  xml2::xml_set_attr(block, "ktag", NULL)
+
   # 9. remove the children of that node
   xml2::xml_remove(xml2::xml_children(block))
   # 10. add the parsed text as the text of the challenge code block

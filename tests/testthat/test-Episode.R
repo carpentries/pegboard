@@ -147,7 +147,11 @@ test_that("blocks can be converted to code blocks", {
     "{: .language-python}"
   )
   challenge_tags <- tags
-  challenge_tags[9:11] <- "{: .challenge}"
+  challenge_tags[9:11] <- NA
+  language_tags <- tags
+  language_tags[-(9:11)] <- NA
+  language_tags[9:11] <- "challenge"
+
   expect_length(e$get_blocks(), 3)
 
   expect_length(e$code, 11)
@@ -155,6 +159,7 @@ test_that("blocks can be converted to code blocks", {
   expect_length(e$reset()$unblock()$get_blocks(), 0)
   expect_length(e$reset()$unblock()$code, 11)
   expect_identical(xml2::xml_attr(e$reset()$unblock()$code, "ktag"), challenge_tags)
+  expect_identical(xml2::xml_attr(e$reset()$unblock()$code, "language"), language_tags)
 
   cb <- xml2::xml_text(e$reset()$unblock()$code[11])
   # All lines will either start with code or comment

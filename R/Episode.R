@@ -105,7 +105,7 @@ Episode <- R6::R6Class("Episode",
       }
       the_file <- fs::path(path, self$name)
       fs::path_ext(the_file) <- format
-      if (format == "md") {
+      if (format %in% c("md", "Rmd")) {
         stylesheet <- get_stylesheet()
         on.exit(fs::file_delete(stylesheet))
         tinkr::to_md(self, path = the_file, stylesheet_path = stylesheet)

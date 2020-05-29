@@ -39,7 +39,7 @@ Suggests:
     ggplot2,
     gt
 Remotes:
-  ropenscilabs/tinkr
+  ropenscilabs/tinkr#16
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
