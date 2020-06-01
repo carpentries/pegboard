@@ -209,6 +209,8 @@ Episode <- R6::R6Class("Episode",
         }
       }
 
+      invisible(fix_links(lsn$body))
+
       # Initialize the object
       self$path <- path
       self$yaml <- lsn$yaml

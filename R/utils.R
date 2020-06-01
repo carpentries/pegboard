@@ -22,6 +22,7 @@ element_df <- function(node) {
     end   = get_lineend(children) - start
   )
 }
+
 # nocov end
 
 block_type <- function(ns, type = NULL, start = "[", end = "]") {
@@ -58,9 +59,10 @@ find_node_level <- function(node) {
   level
 }
 
-xml_new_paragraph <- function(text = "", ns) {
+xml_new_paragraph <- function(text = "", ns, tag = TRUE) {
+  text <- if (tag) glue::glue("<text>{text}</text>") else text
   pgp <- glue::glue(
-    "<document><paragraph><text>{text}</text></paragraph></document>"
+    "<document><paragraph>{text}</paragraph></document>"
   )
   pgp <- xml2::read_xml(pgp)
   xml2::xml_set_attr(pgp, "xmlns", ns)
