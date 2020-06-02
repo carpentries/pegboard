@@ -75,10 +75,10 @@ You can isolate all of the specialized block quotes in the lesson with
 `isolate_blocks()`. 
 
 ```{r isolate_blocks}
-fun <- rng$episodes$`10-functions.md`
+fun <- rng$episodes$`10-functions.Rmd`
 fun$body %>% xml_length()
 fun$isolate_blocks()$body %>% xml_length()
-fun$write(d)
+fun$write(d, format = "Rmd")
 cat(readLines(fs::path(d, fun$name), n = 50)[(2 + length(fun$yaml)):50], sep = "\n")
 ```
 
@@ -105,7 +105,7 @@ All changes can be reset to the initial state with the `$reset()` method:
 
 ```{r reset}
 fun$reset()
-fun$write(d)
+fun$write(d, format = "Rmd")
 cat(readLines(fs::path(d, fun$name), n = 50)[(2 + length(fun$yaml)):50], sep = "\n")
 ```
 
