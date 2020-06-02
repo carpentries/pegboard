@@ -4,7 +4,7 @@
 \alias{get_lesson}
 \title{Get a carpentries lesson in XML format}
 \usage{
-get_lesson(lesson = NULL, path = tempdir(), overwrite = FALSE)
+get_lesson(lesson = NULL, path = tempdir(), overwrite = FALSE, ...)
 }
 \arguments{
 \item{lesson}{a github user/repo pattern to point to the lesson}
@@ -14,6 +14,8 @@ get_lesson(lesson = NULL, path = tempdir(), overwrite = FALSE)
 \item{overwrite}{if the \code{path} exists, setting this to \code{TRUE} will overwrite
 the path, otherwise, the contents of the path will be returned if it is a
 lesson repository.}
+
+\item{...}{arguments passed on to \link[=Episode]{Episode$new()}.}
 }
 \value{
 a list of xml objects, one element per episode.

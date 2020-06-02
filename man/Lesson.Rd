@@ -236,7 +236,7 @@ frg$isolate_blocks()$body # only one challenge block_quote
 \subsection{Method \code{new()}}{
 create a new Lesson object from a directory
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Lesson$new(path = NULL, rmd = FALSE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Lesson$new(path = NULL, rmd = FALSE, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -248,6 +248,8 @@ folder called \verb{_episodes} within that contains markdown episodes}
 \item{\code{rmd}}{[\code{logical}] when \code{TRUE}, the imported files will be the
 source RMarkdown files. Defaults to \code{FALSE}, which reads the rendered
 markdown files.}
+
+\item{\code{...}}{arguments passed on to \link[=Episode]{Episode$new}}
 }
 \if{html}{\out{</div>}}
 }

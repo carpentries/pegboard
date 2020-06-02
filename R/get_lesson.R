@@ -9,6 +9,7 @@
 #' @param overwrite if the `path` exists, setting this to `TRUE` will overwrite
 #'   the path, otherwise, the contents of the path will be returned if it is a
 #'   lesson repository.
+#' @param ... arguments passed on to [Episode$new()][Episode].
 #'
 #' @return a list of xml objects, one element per episode.
 #' @export
@@ -16,7 +17,7 @@
 #'
 #' png <- get_lesson("swcarpentry/python-novice-gapminder")
 #' str(png, max.level = 1)
-get_lesson <- function(lesson = NULL, path = tempdir(), overwrite = FALSE) {
+get_lesson <- function(lesson = NULL, path = tempdir(), overwrite = FALSE, ...) {
   if (is.null(lesson) && fs::dir_exists(fs::path(path, "_episodes"))) {
     # user provides path to lesson on computer
     the_path <- normalizePath(path)
@@ -48,5 +49,5 @@ get_lesson <- function(lesson = NULL, path = tempdir(), overwrite = FALSE) {
   }
 
   # Return a new lesson object
-  return(Lesson$new(the_path))
+  return(Lesson$new(the_path, ...))
 }

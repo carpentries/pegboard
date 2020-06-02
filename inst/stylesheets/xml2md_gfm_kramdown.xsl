@@ -19,8 +19,13 @@
 
 <!-- kramdown tags -->
 
+<xsl:template match="md:text[@klink]">
+    <!-- klink tags are markdown links that haven't been resolved on that page.
+         When this happens, we want to print them as-is -->
+    <xsl:value-of select="."/>
+</xsl:template>
+
 <xsl:template match="md:*[@ktag]">
-    <!-- <xsl:apply-templates select="*" mode="indent"/> -->
     <!-- Apply all the templates from the commonmark and tinkr stylesheet -->
     <!-- https://stackoverflow.com/a/647932/2752888 -->
     <xsl:apply-imports select="md:*"/>

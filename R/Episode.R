@@ -170,13 +170,17 @@ Episode <- R6::R6Class("Episode",
     #' @param process_tags \[`logical`\] if `TRUE` (default), kramdown tags will
     #'   be processed into attributes of the parent nodes. If `FALSE`, these
     #'   tags will be treated as text
+    #' @param fix_links \[`logical`\] if `TRUE` (default), links pointing to
+    #'   liquid tags (e.g. `{{ page.root }}`) and included links (those supplied
+    #'   by a call to `{% import links.md %}`) will be appropriately processed
+    #'   as valid links.
     #' @return A new Episode object with extracted XML data
     #' @examples
     #' scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
     #' scope$name
     #' scope$lesson
     #' scope$challenges
-    initialize = function(path = NULL, process_tags = TRUE) {
+    initialize = function(path = NULL, process_tags = TRUE, fix_links = TRUE) {
       if (!file.exists(path)) {
         stop(glue::glue("the file '{path}' does not exist"))
       }
@@ -209,7 +213,7 @@ Episode <- R6::R6Class("Episode",
         }
       }
 
-      invisible(fix_links(lsn$body))
+      if (fix_links) fix_links(lsn$body)
 
       # Initialize the object
       self$path <- path

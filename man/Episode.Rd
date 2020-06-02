@@ -369,7 +369,7 @@ loop$code # now there are two blocks with challenge tags
 \subsection{Method \code{new()}}{
 Create a new Episode
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Episode$new(path = NULL, process_tags = TRUE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Episode$new(path = NULL, process_tags = TRUE, fix_links = TRUE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

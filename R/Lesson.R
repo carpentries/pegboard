@@ -128,13 +128,14 @@ Lesson <- R6::R6Class("Lesson",
     #' @param rmd \[`logical`\] when `TRUE`, the imported files will be the
     #'   source RMarkdown files. Defaults to `FALSE`, which reads the rendered
     #'   markdown files.
+    #' @param ... arguments passed on to [Episode$new][Episode]
     #' @return a new Lesson object that contains a list of [Episode] objects in
     #' `$episodes`
     #' @examples
     #' frg <- Lesson$new(lesson_fragment())
     #' frg$path
     #' frg$episodes
-    initialize = function(path = NULL, rmd = FALSE) {
+    initialize = function(path = NULL, rmd = FALSE, ...) {
 
       if (!fs::dir_exists(path)) {
         stop(glue::glue("the directory '{path}' does not exist or is not a directory"))
@@ -162,7 +163,7 @@ Lesson <- R6::R6Class("Lesson",
         stop(glue::glue("The {src} directory must have (R)markdown files"))
       }
 
-      self$episodes <- purrr::map(the_episodes, Episode$new)
+      self$episodes <- purrr::map(the_episodes, Episode$new, ...)
       # Names of the episodes will be the filename, not the basename
       names(self$episodes) <- fs::path_file(the_episodes)
       self$path <- path

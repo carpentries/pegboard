@@ -103,6 +103,34 @@ test_that("overwriting is possible", {
 
 })
 
+test_that("Lesson flags will be passed down", {
+
+  testthat::skip_if_offline()
+
+  # The lesson already exists in the directory
+  expect_length(fs::dir_ls(d), 1)
+
+  # Nothing will print because we are using the lesson we downloaded
+  expect_silent(
+    lex <- get_lesson("carpentries/lesson-example", path = d, process_tags = FALSE, fix_links = FALSE)
+  )
+
+  # Kramdown tags still exist
+  kram_tags <- purrr::map_int(
+    lex$episodes,
+    ~length(xml2::xml_find_all(.x$body, ".//*[contains(text(), '{: .challenge}')]"))
+  )
+  expect_true(sum(kram_tags) > 0)
+
+  # Liquid links are unprocessed
+  liquid_links <- purrr::map_int(
+    lex$episodes,
+    ~length(xml2::xml_find_all(.x$body, ".//*[contains(text(), '({{')]"))
+  )
+  expect_true(sum(liquid_links) > 0)
+
+})
+
 test_that("Lesson methods work as expected", {
 
   testthat::skip_if_offline()
@@ -114,6 +142,46 @@ test_that("Lesson methods work as expected", {
   expect_silent(
     lex <- get_lesson("carpentries/lesson-example", path = d)
   )
+
+  # Links and tags are processed
+  kram_tags <- purrr::map_int(
+    lex$episodes,
+    ~length(xml2::xml_find_all(.x$body, ".//*[contains(text(), '{: .challenge}')][not(self::d1:code_block)]"))
+  )
+  expect_true(sum(kram_tags) == 0)
+
+  # Liquid links are processed
+  liquid_links <- purrr::map_int(
+    lex$episodes,
+    ~length(xml2::xml_find_all(.x$body, ".//*[contains(text(), '({{')]"))
+  )
+  expect_true(sum(liquid_links) == 0)
+
+  liquid_links <- purrr::map_int(
+    lex$episodes,
+    ~length(xml2::xml_find_all(.x$body, ".//d1:link[starts-with(@destination, '{{')]"))
+  )
+  expect_true(sum(liquid_links) > 0)
+
+  # Liquid images are processed
+  liquid_images <- purrr::map_int(
+    lex$episodes,
+    ~length(xml2::xml_find_all(.x$body, ".//*[(contains(text(), '![') and contains(text(), '({{'))]"))
+  )
+  expect_true(sum(liquid_images) == 0)
+
+  liquid_images <- purrr::map_int(
+    lex$episodes,
+    ~length(xml2::xml_find_all(.x$body, ".//d1:image"))
+  )
+  expect_true(sum(liquid_images) > 0)
+
+  # Markdown links are processed
+  markdown_links <- purrr::map_int(
+    lex$episodes,
+    ~length(xml2::xml_find_all(.x$body, ".//@klink"))
+  )
+  expect_true(sum(markdown_links) > 0)
 
   # $path ----------------------------------------------------------------------
   expect_equal(fs::path_file(fs::path_dir(lex$path)), fs::path_file(d))
