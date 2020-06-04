@@ -3,7 +3,11 @@
     version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:md="http://commonmark.org/xml/1.0">
+
+  <xsl:import href="FIXME"/>
+
   <xsl:output omit-xml-declaration="no" indent="yes" encoding="UTF-8"/>
+
 
   <!-- Identity transform -->
   <xsl:template match="@* | node()">
@@ -23,28 +27,55 @@
     <xsl:variable name="post" select="substring-after(substring-after(., ']('), ')')"/>
 
     <!-- add the text before the link -->
-    <xsl:if test="not($pre='')">
+    <xsl:call-template name="new-text-node">
+      <xsl:with-param name="text" select="$pre"/>
+    </xsl:call-template>
+
+
+    <!-- create the link element -->
+    <xsl:call-template name="new-link-node">
+      <xsl:with-param name="dest" select="$dest"/>
+      <xsl:with-param name="text" select="$txt"/>
+    </xsl:call-template>
+
+    <!-- add the text after the link -->
+    <xsl:call-template name="new-text-node">
+      <xsl:with-param name="text" select="$post"/>
+    </xsl:call-template>
+
+  </xsl:template>
+
+
+  <xsl:template name="new-text-node">
+    <xsl:param name="text"/>
+
+    <xsl:if test="not($text='')">
       <xsl:element name="text" namespace="http://commonmark.org/xml/1.0">
-        <xsl:value-of select="$pre"/>
+        <xsl:call-template name="escape-text">
+          <xsl:with-param name="text" select="$text"/>
+        </xsl:call-template>
       </xsl:element>
     </xsl:if>
 
-    <!-- create the link element -->
+  </xsl:template>
+
+  <xsl:template name="new-link-node">
+    <xsl:param name="text"/>
+    <xsl:param name="dest"/>
+
     <xsl:element name="link" namespace="http://commonmark.org/xml/1.0">
       <xsl:attribute name="destination">
-        <xsl:value-of select="$dest"/>
+        <xsl:call-template name="escape-text">
+          <xsl:with-param name="text" select="$dest"/>
+          <xsl:with-param name="escape" select="'()'"/>
+        </xsl:call-template>
       </xsl:attribute>
       <xsl:element name="text" namespace="http://commonmark.org/xml/1.0">
-        <xsl:value-of select="$txt"/>
+        <xsl:call-template name="escape-text">
+          <xsl:with-param name="text" select="$text"/>
+        </xsl:call-template>
       </xsl:element>
     </xsl:element>
 
-    <!-- add the text after the link -->
-    <xsl:if test="not($post='')">
-      <xsl:element name="text" namespace="http://commonmark.org/xml/1.0">
-        <xsl:value-of select="$post"/>
-      </xsl:element>
-    </xsl:if>
   </xsl:template>
-
 </xsl:stylesheet>
