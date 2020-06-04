@@ -51,9 +51,7 @@
 
     <xsl:if test="not($text='')">
       <xsl:element name="text" namespace="http://commonmark.org/xml/1.0">
-        <xsl:call-template name="escape-text">
-          <xsl:with-param name="text" select="$text"/>
-        </xsl:call-template>
+        <xsl:value-of select="$text"/>
       </xsl:element>
     </xsl:if>
 
@@ -65,16 +63,11 @@
 
     <xsl:element name="link" namespace="http://commonmark.org/xml/1.0">
       <xsl:attribute name="destination">
-        <xsl:call-template name="escape-text">
-          <xsl:with-param name="text" select="$dest"/>
-          <xsl:with-param name="escape" select="'()'"/>
-        </xsl:call-template>
+        <xsl:value-of select="$dest"/>
       </xsl:attribute>
-      <xsl:element name="text" namespace="http://commonmark.org/xml/1.0">
-        <xsl:call-template name="escape-text">
-          <xsl:with-param name="text" select="$text"/>
-        </xsl:call-template>
-      </xsl:element>
+      <xsl:call-template name="new-text-node">
+        <xsl:with-param name="text" select="$text"/>
+      </xsl:call-template>
     </xsl:element>
 
   </xsl:template>
