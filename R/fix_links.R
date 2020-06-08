@@ -3,6 +3,8 @@
 #' @param body the body of an episode
 #' @return the modified body
 fix_links <- function(body) {
+  # lnks <- system.file("stylesheets", "internal_links.xsl", package = "up2code")
+  # xslt::xml_xslt(body, xml2::read_xml(lnks))
   purrr::walk(names(LINKS), fix_link_type, body)
   body
 }
