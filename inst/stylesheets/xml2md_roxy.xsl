@@ -41,8 +41,19 @@ When there is a "xygen" tag, this adds the tag before the text like so:
     <xsl:value-of select="@comment"/>
     <xsl:text> &#64;</xsl:text>
     <xsl:value-of select="@xygen"/>
-    <xsl:text>&#10;</xsl:text>
-    <xsl:apply-imports select="." mode = "indent-block"/>
+    <xsl:choose>
+    <!-- If the current node is a heading node, then it's part of the tag -->
+        <xsl:when test="boolean(self::md:heading[@level='2'])">
+            <xsl:text> </xsl:text>
+            <xsl:value-of select='self::md:heading[1]'/>
+            <xsl:text>&#10;</xsl:text>
+        </xsl:when>
+    <!-- In all other cases, the node is processed normally -->
+        <xsl:otherwise>
+            <xsl:text>&#10;</xsl:text>
+            <xsl:apply-templates select="." mode="indent-block"/>
+        </xsl:otherwise>
+    </xsl:choose>
 </xsl:template>
 
 <xsl:output method="text" encoding="utf-8"/>

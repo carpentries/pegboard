@@ -12,6 +12,7 @@
 #' frg <- Lesson$new(lesson_fragment())
 #' blo <- frg$episodes$`14-looping-data-sets.md`$get_blocks()[[2]]
 #' convert_to_roxygen(blo)
+#' cat(xml2::xml_text(blo))
 #' }
 convert_to_roxygen <- function(block, token = "#'") {
   # Thoughts on this:
@@ -25,6 +26,7 @@ convert_to_roxygen <- function(block, token = "#'") {
   #
   # 1. copy document and process Rmd code blocks
   ns  <- NS(block)
+  block_type <- gsub("[{}: .]", "", xml2::xml_attr(block, "ktag"))
   copy_xml <- "tinkr" %:% "copy_xml"
   cpy <- copy_xml(xml2::xml_root(block))
   rcd <- xml2::xml_find_all(cpy, glue::glue(".//{ns}:code_block[@language]"))
@@ -50,7 +52,7 @@ convert_to_roxygen <- function(block, token = "#'") {
   # 4. Tag the first sibling as a challenge
   ctags <- xml2::xml_find_all(cpy, glue::glue("{sln}/following-sibling::*[1]"))
   if (length(ctags) > 0) {
-    purrr::walk(ctags, xml2::xml_set_attr, "xygen", "challenge")
+    purrr::walk(ctags, xml2::xml_set_attr, "xygen", block_type)
   }
 
   # 5. elevate the children in the document (removing block quotes)
@@ -117,15 +119,13 @@ convert_to_roxygen <- function(block, token = "#'") {
 
   txt <- xslt::xml_xslt(cpy, stysh)
   txt <- gsub(glue::glue("{token} {token}"), token, txt, fixed = TRUE)
-  # fix closing code fences
-  txt <- gsub(glue::glue("```\\n{splinter(token)}"), token, txt)
-  # fix code fence before code
-  txt <- gsub("\\n\\n?```(?!$)", "\n#+\\1", txt, perl = TRUE)
-  # fix all remaining code fences
-  txt <- gsub("```(\\n?)", glue::glue("{token}"), txt)
+  # fix opening code fences
+  txt <- gsub("\n\n```", "\n#' \n#' ```", txt)
+  # fix closing code fenes
+  txt <- gsub("\n```", "\n#' ```", txt)
   # add challenge roxygen tag
-  block_type <- gsub("[{: .}]", "", xml2::xml_attr(block, "ktag"))
-  txt <- glue::glue("{token} @{block_type}\n{txt}")
+  txt <- if (grepl("^#' ## ", txt)) sub("^#' ## ", '', txt) else paste0("\n", txt)
+  txt <- glue::glue("{token} @{block_type} {txt}")
 
   # 8. rename the challenge node to be a code_block
   xml2::xml_set_name(block, "code_block")

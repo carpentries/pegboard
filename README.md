@@ -55,18 +55,18 @@ library(fs)
 
 d <- fs::file_temp(pattern = "U2CREADME")
 rng <- get_lesson("swcarpentry/r-novice-gapminder", path = d)
-#> cloning into '/tmp/RtmpDGS4ZC/U2CREADME13b04671ec9c/swcarpentry--r-novice-gapminder'...
-#> Receiving objects:   1% (93/9296),   55 kb
-#> Receiving objects:  11% (1023/9296),  415 kb
-#> Receiving objects:  21% (1953/9296),  631 kb
-#> Receiving objects:  31% (2882/9296), 8741 kb
-#> Receiving objects:  41% (3812/9296), 16900 kb
-#> Receiving objects:  51% (4741/9296), 21971 kb
-#> Receiving objects:  61% (5671/9296), 27298 kb
-#> Receiving objects:  71% (6601/9296), 30754 kb
-#> Receiving objects:  81% (7530/9296), 34753 kb
-#> Receiving objects:  91% (8460/9296), 37121 kb
-#> Receiving objects: 100% (9296/9296), 44669 kb, done.
+#> cloning into '/tmp/RtmpWfmxfW/U2CREADME6e6c59d718e7/swcarpentry--r-novice-gapminder'...
+#> Receiving objects:   1% (94/9312),   49 kb
+#> Receiving objects:  11% (1025/9312),  418 kb
+#> Receiving objects:  21% (1956/9312),  626 kb
+#> Receiving objects:  31% (2887/9312), 13918 kb
+#> Receiving objects:  41% (3818/9312), 19133 kb
+#> Receiving objects:  51% (4750/9312), 26251 kb
+#> Receiving objects:  61% (5681/9312), 31563 kb
+#> Receiving objects:  71% (6612/9312), 35050 kb
+#> Receiving objects:  81% (7543/9312), 37498 kb
+#> Receiving objects:  91% (8474/9312), 41402 kb
+#> Receiving objects: 100% (9312/9312), 44680 kb, done.
 rng
 #> <Lesson>
 #>   Public:
@@ -78,7 +78,7 @@ rng
 #>     initialize: function (path = NULL, rmd = FALSE, ...) 
 #>     isolate_blocks: function () 
 #>     n_problems: active binding
-#>     path: /tmp/RtmpDGS4ZC/U2CREADME13b04671ec9c/swcarpentry--r-nov ...
+#>     path: /tmp/RtmpWfmxfW/U2CREADME6e6c59d718e7/swcarpentry--r-nov ...
 #>     reset: function () 
 #>     rmd: TRUE
 #>     show_problems: active binding
@@ -312,26 +312,24 @@ fun$code
 #> [10] <code_block sourcepos="464:1-472:12" language="callout" name="&quot;464: ...
 #> [11] <code_block sourcepos="479:1-506:12" language="callout" name="&quot;479: ...
 fun$code[3] %>% xml_text() %>% cat()
-#> #' @challenge
-#> #' ## Challenge 1
+#> #' @challenge Challenge 1
 #> #' 
 #> #' Write a function called `kelvin_to_celsius()` that takes a temperature in
 #> #' Kelvin and returns that temperature in Celsius.
 #> #' 
 #> #' Hint: To convert from Kelvin to Celsius you subtract 273.15
 #> #'
-#> #' @solution
-#> #' 
-#> #' ## Solution to challenge 1
+#> #' @solution Solution to challenge 1
 #> #' 
 #> #' Write a function called `kelvin_to_celsius` that takes a temperature in Kelvin
 #> #' and returns that temperature in Celsius
-#> #+{r}
+#> #' 
+#> #' ```{r}
 #> kelvin_to_celsius <- function(temp) {
 #>  celsius <- temp - 273.15
 #>  return(celsius)
 #> }
-#> #'
+#> #' ```
 ````
 
 ## Reset
