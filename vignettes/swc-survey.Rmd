@@ -22,7 +22,7 @@ I can understand how I want to update the lesson templates.
 ```{r setup}
 library(tidygraph)
 library(magrittr)
-library(up2code)
+library(pegboard)
 library(ggraph)
 library(dplyr)
 library(purrr)
