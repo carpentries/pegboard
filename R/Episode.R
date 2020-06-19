@@ -161,7 +161,7 @@ Episode <- R6::R6Class("Episode",
     #' loop$get_blocks() # no blocks
     #' loop$code # now there are two blocks with challenge tags
     unblock = function(token = "#'") {
-      purrr::walk(self$get_blocks(), convert_to_roxygen, token = token)
+      purrr::walk(self$get_blocks(), to_dovetail, token = token)
       invisible(self)
     },
 

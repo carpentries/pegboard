@@ -1,4 +1,10 @@
-#' Convert a given block quote to roxygen template
+#' Convert a given block quote to dovetail template
+#'
+#' The {dovetail} package allows people to write block quotes as code blocks
+#' formatted in {roxygen2} syntax. This internal function takes a block quote
+#' element, elevates all the child elements, converts the block quote to a code
+#' block and uses a custom xslt stylesheet to render the children of the block
+#' to roxygen-formatted text and code.
 #'
 #' @param block a block quote element
 #' @param token the token to use to indicate markdown text over code
@@ -11,10 +17,10 @@
 #' \dontrun{
 #' frg <- Lesson$new(lesson_fragment())
 #' blo <- frg$episodes$`14-looping-data-sets.md`$get_blocks()[[2]]
-#' convert_to_roxygen(blo)
+#' to_dovetail(blo)
 #' cat(xml2::xml_text(blo))
 #' }
-convert_to_roxygen <- function(block, token = "#'") {
+to_dovetail <- function(block, token = "#'") {
   # Thoughts on this:
   #
   # xslt::xml_xslt(thing, stylesheet) acts on a document and will parse the
