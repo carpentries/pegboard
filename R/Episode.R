@@ -172,7 +172,7 @@ Episode <- R6::R6Class("Episode",
     #'   tags will be treated as text
     #' @param fix_links \[`logical`\] if `TRUE` (default), links pointing to
     #'   liquid tags (e.g. `{{ page.root }}`) and included links (those supplied
-    #'   by a call to `{% import links.md %}`) will be appropriately processed
+    #'   by a call to `{\% import links.md \%}`) will be appropriately processed
     #'   as valid links.
     #' @return A new Episode object with extracted XML data
     #' @examples

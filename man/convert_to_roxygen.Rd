@@ -22,6 +22,7 @@ Convert a given block quote to roxygen template
 frg <- Lesson$new(lesson_fragment())
 blo <- frg$episodes$`14-looping-data-sets.md`$get_blocks()[[2]]
 convert_to_roxygen(blo)
+cat(xml2::xml_text(blo))
 }
 }
 \keyword{internal}

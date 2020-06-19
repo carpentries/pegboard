@@ -380,6 +380,11 @@ Create a new Episode
 \item{\code{process_tags}}{[\code{logical}] if \code{TRUE} (default), kramdown tags will
 be processed into attributes of the parent nodes. If \code{FALSE}, these
 tags will be treated as text}
+
+\item{\code{fix_links}}{[\code{logical}] if \code{TRUE} (default), links pointing to
+liquid tags (e.g. \code{{{ page.root }}}) and included links (those supplied
+by a call to \verb{\{\\\% import links.md \\\%\}}) will be appropriately processed
+as valid links.}
 }
 \if{html}{\out{</div>}}
 }

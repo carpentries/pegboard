@@ -49,10 +49,10 @@ convert_to_roxygen <- function(block, token = "#'") {
     purrr::walk(stags, xml2::xml_set_attr, "xygen", "solution")
   }
 
-  # 4. Tag the first sibling as a challenge
+  # 4. Tag the first sibling as an end tag
   ctags <- xml2::xml_find_all(cpy, glue::glue("{sln}/following-sibling::*[1]"))
   if (length(ctags) > 0) {
-    purrr::walk(ctags, xml2::xml_set_attr, "xygen", block_type)
+    purrr::walk(ctags, xml2::xml_set_attr, "xygen", "end")
   }
 
   # 5. elevate the children in the document (removing block quotes)
@@ -124,8 +124,8 @@ convert_to_roxygen <- function(block, token = "#'") {
   # fix closing code fenes
   txt <- gsub("\n```", "\n#' ```", txt)
   # add challenge roxygen tag
-  txt <- if (grepl("^#' ## ", txt)) sub("^#' ## ", '', txt) else paste0("\n", txt)
-  txt <- glue::glue("{token} @{block_type} {txt}")
+  # txt <- if (grepl("^#' ## ", txt)) sub("^#' ## ", '', txt) else paste0("\n", txt)
+  # txt <- glue::glue("{token} @{block_type} {txt}")
 
   # 8. rename the challenge node to be a code_block
   xml2::xml_set_name(block, "code_block")
