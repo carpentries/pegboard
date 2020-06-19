@@ -10,5 +10,5 @@
 #'
 #' lesson_fragment()
 lesson_fragment <- function() {
-  system.file("lesson-fragment", package = "up2code")
+  system.file("lesson-fragment", package = "pegboard")
 }

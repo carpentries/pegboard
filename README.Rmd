@@ -13,30 +13,24 @@ knitr::opts_chunk$set(
 )
 ```
 
-# up2code
+# pegboard
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-[![CRAN status](https://www.r-pkg.org/badges/version/up2code)](https://CRAN.R-project.org/package=up2code)
-[![Travis build status](https://travis-ci.com/zkamvar/up2code.svg?branch=master)](https://travis-ci.com/zkamvar/up2code)
-[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/zkamvar/up2code?branch=master&svg=true)](https://ci.appveyor.com/project/zkamvar/up2code)
-[![Codecov test coverage](https://codecov.io/gh/zkamvar/up2code/branch/master/graph/badge.svg)](https://codecov.io/gh/zkamvar/up2code?branch=master)
-[![R build status](https://github.com/zkamvar/up2code/workflows/R-CMD-check/badge.svg)](https://github.com/zkamvar/up2code/actions)
+[![CRAN status](https://www.r-pkg.org/badges/version/pegboard)](https://CRAN.R-project.org/package=pegboard)
+[![Travis build status](https://travis-ci.com/zkamvar/pegboard.svg?branch=master)](https://travis-ci.com/zkamvar/pegboard)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/zkamvar/pegboard?branch=master&svg=true)](https://ci.appveyor.com/project/zkamvar/pegboard)
+[![Codecov test coverage](https://codecov.io/gh/zkamvar/pegboard/branch/master/graph/badge.svg)](https://codecov.io/gh/zkamvar/pegboard?branch=master)
+[![R build status](https://github.com/zkamvar/pegboard/workflows/R-CMD-check/badge.svg)](https://github.com/zkamvar/pegboard/actions)
 <!-- badges: end -->
 
-The goal of up2code is to ...
+> [pegboard] is tempered hardboard which is pre-drilled with evenly spaced
+> holes. The holes are used to accept pegs or hooks to support various items,
+> such as tools in a workshop.
+>
+> https://en.wikipedia.org/wiki/Pegboard
 
-## Installation
-
-You can install the released version of up2code from [CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("up2code")
-```
-
-## Example
-
-The {up2code} package is a way to explore the Carpentries' lessons via their
+The {pegboard} package is a way to explore the Carpentries' lessons via their
 XML representation. This package makes heavy use of rOpenSci's [{tinkr}](https://docs.ropensci.org/tinkr/) and [{xml2}](https://cran.r-project.org/package=xml2). 
 
 There are two [{R6}](https://cran.r-project.org/package=R6) objects in the
@@ -44,13 +38,24 @@ package:
 
  - Episode: stores the xml content of a single episode
  - Lesson: stores all Episodes within a lesson
+
+## Installation
+
+This package is currently in development, but you can install it via {remotes}:
+
+``` r
+if (!requireNamespace("remotes", quietly = TRUE)) install.packages("remotes")
+remotes::install_github("zkamvar/pegboard")
+```
+
+## Example
  
 The first way to get started is to use the `get_lesson()` function, which will
 use [{git2r}](https://cran.r-project.org/package=git2r) to clone a lesson 
 repository to your computer. 
 
 ```{r example, message = FALSE}
-library(up2code)
+library(pegboard)
 library(purrr)
 library(xml2)
 library(fs)

@@ -1,4 +1,4 @@
 library(testthat)
-library(up2code)
+library(pegboard)
 
-test_check("up2code")
+test_check("pegboard")

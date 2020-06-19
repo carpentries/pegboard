@@ -1,6 +1,6 @@
-# Getting help with up2code
+# Getting help with pegboard
 
-Thanks for using up2code!
+Thanks for using pegboard!
 Before filing an issue, there are a few places to explore and pieces to put together to make the process as smooth as possible.
 
 ## Make a reprex
