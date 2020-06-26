@@ -129,9 +129,6 @@ to_dovetail <- function(block, token = "#'") {
   txt <- gsub("\n\n```", "\n#' \n#' ```", txt)
   # fix closing code fenes
   txt <- gsub("\n```", "\n#' ```", txt)
-  # add challenge roxygen tag
-  # txt <- if (grepl("^#' ## ", txt)) sub("^#' ## ", '', txt) else paste0("\n", txt)
-  # txt <- glue::glue("{token} @{block_type} {txt}")
 
   # 8. rename the challenge node to be a code_block
   xml2::xml_set_name(block, "code_block")

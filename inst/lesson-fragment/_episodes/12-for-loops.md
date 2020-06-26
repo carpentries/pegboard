@@ -311,6 +311,10 @@ print(total)
 > > ~~~
 > > {: .language-python}
 > {: .solution}
+> 
+> ZNK: this is a test of text after an end block
+> 
+> ZNK: test two
 {: .challenge}
 
 > ## Cumulative Sum

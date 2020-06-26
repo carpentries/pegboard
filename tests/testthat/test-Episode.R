@@ -207,12 +207,14 @@ test_that("challenges with multiple solution blocks will be rendered appropriate
   expect_true(xml2::xml_find_lgl(chlng, "boolean(self::d1:code_block)"))
   expect_match(xml2::xml_text(chlng), "## Practice Accumulating")
   expect_match(xml2::xml_text(chlng), "@solution Solution")
+  expect_match(xml2::xml_text(chlng), "ZNK: this is a test")
+  expect_match(xml2::xml_text(chlng), "ZNK: test two")
 
   # There will be four solution blocks and four challenge blocks
   ctxt <- strsplit(xml2::xml_text(chlng), "\n")[[1]]
   expect_equal(sum(grepl("@solution", ctxt)), 4)
   expect_equal(sum(grepl("@challenge", ctxt)), 0)
-  expect_equal(sum(grepl("@end", ctxt)), 3)
+  expect_equal(sum(grepl("@end", ctxt)), 4)
 
   # This process works for non-challenge blocks
   e$reset()
@@ -222,11 +224,13 @@ test_that("challenges with multiple solution blocks will be rendered appropriate
   expect_true(xml2::xml_find_lgl(chlng, "boolean(self::d1:code_block)"))
   expect_match(xml2::xml_text(chlng), "## Practice Accumulating")
   expect_match(xml2::xml_text(chlng), "@solution Solution")
+  expect_match(xml2::xml_text(chlng), "ZNK: this is a test")
+  expect_match(xml2::xml_text(chlng), "ZNK: test two")
   ctxt <- strsplit(xml2::xml_text(chlng), "\n")[[1]]
   expect_equal(sum(grepl("@solution", ctxt)), 4)
   expect_equal(sum(grepl("@challenge", ctxt)), 0)
   expect_equal(sum(grepl("@callout", ctxt)), 0)
-  expect_equal(sum(grepl("@end", ctxt)), 3)
+  expect_equal(sum(grepl("@end", ctxt)), 4)
 
   # This works if the first part is not a level2 heading
   e$reset()
@@ -238,11 +242,13 @@ test_that("challenges with multiple solution blocks will be rendered appropriate
   expect_true(xml2::xml_find_lgl(chlng, "boolean(self::d1:code_block)"))
   expect_match(xml2::xml_text(chlng), "### Practice Accumulating")
   expect_match(xml2::xml_text(chlng), "@solution Solution")
+  expect_match(xml2::xml_text(chlng), "ZNK: this is a test")
+  expect_match(xml2::xml_text(chlng), "ZNK: test two")
   ctxt <- strsplit(xml2::xml_text(chlng), "\n")[[1]]
   expect_equal(sum(grepl("@solution", ctxt)), 4)
   expect_equal(sum(grepl("@challenge", ctxt)), 0)
   expect_equal(sum(grepl("@callout", ctxt)), 0)
-  expect_equal(sum(grepl("@end", ctxt)), 3)
+  expect_equal(sum(grepl("@end", ctxt)), 4)
 
 
 })
