@@ -51,7 +51,8 @@ When there is a "xygen" tag, this adds the tag before the text like so:
     <!-- In all other cases, the node is processed normally -->
         <xsl:otherwise>
             <xsl:text>&#10;</xsl:text>
-            <xsl:apply-templates select="." mode="indent-block"/>
+            <xsl:apply-imports select="md:*" mode="indent"/>
+            <xsl:value-of select="@comment"/>
         </xsl:otherwise>
     </xsl:choose>
 </xsl:template>
