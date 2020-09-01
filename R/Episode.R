@@ -302,7 +302,7 @@ Episode <- R6::R6Class("Episode",
     clear_yaml_item = function(what) {
       yml <- self$get_yaml()
       yml[[what]] <- NULL
-      self$yaml <- strsplit(yaml::as.yaml(yml), "\n")[[1]]
+      self$yaml <- c("---", strsplit(yaml::as.yaml(yml), "\n")[[1]], "---")
     },
     record_problem = function(x) {
       private$problems <- c(private$problems, x)
