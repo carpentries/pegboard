@@ -128,6 +128,39 @@ test_that("isolate_blocks() method works as expected", {
 
 })
 
+test_that("yaml items can be moved to the text", {
+
+  scope <- fs::path(lesson_fragment(), "_episodes", "14-looping-data-sets.md")
+  e <- Episode$new(scope)
+  yml <- e$get_yaml()
+  n_code_blocks <- length(e$code)
+  expect_named(yml, c("title", "teaching", "exercises", "questions", "objectives", "keypoints"))
+  expect_false(length(xml2::xml_find_all(e$body, ".//d1:code_block[@info='{questions}']")) > 0)
+
+  e$move_questions()
+  expect_equal(n_code_blocks + 1L, length(e$code))
+
+  # The question block is moved to the top
+  expect_equal(xml2::xml_attr(e$code[1], "info"), "{questions}")
+  # question block is removed from yaml
+  yml <- e$get_yaml()
+  expect_named(yml, c("title", "teaching", "exercises", "objectives", "keypoints"))
+
+  e$move_objectives()
+  expect_equal(n_code_blocks + 2L, length(e$code))
+  expect_equal(xml2::xml_attr(e$code[1], "info"), "{objectives}")
+  yml <- e$get_yaml()
+  expect_named(yml, c("title", "teaching", "exercises", "keypoints"))
+
+  e$move_keypoints()
+  expect_equal(n_code_blocks + 3L, length(e$code))
+  expect_equal(xml2::xml_attr(e$code[1], "info"), "{objectives}")
+  expect_equal(xml2::xml_attr(e$code[length(e$code)], "info"), "{keypoints}")
+  yml <- e$get_yaml()
+  expect_named(yml, c("title", "teaching", "exercises"))
+
+})
+
 test_that("blocks can be converted to code blocks", {
 
 

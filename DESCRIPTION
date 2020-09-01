@@ -24,7 +24,9 @@ Imports:
     glue,
     R6,
     lifecycle,
-    xslt
+    xslt,
+    yaml,
+    commonmark
 Suggests:
     testthat,
     withr,

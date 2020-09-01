@@ -56,6 +56,36 @@ Episode <- R6::R6Class("Episode",
     },
 
     #' @description
+    #' Extract the yaml metadata from the episode
+    get_yaml = function() {
+      yaml::yaml.load(self$yaml)
+    },
+    
+    #' @description 
+    #' move the objectives yaml item to the body
+    move_objectives = function() {
+      yml <- self$get_yaml()
+      move_yaml(yml, self$body, "objectives")
+      private$clear_yaml_item("objectives")
+    },
+    
+    #' @description 
+    #' move the keypoints yaml item to the body
+    move_keypoints = function() {
+      yml <- self$get_yaml()
+      move_yaml(yml, self$body, "keypoints")
+      private$clear_yaml_item("keypoints")
+    },
+
+    #' @description 
+    #' move the questions yaml item to the body
+    move_questions = function() {
+      yml <- self$get_yaml()
+      move_yaml(yml, self$body, "questions")
+      private$clear_yaml_item("questions")
+    },
+
+    #' @description
     #' Create a graph of the top-level elements for the challenges.
     #'
     #' @param recurse if `TRUE` (default), the content of the solutions will be
@@ -269,6 +299,11 @@ Episode <- R6::R6Class("Episode",
     }
   ),
   private = list(
+    clear_yaml_item = function(what) {
+      yml <- self$get_yaml()
+      yml[[what]] <- NULL
+      self$yaml <- strsplit(yaml::as.yaml(yml), "\n")[[1]]
+    },
     record_problem = function(x) {
       private$problems <- c(private$problems, x)
     },
