@@ -136,6 +136,10 @@ scope$challenges
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-get_blocks}{\code{Episode$get_blocks()}}
+\item \href{#method-get_yaml}{\code{Episode$get_yaml()}}
+\item \href{#method-move_objectives}{\code{Episode$move_objectives()}}
+\item \href{#method-move_keypoints}{\code{Episode$move_keypoints()}}
+\item \href{#method-move_questions}{\code{Episode$move_questions()}}
 \item \href{#method-get_challenge_graph}{\code{Episode$get_challenge_graph()}}
 \item \href{#method-write}{\code{Episode$write()}}
 \item \href{#method-reset}{\code{Episode$reset()}}
@@ -196,6 +200,46 @@ scope$get_blocks(".solution", level = 2)
 }
 \if{html}{\out{</div>}}
 
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get_yaml"></a>}}
+\if{latex}{\out{\hypertarget{method-get_yaml}{}}}
+\subsection{Method \code{get_yaml()}}{
+Extract the yaml metadata from the episode
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Episode$get_yaml()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-move_objectives"></a>}}
+\if{latex}{\out{\hypertarget{method-move_objectives}{}}}
+\subsection{Method \code{move_objectives()}}{
+move the objectives yaml item to the body
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Episode$move_objectives()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-move_keypoints"></a>}}
+\if{latex}{\out{\hypertarget{method-move_keypoints}{}}}
+\subsection{Method \code{move_keypoints()}}{
+move the keypoints yaml item to the body
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Episode$move_keypoints()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-move_questions"></a>}}
+\if{latex}{\out{\hypertarget{method-move_questions}{}}}
+\subsection{Method \code{move_questions()}}{
+move the questions yaml item to the body
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Episode$move_questions()}\if{html}{\out{</div>}}
 }
 
 }
