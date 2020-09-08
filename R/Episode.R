@@ -61,28 +61,90 @@ Episode <- R6::R6Class("Episode",
       yaml::yaml.load(self$yaml)
     },
     
+    #' @description
+    #' Ammend or add a setup code block to use `{dovetail}`
+    #' 
+    #' This will convert your lesson to use the {dovetail} R package for
+    #' processing specialized block quotes which will do two things:
+    #'
+    #' 1. convert your lesson from md to Rmd
+    #' 2. add to your setup chunk the following code
+    #'    ```
+    #'    library('dovetail')
+    #'    source(dvt_opts())
+    #'    ```
+    #' If there is no setup chunk, one will be created. If there is a setup
+    #' chunk, then the `source` and `knitr_fig_path` calls will be removed.
+    use_dovetail = function() {
+      use_dovetail(self$body)
+      invisible(self)
+    },
+
+    #' @description
+    #' Use the sandpaper package for processing
+    #'
+    #' This will convert your lesson to use the `{sandpaper}` R package for
+    #' processing the lesson instead of Jekyll (default). Doing this will have
+    #' the following effects:
+    #'
+    #' 1. code blocks that were marked with liquid tags (e.g. `{: .language-r}`
+    #'    are converted to standard code blocks or Rmarkdown chunks (with 
+    #'    language information at the top of the code block)
+    #' 2. If rmarkdown is used and the lesson contains python code, 
+    #'    `library('reticulate')` will be added to the setup chunk of the 
+    #'    lesson.
+    #'
+    #' @param rmd if `TRUE`, lessons will be converted to RMarkdown documents
+    use_sandpaper = function(rmd = FALSE) {
+      use_sandpaper(self$body, rmd)
+      invisible(self)
+    },
+
+    #' @description
+    #' Remove error blocks
+    remove_error = function() {
+      purrr::walk(self$error, xml2::xml_remove)
+      invisible(self)
+    },
+    
+    #' @description
+    #' Remove output blocks
+    remove_output = function() {
+      purrr::walk(self$output, xml2::xml_remove)
+      invisible(self)
+    },
+    
     #' @description 
     #' move the objectives yaml item to the body
-    move_objectives = function() {
+    #' @param dovetail if `TRUE`, the items will be compatible with {dovetail}
+    #' styling, otherwise, the will be div blocks. 
+    move_objectives = function(dovetail = TRUE) {
       yml <- self$get_yaml()
-      move_yaml(yml, self$body, "objectives")
+      move_yaml(yml, self$body, "objectives", dovetail)
       private$clear_yaml_item("objectives")
+      invisible(self)
     },
     
     #' @description 
     #' move the keypoints yaml item to the body
-    move_keypoints = function() {
+    #' @param dovetail if `TRUE`, the items will be compatible with {dovetail}
+    #' styling, otherwise, the will be div blocks. 
+    move_keypoints = function(dovetail = TRUE) {
       yml <- self$get_yaml()
-      move_yaml(yml, self$body, "keypoints")
+      move_yaml(yml, self$body, "keypoints", dovetail)
       private$clear_yaml_item("keypoints")
+      invisible(self)
     },
 
     #' @description 
     #' move the questions yaml item to the body
-    move_questions = function() {
+    #' @param dovetail if `TRUE`, the items will be compatible with {dovetail}
+    #' styling, otherwise, the will be div blocks. 
+    move_questions = function(dovetail = TRUE) {
       yml <- self$get_yaml()
-      move_yaml(yml, self$body, "questions")
+      move_yaml(yml, self$body, "questions", dovetail)
       private$clear_yaml_item("questions")
+      invisible(self)
     },
 
     #' @description

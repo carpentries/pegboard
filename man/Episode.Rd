@@ -137,6 +137,10 @@ scope$challenges
 \itemize{
 \item \href{#method-get_blocks}{\code{Episode$get_blocks()}}
 \item \href{#method-get_yaml}{\code{Episode$get_yaml()}}
+\item \href{#method-use_dovetail}{\code{Episode$use_dovetail()}}
+\item \href{#method-use_sandpaper}{\code{Episode$use_sandpaper()}}
+\item \href{#method-remove_error}{\code{Episode$remove_error()}}
+\item \href{#method-remove_output}{\code{Episode$remove_output()}}
 \item \href{#method-move_objectives}{\code{Episode$move_objectives()}}
 \item \href{#method-move_keypoints}{\code{Episode$move_keypoints()}}
 \item \href{#method-move_questions}{\code{Episode$move_questions()}}
@@ -214,14 +218,93 @@ Extract the yaml metadata from the episode
 
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-use_dovetail"></a>}}
+\if{latex}{\out{\hypertarget{method-use_dovetail}{}}}
+\subsection{Method \code{use_dovetail()}}{
+Ammend or add a setup code block to use \code{{dovetail}}
+
+This will convert your lesson to use the {dovetail} R package for
+processing specialized block quotes which will do two things:
+\enumerate{
+\item convert your lesson from md to Rmd
+\item add to your setup chunk the following code\preformatted{library('dovetail')
+source(dvt_opts())
+}
+}
+
+If there is no setup chunk, one will be created. If there is a setup
+chunk, then the \code{source} and \code{knitr_fig_path} calls will be removed.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Episode$use_dovetail()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-use_sandpaper"></a>}}
+\if{latex}{\out{\hypertarget{method-use_sandpaper}{}}}
+\subsection{Method \code{use_sandpaper()}}{
+Use the sandpaper package for processing
+
+This will convert your lesson to use the \code{{sandpaper}} R package for
+processing the lesson instead of Jekyll (default). Doing this will have
+the following effects:
+\enumerate{
+\item code blocks that were marked with liquid tags (e.g. \verb{\{: .language-r\}}
+are converted to standard code blocks or Rmarkdown chunks (with
+language information at the top of the code block)
+\item If rmarkdown is used and the lesson contains python code,
+\code{library('reticulate')} will be added to the setup chunk of the
+lesson.
+}
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Episode$use_sandpaper(rmd = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{rmd}}{if \code{TRUE}, lessons will be converted to RMarkdown documents}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-remove_error"></a>}}
+\if{latex}{\out{\hypertarget{method-remove_error}{}}}
+\subsection{Method \code{remove_error()}}{
+Remove error blocks
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Episode$remove_error()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-remove_output"></a>}}
+\if{latex}{\out{\hypertarget{method-remove_output}{}}}
+\subsection{Method \code{remove_output()}}{
+Remove output blocks
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Episode$remove_output()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-move_objectives"></a>}}
 \if{latex}{\out{\hypertarget{method-move_objectives}{}}}
 \subsection{Method \code{move_objectives()}}{
 move the objectives yaml item to the body
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Episode$move_objectives()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Episode$move_objectives(dovetail = TRUE)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{dovetail}}{if \code{TRUE}, the items will be compatible with {dovetail}
+styling, otherwise, the will be div blocks.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-move_keypoints"></a>}}
@@ -229,9 +312,17 @@ move the objectives yaml item to the body
 \subsection{Method \code{move_keypoints()}}{
 move the keypoints yaml item to the body
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Episode$move_keypoints()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Episode$move_keypoints(dovetail = TRUE)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{dovetail}}{if \code{TRUE}, the items will be compatible with {dovetail}
+styling, otherwise, the will be div blocks.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-move_questions"></a>}}
@@ -239,9 +330,17 @@ move the keypoints yaml item to the body
 \subsection{Method \code{move_questions()}}{
 move the questions yaml item to the body
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Episode$move_questions()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Episode$move_questions(dovetail = TRUE)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{dovetail}}{if \code{TRUE}, the items will be compatible with {dovetail}
+styling, otherwise, the will be div blocks.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_challenge_graph"></a>}}
