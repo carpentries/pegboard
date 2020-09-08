@@ -25,6 +25,9 @@ element_df <- function(node) {
 
 # nocov end
 
+# Get a character vector of the namespace
+NS <- function(x) attr(xml2::xml_ns(x), "names")[[1]]
+
 block_type <- function(ns, type = NULL, start = "[", end = "]") {
 
   if (is.null(type)) {
@@ -69,15 +72,83 @@ xml_new_paragraph <- function(text = "", ns, tag = TRUE) {
   xml2::xml_child(pgp, 1)
 }
 
+xml_slip_in <- function(body, to_insert, where = length(xml2::xml_children(body))) {
+
+  xml2::xml_add_child(body, to_insert, .where = where)
+
+  the_nodes <- xml2::xml_find_all(body, ".//node()")
+  # adding a child automatically adds "xmlns:xml = http://www.w3.org/XML/1998/namespace"
+  # but this happens to mess up the code blocks, so this gets rid of them
+  xml2::xml_set_attr(the_nodes, "xmlns:xml", NULL)
+
+}
+
+#' Create a new block node based on a list (derived from yaml)
+#'
+#' This assumes that your input is a flat list and is used to translate 
+#' yaml-coded questions and keywords into blocks (for translation between 
+#' jekyll carpentries lessons and the sandpaper lessons
+#' 
+#' @param yaml a list of character vectors
+#' @param what the name of the item to transform
+#' @param dovetail if `TRUE`, the output is presented as a dovetail block,
+#'   otherwise, it is formatted as a div class chunk.
+#' @return an xml document
+#' @noRd
+#' @keywords internal
+#' @examples
+#' l <- list(
+#'   questions = c("what is this?", "who are you?"), 
+#'   keywords  = c("klaatu", "verada", "necktie")
+#' )
+#' xml_list_chunk(l, "questions")
+xml_list_chunk <- function(yaml, what, dovetail = TRUE) {
+  if (dovetail) {
+    item   <- "\n#' - "
+    header <- glue::glue("```{<what>}<item>", .open = "<", .close = ">")
+    tailer <- "\n```"
+  } else {
+    item   <- "\n - "
+    header <- glue::glue("<div class='{what}' markdown='1'>\n{item}")
+    tailer <- "\n\n</div>"
+  }
+  mdlist <- paste0(header, paste(yaml[[what]], collapse = item), tailer)
+  xml2::read_xml(commonmark::markdown_xml(mdlist, smart = TRUE, extensions = TRUE))
+}
+
+#' Retrieve the setup chunk if it exists, create one and insert it at the head 
+#' of the document if it does not
+#' @param body an xml node
+#' @return an xml node containing the setup chunk
+#' @noRd
+#' @keywords internal
+get_setup_chunk <- function(body) {
+  query <- ".//d1:code_block[contains(text(), '../bin/chunk-options.R')]"
+  setup <- xml2::xml_find_first(body, query)
+
+  # No setup chunk from Jekyll site
+  if (inherits(setup, "xml_missing")) {
+    setup <- xml2::xml_child(body)
+  }
+
+  # Check if we've already generated one 
+  if (!grepl("Generated with {pegboard}", xml2::xml_text(setup), fixed = TRUE)) {
+    setup <- "<document><code_block language='r' name='setup' include='FALSE'></code_block></document>"
+    setup <- xml2::xml_child(xml2::read_xml(setup))
+    xml2::xml_set_text(setup, "# Generated via {pegboard}")
+    xml_slip_in(body, setup, where = 0L)
+    setup <- xml2::xml_child(body)
+    xml2::xml_set_namespace(setup, prefix = NS(body), uri = xml2::xml_ns(body)[[1]])
+  }
+  setup
+}
+
 splinter <- function(x) {
   chars      <- strsplit(x, "")[[1]]
   char_class <- glue::glue_collapse(chars, sep = "][")
   glue::glue("[{char_class}]")
 }
 
-
-# Get a character vector of the namespace
-NS <- function(x) attr(xml2::xml_ns(x), "names")[[1]]
 
 # Get the position of an element
 get_pos <- function(x, e = 1) {
@@ -142,6 +213,7 @@ are_blocks <- function(krams) {
     "contains(text(),'discussion}')",
     "contains(text(),'testimonial}')",
     "contains(text(),'keypoints}')",
+    "contains(text(),'questions}')",
     NULL
   )
   tags <- glue::glue_collapse(tags, sep = " or ")
