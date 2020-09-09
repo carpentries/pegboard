@@ -42,8 +42,12 @@ liquid_to_commonmark <- function(block, make_rmd = FALSE) {
     return(block)
   }
 
-  # all blocks will start with {: .language-")
-  lang     <- substring(lang, 14, nchar(lang) - 1L)
+  # if blocks will start with {: .language-, trim it out
+  # otherwise, trim the first five characters and ensure 
+  # that they are not processed as RMD blocks
+  start    <- if (grepl("language", lang, fixed = TRUE)) 14 else 5
+  lang     <- substring(lang, start, nchar(lang) - 1L)
+  make_rmd <- make_rmd && start == 14 
   new_info <- if (make_rmd) "{lang}-chunk-{pos}" else "{lang}{info}"
   info     <- if (all(is.na(info))) "" else paste(",", info)
 

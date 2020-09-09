@@ -123,7 +123,7 @@ xml_list_chunk <- function(yaml, what, dovetail = TRUE) {
 #' @noRd
 #' @keywords internal
 get_setup_chunk <- function(body) {
-  query <- ".//d1:code_block[contains(text(), '../bin/chunk-options.R')]"
+  query <- "./d1:code_block[1][@language='r' and @include='FALSE']"
   setup <- xml2::xml_find_first(body, query)
 
   # No setup chunk from Jekyll site
