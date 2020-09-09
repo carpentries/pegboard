@@ -4,7 +4,9 @@ This version introduces conversions that work together and can be chained to
 convert an episode from the old Jekyll style to the new {sandpaper} style. 
 Things are still very much in development though.
 
-* Conversions for sandpaper and dovetail are clearly separated
+* conversions for sandpaper and dovetail are clearly separated
+* the Episode class understands what conversions have been performed with a
+  private logical vector that tracks changes.
 * pkgdown site is now built automatically from github actions
 
 ## NEW EPISODE METHODS
@@ -12,10 +14,12 @@ Things are still very much in development though.
 * `use_dovetail()` inserts a setup chunk at the top of the file
 * `use_sandpaper()` converts chunks from their liquid/kramdown syntax to the 
   commonmark or RMD syntax
-* `move_*()` methods gain a `dovetail` boolean argument to indicate if they
-  should generate a dovetail block or just a plain div block
+* `move_*()` will generate a dovetail block or just a plain div block depending
+  on whether or not `use_dovetail()` has been called.
 * `remove_output()` does what it says on the tin
 * `remove_error()` removes error code blocks
+* `$output` and `$error` can now grab output and error chunks that were converted
+  via `use_sandpaper()`
 
 # pegboard 0.0.0.9001
 
