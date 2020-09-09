@@ -76,7 +76,11 @@ Episode <- R6::R6Class("Episode",
     #' If there is no setup chunk, one will be created. If there is a setup
     #' chunk, then the `source` and `knitr_fig_path` calls will be removed.
     use_dovetail = function() {
+      if (private$mutations['use_dovetail']) {
+        return(invisible(self))
+      }
       use_dovetail(self$body)
+      private$mutations['use_dovetail'] <- TRUE
       invisible(self)
     },
 
@@ -96,21 +100,37 @@ Episode <- R6::R6Class("Episode",
     #'
     #' @param rmd if `TRUE`, lessons will be converted to RMarkdown documents
     use_sandpaper = function(rmd = FALSE) {
+      if (rmd && private$mutations['use_sandpaper_rmd']) {
+        return(invisible(self))
+      }
+      if (!rmd && private$mutations['use_sandpaper_md']) {
+        return(invisible(self))
+      }
       use_sandpaper(self$body, rmd)
+      type <- if (rmd) 'use_sandpaper_rmd' else 'use_sandpaper_md'
+      private$mutations[type] <- TRUE
       invisible(self)
     },
 
     #' @description
     #' Remove error blocks
     remove_error = function() {
+      if (private$mutations['remove_error']) {
+        return(invisible(self))
+      }
       purrr::walk(self$error, xml2::xml_remove)
+      private$mutations['remove_error'] <- TRUE
       invisible(self)
     },
     
     #' @description
     #' Remove output blocks
     remove_output = function() {
+      if (private$mutations['remove_output']) {
+        return(invisible(self))
+      }
       purrr::walk(self$output, xml2::xml_remove)
+      private$mutations['remove_output'] <- TRUE
       invisible(self)
     },
     
@@ -119,9 +139,13 @@ Episode <- R6::R6Class("Episode",
     #' @param dovetail if `TRUE`, the items will be compatible with {dovetail}
     #' styling, otherwise, the will be div blocks. 
     move_objectives = function(dovetail = TRUE) {
+      if (private$mutations['move_objectives']) {
+        invisible(self)
+      }
       yml <- self$get_yaml()
       move_yaml(yml, self$body, "objectives", dovetail)
       private$clear_yaml_item("objectives")
+      private$mutations['move_objectives'] <- TRUE
       invisible(self)
     },
     
@@ -130,9 +154,13 @@ Episode <- R6::R6Class("Episode",
     #' @param dovetail if `TRUE`, the items will be compatible with {dovetail}
     #' styling, otherwise, the will be div blocks. 
     move_keypoints = function(dovetail = TRUE) {
+      if (private$mutations['move_keypoints']) {
+        invisible(self)
+      }
       yml <- self$get_yaml()
       move_yaml(yml, self$body, "keypoints", dovetail)
       private$clear_yaml_item("keypoints")
+      private$mutations['move_keypoints'] <- TRUE
       invisible(self)
     },
 
@@ -141,9 +169,13 @@ Episode <- R6::R6Class("Episode",
     #' @param dovetail if `TRUE`, the items will be compatible with {dovetail}
     #' styling, otherwise, the will be div blocks. 
     move_questions = function(dovetail = TRUE) {
+      if (private$mutations['move_questions']) {
+        invisible(self)
+      }
       yml <- self$get_yaml()
       move_yaml(yml, self$body, "questions", dovetail)
       private$clear_yaml_item("questions")
+      private$mutations['move_questions'] <- TRUE
       invisible(self)
     },
 
@@ -226,6 +258,7 @@ Episode <- R6::R6Class("Episode",
     #' xml2::xml_text(scope$tags[1])
     reset = function() {
       self$initialize(self$path)
+      private$mutations <- private$mutations & FALSE
       return(invisible(self))
     },
 
@@ -238,7 +271,11 @@ Episode <- R6::R6Class("Episode",
     #' scope$body # a full document with block quotes and code blocks, etc
     #' scope$isolate_blocks()$body # only one challenge block_quote
     isolate_blocks = function() {
+      if (private$mutations['isolate_blocks']) {
+        return(invisible(self))
+      }
       isolate_kram_blocks(self$body)
+      private$mutations['isolate_blocks'] <- TRUE
       invisible(self)
     },
 
@@ -253,7 +290,11 @@ Episode <- R6::R6Class("Episode",
     #' loop$get_blocks() # no blocks
     #' loop$code # now there are two blocks with challenge tags
     unblock = function(token = "#'") {
+      if (private$mutations['unblock']) {
+        return(invisible(self))
+      }
       purrr::walk(self$get_blocks(), to_dovetail, token = token)
+      private$mutations['unblock'] <- TRUE
       invisible(self)
     },
 
@@ -337,12 +378,20 @@ Episode <- R6::R6Class("Episode",
 
     #' @field output \[`xml_nodeset`\] all the output blocks from the episode
     output = function() {
-      get_code(self$body, ".output")
+      if (any(private$mutations[c('use_sandpaper_md', 'use_sandpaper_rmd')])) {
+        self$code[which(xml2::xml_attr(self$code, "info") == "output")]
+      } else {
+        get_code(self$body, ".output")
+      }
     },
 
     #' @field error \[`xml_nodeset`\] all the error blocks from the episode
     error = function() {
-      get_code(self$body, ".error")
+      if (any(private$mutations[c('use_sandpaper_md', 'use_sandpaper_rmd')])) {
+        self$code[which(xml2::xml_attr(self$code, "info") == "error")]
+      } else {
+        get_code(self$body, ".error")
+      }
     },
 
     #' @field code \[`xml_nodeset`\] all the code blocks from the episode
@@ -366,9 +415,24 @@ Episode <- R6::R6Class("Episode",
       yml[[what]] <- NULL
       self$yaml <- c("---", strsplit(yaml::as.yaml(yml), "\n")[[1]], "---")
     },
+
     record_problem = function(x) {
       private$problems <- c(private$problems, x)
     },
+    mutations = c(
+      unblock           = FALSE,
+      use_dovetail      = FALSE,
+      use_sandpaper_md  = FALSE,
+      use_sandpaper_rmd = FALSE,
+      isolate_blocks    = FALSE,
+      move_keypoints    = FALSE,
+      move_questions    = FALSE,
+      move_objectives   = FALSE,
+      remove_error      = FALSE,
+      remove_output     = FALSE,
+      NULL
+    ),
+
     problems = list(),
 
     deep_clone = function(name, value) {
