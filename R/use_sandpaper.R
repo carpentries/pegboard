@@ -5,10 +5,14 @@
 #' @return the body
 #' @noRd
 use_sandpaper <- function(body, rmd = TRUE) {
-  langs      <- get_code(body, ".language-")
+  langs      <- get_code(body, "", "@ktag") # grab all of the tags
   any_python <- any(grepl("python", xml2::xml_attr(langs, "ktag")))
   purrr::walk(langs, liquid_to_commonmark, make_rmd = rmd)
-  if (rmd) {
+  has_setup_chunk <- xml2::xml_find_lgl(
+    body, 
+    "boolean(./d1:code_block[1][@language='r' and @include='FALSE'])"
+  )
+  if (has_setup_chunk || rmd) {
     setup <- get_setup_chunk(body)
     txt   <- parse(text = xml2::xml_text(setup))
     # remove function calls for jekyll sites
@@ -18,11 +22,13 @@ use_sandpaper <- function(body, rmd = TRUE) {
            grepl("source\\(dvt_opts\\(", txt)                 |
            grepl("knitr_fig_path\\(.+?\\)", txt)
     txt[rem] <- NULL
-    # add reticulate if needed
-    if (any_python && length(txt) == 0 || !any(grepl("reticulate", txt))) {
+    needs_reticulate <- rmd && 
+      any_python            && 
+      (length(txt) == 0 || !any(grepl("reticulate", txt)))
+    if (needs_reticulate) {
       txt <- c(txt, as.expression('library("reticulate")'))
     }
-    txt <- c(txt, as.expression("# Generated with {pegboard}"))
+    txt <- c(txt, "# Generated with {pegboard}")
     xml2::xml_set_text(setup, paste(as.character(txt), collapse = "\n"))
   }
   return(body)
