@@ -136,12 +136,11 @@ Episode <- R6::R6Class("Episode",
     
     #' @description 
     #' move the objectives yaml item to the body
-    #' @param dovetail if `TRUE`, the items will be compatible with {dovetail}
-    #' styling, otherwise, the will be div blocks. 
-    move_objectives = function(dovetail = TRUE) {
+    move_objectives = function() {
       if (private$mutations['move_objectives']) {
         invisible(self)
       }
+      dovetail <- private$mutations['use_dovetail']
       yml <- self$get_yaml()
       move_yaml(yml, self$body, "objectives", dovetail)
       private$clear_yaml_item("objectives")
@@ -151,12 +150,11 @@ Episode <- R6::R6Class("Episode",
     
     #' @description 
     #' move the keypoints yaml item to the body
-    #' @param dovetail if `TRUE`, the items will be compatible with {dovetail}
-    #' styling, otherwise, the will be div blocks. 
-    move_keypoints = function(dovetail = TRUE) {
+    move_keypoints = function() {
       if (private$mutations['move_keypoints']) {
         invisible(self)
       }
+      dovetail <- private$mutations['use_dovetail']
       yml <- self$get_yaml()
       move_yaml(yml, self$body, "keypoints", dovetail)
       private$clear_yaml_item("keypoints")
@@ -166,12 +164,11 @@ Episode <- R6::R6Class("Episode",
 
     #' @description 
     #' move the questions yaml item to the body
-    #' @param dovetail if `TRUE`, the items will be compatible with {dovetail}
-    #' styling, otherwise, the will be div blocks. 
-    move_questions = function(dovetail = TRUE) {
+    move_questions = function() {
       if (private$mutations['move_questions']) {
         invisible(self)
       }
+      dovetail <- private$mutations['use_dovetail']
       yml <- self$get_yaml()
       move_yaml(yml, self$body, "questions", dovetail)
       private$clear_yaml_item("questions")

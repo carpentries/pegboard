@@ -94,7 +94,7 @@ test_that("Episodes can be converted to use dovetail", {
 })
 
 
-test_that("Conversion pipeline works for rmarkdown sandpaper sites", {
+test_that("Integration: rmarkdown sandpaper sites", {
 
   loop <- fs::path(lesson_fragment(), "_episodes", "14-looping-data-sets.md")
   e <- Episode$new(loop)
@@ -147,7 +147,7 @@ test_that("Conversion pipeline works for rmarkdown sandpaper sites", {
 
 })
 
-test_that("Conversion pipeline works for markdown sandpaper sites", {
+test_that("Integration: for markdown sandpaper sites", {
 
   loop <- fs::path(lesson_fragment(), "_episodes", "14-looping-data-sets.md")
   e <- Episode$new(loop)
@@ -201,7 +201,61 @@ test_that("Conversion pipeline works for markdown sandpaper sites", {
 
 })
 
-test_that("Conversion pipeline works for jekyll sites", {
+test_that("Integration: for markdown sandpaper sites without dovetail", {
+
+  loop <- fs::path(lesson_fragment(), "_episodes", "14-looping-data-sets.md")
+  e <- Episode$new(loop)
+  tags <- c(
+    "{: .language-python}",
+    "{: .output}",
+    "{: .language-python}",
+    "{: .output}",
+    "{: .language-python}",
+    "{: .output}",
+    "{: .language-python}",
+    "{: .output}",
+    "{: .language-python}",
+    "{: .language-python}",
+    "{: .language-python}"
+  )
+  expect_length(e$code, 11)
+  expect_length(e$challenges, 3)
+  expect_length(e$solutions, 3)
+  # 11 code blocks + 3 challenges + 3 solutions
+  expect_length(e$tags, 11 + 3 + 3)
+  expect_equal(xml2::xml_attr(e$code, "ktag"), tags)
+  expect_equal(xml2::xml_text(xml2::xml_child(e$body)), 
+    "Use a for loop to process files given a list of their names."
+  )
+
+  e$
+    use_sandpaper(rmd = FALSE)$ # Ditch Jekyll, but keep markdown
+    unblock()$                  # Convert block quotes to code chunks
+    move_keypoints()$           # move yaml metadata to actual data
+    move_questions()$
+    move_objectives()
+
+  # The first child is not an RMD chunk
+  expect_equal(xml2::xml_text(xml2::xml_child(e$body)), 
+    "Use a for loop to process files given a list of their names."
+  )
+  # NOTE: at the moment, we don't have a non-dovetail solution, but we're getting
+  # there!
+  expect_length(e$code, 11)
+  # python code chunks exist
+  expect_true(any(grepl("python", xml2::xml_attr(e$code, "info"))))
+  expect_true(any(grepl("output", xml2::xml_attr(e$code, "info"))))
+  # No kramdown tags exist
+  expect_length(e$tags, 0)
+  expect_match(
+    xml2::xml_text(xml2::xml_child(e$body, length(xml2::xml_children(e$body)))),
+    "</div>",
+    fixed = TRUE
+  )
+
+})
+
+test_that("Integration: jekyll sites", {
 
 
   loop <- fs::path(lesson_fragment(), "_episodes", "14-looping-data-sets.md")

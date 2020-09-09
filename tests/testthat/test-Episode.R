@@ -128,7 +128,42 @@ test_that("isolate_blocks() method works as expected", {
 
 })
 
-test_that("yaml items can be moved to the text", {
+test_that("yaml items can be moved to the text (with dovetail)", {
+
+  scope <- fs::path(lesson_fragment(), "_episodes", "14-looping-data-sets.md")
+  e <- Episode$new(scope)
+  yml <- e$get_yaml()
+  n_code_blocks <- length(e$code)
+  expect_named(yml, c("title", "teaching", "exercises", "questions", "objectives", "keypoints"))
+  expect_false(length(xml2::xml_find_all(e$body, ".//d1:code_block[@info='{questions}']")) > 0)
+
+  e$use_dovetail()
+
+  e$move_questions()
+  expect_equal(n_code_blocks + 2L, length(e$code))
+
+  # The question block is moved to the top
+  expect_equal(xml2::xml_attr(e$code[2], "info"), "{questions}")
+  # question block is removed from yaml
+  yml <- e$get_yaml()
+  expect_named(yml, c("title", "teaching", "exercises", "objectives", "keypoints"))
+
+  e$move_objectives()
+  expect_equal(n_code_blocks + 3L, length(e$code))
+  expect_equal(xml2::xml_attr(e$code[2], "info"), "{objectives}")
+  yml <- e$get_yaml()
+  expect_named(yml, c("title", "teaching", "exercises", "keypoints"))
+
+  e$move_keypoints()
+  expect_equal(n_code_blocks + 4L, length(e$code))
+  expect_equal(xml2::xml_attr(e$code[2], "info"), "{objectives}")
+  expect_equal(xml2::xml_attr(e$code[length(e$code)], "info"), "{keypoints}")
+  yml <- e$get_yaml()
+  expect_named(yml, c("title", "teaching", "exercises"))
+
+})
+
+test_that("yaml items can be moved to the text (no dovetail)", {
 
   scope <- fs::path(lesson_fragment(), "_episodes", "14-looping-data-sets.md")
   e <- Episode$new(scope)
@@ -138,24 +173,50 @@ test_that("yaml items can be moved to the text", {
   expect_false(length(xml2::xml_find_all(e$body, ".//d1:code_block[@info='{questions}']")) > 0)
 
   e$move_questions()
-  expect_equal(n_code_blocks + 1L, length(e$code))
+  expect_equal(n_code_blocks, length(e$code))
 
   # The question block is moved to the top
-  expect_equal(xml2::xml_attr(e$code[1], "info"), "{questions}")
+  expect_length(xml2::xml_find_all(e$body, ".//d1:html_block"), 2)
+  expect_match(
+    xml2::xml_text(xml2::xml_find_first(e$body, ".//d1:html_block[1]")),
+    "div class..question"
+  )
+  expect_match(
+    xml2::xml_text(xml2::xml_find_first(e$body, ".//d1:html_block[2]")),
+    "</div>",
+    fixed = TRUE
+  )
   # question block is removed from yaml
   yml <- e$get_yaml()
   expect_named(yml, c("title", "teaching", "exercises", "objectives", "keypoints"))
 
   e$move_objectives()
-  expect_equal(n_code_blocks + 2L, length(e$code))
-  expect_equal(xml2::xml_attr(e$code[1], "info"), "{objectives}")
+  expect_equal(n_code_blocks, length(e$code))
+  expect_length(xml2::xml_find_all(e$body, ".//d1:html_block"), 4)
+  expect_match(
+    xml2::xml_text(xml2::xml_find_first(e$body, ".//d1:html_block[1]")),
+    "div class..objectives"
+  )
+  expect_match(
+    xml2::xml_text(xml2::xml_find_first(e$body, ".//d1:html_block[2]")),
+    "</div>",
+    fixed = TRUE
+  )
   yml <- e$get_yaml()
   expect_named(yml, c("title", "teaching", "exercises", "keypoints"))
 
   e$move_keypoints()
-  expect_equal(n_code_blocks + 3L, length(e$code))
-  expect_equal(xml2::xml_attr(e$code[1], "info"), "{objectives}")
-  expect_equal(xml2::xml_attr(e$code[length(e$code)], "info"), "{keypoints}")
+  expect_equal(n_code_blocks, length(e$code))
+  expect_length(xml2::xml_find_all(e$body, ".//d1:html_block"), 6)
+  expect_match(
+    xml2::xml_text(xml2::xml_find_first(e$body, ".//d1:html_block[5]")),
+    "div class..keypoints"
+  )
+  expect_match(
+    xml2::xml_text(xml2::xml_find_first(e$body, ".//d1:html_block[6]")),
+    "</div>",
+    fixed = TRUE
+  )
   yml <- e$get_yaml()
   expect_named(yml, c("title", "teaching", "exercises"))
 

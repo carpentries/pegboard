@@ -294,17 +294,9 @@ Remove output blocks
 \subsection{Method \code{move_objectives()}}{
 move the objectives yaml item to the body
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Episode$move_objectives(dovetail = TRUE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Episode$move_objectives()}\if{html}{\out{</div>}}
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{dovetail}}{if \code{TRUE}, the items will be compatible with {dovetail}
-styling, otherwise, the will be div blocks.}
-}
-\if{html}{\out{</div>}}
-}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-move_keypoints"></a>}}
@@ -312,17 +304,9 @@ styling, otherwise, the will be div blocks.}
 \subsection{Method \code{move_keypoints()}}{
 move the keypoints yaml item to the body
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Episode$move_keypoints(dovetail = TRUE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Episode$move_keypoints()}\if{html}{\out{</div>}}
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{dovetail}}{if \code{TRUE}, the items will be compatible with {dovetail}
-styling, otherwise, the will be div blocks.}
-}
-\if{html}{\out{</div>}}
-}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-move_questions"></a>}}
@@ -330,17 +314,9 @@ styling, otherwise, the will be div blocks.}
 \subsection{Method \code{move_questions()}}{
 move the questions yaml item to the body
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Episode$move_questions(dovetail = TRUE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Episode$move_questions()}\if{html}{\out{</div>}}
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{dovetail}}{if \code{TRUE}, the items will be compatible with {dovetail}
-styling, otherwise, the will be div blocks.}
-}
-\if{html}{\out{</div>}}
-}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_challenge_graph"></a>}}
