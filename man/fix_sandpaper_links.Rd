@@ -30,11 +30,12 @@ either nothing or the link to software carpentry, respectively.
 
 loop <- fs::path(lesson_fragment(), "_episodes", "14-looping-data-sets.md")
 e <- Episode$new(loop)
-e$body \%>\% xml2::xml_find_all(".//d1:image")
-e$body \%>\% xml2::xml_find_all(".//d1:html_block")
-e$body \%>\% xml2::xml_find_all(".//d1:link[contains(@destination, '{{')]")
-fix_sandpaper_links(e$body)
-e$body \%>\% xml2::xml_find_all(".//d1:image")
-e$body \%>\% xml2::xml_find_all(".//d1:html_block")
-e$body \%>\% xml2::xml_find_all(".//d1:link[contains(@destination, '{{')]")
+b <- e$body
+xml2::xml_find_all(b, ".//d1:image")
+xml2::xml_find_all(b, ".//d1:html_block")
+xml2::xml_find_all(b, ".//d1:link[contains(@destination, '{{')]")
+fix_sandpaper_links(b)
+xml2::xml_find_all(b, ".//d1:image")
+xml2::xml_find_all(b, ".//d1:html_block")
+xml2::xml_find_all(b, ".//d1:link[contains(@destination, '{{')]")
 }
