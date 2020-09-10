@@ -183,3 +183,15 @@ data/gapminder_gdp_oceania.csv 10039.59564
 > > {: .language-python}
 > {: .solution}
 {: .challenge}
+
+### ZNK test links and images 
+
+<img src="https://carpentries.org/assets/img/TheCarpentries.svg" alt="books as clubs">
+
+<img src="../no-workie.svg" alt="books as clubs">
+
+Link to [Home]({{ page.root }}/index.html) and to [shell]({{ site.swc_pages }}/shell-novice)
+
+![Carpentries logo](https://carpentries.org/assets/img/TheCarpentries.svg)
+
+![Non-working image](../no-workie.svg)

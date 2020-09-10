@@ -5,12 +5,16 @@
 #' @return the body
 #' @noRd
 use_sandpaper <- function(body, rmd = TRUE) {
+  fix_sandpaper_links(body)
+  # Fix the code tags
+  ns         <- NS(body)
   langs      <- get_code(body, "", "@ktag") # grab all of the tags
   any_python <- any(grepl("python", xml2::xml_attr(langs, "ktag")))
   purrr::walk(langs, liquid_to_commonmark, make_rmd = rmd)
   has_setup_chunk <- xml2::xml_find_lgl(
     body, 
-    "boolean(./d1:code_block[1][@language='r' and @include='FALSE'])"
+    # setup is the first code block that is not included
+    glue::glue("boolean(./{ns}:code_block[1][@language='r' and @include='FALSE'])")
   )
   if (has_setup_chunk || rmd) {
     setup <- get_setup_chunk(body)
@@ -31,5 +35,5 @@ use_sandpaper <- function(body, rmd = TRUE) {
     txt <- c(txt, "# Generated with {pegboard}")
     xml2::xml_set_text(setup, paste(as.character(txt), collapse = "\n"))
   }
-  return(body)
+  invisible(return(body))
 }

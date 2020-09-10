@@ -171,12 +171,13 @@ test_that("yaml items can be moved to the text (no dovetail)", {
   n_code_blocks <- length(e$code)
   expect_named(yml, c("title", "teaching", "exercises", "questions", "objectives", "keypoints"))
   expect_false(length(xml2::xml_find_all(e$body, ".//d1:code_block[@info='{questions}']")) > 0)
+  expect_length(xml2::xml_find_all(e$body, ".//d1:html_block"), 2)
 
   e$move_questions()
   expect_equal(n_code_blocks, length(e$code))
 
   # The question block is moved to the top
-  expect_length(xml2::xml_find_all(e$body, ".//d1:html_block"), 2)
+  expect_length(xml2::xml_find_all(e$body, ".//d1:html_block"), 2 + 2)
   expect_match(
     xml2::xml_text(xml2::xml_find_first(e$body, ".//d1:html_block[1]")),
     "div class..question"
@@ -192,7 +193,7 @@ test_that("yaml items can be moved to the text (no dovetail)", {
 
   e$move_objectives()
   expect_equal(n_code_blocks, length(e$code))
-  expect_length(xml2::xml_find_all(e$body, ".//d1:html_block"), 4)
+  expect_length(xml2::xml_find_all(e$body, ".//d1:html_block"), 2 + 2 + 2)
   expect_match(
     xml2::xml_text(xml2::xml_find_first(e$body, ".//d1:html_block[1]")),
     "div class..objectives"
@@ -207,13 +208,13 @@ test_that("yaml items can be moved to the text (no dovetail)", {
 
   e$move_keypoints()
   expect_equal(n_code_blocks, length(e$code))
-  expect_length(xml2::xml_find_all(e$body, ".//d1:html_block"), 6)
+  expect_length(xml2::xml_find_all(e$body, ".//d1:html_block"), 2 + 2 + 2 + 2)
   expect_match(
-    xml2::xml_text(xml2::xml_find_first(e$body, ".//d1:html_block[5]")),
+    xml2::xml_text(xml2::xml_find_first(e$body, ".//d1:html_block[7]")),
     "div class..keypoints"
   )
   expect_match(
-    xml2::xml_text(xml2::xml_find_first(e$body, ".//d1:html_block[6]")),
+    xml2::xml_text(xml2::xml_find_first(e$body, ".//d1:html_block[8]")),
     "</div>",
     fixed = TRUE
   )

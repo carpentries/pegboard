@@ -2,6 +2,7 @@ test_that("Episodes can be converted to use sandpaper", {
 
   loop <- fs::path(lesson_fragment(), "_episodes", "14-looping-data-sets.md")
   e <- Episode$new(loop)
+  # insert artificial links
   tags <- c(
     "{: .language-python}",
     "{: .output}",
@@ -19,11 +20,30 @@ test_that("Episodes can be converted to use sandpaper", {
   new_tags[grepl("python", tags)] <- NA
   infos <- ifelse(grepl("python", tags), "python", "output")
   langs <- ifelse(grepl("python", tags), "python", NA)
+  rel_links <- xml2::xml_find_all(
+    e$body, 
+    ".//*[contains(text(), '../') or contains(@destination, '../')]"
+  )
+  jek_links <- xml2::xml_find_all(
+    e$body,
+    ".//d1:link[contains(@destination, '{{')]"
+  )
 
   expect_length(e$code, 11)
+  expect_length(rel_links, 2)
+  expect_equal(xml_name(rel_links), c("html_block", "image"))
+  expect_equal(
+    xml2::xml_attr(rel_links, "destination"),
+    c(NA, "../no-workie.svg")
+  )
+  expect_length(jek_links, 2)
+  expect_equal(
+    xml2::xml_attr(jek_links, "destination"),
+    c("{{ page.root }}/index.html", "{{ site.swc_pages }}/shell-novice")
+  )
 
   # With RMD -------------------------------------------------------------------
-  expect_length(e$reset()$use_sandpaper(rmd = TRUE)$code, 12)
+  expect_length(e$use_sandpaper(rmd = TRUE)$code, 12)
   # ktags are converted
   expect_equal(xml2::xml_attr(e$code, "ktag"), rep(NA_character_, 12)) 
   # but the block quotes are still there
@@ -36,6 +56,14 @@ test_that("Episodes can be converted to use sandpaper", {
   expect_equal(xml2::xml_text(xml2::xml_child(e$body)), 
     'library("reticulate")\n# Generated with {pegboard}'
   )
+  # Links are converted
+  expect_match(xml2::xml_attr(rel_links[[2]], "destination"), 'no-workie.svg', fixed = TRUE)
+  expect_match(xml2::xml_text(rel_links[[1]]), '"no-workie.svg"', fixed = TRUE)
+  expect_equal(
+    xml2::xml_attr(jek_links, "destination"),
+    c("index.html", "https://swcarpentry.github.io/shell-novice")
+  )
+
   # output needs to be explicitly removed
   expect_length(e$output, 4) 
   expect_match(xml2::xml_attr(e$output, "info"), "output")
