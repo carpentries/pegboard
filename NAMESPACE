@@ -2,6 +2,7 @@
 
 export(Episode)
 export(Lesson)
+export(fix_sandpaper_links)
 export(get_blocks)
 export(get_challenges)
 export(get_code)

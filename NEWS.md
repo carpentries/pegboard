@@ -1,3 +1,12 @@
+# pegboard 0.0.0.9003
+
+Jekyll-specific and relative links are now converted as part of `use_sandpaper()`. 
+
+## NEW FUNCTION
+
+* `fix_sandpaper_links()` will fix relative paths and jekyll-specific links 
+  inside of lessons that have not yet otherwise been converted.
+
 # pegboard 0.0.0.9002
 
 This version introduces conversions that work together and can be chained to
