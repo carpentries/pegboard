@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9003</span>
       </span>
     </div>
 
@@ -508,7 +508,7 @@ as valid links.</p></dd>
 
 <span class='kw'>scope</span> <span class='op'>&lt;-</span> <span class='kw'>Episode</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span>(), <span class='st'>"_episodes"</span>, <span class='st'>"17-scope.md"</span>))
 <span class='kw'>scope</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/base/write.html'>write</a></span>()
-</div><div class='output co'>#&gt; <span class='message'>Creating temporary directory '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpYs4iHQ/dir70973178c3'</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Creating temporary directory '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpgEzrdT/dir8eca65a24'</span></div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `Episode$reset`</span>
 <span class='co'>## ------------------------------------------------</span>
@@ -549,7 +549,7 @@ as valid links.</p></dd>
 <span class='kw'>loop</span> <span class='op'>&lt;-</span> <span class='kw'>Episode</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span>(), <span class='st'>"_episodes"</span>, <span class='st'>"14-looping-data-sets.md"</span>))
 <span class='kw'>loop</span><span class='op'>$</span><span class='kw'>body</span> <span class='co'># a full document with block quotes and code blocks, etc</span>
 </div><div class='output co'>#&gt; {xml_document}
-#&gt; &lt;document sourcepos="1:1-170:14" xmlns="http://commonmark.org/xml/1.0"&gt;
+#&gt; &lt;document sourcepos="1:1-182:38" xmlns="http://commonmark.org/xml/1.0"&gt;
 #&gt;  [1] &lt;heading sourcepos="2:1-2:65" level="2"&gt;\n  &lt;text sourcepos="2:4-2:9" xm ...
 #&gt;  [2] &lt;list sourcepos="4:1-6:0" type="bullet" tight="true"&gt;\n  &lt;item sourcepos ...
 #&gt;  [3] &lt;code_block sourcepos="7:1-12:3" xml:space="preserve" ktag="{: .language ...
@@ -567,7 +567,10 @@ as valid links.</p></dd>
 #&gt; [15] &lt;list sourcepos="90:1-94:0" type="bullet" tight="true"&gt;\n  &lt;item sourcep ...
 #&gt; [16] &lt;block_quote sourcepos="95:1-108:14" ktag="{: .challenge}"&gt;\n  &lt;heading  ...
 #&gt; [17] &lt;block_quote sourcepos="110:1-140:14" ktag="{: .challenge}"&gt;\n  &lt;heading ...
-#&gt; [18] &lt;block_quote sourcepos="142:1-170:14" ktag="{: .challenge}"&gt;\n  &lt;heading ...</div><div class='input'><span class='kw'>loop</span><span class='op'>$</span><span class='fu'><a href='get_blocks.html'>get_blocks</a></span>() <span class='co'># all the blocks in the episode</span>
+#&gt; [18] &lt;block_quote sourcepos="142:1-170:14" ktag="{: .challenge}"&gt;\n  &lt;heading ...
+#&gt; [19] &lt;heading sourcepos="172:1-172:29" level="3"&gt;\n  &lt;text sourcepos="172:5-1 ...
+#&gt; [20] &lt;html_block sourcepos="174:1-174:86" xml:space="preserve"&gt;&amp;lt;img src="h ...
+#&gt; ...</div><div class='input'><span class='kw'>loop</span><span class='op'>$</span><span class='fu'><a href='get_blocks.html'>get_blocks</a></span>() <span class='co'># all the blocks in the episode</span>
 </div><div class='output co'>#&gt; {xml_nodeset (3)}
 #&gt; [1] &lt;block_quote sourcepos="95:1-108:14" ktag="{: .challenge}"&gt;\n  &lt;heading s ...
 #&gt; [2] &lt;block_quote sourcepos="110:1-140:14" ktag="{: .challenge}"&gt;\n  &lt;heading  ...

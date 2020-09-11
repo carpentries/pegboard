@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Find all kramdown tags within the document — kramdown_tags • pegboard</title>
+<title>Fix relative and jekyll links to be compatible with sandpaper — fix_sandpaper_links • pegboard</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Find all kramdown tags within the document — kramdown_tags" />
-<meta property="og:description" content="Find all kramdown tags within the document" />
+<meta property="og:title" content="Fix relative and jekyll links to be compatible with sandpaper — fix_sandpaper_links" />
+<meta property="og:description" content="This function will perform the transformation on three node types:" />
 
 
 
@@ -123,30 +123,65 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Find all kramdown tags within the document</h1>
-    <small class="dont-index">Source: <a href='https://github.com/zkamvar/pegboard/blob/master/R/kramdown_tags.R'><code>R/kramdown_tags.R</code></a></small>
-    <div class="hidden name"><code>kramdown_tags.Rd</code></div>
+    <h1>Fix relative and jekyll links to be compatible with sandpaper</h1>
+    <small class="dont-index">Source: <a href='https://github.com/zkamvar/pegboard/blob/master/R/use_sandpaper_links.R'><code>R/use_sandpaper_links.R</code></a></small>
+    <div class="hidden name"><code>fix_sandpaper_links.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Find all kramdown tags within the document</p>
+    <p>This function will perform the transformation on three node types:</p>
     </div>
 
-    <pre class="usage"><span class='fu'>kramdown_tags</span>(<span class='kw'>body</span>)</pre>
+    <pre class="usage"><span class='fu'>fix_sandpaper_links</span>(<span class='kw'>body</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>body</th>
-      <td><p>an XML document</p></td>
+      <td><p>an XML node</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>an XML nodeset with all the kramdown tags</p>
+    <p>the body, invisibly</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
+    
+<ul>
+<li><p>image</p></li>
+<li><p>link</p></li>
+<li><p>html_node</p></li>
+</ul>
+
+<p>The transformation will be to remove relative paths ("../") and replace
+Jekyll templating (e.g. " page.root " and " site.swc_pages " with
+either nothing or the link to software carpentry, respectively.</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+<span class='kw'>loop</span> <span class='op'>&lt;-</span> <span class='kw'>fs</span>::<span class='fu'><a href='http://fs.r-lib.org/reference/path.html'>path</a></span>(<span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span>(), <span class='st'>"_episodes"</span>, <span class='st'>"14-looping-data-sets.md"</span>)
+<span class='kw'>e</span> <span class='op'>&lt;-</span> <span class='kw'>Episode</span><span class='op'>$</span><span class='fu'>new</span>(<span class='kw'>loop</span>)
+<span class='kw'>b</span> <span class='op'>&lt;-</span> <span class='kw'>e</span><span class='op'>$</span><span class='kw'>body</span>
+<span class='kw'>xml2</span>::<span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span>(<span class='kw'>b</span>, <span class='st'>".//d1:image"</span>)
+</div><div class='output co'>#&gt; {xml_nodeset (2)}
+#&gt; [1] &lt;image sourcepos="180:1-180:74" destination="https://carpentries.org/asse ...
+#&gt; [2] &lt;image sourcepos="182:1-182:38" destination="../no-workie.svg" title=""&gt;\ ...</div><div class='input'><span class='kw'>xml2</span>::<span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span>(<span class='kw'>b</span>, <span class='st'>".//d1:html_block"</span>)
+</div><div class='output co'>#&gt; {xml_nodeset (2)}
+#&gt; [1] &lt;html_block sourcepos="174:1-174:86" xml:space="preserve"&gt;&amp;lt;img src="ht ...
+#&gt; [2] &lt;html_block sourcepos="176:1-176:49" xml:space="preserve"&gt;&amp;lt;img src=".. ...</div><div class='input'><span class='kw'>xml2</span>::<span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span>(<span class='kw'>b</span>, <span class='st'>".//d1:link[contains(@destination, '{{')]"</span>)
+</div><div class='output co'>#&gt; {xml_nodeset (2)}
+#&gt; [1] &lt;link xmlns="http://commonmark.org/xml/1.0" destination="{{ page.root }}/ ...
+#&gt; [2] &lt;link xmlns="http://commonmark.org/xml/1.0" destination="{{ site.swc_page ...</div><div class='input'><span class='fu'>fix_sandpaper_links</span>(<span class='kw'>b</span>)
+<span class='kw'>xml2</span>::<span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span>(<span class='kw'>b</span>, <span class='st'>".//d1:image"</span>)
+</div><div class='output co'>#&gt; {xml_nodeset (2)}
+#&gt; [1] &lt;image sourcepos="180:1-180:74" destination="https://carpentries.org/asse ...
+#&gt; [2] &lt;image sourcepos="182:1-182:38" destination="no-workie.svg" title=""&gt;\n   ...</div><div class='input'><span class='kw'>xml2</span>::<span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span>(<span class='kw'>b</span>, <span class='st'>".//d1:html_block"</span>)
+</div><div class='output co'>#&gt; {xml_nodeset (2)}
+#&gt; [1] &lt;html_block sourcepos="174:1-174:86" xml:space="preserve"&gt;&amp;lt;img src="ht ...
+#&gt; [2] &lt;html_block sourcepos="176:1-176:49" xml:space="preserve"&gt;&amp;lt;img src="no ...</div><div class='input'><span class='kw'>xml2</span>::<span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span>(<span class='kw'>b</span>, <span class='st'>".//d1:link[contains(@destination, '{{')]"</span>)
+</div><div class='output co'>#&gt; {xml_nodeset (0)}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
