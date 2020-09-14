@@ -290,7 +290,11 @@ Episode <- R6::R6Class("Episode",
       if (private$mutations['unblock']) {
         return(invisible(self))
       }
-      purrr::walk(self$get_blocks(), to_dovetail, token = token)
+      if (private$mutations['use_dovetail']) {
+        purrr::walk(self$get_blocks(), to_dovetail, token = token)
+      } else {
+        purrr::walk(self$get_blocks(level = 0), replace_with_div)
+      }
       private$mutations['unblock'] <- TRUE
       invisible(self)
     },
