@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9004</span>
       </span>
     </div>
 
@@ -126,6 +126,29 @@
       <small>Source: <a href='https://github.com/zkamvar/pegboard/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="pegboard-0009004" class="section level1">
+<h1 class="page-header" data-toc-text="0.0.0.9004">
+<a href="#pegboard-0009004" class="anchor"></a>pegboard 0.0.0.9004</h1>
+<p>The changes in this version largely are enhancements for handling div tags and conversion. See <a href='https://github.com/zkamvar/pegboard/issues/9'>#9</a> for details</p>
+<ul>
+<li>
+<code>$unblock()</code> defaults to converting to div tags unless <code>$use_sandpaper()</code> has been called.</li>
+<li>
+<code>$unblock()</code> will auto-name ALL the divs with {class}-div-{number}</li>
+<li>
+<code>$move_*</code> functions will now name the html_blocks</li>
+<li>
+<code>$get_divs()</code> returns div tags in a named list</li>
+<li>
+<code>$challenges</code> will now find either blocks, divs or code, depending on the mutations</li>
+<li>
+<code>$soltuions</code> same as challenges (see above)</li>
+<li>
+<code>$use_dovetail()</code> will warn the user if the body is empty</li>
+<li>
+<code>$use_sandpaper()</code> will do the same</li>
+</ul>
+</div>
     <div id="pegboard-0009003" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.0.9003">
 <a href="#pegboard-0009003" class="anchor"></a>pegboard 0.0.0.9003</h1>
