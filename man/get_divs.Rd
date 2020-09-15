@@ -4,10 +4,12 @@
 \alias{get_divs}
 \title{Get paired div blocks}
 \usage{
-get_divs(body)
+get_divs(body, type = NULL)
 }
 \arguments{
 \item{body}{an xml document}
+
+\item{type}{the type of div to return}
 }
 \value{
 a list of nodesets
@@ -15,4 +17,22 @@ a list of nodesets
 \description{
 Get paired div blocks
 }
+\details{
+The strategy behind this is to :
+\enumerate{
+\item find all \code{dtag} elements, which will necessarily be <html_block> elements
+containing div tags
+\item grab the first tag of each pair
+\item filter on div tag class (type)
+\item grab all elements between the tags
+}
+}
+\examples{
+loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
+loop$body # a full document with block quotes and code blocks, etc
+loop$unblock() # removing blockquotes and replacing with div tags
+pegboard:::get_divs(loop$body, 'challenge') # all challenge blocks
+pegboard:::get_divs(loop$body, 'solution') # all solution blocks
+}
+\keyword{div}
 \keyword{internal}

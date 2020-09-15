@@ -137,7 +137,7 @@ test_that("yaml items can be moved to the text (with dovetail)", {
   expect_named(yml, c("title", "teaching", "exercises", "questions", "objectives", "keypoints"))
   expect_false(length(xml2::xml_find_all(e$body, ".//d1:code_block[@info='{questions}']")) > 0)
 
-  e$use_dovetail()
+  e$use_dovetail() # Using dovetail
 
   e$move_questions()
   expect_equal(n_code_blocks + 2L, length(e$code))
@@ -172,8 +172,10 @@ test_that("yaml items can be moved to the text (no dovetail)", {
   expect_named(yml, c("title", "teaching", "exercises", "questions", "objectives", "keypoints"))
   expect_false(length(xml2::xml_find_all(e$body, ".//d1:code_block[@info='{questions}']")) > 0)
   expect_length(xml2::xml_find_all(e$body, ".//d1:html_block"), 2)
+  expect_equal(length(e$get_divs()), 0)
 
   e$move_questions()
+  expect_equal(length(e$get_divs()), 1)
   expect_equal(n_code_blocks, length(e$code))
 
   # The question block is moved to the top
@@ -192,6 +194,7 @@ test_that("yaml items can be moved to the text (no dovetail)", {
   expect_named(yml, c("title", "teaching", "exercises", "objectives", "keypoints"))
 
   e$move_objectives()
+  expect_equal(length(e$get_divs()), 2)
   expect_equal(n_code_blocks, length(e$code))
   expect_length(xml2::xml_find_all(e$body, ".//d1:html_block"), 2 + 2 + 2)
   expect_match(
@@ -207,6 +210,7 @@ test_that("yaml items can be moved to the text (no dovetail)", {
   expect_named(yml, c("title", "teaching", "exercises", "keypoints"))
 
   e$move_keypoints()
+  expect_equal(length(e$get_divs()), 3)
   expect_equal(n_code_blocks, length(e$code))
   expect_length(xml2::xml_find_all(e$body, ".//d1:html_block"), 2 + 2 + 2 + 2)
   expect_match(
@@ -257,6 +261,10 @@ test_that("blocks can be converted to div blocks", {
   expect_length(xml2::xml_find_all(e$reset()$unblock()$body, ".//d1:html_block"), 2 + (6 * 2))
   expect_identical(xml2::xml_attr(e$reset()$unblock()$code, "ktag"), tags)
   expect_identical(xml2::xml_attr(e$reset()$unblock()$code, "language"), language_tags)
+
+  expect_length(e$get_divs(), 3 + 3)
+  expect_length(e$solutions, 3)
+  expect_length(e$challenges, 3)
 
   divs <- xml2::xml_find_all(e$reset()$unblock()$body, ".//d1:html_block")
   divs <- xml2::xml_text(divs)
@@ -360,46 +368,19 @@ test_that("challenges with multiple solution blocks will be rendered appropriate
   expect_true(xml2::xml_find_lgl(chlng, "boolean(self::d1:block_quote)"))
   expect_equal(xml2::xml_text(chlng), "")
 
-  # # There will be four solution blocks and four challenge blocks
-  # ctxt <- strsplit(xml2::xml_text(chlng), "\n")[[1]]
-  # expect_equal(sum(grepl("@solution", ctxt)), 4)
-  # expect_equal(sum(grepl("@challenge", ctxt)), 0)
-  # expect_equal(sum(grepl("@end", ctxt)), 4)
+  # the accessors still register challenges and solutions
+  expect_length(e$challenges, 7)
+  expect_length(e$solutions, 10)
 
-  # # This process works for non-challenge blocks
-  # e$reset()
-  # chlng <- e$challenges[4]
-  # xml2::xml_attr(chlng, "ktag") <- "{: .callout}"
-  # e$unblock()
-  # expect_true(xml2::xml_find_lgl(chlng, "boolean(self::d1:code_block)"))
-  # expect_match(xml2::xml_text(chlng), "## Practice Accumulating")
-  # expect_match(xml2::xml_text(chlng), "@solution Solution")
-  # expect_match(xml2::xml_text(chlng), "ZNK: this is a test")
-  # expect_match(xml2::xml_text(chlng), "ZNK: test two")
-  # ctxt <- strsplit(xml2::xml_text(chlng), "\n")[[1]]
-  # expect_equal(sum(grepl("@solution", ctxt)), 4)
-  # expect_equal(sum(grepl("@challenge", ctxt)), 0)
-  # expect_equal(sum(grepl("@callout", ctxt)), 0)
-  # expect_equal(sum(grepl("@end", ctxt)), 4)
-
-  # # This works if the first part is not a level2 heading
-  # e$reset()
-  # chlng <- e$challenges[4]
-  # xml2::xml_attr(chlng, "ktag") <- "{: .callout}"
-  # chead <- xml2::xml_find_first(chlng, ".//d1:heading")
-  # xml2::xml_attr(chead, "level") <- '3'
-  # e$unblock()
-  # expect_true(xml2::xml_find_lgl(chlng, "boolean(self::d1:code_block)"))
-  # expect_match(xml2::xml_text(chlng), "### Practice Accumulating")
-  # expect_match(xml2::xml_text(chlng), "@solution Solution")
-  # expect_match(xml2::xml_text(chlng), "ZNK: this is a test")
-  # expect_match(xml2::xml_text(chlng), "ZNK: test two")
-  # ctxt <- strsplit(xml2::xml_text(chlng), "\n")[[1]]
-  # expect_equal(sum(grepl("@solution", ctxt)), 4)
-  # expect_equal(sum(grepl("@challenge", ctxt)), 0)
-  # expect_equal(sum(grepl("@callout", ctxt)), 0)
-  # expect_equal(sum(grepl("@end", ctxt)), 4)
-
+  # This process works for non-challenge blocks
+  e$reset()
+  chlng <- e$challenges[4]
+  xml2::xml_attr(chlng, "ktag") <- "{: .callout}"
+  e$unblock()
+  # the accessors still register challenges and solutions
+  expect_length(e$challenges, 6)
+  expect_length(e$solutions, 10)
+  expect_length(e$get_divs("callout"), 1)
 
 })
 

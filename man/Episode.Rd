@@ -136,6 +136,7 @@ scope$challenges
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-get_blocks}{\code{Episode$get_blocks()}}
+\item \href{#method-get_divs}{\code{Episode$get_divs()}}
 \item \href{#method-get_yaml}{\code{Episode$get_yaml()}}
 \item \href{#method-use_dovetail}{\code{Episode$use_dovetail()}}
 \item \href{#method-use_sandpaper}{\code{Episode$use_sandpaper()}}
@@ -206,6 +207,23 @@ scope$get_blocks(".solution", level = 2)
 
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get_divs"></a>}}
+\if{latex}{\out{\hypertarget{method-get_divs}{}}}
+\subsection{Method \code{get_divs()}}{
+return all div elements within the Episode
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Episode$get_divs(type = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{type}}{the type of div tag (e.g. 'challenge' or 'solution')}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_yaml"></a>}}

@@ -56,6 +56,13 @@ Episode <- R6::R6Class("Episode",
     },
 
     #' @description
+    #' return all div elements within the Episode
+    #' @param type the type of div tag (e.g. 'challenge' or 'solution')
+    get_divs = function(type = NULL) {
+      get_divs(self$body, type = type)
+    },
+
+    #' @description
     #' Extract the yaml metadata from the episode
     get_yaml = function() {
       yaml::yaml.load(self$yaml)
@@ -294,6 +301,7 @@ Episode <- R6::R6Class("Episode",
         purrr::walk(self$get_blocks(), to_dovetail, token = token)
       } else {
         purrr::walk(self$get_blocks(level = 0), replace_with_div)
+        label_div_tags(self$body)
       }
       private$mutations['unblock'] <- TRUE
       invisible(self)
@@ -369,12 +377,26 @@ Episode <- R6::R6Class("Episode",
 
     #' @field challenges \[`xml_nodeset`\] all the challenges blocks from the episode
     challenges = function() {
-      get_challenges(self$body)
+      if (!private$mutations['unblock']) {
+        type <- "block"
+      } else if (private$mutations['use_dovetail']) {
+        type <- "chunk"
+      } else {
+        type <- "div"
+      }
+      get_challenges(self$body, type = type)
     },
 
     #' @field solutions \[`xml_nodeset`\] all the solutions blocks from the episode
     solutions = function() {
-      get_solutions(self$body)
+      if (!private$mutations['unblock']) {
+        type <- "block"
+      } else if (private$mutations['use_dovetail']) {
+        type <- "chunk"
+      } else {
+        type <- "div"
+      }
+      get_solutions(self$body, type = type)
     },
 
     #' @field output \[`xml_nodeset`\] all the output blocks from the episode

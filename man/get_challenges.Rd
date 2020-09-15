@@ -4,10 +4,15 @@
 \alias{get_challenges}
 \title{Gather challenges from the XML body of a carpentries lesson}
 \usage{
-get_challenges(body)
+get_challenges(body, type = c("block", "div", "chunk"))
 }
 \arguments{
 \item{body}{the XML body of a carpentries lesson (an xml2 object)}
+
+\item{type}{the type of element containing the challenges "block" is the
+default and will search for all of the blockquotes with liquid/kramdown
+markup, "div" will search for all div tags with class of challenge, and
+"chunk" will search for all of code chunks with the engine of challenge.}
 }
 \value{
 an xml object.
@@ -18,6 +23,9 @@ the block quotes that are ancestral to that marker so that we can extract the
 challenge blockquotes from the carpentries lessons.
 }
 \examples{
-frg <- Lesson$new(lesson_fragment())
-get_challenges(frg$episodes[["17-scope.md"]]$body)
+loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
+get_challenges(loop$body, "block")
+get_challenges(loop$unblock()$body, "div")
+loop$reset()
+get_challenges(loop$use_dovetail()$unblock()$body, "chunk")
 }

@@ -28,6 +28,7 @@ element_df <- function(node) {
 # Get a character vector of the namespace
 NS <- function(x) attr(xml2::xml_ns(x), "names")[[1]]
 
+# generate xpath syntax for a block type
 block_type <- function(ns, type = NULL, start = "[", end = "]") {
 
   if (is.null(type)) {

@@ -187,7 +187,9 @@ odd_blocks %<>%
 names(odd_blocks$src) <- glue_data(odd_blocks, 
   "{Lesson}/{Episode} (Block {Block})"
 )
-purrr::walk(SWC, ~map(.x$episodes, ~.x$unblock()))
+purrr::map(SWC, ~.x$episodes) %>% 
+  purrr::flatten() %>%
+  purrr::walk(~.x$use_dovetail()$unblock())
 purrr::walk2(names(odd_blocks$src), odd_blocks$src, ~cat(.x, xml_text(.y), sep = "\n---\n"))
 ```
 
