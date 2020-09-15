@@ -16,6 +16,10 @@
 #' @noRd
 #' @keywords internal
 use_dovetail <- function(body) {
+  if (inherits(body, "xml_missing")) {
+    warning("episode body missing", call. = FALSE)
+    return(invisible(body))
+  }
   setup <- get_setup_chunk(body)
   txt   <- parse(text = xml2::xml_text(setup))
   to_inject <- as.expression(c('library("dovetail")', 'source(dvt_opts())'))

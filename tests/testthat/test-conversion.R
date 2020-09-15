@@ -1,3 +1,13 @@
+test_that("conversions with empty bodies won't result in an error", {
+
+  loop <- fs::path(lesson_fragment(), "_episodes", "14-looping-data-sets.md")
+  e <- Episode$new(loop)
+  e$body <- xml2::xml_missing()
+  expect_warning(e$use_sandpaper(), "episode body missing")
+  expect_warning(e$use_dovetail(), "episode body missing")
+
+})
+
 test_that("Episodes can be converted to use sandpaper", {
 
   loop <- fs::path(lesson_fragment(), "_episodes", "14-looping-data-sets.md")

@@ -4,23 +4,43 @@
 \alias{get_solutions}
 \title{Gather solutions from the XML body of a carpentries lesson}
 \usage{
-get_solutions(body, parent = NULL)
+get_solutions(body, type = c("block", "div", "chunk"), parent = NULL)
 }
 \arguments{
 \item{body}{the XML body of a carpentries lesson (an xml2 object)}
+
+\item{type}{the type of element containing the solutions "block" is the
+default and will search for all of the blockquotes with liquid/kramdown
+markup, "div" will search for all div tags with class of solution, and
+"chunk" will search for all of code chunks with the engine of solution.}
 
 \item{parent}{the outer block containing the solution. Default is a challenge
 block, but it could also be a discussion block.}
 }
 \value{
-an xml object.
+\itemize{
+\item type = "block" (default) an xml nodelist of blockquotes
+\item type = "div" a list of xml nodelists
+\item type = "chunk" an xml nodelist of code blocks
+}
 }
 \description{
 This will search an XML document for a solution marker and extract all of
 the block quotes that are ancestral to that marker so that we can extract the
 solution blockquotes from the carpentries lessons.
 }
+\note{
+\itemize{
+\item the \code{parent} parameter is only valid for the "block" (default) type
+\item the "chunk" type has the limitation that solutions are embedded within
+their respective blocks, so counting the number of solution elements via
+this method may an undercount
+}
+}
 \examples{
-frg <- Lesson$new(lesson_fragment())
-get_solutions(frg$episodes[["17-scope.md"]]$body)
+loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
+get_solutions(loop$body, "block")
+get_solutions(loop$unblock()$body, "div")
+loop$reset()
+get_solutions(loop$use_dovetail()$unblock()$body, "chunk")
 }

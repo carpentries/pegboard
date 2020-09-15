@@ -121,9 +121,8 @@ to_dovetail <- function(block, token = "#'") {
   xml2::xml_set_attr(nblks, "comment", token)
 
   # 7. parse the document with xslt
-  stysh <- xml2::read_xml(get_stylesheet("xml2md_roxy.xsl"))
-
-  txt <- xslt::xml_xslt(cpy, stysh)
+  txt <- xml_to_md(cpy, "xml2md_roxy.xsl")
+  # replace all duplicated tokens
   txt <- gsub(glue::glue("{token} {token}"), token, txt, fixed = TRUE)
   # fix opening code fences
   txt <- gsub("\n\n```", "\n#' \n#' ```", txt)

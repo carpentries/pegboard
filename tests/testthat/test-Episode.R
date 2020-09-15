@@ -137,7 +137,7 @@ test_that("yaml items can be moved to the text (with dovetail)", {
   expect_named(yml, c("title", "teaching", "exercises", "questions", "objectives", "keypoints"))
   expect_false(length(xml2::xml_find_all(e$body, ".//d1:code_block[@info='{questions}']")) > 0)
 
-  e$use_dovetail()
+  e$use_dovetail() # Using dovetail
 
   e$move_questions()
   expect_equal(n_code_blocks + 2L, length(e$code))
@@ -172,8 +172,10 @@ test_that("yaml items can be moved to the text (no dovetail)", {
   expect_named(yml, c("title", "teaching", "exercises", "questions", "objectives", "keypoints"))
   expect_false(length(xml2::xml_find_all(e$body, ".//d1:code_block[@info='{questions}']")) > 0)
   expect_length(xml2::xml_find_all(e$body, ".//d1:html_block"), 2)
+  expect_equal(length(e$get_divs()), 0)
 
   e$move_questions()
+  expect_equal(length(e$get_divs()), 1)
   expect_equal(n_code_blocks, length(e$code))
 
   # The question block is moved to the top
@@ -192,6 +194,7 @@ test_that("yaml items can be moved to the text (no dovetail)", {
   expect_named(yml, c("title", "teaching", "exercises", "objectives", "keypoints"))
 
   e$move_objectives()
+  expect_equal(length(e$get_divs()), 2)
   expect_equal(n_code_blocks, length(e$code))
   expect_length(xml2::xml_find_all(e$body, ".//d1:html_block"), 2 + 2 + 2)
   expect_match(
@@ -207,6 +210,7 @@ test_that("yaml items can be moved to the text (no dovetail)", {
   expect_named(yml, c("title", "teaching", "exercises", "keypoints"))
 
   e$move_keypoints()
+  expect_equal(length(e$get_divs()), 3)
   expect_equal(n_code_blocks, length(e$code))
   expect_length(xml2::xml_find_all(e$body, ".//d1:html_block"), 2 + 2 + 2 + 2)
   expect_match(
@@ -223,7 +227,7 @@ test_that("yaml items can be moved to the text (no dovetail)", {
 
 })
 
-test_that("blocks can be converted to code blocks", {
+test_that("blocks can be converted to div blocks", {
 
 
   loop <- fs::path(lesson_fragment(), "_episodes", "14-looping-data-sets.md")
@@ -241,22 +245,85 @@ test_that("blocks can be converted to code blocks", {
     "{: .language-python}",
     "{: .language-python}"
   )
-  challenge_tags <- tags
-  challenge_tags[9:11] <- NA
-  language_tags <- tags
+  challenge_tags         <- tags
+  challenge_tags[9:11]   <- NA
+  language_tags          <- rep(NA_character_, length(tags))
+
+  expect_length(e$get_blocks(level = 0), 6)
+  expect_length(xml2::xml_find_all(e$body, ".//d1:html_block"), 2)
+
+  expect_length(e$code, 11)
+  expect_identical(xml2::xml_attr(e$code, "ktag"), tags)
+  expect_length(e$reset()$unblock()$code, 11)
+  # no blocks
+  expect_length(e$reset()$unblock()$get_blocks(), 0)
+  # div tags, though
+  expect_length(xml2::xml_find_all(e$reset()$unblock()$body, ".//d1:html_block"), 2 + (6 * 2))
+  expect_identical(xml2::xml_attr(e$reset()$unblock()$code, "ktag"), tags)
+  expect_identical(xml2::xml_attr(e$reset()$unblock()$code, "language"), language_tags)
+
+  expect_length(e$get_divs(), 3 + 3)
+  expect_length(e$solutions, 3)
+  expect_length(e$challenges, 3)
+
+  divs <- xml2::xml_find_all(e$reset()$unblock()$body, ".//d1:html_block")
+  divs <- xml2::xml_text(divs)
+  expect_match(divs[1:12], "div")
+  expect_match(divs[c(1, 5, 9)], "challenge")
+  expect_match(divs[c(2, 6, 10)], "solution")
+
+  cb <- xml2::xml_text(e$reset()$unblock()$code[11])
+  # All lines will either start with code or comment, but none will start with
+  # a roxygen comment
+  expect_match(strsplit(cb, "\n")[[1]], "^([#][^'+]|import|fig|for|    |plt)")
+
+  # A solution block will exist
+  expect_failure(expect_match(cb, "[@]solution"))
+  expect_failure(expect_match(cb, "[@]challenge"))
+
+  # code is presented unmodified
+
+  # final challenge block is one code block
+  expect_match(cb, xml2::xml_text(e$reset()$code[11]), fixed = TRUE)
+
+})
+
+test_that("blocks can be converted to code blocks with dovetail", {
+
+
+  loop <- fs::path(lesson_fragment(), "_episodes", "14-looping-data-sets.md")
+  e <- Episode$new(loop)
+  tags <- c(
+    "{: .language-python}",
+    "{: .output}",
+    "{: .language-python}",
+    "{: .output}",
+    "{: .language-python}",
+    "{: .output}",
+    "{: .language-python}",
+    "{: .output}",
+    "{: .language-python}",
+    "{: .language-python}",
+    "{: .language-python}"
+  )
+  challenge_tags         <- tags
+  challenge_tags[9:11]   <- NA
+  challenge_tags         <- c(NA, challenge_tags)
+  language_tags          <- tags
   language_tags[-(9:11)] <- NA
-  language_tags[9:11] <- "challenge"
+  language_tags[9:11]    <- "challenge"
+  language_tags          <- c("r", language_tags)
 
   expect_length(e$get_blocks(), 3)
 
   expect_length(e$code, 11)
   expect_identical(xml2::xml_attr(e$code, "ktag"), tags)
   expect_length(e$reset()$unblock()$get_blocks(), 0)
-  expect_length(e$reset()$unblock()$code, 11)
-  expect_identical(xml2::xml_attr(e$reset()$unblock()$code, "ktag"), challenge_tags)
-  expect_identical(xml2::xml_attr(e$reset()$unblock()$code, "language"), language_tags)
+  expect_length(e$reset()$use_dovetail()$unblock()$code, 12)
+  expect_identical(xml2::xml_attr(e$reset()$use_dovetail()$unblock()$code, "ktag"), challenge_tags)
+  expect_identical(xml2::xml_attr(e$reset()$use_dovetail()$unblock()$code, "language"), language_tags)
 
-  cb <- xml2::xml_text(e$reset()$unblock()$code[11])
+  cb <- xml2::xml_text(e$reset()$use_dovetail()$unblock()$code[12])
   # All lines will either start with code or comment
   expect_match(strsplit(cb, "\n")[[1]], "^([#]['+]|import|fig|for|    |plt)")
 
@@ -271,13 +338,13 @@ test_that("blocks can be converted to code blocks", {
 
   # middle challenge block is two code blocks
   expect_match(
-    xml2::xml_text(e$reset()$unblock()$code[10]),
+    xml2::xml_text(e$reset()$use_dovetail()$unblock()$code[11]),
     xml2::xml_text(e$reset()$code[10]),
     fixed = TRUE
   )
 
   expect_match(
-    xml2::xml_text(e$reset()$unblock()$code[10]),
+    xml2::xml_text(e$reset()$use_dovetail()$unblock()$code[11]),
     xml2::xml_text(e$reset()$code[9]),
     fixed = TRUE
   )
@@ -297,6 +364,39 @@ test_that("challenges with multiple solution blocks will be rendered appropriate
   # There should be four solutions within this single challenge
   expect_length(sltns, 4)
   e$unblock()
+  # The challenge is now empty
+  expect_true(xml2::xml_find_lgl(chlng, "boolean(self::d1:block_quote)"))
+  expect_equal(xml2::xml_text(chlng), "")
+
+  # the accessors still register challenges and solutions
+  expect_length(e$challenges, 7)
+  expect_length(e$solutions, 10)
+
+  # This process works for non-challenge blocks
+  e$reset()
+  chlng <- e$challenges[4]
+  xml2::xml_attr(chlng, "ktag") <- "{: .callout}"
+  e$unblock()
+  # the accessors still register challenges and solutions
+  expect_length(e$challenges, 6)
+  expect_length(e$solutions, 10)
+  expect_length(e$get_divs("callout"), 1)
+
+})
+
+test_that("dovetail with multiple solution blocks will be rendered appropriately", {
+
+  floop <- fs::path(lesson_fragment(), "_episodes", "12-for-loops.md")
+  e     <- Episode$new(floop)
+  expect_length(e$challenges, 7)
+  expect_length(e$solutions, 10)
+  chlng <- e$challenges[4]
+  # The challenge is a block quote
+  expect_true(xml2::xml_find_lgl(chlng, "boolean(self::d1:block_quote)"))
+  sltns <- xml2::xml_find_all(chlng, ".//d1:block_quote[@ktag='{: .solution}']")
+  # There should be four solutions within this single challenge
+  expect_length(sltns, 4)
+  e$use_dovetail()$unblock()
   # The challenge is now a code block
   expect_false(xml2::xml_find_lgl(chlng, "boolean(self::d1:block_quote)"))
   expect_true(xml2::xml_find_lgl(chlng, "boolean(self::d1:code_block)"))
@@ -315,7 +415,7 @@ test_that("challenges with multiple solution blocks will be rendered appropriate
   e$reset()
   chlng <- e$challenges[4]
   xml2::xml_attr(chlng, "ktag") <- "{: .callout}"
-  e$unblock()
+  e$use_dovetail()$unblock()
   expect_true(xml2::xml_find_lgl(chlng, "boolean(self::d1:code_block)"))
   expect_match(xml2::xml_text(chlng), "## Practice Accumulating")
   expect_match(xml2::xml_text(chlng), "@solution Solution")
@@ -333,7 +433,7 @@ test_that("challenges with multiple solution blocks will be rendered appropriate
   xml2::xml_attr(chlng, "ktag") <- "{: .callout}"
   chead <- xml2::xml_find_first(chlng, ".//d1:heading")
   xml2::xml_attr(chead, "level") <- '3'
-  e$unblock()
+  e$use_dovetail()$unblock()
   expect_true(xml2::xml_find_lgl(chlng, "boolean(self::d1:code_block)"))
   expect_match(xml2::xml_text(chlng), "### Practice Accumulating")
   expect_match(xml2::xml_text(chlng), "@solution Solution")

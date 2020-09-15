@@ -5,6 +5,10 @@
 #' @return the body
 #' @noRd
 use_sandpaper <- function(body, rmd = TRUE) {
+  if (inherits(body, "xml_missing")) {
+    warning("episode body missing", call. = FALSE)
+    return(invisible(body))
+  }
   fix_sandpaper_links(body)
   # Fix the code tags
   ns         <- NS(body)
