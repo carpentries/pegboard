@@ -184,6 +184,7 @@ destructively modified in the conversion.</p>
 
 <ul>
 <li><p><a href='#method-get_blocks'><code>Episode$get_blocks()</code></a></p></li>
+<li><p><a href='#method-get_divs'><code>Episode$get_divs()</code></a></p></li>
 <li><p><a href='#method-get_yaml'><code>Episode$get_yaml()</code></a></p></li>
 <li><p><a href='#method-use_dovetail'><code>Episode$use_dovetail()</code></a></p></li>
 <li><p><a href='#method-use_sandpaper'><code>Episode$use_sandpaper()</code></a></p></li>
@@ -242,6 +243,16 @@ scope$get_blocks(".solution", level = 2)
 }
 </pre><p></div></p>
 
+<p><hr>
+<a id="method-get_divs"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='get_divs.html'>get_divs()</a></code></h3>
+<p>return all div elements within the Episode</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>Episode</span><span class='op'>$</span><span class='fu'><a href='get_divs.html'>get_divs</a></span>(type = <span class='kw'>NULL</span>)</pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>type</code></dt><dd><p>the type of div tag (e.g. 'challenge' or 'solution')</p></dd>
+
+</dl><p></div></p>
 <p><hr>
 <a id="method-get_yaml"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>get_yaml()</code></h3>
 <p>Extract the yaml metadata from the episode</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
@@ -508,7 +519,7 @@ as valid links.</p></dd>
 
 <span class='kw'>scope</span> <span class='op'>&lt;-</span> <span class='kw'>Episode</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span>(), <span class='st'>"_episodes"</span>, <span class='st'>"17-scope.md"</span>))
 <span class='kw'>scope</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/base/write.html'>write</a></span>()
-</div><div class='output co'>#&gt; <span class='message'>Creating temporary directory '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpgEzrdT/dir8eca65a24'</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Creating temporary directory '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpHfZ5Qo/dir7bf5a033389'</span></div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `Episode$reset`</span>
 <span class='co'>## ------------------------------------------------</span>
@@ -586,9 +597,9 @@ as valid links.</p></dd>
 #&gt;  [6] &lt;code_block sourcepos="64:1-66:3" xml:space="preserve" ktag="{: .output} ...
 #&gt;  [7] &lt;code_block sourcepos="74:1-78:3" xml:space="preserve" ktag="{: .languag ...
 #&gt;  [8] &lt;code_block sourcepos="80:1-87:3" xml:space="preserve" ktag="{: .output} ...
-#&gt;  [9] &lt;code_block sourcepos="95:1-108:14" language="challenge" name="&amp;quot;95: ...
-#&gt; [10] &lt;code_block sourcepos="110:1-140:14" language="challenge" name="&amp;quot;11 ...
-#&gt; [11] &lt;code_block sourcepos="142:1-170:14" language="challenge" name="&amp;quot;14 ...</div><div class='input'>
+#&gt;  [9] &lt;code_block sourcepos="115:3-123:5" xml:space="preserve" ktag="{: .langu ...
+#&gt; [10] &lt;code_block sourcepos="129:5-137:7" xml:space="preserve" ktag="{: .langu ...
+#&gt; [11] &lt;code_block sourcepos="152:5-167:7" xml:space="preserve" ktag="{: .langu ...</div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `Episode$new`</span>
 <span class='co'>## ------------------------------------------------</span>
@@ -615,7 +626,7 @@ as valid links.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

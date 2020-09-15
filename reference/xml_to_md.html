@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Gather blocks from the XML body of a carpentries lesson — get_blocks • pegboard</title>
+<title>Convert xml to markdown — xml_to_md • pegboard</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,8 @@
 
 
 
-<meta property="og:title" content="Gather blocks from the XML body of a carpentries lesson — get_blocks" />
-<meta property="og:description" content="This will search an XML document for block_quotes with the specified type
-and level and extract them into a nodeset." />
+<meta property="og:title" content="Convert xml to markdown — xml_to_md" />
+<meta property="og:description" content="Convert xml to markdown" />
 
 
 
@@ -124,56 +123,47 @@ and level and extract them into a nodeset." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Gather blocks from the XML body of a carpentries lesson</h1>
-    <small class="dont-index">Source: <a href='https://github.com/zkamvar/pegboard/blob/master/R/get_blocks.R'><code>R/get_blocks.R</code></a></small>
-    <div class="hidden name"><code>get_blocks.Rd</code></div>
+    <h1>Convert xml to markdown</h1>
+    <small class="dont-index">Source: <a href='https://github.com/zkamvar/pegboard/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
+    <div class="hidden name"><code>xml_to_md.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This will search an XML document for <code>block_quotes</code> with the specified type
-and level and extract them into a nodeset.</p>
+    <p>Convert xml to markdown</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_blocks</span>(<span class='kw'>body</span>, type = <span class='kw'>NULL</span>, level = <span class='fl'>0</span>)</pre>
+    <pre class="usage"><span class='fu'>xml_to_md</span>(<span class='kw'>body</span>, stylesheet = <span class='st'>"xml2md_roxy.xsl"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>body</th>
-      <td><p>the XML body of a carpentries lesson (an xml2 object)</p></td>
+      <td><p>an xml document</p></td>
     </tr>
     <tr>
-      <th>type</th>
-      <td><p>the type of block quote in the Jekyll syntax like ".challenge",
-".discussion", or ".solution"</p></td>
-    </tr>
-    <tr>
-      <th>level</th>
-      <td><p>the level of the block within the document. Defaults to <code>1</code>,
-which represents all of the block_quotes are not nested within any other
-block quotes. Increase the nubmer to increase the level of nesting.</p></td>
+      <th>stylesheet</th>
+      <td><p>the name of a stylesheet passed to <code>get_stylesheet</code></p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>an xml nodeset object with each element representing a blockquote
-that matched the input criteria.</p>
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
-    <p>At the moment, blocks are returned at the specified level. If you
-select <code>type = ".solution", level = 1</code>, you will receive blocks that
-<em>contain</em> solution blocks even though these blocks are almost always nested
-within other blocks.</p>
+    <p>a character vector of length 1</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>frg</span> <span class='op'>&lt;-</span> <span class='kw'>Lesson</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span>())
-<span class='co'># Find all the blocks in the</span>
-<span class='fu'>get_blocks</span>(<span class='kw'>frg</span><span class='op'>$</span><span class='kw'>episodes</span>[[<span class='st'>"17-scope.md"</span>]]<span class='op'>$</span><span class='kw'>body</span>)
-</div><div class='output co'>#&gt; {xml_nodeset (2)}
-#&gt; [1] &lt;block_quote sourcepos="45:1-60:14" ktag="{: .challenge}"&gt;\n  &lt;heading so ...
-#&gt; [2] &lt;block_quote sourcepos="62:1-95:14" ktag="{: .challenge}"&gt;\n  &lt;heading so ...</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>cha</span> <span class='op'>&lt;-</span> <span class='kw'>pegboard</span>:::<span class='fu'><a href='make_div.html'>make_div</a></span>(<span class='st'>"challenge"</span>)
+<span class='kw'>sol</span> <span class='op'>&lt;-</span> <span class='kw'>pegboard</span>:::<span class='fu'><a href='make_div.html'>make_div</a></span>(<span class='st'>"solution"</span>)
+<span class='kw'>xml2</span>::<span class='fu'><a href='http://xml2.r-lib.org/reference/xml_replace.html'>xml_add_child</a></span>(<span class='kw'>cha</span>, <span class='kw'>xml2</span>::<span class='fu'><a href='http://xml2.r-lib.org/reference/xml_children.html'>xml_child</a></span>(<span class='kw'>sol</span>, <span class='fl'>1</span>), .where =  <span class='fl'>1</span>)
+<span class='kw'>xml2</span>::<span class='fu'><a href='http://xml2.r-lib.org/reference/xml_replace.html'>xml_add_child</a></span>(<span class='kw'>cha</span>, <span class='kw'>xml2</span>::<span class='fu'><a href='http://xml2.r-lib.org/reference/xml_children.html'>xml_child</a></span>(<span class='kw'>sol</span>, <span class='fl'>2</span>), .where = <span class='fl'>2</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span>(<span class='kw'>pegboard</span>:::<span class='fu'>xml_to_md</span>(<span class='kw'>cha</span>))
+</div><div class='output co'>#&gt; &lt;div class="challenge"&gt;
+#&gt; 
+#&gt; &lt;div class="solution"&gt;
+#&gt; 
+#&gt; &lt;/div&gt;
+#&gt; 
+#&gt; &lt;/div&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

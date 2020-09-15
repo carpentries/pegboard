@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Gather solutions from the XML body of a carpentries lesson — get_solutions • pegboard</title>
+<title>Find nodes between two nodes with a given dtag — find_between_tags • pegboard</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,8 @@
 
 
 
-<meta property="og:title" content="Gather solutions from the XML body of a carpentries lesson — get_solutions" />
-<meta property="og:description" content="This will search an XML document for a solution marker and extract all of
-the block quotes that are ancestral to that marker so that we can extract the
-solution blockquotes from the carpentries lessons." />
+<meta property="og:title" content="Find nodes between two nodes with a given dtag — find_between_tags" />
+<meta property="og:description" content="Find nodes between two nodes with a given dtag" />
 
 
 
@@ -125,88 +123,78 @@ solution blockquotes from the carpentries lessons." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Gather solutions from the XML body of a carpentries lesson</h1>
-    <small class="dont-index">Source: <a href='https://github.com/zkamvar/pegboard/blob/master/R/get_solutions.R'><code>R/get_solutions.R</code></a></small>
-    <div class="hidden name"><code>get_solutions.Rd</code></div>
+    <h1>Find nodes between two nodes with a given dtag</h1>
+    <small class="dont-index">Source: <a href='https://github.com/zkamvar/pegboard/blob/master/R/div.R'><code>R/div.R</code></a></small>
+    <div class="hidden name"><code>find_between_tags.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This will search an XML document for a solution marker and extract all of
-the block quotes that are ancestral to that marker so that we can extract the
-solution blockquotes from the carpentries lessons.</p>
+    <p>Find nodes between two nodes with a given dtag</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_solutions</span>(<span class='kw'>body</span>, type = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"block"</span>, <span class='st'>"div"</span>, <span class='st'>"chunk"</span>), parent = <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>find_between_tags</span>(<span class='kw'>tag</span>, <span class='kw'>body</span>, <span class='kw'>ns</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>tag</th>
+      <td><p>an integer representing a unique dtag attribute</p></td>
+    </tr>
+    <tr>
       <th>body</th>
-      <td><p>the XML body of a carpentries lesson (an xml2 object)</p></td>
+      <td><p>an xml document</p></td>
     </tr>
     <tr>
-      <th>type</th>
-      <td><p>the type of element containing the solutions "block" is the
-default and will search for all of the blockquotes with liquid/kramdown
-markup, "div" will search for all div tags with class of solution, and
-"chunk" will search for all of code chunks with the engine of solution.</p></td>
-    </tr>
-    <tr>
-      <th>parent</th>
-      <td><p>the outer block containing the solution. Default is a challenge
-block, but it could also be a discussion block.</p></td>
+      <th>ns</th>
+      <td><p>the namespace from the body</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    
-<ul>
-<li><p>type = "block" (default) an xml nodelist of blockquotes</p></li>
-<li><p>type = "div" a list of xml nodelists</p></li>
-<li><p>type = "chunk" an xml nodelist of code blocks</p></li>
-</ul>
-
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
-    
-<ul>
-<li><p>the <code>parent</code> parameter is only valid for the "block" (default) type</p></li>
-<li><p>the "chunk" type has the limitation that solutions are embedded within
-their respective blocks, so counting the number of solution elements via
-this method may an undercount</p></li>
-</ul>
-
+    <p>a nodeset between tags that have the dtag attribute matching <code>tag</code></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>loop</span> <span class='op'>&lt;-</span> <span class='kw'>Episode</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span>(), <span class='st'>"_episodes"</span>, <span class='st'>"14-looping-data-sets.md"</span>))
-<span class='fu'>get_solutions</span>(<span class='kw'>loop</span><span class='op'>$</span><span class='kw'>body</span>, <span class='st'>"block"</span>)
-</div><div class='output co'>#&gt; {xml_nodeset (3)}
-#&gt; [1] &lt;block_quote sourcepos="104:3-108:14" ktag="{: .solution}"&gt;\n  &lt;heading s ...
-#&gt; [2] &lt;block_quote sourcepos="128:3-140:14" ktag="{: .solution}"&gt;\n  &lt;heading s ...
-#&gt; [3] &lt;block_quote sourcepos="147:3-170:14" ktag="{: .solution}"&gt;\n  &lt;heading s ...</div><div class='input'><span class='fu'>get_solutions</span>(<span class='kw'>loop</span><span class='op'>$</span><span class='fu'>unblock</span>()<span class='op'>$</span><span class='kw'>body</span>, <span class='st'>"div"</span>)
-</div><div class='output co'>#&gt; $`solution-div-3`
-#&gt; {xml_nodeset (2)}
-#&gt; [1] &lt;heading sourcepos="104:5-104:15" level="2"&gt;\n  &lt;text sourcepos="104:8-10 ...
-#&gt; [2] &lt;paragraph sourcepos="106:5-108:14"&gt;\n  &lt;text sourcepos="106:5-106:33" xm ...
-#&gt; 
-#&gt; $`solution-div-6`
-#&gt; {xml_nodeset (2)}
-#&gt; [1] &lt;heading sourcepos="128:5-128:15" level="2"&gt;\n  &lt;text sourcepos="128:8-12 ...
-#&gt; [2] &lt;code_block sourcepos="129:5-137:7" xml:space="preserve" ktag="{: .langua ...
-#&gt; 
-#&gt; $`solution-div-9`
-#&gt; {xml_nodeset (3)}
-#&gt; [1] &lt;heading sourcepos="147:5-147:15" level="2"&gt;\n  &lt;text sourcepos="147:8-14 ...
-#&gt; [2] &lt;paragraph sourcepos="148:5-151:31"&gt;\n  &lt;text sourcepos="148:5-148:61" xm ...
-#&gt; [3] &lt;code_block sourcepos="152:5-167:7" xml:space="preserve" ktag="{: .langua ...
-#&gt; </div><div class='input'><span class='kw'>loop</span><span class='op'>$</span><span class='fu'>reset</span>()
-<span class='fu'>get_solutions</span>(<span class='kw'>loop</span><span class='op'>$</span><span class='fu'>use_dovetail</span>()<span class='op'>$</span><span class='fu'>unblock</span>()<span class='op'>$</span><span class='kw'>body</span>, <span class='st'>"chunk"</span>)
-</div><div class='output co'>#&gt; {xml_nodeset (3)}
-#&gt; [1] &lt;code_block sourcepos="95:1-108:14" language="challenge" name="&amp;quot;95:1 ...
-#&gt; [2] &lt;code_block sourcepos="110:1-140:14" language="challenge" name="&amp;quot;110 ...
-#&gt; [3] &lt;code_block sourcepos="142:1-170:14" language="challenge" name="&amp;quot;142 ...</div></pre>
+<span class='kw'>loop</span><span class='op'>$</span><span class='kw'>body</span> <span class='co'># a full document with block quotes and code blocks, etc</span>
+</div><div class='output co'>#&gt; {xml_document}
+#&gt; &lt;document sourcepos="1:1-182:38" xmlns="http://commonmark.org/xml/1.0"&gt;
+#&gt;  [1] &lt;heading sourcepos="2:1-2:65" level="2"&gt;\n  &lt;text sourcepos="2:4-2:9" xm ...
+#&gt;  [2] &lt;list sourcepos="4:1-6:0" type="bullet" tight="true"&gt;\n  &lt;item sourcepos ...
+#&gt;  [3] &lt;code_block sourcepos="7:1-12:3" xml:space="preserve" ktag="{: .language ...
+#&gt;  [4] &lt;code_block sourcepos="14:1-33:3" xml:space="preserve" ktag="{: .output} ...
+#&gt;  [5] &lt;heading sourcepos="36:1-36:126" level="2"&gt;\n  &lt;text sourcepos="36:4-36: ...
+#&gt;  [6] &lt;list sourcepos="38:1-47:0" type="bullet" tight="true"&gt;\n  &lt;item sourcep ...
+#&gt;  [7] &lt;code_block sourcepos="48:1-51:3" xml:space="preserve" ktag="{: .languag ...
+#&gt;  [8] &lt;code_block sourcepos="53:1-57:3" xml:space="preserve" ktag="{: .output} ...
+#&gt;  [9] &lt;code_block sourcepos="60:1-62:3" xml:space="preserve" ktag="{: .languag ...
+#&gt; [10] &lt;code_block sourcepos="64:1-66:3" xml:space="preserve" ktag="{: .output} ...
+#&gt; [11] &lt;heading sourcepos="69:1-69:52" level="2"&gt;\n  &lt;text sourcepos="69:4-69:7 ...
+#&gt; [12] &lt;list sourcepos="71:1-73:0" type="bullet" tight="true"&gt;\n  &lt;item sourcep ...
+#&gt; [13] &lt;code_block sourcepos="74:1-78:3" xml:space="preserve" ktag="{: .languag ...
+#&gt; [14] &lt;code_block sourcepos="80:1-87:3" xml:space="preserve" ktag="{: .output} ...
+#&gt; [15] &lt;list sourcepos="90:1-94:0" type="bullet" tight="true"&gt;\n  &lt;item sourcep ...
+#&gt; [16] &lt;block_quote sourcepos="95:1-108:14" ktag="{: .challenge}"&gt;\n  &lt;heading  ...
+#&gt; [17] &lt;block_quote sourcepos="110:1-140:14" ktag="{: .challenge}"&gt;\n  &lt;heading ...
+#&gt; [18] &lt;block_quote sourcepos="142:1-170:14" ktag="{: .challenge}"&gt;\n  &lt;heading ...
+#&gt; [19] &lt;heading sourcepos="172:1-172:29" level="3"&gt;\n  &lt;text sourcepos="172:5-1 ...
+#&gt; [20] &lt;html_block sourcepos="174:1-174:86" xml:space="preserve"&gt;&amp;lt;img src="h ...
+#&gt; ...</div><div class='input'><span class='kw'>loop</span><span class='op'>$</span><span class='fu'>unblock</span>() <span class='co'># removing blockquotes and replacing with div tags</span>
+<span class='co'># find all the div tags</span>
+<span class='kw'>tags</span> <span class='op'>&lt;-</span> <span class='kw'>xml2</span>::<span class='fu'><a href='http://xml2.r-lib.org/reference/xml_text.html'>xml_text</a></span>(<span class='kw'>xml2</span>::<span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span>(<span class='kw'>loop</span><span class='op'>$</span><span class='kw'>body</span>, <span class='st'>".//@dtag"</span>))
+<span class='kw'>tags</span>
+</div><div class='output co'>#&gt;  [1] "div-1" "div-3" "div-3" "div-1" "div-4" "div-6" "div-6" "div-4" "div-7"
+#&gt; [10] "div-9" "div-9" "div-7"</div><div class='input'><span class='co'># grab the contents of the first div tag</span>
+<span class='kw'>pegboard</span>:::<span class='fu'>find_between_tags</span>(<span class='kw'>tags</span>, <span class='kw'>loop</span><span class='op'>$</span><span class='kw'>body</span>, <span class='kw'>pegboard</span>:::<span class='fu'>NS</span>(<span class='kw'>loop</span><span class='op'>$</span><span class='kw'>body</span>))
+</div><div class='output co'>#&gt; {xml_nodeset (7)}
+#&gt; [1] &lt;heading sourcepos="95:3-95:24" level="2"&gt;\n  &lt;text sourcepos="95:6-95:24 ...
+#&gt; [2] &lt;paragraph sourcepos="97:3-97:87"&gt;\n  &lt;text sourcepos="97:3-97:26" xml:sp ...
+#&gt; [3] &lt;list sourcepos="99:3-103:1" type="ordered" start="1" delim="period" tigh ...
+#&gt; [4] &lt;html_block xmlns="http://commonmark.org/xml/1.0" xml:space="preserve" dt ...
+#&gt; [5] &lt;heading sourcepos="104:5-104:15" level="2"&gt;\n  &lt;text sourcepos="104:8-10 ...
+#&gt; [6] &lt;paragraph sourcepos="106:5-108:14"&gt;\n  &lt;text sourcepos="106:5-106:33" xm ...
+#&gt; [7] &lt;html_block xmlns="http://commonmark.org/xml/1.0" xml:space="preserve" dt ...</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
