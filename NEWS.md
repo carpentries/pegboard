@@ -1,3 +1,19 @@
+# pegboard 0.0.0.9004
+
+The changes in this version largely are enhancements for handling div tags
+and conversion. See #9 for details
+
+ - `$unblock()` defaults to converting to div tags unless `$use_sandpaper()` has been called. 
+ - `$unblock()` will auto-name ALL the divs with {class}-div-{number}
+ - `$move_*` functions will now name the html_blocks
+ - `$get_divs()` returns div tags in a named list
+ - `$challenges` will now find either blocks, divs or code, depending on
+   the mutations
+ - `$soltuions` same as challenges (see above)
+ - `$use_dovetail()` will warn the user if the body is empty
+ - `$use_sandpaper()` will do the same
+
+
 # pegboard 0.0.0.9003
 
 Jekyll-specific and relative links are now converted as part of `use_sandpaper()`. 
