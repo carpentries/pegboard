@@ -160,6 +160,15 @@ containing div tags</p></li>
 <li><p>grab all elements between the tags</p></li>
 </ol>
 
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code>get_divs()</code> for finding labelled tags,
+<code><a href='find_between_tags.html'>find_between_tags()</a></code> to extract things between the tags,
+<code><a href='label_div_tags.html'>label_div_tags()</a></code> for labelling div tags,
+<code><a href='clean_div_tags.html'>clean_div_tags()</a></code> for cleaning cluttered div tags,
+<code><a href='replace_with_div.html'>replace_with_div()</a></code> for replacing blockquotes with div tags
+<code><a href='make_pairs.html'>make_pairs()</a></code> for connecting open and closing tags
+<code><a href='get_div_levels.html'>get_div_levels()</a></code> for documenting the level of div tags</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>loop</span> <span class='op'>&lt;-</span> <span class='kw'>Episode</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span>(), <span class='st'>"_episodes"</span>, <span class='st'>"14-looping-data-sets.md"</span>))
@@ -188,7 +197,7 @@ containing div tags</p></li>
 #&gt; [20] &lt;html_block sourcepos="174:1-174:86" xml:space="preserve"&gt;&amp;lt;img src="h ...
 #&gt; ...</div><div class='input'><span class='kw'>loop</span><span class='op'>$</span><span class='fu'>unblock</span>() <span class='co'># removing blockquotes and replacing with div tags</span>
 <span class='kw'>pegboard</span>:::<span class='fu'>get_divs</span>(<span class='kw'>loop</span><span class='op'>$</span><span class='kw'>body</span>, <span class='st'>'challenge'</span>) <span class='co'># all challenge blocks</span>
-</div><div class='output co'>#&gt; $`challenge-div-1`
+</div><div class='output co'>#&gt; $`div-1-challenge`
 #&gt; {xml_nodeset (7)}
 #&gt; [1] &lt;heading sourcepos="95:3-95:24" level="2"&gt;\n  &lt;text sourcepos="95:6-95:24 ...
 #&gt; [2] &lt;paragraph sourcepos="97:3-97:87"&gt;\n  &lt;text sourcepos="97:3-97:26" xml:sp ...
@@ -198,7 +207,7 @@ containing div tags</p></li>
 #&gt; [6] &lt;paragraph sourcepos="106:5-108:14"&gt;\n  &lt;text sourcepos="106:5-106:33" xm ...
 #&gt; [7] &lt;html_block xmlns="http://commonmark.org/xml/1.0" xml:space="preserve" dt ...
 #&gt; 
-#&gt; $`challenge-div-4`
+#&gt; $`div-4-challenge`
 #&gt; {xml_nodeset (8)}
 #&gt; [1] &lt;heading sourcepos="110:3-110:22" level="2"&gt;\n  &lt;text sourcepos="110:6-11 ...
 #&gt; [2] &lt;paragraph sourcepos="112:3-113:39"&gt;\n  &lt;text sourcepos="112:3-112:64" xm ...
@@ -209,7 +218,7 @@ containing div tags</p></li>
 #&gt; [7] &lt;code_block sourcepos="129:5-137:7" xml:space="preserve" ktag="{: .langua ...
 #&gt; [8] &lt;html_block xmlns="http://commonmark.org/xml/1.0" xml:space="preserve" dt ...
 #&gt; 
-#&gt; $`challenge-div-7`
+#&gt; $`div-7-challenge`
 #&gt; {xml_nodeset (7)}
 #&gt; [1] &lt;heading sourcepos="142:3-142:19" level="2"&gt;\n  &lt;text sourcepos="142:6-14 ...
 #&gt; [2] &lt;paragraph sourcepos="144:3-146:20"&gt;\n  &lt;text sourcepos="144:3-144:54" xm ...
@@ -219,17 +228,17 @@ containing div tags</p></li>
 #&gt; [6] &lt;code_block sourcepos="152:5-167:7" xml:space="preserve" ktag="{: .langua ...
 #&gt; [7] &lt;html_block xmlns="http://commonmark.org/xml/1.0" xml:space="preserve" dt ...
 #&gt; </div><div class='input'><span class='kw'>pegboard</span>:::<span class='fu'>get_divs</span>(<span class='kw'>loop</span><span class='op'>$</span><span class='kw'>body</span>, <span class='st'>'solution'</span>) <span class='co'># all solution blocks</span>
-</div><div class='output co'>#&gt; $`solution-div-3`
+</div><div class='output co'>#&gt; $`div-3-solution`
 #&gt; {xml_nodeset (2)}
 #&gt; [1] &lt;heading sourcepos="104:5-104:15" level="2"&gt;\n  &lt;text sourcepos="104:8-10 ...
 #&gt; [2] &lt;paragraph sourcepos="106:5-108:14"&gt;\n  &lt;text sourcepos="106:5-106:33" xm ...
 #&gt; 
-#&gt; $`solution-div-6`
+#&gt; $`div-6-solution`
 #&gt; {xml_nodeset (2)}
 #&gt; [1] &lt;heading sourcepos="128:5-128:15" level="2"&gt;\n  &lt;text sourcepos="128:8-12 ...
 #&gt; [2] &lt;code_block sourcepos="129:5-137:7" xml:space="preserve" ktag="{: .langua ...
 #&gt; 
-#&gt; $`solution-div-9`
+#&gt; $`div-9-solution`
 #&gt; {xml_nodeset (3)}
 #&gt; [1] &lt;heading sourcepos="147:5-147:15" level="2"&gt;\n  &lt;text sourcepos="147:8-14 ...
 #&gt; [2] &lt;paragraph sourcepos="148:5-151:31"&gt;\n  &lt;text sourcepos="148:5-148:61" xm ...
