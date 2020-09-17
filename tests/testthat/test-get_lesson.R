@@ -269,6 +269,16 @@ test_that("Lesson methods work as expected", {
 
 })
 
+test_that("code with embedded div tags are parsed correctly", {
+
+  suppressMessages(lex <- get_lesson("carpentries/lesson-example"))
+  expect_length(lex$episodes[[4]]$get_blocks(), 11)
+  expect_length(lex$episodes[[4]]$unblock()$get_divs(), 14)
+  expect_length(lex$episodes[[4]]$challenges, 1)
+  expect_length(lex$episodes[[4]]$solutions, 1)
+
+})
+
 test_that("Lessons with Rmd sources can be downloaded", {
 
   skip_if_offline()

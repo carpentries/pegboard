@@ -4,6 +4,13 @@
 #' @param what the class of block
 #' @return an xml document with commonmark namespace
 #' @keywords internal
+#' @seealso [get_divs()] for finding labelled tags, 
+#' [find_between_tags()] to extract things between the tags, 
+#' [label_div_tags()] for labelling div tags,
+#' [clean_div_tags()] for cleaning cluttered div tags,
+#' [replace_with_div()] for replacing blockquotes with div tags
+#' [make_pairs()] for connecting open and closing tags
+#' [get_div_levels()] for documenting the level of div tags
 #' @examples
 #' cha <- pegboard:::make_div("challenge")
 #' cha
@@ -22,6 +29,13 @@ make_div <- function(what) {
 #' @param block a blockquote element
 #' @return the children of the element, invisibly
 #' @keywords internal div
+#' @seealso [get_divs()] for finding labelled tags, 
+#' [find_between_tags()] to extract things between the tags, 
+#' [label_div_tags()] for labelling div tags,
+#' [clean_div_tags()] for cleaning cluttered div tags,
+#' [replace_with_div()] for replacing blockquotes with div tags
+#' [make_pairs()] for connecting open and closing tags
+#' [get_div_levels()] for documenting the level of div tags
 #' @examples
 #' frg <- Lesson$new(lesson_fragment())
 #' lop <- frg$episodes$`14-looping-data-sets.md`
@@ -42,11 +56,6 @@ replace_with_div <- function(block) {
   div   <- make_div(type)
   open  <- xml2::xml_child(div, 1)
   close <- xml2::xml_child(div, 2)
-  # adding a tag because that allows us to check if it's accurate. 
-  # nine digits should give us enough entropy in any given lesson.
-  # tag <- as.integer(stats::runif(1) * 10 ^ 9)
-  # xml2::xml_set_attr(open, "dtag", tag)
-  # xml2::xml_set_attr(close, "dtag", tag)
   xml2::xml_add_sibling(block, open, .where = "before")
   xml2::xml_add_sibling(block, close, .where = "after")
   elevate_children(block)
@@ -68,6 +77,13 @@ replace_with_div <- function(block) {
 #' @param type the type of div to return
 #' @return a list of nodesets
 #' @keywords internal div
+#' @seealso [get_divs()] for finding labelled tags, 
+#' [find_between_tags()] to extract things between the tags, 
+#' [label_div_tags()] for labelling div tags,
+#' [clean_div_tags()] for cleaning cluttered div tags,
+#' [replace_with_div()] for replacing blockquotes with div tags
+#' [make_pairs()] for connecting open and closing tags
+#' [get_div_levels()] for documenting the level of div tags
 #' @examples
 #' loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
 #' loop$body # a full document with block quotes and code blocks, etc
@@ -88,7 +104,7 @@ get_divs <- function(body, type = NULL){
   # 4. Extract nodes between tags
   valid <- utags & types
   res   <- purrr::map(tags[valid], find_between_tags, body, ns)
-  names(res) <- glue::glue("{get_div_class(prent)}-{tags}")[valid]
+  names(res) <- glue::glue("{tags}-{get_div_class(prent)}")[valid]
   res
 }
 
@@ -99,6 +115,13 @@ get_divs <- function(body, type = NULL){
 #' @param ns the namespace from the body
 #' @return a nodeset between tags that have the dtag attribute matching `tag`
 #' @keywords internal div
+#' @seealso [get_divs()] for finding labelled tags, 
+#' [find_between_tags()] to extract things between the tags, 
+#' [label_div_tags()] for labelling div tags,
+#' [clean_div_tags()] for cleaning cluttered div tags,
+#' [replace_with_div()] for replacing blockquotes with div tags
+#' [make_pairs()] for connecting open and closing tags
+#' [get_div_levels()] for documenting the level of div tags
 #' @examples
 #' loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
 #' loop$body # a full document with block quotes and code blocks, etc
@@ -123,7 +146,15 @@ find_between_tags <- function(tag, body, ns) {
 #' @param body an xml document
 #' @return the document, invisibly
 #' @keywords internal
+#' @seealso [get_divs()] for finding labelled tags, 
+#' [find_between_tags()] to extract things between the tags, 
+#' [label_div_tags()] for labelling div tags,
+#' [clean_div_tags()] for cleaning cluttered div tags,
+#' [replace_with_div()] for replacing blockquotes with div tags
+#' [make_pairs()] for connecting open and closing tags
+#' [get_div_levels()] for documenting the level of div tags
 label_div_tags <- function(body) {
+  clean_div_tags(body)
   ns     <- NS(body)
   xpath  <- glue::glue(".//{ns}:html_block[contains(text(), 'div')]")
   nodes  <- xml2::xml_find_all(body, xpath)
@@ -133,12 +164,124 @@ label_div_tags <- function(body) {
   invisible(body)
 }
 
+#' Clean the div tags from an xml document
+#'
+#' @param body an xml document
+#' @return an xml document
+#' @seealso [get_divs()] for finding labelled tags, 
+#' [find_between_tags()] to extract things between the tags, 
+#' [label_div_tags()] for labelling div tags,
+#' [clean_div_tags()] for cleaning cluttered div tags,
+#' [replace_with_div()] for replacing blockquotes with div tags
+#' [make_pairs()] for connecting open and closing tags
+#' [get_div_levels()] for documenting the level of div tags
+#' @details
+#'
+#' Commonmark knows what raw HTML looks like and will read it in as an HTML
+#' block, escaping the tag. it does this for every HTML tag that is preceded by
+#' a blank line, so this: `<div class='hello'>\n\n</div>` becomes two html_block
+#' elements
+#' 
+#' ```
+#' <html_block>
+#'   &lt;div class='hello'&gt;\n
+#' </html_block>
+#' <html_block>
+#'   &lt;/div&gt;\n
+#' </html_block>
+#' ```
+#'
+#' However, if an element is not preceded by a non-html element, it becomes
+#' part of that html element. So this `<div class='hello'>\n</div>` becomes a 
+#' single html_block element:
+#'
+#' ```
+#' <html_block>
+#'   &lt;div class='hello'&gt;\n&lt;/div&gt;\n
+#' </html_block>
+#' ```
+#' 
+#' Sometimes, this process can gobble up text that is markdown instead of HTML,
+#'
+#' This function will find multiple tags in HTML blocks and separates them into
+#' different blocks. 
+#'
+#' @keywords internal
+#' @examples
+#' txt <- " 
+#' <div class='challenge'>
+#' ## Challenge
+#' 
+#' do that challenging thing.
+#' 
+#' ```{r}
+#' cat('it might be challenging to do this')
+#' ```
+#' <div class='solution'>
+#' ```{r}
+#' It's not that challenging
+#' ```
+#' </div>
+#' <div class='solution'>
+#' We just have to try harder and use `<div>` tags
+#' 
+#' ```{r}
+#' cat('better faster stronger with <div>')
+#' ```
+#' <img src='https://carpentries.org/logo.svg'/>
+#' 
+#' </div>
+#' </div>
+#'
+#' <div class='good'>
+#'
+#' ## Good divs
+#'
+#' </div>
+#' 
+#' "
+#' library(purrr)
+#' library(xml2)
+#' 
+#' f <- tempfile()
+#' writeLines(txt, f)
+#' ex <- tinkr::to_xml(f)
+#' xml2::xml_find_all(ex$body, ".//d1:html_block[contains(text(), 'div')]")
+#' pegboard:::clean_div_tags(ex$body)
+#' xml2::xml_find_all(ex$body, ".//d1:html_block[contains(text(), 'div')]")
+#' pegboard:::label_div_tags(ex$body)
+#' xml2::xml_find_all(ex$body, ".//d1:html_block[contains(text(), 'div')]")
+clean_div_tags <- function(body) {
+  # Find all the multi-div tags and replace newlines with double newlines
+  d   <- xml2::xml_find_all(body, ".//d1:html_block[contains(text(), 'div')]")
+  # regex checks for closed divs with something after them
+  d   <- d[grepl('div(.+?)?[>]\n ?.', xml2::xml_text(d))]
+  txt <- gsub("[>]\n(?!$)", ">\n\n", xml2::xml_text(d), perl = TRUE)
+  txt <- gsub("\n[<]", "\n\n<", txt, perl = TRUE)
+
+  # convert text to xml
+  nodelist <- purrr::map(txt, ~xml2::read_xml(commonmark::markdown_xml(.x)))
+
+  # replace the nodes
+  for (i in seq_along(nodelist)) {
+    nodes <- xml2::xml_children(nodelist[[i]])
+    walk(nodes, ~xml2::xml_add_sibling(d[[i]], .x, .where = "before"))
+    xml2::xml_remove(d[[i]])
+  }
+  invisible(body)
+}
 #' Get levels of a character vector of div tags
 #'
 #' @param nodes a character vector of div open and close tags
 #' @return an integer vector indicating the depth of the tags where 0 indicates
 #'   a closing tag
 #' @keywords internal
+#' @seealso [get_divs()] for finding labelled tags, 
+#' [find_between_tags()] to extract things between the tags, 
+#' [label_div_tags()] for labelling div tags,
+#' [clean_div_tags()] for cleaning cluttered div tags,
+#' [replace_with_div()] for replacing blockquotes with div tags
+#' [make_pairs()] for connecting open and closing tags
 #' @examples
 #' nodes <- c(
 #' "<div class='1'>", 
@@ -168,6 +311,13 @@ get_div_levels <- function(nodes) {
 #'   tag. Note that the labels are produced by doing a cumulative sum of the
 #'   node depths.
 #' @keywords internal
+#' @seealso [get_divs()] for finding labelled tags, 
+#' [find_between_tags()] to extract things between the tags, 
+#' [label_div_tags()] for labelling div tags,
+#' [clean_div_tags()] for cleaning cluttered div tags,
+#' [replace_with_div()] for replacing blockquotes with div tags
+#' [make_pairs()] for connecting open and closing tags
+#' [get_div_levels()] for documenting the level of div tags
 #' @examples
 #' nodes <- c(
 #' "<div class='1'>", 
@@ -222,5 +372,5 @@ next_zero <- function(i, v, n) {
 }
 
 get_div_class <- function(div) {
-  trimws(sub('^.+?class[=]["\']([ a-zA-Z0-9]+?)["\'].+?$', '\\1', div))
+  trimws(sub('^.+?class[=]["\']([- a-zA-Z0-9]+?)["\'].+?$', '\\1', div))
 }

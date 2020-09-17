@@ -1,0 +1,30 @@
+<div class='challenge'>
+## Challenge
+
+do that challenging thing.
+
+```{r}
+cat('it might be challenging to do this')
+```
+<div class='solution'>
+```{r}
+It's not that challenging
+```
+</div>
+<div class='solution'>
+We just have to try harder and use `<div>` tags
+
+```{r}
+cat('better faster stronger with <div>')
+```
+<img src='https://carpentries.org/logo.svg'/>
+
+</div>
+</div>
+
+<div class='good'>
+
+## Good divs
+
+</div>
+

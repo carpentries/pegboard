@@ -28,4 +28,12 @@ nodes <- c(
 "</div>")
 pegboard:::get_div_levels(nodes)
 }
+\seealso{
+\code{\link[=get_divs]{get_divs()}} for finding labelled tags,
+\code{\link[=find_between_tags]{find_between_tags()}} to extract things between the tags,
+\code{\link[=label_div_tags]{label_div_tags()}} for labelling div tags,
+\code{\link[=clean_div_tags]{clean_div_tags()}} for cleaning cluttered div tags,
+\code{\link[=replace_with_div]{replace_with_div()}} for replacing blockquotes with div tags
+\code{\link[=make_pairs]{make_pairs()}} for connecting open and closing tags
+}
 \keyword{internal}
