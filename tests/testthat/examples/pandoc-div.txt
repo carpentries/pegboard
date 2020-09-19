@@ -1,0 +1,31 @@
+::::::: challenge
+## Challenge
+
+do that challenging thing.
+
+```{r}
+cat('it might be challenging to do this')
+```
+::::: solution ::::
+```{r}
+It's not that challenging
+```
+::::
+::: solution ::::::::
+We just have to try harder and use `<div>` tags
+
+```{r}
+cat('better faster stronger with <div>')
+```
+<img src='https://carpentries.org/logo.svg'/>
+
+What if we include some `:::` code in here or ::: like this
+
+:::::
+:::::
+
+::: good
+
+## Good divs
+
+:::

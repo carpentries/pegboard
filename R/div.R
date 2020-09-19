@@ -9,8 +9,8 @@
 #' [label_div_tags()] for labelling div tags,
 #' [clean_div_tags()] for cleaning cluttered div tags,
 #' [replace_with_div()] for replacing blockquotes with div tags
-#' [make_pairs()] for connecting open and closing tags
-#' [get_div_levels()] for documenting the level of div tags
+#' [find_div_pairs()] for connecting open and closing tags
+#' [clean_native_divs()] for cleaning cluttered pandoc div tags
 #' @examples
 #' cha <- pegboard:::make_div("challenge")
 #' cha
@@ -34,8 +34,8 @@ make_div <- function(what) {
 #' [label_div_tags()] for labelling div tags,
 #' [clean_div_tags()] for cleaning cluttered div tags,
 #' [replace_with_div()] for replacing blockquotes with div tags
-#' [make_pairs()] for connecting open and closing tags
-#' [get_div_levels()] for documenting the level of div tags
+#' [find_div_pairs()] for connecting open and closing tags
+#' [clean_native_divs()] for cleaning cluttered pandoc div tags
 #' @examples
 #' frg <- Lesson$new(lesson_fragment())
 #' lop <- frg$episodes$`14-looping-data-sets.md`
@@ -82,8 +82,8 @@ replace_with_div <- function(block) {
 #' [label_div_tags()] for labelling div tags,
 #' [clean_div_tags()] for cleaning cluttered div tags,
 #' [replace_with_div()] for replacing blockquotes with div tags
-#' [make_pairs()] for connecting open and closing tags
-#' [get_div_levels()] for documenting the level of div tags
+#' [find_div_pairs()] for connecting open and closing tags
+#' [clean_native_divs()] for cleaning cluttered pandoc div tags
 #' @examples
 #' loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
 #' loop$body # a full document with block quotes and code blocks, etc
@@ -113,6 +113,7 @@ get_divs <- function(body, type = NULL){
 #' @param tag an integer representing a unique dtag attribute
 #' @param body an xml document
 #' @param ns the namespace from the body
+#' @param find an xpath element to search for (without namespace tag)
 #' @return a nodeset between tags that have the dtag attribute matching `tag`
 #' @keywords internal div
 #' @seealso [get_divs()] for finding labelled tags, 
@@ -120,8 +121,8 @@ get_divs <- function(body, type = NULL){
 #' [label_div_tags()] for labelling div tags,
 #' [clean_div_tags()] for cleaning cluttered div tags,
 #' [replace_with_div()] for replacing blockquotes with div tags
-#' [make_pairs()] for connecting open and closing tags
-#' [get_div_levels()] for documenting the level of div tags
+#' [find_div_pairs()] for connecting open and closing tags
+#' [clean_native_divs()] for cleaning cluttered pandoc div tags
 #' @examples
 #' loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
 #' loop$body # a full document with block quotes and code blocks, etc
@@ -131,8 +132,8 @@ get_divs <- function(body, type = NULL){
 #' tags
 #' # grab the contents of the first div tag
 #' pegboard:::find_between_tags(tags, loop$body, pegboard:::NS(loop$body))
-find_between_tags <- function(tag, body, ns) {
-  block  <- glue::glue("{ns}:html_block[@dtag='{tag}']")
+find_between_tags <- function(tag, body, ns, find = "html_block[@dtag='{tag}']") {
+  block  <- glue::glue("{ns}:{glue::glue(find)}")
   after  <- "following-sibling::"
   before <- "preceding-sibling::"
   after_first_tag <- glue::glue("{after}{block}")
@@ -144,6 +145,7 @@ find_between_tags <- function(tag, body, ns) {
 #' Add labels to div tags in the form of a "dtag" attribute
 #' 
 #' @param body an xml document
+#' @param pandoc if `TRUE`, this will search for native div tags in t
 #' @return the document, invisibly
 #' @keywords internal
 #' @seealso [get_divs()] for finding labelled tags, 
@@ -151,15 +153,17 @@ find_between_tags <- function(tag, body, ns) {
 #' [label_div_tags()] for labelling div tags,
 #' [clean_div_tags()] for cleaning cluttered div tags,
 #' [replace_with_div()] for replacing blockquotes with div tags
-#' [make_pairs()] for connecting open and closing tags
-#' [get_div_levels()] for documenting the level of div tags
-label_div_tags <- function(body) {
-  clean_div_tags(body)
+#' [find_div_pairs()] for connecting open and closing tags
+#' [clean_native_divs()] for cleaning cluttered pandoc div tags
+label_div_tags <- function(body, pandoc = FALSE) {
+  body   <- if (pandoc) clean_native_divs(body) else clean_div_tags(body)
   ns     <- NS(body)
-  xpath  <- glue::glue(".//{ns}:html_block[contains(text(), 'div')]")
-  nodes  <- xml2::xml_find_all(body, xpath)
+  divs   <- ".//{ns}:html_block[contains(text(), '<div') or contains(text(), '</div')]"
+  ndiv   <- ".//{ns}:text[starts-with(text(), ':::')]"
+  xpath  <- if (pandoc) ndiv else divs
+  nodes  <- xml2::xml_find_all(body, glue::glue(xpath))
   ntext  <- xml2::xml_text(nodes)
-  labels <- make_pairs(ntext)
+  labels <- find_div_pairs(ntext)
   xml2::xml_set_attr(nodes, "dtag", glue::glue("div-{labels}"))
   invisible(body)
 }
@@ -173,8 +177,8 @@ label_div_tags <- function(body) {
 #' [label_div_tags()] for labelling div tags,
 #' [clean_div_tags()] for cleaning cluttered div tags,
 #' [replace_with_div()] for replacing blockquotes with div tags
-#' [make_pairs()] for connecting open and closing tags
-#' [get_div_levels()] for documenting the level of div tags
+#' [find_div_pairs()] for connecting open and closing tags
+#' [clean_native_divs()] for cleaning cluttered pandoc div tags
 #' @details
 #'
 #' Commonmark knows what raw HTML looks like and will read it in as an HTML
@@ -270,43 +274,100 @@ clean_div_tags <- function(body) {
   }
   invisible(body)
 }
-#' Get levels of a character vector of div tags
+
+#' Clean pandoc native divs and place them in their own paragraph elements
 #'
-#' @param nodes a character vector of div open and close tags
-#' @return an integer vector indicating the depth of the tags where 0 indicates
-#'   a closing tag
+#' Sometimes pandoc native divs are bunched together, which makes it difficult
+#' to track the pairs. This separates them into different paragraph elements so
+#' that we can track them
+#'
+#' @param body an xml document
+#' @return an xml document
 #' @keywords internal
 #' @seealso [get_divs()] for finding labelled tags, 
 #' [find_between_tags()] to extract things between the tags, 
 #' [label_div_tags()] for labelling div tags,
-#' [clean_div_tags()] for cleaning cluttered div tags,
 #' [replace_with_div()] for replacing blockquotes with div tags
-#' [make_pairs()] for connecting open and closing tags
+#' [find_div_pairs()] for connecting open and closing tags
+#' [clean_native_divs()] for cleaning cluttered pandoc div tags
 #' @examples
-#' nodes <- c(
-#' "<div class='1'>", 
-#'   "<div class='2'>" , 
-#'   "</div>", 
-#'   "<div class='2'>", 
-#'     "<div class='3'>", 
-#'     "</div>", 
-#'   "</div>", 
-#' "</div>")
-#' pegboard:::get_div_levels(nodes)
-get_div_levels <- function(nodes) {
-  levels <- rep(0, length(nodes))
-  opener <- grepl("class", nodes)
-  nodestring <- paste(nodes, collapse = "")
-  x <- xml2::read_xml(glue::glue("<document>{nodestring}</document>"))
-  divs <- xml2::xml_find_all(x, ".//div")
-  labels <- purrr::map_int(divs, find_node_level)
-  levels[opener] <- labels
-  levels
+#' txt <- "::::::: challenge
+#' ## Challenge
+#' 
+#' do that challenging thing.
+#' 
+#' ```{r}
+#' cat('it might be challenging to do this')
+#' ```
+#' ::::: solution ::::
+#' ```{r}
+#' It's not that challenging
+#' ```
+#' ::::
+#' ::: solution ::::::::
+#' We just have to try harder and use `<div>` tags
+#' 
+#' ```{r}
+#' cat('better faster stronger with <div>')
+#' ```
+#' <img src='https://carpentries.org/logo.svg'/>
+#' 
+#' What if we include some `:::` code in here or ::: like this
+#' 
+#' :::::
+#' :::::
+#' 
+#' ::: good
+#' 
+#' ## Good divs
+#' 
+#' :::"
+#' f <- tempfile()
+#' writeLines(txt, f)
+#' ex <- tinkr::to_xml(f)
+#' ex$body
+#' clean_native_divs(ex$body)
+#' ex$body
+#'
+clean_native_divs <- function(body) {
+  ns <- NS(body)
+  txt   <- xml_find_all(body, glue::glue(".//{ns}:text[starts-with(text(), ':::')]"))
+  rents <- xml_parent(txt)
+  if (length(rents) < length(txt)) {
+    # Find out which text elements are on adjacent lines and loop
+    dupes <- which(diff(get_linestart(txt)) < 2)
+    for (i in dupes) {
+      the_rent <- xml2::xml_parent(txt[[i]])
+      # Duplicate the parent node
+      xml2::xml_add_sibling(the_rent, the_rent, .where = "before")
+      new_rent <- xml2::xml_find_first(the_rent, "self::*[preceding-sibling::*[1]]")
+      # Get the children of the nodes
+      oc <- xml2::xml_children(the_rent)
+      nc <- xml2::xml_children(new_rent)
+      # Find out where they need to be split
+      bounds     <- purrr::map_lgl(oc, xml_find_lgl, "boolean(self::*[starts-with(text(), ':::')])")
+      switcheroo <- max(which(bounds)) - 1L
+      # Remove the upper portion from the original parent
+      for (i in seq(switcheroo)) {
+        xml2::xml_remove(oc[[i]])
+      }
+      # Remove the lower portion from the new parent
+      for (i in seq(switcheroo + 1L, length(bounds))) {
+        xml2::xml_remove(nc[[i]])
+      }
+    }
+  }
+  invisible(body)
+}
+
+get_div_class <- function(div) {
+  trimws(sub('^(.+?class[=]["\']|[:]{3,}?)([- a-zA-Z0-9]+?)(["\'].+?|[:]*?)$', '\\2', div))
 }
 
 #' Make paired labels for opening and closing div tags
 #'
 #' @param nodes a character vector of div open and close tags
+#' @param close the regex for a valid closing tag
 #' @return an integer vector with pairs of labels for each opening and closing
 #'   tag. Note that the labels are produced by doing a cumulative sum of the
 #'   node depths.
@@ -316,8 +377,8 @@ get_div_levels <- function(nodes) {
 #' [label_div_tags()] for labelling div tags,
 #' [clean_div_tags()] for cleaning cluttered div tags,
 #' [replace_with_div()] for replacing blockquotes with div tags
-#' [make_pairs()] for connecting open and closing tags
-#' [get_div_levels()] for documenting the level of div tags
+#' [find_div_pairs()] for connecting open and closing tags
+#' [clean_native_divs()] for cleaning cluttered pandoc div tags
 #' @examples
 #' nodes <- c(
 #' "<div class='1'>", 
@@ -328,49 +389,38 @@ get_div_levels <- function(nodes) {
 #'     "</div>", 
 #'   "</div>", 
 #' "</div>")
-#' pegboard:::make_pairs(nodes)
-make_pairs <- function(nodes) {
-  depths <- get_div_levels(nodes)
-  n      <- length(nodes)
-  opened <- depths > 0
-  
-  # Create unique labels for our div tags
-  nzlevels <- depths[opened]
-  labels   <- cumsum(nzlevels)
-
-  # The label list is needed to populate our closing tags
-  label_list <- split(labels, nzlevels)
-
-  # loop over labels
-  levels <- rev(sort(unique(nzlevels)))
-  for (i in levels) {
-    to_close <- which(depths == i)
-    to_close <- next_zeroes(to_close, depths, n)
-    depths[to_close] <- label_list[[i]]
+#' pegboard:::find_div_pairs(nodes)
+find_div_pairs <- function(divs, close = "(^ *?[<][/]div[>] *?\n?$|^[:]{3,80}$)") {
+  n_item <- length(divs)
+  n_tags <- n_item / 2
+  if (n_tags != sum(grepl(close, divs))) { 
+    stop("the number of closing tags must equal the number of opening tags")
   }
 
-  depths[opened] <- labels
-  depths
-}
+  tag_stack <- integer(n_tags)
+  labels    <- integer(n_item)
+  labels[1]    <- 1L
+  tag_stack[1] <- 1L
 
-# fint the next zeroes in a vector, given a vector of indices
-next_zeroes <- function(i, v, n) {
-  vapply(i, next_zero, integer(1), v, n)
-}
-
-# find the next zero in a vector
-#
-# v <- c(1, 2, 0, 3, 0, 4, 5, 0)
-# n <- length(v)
-# next_zero(1, v, n) # 3
-# next_zero(4, v, n) # 5
-# next_zero(6, v, n) # 8
-next_zero <- function(i, v, n) {
-  res <- which(v[seq(i, n)] == 0)[1]
-  res <- res - 1L + as.integer(i)
-  if (length(res)) res else 0L
-}
-
-get_div_class <- function(div) {
-  trimws(sub('^.+?class[=]["\']([- a-zA-Z0-9]+?)["\'].+?$', '\\1', div))
+  this_item    <- 2L
+  this_tag     <- 1L
+  tag_count    <- 1L
+  while(this_item <= n_item) {
+    is_closed <- grepl(close, divs[this_item])
+    # Tags that are closed will be labelled with the current tag on the stack
+    # and then have the stack decreased
+    if (is_closed) {
+      labels[this_item]   <- tag_stack[this_tag]
+      tag_stack[this_tag] <- 0L
+      this_tag <- this_tag - 1L
+    } else {
+    # New tags will have a new label added to the stack
+      tag_count <- tag_count + 1L
+      this_tag  <- this_tag  + 1L
+      tag_stack[this_tag] <- tag_count
+      labels[this_item] <- tag_stack[this_tag]
+    }
+    this_item <- this_item + 1L
+  }
+  labels
 }
