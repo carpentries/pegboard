@@ -13,6 +13,8 @@ It's not that challenging
 ::::
 ::: solution ::::::::
 We just have to try harder and use `<div>` tags
+::::
+::: callout ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ```{r}
 cat('better faster stronger with <div>')

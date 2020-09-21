@@ -103,7 +103,14 @@ get_divs <- function(body, type = NULL){
   types <- if (is.null(type)) TRUE else grepl(type, prent)
   # 4. Extract nodes between tags
   valid <- utags & types
-  res   <- purrr::map(tags[valid], find_between_tags, body, ns)
+  # 5. Define search pattern
+  block <- grepl("^:::", prent)
+  block <- ifelse(block, "paragraph", "html_block")
+  block <- glue::glue("{block}[@dtag='{{tag}}']")
+  res   <- purrr::map2(
+    tags[valid], block[valid],
+    ~find_between_tags(.x, body, ns, .y)
+  )
   names(res) <- glue::glue("{tags}-{get_div_class(prent)}")[valid]
   res
 }
@@ -159,7 +166,7 @@ label_div_tags <- function(body, pandoc = FALSE) {
   body   <- if (pandoc) clean_native_divs(body) else clean_div_tags(body)
   ns     <- NS(body)
   divs   <- ".//{ns}:html_block[contains(text(), '<div') or contains(text(), '</div')]"
-  ndiv   <- ".//{ns}:text[starts-with(text(), ':::')]"
+  ndiv   <- ".//{ns}:paragraph[{ns}:text[starts-with(text(), ':::')]]"
   xpath  <- if (pandoc) ndiv else divs
   nodes  <- xml2::xml_find_all(body, glue::glue(xpath))
   ntext  <- xml2::xml_text(nodes)
@@ -331,33 +338,80 @@ clean_div_tags <- function(body) {
 #'
 clean_native_divs <- function(body) {
   ns <- NS(body)
-  txt   <- xml_find_all(body, glue::glue(".//{ns}:text[starts-with(text(), ':::')]"))
-  rents <- xml_parent(txt)
-  if (length(rents) < length(txt)) {
-    # Find out which text elements are on adjacent lines and loop
-    dupes <- which(diff(get_linestart(txt)) < 2)
-    for (i in dupes) {
-      the_rent <- xml2::xml_parent(txt[[i]])
-      # Duplicate the parent node
-      xml2::xml_add_sibling(the_rent, the_rent, .where = "before")
-      new_rent <- xml2::xml_find_first(the_rent, "self::*[preceding-sibling::*[1]]")
-      # Get the children of the nodes
-      oc <- xml2::xml_children(the_rent)
-      nc <- xml2::xml_children(new_rent)
-      # Find out where they need to be split
-      bounds     <- purrr::map_lgl(oc, xml_find_lgl, "boolean(self::*[starts-with(text(), ':::')])")
-      switcheroo <- max(which(bounds)) - 1L
-      # Remove the upper portion from the original parent
-      for (i in seq(switcheroo)) {
-        xml2::xml_remove(oc[[i]])
-      }
-      # Remove the lower portion from the new parent
-      for (i in seq(switcheroo + 1L, length(bounds))) {
-        xml2::xml_remove(nc[[i]])
-      }
-    }
+  # Find the parents and then see if they have multiple child elements that
+  # need to be split off into separate paragraphs. 
+  predicate <- "[starts-with(text(), ':::')]"
+  parent_xslt  <- glue::glue(".//{ns}:paragraph[{ns}:text{predicate}]")
+  is_a_tag     <- glue::glue("boolean(self::*{predicate})")
+  rents        <- xml2::xml_find_all(body, parent_xslt)
+  names(rents) <- xml2::xml_attr(rents, "sourcepos")
+  children     <- purrr::map(rents, xml2::xml_children)
+  multi_tag    <- purrr::map(children, ~xml2::xml_find_lgl(.x, is_a_tag))
+
+  # We want to isolate the div nodes, so we need to fix any paragraphs that 
+  # have more than one child.
+  to_fix <- lengths(children) > 1L
+  if (any(to_fix)) {
+    rents_to_fix <- rents[to_fix]
+  } else {
+    return(invisible(body))
   }
-  invisible(body)
+
+  # Calculate the number of new parent blocks needed
+  need_n_blocks <- function(tags) {
+    # number of tags is 2n - 1L assuming that the tags are bookends
+    n <- sum(tags) * 2L - 1L 
+    # If the tags are not bookending, then we need to make sure to include
+    # paragraphs to account for that
+    not_bookend <- sum(!tags & seq_along(tags) %in% c(1L, length(tags)))
+    n + not_bookend
+  }
+
+  # For each parent:
+  #   1. add new siblings above the parent, determined by the number of blocks
+  #      needed.
+  #   2. fill in the siblings with the children of the original parent
+  #   3. remove the original parent
+  for (parent in names(rents_to_fix)) {
+    the_children <- children[[parent]]
+    are_tags     <- multi_tag[[parent]]
+    n_children   <- length(the_children)
+    n_parents    <- need_n_blocks(are_tags)
+
+    # Create siblings --------------------------------------
+    purrr::walk(
+      seq(n_parents), 
+      ~xml2::xml_add_sibling(rents[[parent]], rents[[parent]], .where = "before")
+    )
+    the_parents <- xml2::xml_find_all(body, glue::glue(".//node()[@sourcepos='{parent}']"))
+
+    # Remove contents of siblings -------------------------
+    purrr::walk(
+      the_parents[-length(the_parents)],
+      ~xml2::xml_remove(xml2::xml_children(.x))
+    )
+
+    # Fill in children ------------------------------------
+    this_child  <- 1L
+    this_parent <- 1L
+    while(this_child <= n_children) {
+      child_is_tag <- are_tags[[this_child]]
+      if (xml2::xml_name(the_children[[this_child]]) != "softbreak") {
+        xml2::xml_add_child(the_parents[[this_parent]], the_children[[this_child]])
+      }
+      # Switch parents if the current or next child is a tag
+      this_child <- this_child + 1L
+      if (this_child <= n_children) {
+        should_switch <- child_is_tag || are_tags[[this_child]]
+      } else {
+        should_switch <- FALSE
+      }
+      this_parent <- this_parent + should_switch
+    }
+    # Remove the old parent ------------------------------
+    xml2::xml_remove(rents_to_fix[[parent]])
+  }
+  return(invisible(body))
 }
 
 get_div_class <- function(div) {

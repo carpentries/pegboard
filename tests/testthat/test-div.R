@@ -64,7 +64,7 @@ test_that("clustered divs can be cleaned", {
 
 test_that("label_div_tags() will clean clustered divs", {
 
-  ex <- tinkr::to_xml(file.path(test_path(), "examples", "div-cluster.txt"))
+  ex <- tinkr::to_xml(file.path(test_path(), "examples", "div-cluster.txt"), sourcepos = TRUE)
 
   divs <- xml2::xml_find_all(ex$body, ".//d1:html_block[contains(text(), 'div')]")
   expect_length(divs, 5)
@@ -78,18 +78,24 @@ test_that("label_div_tags() will clean clustered divs", {
 
 test_that("label_div_tags() will clean clustered pandoc divs", {
 
-  skip("Work still needs to be done here")
-
-  ex <- tinkr::to_xml(file.path(test_path(), "examples", "pandoc-div.txt"))
+  ex <- tinkr::to_xml(file.path(test_path(), "examples", "pandoc-div.txt"), sourcepos = TRUE)
 
   divs <- xml2::xml_find_all(ex$body, ".//d1:html_block[contains(text(), 'div')]")
   expect_length(divs, 0)
   divs <- xml2::xml_find_all(ex$body, ".//d1:text[contains(text(), ':::')]")
-  expect_length(divs, 9)
+  expect_length(divs, 11)
   label_div_tags(ex$body, pandoc = TRUE)
   dvs <- get_divs(ex$body)
-  expect_length(dvs, 8 / 2) # 8 html tags are 4 pairs of div tags
-  expect_length(dvs[[2]], 1) 
-  expect_length(dvs[[3]], 3)
+  expect_length(dvs, 10 / 2) # 10 html tags are 5 pairs of div tags
+  expect_length(get_divs(ex$body, "challenge"), 1L)
+  expect_length(get_divs(ex$body, "callout"), 1L)
+  expect_length(get_divs(ex$body, "solution"), 2L)
+  expect_length(get_divs(ex$body, "good"), 1L)
+  tinkr::to_md(ex, ff)
+  exc <- paste(readLines(ff), collapse = "\n")
+  expect_match(exc, "::::::: challenge\n\n## Challenge", fixed = TRUE)
+  expect_match(exc, "::::\n\n\n\n::: solution :::", fixed = TRUE)
+  expect_match(exc, ":::::\n\n\n\n:::::", fixed = TRUE)
+  expect_match(exc, "::::: solution ::::\n\n```{r}\nIt's", fixed = TRUE)
 
 })
