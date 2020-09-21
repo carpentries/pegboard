@@ -4,7 +4,7 @@
 \alias{find_div_pairs}
 \title{Make paired labels for opening and closing div tags}
 \usage{
-find_div_pairs(divs, close = "(^[<][/]div[>] *?\\n?$|^[:]{3,80}$)")
+find_div_pairs(divs, close = "(^ *?[<][/]div[>] *?\\n?$|^[:]{3,80}$)")
 }
 \arguments{
 \item{close}{the regex for a valid closing tag}

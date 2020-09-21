@@ -51,11 +51,12 @@ What if we include some `:::` code in here or ::: like this
 :::"
 f <- tempfile()
 writeLines(txt, f)
-ex <- tinkr::to_xml(f)
+ex <- tinkr::to_xml(f, sourcepos = TRUE)
 ex$body
-clean_native_divs(ex$body)
-ex$body
-
+predicate <- ".//d1:paragraph[d1:text[starts-with(text(), ':::')]]"
+xml2::xml_text(xml2::xml_find_all(ex$body, predicate))
+pegboard:::clean_native_divs(ex$body)
+xml2::xml_find_all(ex$body, predicate) 
 }
 \seealso{
 \code{\link[=get_divs]{get_divs()}} for finding labelled tags,

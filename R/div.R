@@ -331,11 +331,12 @@ clean_div_tags <- function(body) {
 #' :::"
 #' f <- tempfile()
 #' writeLines(txt, f)
-#' ex <- tinkr::to_xml(f)
+#' ex <- tinkr::to_xml(f, sourcepos = TRUE)
 #' ex$body
-#' clean_native_divs(ex$body)
-#' ex$body
-#'
+#' predicate <- ".//d1:paragraph[d1:text[starts-with(text(), ':::')]]"
+#' xml2::xml_text(xml2::xml_find_all(ex$body, predicate))
+#' pegboard:::clean_native_divs(ex$body)
+#' xml2::xml_text(xml2::xml_find_all(ex$body, predicate))
 clean_native_divs <- function(body) {
   ns <- NS(body)
   # Find the parents and then see if they have multiple child elements that
