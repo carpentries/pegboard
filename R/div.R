@@ -171,6 +171,10 @@ label_div_tags <- function(body) {
   ndiv   <- ".//{ns}:paragraph[{ns}:text[starts-with(text(), ':::')]]"
   xpath  <- glue::glue("{glue::glue(divs)} | {glue::glue(ndiv)}")
   nodes  <- xml2::xml_find_all(body, xpath)
+  # TODO: There seems to be a problem with 
+  # https://github.com/swcarpentry/python-novice-gapminder/blame/gh-pages/_episodes/01-run-quit.md
+  # and fencepost errors finding the last two closing div tags
+
   # Convert text to labels and add the attributes to the nodes
   ntext  <- xml2::xml_text(nodes)
   labels <- find_div_pairs(ntext)
