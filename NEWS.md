@@ -1,3 +1,13 @@
+# pegboard 0.0.0.9005
+
+ - pandoc-style fenced divs are now processed the same as native div tags
+ - `@dtag` labels are now in the format `div-{n}-{class}` where {n} is the 
+   sequential number in the document and {class} is the type of div.
+ - div tags and pandoc-style fenced divs are now processed and labelled on
+   Episode initialization
+ - labelling of `@dtags` is more straightforward and will label the tags 
+   sequentially. 
+
 # pegboard 0.0.0.9004
 
 The changes in this version largely are enhancements for handling div tags

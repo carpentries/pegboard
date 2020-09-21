@@ -360,7 +360,7 @@ Episode <- R6::R6Class("Episode",
       # Initialize the object
       self$path <- path
       self$yaml <- lsn$yaml
-      self$body <- lsn$body
+      self$body <- label_div_tags(lsn$body)
       self$ns   <- xml2::xml_ns(lsn$body)
     }
   ),

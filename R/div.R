@@ -111,7 +111,7 @@ get_divs <- function(body, type = NULL){
     tags[valid], block[valid],
     ~find_between_tags(.x, body, ns, .y)
   )
-  names(res) <- glue::glue("{tags}-{get_div_class(prent)}")[valid]
+  names(res) <- tags[valid]
   res
 }
 
@@ -152,7 +152,6 @@ find_between_tags <- function(tag, body, ns, find = "html_block[@dtag='{tag}']")
 #' Add labels to div tags in the form of a "dtag" attribute
 #' 
 #' @param body an xml document
-#' @param pandoc if `TRUE`, this will search for native div tags in t
 #' @return the document, invisibly
 #' @keywords internal
 #' @seealso [get_divs()] for finding labelled tags, 
@@ -162,16 +161,22 @@ find_between_tags <- function(tag, body, ns, find = "html_block[@dtag='{tag}']")
 #' [replace_with_div()] for replacing blockquotes with div tags
 #' [find_div_pairs()] for connecting open and closing tags
 #' [clean_native_divs()] for cleaning cluttered pandoc div tags
-label_div_tags <- function(body, pandoc = FALSE) {
-  body   <- if (pandoc) clean_native_divs(body) else clean_div_tags(body)
+label_div_tags <- function(body) {
+  # Clean up the div tags 
+  body   <- clean_native_divs(body)
+  body   <- clean_div_tags(body)
   ns     <- NS(body)
+  # Find all div tags in html blocks or native div tags in paragraphs
   divs   <- ".//{ns}:html_block[contains(text(), '<div') or contains(text(), '</div')]"
   ndiv   <- ".//{ns}:paragraph[{ns}:text[starts-with(text(), ':::')]]"
-  xpath  <- if (pandoc) ndiv else divs
-  nodes  <- xml2::xml_find_all(body, glue::glue(xpath))
+  xpath  <- glue::glue("{glue::glue(divs)} | {glue::glue(ndiv)}")
+  nodes  <- xml2::xml_find_all(body, xpath)
+  # Convert text to labels and add the attributes to the nodes
   ntext  <- xml2::xml_text(nodes)
   labels <- find_div_pairs(ntext)
-  xml2::xml_set_attr(nodes, "dtag", glue::glue("div-{labels}"))
+  types  <- get_div_class(ntext)[!duplicated(labels)]
+  labels <- glue::glue("div-{labels}-{types[labels]}")
+  xml2::xml_set_attr(nodes, "dtag", labels)
   invisible(body)
 }
 
