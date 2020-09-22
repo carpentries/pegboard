@@ -22,6 +22,6 @@ Add labels to div tags in the form of a "dtag" attribute
 \code{\link[=clean_div_tags]{clean_div_tags()}} for cleaning cluttered div tags,
 \code{\link[=replace_with_div]{replace_with_div()}} for replacing blockquotes with div tags
 \code{\link[=find_div_pairs]{find_div_pairs()}} for connecting open and closing tags
-\code{\link[=clean_native_divs]{clean_native_divs()}} for cleaning cluttered pandoc div tags
+\code{\link[=clean_fenced_divs]{clean_fenced_divs()}} for cleaning cluttered pandoc div tags
 }
 \keyword{internal}

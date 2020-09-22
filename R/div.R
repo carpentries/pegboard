@@ -10,7 +10,7 @@
 #' [clean_div_tags()] for cleaning cluttered div tags,
 #' [replace_with_div()] for replacing blockquotes with div tags
 #' [find_div_pairs()] for connecting open and closing tags
-#' [clean_native_divs()] for cleaning cluttered pandoc div tags
+#' [clean_fenced_divs()] for cleaning cluttered pandoc div tags
 #' @examples
 #' cha <- pegboard:::make_div("challenge")
 #' cha
@@ -35,7 +35,7 @@ make_div <- function(what) {
 #' [clean_div_tags()] for cleaning cluttered div tags,
 #' [replace_with_div()] for replacing blockquotes with div tags
 #' [find_div_pairs()] for connecting open and closing tags
-#' [clean_native_divs()] for cleaning cluttered pandoc div tags
+#' [clean_fenced_divs()] for cleaning cluttered pandoc div tags
 #' @examples
 #' frg <- Lesson$new(lesson_fragment())
 #' lop <- frg$episodes$`14-looping-data-sets.md`
@@ -83,7 +83,7 @@ replace_with_div <- function(block) {
 #' [clean_div_tags()] for cleaning cluttered div tags,
 #' [replace_with_div()] for replacing blockquotes with div tags
 #' [find_div_pairs()] for connecting open and closing tags
-#' [clean_native_divs()] for cleaning cluttered pandoc div tags
+#' [clean_fenced_divs()] for cleaning cluttered pandoc div tags
 #' @examples
 #' loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
 #' loop$body # a full document with block quotes and code blocks, etc
@@ -129,7 +129,7 @@ get_divs <- function(body, type = NULL){
 #' [clean_div_tags()] for cleaning cluttered div tags,
 #' [replace_with_div()] for replacing blockquotes with div tags
 #' [find_div_pairs()] for connecting open and closing tags
-#' [clean_native_divs()] for cleaning cluttered pandoc div tags
+#' [clean_fenced_divs()] for cleaning cluttered pandoc div tags
 #' @examples
 #' loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
 #' loop$body # a full document with block quotes and code blocks, etc
@@ -160,13 +160,13 @@ find_between_tags <- function(tag, body, ns, find = "html_block[@dtag='{tag}']")
 #' [clean_div_tags()] for cleaning cluttered div tags,
 #' [replace_with_div()] for replacing blockquotes with div tags
 #' [find_div_pairs()] for connecting open and closing tags
-#' [clean_native_divs()] for cleaning cluttered pandoc div tags
+#' [clean_fenced_divs()] for cleaning cluttered pandoc div tags
 label_div_tags <- function(body) {
   # Clean up the div tags 
-  body   <- clean_native_divs(body)
+  body   <- clean_fenced_divs(body)
   body   <- clean_div_tags(body)
   ns     <- NS(body)
-  # Find all div tags in html blocks or native div tags in paragraphs
+  # Find all div tags in html blocks or fenced div tags in paragraphs
   divs   <- ".//{ns}:html_block[contains(text(), '<div') or contains(text(), '</div')]"
   ndiv   <- ".//{ns}:paragraph[{ns}:text[starts-with(text(), ':::')]]"
   xpath  <- glue::glue("{glue::glue(divs)} | {glue::glue(ndiv)}")
@@ -194,7 +194,7 @@ label_div_tags <- function(body) {
 #' [clean_div_tags()] for cleaning cluttered div tags,
 #' [replace_with_div()] for replacing blockquotes with div tags
 #' [find_div_pairs()] for connecting open and closing tags
-#' [clean_native_divs()] for cleaning cluttered pandoc div tags
+#' [clean_fenced_divs()] for cleaning cluttered pandoc div tags
 #' @details
 #'
 #' Commonmark knows what raw HTML looks like and will read it in as an HTML
@@ -291,9 +291,9 @@ clean_div_tags <- function(body) {
   invisible(body)
 }
 
-#' Clean pandoc native divs and place them in their own paragraph elements
+#' Clean pandoc fenced divs and place them in their own paragraph elements
 #'
-#' Sometimes pandoc native divs are bunched together, which makes it difficult
+#' Sometimes pandoc fenced divs are bunched together, which makes it difficult
 #' to track the pairs. This separates them into different paragraph elements so
 #' that we can track them
 #'
@@ -305,7 +305,7 @@ clean_div_tags <- function(body) {
 #' [label_div_tags()] for labelling div tags,
 #' [replace_with_div()] for replacing blockquotes with div tags
 #' [find_div_pairs()] for connecting open and closing tags
-#' [clean_native_divs()] for cleaning cluttered pandoc div tags
+#' [clean_fenced_divs()] for cleaning cluttered pandoc div tags
 #' @examples
 #' txt <- "::::::: challenge
 #' ## Challenge
@@ -344,9 +344,9 @@ clean_div_tags <- function(body) {
 #' ex$body
 #' predicate <- ".//d1:paragraph[d1:text[starts-with(text(), ':::')]]"
 #' xml2::xml_text(xml2::xml_find_all(ex$body, predicate))
-#' pegboard:::clean_native_divs(ex$body)
+#' pegboard:::clean_fenced_divs(ex$body)
 #' xml2::xml_text(xml2::xml_find_all(ex$body, predicate))
-clean_native_divs <- function(body) {
+clean_fenced_divs <- function(body) {
   ns <- NS(body)
   # Find the parents and then see if they have multiple child elements that
   # need to be split off into separate paragraphs. 
@@ -442,7 +442,7 @@ get_div_class <- function(div) {
 #' [clean_div_tags()] for cleaning cluttered div tags,
 #' [replace_with_div()] for replacing blockquotes with div tags
 #' [find_div_pairs()] for connecting open and closing tags
-#' [clean_native_divs()] for cleaning cluttered pandoc div tags
+#' [clean_fenced_divs()] for cleaning cluttered pandoc div tags
 #' @examples
 #' nodes <- c(
 #' "<div class='1'>", 
