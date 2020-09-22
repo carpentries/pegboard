@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Find nodes between two nodes with a given dtag — find_between_tags • pegboard</title>
+<title>Clean pandoc fenced divs and place them in their own paragraph elements — clean_fenced_divs • pegboard</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,10 @@
 
 
 
-<meta property="og:title" content="Find nodes between two nodes with a given dtag — find_between_tags" />
-<meta property="og:description" content="Find nodes between two nodes with a given dtag" />
+<meta property="og:title" content="Clean pandoc fenced divs and place them in their own paragraph elements — clean_fenced_divs" />
+<meta property="og:description" content="Sometimes pandoc fenced divs are bunched together, which makes it difficult
+to track the pairs. This separates them into different paragraph elements so
+that we can track them" />
 
 
 
@@ -123,92 +125,103 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Find nodes between two nodes with a given dtag</h1>
+    <h1>Clean pandoc fenced divs and place them in their own paragraph elements</h1>
     <small class="dont-index">Source: <a href='https://github.com/zkamvar/pegboard/blob/master/R/div.R'><code>R/div.R</code></a></small>
-    <div class="hidden name"><code>find_between_tags.Rd</code></div>
+    <div class="hidden name"><code>clean_fenced_divs.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Find nodes between two nodes with a given dtag</p>
+    <p>Sometimes pandoc fenced divs are bunched together, which makes it difficult
+to track the pairs. This separates them into different paragraph elements so
+that we can track them</p>
     </div>
 
-    <pre class="usage"><span class='fu'>find_between_tags</span>(<span class='kw'>tag</span>, <span class='kw'>body</span>, <span class='kw'>ns</span>, find = <span class='st'>"html_block[@dtag='{tag}']"</span>)</pre>
+    <pre class="usage"><span class='fu'>clean_fenced_divs</span>(<span class='kw'>body</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>tag</th>
-      <td><p>an integer representing a unique dtag attribute</p></td>
-    </tr>
-    <tr>
       <th>body</th>
       <td><p>an xml document</p></td>
-    </tr>
-    <tr>
-      <th>ns</th>
-      <td><p>the namespace from the body</p></td>
-    </tr>
-    <tr>
-      <th>find</th>
-      <td><p>an xpath element to search for (without namespace tag)</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a nodeset between tags that have the dtag attribute matching <code>tag</code></p>
+    <p>an xml document</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='get_divs.html'>get_divs()</a></code> for finding labelled tags,
-<code>find_between_tags()</code> to extract things between the tags,
+<code><a href='find_between_tags.html'>find_between_tags()</a></code> to extract things between the tags,
 <code><a href='label_div_tags.html'>label_div_tags()</a></code> for labelling div tags,
-<code><a href='clean_div_tags.html'>clean_div_tags()</a></code> for cleaning cluttered div tags,
 <code><a href='replace_with_div.html'>replace_with_div()</a></code> for replacing blockquotes with div tags
 <code><a href='find_div_pairs.html'>find_div_pairs()</a></code> for connecting open and closing tags
-<code><a href='clean_fenced_divs.html'>clean_fenced_divs()</a></code> for cleaning cluttered pandoc div tags</p></div>
+<code>clean_fenced_divs()</code> for cleaning cluttered pandoc div tags</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>loop</span> <span class='op'>&lt;-</span> <span class='kw'>Episode</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span>(), <span class='st'>"_episodes"</span>, <span class='st'>"14-looping-data-sets.md"</span>))
-<span class='kw'>loop</span><span class='op'>$</span><span class='kw'>body</span> <span class='co'># a full document with block quotes and code blocks, etc</span>
+    <pre class="examples"><div class='input'><span class='kw'>txt</span> <span class='op'>&lt;-</span> <span class='st'>"::::::: challenge
+## Challenge
+
+do that challenging thing.
+
+```{r}
+cat('it might be challenging to do this')
+```
+::::: solution ::::
+```{r}
+It's not that challenging
+```
+::::
+::: solution ::::::::
+We just have to try harder and use `&lt;div&gt;` tags
+
+```{r}
+cat('better faster stronger with &lt;div&gt;')
+```
+&lt;img src='https://carpentries.org/logo.svg'/&gt;
+
+What if we include some `:::` code in here or ::: like this
+
+:::::
+:::::
+
+::: good
+
+## Good divs
+
+:::"</span>
+<span class='kw'>f</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span>()
+<span class='fu'><a href='https://rdrr.io/r/base/writeLines.html'>writeLines</a></span>(<span class='kw'>txt</span>, <span class='kw'>f</span>)
+<span class='kw'>ex</span> <span class='op'>&lt;-</span> <span class='kw'>tinkr</span>::<span class='fu'><a href='https://rdrr.io/pkg/tinkr/man/to_xml.html'>to_xml</a></span>(<span class='kw'>f</span>, sourcepos = <span class='fl'>TRUE</span>)
+<span class='kw'>ex</span><span class='op'>$</span><span class='kw'>body</span>
 </div><div class='output co'>#&gt; {xml_document}
-#&gt; &lt;document sourcepos="1:1-182:38" xmlns="http://commonmark.org/xml/1.0"&gt;
-#&gt;  [1] &lt;heading sourcepos="2:1-2:65" level="2"&gt;\n  &lt;text sourcepos="2:4-2:9" xm ...
-#&gt;  [2] &lt;list sourcepos="4:1-6:0" type="bullet" tight="true"&gt;\n  &lt;item sourcepos ...
-#&gt;  [3] &lt;code_block sourcepos="7:1-12:3" xml:space="preserve" ktag="{: .language ...
-#&gt;  [4] &lt;code_block sourcepos="14:1-33:3" xml:space="preserve" ktag="{: .output} ...
-#&gt;  [5] &lt;heading sourcepos="36:1-36:126" level="2"&gt;\n  &lt;text sourcepos="36:4-36: ...
-#&gt;  [6] &lt;list sourcepos="38:1-47:0" type="bullet" tight="true"&gt;\n  &lt;item sourcep ...
-#&gt;  [7] &lt;code_block sourcepos="48:1-51:3" xml:space="preserve" ktag="{: .languag ...
-#&gt;  [8] &lt;code_block sourcepos="53:1-57:3" xml:space="preserve" ktag="{: .output} ...
-#&gt;  [9] &lt;code_block sourcepos="60:1-62:3" xml:space="preserve" ktag="{: .languag ...
-#&gt; [10] &lt;code_block sourcepos="64:1-66:3" xml:space="preserve" ktag="{: .output} ...
-#&gt; [11] &lt;heading sourcepos="69:1-69:52" level="2"&gt;\n  &lt;text sourcepos="69:4-69:7 ...
-#&gt; [12] &lt;list sourcepos="71:1-73:0" type="bullet" tight="true"&gt;\n  &lt;item sourcep ...
-#&gt; [13] &lt;code_block sourcepos="74:1-78:3" xml:space="preserve" ktag="{: .languag ...
-#&gt; [14] &lt;code_block sourcepos="80:1-87:3" xml:space="preserve" ktag="{: .output} ...
-#&gt; [15] &lt;list sourcepos="90:1-94:0" type="bullet" tight="true"&gt;\n  &lt;item sourcep ...
-#&gt; [16] &lt;block_quote sourcepos="95:1-108:14" ktag="{: .challenge}"&gt;\n  &lt;heading  ...
-#&gt; [17] &lt;block_quote sourcepos="110:1-140:14" ktag="{: .challenge}"&gt;\n  &lt;heading ...
-#&gt; [18] &lt;block_quote sourcepos="142:1-170:14" ktag="{: .challenge}"&gt;\n  &lt;heading ...
-#&gt; [19] &lt;heading sourcepos="172:1-172:29" level="3"&gt;\n  &lt;text sourcepos="172:5-1 ...
-#&gt; [20] &lt;html_block sourcepos="174:1-174:86" xml:space="preserve"&gt;&amp;lt;img src="h ...
-#&gt; ...</div><div class='input'><span class='kw'>loop</span><span class='op'>$</span><span class='fu'>unblock</span>() <span class='co'># removing blockquotes and replacing with div tags</span>
-<span class='co'># find all the div tags</span>
-<span class='kw'>tags</span> <span class='op'>&lt;-</span> <span class='kw'>xml2</span>::<span class='fu'><a href='http://xml2.r-lib.org/reference/xml_text.html'>xml_text</a></span>(<span class='kw'>xml2</span>::<span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span>(<span class='kw'>loop</span><span class='op'>$</span><span class='kw'>body</span>, <span class='st'>".//@dtag"</span>))
-<span class='kw'>tags</span>
-</div><div class='output co'>#&gt;  [1] "div-1-challenge" "div-2-solution"  "div-2-solution"  "div-1-challenge"
-#&gt;  [5] "div-3-challenge" "div-4-solution"  "div-4-solution"  "div-3-challenge"
-#&gt;  [9] "div-5-challenge" "div-6-solution"  "div-6-solution"  "div-5-challenge"</div><div class='input'><span class='co'># grab the contents of the first div tag</span>
-<span class='kw'>pegboard</span>:::<span class='fu'>find_between_tags</span>(<span class='kw'>tags</span>, <span class='kw'>loop</span><span class='op'>$</span><span class='kw'>body</span>, <span class='kw'>pegboard</span>:::<span class='fu'>NS</span>(<span class='kw'>loop</span><span class='op'>$</span><span class='kw'>body</span>))
-</div><div class='output co'>#&gt; {xml_nodeset (7)}
-#&gt; [1] &lt;heading sourcepos="95:3-95:24" level="2"&gt;\n  &lt;text sourcepos="95:6-95:24 ...
-#&gt; [2] &lt;paragraph sourcepos="97:3-97:87"&gt;\n  &lt;text sourcepos="97:3-97:26" xml:sp ...
-#&gt; [3] &lt;list sourcepos="99:3-103:1" type="ordered" start="1" delim="period" tigh ...
-#&gt; [4] &lt;html_block xmlns="http://commonmark.org/xml/1.0" xml:space="preserve" dt ...
-#&gt; [5] &lt;heading sourcepos="104:5-104:15" level="2"&gt;\n  &lt;text sourcepos="104:8-10 ...
-#&gt; [6] &lt;paragraph sourcepos="106:5-108:14"&gt;\n  &lt;text sourcepos="106:5-106:33" xm ...
-#&gt; [7] &lt;html_block xmlns="http://commonmark.org/xml/1.0" xml:space="preserve" dt ...</div></pre>
+#&gt; &lt;document sourcepos="1:1-31:3" xmlns="http://commonmark.org/xml/1.0"&gt;
+#&gt;  [1] &lt;paragraph sourcepos="1:1-1:17"&gt;\n  &lt;text sourcepos="1:1-1:17" xml:space ...
+#&gt;  [2] &lt;heading sourcepos="2:1-2:12" level="2"&gt;\n  &lt;text sourcepos="2:4-2:12" x ...
+#&gt;  [3] &lt;paragraph sourcepos="4:1-4:26"&gt;\n  &lt;text sourcepos="4:1-4:26" xml:space ...
+#&gt;  [4] &lt;code_block sourcepos="6:1-8:3" info="{r}" xml:space="preserve"&gt;cat('it  ...
+#&gt;  [5] &lt;paragraph sourcepos="9:1-9:19"&gt;\n  &lt;text sourcepos="9:1-9:19" xml:space ...
+#&gt;  [6] &lt;code_block sourcepos="10:1-12:3" info="{r}" xml:space="preserve"&gt;It's n ...
+#&gt;  [7] &lt;paragraph sourcepos="13:1-15:47"&gt;\n  &lt;text sourcepos="13:1-13:4" xml:sp ...
+#&gt;  [8] &lt;code_block sourcepos="17:1-19:3" info="{r}" xml:space="preserve"&gt;cat('b ...
+#&gt;  [9] &lt;html_block sourcepos="20:1-20:45" xml:space="preserve"&gt;&amp;lt;img src='htt ...
+#&gt; [10] &lt;paragraph sourcepos="22:1-22:59"&gt;\n  &lt;text sourcepos="22:1-22:24" xml:s ...
+#&gt; [11] &lt;paragraph sourcepos="24:1-25:5"&gt;\n  &lt;text sourcepos="24:1-24:5" xml:spa ...
+#&gt; [12] &lt;paragraph sourcepos="27:1-27:8"&gt;\n  &lt;text sourcepos="27:1-27:8" xml:spa ...
+#&gt; [13] &lt;heading sourcepos="29:1-29:12" level="2"&gt;\n  &lt;text sourcepos="29:4-29:1 ...
+#&gt; [14] &lt;paragraph sourcepos="31:1-31:3"&gt;\n  &lt;text sourcepos="31:1-31:3" xml:spa ...</div><div class='input'><span class='kw'>predicate</span> <span class='op'>&lt;-</span> <span class='st'>".//d1:paragraph[d1:text[starts-with(text(), ':::')]]"</span>
+<span class='kw'>xml2</span>::<span class='fu'><a href='http://xml2.r-lib.org/reference/xml_text.html'>xml_text</a></span>(<span class='kw'>xml2</span>::<span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span>(<span class='kw'>ex</span><span class='op'>$</span><span class='kw'>body</span>, <span class='kw'>predicate</span>))
+</div><div class='output co'>#&gt; [1] "::::::: challenge"                                                     
+#&gt; [2] "::::: solution ::::"                                                   
+#&gt; [3] "::::::: solution ::::::::We just have to try harder and use &lt;div&gt; tags"
+#&gt; [4] "::::::::::"                                                            
+#&gt; [5] "::: good"                                                              
+#&gt; [6] ":::"                                                                   </div><div class='input'><span class='kw'>pegboard</span>:::<span class='fu'>clean_fenced_divs</span>(<span class='kw'>ex</span><span class='op'>$</span><span class='kw'>body</span>)
+<span class='kw'>xml2</span>::<span class='fu'><a href='http://xml2.r-lib.org/reference/xml_text.html'>xml_text</a></span>(<span class='kw'>xml2</span>::<span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span>(<span class='kw'>ex</span><span class='op'>$</span><span class='kw'>body</span>, <span class='kw'>predicate</span>))
+</div><div class='output co'>#&gt; [1] "::::::: challenge"     "::::: solution ::::"   "::::"                 
+#&gt; [4] "::: solution ::::::::" ":::::"                 ":::::"                
+#&gt; [7] "::: good"              ":::"                  </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
