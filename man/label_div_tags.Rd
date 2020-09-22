@@ -4,12 +4,10 @@
 \alias{label_div_tags}
 \title{Add labels to div tags in the form of a "dtag" attribute}
 \usage{
-label_div_tags(body, pandoc = FALSE)
+label_div_tags(body)
 }
 \arguments{
 \item{body}{an xml document}
-
-\item{pandoc}{if \code{TRUE}, this will search for native div tags in t}
 }
 \value{
 the document, invisibly
