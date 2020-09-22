@@ -1,0 +1,241 @@
+---
+title: I don't know much about namespaces
+author: Zhian N. Kamvar
+---
+
+
+I don't know much about namespaces in {xml2}, but I'm trying to figure it out. 
+From what I can tell, creating and appending xml documents is fairly
+straightforward (once you are comfortable with the structure). Here, I can
+create a document that contains a node 'a' and nest a node 'b' underneath:
+
+```{r first}
+library("xml2")
+x <- read_xml("<a></a>")
+xml_add_child(x, read_xml("<b></b>"))
+xml_structure(x)
+xml_find_all(x, ".//b")
+```
+
+A more concrete example is the CD catalogue example. Let's say I wanted to make
+sure that Santana's 'Supernatural' made the cut because life without 'Smooth'
+by Santana feat. Rob Thomas from Matchbox 20 is no life at all.
+
+```{r cd}
+cd <- read_xml(xml2_example("cd_catalog.xml"))
+xml_find_all(cd, ".//TITLE[text()='Supernatural']/parent::*")
+smooth <- read_xml("<CD>
+  <TITLE>Supernatural</TITLE>
+  <ARTIST>Santana</ARTIST>
+  <COMPANY>Fantasy Studios</COMPANY>
+  <PRICE>priceless</PRICE>
+  <YEAR>1999</YEAR>
+</CD>")
+
+xml_add_child(cd, smooth, .where = 0)
+xml_find_all(cd, ".//TITLE[text()='Supernatural']/parent::*")
+```
+
+That's great! But what happens if smooth happens to have a namespace
+
+
+```{r ns}
+cd <- read_xml(xml2_example("cd_catalog.xml"))
+smooth <- read_xml("<CD xmlns='http://featur.ing/rob-thomas-of-matchbox-20'>
+  <TITLE>Supernatural</TITLE>
+  <ARTIST>Santana</ARTIST>
+  <COMPANY>Fantasy Studios</COMPANY>
+  <PRICE>priceless</PRICE>
+  <YEAR>1999</YEAR>
+</CD>")
+xml_add_child(cd, smooth, .where = 0)
+xml_find_all(cd, ".//TITLE[text()='Supernatural']/parent::*")
+xml_find_all(cd, ".//TITLE[text()='Greatest Hits']/parent::*")
+```
+
+All of a sudden, I can't find SMOOTH :(
+If I use `xml_ns()`, I can find out what the name of the namespace is. 
+
+```{r nsxpath}
+(sns <- xml_ns(smooth))
+xml_find_all(cd, ".//d1:TITLE[text()='Supernatural']/parent::*")
+xml_find_all(cd, ".//d1:TITLE[text()='Greatest Hits']/parent::*")
+```
+
+So, I can get the name of the namespace, but I can't use it across the document
+because the whole document doesn't have a namespace. I would use 
+`xml_set_namespace()`, but the function requires that a node has some ancestor
+with the same namespace.
+
+```{r}
+xml_attr(smooth, "xmlns")
+xml_attr(cd, "xmlns")
+```
+
+What if I set the namespace using the attribute?
+
+```{r}
+xml_set_attr(cd, "xmlns", xml_attr(smooth, "xmlns"))
+xml_find_all(cd, ".//d1:TITLE[text()='Supernatural']/parent::*")
+xml_find_all(cd, ".//d1:TITLE[text()='Greatest Hits']/parent::*")
+xml_ns(cd)
+```
+
+It worked! Now let's try the situation where I insert a node with no namespace
+into a document that has a namespace
+
+```{r}
+cd <- read_xml(xml2_example("cd_catalog.xml"))
+xml_set_attr(cd, "xmlns", xml_attr(smooth, "xmlns"))
+smooth <- read_xml("<CD>
+  <TITLE>Supernatural</TITLE>
+  <ARTIST>Santana</ARTIST>
+  <COMPANY>Fantasy Studios</COMPANY>
+  <PRICE>priceless</PRICE>
+  <YEAR>1999</YEAR>
+</CD>")
+xml_add_child(cd, smooth, .where = 0)
+xml_find_all(cd, ".//d1:TITLE[text()='Supernatural']/parent::*")
+xml_find_all(cd, ".//d1:TITLE[text()='Greatest Hits']/parent::*")
+```
+
+AHA! This is one of the problems I've been having, if you have a document that
+starts out with a namespace, and you insert nodes without that namespace, then
+you will have a mismatch and you can't select those nodes. What if we used
+`xml_set_namespace()` on this?
+
+```{r}
+xml_set_namespace(xml_child(cd), "d1", xml_ns(cd))
+xml_find_all(cd, ".//d1:TITLE[text()='Supernatural']/parent::*")
+xml_find_all(cd, ".//d1:TITLE[text()='Greatest Hits']/parent::*")
+```
+
+Well, that's frustrating. What's even more frustrating is that xml_ns reports
+that the namespace has already been set. Maybe we can add it via attributes
+
+```{r}
+xml_set_attr(xml_child(cd), "xmlns", xml_ns(cd))
+xml_find_all(cd, ".//d1:TITLE[text()='Supernatural']/parent::*")
+xml_find_all(cd, ".//d1:TITLE[text()='Greatest Hits']/parent::*")
+```
+
+YES! But now, we have that attribute hanging there and it's weird. 
+
+# Why is this relevant?
+
+The namespace of nodes is relevant for me at the very least because it affects
+how the document is processed by XSLT: https://www.w3schools.com/XML/xml_namespaces.asp
+
+It's of concern because the {tinkr} package processes markdown documents via
+the {commonmark} package. For example:
+
+```{r common}
+library(commonmark)
+cat(lst <- markdown_xml("- eggs\n- butter\n- milk"))
+x <- read_xml(lst)
+```
+
+The document has a namespace that points to "http://commonmark.org/xml/1.0" and
+that's used in the [stylesheet for {tinkr}](https://github.com/ropenscilabs/tinkr/blob/4980e816d876a86bb1ea07fe2b564701bc4bce22/inst/extdata/xml2md_gfm.xsl#L4-L5).
+
+If an item is in the commonmark namespace, it will be processed by the
+stylesheet. Tinkr does this via the {xslt} package, which provides an interface to the tempaltes and outputs text:
+
+```{r xslt}
+library(xslt)
+stylesheet <- read_xml(system.file("extdata", "xml2md_gfm.xsl", package = "tinkr"))
+cat(xslt::xml_xslt(x, stylesheet))
+xlist <- xml_find_first(x, ".//d1:list")
+xlist
+```
+
+```{r}
+brandy <- read_xml("<item><paragraph><text>brandy</text></paragraph></item>")
+xml_add_child(xlist, brandy)
+xlist
+xml_find_all(x, ".//d1:text[text()='brandy']")
+xml_find_all(x, ".//d1:text[text()='butter']")
+# Adding this child has no effect
+cat(xslt::xml_xslt(x, stylesheet))
+```
+
+So, what can we do? We can try adding a namspace to the node
+
+
+```{r}
+xml_set_attr(xml_children(xlist), "xmlns", xml_ns(x))
+xlist
+cat(xslt::xml_xslt(x, stylesheet))
+```
+
+It works! But that is a bit of a hassle because now everything shows up with
+that xmlns attribute:
+
+```{r}
+xml_attrs(xml_children(xlist))
+```
+
+What if we defined the namespace from the get-go?
+
+
+```{r}
+x <- read_xml(lst)
+ns <- glue::glue("xmlns='{xml_ns(x)}'")
+brandy <- read_xml(glue::glue("<item {ns}><paragraph><text>brandy</text></paragraph></item>"))
+xlist <- xml_find_first(x, ".//d1:list")
+xml_add_child(xlist, brandy)
+xlist
+xml_find_all(x, ".//d1:text[text()='brandy']")
+xml_find_all(x, ".//d1:text[text()='butter']")
+# Adding this child has no effect
+cat(xslt::xml_xslt(x, stylesheet))
+xml_ns(x)
+```
+
+
+IT WORKS!!!!
+
+Let's see if it will work with tinkr. I'm going to add a code block at the top
+of a README:
+
+```{r}
+reprex::reprex({
+x <- tinkr::to_xml(system.file("extdata", "example2.Rmd", package = "tinkr"))
+
+make_code_block <- function(code = "print('hello world?')", name = 'cody', body) {
+  block <- glue::glue("
+    <document xmlns='{xml2::xml_ns(body)[[1]]}'>
+      <code_block language='r' name='{name}' echo='TRUE' eval='TRUE'>
+        {code}
+      </code_block>
+    </document>"
+  )
+  xml2::xml_child(xml2::read_xml(block))
+}
+
+# insert a new code block after the setup chunk
+xml2::xml_add_child(x$body, make_code_block(body = x$body), .where = 1)
+
+# find that code block
+xml2::xml_find_all(x$body, ".//d1:code_block[@name='setup']")
+xml2::xml_find_all(x$body, ".//d1:code_block[@name='cody']")
+
+# Round trip does not work
+tou <- tempfile(fileext = ".Rmd")
+tinkr::to_md(x, tou)
+xml2::xml_find_all(tinkr::to_xml(tou)$body, ".//d1:code_block[@name='setup']")
+xml2::xml_find_all(tinkr::to_xml(tou)$body, ".//d1:code_block[@name='cody']")
+})
+```
+
+
+
+
+
+
+
+
+
+
+
+
