@@ -10,13 +10,13 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 [![CRAN
 status](https://www.r-pkg.org/badges/version/pegboard)](https://CRAN.R-project.org/package=pegboard)
 [![Travis build
-status](https://travis-ci.com/zkamvar/pegboard.svg?branch=master)](https://travis-ci.com/zkamvar/pegboard)
+status](https://travis-ci.com/carpentries/pegboard.svg?branch=main)](https://travis-ci.com/carpentries/pegboard)
 [![AppVeyor build
-status](https://ci.appveyor.com/api/projects/status/github/zkamvar/pegboard?branch=master&svg=true)](https://ci.appveyor.com/project/zkamvar/pegboard)
+status](https://ci.appveyor.com/api/projects/status/github/carpentries/pegboard?branch=main&svg=true)](https://ci.appveyor.com/project/carpentries/pegboard)
 [![Codecov test
-coverage](https://codecov.io/gh/zkamvar/pegboard/branch/master/graph/badge.svg)](https://codecov.io/gh/zkamvar/pegboard?branch=master)
+coverage](https://codecov.io/gh/carpentries/pegboard/branch/main/graph/badge.svg)](https://codecov.io/gh/carpentries/pegboard?branch=main)
 [![R build
-status](https://github.com/zkamvar/pegboard/workflows/R-CMD-check/badge.svg)](https://github.com/zkamvar/pegboard/actions)
+status](https://github.com/carpentries/pegboard/workflows/R-CMD-check/badge.svg)](https://github.com/carpentries/pegboard/actions)
 <!-- badges: end -->
 
 > [pegboard](#pegboard) is tempered hardboard which is pre-drilled with
@@ -43,7 +43,7 @@ This package is currently in development, but you can install it via
 
 ``` r
 if (!requireNamespace("remotes", quietly = TRUE)) install.packages("remotes")
-remotes::install_github("zkamvar/pegboard")
+remotes::install_github("carpentries/pegboard")
 ```
 
 ## Example
