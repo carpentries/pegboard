@@ -4,7 +4,7 @@
 \alias{find_between_tags}
 \title{Find nodes between two nodes with a given dtag}
 \usage{
-find_between_tags(tag, body, ns)
+find_between_tags(tag, body, ns, find = "html_block[@dtag='{tag}']")
 }
 \arguments{
 \item{tag}{an integer representing a unique dtag attribute}
@@ -12,6 +12,8 @@ find_between_tags(tag, body, ns)
 \item{body}{an xml document}
 
 \item{ns}{the namespace from the body}
+
+\item{find}{an xpath element to search for (without namespace tag)}
 }
 \value{
 a nodeset between tags that have the dtag attribute matching \code{tag}
@@ -35,8 +37,8 @@ pegboard:::find_between_tags(tags, loop$body, pegboard:::NS(loop$body))
 \code{\link[=label_div_tags]{label_div_tags()}} for labelling div tags,
 \code{\link[=clean_div_tags]{clean_div_tags()}} for cleaning cluttered div tags,
 \code{\link[=replace_with_div]{replace_with_div()}} for replacing blockquotes with div tags
-\code{\link[=make_pairs]{make_pairs()}} for connecting open and closing tags
-\code{\link[=get_div_levels]{get_div_levels()}} for documenting the level of div tags
+\code{\link[=find_div_pairs]{find_div_pairs()}} for connecting open and closing tags
+\code{\link[=clean_native_divs]{clean_native_divs()}} for cleaning cluttered pandoc div tags
 }
 \keyword{div}
 \keyword{internal}

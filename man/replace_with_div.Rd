@@ -35,8 +35,8 @@ xml2::xml_find_all(lop$body, ".//d1:html_block")
 \code{\link[=label_div_tags]{label_div_tags()}} for labelling div tags,
 \code{\link[=clean_div_tags]{clean_div_tags()}} for cleaning cluttered div tags,
 \code{\link[=replace_with_div]{replace_with_div()}} for replacing blockquotes with div tags
-\code{\link[=make_pairs]{make_pairs()}} for connecting open and closing tags
-\code{\link[=get_div_levels]{get_div_levels()}} for documenting the level of div tags
+\code{\link[=find_div_pairs]{find_div_pairs()}} for connecting open and closing tags
+\code{\link[=clean_native_divs]{clean_native_divs()}} for cleaning cluttered pandoc div tags
 }
 \keyword{div}
 \keyword{internal}
