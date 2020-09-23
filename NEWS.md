@@ -1,3 +1,10 @@
+# pegboard 0.0.0.9006
+
+ - `$label_divs()` method now will label any div tags in the episode
+ - `$move_*` methods will now auto-label div tags
+ - `$questions` field now returns the questions block or yaml header as a
+   character vector.
+
 # pegboard 0.0.0.9005
 
  - pandoc-style fenced divs are now processed the same as native div tags

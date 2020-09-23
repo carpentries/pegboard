@@ -116,6 +116,8 @@ scope$challenges
 
 \item{\code{tags}}{[\code{xml_nodeset}] all the kramdown tags from the episode}
 
+\item{\code{questions}}{[\code{character}] the questions from the episode}
+
 \item{\code{challenges}}{[\code{xml_nodeset}] all the challenges blocks from the episode}
 
 \item{\code{solutions}}{[\code{xml_nodeset}] all the solutions blocks from the episode}
@@ -136,6 +138,7 @@ scope$challenges
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-get_blocks}{\code{Episode$get_blocks()}}
+\item \href{#method-label_divs}{\code{Episode$label_divs()}}
 \item \href{#method-get_divs}{\code{Episode$get_divs()}}
 \item \href{#method-get_yaml}{\code{Episode$get_yaml()}}
 \item \href{#method-use_dovetail}{\code{Episode$use_dovetail()}}
@@ -205,6 +208,17 @@ scope$get_blocks(".solution", level = 2)
 }
 \if{html}{\out{</div>}}
 
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-label_divs"></a>}}
+\if{latex}{\out{\hypertarget{method-label_divs}{}}}
+\subsection{Method \code{label_divs()}}{
+label all the div elements within the Episode to extract them with
+\verb{$get_divs()}
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Episode$label_divs()}\if{html}{\out{</div>}}
 }
 
 }

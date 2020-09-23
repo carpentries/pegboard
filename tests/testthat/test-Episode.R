@@ -209,7 +209,7 @@ test_that("yaml items can be moved to the text (no dovetail)", {
   yml <- e$get_yaml()
   expect_named(yml, c("title", "teaching", "exercises", "keypoints"))
 
-  e$move_keypoints()
+  e$move_keypoints()$label_divs()
   expect_equal(length(e$get_divs()), 3)
   expect_equal(n_code_blocks, length(e$code))
   expect_length(xml2::xml_find_all(e$body, ".//d1:html_block"), 2 + 2 + 2 + 2)
@@ -448,6 +448,19 @@ test_that("dovetail with multiple solution blocks will be rendered appropriately
 
 })
 
+
+test_that("questions can be retrieved reliably from any source", {
+
+  scope <- fs::path(lesson_fragment(), "_episodes", "17-scope.md")
+  e <- Episode$new(scope)
+  answers <- c("How do function calls actually work?", 
+    "How can I determine where errors occurred?")
+  expect_equal(e$questions, answers)
+  expect_equal(e$move_questions()$questions, answers)
+  e <- Episode$new(scope)
+  expect_equal(e$use_dovetail()$move_questions()$questions, answers)
+
+})
 
 test_that("An episode can be cloned deeply", {
 

@@ -56,6 +56,14 @@ Episode <- R6::R6Class("Episode",
     },
 
     #' @description
+    #' label all the div elements within the Episode to extract them with 
+    #' `$get_divs()`
+    label_divs = function() {
+      label_div_tags(self$body)
+      return(invisible(self))
+    },
+    
+    #' @description
     #' return all div elements within the Episode
     #' @param type the type of div tag (e.g. 'challenge' or 'solution')
     get_divs = function(type = NULL) {
@@ -375,6 +383,36 @@ Episode <- R6::R6Class("Episode",
       xml2::xml_find_all(self$body, ".//@ktag")
     },
 
+    #' @field questions \[`character`\] the questions from the episode
+    questions = function() {
+      q <- NULL
+
+      # Try the yaml first
+      if (!private$mutations['move_questions']) {
+        yaml <- self$get_yaml()
+        q <- yaml$questions
+      } 
+      
+      # Try the code blocks next
+      if (is.null(q)) {
+        ns <- NS(self$body)
+        xpath <- glue::glue(".//{ns}:code_block[@info='{{questions}}' or @language='questions']")
+        q <- xml2::xml_find_first(self$body, xpath)
+      } else {
+        return(q)
+      }
+      # If they produce something, parse, otherwise, try the divs
+      if (length(q) > 0) {
+        txt <- gsub("\n?#' ?-?", "\n", xml2::xml_text(q), perl = TRUE)
+        txt <- trimws(gsub("\n{2,}", "\n", txt, perl = TRUE))
+        q <- strsplit(txt, "\n")[[1]]
+      } else {
+        q <- xml2::xml_children(get_divs(self$label_divs()$body, "questions")[[1]])
+        q <- purrr::map_chr(q, xml2::xml_text)
+      }
+      return(trimws(q))
+    },
+
     #' @field challenges \[`xml_nodeset`\] all the challenges blocks from the episode
     challenges = function() {
       if (!private$mutations['unblock']) {
@@ -443,16 +481,16 @@ Episode <- R6::R6Class("Episode",
       private$problems <- c(private$problems, x)
     },
     mutations = c(
-      unblock           = FALSE,
-      use_dovetail      = FALSE,
-      use_sandpaper_md  = FALSE,
-      use_sandpaper_rmd = FALSE,
-      isolate_blocks    = FALSE,
-      move_keypoints    = FALSE,
-      move_questions    = FALSE,
-      move_objectives   = FALSE,
-      remove_error      = FALSE,
-      remove_output     = FALSE,
+      unblock           = FALSE, # have kramdown blocks been converted?
+      use_dovetail      = FALSE, # are we keeping challenges in code blocks?
+      use_sandpaper_md  = FALSE, # are we using a sandpaper lesson? 
+      use_sandpaper_rmd = FALSE, #   e.g. code has label, not liquid tag
+      isolate_blocks    = FALSE, # does our lesson consist of only blocks?
+      move_keypoints    = FALSE, # are the keypoints in the body?
+      move_questions    = FALSE, # are the questions in the body?
+      move_objectives   = FALSE, # are the objectives in the body?
+      remove_error      = FALSE, # have errors been removed?
+      remove_output     = FALSE, # have output been removed?
       NULL
     ),
 
