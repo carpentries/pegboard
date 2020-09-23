@@ -398,6 +398,8 @@ Episode <- R6::R6Class("Episode",
         ns <- NS(self$body)
         xpath <- glue::glue(".//{ns}:code_block[@info='{{questions}}' or @language='questions']")
         q <- xml2::xml_find_first(self$body, xpath)
+      } else {
+        return(q)
       }
       # If they produce something, parse, otherwise, try the divs
       if (length(q) > 0) {
@@ -405,7 +407,7 @@ Episode <- R6::R6Class("Episode",
         txt <- trimws(gsub("\n{2,}", "\n", txt, perl = TRUE))
         q <- strsplit(txt, "\n")[[1]]
       } else {
-        q <- xml2::xml_children(get_divs(self$body, "questions")[[1]])
+        q <- xml2::xml_children(get_divs(self$label_divs()$body, "questions")[[1]])
         q <- purrr::map_chr(q, xml2::xml_text)
       }
       return(trimws(q))
