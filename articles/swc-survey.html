@@ -156,7 +156,7 @@
 <span class="kw">relationships</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dfr</a></span>(<span class="kw">SWC</span>, <span class="op">~</span><span class="kw">.x</span><span class="op">$</span><span class="fu">challenges</span>(graph = <span class="fl">TRUE</span>, recurse = <span class="fl">TRUE</span>), .id = <span class="st">"Lesson"</span>) <span class="op">%&gt;%</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span>()
 
 <span class="kw">relationships</span>
-<span class="co">#&gt; # A tibble: 4,681 x 7</span>
+<span class="co">#&gt; # A tibble: 4,721 x 7</span>
 <span class="co">#&gt;    Lesson       Episode       Block from      to        pos          level</span>
 <span class="co">#&gt;    &lt;chr&gt;        &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;        &lt;int&gt;</span>
 <span class="co">#&gt;  1 shell-novice 02-filedir.md 1     challenge heading   402:1-418:14     1</span>
@@ -169,7 +169,7 @@
 <span class="co">#&gt;  8 shell-novice 02-filedir.md 1     paragraph challenge 412:5-418:14     2</span>
 <span class="co">#&gt;  9 shell-novice 02-filedir.md 2     challenge heading   420:1-435:14     1</span>
 <span class="co">#&gt; 10 shell-novice 02-filedir.md 2     heading   paragraph 420:3-420:43     1</span>
-<span class="co">#&gt; # … with 4,671 more rows</span>
+<span class="co">#&gt; # … with 4,711 more rows</span>
 
 <span class="kw">curr_graph</span> <span class="op">&lt;-</span> <span class="kw">relationships</span> <span class="op">%&gt;%</span>
   <span class="kw">dplyr</span>::<span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(level = <span class="kw">dplyr</span>::<span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span>(
@@ -284,7 +284,7 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#qlcrebirsn .gt_table {
+#bukextgzlr .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -309,7 +309,7 @@
   border-left-color: #D3D3D3;
 }
 
-#qlcrebirsn .gt_heading {
+#bukextgzlr .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -321,7 +321,7 @@
   border-right-color: #D3D3D3;
 }
 
-#qlcrebirsn .gt_title {
+#bukextgzlr .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -331,7 +331,7 @@
   border-bottom-width: 0;
 }
 
-#qlcrebirsn .gt_subtitle {
+#bukextgzlr .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -341,13 +341,13 @@
   border-top-width: 0;
 }
 
-#qlcrebirsn .gt_bottom_border {
+#bukextgzlr .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#qlcrebirsn .gt_col_headings {
+#bukextgzlr .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -362,7 +362,7 @@
   border-right-color: #D3D3D3;
 }
 
-#qlcrebirsn .gt_col_heading {
+#bukextgzlr .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -382,7 +382,7 @@
   overflow-x: hidden;
 }
 
-#qlcrebirsn .gt_column_spanner_outer {
+#bukextgzlr .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -394,15 +394,15 @@
   padding-right: 4px;
 }
 
-#qlcrebirsn .gt_column_spanner_outer:first-child {
+#bukextgzlr .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qlcrebirsn .gt_column_spanner_outer:last-child {
+#bukextgzlr .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qlcrebirsn .gt_column_spanner {
+#bukextgzlr .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -414,7 +414,7 @@
   width: 100%;
 }
 
-#qlcrebirsn .gt_group_heading {
+#bukextgzlr .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -436,7 +436,7 @@
   vertical-align: middle;
 }
 
-#qlcrebirsn .gt_empty_group_heading {
+#bukextgzlr .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -451,15 +451,15 @@
   vertical-align: middle;
 }
 
-#qlcrebirsn .gt_from_md > :first-child {
+#bukextgzlr .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qlcrebirsn .gt_from_md > :last-child {
+#bukextgzlr .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qlcrebirsn .gt_row {
+#bukextgzlr .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -478,7 +478,7 @@
   overflow-x: hidden;
 }
 
-#qlcrebirsn .gt_stub {
+#bukextgzlr .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -490,7 +490,7 @@
   padding-left: 12px;
 }
 
-#qlcrebirsn .gt_summary_row {
+#bukextgzlr .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -500,7 +500,7 @@
   padding-right: 5px;
 }
 
-#qlcrebirsn .gt_first_summary_row {
+#bukextgzlr .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -510,7 +510,7 @@
   border-top-color: #D3D3D3;
 }
 
-#qlcrebirsn .gt_grand_summary_row {
+#bukextgzlr .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -520,7 +520,7 @@
   padding-right: 5px;
 }
 
-#qlcrebirsn .gt_first_grand_summary_row {
+#bukextgzlr .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -530,11 +530,11 @@
   border-top-color: #D3D3D3;
 }
 
-#qlcrebirsn .gt_striped {
+#bukextgzlr .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#qlcrebirsn .gt_table_body {
+#bukextgzlr .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -543,7 +543,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#qlcrebirsn .gt_footnotes {
+#bukextgzlr .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -557,13 +557,13 @@
   border-right-color: #D3D3D3;
 }
 
-#qlcrebirsn .gt_footnote {
+#bukextgzlr .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#qlcrebirsn .gt_sourcenotes {
+#bukextgzlr .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -577,46 +577,46 @@
   border-right-color: #D3D3D3;
 }
 
-#qlcrebirsn .gt_sourcenote {
+#bukextgzlr .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#qlcrebirsn .gt_left {
+#bukextgzlr .gt_left {
   text-align: left;
 }
 
-#qlcrebirsn .gt_center {
+#bukextgzlr .gt_center {
   text-align: center;
 }
 
-#qlcrebirsn .gt_right {
+#bukextgzlr .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qlcrebirsn .gt_font_normal {
+#bukextgzlr .gt_font_normal {
   font-weight: normal;
 }
 
-#qlcrebirsn .gt_font_bold {
+#bukextgzlr .gt_font_bold {
   font-weight: bold;
 }
 
-#qlcrebirsn .gt_font_italic {
+#bukextgzlr .gt_font_italic {
   font-style: italic;
 }
 
-#qlcrebirsn .gt_super {
+#bukextgzlr .gt_super {
   font-size: 65%;
 }
 
-#qlcrebirsn .gt_footnote_marks {
+#bukextgzlr .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="qlcrebirsn" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="table gt_table">
+<div id="bukextgzlr" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="table gt_table">
 <colgroup>
 <col style="width:140px;">
 <col style="width:80px;">
@@ -634,23 +634,23 @@
     </tr>
 <tr>
 <td class="gt_row gt_left">Lesson</td>
-      <td class="gt_row gt_right">411</td>
-      <td class="gt_row gt_right">87.26&amp;percnt;</td>
+      <td class="gt_row gt_right">415</td>
+      <td class="gt_row gt_right">87.18&amp;percnt;</td>
     </tr>
 <tr>
 <td class="gt_row gt_left gt_striped">Paragraph</td>
       <td class="gt_row gt_right gt_striped">12</td>
-      <td class="gt_row gt_right gt_striped">2.55&amp;percnt;</td>
+      <td class="gt_row gt_right gt_striped">2.52&amp;percnt;</td>
     </tr>
 <tr>
 <td class="gt_row gt_left">Solution</td>
       <td class="gt_row gt_right">4</td>
-      <td class="gt_row gt_right">0.85&amp;percnt;</td>
+      <td class="gt_row gt_right">0.84&amp;percnt;</td>
     </tr>
 <tr>
 <td class="gt_row gt_left gt_striped">Code block</td>
       <td class="gt_row gt_right gt_striped">3</td>
-      <td class="gt_row gt_right gt_striped">0.64&amp;percnt;</td>
+      <td class="gt_row gt_right gt_striped">0.63&amp;percnt;</td>
     </tr>
 <tr>
 <td class="gt_row gt_left">Heading</td>
@@ -667,13 +667,13 @@
     </tr>
 <tr>
 <td class="gt_row gt_left">Heading</td>
-      <td class="gt_row gt_right">431</td>
-      <td class="gt_row gt_right">91.51&amp;percnt;</td>
+      <td class="gt_row gt_right">435</td>
+      <td class="gt_row gt_right">91.39&amp;percnt;</td>
     </tr>
 <tr>
 <td class="gt_row gt_left gt_striped">Code block</td>
       <td class="gt_row gt_right gt_striped">3</td>
-      <td class="gt_row gt_right gt_striped">0.64&amp;percnt;</td>
+      <td class="gt_row gt_right gt_striped">0.63&amp;percnt;</td>
     </tr>
 </tbody>
 </table></div>
