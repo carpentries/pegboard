@@ -199,15 +199,13 @@ Let's see if it will work with tinkr. I'm going to add a code block at the top
 of a README:
 
 ```{r}
-reprex::reprex({
 x <- tinkr::to_xml(system.file("extdata", "example2.Rmd", package = "tinkr"))
 
-make_code_block <- function(code = "print('hello world?')", name = 'cody', body) {
+# It's a bit weird, but there must be a newline character after the code
+make_code_block <- function(code = "print('hello world?')\n", name = 'cody', body) {
   block <- glue::glue("
     <document xmlns='{xml2::xml_ns(body)[[1]]}'>
-      <code_block language='r' name='{name}' echo='TRUE' eval='TRUE'>
-        {code}
-      </code_block>
+      <code_block language='r' name='{name}' echo='TRUE' eval='TRUE'>{code}</code_block>
     </document>"
   )
   xml2::xml_child(xml2::read_xml(block))
@@ -225,10 +223,40 @@ tou <- tempfile(fileext = ".Rmd")
 tinkr::to_md(x, tou)
 xml2::xml_find_all(tinkr::to_xml(tou)$body, ".//d1:code_block[@name='setup']")
 xml2::xml_find_all(tinkr::to_xml(tou)$body, ".//d1:code_block[@name='cody']")
-})
 ```
 
+As of this writing (2020-09-23) this failed spectacularly. Let's see if we can
+break away from the {tinkr} package and focus on {commonmark} and {xslt}:
 
+
+```{r}
+stylesheet <- read_xml(system.file("extdata", "xml2md_gfm.xsl", package = "tinkr"))
+message(md <- "# hello\n\n`code` text\n\n```{r}\ncat('a code block')\n```")
+message(xmd <- commonmark::markdown_xml(md))
+x <- xml2::read_xml(xmd)
+# round trip from markdown -> xml -> markdown
+message(xslt::xml_xslt(x, stylesheet))
+```
+
+Now, let's see what happens if we try to insert a new code block into the mix
+
+```{r}
+print(cb <- make_code_block(body = x))
+xml2::xml_add_child(x, cb, .where = 1)
+message(xslt::xml_xslt(x, stylesheet))
+```
+
+It's  a bit weird, but the text of a code block MUST have a newline at the end
+or else, it won't appear:
+
+
+```{r}
+print(cb <- make_code_block("# This comment shows up\n# This comment is hidden", body = x))
+xml2::xml_add_child(x, cb, .where = 1)
+message(xslt::xml_xslt(x, stylesheet))
+```
+
+I've addressed this in https://github.com/ropenscilabs/tinkr/pull/24
 
 
 
