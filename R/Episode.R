@@ -385,20 +385,30 @@ Episode <- R6::R6Class("Episode",
 
     #' @field questions \[`character`\] the questions from the episode
     questions = function() {
+      q <- NULL
+
+      # Try the yaml first
       if (!private$mutations['move_questions']) {
         yaml <- self$get_yaml()
-        return(trimws(yaml$questions))
-      } else if (private$mutations['use_dovetail']) {
+        q <- yaml$questions
+      } 
+      
+      # Try the code blocks next
+      if (is.null(q)) {
         ns <- NS(self$body)
         xpath <- glue::glue(".//{ns}:code_block[@info='{{questions}}' or @language='questions']")
         q <- xml2::xml_find_first(self$body, xpath)
+      }
+      # If they produce something, parse, otherwise, try the divs
+      if (length(q) > 0) {
         txt <- gsub("\n?#' ?-?", "\n", xml2::xml_text(q), perl = TRUE)
         txt <- trimws(gsub("\n{2,}", "\n", txt, perl = TRUE))
-        return(trimws(strsplit(txt, "\n")[[1]]))
+        q <- strsplit(txt, "\n")[[1]]
       } else {
         q <- xml2::xml_children(get_divs(self$body, "questions")[[1]])
-        return(trimws(purrr::map_chr(q, xml2::xml_text)))
+        q <- purrr::map_chr(q, xml2::xml_text)
       }
+      return(trimws(q))
     },
 
     #' @field challenges \[`xml_nodeset`\] all the challenges blocks from the episode
