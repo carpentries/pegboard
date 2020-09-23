@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9005</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9006</span>
       </span>
     </div>
 
@@ -162,6 +162,8 @@ destructively modified in the conversion.</p>
 
 <dt><code>tags</code></dt><dd><p>[<code>xml_nodeset</code>] all the kramdown tags from the episode</p></dd>
 
+<dt><code>questions</code></dt><dd><p>[<code>character</code>] the questions from the episode</p></dd>
+
 <dt><code>challenges</code></dt><dd><p>[<code>xml_nodeset</code>] all the challenges blocks from the episode</p></dd>
 
 <dt><code>solutions</code></dt><dd><p>[<code>xml_nodeset</code>] all the solutions blocks from the episode</p></dd>
@@ -184,6 +186,7 @@ destructively modified in the conversion.</p>
 
 <ul>
 <li><p><a href='#method-get_blocks'><code>Episode$get_blocks()</code></a></p></li>
+<li><p><a href='#method-label_divs'><code>Episode$label_divs()</code></a></p></li>
 <li><p><a href='#method-get_divs'><code>Episode$get_divs()</code></a></p></li>
 <li><p><a href='#method-get_yaml'><code>Episode$get_yaml()</code></a></p></li>
 <li><p><a href='#method-use_dovetail'><code>Episode$use_dovetail()</code></a></p></li>
@@ -242,6 +245,12 @@ scope$get_blocks(".solution", level = 2)
   dsp1$get_blocks(".solution", level = 2L)
 }
 </pre><p></div></p>
+
+<p><hr>
+<a id="method-label_divs"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>label_divs()</code></h3>
+<p>label all the div elements within the Episode to extract them with
+<code>$get_divs()</code></p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='kw'>Episode</span><span class='op'>$</span><span class='fu'>label_divs</span>()</pre><p></div></p>
 
 <p><hr>
 <a id="method-get_divs"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='get_divs.html'>get_divs()</a></code></h3>
@@ -519,7 +528,7 @@ as valid links.</p></dd>
 
 <span class='kw'>scope</span> <span class='op'>&lt;-</span> <span class='kw'>Episode</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span>(), <span class='st'>"_episodes"</span>, <span class='st'>"17-scope.md"</span>))
 <span class='kw'>scope</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/base/write.html'>write</a></span>()
-</div><div class='output co'>#&gt; <span class='message'>Creating temporary directory '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/Rtmp3MiY1f/dir7665bdba292'</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Creating temporary directory '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpbZNUrr/dir72968062779'</span></div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `Episode$reset`</span>
 <span class='co'>## ------------------------------------------------</span>
