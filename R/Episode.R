@@ -385,32 +385,17 @@ Episode <- R6::R6Class("Episode",
 
     #' @field questions \[`character`\] the questions from the episode
     questions = function() {
-      q <- NULL
+      get_list_block(self, type = "questions", in_yaml = !private$mutations['move_questions'])
+    },
 
-      # Try the yaml first
-      if (!private$mutations['move_questions']) {
-        yaml <- self$get_yaml()
-        q <- yaml$questions
-      } 
-      
-      # Try the code blocks next
-      if (is.null(q)) {
-        ns <- NS(self$body)
-        xpath <- glue::glue(".//{ns}:code_block[@info='{{questions}}' or @language='questions']")
-        q <- xml2::xml_find_first(self$body, xpath)
-      } else {
-        return(q)
-      }
-      # If they produce something, parse, otherwise, try the divs
-      if (length(q) > 0) {
-        txt <- gsub("\n?#' ?-?", "\n", xml2::xml_text(q), perl = TRUE)
-        txt <- trimws(gsub("\n{2,}", "\n", txt, perl = TRUE))
-        q <- strsplit(txt, "\n")[[1]]
-      } else {
-        q <- xml2::xml_children(get_divs(self$label_divs()$body, "questions")[[1]])
-        q <- purrr::map_chr(q, xml2::xml_text)
-      }
-      return(trimws(q))
+    #' @field keypoints \[`character`\] the keypoints from the episode
+    keypoints = function() {
+      get_list_block(self, type = "keypoints", in_yaml = !private$mutations['move_keypoints'])
+    },
+
+    #' @field objectives \[`character`\] the objectives from the episode
+    objectives = function() {
+      get_list_block(self, type = "objectives", in_yaml = !private$mutations['move_objectives'])
     },
 
     #' @field challenges \[`xml_nodeset`\] all the challenges blocks from the episode

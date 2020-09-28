@@ -28,6 +28,8 @@ element_df <- function(node) {
 # Get a character vector of the namespace
 NS <- function(x) attr(xml2::xml_ns(x), "names")[[1]]
 
+capitalize <- function(x) `substring<-`(x, 1, 1, toupper(substring(x, 1, 1)))
+
 # generate xpath syntax for a block type
 block_type <- function(ns, type = NULL, start = "[", end = "]") {
 
@@ -103,14 +105,16 @@ xml_slip_in <- function(body, to_insert, where = length(xml2::xml_children(body)
 #'   keywords  = c("klaatu", "verada", "necktie")
 #' )
 #' xml_list_chunk(l, "questions")
+#' xml_list_chunk(l, "questions", dovetail = FALSE)
 xml_list_chunk <- function(yaml, what, dovetail = TRUE) {
   if (dovetail) {
     item   <- "\n#' - "
     header <- glue::glue("```{<what>}<item>", .open = "<", .close = ">")
     tailer <- "\n```"
   } else {
+    title  <- capitalize(what)
     item   <- "\n - "
-    header <- glue::glue("<div class='{what}' markdown='1'>\n{item}")
+    header <- glue::glue("<div class='{what}' markdown='1'>\n\n## {title}\n\n{item}")
     tailer <- "\n\n</div>"
   }
   mdlist <- paste0(header, paste(yaml[[what]], collapse = item), tailer)
