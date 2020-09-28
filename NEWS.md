@@ -1,3 +1,8 @@
+# pegboard 0.0.0.9007
+
+ - `$keypoints` and `$objectives` now are available and act like `$questions`
+ - The `$move_*()` methods will now add an h2 header to the block
+
 # pegboard 0.0.0.9006
 
  - `$label_divs()` method now will label any div tags in the episode

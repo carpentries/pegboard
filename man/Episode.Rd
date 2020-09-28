@@ -118,6 +118,10 @@ scope$challenges
 
 \item{\code{questions}}{[\code{character}] the questions from the episode}
 
+\item{\code{keypoints}}{[\code{character}] the keypoints from the episode}
+
+\item{\code{objectives}}{[\code{character}] the objectives from the episode}
+
 \item{\code{challenges}}{[\code{xml_nodeset}] all the challenges blocks from the episode}
 
 \item{\code{solutions}}{[\code{xml_nodeset}] all the solutions blocks from the episode}
