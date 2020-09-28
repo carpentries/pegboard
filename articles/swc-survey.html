@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9006</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9007</span>
       </span>
     </div>
 
@@ -146,7 +146,6 @@
   <span class="kw">NULL</span>
 )
 <span class="kw">SWC</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span>(<span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html">glue</a></span>(<span class="st">"swcarpentry/{swc_core_lessons}"</span>), <span class="kw">get_lesson</span>, path = <span class="kw">swc_path</span>)
-<span class="co">#&gt; Error: Duplicate map key: 'keypoints'</span>
 <span class="co">#&gt; could not find _episodes/, using _episodes_rmd/ as the source</span>
 <span class="co">#&gt; could not find _episodes/, using _episodes_rmd/ as the source</span>
 <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="kw">SWC</span>) <span class="op">&lt;-</span> <span class="kw">swc_core_lessons</span>
@@ -156,7 +155,7 @@
 <span class="kw">relationships</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dfr</a></span>(<span class="kw">SWC</span>, <span class="op">~</span><span class="kw">.x</span><span class="op">$</span><span class="fu">challenges</span>(graph = <span class="fl">TRUE</span>, recurse = <span class="fl">TRUE</span>), .id = <span class="st">"Lesson"</span>) <span class="op">%&gt;%</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span>()
 
 <span class="kw">relationships</span>
-<span class="co">#&gt; # A tibble: 4,721 x 7</span>
+<span class="co">#&gt; # A tibble: 4,723 x 7</span>
 <span class="co">#&gt;    Lesson       Episode       Block from      to        pos          level</span>
 <span class="co">#&gt;    &lt;chr&gt;        &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;        &lt;int&gt;</span>
 <span class="co">#&gt;  1 shell-novice 02-filedir.md 1     challenge heading   402:1-418:14     1</span>
@@ -169,7 +168,7 @@
 <span class="co">#&gt;  8 shell-novice 02-filedir.md 1     paragraph challenge 412:5-418:14     2</span>
 <span class="co">#&gt;  9 shell-novice 02-filedir.md 2     challenge heading   420:1-435:14     1</span>
 <span class="co">#&gt; 10 shell-novice 02-filedir.md 2     heading   paragraph 420:3-420:43     1</span>
-<span class="co">#&gt; # … with 4,711 more rows</span>
+<span class="co">#&gt; # … with 4,713 more rows</span>
 
 <span class="kw">curr_graph</span> <span class="op">&lt;-</span> <span class="kw">relationships</span> <span class="op">%&gt;%</span>
   <span class="kw">dplyr</span>::<span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(level = <span class="kw">dplyr</span>::<span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span>(
@@ -284,7 +283,7 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#xrubqvzubz .gt_table {
+#rufrfdkexc .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -309,7 +308,7 @@
   border-left-color: #D3D3D3;
 }
 
-#xrubqvzubz .gt_heading {
+#rufrfdkexc .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -321,7 +320,7 @@
   border-right-color: #D3D3D3;
 }
 
-#xrubqvzubz .gt_title {
+#rufrfdkexc .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -331,7 +330,7 @@
   border-bottom-width: 0;
 }
 
-#xrubqvzubz .gt_subtitle {
+#rufrfdkexc .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -341,13 +340,13 @@
   border-top-width: 0;
 }
 
-#xrubqvzubz .gt_bottom_border {
+#rufrfdkexc .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#xrubqvzubz .gt_col_headings {
+#rufrfdkexc .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -362,7 +361,7 @@
   border-right-color: #D3D3D3;
 }
 
-#xrubqvzubz .gt_col_heading {
+#rufrfdkexc .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -382,7 +381,7 @@
   overflow-x: hidden;
 }
 
-#xrubqvzubz .gt_column_spanner_outer {
+#rufrfdkexc .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -394,15 +393,15 @@
   padding-right: 4px;
 }
 
-#xrubqvzubz .gt_column_spanner_outer:first-child {
+#rufrfdkexc .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#xrubqvzubz .gt_column_spanner_outer:last-child {
+#rufrfdkexc .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#xrubqvzubz .gt_column_spanner {
+#rufrfdkexc .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -414,7 +413,7 @@
   width: 100%;
 }
 
-#xrubqvzubz .gt_group_heading {
+#rufrfdkexc .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -436,7 +435,7 @@
   vertical-align: middle;
 }
 
-#xrubqvzubz .gt_empty_group_heading {
+#rufrfdkexc .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -451,15 +450,15 @@
   vertical-align: middle;
 }
 
-#xrubqvzubz .gt_from_md > :first-child {
+#rufrfdkexc .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#xrubqvzubz .gt_from_md > :last-child {
+#rufrfdkexc .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#xrubqvzubz .gt_row {
+#rufrfdkexc .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -478,7 +477,7 @@
   overflow-x: hidden;
 }
 
-#xrubqvzubz .gt_stub {
+#rufrfdkexc .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -490,7 +489,7 @@
   padding-left: 12px;
 }
 
-#xrubqvzubz .gt_summary_row {
+#rufrfdkexc .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -500,7 +499,7 @@
   padding-right: 5px;
 }
 
-#xrubqvzubz .gt_first_summary_row {
+#rufrfdkexc .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -510,7 +509,7 @@
   border-top-color: #D3D3D3;
 }
 
-#xrubqvzubz .gt_grand_summary_row {
+#rufrfdkexc .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -520,7 +519,7 @@
   padding-right: 5px;
 }
 
-#xrubqvzubz .gt_first_grand_summary_row {
+#rufrfdkexc .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -530,11 +529,11 @@
   border-top-color: #D3D3D3;
 }
 
-#xrubqvzubz .gt_striped {
+#rufrfdkexc .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#xrubqvzubz .gt_table_body {
+#rufrfdkexc .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -543,7 +542,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#xrubqvzubz .gt_footnotes {
+#rufrfdkexc .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -557,13 +556,13 @@
   border-right-color: #D3D3D3;
 }
 
-#xrubqvzubz .gt_footnote {
+#rufrfdkexc .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#xrubqvzubz .gt_sourcenotes {
+#rufrfdkexc .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -577,46 +576,46 @@
   border-right-color: #D3D3D3;
 }
 
-#xrubqvzubz .gt_sourcenote {
+#rufrfdkexc .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#xrubqvzubz .gt_left {
+#rufrfdkexc .gt_left {
   text-align: left;
 }
 
-#xrubqvzubz .gt_center {
+#rufrfdkexc .gt_center {
   text-align: center;
 }
 
-#xrubqvzubz .gt_right {
+#rufrfdkexc .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xrubqvzubz .gt_font_normal {
+#rufrfdkexc .gt_font_normal {
   font-weight: normal;
 }
 
-#xrubqvzubz .gt_font_bold {
+#rufrfdkexc .gt_font_bold {
   font-weight: bold;
 }
 
-#xrubqvzubz .gt_font_italic {
+#rufrfdkexc .gt_font_italic {
   font-style: italic;
 }
 
-#xrubqvzubz .gt_super {
+#rufrfdkexc .gt_super {
   font-size: 65%;
 }
 
-#xrubqvzubz .gt_footnote_marks {
+#rufrfdkexc .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="xrubqvzubz" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="table gt_table">
+<div id="rufrfdkexc" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="table gt_table">
 <colgroup>
 <col style="width:140px;">
 <col style="width:80px;">
@@ -808,7 +807,6 @@
 <span class="kw">purrr</span>::<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span>(<span class="kw">SWC</span>, <span class="op">~</span><span class="kw">.x</span><span class="op">$</span><span class="kw">episodes</span>) <span class="op">%&gt;%</span> 
   <span class="kw">purrr</span>::<span class="fu"><a href="https://purrr.tidyverse.org/reference/flatten.html">flatten</a></span>() <span class="op">%&gt;%</span>
   <span class="kw">purrr</span>::<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">walk</a></span>(<span class="op">~</span><span class="kw">.x</span><span class="op">$</span><span class="fu">use_dovetail</span>()<span class="op">$</span><span class="fu">unblock</span>())
-<span class="co">#&gt; Warning: episode body missing</span>
 <span class="kw">purrr</span>::<span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">walk2</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="kw">odd_blocks</span><span class="op">$</span><span class="kw">src</span>), <span class="kw">odd_blocks</span><span class="op">$</span><span class="kw">src</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>(<span class="kw">.x</span>, <span class="fu"><a href="http://xml2.r-lib.org/reference/xml_text.html">xml_text</a></span>(<span class="kw">.y</span>), sep = <span class="st">"\n---\n"</span>))
 <span class="co">#&gt; shell-novice/05-loop.md (Block 2)</span>
 <span class="co">#&gt; ---</span>
