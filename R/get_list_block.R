@@ -27,9 +27,9 @@ get_list_block <- function(self, type = "questions", in_yaml = TRUE) {
     q <- strsplit(txt, "\n")[[1]]
   } else {
     q <- get_divs(self$label_divs()$body, type)[[1]]
-    # Only use the list elements
-    q <- xml2::xml_children(q[xml2::xml_name(q) == "list"])
-    q <- purrr::map_chr(q, xml2::xml_text)
+    q <- xml_to_md(q[xml2::xml_name(q) == "list"])
+    q <- trimws(gsub("\n?- ", "\n", q))
+    q <- strsplit(q, "\n")[[1]] 
   }
   return(trimws(q))
 }

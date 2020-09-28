@@ -230,7 +230,7 @@ test_that("yaml items can be moved to the text (no dovetail)", {
   e$move_keypoints()$label_divs()
   expect_equal(length(e$get_divs()), 3)
   expect_equal(n_code_blocks, length(e$code))
-  expect_equal(e$keypoints, gsub("`", "", yml[["keypoints"]]))
+  expect_equal(e$keypoints, yml$keypoints) 
   expect_length(xml2::xml_find_all(e$body, ".//d1:html_block"), 2 + 2 + 2 + 2)
   expect_match(
     xml2::xml_text(xml2::xml_find_first(e$body, ".//d1:html_block[7]")),
