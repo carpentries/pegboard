@@ -138,12 +138,18 @@ get_setup_chunk <- function(body) {
 
   # Check if we've already generated one 
   if (!grepl("Generated with {pegboard}", xml2::xml_text(setup), fixed = TRUE)) {
-    setup <- "<document><code_block language='r' name='setup' include='FALSE'></code_block></document>"
-    setup <- xml2::xml_child(xml2::read_xml(setup))
-    xml2::xml_set_text(setup, "# Generated via {pegboard}")
-    xml_slip_in(body, setup, where = 0L)
+    # Add the code block as a child
+    xml2::xml_add_child(body,
+      "code_block",
+      "# Generated via {pegboard}\n",
+      language = "r",
+      name = "setup", 
+      include = "FALSE",
+      xmlns = xml2::xml_ns(body)[[1]],
+      .where = 0L
+    )
+    # Grab it and go
     setup <- xml2::xml_child(body)
-    xml2::xml_set_namespace(setup, prefix = NS(body), uri = xml2::xml_ns(body)[[1]])
   }
   setup
 }
