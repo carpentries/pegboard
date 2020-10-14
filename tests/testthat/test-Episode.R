@@ -189,12 +189,12 @@ test_that("yaml items can be moved to the text (no dovetail)", {
   # The question block is moved to the top
   expect_length(xml2::xml_find_all(e$body, ".//d1:html_block"), 2)
   expect_match(
-    xml2::xml_text(xml2::xml_find_first(e$body, "./d1:paragraph[1]")),
+    xml2::xml_text(xml2::xml_find_all(e$body, "./*[@dtag]")[1]),
     ":::::::::: questions",
     fixed = TRUE
   )
   expect_match(
-    xml2::xml_text(xml2::xml_find_first(e$body, "./d1:paragraph[2]")),
+    xml2::xml_text(xml2::xml_find_all(e$body, "./*[@dtag]")[2]),
     "::::::::::::::::::::",
     fixed = TRUE
   )
@@ -213,11 +213,11 @@ test_that("yaml items can be moved to the text (no dovetail)", {
   expect_equal(e$objectives, yml[["objectives"]])
   expect_length(xml2::xml_find_all(e$body, ".//d1:html_block"), 2)
   expect_match(
-    xml2::xml_text(xml2::xml_find_first(e$body, "./d1:paragraph[1]")),
+    xml2::xml_text(xml2::xml_find_all(e$body, "./*[@dtag]")[1]),
     ":::::::::: objectives"
   )
   expect_match(
-    xml2::xml_text(xml2::xml_find_first(e$body, "./d1:paragraph[2]")),
+    xml2::xml_text(xml2::xml_find_all(e$body, "./*[@dtag]")[2]),
     "::::::::::::::::::::",
     fixed = TRUE
   )
@@ -235,11 +235,11 @@ test_that("yaml items can be moved to the text (no dovetail)", {
   expect_equal(e$keypoints, yml$keypoints) 
   expect_length(xml2::xml_find_all(e$body, ".//d1:html_block"), 2)
   expect_match(
-    xml2::xml_text(xml2::xml_find_all(e$body, "./d1:paragraph[@dtag]")[5]),
+    xml2::xml_text(xml2::xml_find_all(e$body, "./*[@dtag]")[5]),
     ":::::::::: keypoints"
   )
   expect_match(
-    xml2::xml_text(xml2::xml_find_all(e$body, "./d1:paragraph[@dtag]")[6]),
+    xml2::xml_text(xml2::xml_find_all(e$body, "./*[@dtag]")[6]),
     "::::::::::::::::::::",
     fixed = TRUE
   )
@@ -283,7 +283,7 @@ test_that("blocks can be converted to div blocks", {
   # no blocks
   expect_length(e$reset()$unblock()$get_blocks(), 0)
   # div tags, though
-  expect_length(xml2::xml_find_all(e$reset()$unblock()$body, ".//d1:html_block"), 2 + (6 * 2))
+  expect_length(xml2::xml_find_all(e$reset()$unblock()$body, ".//d1:html_block"), 2)# + (6 * 2))
   expect_identical(xml2::xml_attr(e$reset()$unblock()$code, "ktag"), tags)
   expect_identical(xml2::xml_attr(e$reset()$unblock()$code, "language"), language_tags)
 
@@ -291,9 +291,12 @@ test_that("blocks can be converted to div blocks", {
   expect_length(e$solutions, 3)
   expect_length(e$challenges, 3)
 
-  divs <- xml2::xml_find_all(e$reset()$unblock()$body, ".//d1:html_block")
+  html <- xml2::xml_find_all(e$reset()$unblock()$body, ".//d1:html_block")
+  html <- xml2::xml_text(html)
+  expect_length(html, 2)
+  expect_match(html, "img")
+  divs <- xml2::xml_find_all(e$reset()$unblock()$body, "./*[@dtag]")
   divs <- xml2::xml_text(divs)
-  expect_match(divs[1:12], "div")
   expect_match(divs[c(1, 5, 9)], "challenge")
   expect_match(divs[c(2, 6, 10)], "solution")
 

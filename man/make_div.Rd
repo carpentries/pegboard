@@ -5,7 +5,7 @@
 \title{Create an xml document that contains two html_block elements
 that contain div tags.}
 \usage{
-make_div(what)
+make_div(what, fenced = TRUE)
 }
 \arguments{
 \item{what}{the class of block}

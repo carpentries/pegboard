@@ -15,8 +15,15 @@
 #' cha <- pegboard:::make_div("challenge")
 #' cha
 #' cat(pegboard:::xml_to_md(cha))
-make_div <- function(what) {
-  div <- glue::glue('<div class="{what}">\n\n</div>')
+make_div <- function(what, fenced = TRUE) {
+  if (fenced) {
+    n <- if (grepl("solution", what, fixed = TRUE)) 25 else 50
+    open <- paste(rep(":", n - nchar(what) - 1L), collapse = "")
+    dots <- paste(rep(":", n), collapse = "")
+    div <- glue::glue("{open} {what}\n\n{dots}")
+  } else {
+    div <- glue::glue('<div class="{what}">\n\n</div>')
+  }
   div <- commonmark::markdown_xml(div)
   xml2::read_xml(div)
 }
@@ -45,10 +52,10 @@ make_div <- function(what) {
 #' purrr::walk(lop$get_blocks(level = 2), pegboard:::replace_with_div)
 #' purrr::walk(lop$get_blocks(level = 1), pegboard:::replace_with_div)
 #' lop$get_blocks()
-#' xml2::xml_find_all(lop$body, ".//d1:html_block")
 #' # add tags
 #' pegboard:::label_div_tags(lop$body)
-#' xml2::xml_find_all(lop$body, ".//d1:html_block")
+#' xml2::xml_find_all(lop$body, ".//d1:paragraph[@dtag]")
+#' xml2::xml_text(xml2::xml_find_all(lop$body, ".//d1:paragraph[@dtag]"))
 replace_with_div <- function(block) {
   # Grab the type of block and filter out markup
   type <- gsub("[{:}.]", "", xml2::xml_attr(block, "ktag"))

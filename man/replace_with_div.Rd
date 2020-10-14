@@ -24,10 +24,10 @@ lop$get_blocks(level = 2)
 purrr::walk(lop$get_blocks(level = 2), pegboard:::replace_with_div)
 purrr::walk(lop$get_blocks(level = 1), pegboard:::replace_with_div)
 lop$get_blocks()
-xml2::xml_find_all(lop$body, ".//d1:html_block")
 # add tags
 pegboard:::label_div_tags(lop$body)
-xml2::xml_find_all(lop$body, ".//d1:html_block")
+xml2::xml_find_all(lop$body, ".//d1:paragraph[@dtag]")
+xml2::xml_text(xml2::xml_find_all(lop$body, ".//d1:paragraph[@dtag]"))
 }
 \seealso{
 \code{\link[=get_divs]{get_divs()}} for finding labelled tags,
