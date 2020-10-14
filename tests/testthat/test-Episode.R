@@ -145,7 +145,7 @@ test_that("yaml items can be moved to the text (with dovetail)", {
   expect_equal(e$questions, yml[["questions"]])
 
   # The question block is moved to the top
-  expect_equal(xml2::xml_attr(e$code[2], "info"), "{questions}")
+  expect_equal(xml2::xml_attr(e$code[2], "language"), "questions")
   # question block is removed from yaml
   yml <- e$get_yaml()
   expect_equal(e$objectives, yml[["objectives"]])
@@ -154,7 +154,7 @@ test_that("yaml items can be moved to the text (with dovetail)", {
   e$move_objectives()
   expect_equal(n_code_blocks + 3L, length(e$code))
   expect_equal(e$objectives, yml[["objectives"]])
-  expect_equal(xml2::xml_attr(e$code[2], "info"), "{objectives}")
+  expect_equal(xml2::xml_attr(e$code[2], "language"), "objectives")
   yml <- e$get_yaml()
   expect_equal(e$keypoints, yml[["keypoints"]])
   expect_named(yml, c("title", "teaching", "exercises", "keypoints"))
@@ -162,8 +162,8 @@ test_that("yaml items can be moved to the text (with dovetail)", {
   e$move_keypoints()
   expect_equal(n_code_blocks + 4L, length(e$code))
   expect_equal(e$keypoints, yml[["keypoints"]])
-  expect_equal(xml2::xml_attr(e$code[2], "info"), "{objectives}")
-  expect_equal(xml2::xml_attr(e$code[length(e$code)], "info"), "{keypoints}")
+  expect_equal(xml2::xml_attr(e$code[2], "language"), "objectives")
+  expect_equal(xml2::xml_attr(e$code[length(e$code)], "language"), "keypoints")
   yml <- e$get_yaml()
   expect_named(yml, c("title", "teaching", "exercises"))
 
@@ -187,16 +187,18 @@ test_that("yaml items can be moved to the text (no dovetail)", {
   expect_equal(e$questions, yml[["questions"]])
 
   # The question block is moved to the top
-  expect_length(xml2::xml_find_all(e$body, ".//d1:html_block"), 2 + 2)
+  expect_length(xml2::xml_find_all(e$body, ".//d1:html_block"), 2)
   expect_match(
-    xml2::xml_text(xml2::xml_find_first(e$body, ".//d1:html_block[1]")),
-    "div class..question"
-  )
-  expect_match(
-    xml2::xml_text(xml2::xml_find_first(e$body, ".//d1:html_block[2]")),
-    "</div>",
+    xml2::xml_text(xml2::xml_find_first(e$body, "./d1:paragraph[1]")),
+    ":::::::::: questions",
     fixed = TRUE
   )
+  expect_match(
+    xml2::xml_text(xml2::xml_find_first(e$body, "./d1:paragraph[2]")),
+    "::::::::::::::::::::",
+    fixed = TRUE
+  )
+  # The first div block consists of a heading and a list.
   expect_equal(xml2::xml_name(e$get_divs()[[1]]), c("heading", "list"))
   expect_equal(xml2::xml_text(e$get_divs()[[1]][[1]]), "Questions")
 
@@ -209,14 +211,14 @@ test_that("yaml items can be moved to the text (no dovetail)", {
   expect_equal(length(e$get_divs()), 2)
   expect_equal(n_code_blocks, length(e$code))
   expect_equal(e$objectives, yml[["objectives"]])
-  expect_length(xml2::xml_find_all(e$body, ".//d1:html_block"), 2 + 2 + 2)
+  expect_length(xml2::xml_find_all(e$body, ".//d1:html_block"), 2)
   expect_match(
-    xml2::xml_text(xml2::xml_find_first(e$body, ".//d1:html_block[1]")),
-    "div class..objectives"
+    xml2::xml_text(xml2::xml_find_first(e$body, "./d1:paragraph[1]")),
+    ":::::::::: objectives"
   )
   expect_match(
-    xml2::xml_text(xml2::xml_find_first(e$body, ".//d1:html_block[2]")),
-    "</div>",
+    xml2::xml_text(xml2::xml_find_first(e$body, "./d1:paragraph[2]")),
+    "::::::::::::::::::::",
     fixed = TRUE
   )
   expect_equal(xml2::xml_name(e$get_divs()[[1]]), c("heading", "list"))
@@ -231,14 +233,14 @@ test_that("yaml items can be moved to the text (no dovetail)", {
   expect_equal(length(e$get_divs()), 3)
   expect_equal(n_code_blocks, length(e$code))
   expect_equal(e$keypoints, yml$keypoints) 
-  expect_length(xml2::xml_find_all(e$body, ".//d1:html_block"), 2 + 2 + 2 + 2)
+  expect_length(xml2::xml_find_all(e$body, ".//d1:html_block"), 2)
   expect_match(
-    xml2::xml_text(xml2::xml_find_first(e$body, ".//d1:html_block[7]")),
-    "div class..keypoints"
+    xml2::xml_text(xml2::xml_find_all(e$body, "./d1:paragraph[@dtag]")[5]),
+    ":::::::::: keypoints"
   )
   expect_match(
-    xml2::xml_text(xml2::xml_find_first(e$body, ".//d1:html_block[8]")),
-    "</div>",
+    xml2::xml_text(xml2::xml_find_all(e$body, "./d1:paragraph[@dtag]")[6]),
+    "::::::::::::::::::::",
     fixed = TRUE
   )
 

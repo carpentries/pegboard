@@ -75,52 +75,6 @@ xml_new_paragraph <- function(text = "", ns, tag = TRUE) {
   xml2::xml_child(pgp, 1)
 }
 
-xml_slip_in <- function(body, to_insert, where = length(xml2::xml_children(body))) {
-
-  xml2::xml_add_child(body, to_insert, .where = where)
-
-  the_nodes <- xml2::xml_find_all(body, ".//node()")
-  # adding a child automatically adds "xmlns:xml = http://www.w3.org/XML/1998/namespace"
-  # but this happens to mess up the code blocks, so this gets rid of them
-  xml2::xml_set_attr(the_nodes, "xmlns:xml", NULL)
-
-}
-
-#' Create a new block node based on a list (derived from yaml)
-#'
-#' This assumes that your input is a flat list and is used to translate 
-#' yaml-coded questions and keywords into blocks (for translation between 
-#' jekyll carpentries lessons and the sandpaper lessons
-#' 
-#' @param yaml a list of character vectors
-#' @param what the name of the item to transform
-#' @param dovetail if `TRUE`, the output is presented as a dovetail block,
-#'   otherwise, it is formatted as a div class chunk.
-#' @return an xml document
-#' @noRd
-#' @keywords internal
-#' @examples
-#' l <- list(
-#'   questions = c("what is this?", "who are you?"), 
-#'   keywords  = c("klaatu", "verada", "necktie")
-#' )
-#' xml_list_chunk(l, "questions")
-#' xml_list_chunk(l, "questions", dovetail = FALSE)
-xml_list_chunk <- function(yaml, what, dovetail = TRUE) {
-  if (dovetail) {
-    item   <- "\n#' - "
-    header <- glue::glue("```{<what>}<item>", .open = "<", .close = ">")
-    tailer <- "\n```"
-  } else {
-    title  <- capitalize(what)
-    item   <- "\n - "
-    header <- glue::glue("<div class='{what}' markdown='1'>\n\n## {title}\n\n{item}")
-    tailer <- "\n\n</div>"
-  }
-  mdlist <- paste0(header, paste(yaml[[what]], collapse = item), tailer)
-  xml2::read_xml(commonmark::markdown_xml(mdlist, smart = TRUE, extensions = TRUE))
-}
-
 #' Retrieve the setup chunk if it exists, create one and insert it at the head 
 #' of the document if it does not
 #' @param body an xml node
@@ -135,18 +89,19 @@ get_setup_chunk <- function(body) {
   if (inherits(setup, "xml_missing")) {
     setup <- xml2::xml_child(body)
   }
+  comment <- "# Generated with {pegboard}"
 
   # Check if we've already generated one 
-  if (!grepl("Generated with {pegboard}", xml2::xml_text(setup), fixed = TRUE)) {
+  if (!grepl(comment, xml2::xml_text(setup), fixed = TRUE)) {
     # Add the code block as a child
     xml2::xml_add_child(body,
       "code_block",
-      "# Generated via {pegboard}\n",
+      paste0(comment, "\n"),
       language = "r",
-      name = "setup", 
-      include = "FALSE",
-      xmlns = xml2::xml_ns(body)[[1]],
-      .where = 0L
+      name     = "setup",
+      include  = "FALSE",
+      xmlns    = xml2::xml_ns(body)[[1]],
+      .where   = 0L
     )
     # Grab it and go
     setup <- xml2::xml_child(body)

@@ -2,6 +2,9 @@
 
  - `$keypoints` and `$objectives` now are available and act like `$questions`
  - The `$move_*()` methods will now add an h2 header to the block
+ - The `$move_*()` methods will use pandoc syntax instead of html div blocks. 
+ - Internal changes to creation of elements no longer relies on complex
+   namespace juggling
 
 # pegboard 0.0.0.9006
 

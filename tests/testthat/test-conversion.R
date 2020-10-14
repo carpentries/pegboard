@@ -180,7 +180,11 @@ test_that("Integration: rmarkdown sandpaper sites", {
   expect_length(e$tags, 0)
   expect_equal(
     xml2::xml_attr(xml2::xml_child(e$body, length(xml2::xml_children(e$body))), "info"),
-    "{keypoints}"
+    NA_character_
+  )
+  expect_equal(
+    xml2::xml_attr(xml2::xml_child(e$body, length(xml2::xml_children(e$body))), "language"),
+    "keypoints"
   )
 
 })
@@ -234,7 +238,11 @@ test_that("Integration: for markdown sandpaper sites", {
   expect_length(e$tags, 0)
   expect_equal(
     xml2::xml_attr(xml2::xml_child(e$body, length(xml2::xml_children(e$body))), "info"),
-    "{keypoints}"
+    NA_character_
+  )
+  expect_equal(
+    xml2::xml_attr(xml2::xml_child(e$body, length(xml2::xml_children(e$body))), "language"),
+    "keypoints"
   )
 
 })
@@ -287,7 +295,7 @@ test_that("Integration: for markdown sandpaper sites without dovetail", {
   expect_length(e$tags, 0)
   expect_match(
     xml2::xml_text(xml2::xml_child(e$body, length(xml2::xml_children(e$body)))),
-    "</div>",
+    ":::::::::::::::",
     fixed = TRUE
   )
 
@@ -343,7 +351,11 @@ test_that("Integration: jekyll sites", {
   # original code chunks + yaml + setup - output
   expect_equal(
     xml2::xml_attr(xml2::xml_child(e$body, length(xml2::xml_children(e$body))), "info"),
-    "{keypoints}"
+    NA_character_
+  )
+  expect_equal(
+    xml2::xml_attr(xml2::xml_child(e$body, length(xml2::xml_children(e$body))), "language"),
+    "keypoints"
   )
   # output needs to be explicitly removed
   expect_length(e$output, 4) 
