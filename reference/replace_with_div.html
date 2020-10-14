@@ -132,7 +132,7 @@
     <p>This modifies a document to replace a blockquote element with a div element</p>
     </div>
 
-    <pre class="usage"><span class='fu'>replace_with_div</span>(<span class='kw'>block</span>)</pre>
+    <pre class="usage"><span class='fu'>replace_with_div</span><span class='op'>(</span><span class='va'>block</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -157,23 +157,23 @@
 <code><a href='clean_fenced_divs.html'>clean_fenced_divs()</a></code> for cleaning cluttered pandoc div tags</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>frg</span> <span class='op'>&lt;-</span> <span class='kw'>Lesson</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span>())
-<span class='kw'>lop</span> <span class='op'>&lt;-</span> <span class='kw'>frg</span><span class='op'>$</span><span class='kw'>episodes</span><span class='op'>$</span><span class='kw'>`14-looping-data-sets.md`</span>
-<span class='kw'>xml2</span>::<span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span>(<span class='kw'>lop</span><span class='op'>$</span><span class='kw'>body</span>, <span class='st'>".//d1:html_block"</span>)
+    <pre class="examples"><div class='input'><span class='va'>frg</span> <span class='op'>&lt;-</span> <span class='va'><a href='Lesson.html'>Lesson</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>lop</span> <span class='op'>&lt;-</span> <span class='va'>frg</span><span class='op'>$</span><span class='va'>episodes</span><span class='op'>$</span><span class='va'>`14-looping-data-sets.md`</span>
+<span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span><span class='op'>(</span><span class='va'>lop</span><span class='op'>$</span><span class='va'>body</span>, <span class='st'>".//d1:html_block"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; {xml_nodeset (2)}
 #&gt; [1] &lt;html_block sourcepos="174:1-174:86" xml:space="preserve"&gt;&amp;lt;img src="ht ...
-#&gt; [2] &lt;html_block sourcepos="176:1-176:49" xml:space="preserve"&gt;&amp;lt;img src=".. ...</div><div class='input'><span class='kw'>lop</span><span class='op'>$</span><span class='fu'><a href='get_blocks.html'>get_blocks</a></span>(level = <span class='fl'>1</span>)
+#&gt; [2] &lt;html_block sourcepos="176:1-176:49" xml:space="preserve"&gt;&amp;lt;img src=".. ...</div><div class='input'><span class='va'>lop</span><span class='op'>$</span><span class='fu'>get_blocks</span><span class='op'>(</span>level <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; {xml_nodeset (3)}
 #&gt; [1] &lt;block_quote sourcepos="95:1-108:14" ktag="{: .challenge}"&gt;\n  &lt;heading s ...
 #&gt; [2] &lt;block_quote sourcepos="110:1-140:14" ktag="{: .challenge}"&gt;\n  &lt;heading  ...
-#&gt; [3] &lt;block_quote sourcepos="142:1-170:14" ktag="{: .challenge}"&gt;\n  &lt;heading  ...</div><div class='input'><span class='kw'>lop</span><span class='op'>$</span><span class='fu'><a href='get_blocks.html'>get_blocks</a></span>(level = <span class='fl'>2</span>)
+#&gt; [3] &lt;block_quote sourcepos="142:1-170:14" ktag="{: .challenge}"&gt;\n  &lt;heading  ...</div><div class='input'><span class='va'>lop</span><span class='op'>$</span><span class='fu'>get_blocks</span><span class='op'>(</span>level <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; {xml_nodeset (3)}
 #&gt; [1] &lt;block_quote sourcepos="104:3-108:14" ktag="{: .solution}"&gt;\n  &lt;heading s ...
 #&gt; [2] &lt;block_quote sourcepos="128:3-140:14" ktag="{: .solution}"&gt;\n  &lt;heading s ...
-#&gt; [3] &lt;block_quote sourcepos="147:3-170:14" ktag="{: .solution}"&gt;\n  &lt;heading s ...</div><div class='input'><span class='kw'>purrr</span>::<span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>walk</a></span>(<span class='kw'>lop</span><span class='op'>$</span><span class='fu'><a href='get_blocks.html'>get_blocks</a></span>(level = <span class='fl'>2</span>), <span class='kw'>pegboard</span>:::<span class='kw'>replace_with_div</span>)
-<span class='kw'>purrr</span>::<span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>walk</a></span>(<span class='kw'>lop</span><span class='op'>$</span><span class='fu'><a href='get_blocks.html'>get_blocks</a></span>(level = <span class='fl'>1</span>), <span class='kw'>pegboard</span>:::<span class='kw'>replace_with_div</span>)
-<span class='kw'>lop</span><span class='op'>$</span><span class='fu'><a href='get_blocks.html'>get_blocks</a></span>()
-</div><div class='output co'>#&gt; {xml_nodeset (0)}</div><div class='input'><span class='kw'>xml2</span>::<span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span>(<span class='kw'>lop</span><span class='op'>$</span><span class='kw'>body</span>, <span class='st'>".//d1:html_block"</span>)
+#&gt; [3] &lt;block_quote sourcepos="147:3-170:14" ktag="{: .solution}"&gt;\n  &lt;heading s ...</div><div class='input'><span class='fu'>purrr</span><span class='fu'>::</span><span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>walk</a></span><span class='op'>(</span><span class='va'>lop</span><span class='op'>$</span><span class='fu'>get_blocks</span><span class='op'>(</span>level <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>, <span class='fu'>pegboard</span><span class='fu'>:::</span><span class='va'>replace_with_div</span><span class='op'>)</span>
+<span class='fu'>purrr</span><span class='fu'>::</span><span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>walk</a></span><span class='op'>(</span><span class='va'>lop</span><span class='op'>$</span><span class='fu'>get_blocks</span><span class='op'>(</span>level <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>, <span class='fu'>pegboard</span><span class='fu'>:::</span><span class='va'>replace_with_div</span><span class='op'>)</span>
+<span class='va'>lop</span><span class='op'>$</span><span class='fu'>get_blocks</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; {xml_nodeset (0)}</div><div class='input'><span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span><span class='op'>(</span><span class='va'>lop</span><span class='op'>$</span><span class='va'>body</span>, <span class='st'>".//d1:html_block"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; {xml_nodeset (14)}
 #&gt;  [1] &lt;html_block xmlns="http://commonmark.org/xml/1.0" xml:space="preserve"&gt;&amp; ...
 #&gt;  [2] &lt;html_block xmlns="http://commonmark.org/xml/1.0" xml:space="preserve"&gt;&amp; ...
@@ -189,8 +189,8 @@
 #&gt; [12] &lt;html_block xmlns="http://commonmark.org/xml/1.0" xml:space="preserve"&gt;&amp; ...
 #&gt; [13] &lt;html_block sourcepos="174:1-174:86" xml:space="preserve"&gt;&amp;lt;img src="h ...
 #&gt; [14] &lt;html_block sourcepos="176:1-176:49" xml:space="preserve"&gt;&amp;lt;img src=". ...</div><div class='input'><span class='co'># add tags</span>
-<span class='kw'>pegboard</span>:::<span class='fu'><a href='label_div_tags.html'>label_div_tags</a></span>(<span class='kw'>lop</span><span class='op'>$</span><span class='kw'>body</span>)
-<span class='kw'>xml2</span>::<span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span>(<span class='kw'>lop</span><span class='op'>$</span><span class='kw'>body</span>, <span class='st'>".//d1:html_block"</span>)
+<span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'><a href='label_div_tags.html'>label_div_tags</a></span><span class='op'>(</span><span class='va'>lop</span><span class='op'>$</span><span class='va'>body</span><span class='op'>)</span>
+<span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span><span class='op'>(</span><span class='va'>lop</span><span class='op'>$</span><span class='va'>body</span>, <span class='st'>".//d1:html_block"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; {xml_nodeset (14)}
 #&gt;  [1] &lt;html_block xmlns="http://commonmark.org/xml/1.0" xml:space="preserve" d ...
 #&gt;  [2] &lt;html_block xmlns="http://commonmark.org/xml/1.0" xml:space="preserve" d ...

@@ -133,10 +133,10 @@ directory and extracts the lesson in _episodes/ using tinkr::to_xml()" />
     <div class="ref-description">
     <p>Download and extract a carpentries lesson in XML format. This uses <code><a href='https://docs.ropensci.org/git2r/reference/clone.html'>git2r::clone()</a></code>
 to download a carpentries lesson to your computer (defaults to the temporary
-directory and extracts the lesson in <code>_episodes/</code> using <code><a href='https://rdrr.io/pkg/tinkr/man/to_xml.html'>tinkr::to_xml()</a></code></p>
+directory and extracts the lesson in <code>_episodes/</code> using <code><a href='https://docs.ropensci.org/tinkr/reference/to_xml.html'>tinkr::to_xml()</a></code></p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_lesson</span>(lesson = <span class='kw'>NULL</span>, path = <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), overwrite = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>get_lesson</span><span class='op'>(</span>lesson <span class='op'>=</span> <span class='cn'>NULL</span>, path <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span>, overwrite <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -167,19 +167,19 @@ lesson repository.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='kw'>png</span> <span class='op'>&lt;-</span> <span class='fu'>get_lesson</span>(<span class='st'>"swcarpentry/python-novice-gapminder"</span>)
-</div><div class='output co'>#&gt; cloning into '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpuhkTIj/swcarpentry--python-novice-gapminder'...
-#&gt; Receiving objects:   1% (83/8215),   50 kb
-#&gt; Receiving objects:  11% (904/8215),  339 kb
-#&gt; Receiving objects:  21% (1726/8215),  507 kb
-#&gt; Receiving objects:  31% (2547/8215), 3461 kb
-#&gt; Receiving objects:  41% (3369/8215), 3781 kb
-#&gt; Receiving objects:  51% (4190/8215), 4181 kb
-#&gt; Receiving objects:  61% (5012/8215), 4373 kb
-#&gt; Receiving objects:  71% (5833/8215), 4517 kb
-#&gt; Receiving objects:  81% (6655/8215), 4757 kb
-#&gt; Receiving objects:  91% (7476/8215), 6692 kb
-#&gt; Receiving objects: 100% (8215/8215), 6857 kb, done.</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='kw'>png</span>, max.level = <span class='fl'>1</span>)
+<span class='va'>png</span> <span class='op'>&lt;-</span> <span class='fu'>get_lesson</span><span class='op'>(</span><span class='st'>"swcarpentry/python-novice-gapminder"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; cloning into '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpJSFsJh/swcarpentry--python-novice-gapminder'...
+#&gt; Receiving objects:   1% (83/8215),   48 kb
+#&gt; Receiving objects:  11% (904/8215),  337 kb
+#&gt; Receiving objects:  21% (1726/8215),  505 kb
+#&gt; Receiving objects:  31% (2547/8215), 3250 kb
+#&gt; Receiving objects:  41% (3369/8215), 3842 kb
+#&gt; Receiving objects:  51% (4190/8215), 4194 kb
+#&gt; Receiving objects:  61% (5012/8215), 4370 kb
+#&gt; Receiving objects:  71% (5833/8215), 4530 kb
+#&gt; Receiving objects:  81% (6655/8215), 4754 kb
+#&gt; Receiving objects:  91% (7476/8215), 6690 kb
+#&gt; Receiving objects: 100% (8215/8215), 6838 kb, done.</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>png</span>, max.level <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Classes 'Lesson', 'R6' &lt;Lesson&gt;
 #&gt;   Public:
 #&gt;     blocks: function (type = NULL, level = 0, path = FALSE) 
@@ -190,7 +190,7 @@ lesson repository.</p></td>
 #&gt;     initialize: function (path = NULL, rmd = FALSE, ...) 
 #&gt;     isolate_blocks: function () 
 #&gt;     n_problems: active binding
-#&gt;     path: /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/Rtmpuhk ...
+#&gt;     path: /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpJSF ...
 #&gt;     reset: function () 
 #&gt;     rmd: FALSE
 #&gt;     show_problems: active binding

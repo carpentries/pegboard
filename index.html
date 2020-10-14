@@ -107,22 +107,21 @@
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>This package is currently in development, but you can install it via {remotes}:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="co">if</span> (<span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span>(<span class="st">"remotes"</span>, quietly = <span class="fl">TRUE</span>)) <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"remotes"</span>)
-<span class="kw">remotes</span>::<span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"carpentries/pegboard"</span>)
-</pre></div>
+<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">"remotes"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"carpentries/pegboard"</span><span class="op">)</span></pre></div>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
 <p>The first way to get started is to use the <code><a href="reference/get_lesson.html">get_lesson()</a></code> function, which will use <a href="https://cran.r-project.org/package=git2r">{git2r}</a> to clone a lesson repository to your computer.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/zkamvar/pegboard">pegboard</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://purrr.tidyverse.org">purrr</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://xml2.r-lib.org">xml2</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://fs.r-lib.org">fs</a></span>)
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/zkamvar/pegboard">pegboard</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://xml2.r-lib.org/">xml2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://fs.r-lib.org">fs</a></span><span class="op">)</span>
 
-<span class="kw">d</span> <span class="op">&lt;-</span> <span class="kw">fs</span>::<span class="fu"><a href="http://fs.r-lib.org/reference/file_temp.html">file_temp</a></span>(pattern = <span class="st">"U2CREADME"</span>)
-<span class="kw">rng</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_lesson.html">get_lesson</a></span>(<span class="st">"swcarpentry/r-novice-gapminder"</span>, path = <span class="kw">d</span>)
+<span class="va">d</span> <span class="op">&lt;-</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="http://fs.r-lib.org/reference/file_temp.html">file_temp</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"U2CREADME"</span><span class="op">)</span>
+<span class="va">rng</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_lesson.html">get_lesson</a></span><span class="op">(</span><span class="st">"swcarpentry/r-novice-gapminder"</span>, path <span class="op">=</span> <span class="va">d</span><span class="op">)</span>
 <span class="co">#&gt; cloning into '/tmp/RtmpgOaoR9/U2CREADME32bb1e071ed3/swcarpentry--r-novice-gapminder'...</span>
 <span class="co">#&gt; Receiving objects:   1% (94/9318),   49 kb</span>
 <span class="co">#&gt; Receiving objects:  11% (1025/9318),  420 kb</span>
@@ -135,7 +134,7 @@
 <span class="co">#&gt; Receiving objects:  81% (7548/9318), 37500 kb</span>
 <span class="co">#&gt; Receiving objects:  91% (8480/9318), 41403 kb</span>
 <span class="co">#&gt; Receiving objects: 100% (9318/9318), 44687 kb, done.</span>
-<span class="kw">rng</span>
+<span class="va">rng</span>
 <span class="co">#&gt; &lt;Lesson&gt;</span>
 <span class="co">#&gt;   Public:</span>
 <span class="co">#&gt;     blocks: function (type = NULL, level = 0, path = FALSE) </span>
@@ -156,7 +155,7 @@
 <span class="co">#&gt;     deep_clone: function (name, value)</span>
 
 <span class="co"># Find all challenges</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">rng</span><span class="op">$</span><span class="fu">challenges</span>())
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">rng</span><span class="op">$</span><span class="fu">challenges</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; $`01-rstudio-intro.Rmd`</span>
 <span class="co">#&gt; {xml_nodeset (5)}</span>
 <span class="co">#&gt; [1] &lt;block_quote sourcepos="350:1-386:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="350:3-350 ...</span>
@@ -208,7 +207,7 @@
 <span class="co">#&gt; [8] &lt;block_quote sourcepos="747:1-765:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="747:3-747 ...</span>
 
 <span class="co"># Find all solutions</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">rng</span><span class="op">$</span><span class="fu">solutions</span>())
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">rng</span><span class="op">$</span><span class="fu">solutions</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; $`01-rstudio-intro.Rmd`</span>
 <span class="co">#&gt; {xml_nodeset (5)}</span>
 <span class="co">#&gt; [1] &lt;block_quote sourcepos="364:3-384:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="364:5-364:3 ...</span>
@@ -258,7 +257,7 @@
 <span class="co">#&gt; [8] &lt;block_quote sourcepos="755:3-763:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="755:5-755:3 ...</span>
 
 <span class="co"># Find all discussion blocks</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">rng</span><span class="op">$</span><span class="fu">blocks</span>(<span class="st">".discussion"</span>))
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">rng</span><span class="op">$</span><span class="fu">blocks</span><span class="op">(</span><span class="st">".discussion"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; $`01-rstudio-intro.Rmd`</span>
 <span class="co">#&gt; {xml_nodeset (0)}</span>
 <span class="co">#&gt; </span>
@@ -276,21 +275,20 @@
 <span class="co">#&gt; {xml_nodeset (0)}</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $`06-data-subsetting.Rmd`</span>
-<span class="co">#&gt; {xml_nodeset (0)}</span>
-</pre></div>
+<span class="co">#&gt; {xml_nodeset (0)}</span></pre></div>
 </div>
 <div id="lesson-manipulation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#lesson-manipulation" class="anchor"></a>Lesson Manipulation</h2>
 <p>You can isolate all of the specialized block quotes in the lesson with <code>isolate_blocks()</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="kw">fun</span> <span class="op">&lt;-</span> <span class="kw">rng</span><span class="op">$</span><span class="kw">episodes</span><span class="op">$</span><span class="kw">`10-functions.Rmd`</span>
-<span class="kw">fun</span><span class="op">$</span><span class="kw">body</span> <span class="op">%&gt;%</span> <span class="fu"><a href="http://xml2.r-lib.org/reference/xml_children.html">xml_length</a></span>()
+<span class="va">fun</span> <span class="op">&lt;-</span> <span class="va">rng</span><span class="op">$</span><span class="va">episodes</span><span class="op">$</span><span class="va">`10-functions.Rmd`</span>
+<span class="va">fun</span><span class="op">$</span><span class="va">body</span> <span class="op">%&gt;%</span> <span class="fu"><a href="http://xml2.r-lib.org/reference/xml_children.html">xml_length</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; [1] 72</span>
-<span class="kw">fun</span><span class="op">$</span><span class="fu">isolate_blocks</span>()<span class="op">$</span><span class="kw">body</span> <span class="op">%&gt;%</span> <span class="fu"><a href="http://xml2.r-lib.org/reference/xml_children.html">xml_length</a></span>()
+<span class="va">fun</span><span class="op">$</span><span class="fu">isolate_blocks</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">body</span> <span class="op">%&gt;%</span> <span class="fu"><a href="http://xml2.r-lib.org/reference/xml_children.html">xml_length</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; [1] 11</span>
-<span class="kw">fun</span><span class="op">$</span><span class="fu"><a href="https://rdrr.io/r/base/write.html">write</a></span>(<span class="kw">d</span>, format = <span class="st">"Rmd"</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/readLines.html">readLines</a></span>(<span class="kw">fs</span>::<span class="fu"><a href="http://fs.r-lib.org/reference/path.html">path</a></span>(<span class="kw">d</span>, <span class="kw">fun</span><span class="op">$</span><span class="kw">name</span>), n = <span class="fl">50</span>)[(<span class="fl">2</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="kw">fun</span><span class="op">$</span><span class="kw">yaml</span>))<span class="op">:</span><span class="fl">50</span>], sep = <span class="st">"\n"</span>)
+<span class="va">fun</span><span class="op">$</span><span class="fu">write</span><span class="op">(</span><span class="va">d</span>, format <span class="op">=</span> <span class="st">"Rmd"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html">readLines</a></span><span class="op">(</span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="http://fs.r-lib.org/reference/path.html">path</a></span><span class="op">(</span><span class="va">d</span>, <span class="va">fun</span><span class="op">$</span><span class="va">name</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">50</span><span class="op">)</span><span class="op">[</span><span class="op">(</span><span class="fl">2</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">fun</span><span class="op">$</span><span class="va">yaml</span><span class="op">)</span><span class="op">)</span><span class="op">:</span><span class="fl">50</span><span class="op">]</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span>
 <span class="co">#&gt; &gt; ## What is a function?</span>
 <span class="co">#&gt; &gt; </span>
 <span class="co">#&gt; &gt; Functions gather a sequence of operations into a whole, preserving it for</span>
@@ -319,15 +317,14 @@
 <span class="co">#&gt; &gt; ## Challenge 1</span>
 <span class="co">#&gt; &gt; </span>
 <span class="co">#&gt; &gt; Write a function called `kelvin_to_celsius()` that takes a temperature in</span>
-<span class="co">#&gt; &gt; Kelvin and returns that temperature in Celsius.</span>
-</pre></div>
+<span class="co">#&gt; &gt; Kelvin and returns that temperature in Celsius.</span></pre></div>
 </div>
 <div id="roxygen-style-blocks" class="section level2">
 <h2 class="hasAnchor">
 <a href="#roxygen-style-blocks" class="anchor"></a>Roxygen-style blocks</h2>
 <p>One experiment we are trying is to create a new formatting for challenge blocks that we think may be easier to write for folks. To convert lessons to this new format, we can use <code>$unblock()</code>, for example, here’s a challenge block that was reformatted to remove the</p>
 <div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/readLines.html">readLines</a></span>(<span class="kw">fs</span>::<span class="fu"><a href="http://fs.r-lib.org/reference/path.html">path</a></span>(<span class="kw">d</span>, <span class="kw">fun</span><span class="op">$</span><span class="kw">name</span>), n = <span class="fl">70</span>)[(<span class="fl">27</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="kw">fun</span><span class="op">$</span><span class="kw">yaml</span>))<span class="op">:</span><span class="fl">70</span>], sep = <span class="st">"\n"</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html">readLines</a></span><span class="op">(</span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="http://fs.r-lib.org/reference/path.html">path</a></span><span class="op">(</span><span class="va">d</span>, <span class="va">fun</span><span class="op">$</span><span class="va">name</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">70</span><span class="op">)</span><span class="op">[</span><span class="op">(</span><span class="fl">27</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">fun</span><span class="op">$</span><span class="va">yaml</span><span class="op">)</span><span class="op">)</span><span class="op">:</span><span class="fl">70</span><span class="op">]</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span>
 <span class="co">#&gt; &gt; ## Challenge 1</span>
 <span class="co">#&gt; &gt; </span>
 <span class="co">#&gt; &gt; Write a function called `kelvin_to_celsius()` that takes a temperature in</span>
@@ -352,17 +349,17 @@
 <span class="co">#&gt; &gt; ## Challenge 2</span>
 <span class="co">#&gt; &gt; </span>
 <span class="co">#&gt; &gt; Define the function to convert directly from Fahrenheit to Celsius,</span>
-<span class="kw">fun</span><span class="op">$</span><span class="kw">challenges</span>
+<span class="va">fun</span><span class="op">$</span><span class="va">challenges</span>
 <span class="co">#&gt; {xml_nodeset (5)}</span>
 <span class="co">#&gt; [1] &lt;block_quote sourcepos="86:1-105:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="86:3-86:16 ...</span>
 <span class="co">#&gt; [2] &lt;block_quote sourcepos="127:1-148:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="127:3-127 ...</span>
 <span class="co">#&gt; [3] &lt;block_quote sourcepos="226:1-250:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="226:3-226 ...</span>
 <span class="co">#&gt; [4] &lt;block_quote sourcepos="409:1-423:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="409:3-409 ...</span>
 <span class="co">#&gt; [5] &lt;block_quote sourcepos="426:1-462:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="426:3-426 ...</span>
-<span class="kw">fun</span><span class="op">$</span><span class="fu">unblock</span>(token = <span class="st">"#'"</span>)
-<span class="kw">fun</span><span class="op">$</span><span class="kw">challenges</span>
+<span class="va">fun</span><span class="op">$</span><span class="fu">unblock</span><span class="op">(</span>token <span class="op">=</span> <span class="st">"#'"</span><span class="op">)</span>
+<span class="va">fun</span><span class="op">$</span><span class="va">challenges</span>
 <span class="co">#&gt; {xml_nodeset (0)}</span>
-<span class="kw">fun</span><span class="op">$</span><span class="kw">code</span>
+<span class="va">fun</span><span class="op">$</span><span class="va">code</span>
 <span class="co">#&gt; {xml_nodeset (11)}</span>
 <span class="co">#&gt;  [1] &lt;code_block sourcepos="19:1-32:12" language="callout" name="&amp;quot;19:1-32:12&amp;quot;"&gt;#' ## Wh ...</span>
 <span class="co">#&gt;  [2] &lt;code_block sourcepos="64:1-70:12" language="callout" name="&amp;quot;64:1-70:12&amp;quot;"&gt;#' ## Ti ...</span>
@@ -375,7 +372,7 @@
 <span class="co">#&gt;  [9] &lt;code_block sourcepos="426:1-462:14" language="challenge" name="&amp;quot;426:1-462:14&amp;quot;"&gt;#' ...</span>
 <span class="co">#&gt; [10] &lt;code_block sourcepos="464:1-472:12" language="callout" name="&amp;quot;464:1-472:12&amp;quot;"&gt;#' # ...</span>
 <span class="co">#&gt; [11] &lt;code_block sourcepos="479:1-506:12" language="callout" name="&amp;quot;479:1-506:12&amp;quot;"&gt;#' # ...</span>
-<span class="kw">fun</span><span class="op">$</span><span class="kw">code</span>[<span class="fl">3</span>] <span class="op">%&gt;%</span> <span class="fu"><a href="http://xml2.r-lib.org/reference/xml_text.html">xml_text</a></span>() <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>()
+<span class="va">fun</span><span class="op">$</span><span class="va">code</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span> <span class="op">%&gt;%</span> <span class="fu"><a href="http://xml2.r-lib.org/reference/xml_text.html">xml_text</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; #' ## Challenge 1</span>
 <span class="co">#&gt; #' </span>
 <span class="co">#&gt; #' Write a function called `kelvin_to_celsius()` that takes a temperature in</span>
@@ -393,17 +390,16 @@
 <span class="co">#&gt;  celsius &lt;- temp - 273.15</span>
 <span class="co">#&gt;  return(celsius)</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; #' ```</span>
-</pre></div>
+<span class="co">#&gt; #' ```</span></pre></div>
 </div>
 <div id="reset" class="section level2">
 <h2 class="hasAnchor">
 <a href="#reset" class="anchor"></a>Reset</h2>
 <p>All changes can be reset to the initial state with the <code>$reset()</code> method:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="kw">fun</span><span class="op">$</span><span class="fu">reset</span>()
-<span class="kw">fun</span><span class="op">$</span><span class="fu"><a href="https://rdrr.io/r/base/write.html">write</a></span>(<span class="kw">d</span>, format = <span class="st">"Rmd"</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/readLines.html">readLines</a></span>(<span class="kw">fs</span>::<span class="fu"><a href="http://fs.r-lib.org/reference/path.html">path</a></span>(<span class="kw">d</span>, <span class="kw">fun</span><span class="op">$</span><span class="kw">name</span>), n = <span class="fl">50</span>)[(<span class="fl">2</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="kw">fun</span><span class="op">$</span><span class="kw">yaml</span>))<span class="op">:</span><span class="fl">50</span>], sep = <span class="st">"\n"</span>)
+<span class="va">fun</span><span class="op">$</span><span class="fu">reset</span><span class="op">(</span><span class="op">)</span>
+<span class="va">fun</span><span class="op">$</span><span class="fu">write</span><span class="op">(</span><span class="va">d</span>, format <span class="op">=</span> <span class="st">"Rmd"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html">readLines</a></span><span class="op">(</span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="http://fs.r-lib.org/reference/path.html">path</a></span><span class="op">(</span><span class="va">d</span>, <span class="va">fun</span><span class="op">$</span><span class="va">name</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">50</span><span class="op">)</span><span class="op">[</span><span class="op">(</span><span class="fl">2</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">fun</span><span class="op">$</span><span class="va">yaml</span><span class="op">)</span><span class="op">)</span><span class="op">:</span><span class="fl">50</span><span class="op">]</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span>
 <span class="co">#&gt; ```{r, include=FALSE}</span>
 <span class="co">#&gt; source("../bin/chunk-options.R")</span>
 <span class="co">#&gt; knitr_fig_path("10-")</span>
@@ -432,8 +428,7 @@
 <span class="co">#&gt; &gt; </span>
 <span class="co">#&gt; &gt; As the basic building block of most programming languages, user-defined</span>
 <span class="co">#&gt; &gt; functions constitute "programming" as much as any single abstraction can. If</span>
-<span class="co">#&gt; &gt; you have written a function, you are a computer programmer.</span>
-</pre></div>
+<span class="co">#&gt; &gt; you have written a function, you are a computer programmer.</span></pre></div>
 </div>
 </div>
   </div>

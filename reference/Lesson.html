@@ -178,7 +178,7 @@ files, default is <code>FALSE</code> for markdown files.</p></dd>
 <p><hr>
 <a id="method-blocks"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>blocks()</code></h3>
 <p>Gather all of the blocks from the lesson in a list of xml_nodeset objects</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Lesson</span><span class='op'>$</span><span class='fu'>blocks</span>(type = <span class='kw'>NULL</span>, level = <span class='fl'>0</span>, path = <span class='fl'>FALSE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>blocks</span><span class='op'>(</span>type <span class='op'>=</span> <span class='cn'>NULL</span>, level <span class='op'>=</span> <span class='fl'>0</span>, path <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -199,7 +199,7 @@ name of each episode.</p></dd>
 <p><hr>
 <a id="method-challenges"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>challenges()</code></h3>
 <p>Gather all of the challenges from the lesson in a list of xml_nodeset objects</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Lesson</span><span class='op'>$</span><span class='fu'>challenges</span>(path = <span class='fl'>FALSE</span>, graph = <span class='fl'>FALSE</span>, recurse = <span class='fl'>TRUE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>challenges</span><span class='op'>(</span>path <span class='op'>=</span> <span class='cn'>FALSE</span>, graph <span class='op'>=</span> <span class='cn'>FALSE</span>, recurse <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -218,7 +218,7 @@ solutions in the output. See <a href='Episode.html'>Episode</a> for more details
 <p><hr>
 <a id="method-solutions"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>solutions()</code></h3>
 <p>Gather all of the solutions from the lesson in a list of xml_nodeset objects</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Lesson</span><span class='op'>$</span><span class='fu'>solutions</span>(path = <span class='fl'>FALSE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>solutions</span><span class='op'>(</span>path <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -230,7 +230,7 @@ name of each episode.</p></dd>
 <p><hr>
 <a id="method-thin"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>thin()</code></h3>
 <p>Remove episodes that have no challenges</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Lesson</span><span class='op'>$</span><span class='fu'>thin</span>(verbose = <span class='fl'>TRUE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>thin</span><span class='op'>(</span>verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -241,41 +241,41 @@ episode removed is reported. Set to <code>FALSE</code> to remove this behavior.<
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>the Lesson object, invisibly</p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
-<p><div class="r example copy"></p><pre><span class='kw'>frg</span> <span class='op'>&lt;-</span> <span class='kw'>Lesson</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span>())
-<span class='kw'>frg</span><span class='op'>$</span><span class='fu'>thin</span>()
+<p><div class="r example copy"></p><pre><span class='va'>frg</span> <span class='op'>&lt;-</span> <span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>frg</span><span class='op'>$</span><span class='fu'>thin</span><span class='op'>(</span><span class='op'>)</span>
 </pre><p></div></p>
 
 <p><hr>
 <a id="method-reset"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>reset()</code></h3>
 <p>Re-read all Episodes from disk</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Lesson</span><span class='op'>$</span><span class='fu'>reset</span>()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>reset</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>the Lesson object</p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
-<p><div class="r example copy"></p><pre><span class='kw'>frg</span> <span class='op'>&lt;-</span> <span class='kw'>Lesson</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span>())
-<span class='kw'>frg</span><span class='op'>$</span><span class='kw'>episodes</span>[[<span class='fl'>1</span>]]<span class='op'>$</span><span class='kw'>body</span>
-<span class='kw'>frg</span><span class='op'>$</span><span class='fu'>isolate_blocks</span>()<span class='op'>$</span><span class='kw'>episodes</span>[[<span class='fl'>1</span>]]<span class='op'>$</span><span class='kw'>body</span> <span class='co'># empty</span>
-<span class='kw'>frg</span><span class='op'>$</span><span class='fu'>reset</span>()<span class='op'>$</span><span class='kw'>episodes</span>[[<span class='fl'>1</span>]]<span class='op'>$</span><span class='kw'>body</span> <span class='co'># reset</span>
+<p><div class="r example copy"></p><pre><span class='va'>frg</span> <span class='op'>&lt;-</span> <span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>frg</span><span class='op'>$</span><span class='va'>episodes</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>$</span><span class='va'>body</span>
+<span class='va'>frg</span><span class='op'>$</span><span class='fu'>isolate_blocks</span><span class='op'>(</span><span class='op'>)</span><span class='op'>$</span><span class='va'>episodes</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>$</span><span class='va'>body</span> <span class='co'># empty</span>
+<span class='va'>frg</span><span class='op'>$</span><span class='fu'>reset</span><span class='op'>(</span><span class='op'>)</span><span class='op'>$</span><span class='va'>episodes</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>$</span><span class='va'>body</span> <span class='co'># reset</span>
 </pre><p></div></p>
 
 <p><hr>
 <a id="method-isolate_blocks"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>isolate_blocks()</code></h3>
 <p>Remove all elements except for those within block quotes that have a
 kramdown tag. Note that this is a destructive process.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Lesson</span><span class='op'>$</span><span class='fu'>isolate_blocks</span>()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>isolate_blocks</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>the Episode object, invisibly</p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
-<p><div class="r example copy"></p><pre><span class='kw'>frg</span> <span class='op'>&lt;-</span> <span class='kw'>Lesson</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span>())
-<span class='kw'>frg</span><span class='op'>$</span><span class='fu'>isolate_blocks</span>()<span class='op'>$</span><span class='kw'>body</span> <span class='co'># only one challenge block_quote</span>
+<p><div class="r example copy"></p><pre><span class='va'>frg</span> <span class='op'>&lt;-</span> <span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>frg</span><span class='op'>$</span><span class='fu'>isolate_blocks</span><span class='op'>(</span><span class='op'>)</span><span class='op'>$</span><span class='va'>body</span> <span class='co'># only one challenge block_quote</span>
 </pre><p></div></p>
 
 <p><hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
 <p>create a new Lesson object from a directory</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Lesson</span><span class='op'>$</span><span class='fu'>new</span>(path = <span class='kw'>NULL</span>, rmd = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>path <span class='op'>=</span> <span class='cn'>NULL</span>, rmd <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -293,15 +293,15 @@ markdown files.</p></dd>
 <p>a new Lesson object that contains a list of <a href='Episode.html'>Episode</a> objects in
 <code>$episodes</code></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
-<p><div class="r example copy"></p><pre><span class='kw'>frg</span> <span class='op'>&lt;-</span> <span class='kw'>Lesson</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span>())
-<span class='kw'>frg</span><span class='op'>$</span><span class='kw'>path</span>
-<span class='kw'>frg</span><span class='op'>$</span><span class='kw'>episodes</span>
+<p><div class="r example copy"></p><pre><span class='va'>frg</span> <span class='op'>&lt;-</span> <span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>frg</span><span class='op'>$</span><span class='va'>path</span>
+<span class='va'>frg</span><span class='op'>$</span><span class='va'>episodes</span>
 </pre><p></div></p>
 
 <p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>Lesson</span><span class='op'>$</span><span class='fu'>clone</span>(deep = <span class='fl'>FALSE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -317,21 +317,21 @@ markdown files.</p></dd>
 <span class='co'>## Method `Lesson$thin`</span>
 <span class='co'>## ------------------------------------------------</span>
 
-<span class='kw'>frg</span> <span class='op'>&lt;-</span> <span class='kw'>Lesson</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span>())
-<span class='kw'>frg</span><span class='op'>$</span><span class='fu'>thin</span>()
+<span class='va'>frg</span> <span class='op'>&lt;-</span> <span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>frg</span><span class='op'>$</span><span class='fu'>thin</span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Removing 1 episode: 10-lunch.md</span></div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `Lesson$reset`</span>
 <span class='co'>## ------------------------------------------------</span>
 
-<span class='kw'>frg</span> <span class='op'>&lt;-</span> <span class='kw'>Lesson</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span>())
-<span class='kw'>frg</span><span class='op'>$</span><span class='kw'>episodes</span>[[<span class='fl'>1</span>]]<span class='op'>$</span><span class='kw'>body</span>
+<span class='va'>frg</span> <span class='op'>&lt;-</span> <span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>frg</span><span class='op'>$</span><span class='va'>episodes</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>$</span><span class='va'>body</span>
 </div><div class='output co'>#&gt; {xml_document}
 #&gt; &lt;document sourcepos="1:1-4:131" xmlns="http://commonmark.org/xml/1.0"&gt;
 #&gt; [1] &lt;paragraph sourcepos="1:1-1:49"&gt;\n  &lt;text sourcepos="1:1-1:49" xml:space= ...
-#&gt; [2] &lt;list sourcepos="2:1-4:131" type="bullet" tight="true"&gt;\n  &lt;item sourcepo ...</div><div class='input'><span class='kw'>frg</span><span class='op'>$</span><span class='fu'>isolate_blocks</span>()<span class='op'>$</span><span class='kw'>episodes</span>[[<span class='fl'>1</span>]]<span class='op'>$</span><span class='kw'>body</span> <span class='co'># empty</span>
+#&gt; [2] &lt;list sourcepos="2:1-4:131" type="bullet" tight="true"&gt;\n  &lt;item sourcepo ...</div><div class='input'><span class='va'>frg</span><span class='op'>$</span><span class='fu'>isolate_blocks</span><span class='op'>(</span><span class='op'>)</span><span class='op'>$</span><span class='va'>episodes</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>$</span><span class='va'>body</span> <span class='co'># empty</span>
 </div><div class='output co'>#&gt; {xml_document}
-#&gt; &lt;document sourcepos="1:1-4:131" xmlns="http://commonmark.org/xml/1.0"&gt;</div><div class='input'><span class='kw'>frg</span><span class='op'>$</span><span class='fu'>reset</span>()<span class='op'>$</span><span class='kw'>episodes</span>[[<span class='fl'>1</span>]]<span class='op'>$</span><span class='kw'>body</span> <span class='co'># reset</span>
+#&gt; &lt;document sourcepos="1:1-4:131" xmlns="http://commonmark.org/xml/1.0"&gt;</div><div class='input'><span class='va'>frg</span><span class='op'>$</span><span class='fu'>reset</span><span class='op'>(</span><span class='op'>)</span><span class='op'>$</span><span class='va'>episodes</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>$</span><span class='va'>body</span> <span class='co'># reset</span>
 </div><div class='output co'>#&gt; {xml_document}
 #&gt; &lt;document sourcepos="1:1-4:131" xmlns="http://commonmark.org/xml/1.0"&gt;
 #&gt; [1] &lt;paragraph sourcepos="1:1-1:49"&gt;\n  &lt;text sourcepos="1:1-1:49" xml:space= ...
@@ -340,16 +340,16 @@ markdown files.</p></dd>
 <span class='co'>## Method `Lesson$isolate_blocks`</span>
 <span class='co'>## ------------------------------------------------</span>
 
-<span class='kw'>frg</span> <span class='op'>&lt;-</span> <span class='kw'>Lesson</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span>())
-<span class='kw'>frg</span><span class='op'>$</span><span class='fu'>isolate_blocks</span>()<span class='op'>$</span><span class='kw'>body</span> <span class='co'># only one challenge block_quote</span>
+<span class='va'>frg</span> <span class='op'>&lt;-</span> <span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>frg</span><span class='op'>$</span><span class='fu'>isolate_blocks</span><span class='op'>(</span><span class='op'>)</span><span class='op'>$</span><span class='va'>body</span> <span class='co'># only one challenge block_quote</span>
 </div><div class='output co'>#&gt; NULL</div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `Lesson$new`</span>
 <span class='co'>## ------------------------------------------------</span>
 
-<span class='kw'>frg</span> <span class='op'>&lt;-</span> <span class='kw'>Lesson</span><span class='op'>$</span><span class='fu'>new</span>(<span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span>())
-<span class='kw'>frg</span><span class='op'>$</span><span class='kw'>path</span>
-</div><div class='output co'>#&gt; [1] "/Users/runner/work/_temp/Library/pegboard/lesson-fragment"</div><div class='input'><span class='kw'>frg</span><span class='op'>$</span><span class='kw'>episodes</span>
+<span class='va'>frg</span> <span class='op'>&lt;-</span> <span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>frg</span><span class='op'>$</span><span class='va'>path</span>
+</div><div class='output co'>#&gt; [1] "/Users/runner/work/_temp/Library/pegboard/lesson-fragment"</div><div class='input'><span class='va'>frg</span><span class='op'>$</span><span class='va'>episodes</span>
 </div><div class='output co'>#&gt; $`10-lunch.md`
 #&gt; &lt;Episode&gt;
 #&gt;   Public:

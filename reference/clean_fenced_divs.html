@@ -136,7 +136,7 @@ to track the pairs. This separates them into different paragraph elements so
 that we can track them</p>
     </div>
 
-    <pre class="usage"><span class='fu'>clean_fenced_divs</span>(<span class='kw'>body</span>)</pre>
+    <pre class="usage"><span class='fu'>clean_fenced_divs</span><span class='op'>(</span><span class='va'>body</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -160,7 +160,7 @@ that we can track them</p>
 <code>clean_fenced_divs()</code> for cleaning cluttered pandoc div tags</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>txt</span> <span class='op'>&lt;-</span> <span class='st'>"::::::: challenge
+    <pre class="examples"><div class='input'><span class='va'>txt</span> <span class='op'>&lt;-</span> <span class='st'>"::::::: challenge
 ## Challenge
 
 do that challenging thing.
@@ -191,10 +191,10 @@ What if we include some `:::` code in here or ::: like this
 ## Good divs
 
 :::"</span>
-<span class='kw'>f</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span>()
-<span class='fu'><a href='https://rdrr.io/r/base/writeLines.html'>writeLines</a></span>(<span class='kw'>txt</span>, <span class='kw'>f</span>)
-<span class='kw'>ex</span> <span class='op'>&lt;-</span> <span class='kw'>tinkr</span>::<span class='fu'><a href='https://rdrr.io/pkg/tinkr/man/to_xml.html'>to_xml</a></span>(<span class='kw'>f</span>, sourcepos = <span class='fl'>TRUE</span>)
-<span class='kw'>ex</span><span class='op'>$</span><span class='kw'>body</span>
+<span class='va'>f</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/writeLines.html'>writeLines</a></span><span class='op'>(</span><span class='va'>txt</span>, <span class='va'>f</span><span class='op'>)</span>
+<span class='va'>ex</span> <span class='op'>&lt;-</span> <span class='fu'>tinkr</span><span class='fu'>::</span><span class='fu'><a href='https://docs.ropensci.org/tinkr/reference/to_xml.html'>to_xml</a></span><span class='op'>(</span><span class='va'>f</span>, sourcepos <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>ex</span><span class='op'>$</span><span class='va'>body</span>
 </div><div class='output co'>#&gt; {xml_document}
 #&gt; &lt;document sourcepos="1:1-31:3" xmlns="http://commonmark.org/xml/1.0"&gt;
 #&gt;  [1] &lt;paragraph sourcepos="1:1-1:17"&gt;\n  &lt;text sourcepos="1:1-1:17" xml:space ...
@@ -210,15 +210,15 @@ What if we include some `:::` code in here or ::: like this
 #&gt; [11] &lt;paragraph sourcepos="24:1-25:5"&gt;\n  &lt;text sourcepos="24:1-24:5" xml:spa ...
 #&gt; [12] &lt;paragraph sourcepos="27:1-27:8"&gt;\n  &lt;text sourcepos="27:1-27:8" xml:spa ...
 #&gt; [13] &lt;heading sourcepos="29:1-29:12" level="2"&gt;\n  &lt;text sourcepos="29:4-29:1 ...
-#&gt; [14] &lt;paragraph sourcepos="31:1-31:3"&gt;\n  &lt;text sourcepos="31:1-31:3" xml:spa ...</div><div class='input'><span class='kw'>predicate</span> <span class='op'>&lt;-</span> <span class='st'>".//d1:paragraph[d1:text[starts-with(text(), ':::')]]"</span>
-<span class='kw'>xml2</span>::<span class='fu'><a href='http://xml2.r-lib.org/reference/xml_text.html'>xml_text</a></span>(<span class='kw'>xml2</span>::<span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span>(<span class='kw'>ex</span><span class='op'>$</span><span class='kw'>body</span>, <span class='kw'>predicate</span>))
+#&gt; [14] &lt;paragraph sourcepos="31:1-31:3"&gt;\n  &lt;text sourcepos="31:1-31:3" xml:spa ...</div><div class='input'><span class='va'>predicate</span> <span class='op'>&lt;-</span> <span class='st'>".//d1:paragraph[d1:text[starts-with(text(), ':::')]]"</span>
+<span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_text.html'>xml_text</a></span><span class='op'>(</span><span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span><span class='op'>(</span><span class='va'>ex</span><span class='op'>$</span><span class='va'>body</span>, <span class='va'>predicate</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "::::::: challenge"                                                     
 #&gt; [2] "::::: solution ::::"                                                   
 #&gt; [3] "::::::: solution ::::::::We just have to try harder and use &lt;div&gt; tags"
 #&gt; [4] "::::::::::"                                                            
 #&gt; [5] "::: good"                                                              
-#&gt; [6] ":::"                                                                   </div><div class='input'><span class='kw'>pegboard</span>:::<span class='fu'>clean_fenced_divs</span>(<span class='kw'>ex</span><span class='op'>$</span><span class='kw'>body</span>)
-<span class='kw'>xml2</span>::<span class='fu'><a href='http://xml2.r-lib.org/reference/xml_text.html'>xml_text</a></span>(<span class='kw'>xml2</span>::<span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span>(<span class='kw'>ex</span><span class='op'>$</span><span class='kw'>body</span>, <span class='kw'>predicate</span>))
+#&gt; [6] ":::"                                                                   </div><div class='input'><span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>clean_fenced_divs</span><span class='op'>(</span><span class='va'>ex</span><span class='op'>$</span><span class='va'>body</span><span class='op'>)</span>
+<span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_text.html'>xml_text</a></span><span class='op'>(</span><span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span><span class='op'>(</span><span class='va'>ex</span><span class='op'>$</span><span class='va'>body</span>, <span class='va'>predicate</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "::::::: challenge"     "::::: solution ::::"   "::::"                 
 #&gt; [4] "::: solution ::::::::" ":::::"                 ":::::"                
 #&gt; [7] "::: good"              ":::"                  </div></pre>
