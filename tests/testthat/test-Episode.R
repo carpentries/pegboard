@@ -186,21 +186,7 @@ test_that("yaml items can be moved to the text (no dovetail)", {
   expect_equal(n_code_blocks, length(e$code))
   expect_equal(e$questions, yml[["questions"]])
 
-  # The question block is moved to the top
-  expect_length(xml2::xml_find_all(e$body, ".//d1:html_block"), 2)
-  expect_match(
-    xml2::xml_text(xml2::xml_find_all(e$body, "./*[@dtag]")[1]),
-    ":::::::::: questions",
-    fixed = TRUE
-  )
-  expect_match(
-    xml2::xml_text(xml2::xml_find_all(e$body, "./*[@dtag]")[2]),
-    "::::::::::::::::::::",
-    fixed = TRUE
-  )
-  # The first div block consists of a heading and a list.
-  expect_equal(xml2::xml_name(e$get_divs()[[1]]), c("heading", "list"))
-  expect_equal(xml2::xml_text(e$get_divs()[[1]][[1]]), "Questions")
+  expect_moved_yaml(e, "questions", 1L)
 
   # question block is removed from yaml
   yml <- e$get_yaml()
@@ -211,41 +197,19 @@ test_that("yaml items can be moved to the text (no dovetail)", {
   expect_equal(length(e$get_divs()), 2)
   expect_equal(n_code_blocks, length(e$code))
   expect_equal(e$objectives, yml[["objectives"]])
-  expect_length(xml2::xml_find_all(e$body, ".//d1:html_block"), 2)
-  expect_match(
-    xml2::xml_text(xml2::xml_find_all(e$body, "./*[@dtag]")[1]),
-    ":::::::::: objectives"
-  )
-  expect_match(
-    xml2::xml_text(xml2::xml_find_all(e$body, "./*[@dtag]")[2]),
-    "::::::::::::::::::::",
-    fixed = TRUE
-  )
-  expect_equal(xml2::xml_name(e$get_divs()[[1]]), c("heading", "list"))
-  expect_equal(xml2::xml_text(e$get_divs()[[1]][[1]]), "Objectives")
+  
+  expect_moved_yaml(e, "objectives", 1L)
 
   yml <- e$get_yaml()
   expect_equal(e$keypoints, yml[["keypoints"]])
-
   expect_named(yml, c("title", "teaching", "exercises", "keypoints"))
 
   e$move_keypoints()$label_divs()
   expect_equal(length(e$get_divs()), 3)
   expect_equal(n_code_blocks, length(e$code))
   expect_equal(e$keypoints, yml$keypoints) 
-  expect_length(xml2::xml_find_all(e$body, ".//d1:html_block"), 2)
-  expect_match(
-    xml2::xml_text(xml2::xml_find_all(e$body, "./*[@dtag]")[5]),
-    ":::::::::: keypoints"
-  )
-  expect_match(
-    xml2::xml_text(xml2::xml_find_all(e$body, "./*[@dtag]")[6]),
-    "::::::::::::::::::::",
-    fixed = TRUE
-  )
-
-  expect_equal(xml2::xml_name(e$get_divs()[[3]]), c("heading", "list"))
-  expect_equal(xml2::xml_text(e$get_divs()[[3]][[1]]), "Keypoints")
+  
+  expect_moved_yaml(e, "keypoints", 3L)
 
   yml <- e$get_yaml()
   expect_named(yml, c("title", "teaching", "exercises"))
@@ -295,8 +259,9 @@ test_that("blocks can be converted to div blocks", {
   html <- xml2::xml_text(html)
   expect_length(html, 2)
   expect_match(html, "img")
-  divs <- xml2::xml_find_all(e$reset()$unblock()$body, "./*[@dtag]")
-  divs <- xml2::xml_text(divs)
+  ub <- e$reset()$unblock()$body
+  divs <- xml2::xml_find_all(ub, "./pb:dtag", get_ns(ub))
+  divs <- xml2::xml_attr(divs, "label")
   expect_match(divs[c(1, 5, 9)], "challenge")
   expect_match(divs[c(2, 6, 10)], "solution")
 

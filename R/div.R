@@ -97,9 +97,12 @@ replace_with_div <- function(block) {
 #' pegboard:::get_divs(loop$body, 'challenge') # all challenge blocks
 #' pegboard:::get_divs(loop$body, 'solution') # all solution blocks
 get_divs <- function(body, type = NULL){
-  ns    <- NS(body)
+  ns    <- get_ns(body)
+  if (!any(ns == "pegboard")) {
+    return(list())
+  }
   # 1. Find tags
-  nodes <- xml2::xml_find_all(body, ".//pb:dtag", get_ns(body))
+  nodes <- xml2::xml_find_all(body, ".//pb:dtag", ns)
   tags  <- xml2::xml_attr(nodes, "label")
   # 2. Get the first tag of each pair
   start <- !duplicated(tags)
@@ -178,10 +181,10 @@ label_div_tags <- function(body) {
   # Clean up the div tags 
   clear_div_labels(body)
   any_divs <- clean_div_tags(body)
-  if (!any_divs) {
+  nodes  <- find_div_tags(body)
+  if (!any_divs && length(nodes) == 0) {
     return(invisible(body))
   }
-  nodes  <- find_div_tags(body)
   divtab <- make_div_table(nodes)
   purrr::walk2(nodes, divtab, add_pegboard_nodes)
   invisible(body)
@@ -231,21 +234,24 @@ clear_div_labels <- function(body) {
 make_div_table <- function(nodes) {
   types <- xml2::xml_name(nodes)
   # list to store parsed nodes in
-  divs <- vector(mode = "list", length = length(types))
-  fdivs <- types == "paragraph"
+  divs        <- vector(mode = "list", length = length(types))
+  fenced_divs <- types == "paragraph"
   
-  # Convert text to labels and add the attributes to the nodes
-  if (any(fdivs)) {
+  # Grab all the fenced div text, which consists of finding the text nodes that
+  # only have the div tags... pretty straightforward
+  if (any(fenced_divs)) {
     pblock <- "starts-with(text(), ':::')"
     chills <- glue::glue(".//node()[{pblock}]")
-    chills <- purrr::map(nodes[fdivs], ~xml2::xml_find_all(.x, chills))
-    divs[fdivs] <- purrr::map(chills, xml2::xml_text)
-  } 
-  if (any(!fdivs)) {
-    ndivs <- xml2::xml_text(nodes[!fdivs])
+    chills <- purrr::map(nodes[fenced_divs], ~xml2::xml_find_all(.x, chills))
+    divs[fenced_divs] <- purrr::map(chills, xml2::xml_text)
+  }
+  # Grab all of the native div text, stripping out any content that happens to
+  # be between div tags (it's happened before, even after cleaning). 
+  if (any(!fenced_divs)) {
+    ndivs <- xml2::xml_text(nodes[!fenced_divs])
     # Clean content between divs (we don't particularly care about them
     ndivs <- gsub("[>]([^<]|(?<=[`])[<])+?([<]?)", ">\n\\2", ndivs, perl = TRUE)
-    divs[!fdivs] <- strsplit(trimws(ndivs), "\n")
+    divs[!fenced_divs] <- strsplit(trimws(ndivs), "\n")
   }
   res <- data.frame(
     node = rep(seq_along(divs), lengths(divs)),
