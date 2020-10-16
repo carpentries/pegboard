@@ -39,7 +39,8 @@ Suggests:
     tidygraph,
     ggraph,
     ggplot2,
-    gt
+    gt,
+    rlang
 Remotes:
   ropenscilabs/tinkr
 Encoding: UTF-8

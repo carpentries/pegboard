@@ -25,7 +25,50 @@ In order to mark the pairs, we need to account for what tags exist in the
 nodes. This function creates that
 }
 \examples{
-ex <- tinkr::to_xml(file.path(test_path(), "examples", "div-mix.txt"), sourcepos = TRUE)
+txt <- "# Example with a mix of div tags
+
+> PLEASE NEVER DO THE LESSONS THIS WAY
+>
+> I AM LITERALLY JUST TESTING A TERRIBLE EXAMPLE.
+
+--------------------------------------------------------------------------------
+
+<div class='challenge'>
+## Challenge
+
+do that challenging thing.
+
+```{r}
+cat('it might be challenging to do this')
+```
+:::: solution
+```{r}
+It's not that challenging
+```
+:::
+<div class='solution'>
+We just have to try harder and use `<div>` tags
+
+:::::: callout
+```{r}
+cat('better faster stronger with <div>')
+```
+::::
+:::::: discussion
+<img src='https://carpentries.org/logo.svg'/>
+:::::
+</div>
+</div>
+
+<div class='good'>
+
+## Good divs
+
+</div>
+" 
+tmp <- tempfile()
+writeLines(txt, tmp)
+ex <- tinkr::to_xml(tmp)
 pegboard:::clean_div_tags(ex$body)
 nodes <- pegboard:::find_div_tags(ex$body)
 divs  <- pegboard:::make_div_table(nodes)

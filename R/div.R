@@ -139,11 +139,13 @@ get_divs <- function(body, type = NULL){
 #' loop$body # a full document with block quotes and code blocks, etc
 #' loop$unblock() # removing blockquotes and replacing with div tags
 #' # find all the div tags
-#' tags <- xml2::xml_text(xml2::xml_find_all(loop$body, ".//@dtag"))
+#' ns <- pegboard:::get_ns(loop$body)
+#' tags <- xml2::xml_find_all(loop$body, ".//pb:dtag", ns)
+#' tags <- xml2::xml_attr(tags, "label")
 #' tags
 #' # grab the contents of the first div tag
-#' pegboard:::find_between_tags(tags, loop$body, pegboard:::NS(loop$body))
-find_between_tags <- function(tag, body, ns, find = "html_block[@dtag='{tag}']") {
+#' pegboard:::find_between_tags(tags[[1]], loop$body)
+find_between_tags <- function(tag, body, ns = "pb", find = "dtag[@label='{tag}']") {
   block  <- glue::glue("{ns}:{glue::glue(find)}")
   after  <- "following-sibling::"
   before <- "preceding-sibling::"
@@ -172,7 +174,50 @@ find_between_tags <- function(tag, body, ns, find = "html_block[@dtag='{tag}']")
 #' [make_div_table()] for creating the div table used to make the tags
 #' @rdname div_labels
 #' @examples
-#' ex <- tinkr::to_xml(file.path(test_path(), "examples", "div-mix.txt"), sourcepos = TRUE)
+#' txt <- "# Example with a mix of div tags
+#' 
+#' > PLEASE NEVER DO THE LESSONS THIS WAY
+#' >
+#' > I AM LITERALLY JUST TESTING A TERRIBLE EXAMPLE.
+#' 
+#' --------------------------------------------------------------------------------
+#' 
+#' <div class='challenge'>
+#' ## Challenge
+#' 
+#' do that challenging thing.
+#' 
+#' ```{r}
+#' cat('it might be challenging to do this')
+#' ```
+#' :::: solution
+#' ```{r}
+#' It's not that challenging
+#' ```
+#' :::
+#' <div class='solution'>
+#' We just have to try harder and use `<div>` tags
+#' 
+#' :::::: callout
+#' ```{r}
+#' cat('better faster stronger with <div>')
+#' ```
+#' ::::
+#' :::::: discussion
+#' <img src='https://carpentries.org/logo.svg'/>
+#' :::::
+#' </div>
+#' </div>
+#' 
+#' <div class='good'>
+#' 
+#' ## Good divs
+#' 
+#' </div>
+#' " 
+#' tmp <- tempfile()
+#' writeLines(txt, tmp)
+#' ex <- tinkr::to_xml(tmp)
 #' ex$body
 #' pegboard:::label_div_tags(ex$body)
 #' ex$body
@@ -226,7 +271,50 @@ clear_div_labels <- function(body) {
 #' @keywords internal
 #' @seealso [find_div_tags()], [find_div_pairs()]
 #' @examples
-#' ex <- tinkr::to_xml(file.path(test_path(), "examples", "div-mix.txt"), sourcepos = TRUE)
+#' txt <- "# Example with a mix of div tags
+#' 
+#' > PLEASE NEVER DO THE LESSONS THIS WAY
+#' >
+#' > I AM LITERALLY JUST TESTING A TERRIBLE EXAMPLE.
+#' 
+#' --------------------------------------------------------------------------------
+#' 
+#' <div class='challenge'>
+#' ## Challenge
+#' 
+#' do that challenging thing.
+#' 
+#' ```{r}
+#' cat('it might be challenging to do this')
+#' ```
+#' :::: solution
+#' ```{r}
+#' It's not that challenging
+#' ```
+#' :::
+#' <div class='solution'>
+#' We just have to try harder and use `<div>` tags
+#' 
+#' :::::: callout
+#' ```{r}
+#' cat('better faster stronger with <div>')
+#' ```
+#' ::::
+#' :::::: discussion
+#' <img src='https://carpentries.org/logo.svg'/>
+#' :::::
+#' </div>
+#' </div>
+#' 
+#' <div class='good'>
+#' 
+#' ## Good divs
+#' 
+#' </div>
+#' " 
+#' tmp <- tempfile()
+#' writeLines(txt, tmp)
+#' ex <- tinkr::to_xml(tmp)
 #' pegboard:::clean_div_tags(ex$body)
 #' nodes <- pegboard:::find_div_tags(ex$body)
 #' divs  <- pegboard:::make_div_table(nodes)
