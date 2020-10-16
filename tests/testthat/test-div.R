@@ -130,3 +130,4 @@ test_that("a mix of div tags can be read", {
   expect_match(exc, ":::\n\n<div class='solution'>", fixed = TRUE)
 
 })
+

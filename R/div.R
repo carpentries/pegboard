@@ -28,7 +28,6 @@ make_div <- function(what, fenced = TRUE) {
   xml2::read_xml(div)
 }
 
-
 #' Replace a blockquote with a div tag
 #'
 #' This modifies a document to replace a blockquote element with a div element
@@ -151,10 +150,14 @@ find_between_tags <- function(tag, body, ns, find = "html_block[@dtag='{tag}']")
   xml2::xml_find_all(body, xpath, get_ns(body))
 }
 
-#' Add labels to div tags in the form of a "dtag" attribute
+#' Add labels to div tags in the form of a "dtag" node with a paired "label"
+#' attribute.
 #' 
 #' @param body an xml document
-#' @return the document, invisibly
+#' @return 
+#'   - `label_div_tags()`: the document, modified
+#'   - `clear_div_labels()`: the document, modified
+#'   - `find_div_tags()`: a node list
 #' @keywords internal
 #' @seealso [get_divs()] for finding labelled tags, 
 #' [find_between_tags()] to extract things between the tags, 
@@ -163,35 +166,109 @@ find_between_tags <- function(tag, body, ns, find = "html_block[@dtag='{tag}']")
 #' [replace_with_div()] for replacing blockquotes with div tags
 #' [find_div_pairs()] for connecting open and closing tags
 #' [clean_fenced_divs()] for cleaning cluttered pandoc div tags
+#' [make_div_table()] for creating the div table used to make the tags
+#' @rdname div_labels
+#' @examples
+#' ex <- tinkr::to_xml(file.path(test_path(), "examples", "div-mix.txt"), sourcepos = TRUE)
+#' ex$body
+#' pegboard:::label_div_tags(ex$body)
+#' ex$body
+#' pegboard:::clear_div_labels(ex$body)
 label_div_tags <- function(body) {
   # Clean up the div tags 
-  # body   <- clean_fenced_divs(body)
-  body   <- clean_div_tags(body)
-  ns     <- "md" # NS(body, )
+  clear_div_labels(body)
+  any_divs <- clean_div_tags(body)
+  if (!any_divs) {
+    return(invisible(body))
+  }
+  nodes  <- find_div_tags(body)
+  divtab <- make_div_table(nodes)
+  purrr::walk2(nodes, divtab, add_pegboard_nodes)
+  invisible(body)
+}
+
+#' @rdname div_labels
+find_div_tags <- function(body) {
+  ns     <- "md"
   # Find all div tags in html blocks or fenced div tags in paragraphs
   pblock <- "starts-with(text(), ':::')"
   divs   <- ".//{ns}:html_block[contains(text(), '<div') or contains(text(), '</div')]"
   ndiv   <- ".//{ns}:paragraph[{ns}:text[{pblock}]]"
   xpath  <- glue::glue("{glue::glue(divs)} | {glue::glue(ndiv)}")
   nodes  <- xml2::xml_find_all(body, xpath, get_ns(body))
-  # TODO: There seems to be a problem with 
-  # https://github.com/swcarpentry/python-novice-gapminder/blame/gh-pages/_episodes/01-run-quit.md
-  # and fencepost errors finding the last two closing div tags
-
-  # Convert text to labels and add the attributes to the nodes
-  # TODO: find better way to parse div and pandoc divs
-  if (all(xml2::xml_name(nodes) == "paragraph")) {
-    chills <- glue::glue(".//node()[{pblock}]")
-    chills <- purrr::map(nodes, ~xml2::xml_find_all(.x, chills))
-    ntext  <- purrr::map(chills, xml2::xml_text)
-  } else {
-    ntext  <- xml2::xml_text(nodes)
-  }
-  divtab <- make_div_table(ntext, is.list(ntext))
-  purrr::walk2(nodes, divtab, add_pegboard_nodes)
-  invisible(body)
+  nodes
 }
 
+#' @rdname div_labels
+clear_div_labels <- function(body) {
+  ns <- get_ns(body)
+  if (!any(ns == "pegboard")) return(invisible(NULL))
+  dtags <- xml2::xml_find_all(body, ".//pb:dtag", get_ns(body))
+  purrr::walk(dtags, xml2::xml_remove)
+}
+
+#' Create a data frame describing the divs associated with nodes.
+#'
+#' Native and fenced divs may have several tags grouped in a single element.
+#' In order to mark the pairs, we need to account for what tags exist in the
+#' nodes. This function creates that 
+#' 
+#' @param nodes a nodelist containing native div and fenced div tags in 
+#'   `html_block` or `paragraphs`.
+#' @return a list of data frames for each node with the following columns:
+#'   - node: numeric index of the node
+#'   - div: the text of the individual div element, stripped of context
+#'   - label: label of the div pair (div-label-class)
+#'   - pos: position the label will be relative to its associated node
+#' @keywords internal
+#' @seealso [find_div_tags()], [find_div_pairs()]
+#' @examples
+#' ex <- tinkr::to_xml(file.path(test_path(), "examples", "div-mix.txt"), sourcepos = TRUE)
+#' pegboard:::clean_div_tags(ex$body)
+#' nodes <- pegboard:::find_div_tags(ex$body)
+#' divs  <- pegboard:::make_div_table(nodes)
+#' do.call("rbind", divs)
+make_div_table <- function(nodes) {
+  types <- xml2::xml_name(nodes)
+  # list to store parsed nodes in
+  divs <- vector(mode = "list", length = length(types))
+  fdivs <- types == "paragraph"
+  
+  # Convert text to labels and add the attributes to the nodes
+  if (any(fdivs)) {
+    pblock <- "starts-with(text(), ':::')"
+    chills <- glue::glue(".//node()[{pblock}]")
+    chills <- purrr::map(nodes[fdivs], ~xml2::xml_find_all(.x, chills))
+    divs[fdivs] <- purrr::map(chills, xml2::xml_text)
+  } 
+  if (any(!fdivs)) {
+    ndivs <- xml2::xml_text(nodes[!fdivs])
+    # Clean content between divs (we don't particularly care about them
+    ndivs <- gsub("[>]([^<]|(?<=[`])[<])+?([<]?)", ">\n\\2", ndivs, perl = TRUE)
+    divs[!fdivs] <- strsplit(trimws(ndivs), "\n")
+  }
+  res <- data.frame(
+    node = rep(seq_along(divs), lengths(divs)),
+    div  = unlist(divs, use.names = FALSE),
+    stringsAsFactors = FALSE
+  )
+  labels    <- find_div_pairs(res$div)
+  # find the divs that are closing tags
+  ends      <- duplicated(labels)
+  # create the label by querying the class
+  types     <- get_div_class(res$div)[!ends]
+  res$label <- glue::glue("div-{labels}-{types[labels]}")
+  # tell us if the tag should go before or after the node
+  res$pos   <- ifelse(ends, "after", "before")
+  split(res, res$node)
+}
+
+#' Add a pegboard node before or after a node
+#' 
+#' @keywords internal
+#' @param node a single node
+#' @param df a data frame generated from [make_div_table()]
+#' @return NULL, invisibly
 add_pegboard_nodes <- function(node, df) {
   parents <- xml2::xml_parents(node)
   if (length(parents) > 1L) {
@@ -209,34 +286,12 @@ add_pegboard_nodes <- function(node, df) {
   invisible(NULL)
 }
 
-make_div_table <- function(divs, is_list = FALSE) {
-  if (!is_list) {
-    # Clean content between divs (we don't particularly care about them
-    divs <- trimws(gsub("[>]([^<]|(?<=[`])[<])+?([<]?)", ">\n\\2", divs, perl = TRUE))
-    singletons <- strsplit(divs, "\n")
-  } else {
-    singletons <- divs
-  }
-  res <- data.frame(
-    node = rep(seq_along(divs), lengths(singletons)),
-    div  = unlist(singletons, use.names = FALSE),
-    stringsAsFactors = FALSE
-  )
-  labels    <- find_div_pairs(res$div)
-  # find the divs that are closing tags
-  ends      <- duplicated(labels)
-  # create the label by querying the class
-  types     <- get_div_class(res$div)[!ends]
-  res$label <- glue::glue("div-{labels}-{types[labels]}")
-  # tell us if the tag should go before or after the node
-  res$pos   <- ifelse(ends, "after", "before")
-  split(res, res$node)
-}
 
 #' Clean the div tags from an xml document
 #'
 #' @param body an xml document
-#' @return an xml document
+#' @return `TRUE` if divs were detected and cleaned, `FALSE` if there were no
+#'   divs.
 #' @seealso [get_divs()] for finding labelled tags, 
 #' [find_between_tags()] to extract things between the tags, 
 #' [label_div_tags()] for labelling div tags,
@@ -322,7 +377,12 @@ make_div_table <- function(divs, is_list = FALSE) {
 #' xml2::xml_find_all(ex$body, ".//d1:html_block[contains(text(), 'div')]")
 clean_div_tags <- function(body) {
   # Find all the multi-div tags and replace newlines with double newlines
-  d   <- xml2::xml_find_all(body, ".//d1:html_block[contains(text(), 'div')]")
+  ns  <- get_ns(body)
+  d   <- xml2::xml_find_all(body, ".//md:html_block[contains(text(), 'div')]", ns)
+  if (length(d) == 0) {
+    return(FALSE)
+  }
+
   # regex checks for closed divs with something after them
   d   <- d[grepl('div(.+?)?[>]\n ?.', xml2::xml_text(d))]
   txt <- gsub("[>]\n(?!$)", ">\n\n", xml2::xml_text(d), perl = TRUE)
@@ -337,9 +397,10 @@ clean_div_tags <- function(body) {
     walk(nodes, ~xml2::xml_add_sibling(d[[i]], .x, .where = "before"))
     xml2::xml_remove(d[[i]])
   }
-  invisible(body)
+  return(TRUE)
 }
 
+#nocov start
 #' Clean pandoc fenced divs and place them in their own paragraph elements
 #'
 #' Sometimes pandoc fenced divs are bunched together, which makes it difficult
@@ -349,6 +410,7 @@ clean_div_tags <- function(body) {
 #' @param body an xml document
 #' @return an xml document
 #' @keywords internal
+#' @note DEPRECATED.
 #' @seealso [get_divs()] for finding labelled tags, 
 #' [find_between_tags()] to extract things between the tags, 
 #' [label_div_tags()] for labelling div tags,
@@ -472,6 +534,7 @@ clean_fenced_divs <- function(body) {
   }
   return(invisible(body))
 }
+#nocov end
 
 get_div_class <- function(div) {
   trimws(sub('^(.+?class[=]["\']|[:]{3,}?)([- a-zA-Z0-9]+?)(["\'].+?|[:]*?)$', '\\2', div))

@@ -2,18 +2,37 @@
 % Please edit documentation in R/div.R
 \name{label_div_tags}
 \alias{label_div_tags}
-\title{Add labels to div tags in the form of a "dtag" attribute}
+\alias{find_div_tags}
+\alias{clear_div_labels}
+\title{Add labels to div tags in the form of a "dtag" node with a paired "label"
+attribute.}
 \usage{
 label_div_tags(body)
+
+find_div_tags(body)
+
+clear_div_labels(body)
 }
 \arguments{
 \item{body}{an xml document}
 }
 \value{
-the document, invisibly
+\itemize{
+\item \code{label_div_tags()}: the document, modified
+\item \code{clear_div_labels()}: the document, modified
+\item \code{find_div_tags()}: a node list
+}
 }
 \description{
-Add labels to div tags in the form of a "dtag" attribute
+Add labels to div tags in the form of a "dtag" node with a paired "label"
+attribute.
+}
+\examples{
+ex <- tinkr::to_xml(file.path(test_path(), "examples", "div-mix.txt"), sourcepos = TRUE)
+ex$body
+pegboard:::label_div_tags(ex$body)
+ex$body
+pegboard:::clear_div_labels(ex$body)
 }
 \seealso{
 \code{\link[=get_divs]{get_divs()}} for finding labelled tags,
@@ -23,5 +42,6 @@ Add labels to div tags in the form of a "dtag" attribute
 \code{\link[=replace_with_div]{replace_with_div()}} for replacing blockquotes with div tags
 \code{\link[=find_div_pairs]{find_div_pairs()}} for connecting open and closing tags
 \code{\link[=clean_fenced_divs]{clean_fenced_divs()}} for cleaning cluttered pandoc div tags
+\code{\link[=make_div_table]{make_div_table()}} for creating the div table used to make the tags
 }
 \keyword{internal}
