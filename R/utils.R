@@ -26,7 +26,23 @@ element_df <- function(node) {
 # nocov end
 
 # Get a character vector of the namespace
-NS <- function(x) attr(xml2::xml_ns(x), "names")[[1]]
+NS <- function(x, generic = TRUE) {
+  if (generic) {
+    attr(xml2::xml_ns(x), "names")[[1]]
+  } else {
+    attr(get_ns(x), "names")[[1]]
+  }
+}
+
+get_ns <- function(body) {
+  ns <- xml2::xml_ns(body)
+  # assuming that the first namespace is commonmark
+  ns   <- c(ns[1], ns[ns == "pegboard"][1])
+  ns[] <- c("md", "pb")
+  ns   <- as.list(ns[!is.na(names(ns))])
+  xml2::xml_ns_rename(xml2::xml_ns(body), ns)
+}
+
 
 capitalize <- function(x) `substring<-`(x, 1, 1, toupper(substring(x, 1, 1)))
 
@@ -82,8 +98,9 @@ xml_new_paragraph <- function(text = "", ns, tag = TRUE) {
 #' @noRd
 #' @keywords internal
 get_setup_chunk <- function(body) {
-  query <- "./d1:code_block[1][@language='r' and @include='FALSE']"
-  setup <- xml2::xml_find_first(body, query)
+  ns <- get_ns(body)
+  query <- "./md:code_block[1][@language='r' and @include='FALSE']"
+  setup <- xml2::xml_find_first(body, query, ns)
 
   # No setup chunk from Jekyll site
   if (inherits(setup, "xml_missing")) {
