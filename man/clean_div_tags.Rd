@@ -10,7 +10,8 @@ clean_div_tags(body)
 \item{body}{an xml document}
 }
 \value{
-an xml document
+\code{TRUE} if divs were detected and cleaned, \code{FALSE} if there were no
+divs.
 }
 \description{
 Clean the div tags from an xml document

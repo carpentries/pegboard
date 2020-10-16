@@ -71,8 +71,8 @@ test_that("label_div_tags() will clean clustered divs", {
   label_div_tags(ex$body)
   dvs <- get_divs(ex$body)
   expect_length(dvs, 8 / 2) # 8 html tags are 4 pairs of div tags
-  expect_length(dvs[[2]], 1) 
-  expect_length(dvs[[3]], 3)
+  expect_length(dvs[[2]], 3) 
+  expect_length(dvs[[3]], 5)
 
 })
 
@@ -94,8 +94,8 @@ test_that("label_div_tags() will clean clustered pandoc divs", {
   tinkr::to_md(ex, ff)
   exc <- paste(readLines(ff), collapse = "\n")
   expect_match(exc, "::::::: challenge\n\n## Challenge", fixed = TRUE)
-  expect_match(exc, "::::\n\n\n\n::: solution :::", fixed = TRUE)
-  expect_match(exc, ":::::\n\n\n\n:::::", fixed = TRUE)
+  expect_match(exc, "::::\n::: solution :::", fixed = TRUE)
+  expect_match(exc, ":::::\n:::::", fixed = TRUE)
   expect_match(exc, "::::: solution ::::\n\n```{r}\nIt's", fixed = TRUE)
 
 })
@@ -110,6 +110,7 @@ test_that("a mix of div tags can be read", {
   expect_length(divs, 5)
   divs <- xml2::xml_find_all(ex$body, ".//d1:text[contains(text(), ':::')]")
   expect_length(divs, 6)
+  # TODO: fix me. Parsing div tags and pandoc tags must be equal. 
   label_div_tags(ex$body)
   dvs <- get_divs(ex$body)
   expect_length(dvs, 12 / 2)
@@ -129,3 +130,4 @@ test_that("a mix of div tags can be read", {
   expect_match(exc, ":::\n\n<div class='solution'>", fixed = TRUE)
 
 })
+

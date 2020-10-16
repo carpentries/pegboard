@@ -294,7 +294,7 @@ test_that("Integration: for markdown sandpaper sites without dovetail", {
   # No kramdown tags exist
   expect_length(e$tags, 0)
   expect_match(
-    xml2::xml_text(xml2::xml_child(e$body, length(xml2::xml_children(e$body)))),
+    xml2::xml_text(xml2::xml_child(e$body, length(xml2::xml_children(e$body)) - 1L)),
     ":::::::::::::::",
     fixed = TRUE
   )

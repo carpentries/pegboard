@@ -1,6 +1,6 @@
 Package: pegboard
 Title: Explore and Manipulate Markdown Curricula from the Carpentries
-Version: 0.0.0.9007
+Version: 0.0.0.9008
 Authors@R:
     person(given = "Zhian N.",
            family = "Kamvar",
@@ -39,7 +39,8 @@ Suggests:
     tidygraph,
     ggraph,
     ggplot2,
-    gt
+    gt,
+    rlang
 Remotes:
   ropenscilabs/tinkr
 Encoding: UTF-8

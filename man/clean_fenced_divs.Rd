@@ -17,6 +17,9 @@ Sometimes pandoc fenced divs are bunched together, which makes it difficult
 to track the pairs. This separates them into different paragraph elements so
 that we can track them
 }
+\note{
+DEPRECATED.
+}
 \examples{
 txt <- "::::::: challenge
 ## Challenge
@@ -53,7 +56,7 @@ f <- tempfile()
 writeLines(txt, f)
 ex <- tinkr::to_xml(f, sourcepos = TRUE)
 ex$body
-predicate <- ".//d1:paragraph[d1:text[starts-with(text(), ':::')]]"
+predicate <- ".//d1:paragraph/d1:text[starts-with(text(), ':::')]"
 xml2::xml_text(xml2::xml_find_all(ex$body, predicate))
 pegboard:::clean_fenced_divs(ex$body)
 xml2::xml_text(xml2::xml_find_all(ex$body, predicate))

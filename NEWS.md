@@ -1,3 +1,17 @@
+# pegboard 0.0.0.9008
+
+ - `$label_divs()` no longer modifies the fenced divs.
+ - `@dtag` labels attached to `html_block` and `paragraph` elements are now 
+   replaced by `<dtag>` elements that live within a custom namespace called
+   "pegboard". This allows us to avoid manipulating the document paragraph
+   structure in the case of fenced divs.
+ - `$get_divs()` now includes the div tags/fences in the output.
+ - Internally, namespace handling has gotten marginally better where the 
+   default namespace prefix is modified to `md:`. 
+ - fenced divs are no longer manipulated on labelling.
+ - A new test expectation, `expect_moved_yaml()` tests that a yaml element
+   was successfully moved to the body of the document. 
+
 # pegboard 0.0.0.9007
 
  - `$keypoints` and `$objectives` now are available and act like `$questions`

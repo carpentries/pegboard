@@ -4,7 +4,7 @@
 \alias{find_between_tags}
 \title{Find nodes between two nodes with a given dtag}
 \usage{
-find_between_tags(tag, body, ns, find = "html_block[@dtag='{tag}']")
+find_between_tags(tag, body, ns = "pb", find = "dtag[@label='{tag}']")
 }
 \arguments{
 \item{tag}{an integer representing a unique dtag attribute}
@@ -26,10 +26,12 @@ loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-s
 loop$body # a full document with block quotes and code blocks, etc
 loop$unblock() # removing blockquotes and replacing with div tags
 # find all the div tags
-tags <- xml2::xml_text(xml2::xml_find_all(loop$body, ".//@dtag"))
+ns <- pegboard:::get_ns(loop$body)
+tags <- xml2::xml_find_all(loop$body, ".//pb:dtag", ns)
+tags <- xml2::xml_attr(tags, "label")
 tags
 # grab the contents of the first div tag
-pegboard:::find_between_tags(tags, loop$body, pegboard:::NS(loop$body))
+pegboard:::find_between_tags(tags[[1]], loop$body)
 }
 \seealso{
 \code{\link[=get_divs]{get_divs()}} for finding labelled tags,
