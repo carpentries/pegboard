@@ -11,14 +11,14 @@ use_sandpaper <- function(body, rmd = TRUE) {
   }
   fix_sandpaper_links(body)
   # Fix the code tags
-  ns         <- NS(body)
   langs      <- get_code(body, "", "@ktag") # grab all of the tags
   any_python <- any(grepl("python", xml2::xml_attr(langs, "ktag")))
   purrr::walk(langs, liquid_to_commonmark, make_rmd = rmd)
   has_setup_chunk <- xml2::xml_find_lgl(
     body, 
     # setup is the first code block that is not included
-    glue::glue("boolean(./{ns}:code_block[1][@language='r' and @include='FALSE'])")
+    glue::glue("boolean(./md:code_block[1][@language='r' and @include='FALSE'])"),
+    get_ns(body)
   )
   if (has_setup_chunk || rmd) {
     setup <- get_setup_chunk(body)
@@ -29,7 +29,7 @@ use_sandpaper <- function(body, rmd = TRUE) {
     rem <- grepl("source\\(.../bin/chunk-options.R.\\)", txt) |
            grepl("source\\(dvt_opts\\(", txt)                 |
            grepl("knitr_fig_path\\(.+?\\)", txt)
-    txt[rem] <- NULL
+    txt <- txt[!rem]
     needs_reticulate <- rmd && 
       any_python            && 
       (length(txt) == 0 || !any(grepl("reticulate", txt)))

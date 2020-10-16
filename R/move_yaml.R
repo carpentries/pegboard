@@ -53,11 +53,14 @@ prepare_yaml_packet <- function(yaml, what = "questions", dovetail = TRUE) {
     to_insert <- paste0("#' - ", to_insert, "\n")
   } else {
     to_insert <- paste(yaml, collapse = "\n - ")
+    n <- if (grepl("solution", what, fixed = TRUE)) 25 else 50
+    open <- paste(rep(":", n - nchar(what) - 1L), collapse = "")
+    dots <- paste(rep(":", n), collapse = "")
     to_insert <- paste0(
-      ":::::::::: ", what, "\n\n",
+      open, " ", what, "\n\n",
       "## ", capitalize(what), "\n\n",
       " - ", to_insert, "\n\n",
-      "::::::::::::::::::::"
+      dots
     )
     to_insert <- commonmark::markdown_xml(to_insert)
     to_insert <- xml2::read_xml(to_insert)

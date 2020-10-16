@@ -7,7 +7,7 @@ output: github_document
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
+  comment = "#|",
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
@@ -60,7 +60,7 @@ library(purrr)
 library(xml2)
 library(fs)
 
-d <- fs::file_temp(pattern = "U2CREADME")
+d <- fs::file_temp(pattern = "PBREADME")
 rng <- get_lesson("swcarpentry/r-novice-gapminder", path = d)
 rng
 
@@ -74,35 +74,44 @@ head(rng$solutions())
 head(rng$blocks(".discussion"))
 ```
 
-## Lesson Manipulation
+## Manipulation
 
-You can isolate all of the specialized block quotes in the lesson with
-`isolate_blocks()`. 
+At the moment, you can manipulate each episode in various ways. One of the ways
+that will become useful in the future is translating the episode from using the
+old and busted Jekyll syntax (e.g. using nested block quotes to create
+specialized sections and writing questions/keypoints/objectives in the YAML) to 
+using a more intuitive system (currently being evaluated). For example, let's
+say we wanted to transform an episode from Jekyll to using
+[{sandpaper}](https://github.com/zkamvar/sandpaper#readme). This would involve
+the following steps:
 
-```{r isolate_blocks}
+1. transforming the block quotes to native or fenced div tags (or dovetail blocks)
+1. converting code block decorators (`{: .language-r}`) and modify setup chunk
+1. moving questions, objectives, and keypoints to the body of the document
+
+Doing this by hand would be a nightmare, but we've written {pegboard} in such a
+way that will streamline this process
+
+First, let's inspect how the file looks at the moment:
+
+```{r inspect the file}
 fun <- rng$episodes$`10-functions.Rmd`
-fun$body %>% xml_length()
-fun$isolate_blocks()$body %>% xml_length()
 fun$write(d, format = "Rmd")
-cat(readLines(fs::path(d, fun$name), n = 50)[(2 + length(fun$yaml)):50], sep = "\n")
+cat(readLines(fs::path(d, fun$name), n = 60), sep = "\n")
 ```
 
-## Roxygen-style blocks
+Now, we can apply the transformation chain in the order we specifed:
 
-One experiment we are trying is to create a new formatting for challenge blocks
-that we think may be easier to write for folks. To convert lessons to this new
-format, we can use `$unblock()`, for example, here's a challenge block that 
-was reformatted to remove the 
-
-```{r unblock}
-cat(readLines(fs::path(d, fun$name), n = 70)[(27 + length(fun$yaml)):70], sep = "\n")
-fun$challenges
-fun$unblock(token = "#'")
-fun$challenges
-fun$code
-fun$code[3] %>% xml_text() %>% cat()
+```{r chain}
+fun$
+  unblock()$         # transform block quotes
+  use_sandpaper()$   # convert code block decorators and modify setup chunk
+  move_questions()$  # ...
+  move_objectives()$
+  move_keypoints()$
+  write(d, format = "Rmd")
+cat(readLines(fs::path(d, fun$name), n = 70), sep = "\n")
 ```
-
 
 ## Reset
 
@@ -110,7 +119,6 @@ All changes can be reset to the initial state with the `$reset()` method:
 
 ```{r reset}
 fun$reset()
-fun$write(d, format = "Rmd")
-cat(readLines(fs::path(d, fun$name), n = 50)[(2 + length(fun$yaml)):50], sep = "\n")
+cat(readLines(fs::path(d, fun$name), n = 70), sep = "\n")
 ```
 

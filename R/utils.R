@@ -105,6 +105,8 @@ get_setup_chunk <- function(body) {
   # No setup chunk from Jekyll site
   if (inherits(setup, "xml_missing")) {
     setup <- xml2::xml_child(body)
+  } else {
+    return(setup)
   }
   comment <- "# Generated with {pegboard}"
 

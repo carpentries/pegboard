@@ -24,7 +24,7 @@ use_dovetail <- function(body) {
   txt   <- parse(text = xml2::xml_text(setup))
   to_inject <- as.expression(c('library("dovetail")', 'source(dvt_opts())'))
   if (length(txt) > 0) {
-    if (!grepl("knitr_fig_path", txt)) {
+    if (!any(grepl("knitr_fig_path", txt))) {
       to_inject <- c(to_inject, as.expression('knitr_fig_path("fig-")'))
     }
     rem      <- grepl("source\\(.../bin/chunk-options.R.\\)", txt)
