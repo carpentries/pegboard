@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Find all kramdown tags within the document — kramdown_tags • pegboard</title>
+<title>Add a pegboard node before or after a node — add_pegboard_nodes • pegboard</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Find all kramdown tags within the document — kramdown_tags" />
-<meta property="og:description" content="Find all kramdown tags within the document" />
+<meta property="og:title" content="Add a pegboard node before or after a node — add_pegboard_nodes" />
+<meta property="og:description" content="Add a pegboard node before or after a node" />
 
 
 
@@ -123,29 +123,33 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Find all kramdown tags within the document</h1>
-    <small class="dont-index">Source: <a href='https://github.com/zkamvar/pegboard/blob/master/R/kramdown_tags.R'><code>R/kramdown_tags.R</code></a></small>
-    <div class="hidden name"><code>kramdown_tags.Rd</code></div>
+    <h1>Add a pegboard node before or after a node</h1>
+    <small class="dont-index">Source: <a href='https://github.com/zkamvar/pegboard/blob/master/R/div.R'><code>R/div.R</code></a></small>
+    <div class="hidden name"><code>add_pegboard_nodes.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Find all kramdown tags within the document</p>
+    <p>Add a pegboard node before or after a node</p>
     </div>
 
-    <pre class="usage"><span class='fu'>kramdown_tags</span><span class='op'>(</span><span class='va'>body</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>add_pegboard_nodes</span><span class='op'>(</span><span class='va'>node</span>, <span class='va'>df</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>body</th>
-      <td><p>an XML document</p></td>
+      <th>node</th>
+      <td><p>a single node</p></td>
+    </tr>
+    <tr>
+      <th>df</th>
+      <td><p>a data frame generated from <code><a href='make_div_table.html'>make_div_table()</a></code></p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>an XML nodeset with all the kramdown tags</p>
+    <p>NULL, invisibly</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

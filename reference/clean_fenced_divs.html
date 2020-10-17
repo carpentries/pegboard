@@ -74,7 +74,7 @@ that we can track them" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9008</span>
       </span>
     </div>
 
@@ -150,6 +150,9 @@ that we can track them</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>an xml document</p>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>DEPRECATED.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='get_divs.html'>get_divs()</a></code> for finding labelled tags,
@@ -210,14 +213,11 @@ What if we include some `:::` code in here or ::: like this
 #&gt; [11] &lt;paragraph sourcepos="24:1-25:5"&gt;\n  &lt;text sourcepos="24:1-24:5" xml:spa ...
 #&gt; [12] &lt;paragraph sourcepos="27:1-27:8"&gt;\n  &lt;text sourcepos="27:1-27:8" xml:spa ...
 #&gt; [13] &lt;heading sourcepos="29:1-29:12" level="2"&gt;\n  &lt;text sourcepos="29:4-29:1 ...
-#&gt; [14] &lt;paragraph sourcepos="31:1-31:3"&gt;\n  &lt;text sourcepos="31:1-31:3" xml:spa ...</div><div class='input'><span class='va'>predicate</span> <span class='op'>&lt;-</span> <span class='st'>".//d1:paragraph[d1:text[starts-with(text(), ':::')]]"</span>
+#&gt; [14] &lt;paragraph sourcepos="31:1-31:3"&gt;\n  &lt;text sourcepos="31:1-31:3" xml:spa ...</div><div class='input'><span class='va'>predicate</span> <span class='op'>&lt;-</span> <span class='st'>".//d1:paragraph/d1:text[starts-with(text(), ':::')]"</span>
 <span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_text.html'>xml_text</a></span><span class='op'>(</span><span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span><span class='op'>(</span><span class='va'>ex</span><span class='op'>$</span><span class='va'>body</span>, <span class='va'>predicate</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "::::::: challenge"                                                     
-#&gt; [2] "::::: solution ::::"                                                   
-#&gt; [3] "::::::: solution ::::::::We just have to try harder and use &lt;div&gt; tags"
-#&gt; [4] "::::::::::"                                                            
-#&gt; [5] "::: good"                                                              
-#&gt; [6] ":::"                                                                   </div><div class='input'><span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>clean_fenced_divs</span><span class='op'>(</span><span class='va'>ex</span><span class='op'>$</span><span class='va'>body</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "::::::: challenge"     "::::: solution ::::"   "::::"                 
+#&gt; [4] "::: solution ::::::::" ":::::"                 ":::::"                
+#&gt; [7] "::: good"              ":::"                  </div><div class='input'><span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>clean_fenced_divs</span><span class='op'>(</span><span class='va'>ex</span><span class='op'>$</span><span class='va'>body</span><span class='op'>)</span>
 <span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_text.html'>xml_text</a></span><span class='op'>(</span><span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span><span class='op'>(</span><span class='va'>ex</span><span class='op'>$</span><span class='va'>body</span>, <span class='va'>predicate</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "::::::: challenge"     "::::: solution ::::"   "::::"                 
 #&gt; [4] "::: solution ::::::::" ":::::"                 ":::::"                

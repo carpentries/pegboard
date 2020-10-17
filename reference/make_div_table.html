@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get code blocks from xml document — get_code • pegboard</title>
+<title>Create a data frame describing the divs associated with nodes. — make_div_table • pegboard</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,10 @@
 
 
 
-<meta property="og:title" content="Get code blocks from xml document — get_code" />
-<meta property="og:description" content="Get code blocks from xml document" />
+<meta property="og:title" content="Create a data frame describing the divs associated with nodes. — make_div_table" />
+<meta property="og:description" content="Native and fenced divs may have several tags grouped in a single element.
+In order to mark the pairs, we need to account for what tags exist in the
+nodes. This function creates that" />
 
 
 
@@ -123,60 +125,104 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get code blocks from xml document</h1>
-    <small class="dont-index">Source: <a href='https://github.com/zkamvar/pegboard/blob/master/R/get_code.R'><code>R/get_code.R</code></a></small>
-    <div class="hidden name"><code>get_code.Rd</code></div>
+    <h1>Create a data frame describing the divs associated with nodes.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/zkamvar/pegboard/blob/master/R/div.R'><code>R/div.R</code></a></small>
+    <div class="hidden name"><code>make_div_table.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Get code blocks from xml document</p>
+    <p>Native and fenced divs may have several tags grouped in a single element.
+In order to mark the pairs, we need to account for what tags exist in the
+nodes. This function creates that</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_code</span><span class='op'>(</span><span class='va'>body</span>, type <span class='op'>=</span> <span class='st'>".language-"</span>, attr <span class='op'>=</span> <span class='st'>"@ktag"</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>make_div_table</span><span class='op'>(</span><span class='va'>nodes</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>body</th>
-      <td><p>an xml document from a jekyll site</p></td>
-    </tr>
-    <tr>
-      <th>type</th>
-      <td><p>a full or partial string of a code block attribute from Jekyll
-without parenthesis.</p></td>
-    </tr>
-    <tr>
-      <th>attr</th>
-      <td><p>what attribute to query in search of code blocks. Default is
-@ktag, which will search for "{: \&lt;type\&gt;".</p></td>
+      <th>nodes</th>
+      <td><p>a nodelist containing native div and fenced div tags in
+<code>html_block</code> or <code>paragraphs</code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>an xml nodeset object</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <p>a list of data frames for each node with the following columns:</p><ul>
+<li><p>node: numeric index of the node</p></li>
+<li><p>div: the text of the individual div element, stripped of context</p></li>
+<li><p>label: label of the div pair (div-label-class)</p></li>
+<li><p>pos: position the label will be relative to its associated node</p></li>
+</ul>
 
-    <p>This uses the XPath function <code>fn:starts-with()</code> to  search for the
-code block and automatically includes the opening brace, so regular
-expressions are not allowed. This is used by the <code>$code</code>, <code>$output</code>, and
-<code>$error</code> elements of the <a href='Episode.html'>Episode</a> class.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='label_div_tags.html'>find_div_tags()</a></code>, <code><a href='find_div_pairs.html'>find_div_pairs()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='va'>e</span> <span class='op'>&lt;-</span> <span class='va'><a href='Episode.html'>Episode</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'>fs</span><span class='fu'>::</span><span class='fu'><a href='http://fs.r-lib.org/reference/path.html'>path</a></span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"_episodes"</span>, <span class='st'>"17-scope.md"</span><span class='op'>)</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='va'>txt</span> <span class='op'>&lt;-</span> <span class='st'>"# Example with a mix of div tags
 
-<span class='fu'>get_code</span><span class='op'>(</span><span class='va'>e</span><span class='op'>$</span><span class='va'>body</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {xml_nodeset (3)}
-#&gt; [1] &lt;code_block sourcepos="10:1-16:3" xml:space="preserve" ktag="{: .language ...
-#&gt; [2] &lt;code_block sourcepos="28:1-31:3" xml:space="preserve" ktag="{: .language ...
-#&gt; [3] &lt;code_block sourcepos="50:3-58:5" xml:space="preserve" ktag="{: .language ...</div><div class='input'><span class='fu'>get_code</span><span class='op'>(</span><span class='va'>e</span><span class='op'>$</span><span class='va'>body</span>, <span class='st'>".output"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {xml_nodeset (1)}
-#&gt; [1] &lt;code_block sourcepos="33:1-35:3" xml:space="preserve" ktag="{: .output}" ...</div><div class='input'><span class='fu'>get_code</span><span class='op'>(</span><span class='va'>e</span><span class='op'>$</span><span class='va'>body</span>, <span class='st'>".error"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {xml_nodeset (2)}
-#&gt; [1] &lt;code_block sourcepos="37:1-42:3" xml:space="preserve" ktag="{: .error}"&gt; ...
-#&gt; [2] &lt;code_block sourcepos="73:3-93:5" xml:space="preserve" ktag="{: .error}"&gt; ...</div></pre>
+&gt; PLEASE NEVER DO THE LESSONS THIS WAY
+&gt;
+&gt; I AM LITERALLY JUST TESTING A TERRIBLE EXAMPLE.
+
+--------------------------------------------------------------------------------
+
+&lt;div class='challenge'&gt;
+## Challenge
+
+do that challenging thing.
+
+```{r}
+cat('it might be challenging to do this')
+```
+:::: solution
+```{r}
+It's not that challenging
+```
+:::
+&lt;div class='solution'&gt;
+We just have to try harder and use `&lt;div&gt;` tags
+
+:::::: callout
+```{r}
+cat('better faster stronger with &lt;div&gt;')
+```
+::::
+:::::: discussion
+&lt;img src='https://carpentries.org/logo.svg'/&gt;
+:::::
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class='good'&gt;
+
+## Good divs
+
+&lt;/div&gt;
+"</span> 
+<span class='va'>tmp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/writeLines.html'>writeLines</a></span><span class='op'>(</span><span class='va'>txt</span>, <span class='va'>tmp</span><span class='op'>)</span>
+<span class='va'>ex</span> <span class='op'>&lt;-</span> <span class='fu'>tinkr</span><span class='fu'>::</span><span class='fu'><a href='https://docs.ropensci.org/tinkr/reference/to_xml.html'>to_xml</a></span><span class='op'>(</span><span class='va'>tmp</span><span class='op'>)</span>
+<span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'><a href='clean_div_tags.html'>clean_div_tags</a></span><span class='op'>(</span><span class='va'>ex</span><span class='op'>$</span><span class='va'>body</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='va'>nodes</span> <span class='op'>&lt;-</span> <span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'><a href='label_div_tags.html'>find_div_tags</a></span><span class='op'>(</span><span class='va'>ex</span><span class='op'>$</span><span class='va'>body</span><span class='op'>)</span>
+<span class='va'>divs</span>  <span class='op'>&lt;-</span> <span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>make_div_table</span><span class='op'>(</span><span class='va'>nodes</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/do.call.html'>do.call</a></span><span class='op'>(</span><span class='st'>"rbind"</span>, <span class='va'>divs</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;     node                     div            label    pos
+#&gt; 1      1 &lt;div class='challenge'&gt;  div-1-challenge before
+#&gt; 2      2           :::: solution   div-2-solution before
+#&gt; 3      3                     :::   div-2-solution  after
+#&gt; 4      4  &lt;div class='solution'&gt;   div-3-solution before
+#&gt; 5      5          :::::: callout    div-4-callout before
+#&gt; 6.6    6                    ::::    div-4-callout  after
+#&gt; 6.7    6       :::::: discussion div-5-discussion before
+#&gt; 6.8    6                   ::::: div-5-discussion  after
+#&gt; 7      7                  &lt;/div&gt;   div-3-solution  after
+#&gt; 8      8                  &lt;/div&gt;  div-1-challenge  after
+#&gt; 9      9      &lt;div class='good'&gt;       div-6-good before
+#&gt; 10    10                  &lt;/div&gt;       div-6-good  after</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

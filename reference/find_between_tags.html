@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9008</span>
       </span>
     </div>
 
@@ -132,7 +132,7 @@
     <p>Find nodes between two nodes with a given dtag</p>
     </div>
 
-    <pre class="usage"><span class='fu'>find_between_tags</span><span class='op'>(</span><span class='va'>tag</span>, <span class='va'>body</span>, <span class='va'>ns</span>, find <span class='op'>=</span> <span class='st'>"html_block[@dtag='{tag}']"</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>find_between_tags</span><span class='op'>(</span><span class='va'>tag</span>, <span class='va'>body</span>, ns <span class='op'>=</span> <span class='st'>"pb"</span>, find <span class='op'>=</span> <span class='st'>"dtag[@label='{tag}']"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -195,13 +195,24 @@
 #&gt; [20] &lt;html_block sourcepos="174:1-174:86" xml:space="preserve"&gt;&amp;lt;img src="h ...
 #&gt; ...</div><div class='input'><span class='va'>loop</span><span class='op'>$</span><span class='fu'>unblock</span><span class='op'>(</span><span class='op'>)</span> <span class='co'># removing blockquotes and replacing with div tags</span>
 <span class='co'># find all the div tags</span>
-<span class='va'>tags</span> <span class='op'>&lt;-</span> <span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_text.html'>xml_text</a></span><span class='op'>(</span><span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span><span class='op'>(</span><span class='va'>loop</span><span class='op'>$</span><span class='va'>body</span>, <span class='st'>".//@dtag"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>ns</span> <span class='op'>&lt;-</span> <span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>get_ns</span><span class='op'>(</span><span class='va'>loop</span><span class='op'>$</span><span class='va'>body</span><span class='op'>)</span>
+<span class='va'>tags</span> <span class='op'>&lt;-</span> <span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span><span class='op'>(</span><span class='va'>loop</span><span class='op'>$</span><span class='va'>body</span>, <span class='st'>".//pb:dtag"</span>, <span class='va'>ns</span><span class='op'>)</span>
+<span class='va'>tags</span> <span class='op'>&lt;-</span> <span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_attr.html'>xml_attr</a></span><span class='op'>(</span><span class='va'>tags</span>, <span class='st'>"label"</span><span class='op'>)</span>
 <span class='va'>tags</span>
 </div><div class='output co'>#&gt;  [1] "div-1-challenge" "div-2-solution"  "div-2-solution"  "div-1-challenge"
 #&gt;  [5] "div-3-challenge" "div-4-solution"  "div-4-solution"  "div-3-challenge"
 #&gt;  [9] "div-5-challenge" "div-6-solution"  "div-6-solution"  "div-5-challenge"</div><div class='input'><span class='co'># grab the contents of the first div tag</span>
-<span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>find_between_tags</span><span class='op'>(</span><span class='va'>tags</span>, <span class='va'>loop</span><span class='op'>$</span><span class='va'>body</span>, <span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>NS</span><span class='op'>(</span><span class='va'>loop</span><span class='op'>$</span><span class='va'>body</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {xml_nodeset (0)}</div></pre>
+<span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>find_between_tags</span><span class='op'>(</span><span class='va'>tags</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, <span class='va'>loop</span><span class='op'>$</span><span class='va'>body</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; {xml_nodeset (9)}
+#&gt; [1] &lt;paragraph xmlns="http://commonmark.org/xml/1.0"&gt;\n  &lt;text xml:space="pre ...
+#&gt; [2] &lt;heading sourcepos="95:3-95:24" level="2"&gt;\n  &lt;text sourcepos="95:6-95:24 ...
+#&gt; [3] &lt;paragraph sourcepos="97:3-97:87"&gt;\n  &lt;text sourcepos="97:3-97:26" xml:sp ...
+#&gt; [4] &lt;list sourcepos="99:3-103:1" type="ordered" start="1" delim="period" tigh ...
+#&gt; [5] &lt;paragraph xmlns="http://commonmark.org/xml/1.0"&gt;\n  &lt;text xml:space="pre ...
+#&gt; [6] &lt;heading sourcepos="104:5-104:15" level="2"&gt;\n  &lt;text sourcepos="104:8-10 ...
+#&gt; [7] &lt;paragraph sourcepos="106:5-108:14"&gt;\n  &lt;text sourcepos="106:5-106:33" xm ...
+#&gt; [8] &lt;paragraph xmlns="http://commonmark.org/xml/1.0"&gt;\n  &lt;text xml:space="pre ...
+#&gt; [9] &lt;paragraph xmlns="http://commonmark.org/xml/1.0"&gt;\n  &lt;text xml:space="pre ...</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

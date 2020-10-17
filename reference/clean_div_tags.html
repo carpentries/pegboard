@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9008</span>
       </span>
     </div>
 
@@ -145,7 +145,8 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>an xml document</p>
+    <p><code>TRUE</code> if divs were detected and cleaned, <code>FALSE</code> if there were no
+divs.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Commonmark knows what raw HTML looks like and will read it in as an HTML
@@ -225,7 +226,7 @@ cat('better faster stronger with &lt;div&gt;')
 #&gt; [3] &lt;html_block xml:space="preserve"&gt;&amp;lt;/div&amp;gt;\n&amp;lt;/div&amp;gt;\n&lt;/html_block&gt;
 #&gt; [4] &lt;html_block xml:space="preserve"&gt;&amp;lt;div class='good'&amp;gt;\n&lt;/html_block&gt;
 #&gt; [5] &lt;html_block xml:space="preserve"&gt;&amp;lt;/div&amp;gt;\n&lt;/html_block&gt;</div><div class='input'><span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>clean_div_tags</span><span class='op'>(</span><span class='va'>ex</span><span class='op'>$</span><span class='va'>body</span><span class='op'>)</span>
-<span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span><span class='op'>(</span><span class='va'>ex</span><span class='op'>$</span><span class='va'>body</span>, <span class='st'>".//d1:html_block[contains(text(), 'div')]"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span><span class='op'>(</span><span class='va'>ex</span><span class='op'>$</span><span class='va'>body</span>, <span class='st'>".//d1:html_block[contains(text(), 'div')]"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; {xml_nodeset (8)}
 #&gt; [1] &lt;html_block xmlns="http://commonmark.org/xml/1.0" xml:space="preserve"&gt;&amp;l ...
 #&gt; [2] &lt;html_block xmlns="http://commonmark.org/xml/1.0" xml:space="preserve"&gt;&amp;l ...
@@ -237,14 +238,14 @@ cat('better faster stronger with &lt;div&gt;')
 #&gt; [8] &lt;html_block xml:space="preserve"&gt;&amp;lt;/div&amp;gt;\n&lt;/html_block&gt;</div><div class='input'><span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'><a href='label_div_tags.html'>label_div_tags</a></span><span class='op'>(</span><span class='va'>ex</span><span class='op'>$</span><span class='va'>body</span><span class='op'>)</span>
 <span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span><span class='op'>(</span><span class='va'>ex</span><span class='op'>$</span><span class='va'>body</span>, <span class='st'>".//d1:html_block[contains(text(), 'div')]"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; {xml_nodeset (8)}
-#&gt; [1] &lt;html_block xmlns="http://commonmark.org/xml/1.0" xml:space="preserve" dt ...
-#&gt; [2] &lt;html_block xmlns="http://commonmark.org/xml/1.0" xml:space="preserve" dt ...
-#&gt; [3] &lt;html_block xmlns="http://commonmark.org/xml/1.0" xml:space="preserve" dt ...
-#&gt; [4] &lt;html_block xmlns="http://commonmark.org/xml/1.0" xml:space="preserve" dt ...
-#&gt; [5] &lt;html_block xmlns="http://commonmark.org/xml/1.0" xml:space="preserve" dt ...
-#&gt; [6] &lt;html_block xmlns="http://commonmark.org/xml/1.0" xml:space="preserve" dt ...
-#&gt; [7] &lt;html_block xml:space="preserve" dtag="div-4-good"&gt;&amp;lt;div class='good'&amp;g ...
-#&gt; [8] &lt;html_block xml:space="preserve" dtag="div-4-good"&gt;&amp;lt;/div&amp;gt;\n&lt;/html_b ...</div></pre>
+#&gt; [1] &lt;html_block xmlns="http://commonmark.org/xml/1.0" xml:space="preserve"&gt;&amp;l ...
+#&gt; [2] &lt;html_block xmlns="http://commonmark.org/xml/1.0" xml:space="preserve"&gt;&amp;l ...
+#&gt; [3] &lt;html_block xmlns="http://commonmark.org/xml/1.0" xml:space="preserve"&gt;&amp;l ...
+#&gt; [4] &lt;html_block xmlns="http://commonmark.org/xml/1.0" xml:space="preserve"&gt;&amp;l ...
+#&gt; [5] &lt;html_block xmlns="http://commonmark.org/xml/1.0" xml:space="preserve"&gt;&amp;l ...
+#&gt; [6] &lt;html_block xmlns="http://commonmark.org/xml/1.0" xml:space="preserve"&gt;&amp;l ...
+#&gt; [7] &lt;html_block xml:space="preserve"&gt;&amp;lt;div class='good'&amp;gt;\n&lt;/html_block&gt;
+#&gt; [8] &lt;html_block xml:space="preserve"&gt;&amp;lt;/div&amp;gt;\n&lt;/html_block&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

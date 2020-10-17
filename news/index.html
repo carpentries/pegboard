@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9008</span>
       </span>
     </div>
 
@@ -126,6 +126,21 @@
       <small>Source: <a href='https://github.com/zkamvar/pegboard/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="pegboard-0009008" class="section level1">
+<h1 class="page-header" data-toc-text="0.0.0.9008">
+<a href="#pegboard-0009008" class="anchor"></a>pegboard 0.0.0.9008</h1>
+<ul>
+<li>
+<code>$label_divs()</code> no longer modifies the fenced divs.</li>
+<li>
+<code>@dtag</code> labels attached to <code>html_block</code> and <code>paragraph</code> elements are now replaced by <code>&lt;dtag&gt;</code> elements that live within a custom namespace called “pegboard”. This allows us to avoid manipulating the document paragraph structure in the case of fenced divs.</li>
+<li>
+<code>$get_divs()</code> now includes the div tags/fences in the output.</li>
+<li>Internally, namespace handling has gotten marginally better where the default namespace prefix is modified to <code>md:</code>.</li>
+<li>fenced divs are no longer manipulated on labelling.</li>
+<li>A new test expectation, <code>expect_moved_yaml()</code> tests that a yaml element was successfully moved to the body of the document.</li>
+</ul>
+</div>
     <div id="pegboard-0009007" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.0.9007">
 <a href="#pegboard-0009007" class="anchor"></a>pegboard 0.0.0.9007</h1>

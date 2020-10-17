@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9007</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9008</span>
       </span>
     </div>
 
@@ -176,31 +176,8 @@
 </div><div class='output co'>#&gt; {xml_nodeset (0)}</div><div class='input'><span class='co'># add tags</span>
 <span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'><a href='label_div_tags.html'>label_div_tags</a></span><span class='op'>(</span><span class='va'>lop</span><span class='op'>$</span><span class='va'>body</span><span class='op'>)</span>
 <span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span><span class='op'>(</span><span class='va'>lop</span><span class='op'>$</span><span class='va'>body</span>, <span class='st'>".//d1:paragraph[@dtag]"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {xml_nodeset (12)}
-#&gt;  [1] &lt;paragraph xmlns="http://commonmark.org/xml/1.0" dtag="div-1-challenge"&gt; ...
-#&gt;  [2] &lt;paragraph xmlns="http://commonmark.org/xml/1.0" dtag="div-2-solution"&gt;\ ...
-#&gt;  [3] &lt;paragraph xmlns="http://commonmark.org/xml/1.0" dtag="div-2-solution"&gt;\ ...
-#&gt;  [4] &lt;paragraph xmlns="http://commonmark.org/xml/1.0" dtag="div-1-challenge"&gt; ...
-#&gt;  [5] &lt;paragraph xmlns="http://commonmark.org/xml/1.0" dtag="div-3-challenge"&gt; ...
-#&gt;  [6] &lt;paragraph xmlns="http://commonmark.org/xml/1.0" dtag="div-4-solution"&gt;\ ...
-#&gt;  [7] &lt;paragraph xmlns="http://commonmark.org/xml/1.0" dtag="div-4-solution"&gt;\ ...
-#&gt;  [8] &lt;paragraph xmlns="http://commonmark.org/xml/1.0" dtag="div-3-challenge"&gt; ...
-#&gt;  [9] &lt;paragraph xmlns="http://commonmark.org/xml/1.0" dtag="div-5-challenge"&gt; ...
-#&gt; [10] &lt;paragraph xmlns="http://commonmark.org/xml/1.0" dtag="div-6-solution"&gt;\ ...
-#&gt; [11] &lt;paragraph xmlns="http://commonmark.org/xml/1.0" dtag="div-6-solution"&gt;\ ...
-#&gt; [12] &lt;paragraph xmlns="http://commonmark.org/xml/1.0" dtag="div-5-challenge"&gt; ...</div><div class='input'><span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_text.html'>xml_text</a></span><span class='op'>(</span><span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span><span class='op'>(</span><span class='va'>lop</span><span class='op'>$</span><span class='va'>body</span>, <span class='st'>".//d1:paragraph[@dtag]"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;  [1] ":::::::::::::::::::::::::::::::::::::::  challenge"
-#&gt;  [2] ":::::::::::::::  solution"                         
-#&gt;  [3] ":::::::::::::::::::::::::"                         
-#&gt;  [4] "::::::::::::::::::::::::::::::::::::::::::::::::::"
-#&gt;  [5] ":::::::::::::::::::::::::::::::::::::::  challenge"
-#&gt;  [6] ":::::::::::::::  solution"                         
-#&gt;  [7] ":::::::::::::::::::::::::"                         
-#&gt;  [8] "::::::::::::::::::::::::::::::::::::::::::::::::::"
-#&gt;  [9] ":::::::::::::::::::::::::::::::::::::::  challenge"
-#&gt; [10] ":::::::::::::::  solution"                         
-#&gt; [11] ":::::::::::::::::::::::::"                         
-#&gt; [12] "::::::::::::::::::::::::::::::::::::::::::::::::::"</div></pre>
+</div><div class='output co'>#&gt; {xml_nodeset (0)}</div><div class='input'><span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_text.html'>xml_text</a></span><span class='op'>(</span><span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span><span class='op'>(</span><span class='va'>lop</span><span class='op'>$</span><span class='va'>body</span>, <span class='st'>".//d1:paragraph[@dtag]"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; character(0)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
