@@ -97,7 +97,7 @@ First, let's inspect how the file looks at the moment:
 ```{r inspect the file}
 fun <- rng$episodes$`10-functions.Rmd`
 fun$write(d, format = "Rmd")
-cat(readLines(fs::path(d, fun$name), n = 60), sep = "\n")
+cat(readLines(fs::path(d, fun$name), n = 70), sep = "\n")
 ```
 
 Now, we can apply the transformation chain in the order we specifed:
@@ -118,7 +118,9 @@ cat(readLines(fs::path(d, fun$name), n = 70), sep = "\n")
 All changes can be reset to the initial state with the `$reset()` method:
 
 ```{r reset}
-fun$reset()
+fun$
+  reset()$
+  write(d, format = "Rmd")
 cat(readLines(fs::path(d, fun$name), n = 70), sep = "\n")
 ```
 
