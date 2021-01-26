@@ -123,7 +123,7 @@ set_ktag_block <- function(tags) {
   # when this happens, we need to find the nested block quote and
   # get its parents
   if (length(parents) < length(are_tags) && length(parents) == 1) {
-    blq <- glue::glue(".//{ns}:block_quote/*")
+    blq <- glue::glue(".//{ns}:block_quote[not(@ktag)]/*")
     if (xml2::xml_find_lgl(parents, glue::glue("boolean({blq})"))) {
       parents <- xml2::xml_parents(
         xml2::xml_find_first(parents, blq)
