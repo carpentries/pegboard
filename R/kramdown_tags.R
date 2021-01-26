@@ -119,8 +119,10 @@ set_ktag_block <- function(tags) {
   }
 
 
-  # Sometimes the tags are mis-aligned by the interpreter
-  # when this happens, we need to find the nested block quote and
+  # Sometimes the tags are mis-aligned by the interpreter, which will happen
+  # with the last solution block inside of a challenge block 
+  #
+  # When this happens, we need to find the nested block quote and
   # get its parents
   if (length(parents) < length(are_tags) && length(parents) == 1) {
     blq <- glue::glue(".//{ns}:block_quote[not(@ktag)]/*")
