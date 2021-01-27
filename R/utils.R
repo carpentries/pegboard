@@ -190,16 +190,16 @@ after_thing <- function(body, thing = "code_block") {
 #' @keywords internal
 are_blocks <- function(krams) {
   tags <- c(
-    "contains(text(),'callout}')",
-    "contains(text(),'objectives}')",
-    "contains(text(),'challenge}')",
-    "contains(text(),'prereq}')",
-    "contains(text(),'checklist}')",
-    "contains(text(),'solution}')",
-    "contains(text(),'discussion}')",
-    "contains(text(),'testimonial}')",
-    "contains(text(),'keypoints}')",
-    "contains(text(),'questions}')",
+    "contains(text(),'.callout')",
+    "contains(text(),'.objectives')",
+    "contains(text(),'.challenge')",
+    "contains(text(),'.prereq')",
+    "contains(text(),'.checklist')",
+    "contains(text(),'.solution')",
+    "contains(text(),'.discussion')",
+    "contains(text(),'.testimonial')",
+    "contains(text(),'.keypoints')",
+    "contains(text(),'.questions')",
     NULL
   )
   tags <- glue::glue_collapse(tags, sep = " or ")
