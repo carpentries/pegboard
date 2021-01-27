@@ -61,7 +61,7 @@ test_that("Episodes can be converted to use sandpaper", {
   # language tags added
   expect_equal(xml2::xml_attr(e$code, "language"), c("r", langs))
   # name tags added
-  expect_match(na.omit(xml2::xml_attr(e$code, "name")), "setup|python-chunk")
+  expect_match(xml2::xml_attr(e$code, "name"), "^(setup|python-chunk-.+)*$")
   # First node is the setup chunk
   expect_equal(xml2::xml_text(xml2::xml_child(e$body)), 
     'library("reticulate")\n# Generated with {pegboard}'
@@ -86,7 +86,7 @@ test_that("Episodes can be converted to use sandpaper", {
   expect_equal(xml2::xml_attr(e$code, "ktag"), rep(NA_character_, 11))
   # but the block quotes are still there
   expect_length(e$tags, 3 + 3)
-  expect_equal(xml2::xml_attr(e$code, "name"), rep(NA_character_, 11))
+  expect_equal(xml2::xml_attr(e$code, "name"), rep("", 11))
   expect_equal(xml2::xml_attr(e$code, "language"), rep(NA_character_, 11))
   # First node is text
   expect_equal(xml2::xml_text(xml2::xml_child(e$body)), 
