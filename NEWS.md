@@ -1,3 +1,9 @@
+# pegboard 0.0.0.9009
+
+ - Several Bug fixes, see https://github.com/carpentries/pegboard/pull/21 for
+   details.
+ - Travis hopefully banished
+
 # pegboard 0.0.0.9008
 
  - `$label_divs()` no longer modifies the fenced divs.
