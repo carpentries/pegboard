@@ -90,6 +90,17 @@ set_ktag_block <- function(tags) {
     )
   )
 
+  # Sometimes, we just have to check to make sure the tag is really at the end
+  # of the block. In this case, we already know that the parent is a blockquote
+  # and we know that the parents and tags are blanaced, so here we want to 
+  # just confirm that they are the end of the block. 
+  balanced <- length(parents) == length(are_tags)
+  if (balanced) {
+    end_of_block <- get_lineend(tags) == get_lineend(parents)
+  } else {
+    end_of_block <- FALSE
+  }
+
   # exclude the first tag if it's after a code block
   # In Rmarkdown documents, all code blocks are tagged with a language attribute
   #
@@ -108,7 +119,7 @@ set_ktag_block <- function(tags) {
   }
 
 
-  if (after_code || is_language || is_output) {
+  if (!all(end_of_block) && (after_code || is_language || is_output)) {
     ctag <- children[[are_tags[1]]]
     are_tags <- are_tags[-1]
     if (after_code || is_language) {
@@ -124,7 +135,7 @@ set_ktag_block <- function(tags) {
   #
   # When this happens, we need to find the nested block quote and
   # get its parents
-  if (length(parents) < length(are_tags) && length(parents) == 1) {
+  if (!balanced && length(parents) < length(are_tags) && length(parents) == 1) {
     blq <- glue::glue(".//{ns}:block_quote[not(@ktag)]/*")
     if (xml2::xml_find_lgl(parents, glue::glue("boolean({blq})"))) {
       parents <- xml2::xml_parents(
@@ -167,7 +178,7 @@ set_ktag_block <- function(tags) {
     # Grab the correct parent from the list
     the_parent <- parents[tag]
     this_tag   <- xml2::xml_text(children[are_tags[tag]])
-    xml2::xml_attr(the_parent, "ktag") <-this_tag
+    xml2::xml_attr(the_parent, "ktag") <- this_tag
 
   }
   xml2::xml_remove(children[are_tags])
