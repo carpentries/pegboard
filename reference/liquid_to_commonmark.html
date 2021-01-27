@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -106,7 +106,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/zkamvar/pegboard/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -171,19 +171,19 @@ the liquid tag (which we have added as a "ktag" attribute for "kramdown" tag)</p
 <span class='va'>py2</span>  <span class='op'>&lt;-</span> <span class='fu'><a href='get_code.html'>get_code</a></span><span class='op'>(</span><span class='va'>frg2</span><span class='op'>$</span><span class='va'>episodes</span><span class='op'>[[</span><span class='st'>"17-scope.md"</span><span class='op'>]</span><span class='op'>]</span><span class='op'>$</span><span class='va'>body</span>, <span class='st'>".language"</span><span class='op'>)</span>
 <span class='va'>py1</span>
 </div><div class='output co'>#&gt; {xml_nodeset (3)}
-#&gt; [1] &lt;code_block sourcepos="10:1-16:3" xml:space="preserve" ktag="{: .language ...
-#&gt; [2] &lt;code_block sourcepos="28:1-31:3" xml:space="preserve" ktag="{: .language ...
-#&gt; [3] &lt;code_block sourcepos="50:3-58:5" xml:space="preserve" ktag="{: .language ...</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/invisible.html'>invisible</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>py1</span>, <span class='va'>liquid_to_commonmark</span>, make_rmd <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span>
+#&gt; [1] &lt;code_block sourcepos="10:1-16:3" xml:space="preserve" name="" ktag="{: . ...
+#&gt; [2] &lt;code_block sourcepos="28:1-31:3" xml:space="preserve" name="" ktag="{: . ...
+#&gt; [3] &lt;code_block sourcepos="50:3-58:5" xml:space="preserve" name="" ktag="{: . ...</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/invisible.html'>invisible</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>py1</span>, <span class='va'>liquid_to_commonmark</span>, make_rmd <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/invisible.html'>invisible</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>py2</span>, <span class='va'>liquid_to_commonmark</span>, make_rmd <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>py1</span>
 </div><div class='output co'>#&gt; {xml_nodeset (3)}
-#&gt; [1] &lt;code_block sourcepos="10:1-16:3" xml:space="preserve" info="python"&gt;pres ...
-#&gt; [2] &lt;code_block sourcepos="28:1-31:3" xml:space="preserve" info="python"&gt;prin ...
-#&gt; [3] &lt;code_block sourcepos="50:3-58:5" xml:space="preserve" info="python"&gt;limi ...</div><div class='input'><span class='va'>py2</span>
+#&gt; [1] &lt;code_block sourcepos="10:1-16:3" xml:space="preserve" name="" info="pyth ...
+#&gt; [2] &lt;code_block sourcepos="28:1-31:3" xml:space="preserve" name="" info="pyth ...
+#&gt; [3] &lt;code_block sourcepos="50:3-58:5" xml:space="preserve" name="" info="pyth ...</div><div class='input'><span class='va'>py2</span>
 </div><div class='output co'>#&gt; {xml_nodeset (3)}
-#&gt; [1] &lt;code_block sourcepos="10:1-16:3" space="preserve" language="python" name ...
-#&gt; [2] &lt;code_block sourcepos="28:1-31:3" space="preserve" language="python" name ...
-#&gt; [3] &lt;code_block sourcepos="50:3-58:5" space="preserve" language="python" name ...</div></pre>
+#&gt; [1] &lt;code_block sourcepos="10:1-16:3" space="preserve" name="python-chunk-10: ...
+#&gt; [2] &lt;code_block sourcepos="28:1-31:3" space="preserve" name="python-chunk-28: ...
+#&gt; [3] &lt;code_block sourcepos="50:3-58:5" space="preserve" name="python-chunk-50: ...</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
