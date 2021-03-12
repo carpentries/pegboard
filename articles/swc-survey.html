@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9009</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9010</span>
       </span>
     </div>
 
@@ -153,20 +153,20 @@
 <code class="sourceCode R"><span class="va">relationships</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dfr</a></span><span class="op">(</span><span class="va">SWC</span>, <span class="op">~</span><span class="va">.x</span><span class="op">$</span><span class="fu">challenges</span><span class="op">(</span>graph <span class="op">=</span> <span class="cn">TRUE</span>, recurse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, .id <span class="op">=</span> <span class="st">"Lesson"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">relationships</span>
-<span class="co">#&gt; # A tibble: 4,716 x 7</span>
+<span class="co">#&gt; # A tibble: 4,702 x 7</span>
 <span class="co">#&gt;    Lesson       Episode       Block from      to        pos          level</span>
 <span class="co">#&gt;    &lt;chr&gt;        &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;        &lt;int&gt;</span>
-<span class="co">#&gt;  1 shell-novice 02-filedir.md 1     challenge heading   401:1-417:14     1</span>
-<span class="co">#&gt;  2 shell-novice 02-filedir.md 1     heading   paragraph 401:3-401:30     1</span>
-<span class="co">#&gt;  3 shell-novice 02-filedir.md 1     paragraph paragraph 403:3-404:80     1</span>
-<span class="co">#&gt;  4 shell-novice 02-filedir.md 1     paragraph solution  406:3-408:15     1</span>
-<span class="co">#&gt;  5 shell-novice 02-filedir.md 1     solution  lesson    410:3-417:14     1</span>
-<span class="co">#&gt;  6 shell-novice 02-filedir.md 1     solution  heading   410:3-417:14     2</span>
-<span class="co">#&gt;  7 shell-novice 02-filedir.md 1     heading   paragraph 410:5-410:15     2</span>
-<span class="co">#&gt;  8 shell-novice 02-filedir.md 1     paragraph challenge 411:5-417:14     2</span>
-<span class="co">#&gt;  9 shell-novice 02-filedir.md 2     challenge heading   419:1-434:14     1</span>
-<span class="co">#&gt; 10 shell-novice 02-filedir.md 2     heading   paragraph 419:3-419:43     1</span>
-<span class="co">#&gt; # … with 4,706 more rows</span>
+<span class="co">#&gt;  1 shell-novice 02-filedir.md 1     challenge heading   318:1-334:14     1</span>
+<span class="co">#&gt;  2 shell-novice 02-filedir.md 1     heading   paragraph 318:3-318:30     1</span>
+<span class="co">#&gt;  3 shell-novice 02-filedir.md 1     paragraph paragraph 320:3-321:80     1</span>
+<span class="co">#&gt;  4 shell-novice 02-filedir.md 1     paragraph solution  323:3-325:15     1</span>
+<span class="co">#&gt;  5 shell-novice 02-filedir.md 1     solution  lesson    327:3-334:14     1</span>
+<span class="co">#&gt;  6 shell-novice 02-filedir.md 1     solution  heading   327:3-334:14     2</span>
+<span class="co">#&gt;  7 shell-novice 02-filedir.md 1     heading   paragraph 327:5-327:15     2</span>
+<span class="co">#&gt;  8 shell-novice 02-filedir.md 1     paragraph challenge 328:5-334:14     2</span>
+<span class="co">#&gt;  9 shell-novice 02-filedir.md 2     challenge heading   336:1-351:14     1</span>
+<span class="co">#&gt; 10 shell-novice 02-filedir.md 2     heading   paragraph 336:3-336:43     1</span>
+<span class="co">#&gt; # … with 4,692 more rows</span>
 
 <span class="va">curr_graph</span> <span class="op">&lt;-</span> <span class="va">relationships</span> <span class="op">%&gt;%</span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>level <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span>
@@ -278,7 +278,7 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#fzamtdszui .gt_table {
+#jjrficimzc .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -303,7 +303,7 @@
   border-left-color: #D3D3D3;
 }
 
-#fzamtdszui .gt_heading {
+#jjrficimzc .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -315,7 +315,7 @@
   border-right-color: #D3D3D3;
 }
 
-#fzamtdszui .gt_title {
+#jjrficimzc .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -325,7 +325,7 @@
   border-bottom-width: 0;
 }
 
-#fzamtdszui .gt_subtitle {
+#jjrficimzc .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -335,13 +335,13 @@
   border-top-width: 0;
 }
 
-#fzamtdszui .gt_bottom_border {
+#jjrficimzc .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#fzamtdszui .gt_col_headings {
+#jjrficimzc .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -356,7 +356,7 @@
   border-right-color: #D3D3D3;
 }
 
-#fzamtdszui .gt_col_heading {
+#jjrficimzc .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -376,7 +376,7 @@
   overflow-x: hidden;
 }
 
-#fzamtdszui .gt_column_spanner_outer {
+#jjrficimzc .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -388,15 +388,15 @@
   padding-right: 4px;
 }
 
-#fzamtdszui .gt_column_spanner_outer:first-child {
+#jjrficimzc .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#fzamtdszui .gt_column_spanner_outer:last-child {
+#jjrficimzc .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#fzamtdszui .gt_column_spanner {
+#jjrficimzc .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -408,7 +408,7 @@
   width: 100%;
 }
 
-#fzamtdszui .gt_group_heading {
+#jjrficimzc .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -430,7 +430,7 @@
   vertical-align: middle;
 }
 
-#fzamtdszui .gt_empty_group_heading {
+#jjrficimzc .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -445,15 +445,15 @@
   vertical-align: middle;
 }
 
-#fzamtdszui .gt_from_md > :first-child {
+#jjrficimzc .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#fzamtdszui .gt_from_md > :last-child {
+#jjrficimzc .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#fzamtdszui .gt_row {
+#jjrficimzc .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -472,7 +472,7 @@
   overflow-x: hidden;
 }
 
-#fzamtdszui .gt_stub {
+#jjrficimzc .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -484,7 +484,7 @@
   padding-left: 12px;
 }
 
-#fzamtdszui .gt_summary_row {
+#jjrficimzc .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -494,7 +494,7 @@
   padding-right: 5px;
 }
 
-#fzamtdszui .gt_first_summary_row {
+#jjrficimzc .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -504,7 +504,7 @@
   border-top-color: #D3D3D3;
 }
 
-#fzamtdszui .gt_grand_summary_row {
+#jjrficimzc .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -514,7 +514,7 @@
   padding-right: 5px;
 }
 
-#fzamtdszui .gt_first_grand_summary_row {
+#jjrficimzc .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -524,11 +524,11 @@
   border-top-color: #D3D3D3;
 }
 
-#fzamtdszui .gt_striped {
+#jjrficimzc .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#fzamtdszui .gt_table_body {
+#jjrficimzc .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -537,7 +537,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#fzamtdszui .gt_footnotes {
+#jjrficimzc .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -551,13 +551,13 @@
   border-right-color: #D3D3D3;
 }
 
-#fzamtdszui .gt_footnote {
+#jjrficimzc .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#fzamtdszui .gt_sourcenotes {
+#jjrficimzc .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -571,46 +571,46 @@
   border-right-color: #D3D3D3;
 }
 
-#fzamtdszui .gt_sourcenote {
+#jjrficimzc .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#fzamtdszui .gt_left {
+#jjrficimzc .gt_left {
   text-align: left;
 }
 
-#fzamtdszui .gt_center {
+#jjrficimzc .gt_center {
   text-align: center;
 }
 
-#fzamtdszui .gt_right {
+#jjrficimzc .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#fzamtdszui .gt_font_normal {
+#jjrficimzc .gt_font_normal {
   font-weight: normal;
 }
 
-#fzamtdszui .gt_font_bold {
+#jjrficimzc .gt_font_bold {
   font-weight: bold;
 }
 
-#fzamtdszui .gt_font_italic {
+#jjrficimzc .gt_font_italic {
   font-style: italic;
 }
 
-#fzamtdszui .gt_super {
+#jjrficimzc .gt_super {
   font-size: 65%;
 }
 
-#fzamtdszui .gt_footnote_marks {
+#jjrficimzc .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="fzamtdszui" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="table gt_table">
+<div id="jjrficimzc" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="table gt_table">
 <colgroup>
 <col style="width:140px;">
 <col style="width:80px;">
@@ -679,67 +679,67 @@
 <span class="co">#&gt; # A tibble: 4 x 7</span>
 <span class="co">#&gt;   Lesson                  Episode         pos        Block from    to      level</span>
 <span class="co">#&gt;   &lt;chr&gt;                   &lt;chr&gt;           &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt;</span>
-<span class="co">#&gt; 1 python-novice-inflamma… 02-numpy.md     623:3-646… 3     soluti… soluti…     1</span>
-<span class="co">#&gt; 2 python-novice-inflamma… 03-matplotlib.… 139:3-147… 1     soluti… soluti…     1</span>
+<span class="co">#&gt; 1 python-novice-inflamma… 02-numpy.md     609:3-632… 3     soluti… soluti…     1</span>
+<span class="co">#&gt; 2 python-novice-inflamma… 03-matplotlib.… 159:3-167… 1     soluti… soluti…     1</span>
 <span class="co">#&gt; 3 python-novice-inflamma… 07-cond.md      304:3-315… 4     soluti… soluti…     1</span>
 <span class="co">#&gt; 4 python-novice-inflamma… 07-cond.md      317:3-328… 4     soluti… soluti…     1</span>
 
 <span class="co"># Adding ten lines to the range and the length of the yaml</span>
 <span class="fu"><a href="https://rdrr.io/r/base/readLines.html">readLines</a></span><span class="op">(</span><span class="va">SWC</span><span class="op">$</span><span class="va">`python-novice-inflammation`</span><span class="op">$</span><span class="va">files</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">[</span><span class="op">(</span><span class="fl">615</span><span class="op">:</span><span class="op">(</span><span class="fl">638</span> <span class="op">+</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fl">23</span><span class="op">]</span>
-<span class="co">#&gt;  [1] "&gt;  [7 8 9]]"                                                                  </span>
-<span class="co">#&gt;  [2] "&gt; ~~~"                                                                        </span>
-<span class="co">#&gt;  [3] "&gt; {: .output}"                                                                </span>
-<span class="co">#&gt;  [4] "&gt;"                                                                            </span>
-<span class="co">#&gt;  [5] "&gt; Write some additional code that slices the first and last columns of `A`,"  </span>
-<span class="co">#&gt;  [6] "&gt; and stacks them into a 3x2 array."                                          </span>
-<span class="co">#&gt;  [7] "&gt; Make sure to `print` the results to verify your solution."                  </span>
-<span class="co">#&gt;  [8] "&gt;"                                                                            </span>
-<span class="co">#&gt;  [9] "&gt; &gt; ## Solution"                                                              </span>
-<span class="co">#&gt; [10] "&gt; &gt;"                                                                          </span>
-<span class="co">#&gt; [11] "&gt; &gt; A 'gotcha' with array indexing is that singleton dimensions"              </span>
-<span class="co">#&gt; [12] "&gt; &gt; are dropped by default. That means `A[:, 0]` is a one dimensional"        </span>
-<span class="co">#&gt; [13] "&gt; &gt; array, which won't stack as desired. To preserve singleton dimensions,"   </span>
-<span class="co">#&gt; [14] "&gt; &gt; the index itself can be a slice or array. For example, `A[:, :1]` returns"</span>
-<span class="co">#&gt; [15] "&gt; &gt; a two dimensional array with one singleton dimension (i.e. a column"      </span>
-<span class="co">#&gt; [16] "&gt; &gt; vector)."                                                                 </span>
-<span class="co">#&gt; [17] "&gt; &gt;"                                                                          </span>
-<span class="co">#&gt; [18] "&gt; &gt; ~~~"                                                                      </span>
-<span class="co">#&gt; [19] "&gt; &gt; D = numpy.hstack((A[:, :1], A[:, -1:]))"                                  </span>
-<span class="co">#&gt; [20] "&gt; &gt; print('D = ')"                                                            </span>
-<span class="co">#&gt; [21] "&gt; &gt; print(D)"                                                                 </span>
-<span class="co">#&gt; [22] "&gt; &gt; ~~~"                                                                      </span>
-<span class="co">#&gt; [23] "&gt; &gt; {: .language-python}"                                                     </span>
-<span class="co">#&gt; [24] "&gt; &gt;"                                                                          </span>
-<span class="co">#&gt; [25] "&gt; &gt; ~~~"                                                                      </span>
-<span class="co">#&gt; [26] "&gt; &gt; D ="                                                                      </span>
-<span class="co">#&gt; [27] "&gt; &gt; [[1 3]"                                                                   </span>
-<span class="co">#&gt; [28] "&gt; &gt;  [4 6]"                                                                   </span>
-<span class="co">#&gt; [29] "&gt; &gt;  [7 9]]"                                                                  </span>
-<span class="co">#&gt; [30] "&gt; &gt; ~~~"                                                                      </span>
-<span class="co">#&gt; [31] "&gt; &gt; {: .output}"                                                              </span>
-<span class="co">#&gt; [32] "&gt; {: .solution}"                                                              </span>
-<span class="co">#&gt; [33] "&gt;"                                                                            </span>
-<span class="co">#&gt; [34] "&gt; &gt; ## Solution"</span>
+<span class="co">#&gt;  [1] "&gt; &gt; a two dimensional array with one singleton dimension (i.e. a column"</span>
+<span class="co">#&gt;  [2] "&gt; &gt; vector)."                                                           </span>
+<span class="co">#&gt;  [3] "&gt; &gt;"                                                                    </span>
+<span class="co">#&gt;  [4] "&gt; &gt; ~~~"                                                                </span>
+<span class="co">#&gt;  [5] "&gt; &gt; D = numpy.hstack((A[:, :1], A[:, -1:]))"                            </span>
+<span class="co">#&gt;  [6] "&gt; &gt; print('D = ')"                                                      </span>
+<span class="co">#&gt;  [7] "&gt; &gt; print(D)"                                                           </span>
+<span class="co">#&gt;  [8] "&gt; &gt; ~~~"                                                                </span>
+<span class="co">#&gt;  [9] "&gt; &gt; {: .language-python}"                                               </span>
+<span class="co">#&gt; [10] "&gt; &gt;"                                                                    </span>
+<span class="co">#&gt; [11] "&gt; &gt; ~~~"                                                                </span>
+<span class="co">#&gt; [12] "&gt; &gt; D ="                                                                </span>
+<span class="co">#&gt; [13] "&gt; &gt; [[1 3]"                                                             </span>
+<span class="co">#&gt; [14] "&gt; &gt;  [4 6]"                                                             </span>
+<span class="co">#&gt; [15] "&gt; &gt;  [7 9]]"                                                            </span>
+<span class="co">#&gt; [16] "&gt; &gt; ~~~"                                                                </span>
+<span class="co">#&gt; [17] "&gt; &gt; {: .output}"                                                        </span>
+<span class="co">#&gt; [18] "&gt; {: .solution}"                                                        </span>
+<span class="co">#&gt; [19] "&gt;"                                                                      </span>
+<span class="co">#&gt; [20] "&gt; &gt; ## Solution"                                                        </span>
+<span class="co">#&gt; [21] "&gt; &gt;"                                                                    </span>
+<span class="co">#&gt; [22] "&gt; &gt; An alternative way to achieve the same result is to use Numpy's"    </span>
+<span class="co">#&gt; [23] "&gt; &gt; delete function to remove the second column of A."                  </span>
+<span class="co">#&gt; [24] "&gt; &gt;"                                                                    </span>
+<span class="co">#&gt; [25] "&gt; &gt; ~~~"                                                                </span>
+<span class="co">#&gt; [26] "&gt; &gt; D = numpy.delete(A, 1, 1)"                                          </span>
+<span class="co">#&gt; [27] "&gt; &gt; print('D = ')"                                                      </span>
+<span class="co">#&gt; [28] "&gt; &gt; print(D)"                                                           </span>
+<span class="co">#&gt; [29] "&gt; &gt; ~~~"                                                                </span>
+<span class="co">#&gt; [30] "&gt; &gt; {: .language-python}"                                               </span>
+<span class="co">#&gt; [31] "&gt; &gt;"                                                                    </span>
+<span class="co">#&gt; [32] "&gt; &gt; ~~~"                                                                </span>
+<span class="co">#&gt; [33] "&gt; &gt; D ="                                                                </span>
+<span class="co">#&gt; [34] "&gt; &gt; [[1 3]"</span>
 <span class="fu"><a href="https://rdrr.io/r/base/readLines.html">readLines</a></span><span class="op">(</span><span class="va">SWC</span><span class="op">$</span><span class="va">`python-novice-inflammation`</span><span class="op">$</span><span class="va">files</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span><span class="op">[</span><span class="op">(</span><span class="fl">129</span><span class="op">:</span><span class="op">(</span><span class="fl">137</span> <span class="op">+</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fl">13</span><span class="op">]</span>
-<span class="co">#&gt;  [1] "&gt; for example:"                                                            </span>
-<span class="co">#&gt;  [2] "&gt;"                                                                         </span>
-<span class="co">#&gt;  [3] "&gt; ~~~"                                                                     </span>
-<span class="co">#&gt;  [4] "&gt; axes3.set_ylim(0,6)"                                                     </span>
-<span class="co">#&gt;  [5] "&gt; ~~~"                                                                     </span>
-<span class="co">#&gt;  [6] "&gt; {: .language-python}"                                                    </span>
-<span class="co">#&gt;  [7] "&gt;"                                                                         </span>
-<span class="co">#&gt;  [8] "&gt; Update your plotting code to automatically set a more appropriate scale."</span>
-<span class="co">#&gt;  [9] "&gt; (Hint: you can make use of the `max` and `min` methods to help.)"        </span>
-<span class="co">#&gt; [10] "&gt;"                                                                         </span>
-<span class="co">#&gt; [11] "&gt; &gt; ## Solution"                                                           </span>
-<span class="co">#&gt; [12] "&gt; &gt; ~~~"                                                                   </span>
-<span class="co">#&gt; [13] "&gt; &gt; # One method"                                                          </span>
-<span class="co">#&gt; [14] "&gt; &gt; axes3.set_ylabel('min')"                                               </span>
-<span class="co">#&gt; [15] "&gt; &gt; axes3.plot(numpy.min(data, axis=0))"                                   </span>
-<span class="co">#&gt; [16] "&gt; &gt; axes3.set_ylim(0,6)"                                                   </span>
-<span class="co">#&gt; [17] "&gt; &gt; ~~~"                                                                   </span>
-<span class="co">#&gt; [18] "&gt; &gt; {: .language-python}"                                                  </span>
-<span class="co">#&gt; [19] "&gt; {: .solution}"</span>
+<span class="co">#&gt;  [1] "&gt; Some people prefer these shortcuts as it is quicker to type and results in shorter"      </span>
+<span class="co">#&gt;  [2] "&gt; lines of code - especially for libraries with long names! You will frequently see"       </span>
+<span class="co">#&gt;  [3] "&gt; Python code online using a `pyplot` function with `plt`, or a NumPy function with"       </span>
+<span class="co">#&gt;  [4] "&gt; `np`, and it's because they've used this shortcut. It makes no difference which"         </span>
+<span class="co">#&gt;  [5] "&gt; approach you choose to take, but you must be consistent as if you use"                   </span>
+<span class="co">#&gt;  [6] "&gt; `import matplotlib.pyplot as plt` then `matplotlib.pyplot.plot(...)` will not work, and" </span>
+<span class="co">#&gt;  [7] "&gt; you must use `plt.plot(...)` instead. Because of this, when working with other people it"</span>
+<span class="co">#&gt;  [8] "&gt; is important you agree on how libraries are imported."                                   </span>
+<span class="co">#&gt;  [9] "{: .callout}"                                                                              </span>
+<span class="co">#&gt; [10] ""                                                                                          </span>
+<span class="co">#&gt; [11] "&gt; ## Plot Scaling"                                                                         </span>
+<span class="co">#&gt; [12] "&gt;"                                                                                         </span>
+<span class="co">#&gt; [13] "&gt; Why do all of our plots stop just short of the upper end of our graph?"                  </span>
+<span class="co">#&gt; [14] "&gt;"                                                                                         </span>
+<span class="co">#&gt; [15] "&gt; &gt; ## Solution"                                                                           </span>
+<span class="co">#&gt; [16] "&gt; &gt; Because matplotlib normally sets x and y axes limits to the min and max of our data"   </span>
+<span class="co">#&gt; [17] "&gt; &gt; (depending on data range)"                                                             </span>
+<span class="co">#&gt; [18] "&gt; {: .solution}"                                                                           </span>
+<span class="co">#&gt; [19] "&gt;"</span>
 <span class="fu"><a href="https://rdrr.io/r/base/readLines.html">readLines</a></span><span class="op">(</span><span class="va">SWC</span><span class="op">$</span><span class="va">`python-novice-inflammation`</span><span class="op">$</span><span class="va">files</span><span class="op">[</span><span class="fl">7</span><span class="op">]</span><span class="op">)</span><span class="op">[</span><span class="op">(</span><span class="fl">291</span><span class="op">:</span><span class="op">(</span><span class="fl">302</span> <span class="op">+</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fl">20</span><span class="op">]</span>
 <span class="co">#&gt;  [1] "&gt; if not not True:"                                                                             </span>
 <span class="co">#&gt;  [2] "&gt;     print('not not True is true')"                                                            </span>
@@ -811,7 +811,7 @@
 <span class="co">#&gt; #' ```</span>
 <span class="co">#&gt; $ for filename in c*</span>
 <span class="co">#&gt; &gt; do</span>
-<span class="co">#&gt; &gt;    ls $filename</span>
+<span class="co">#&gt; &gt;     ls $filename</span>
 <span class="co">#&gt; &gt; done</span>
 <span class="co">#&gt; #' ```</span>
 <span class="co">#&gt; #' </span>
@@ -833,7 +833,7 @@
 <span class="co">#&gt; #' ```</span>
 <span class="co">#&gt; $ for filename in *c*</span>
 <span class="co">#&gt; &gt; do</span>
-<span class="co">#&gt; &gt;    ls $filename</span>
+<span class="co">#&gt; &gt;     ls $filename</span>
 <span class="co">#&gt; &gt; done</span>
 <span class="co">#&gt; #' ```</span>
 <span class="co">#&gt; #' </span>
