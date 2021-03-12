@@ -37,7 +37,7 @@ NS <- function(x, generic = TRUE) {
 get_ns <- function(body) {
   ns <- xml2::xml_ns(body)
   # assuming that the first namespace is commonmark
-  ns   <- c(ns[1], ns[ns == "pegboard"][1])
+  ns   <- c(ns[1], ns[ns == "http://carpentries.org/pegboard/"][1])
   ns[] <- c("md", "pb")
   ns   <- as.list(ns[!is.na(names(ns))])
   xml2::xml_ns_rename(xml2::xml_ns(body), ns)
