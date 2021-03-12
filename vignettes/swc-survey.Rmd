@@ -1,10 +1,6 @@
 ---
-title: "swc-survey"
+title: "Software Carpentry Survey"
 output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{swc-survey}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}
