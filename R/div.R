@@ -98,7 +98,7 @@ replace_with_div <- function(block) {
 #' pegboard:::get_divs(loop$body, 'solution') # all solution blocks
 get_divs <- function(body, type = NULL){
   ns    <- get_ns(body)
-  if (!any(ns == "pegboard")) {
+  if (!any(ns == "http://carpentries.org/pegboard/")) {
     return(list())
   }
   # 1. Find tags
@@ -250,7 +250,7 @@ find_div_tags <- function(body) {
 #' @rdname div_labels
 clear_div_labels <- function(body) {
   ns <- get_ns(body)
-  if (!any(ns == "pegboard")) return(invisible(NULL))
+  if (!any(ns == "http://carpentries.org/pegboard/")) return(invisible(NULL))
   dtags <- xml2::xml_find_all(body, ".//pb:dtag", get_ns(body))
   purrr::walk(dtags, xml2::xml_remove)
 }
@@ -359,6 +359,7 @@ make_div_table <- function(nodes) {
 
 #' Add a pegboard node before or after a node
 #' 
+#' These nodes have the namespace of "http://carpentries.org/pegboard/"
 #' @keywords internal
 #' @param node a single node
 #' @param df a data frame generated from [make_div_table()]
@@ -373,7 +374,7 @@ add_pegboard_nodes <- function(node, df) {
       node,
       "dtag",
       label = df$label[i],
-      xmlns = "pegboard", 
+      xmlns = "http://carpentries.org/pegboard/", 
       .where = df$pos[i]
     )
   }

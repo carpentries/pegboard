@@ -1,3 +1,12 @@
+# pegboard 0.0.0.9010
+
+ - Missing questions, objectives, or keypoints will no longer fail with a 
+   cryptic error. An informative warning will be thrown and an empty character
+   vector will be returned. This addresses an issue in {sandpaper}:
+   https://github.com/carpentries/sandpaper/issues/79
+ - The URI for pegboard tags is now "http://carpentries.org/pegboard/", which
+   fixes https://github.com/carpentries/pegboard/issues/18
+
 # pegboard 0.0.0.9009
 
  - Several Bug fixes, see https://github.com/carpentries/pegboard/pull/21 for

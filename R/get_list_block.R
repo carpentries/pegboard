@@ -1,3 +1,12 @@
+#' Extract list elements from a block
+#'
+#' @param self an Episode object
+#' @param type the type of block/div to extract the list from
+#' @param in_yaml indicator if the elements are in the YAML header (`TRUE`, 
+#'   default for styles version 9 lessons) or if they are in the body of the
+#'   lesson (`FALSE`, for sandpaper lessons).
+#' @return a character vector
+#' @keywords internal
 get_list_block <- function(self, type = "questions", in_yaml = TRUE) {
   q <- NULL
   # Try the yaml first
@@ -6,7 +15,8 @@ get_list_block <- function(self, type = "questions", in_yaml = TRUE) {
     q <- yaml[[type]]
   } 
 
-  # Try the code blocks next
+  # Try the code blocks next (for dovetail lessons)
+  # TODO: remove this if we determine that {dovetail} is an impossibility
   if (is.null(q)) {
     ns <- NS(self$body)
     xpath <- ".//{ns}:code_block[@info='{{{type}}}' or @language='{type}']"
@@ -26,7 +36,13 @@ get_list_block <- function(self, type = "questions", in_yaml = TRUE) {
     # splitting into individual elements
     q <- strsplit(txt, "\n")[[1]]
   } else {
-    q <- get_divs(self$label_divs()$body, type)[[1]]
+    q <- get_divs(self$label_divs()$body, type)
+    if (length(q)) {
+      q <- q[[1]]
+    } else {
+      warning(glue::glue("No section called {sQuote(type)}"), call. = FALSE)
+      return(character(0))
+    }
     q <- xml_to_md(q[xml2::xml_name(q) == "list"])
     q <- trimws(gsub("\n?- ", "\n", q))
     q <- strsplit(q, "\n")[[1]] 
