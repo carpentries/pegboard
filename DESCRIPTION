@@ -41,9 +41,7 @@ Suggests:
     ggplot2,
     gt,
     rlang
-Remotes:
-  ropenscilabs/tinkr
-Additional_repositories: https://carpentries.github.io/drat/
+Additional_repositories: https://carpentries.github.io/drat/ 
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

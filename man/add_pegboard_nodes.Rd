@@ -15,6 +15,6 @@ add_pegboard_nodes(node, df)
 NULL, invisibly
 }
 \description{
-Add a pegboard node before or after a node
+These nodes have the namespace of "http://carpentries.org/pegboard/"
 }
 \keyword{internal}
