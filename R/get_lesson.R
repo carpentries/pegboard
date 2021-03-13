@@ -1,6 +1,6 @@
 #' Get a carpentries lesson in XML format
 #'
-#' Download and extract a carpentries lesson in XML format. This uses [git2r::clone()]
+#' Download and extract a carpentries lesson in XML format. This uses [gert::git_clone()]
 #' to download a carpentries lesson to your computer (defaults to the temporary
 #' directory and extracts the lesson in `_episodes/` using [tinkr::to_xml()]
 #'
