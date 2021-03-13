@@ -18,6 +18,9 @@
 #' png <- get_lesson("swcarpentry/python-novice-gapminder")
 #' str(png, max.level = 1)
 get_lesson <- function(lesson = NULL, path = tempdir(), overwrite = FALSE, ...) {
+  if (!requireNamespace("gert", quietly = FALSE)) {
+    stop("Please install the {gert} package to use this feature.")
+  }
   if (is.null(lesson) && fs::dir_exists(fs::path(path, "_episodes"))) {
     # user provides path to lesson on computer
     the_path <- normalizePath(path)
