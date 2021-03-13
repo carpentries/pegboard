@@ -42,9 +42,10 @@ get_lesson <- function(lesson = NULL, path = tempdir(), overwrite = FALSE, ...) 
   episodes_rmd <- fs::path(the_path, "_episodes_rmd")
 
   if (!fs::dir_exists(episodes) && !fs::dir_exists(episodes_rmd)) {
-    lpath <- git2r::clone(
-      glue::glue("https://github.com/{lesson}.git"),
-      local_path = the_path
+    lpath <- gert::git_clone(
+      url = glue::glue("https://github.com/{lesson}.git"),
+      path = the_path,
+      verbose = FALSE
     )
   }
 

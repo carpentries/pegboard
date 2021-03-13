@@ -54,6 +54,10 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
           restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
 
+      - name: Install Mac deps
+        if: runner.os == 'macOS'
+        run: brew install libgit2
+
       - name: Install system dependencies
         if: runner.os == 'Linux'
         run: |
@@ -61,6 +65,7 @@ jobs:
           do
             eval sudo $cmd
           done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "20.04"))')
+          sudo apt install libgit2-dev
       - name: Install dependencies
         run: |
           remotes::install_deps(dependencies = TRUE)
