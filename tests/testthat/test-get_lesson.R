@@ -281,7 +281,7 @@ test_that("Lessons with Rmd sources can be downloaded", {
 test_that("Non-lessons will be downloaded but rejected", {
 
   skip_if_offline()
-  skip_on_os("Windows")
+  skip_on_os("windows")
 
   expect_error(
     capture.output(get_lesson("zkamvar/notes-template", path = d)),
