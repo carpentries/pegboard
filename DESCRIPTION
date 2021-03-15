@@ -1,13 +1,13 @@
 Package: pegboard
 Title: Explore and Manipulate Markdown Curricula from the Carpentries
-Version: 0.0.0.9010
+Version: 0.0.0.9011
 Authors@R:
     person(given = "Zhian N.",
            family = "Kamvar",
            role = c("aut", "cre"),
            email = "zkamvar@gmail.com",
            comment = c(ORCID = "0000-0003-1458-7108"))
-Description: The Carpentries (https://carpentries.org>) curricula is made of of
+Description: The Carpentries (<https://carpentries.org>) curricula is made of of
     lessons that are hosted as websites. Each lesson represents between a half
     day to two days of instruction and contains several episodes, which are
     written as 'kramdown'-flavored 'markdown' documents and converted to HTML
@@ -17,7 +17,6 @@ Description: The Carpentries (https://carpentries.org>) curricula is made of of
 License: MIT + file LICENSE
 Imports:
     fs,
-    git2r,
     tinkr,
     xml2,
     purrr,
@@ -28,6 +27,7 @@ Imports:
     yaml,
     commonmark
 Suggests:
+    gert (>= 1.0.0),
     testthat,
     withr,
     covr,

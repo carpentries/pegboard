@@ -16,6 +16,9 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@master
 
+      - name: Install Mac deps
+        run: brew install libgit2
+
       - name: Query dependencies
         run: |
           install.packages('remotes')

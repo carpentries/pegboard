@@ -46,10 +46,7 @@ test_that("lessons can be downloaded", {
 
   testthat::skip_if_offline()
   expect_length(fs::dir_ls(d), 0)
-  expect_output(
-    lex <- get_lesson("carpentries/lesson-example", path = d),
-    "cloning into"
-  )
+  lex <- get_lesson("carpentries/lesson-example", path = d)
   # the output is a Lesson object
   expect_is(lex, "Lesson")
   # the directory exists
@@ -67,10 +64,7 @@ test_that("lessons are accessed without re-downloading", {
   # The lesson already exists in the directory
   expect_length(fs::dir_ls(d), 1)
 
-  # Nothing will print because we are using the lesson we downloaded
-  expect_silent(
-    lex <- get_lesson("carpentries/lesson-example", path = d)
-  )
+  lex <- get_lesson("carpentries/lesson-example", path = d)
 
   # the output is a Lesson object
   expect_is(lex, "Lesson")
@@ -88,10 +82,7 @@ test_that("overwriting is possible", {
 
   expect_length(fs::dir_ls(d), 1)
 
-  expect_output(
-    lex <- get_lesson("carpentries/lesson-example", path = d, overwrite = TRUE),
-    "cloning into"
-  )
+  lex <- get_lesson("carpentries/lesson-example", path = d, overwrite = TRUE)
 
   # the output is a Lesson object
   expect_is(lex, "Lesson")
@@ -275,13 +266,10 @@ test_that("Lessons with Rmd sources can be downloaded", {
   skip_if_offline()
   expect_false(fs::dir_exists(fs::path(d, "swcarpentry--r-novice-inflammation")))
 
-  expect_output({
-    expect_message(
-      rni <- get_lesson("swcarpentry/r-novice-inflammation", path = d),
-      "could not find _episodes/, using _episodes_rmd/ as the source",
-      fixed = TRUE
-    )},
-    "cloning into"
+  expect_message(
+    rni <- get_lesson("swcarpentry/r-novice-inflammation", path = d),
+    "could not find _episodes/, using _episodes_rmd/ as the source",
+    fixed = TRUE
   )
 
   expect_is(rni, "Lesson")
@@ -293,6 +281,7 @@ test_that("Lessons with Rmd sources can be downloaded", {
 test_that("Non-lessons will be downloaded but rejected", {
 
   skip_if_offline()
+  skip_on_os("windows")
 
   expect_error(
     capture.output(get_lesson("zkamvar/notes-template", path = d)),

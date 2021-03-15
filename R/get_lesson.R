@@ -1,6 +1,6 @@
 #' Get a carpentries lesson in XML format
 #'
-#' Download and extract a carpentries lesson in XML format. This uses [git2r::clone()]
+#' Download and extract a carpentries lesson in XML format. This uses [gert::git_clone()]
 #' to download a carpentries lesson to your computer (defaults to the temporary
 #' directory and extracts the lesson in `_episodes/` using [tinkr::to_xml()]
 #'
@@ -18,6 +18,9 @@
 #' png <- get_lesson("swcarpentry/python-novice-gapminder")
 #' str(png, max.level = 1)
 get_lesson <- function(lesson = NULL, path = tempdir(), overwrite = FALSE, ...) {
+  if (!requireNamespace("gert", quietly = FALSE)) {
+    stop("Please install the {gert} package to use this feature.")
+  }
   if (is.null(lesson) && fs::dir_exists(fs::path(path, "_episodes"))) {
     # user provides path to lesson on computer
     the_path <- normalizePath(path)
@@ -42,9 +45,10 @@ get_lesson <- function(lesson = NULL, path = tempdir(), overwrite = FALSE, ...) 
   episodes_rmd <- fs::path(the_path, "_episodes_rmd")
 
   if (!fs::dir_exists(episodes) && !fs::dir_exists(episodes_rmd)) {
-    lpath <- git2r::clone(
-      glue::glue("https://github.com/{lesson}.git"),
-      local_path = the_path
+    lpath <- gert::git_clone(
+      url = glue::glue("https://github.com/{lesson}.git"),
+      path = the_path,
+      verbose = FALSE
     )
   }
 

@@ -1,3 +1,8 @@
+# pegboard 0.0.0.9011
+
+ - Swap {git2r} dependency for {gert}, which has a smoother interface and matches
+   with the dependencies of {sandpaper}.
+
 # pegboard 0.0.0.9010
 
  - Missing questions, objectives, or keypoints will no longer fail with a 

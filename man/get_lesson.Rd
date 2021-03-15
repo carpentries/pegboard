@@ -21,7 +21,7 @@ lesson repository.}
 a list of xml objects, one element per episode.
 }
 \description{
-Download and extract a carpentries lesson in XML format. This uses \code{\link[git2r:clone]{git2r::clone()}}
+Download and extract a carpentries lesson in XML format. This uses \code{\link[gert:git_fetch]{gert::git_clone()}}
 to download a carpentries lesson to your computer (defaults to the temporary
 directory and extracts the lesson in \verb{_episodes/} using \code{\link[tinkr:to_xml]{tinkr::to_xml()}}
 }
