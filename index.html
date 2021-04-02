@@ -113,7 +113,7 @@
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
-<p>The first way to get started is to use the <code><a href="reference/get_lesson.html">get_lesson()</a></code> function, which will use <a href="https://cran.r-project.org/package=git2r">{git2r}</a> to clone a lesson repository to your computer.</p>
+<p>The first way to get started is to use the <code><a href="reference/get_lesson.html">get_lesson()</a></code> function, which will use <a href="https://r-lib.github.io/gert/">{gert}</a> to clone a lesson repository to your computer.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/zkamvar/pegboard">pegboard</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span><span class="op">)</span>
@@ -122,18 +122,6 @@
 
 <span class="va">d</span> <span class="op">&lt;-</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="http://fs.r-lib.org/reference/file_temp.html">file_temp</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"PBREADME"</span><span class="op">)</span>
 <span class="va">rng</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_lesson.html">get_lesson</a></span><span class="op">(</span><span class="st">"swcarpentry/r-novice-gapminder"</span>, path <span class="op">=</span> <span class="va">d</span><span class="op">)</span>
-<span class="co">#| cloning into '/tmp/RtmpDlAWmb/PBREADME623e2d755f64/swcarpentry--r-novice-gapminder'...</span>
-<span class="co">#| Receiving objects:   1% (94/9360),   52 kb</span>
-<span class="co">#| Receiving objects:  11% (1030/9360),  424 kb</span>
-<span class="co">#| Receiving objects:  21% (1966/9360),  647 kb</span>
-<span class="co">#| Receiving objects:  31% (2902/9360), 8964 kb</span>
-<span class="co">#| Receiving objects:  41% (3838/9360), 14196 kb</span>
-<span class="co">#| Receiving objects:  51% (4774/9360), 21315 kb</span>
-<span class="co">#| Receiving objects:  61% (5710/9360), 26626 kb</span>
-<span class="co">#| Receiving objects:  71% (6646/9360), 30114 kb</span>
-<span class="co">#| Receiving objects:  81% (7582/9360), 32561 kb</span>
-<span class="co">#| Receiving objects:  91% (8518/9360), 36465 kb</span>
-<span class="co">#| Receiving objects: 100% (9360/9360), 44724 kb, done.</span>
 <span class="va">rng</span>
 <span class="co">#| &lt;Lesson&gt;</span>
 <span class="co">#|   Public:</span>
@@ -141,11 +129,12 @@
 <span class="co">#|     challenges: function (path = FALSE, graph = FALSE, recurse = TRUE) </span>
 <span class="co">#|     clone: function (deep = FALSE) </span>
 <span class="co">#|     episodes: list</span>
+<span class="co">#|     extra: NULL</span>
 <span class="co">#|     files: active binding</span>
-<span class="co">#|     initialize: function (path = NULL, rmd = FALSE, ...) </span>
+<span class="co">#|     initialize: function (path = NULL, rmd = FALSE, jekyll = TRUE, ...) </span>
 <span class="co">#|     isolate_blocks: function () </span>
 <span class="co">#|     n_problems: active binding</span>
-<span class="co">#|     path: /tmp/RtmpDlAWmb/PBREADME623e2d755f64/swcarpentry--r-novi ...</span>
+<span class="co">#|     path: /tmp/RtmpjVit9F/PBREADME29b7975b150/swcarpentry--r-novic ...</span>
 <span class="co">#|     reset: function () </span>
 <span class="co">#|     rmd: TRUE</span>
 <span class="co">#|     show_problems: active binding</span>
@@ -173,19 +162,19 @@
 <span class="co">#| </span>
 <span class="co">#| $`03-seeking-help.Rmd`</span>
 <span class="co">#| {xml_nodeset (3)}</span>
-<span class="co">#| [1] &lt;block_quote sourcepos="105:1-121:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="105:3-105:16" ...</span>
-<span class="co">#| [2] &lt;block_quote sourcepos="123:1-153:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="123:3-123:16" ...</span>
-<span class="co">#| [3] &lt;block_quote sourcepos="155:1-172:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="155:3-155:16" ...</span>
+<span class="co">#| [1] &lt;block_quote sourcepos="119:1-135:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="119:3-119:16" ...</span>
+<span class="co">#| [2] &lt;block_quote sourcepos="137:1-167:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="137:3-137:16" ...</span>
+<span class="co">#| [3] &lt;block_quote sourcepos="169:1-186:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="169:3-169:16" ...</span>
 <span class="co">#| </span>
 <span class="co">#| $`04-data-structures-part1.Rmd`</span>
 <span class="co">#| {xml_nodeset (7)}</span>
 <span class="co">#| [1] &lt;block_quote sourcepos="329:1-343:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="329:3-329:16" ...</span>
-<span class="co">#| [2] &lt;block_quote sourcepos="393:1-421:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="393:3-393:16" ...</span>
-<span class="co">#| [3] &lt;block_quote sourcepos="482:1-541:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="482:3-482:16" ...</span>
-<span class="co">#| [4] &lt;block_quote sourcepos="563:1-583:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="563:3-563:16" ...</span>
-<span class="co">#| [5] &lt;block_quote sourcepos="586:1-609:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="586:3-586:16" ...</span>
-<span class="co">#| [6] &lt;block_quote sourcepos="612:1-632:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="612:3-612:16" ...</span>
-<span class="co">#| [7] &lt;block_quote sourcepos="635:1-663:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="635:3-635:16" ...</span>
+<span class="co">#| [2] &lt;block_quote sourcepos="413:1-441:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="413:3-413:16" ...</span>
+<span class="co">#| [3] &lt;block_quote sourcepos="502:1-561:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="502:3-502:16" ...</span>
+<span class="co">#| [4] &lt;block_quote sourcepos="583:1-603:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="583:3-583:16" ...</span>
+<span class="co">#| [5] &lt;block_quote sourcepos="606:1-629:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="606:3-606:16" ...</span>
+<span class="co">#| [6] &lt;block_quote sourcepos="632:1-652:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="632:3-632:16" ...</span>
+<span class="co">#| [7] &lt;block_quote sourcepos="655:1-683:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="655:3-655:16" ...</span>
 <span class="co">#| </span>
 <span class="co">#| $`05-data-structures-part2.Rmd`</span>
 <span class="co">#| {xml_nodeset (5)}</span>
@@ -222,20 +211,20 @@
 <span class="co">#| </span>
 <span class="co">#| $`03-seeking-help.Rmd`</span>
 <span class="co">#| {xml_nodeset (3)}</span>
-<span class="co">#| [1] &lt;block_quote sourcepos="114:3-121:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="114:5-114:30"  ...</span>
-<span class="co">#| [2] &lt;block_quote sourcepos="128:3-153:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="128:5-128:30"  ...</span>
-<span class="co">#| [3] &lt;block_quote sourcepos="163:3-172:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="163:5-163:30"  ...</span>
+<span class="co">#| [1] &lt;block_quote sourcepos="128:3-135:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="128:5-128:30"  ...</span>
+<span class="co">#| [2] &lt;block_quote sourcepos="142:3-167:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="142:5-142:30"  ...</span>
+<span class="co">#| [3] &lt;block_quote sourcepos="177:3-186:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="177:5-177:30"  ...</span>
 <span class="co">#| </span>
 <span class="co">#| $`04-data-structures-part1.Rmd`</span>
 <span class="co">#| {xml_nodeset (8)}</span>
 <span class="co">#| [1] &lt;block_quote sourcepos="222:3-231:15" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="222:5-222:19"  ...</span>
 <span class="co">#| [2] &lt;block_quote sourcepos="335:3-341:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="335:5-335:30" l ...</span>
-<span class="co">#| [3] &lt;block_quote sourcepos="400:3-421:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="400:5-400:30"  ...</span>
-<span class="co">#| [4] &lt;block_quote sourcepos="499:3-541:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="499:5-499:30"  ...</span>
-<span class="co">#| [5] &lt;block_quote sourcepos="570:3-583:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="570:5-570:30"  ...</span>
-<span class="co">#| [6] &lt;block_quote sourcepos="595:3-607:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="595:5-595:30" l ...</span>
-<span class="co">#| [7] &lt;block_quote sourcepos="621:3-630:3" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="621:5-621:30" l ...</span>
-<span class="co">#| [8] &lt;block_quote sourcepos="650:3-661:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="650:5-650:30" l ...</span>
+<span class="co">#| [3] &lt;block_quote sourcepos="420:3-441:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="420:5-420:30"  ...</span>
+<span class="co">#| [4] &lt;block_quote sourcepos="519:3-561:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="519:5-519:30"  ...</span>
+<span class="co">#| [5] &lt;block_quote sourcepos="590:3-603:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="590:5-590:30"  ...</span>
+<span class="co">#| [6] &lt;block_quote sourcepos="615:3-627:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="615:5-615:30" l ...</span>
+<span class="co">#| [7] &lt;block_quote sourcepos="641:3-650:3" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="641:5-641:30" l ...</span>
+<span class="co">#| [8] &lt;block_quote sourcepos="670:3-681:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="670:5-670:30" l ...</span>
 <span class="co">#| </span>
 <span class="co">#| $`05-data-structures-part2.Rmd`</span>
 <span class="co">#| {xml_nodeset (5)}</span>
@@ -562,8 +551,6 @@
 <ul class="list-unstyled">
 <li><a href="https://www.tidyverse.org/lifecycle/#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
 <li><a href="https://CRAN.R-project.org/package=pegboard"><img src="https://www.r-pkg.org/badges/version/pegboard" alt="CRAN status"></a></li>
-<li><a href="https://travis-ci.com/carpentries/pegboard"><img src="https://travis-ci.com/carpentries/pegboard.svg?branch=main" alt="Travis build status"></a></li>
-<li><a href="https://ci.appveyor.com/project/carpentries/pegboard"><img src="https://ci.appveyor.com/api/projects/status/github/carpentries/pegboard?branch=main&amp;svg=true" alt="AppVeyor build status"></a></li>
 <li><a href="https://codecov.io/gh/carpentries/pegboard?branch=main"><img src="https://codecov.io/gh/carpentries/pegboard/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
 <li><a href="https://github.com/carpentries/pegboard/actions"><img src="https://github.com/carpentries/pegboard/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
 </ul>
