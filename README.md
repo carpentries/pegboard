@@ -9,10 +9,6 @@
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/pegboard)](https://CRAN.R-project.org/package=pegboard)
-[![Travis build
-status](https://travis-ci.com/carpentries/pegboard.svg?branch=main)](https://travis-ci.com/carpentries/pegboard)
-[![AppVeyor build
-status](https://ci.appveyor.com/api/projects/status/github/carpentries/pegboard?branch=main&svg=true)](https://ci.appveyor.com/project/carpentries/pegboard)
 [![Codecov test
 coverage](https://codecov.io/gh/carpentries/pegboard/branch/main/graph/badge.svg)](https://codecov.io/gh/carpentries/pegboard?branch=main)
 [![R build
@@ -22,7 +18,7 @@ status](https://github.com/carpentries/pegboard/workflows/R-CMD-check/badge.svg)
 > [pegboard](#pegboard) is tempered hardboard which is pre-drilled with
 > evenly spaced holes. The holes are used to accept pegs or hooks to
 > support various items, such as tools in a workshop.
-> 
+>
 > <https://en.wikipedia.org/wiki/Pegboard>
 
 The {pegboard} package is a way to explore the Carpentries’ lessons via
@@ -33,8 +29,8 @@ their XML representation. This package makes heavy use of rOpenSci’s
 There are two [{R6}](https://cran.r-project.org/package=R6) objects in
 the package:
 
-  - Episode: stores the xml content of a single episode
-  - Lesson: stores all Episodes within a lesson
+-   Episode: stores the xml content of a single episode
+-   Lesson: stores all Episodes within a lesson
 
 ## Installation
 
@@ -49,8 +45,8 @@ remotes::install_github("carpentries/pegboard")
 ## Example
 
 The first way to get started is to use the `get_lesson()` function,
-which will use [{git2r}](https://cran.r-project.org/package=git2r) to
-clone a lesson repository to your computer.
+which will use [{gert}](https://r-lib.github.io/gert/) to clone a lesson
+repository to your computer.
 
 ``` r
 library(pegboard)
@@ -60,18 +56,6 @@ library(fs)
 
 d <- fs::file_temp(pattern = "PBREADME")
 rng <- get_lesson("swcarpentry/r-novice-gapminder", path = d)
-#| cloning into '/tmp/RtmpDlAWmb/PBREADME623e2d755f64/swcarpentry--r-novice-gapminder'...
-#| Receiving objects:   1% (94/9360),   52 kb
-#| Receiving objects:  11% (1030/9360),  424 kb
-#| Receiving objects:  21% (1966/9360),  647 kb
-#| Receiving objects:  31% (2902/9360), 8964 kb
-#| Receiving objects:  41% (3838/9360), 14196 kb
-#| Receiving objects:  51% (4774/9360), 21315 kb
-#| Receiving objects:  61% (5710/9360), 26626 kb
-#| Receiving objects:  71% (6646/9360), 30114 kb
-#| Receiving objects:  81% (7582/9360), 32561 kb
-#| Receiving objects:  91% (8518/9360), 36465 kb
-#| Receiving objects: 100% (9360/9360), 44724 kb, done.
 rng
 #| <Lesson>
 #|   Public:
@@ -79,11 +63,12 @@ rng
 #|     challenges: function (path = FALSE, graph = FALSE, recurse = TRUE) 
 #|     clone: function (deep = FALSE) 
 #|     episodes: list
+#|     extra: NULL
 #|     files: active binding
-#|     initialize: function (path = NULL, rmd = FALSE, ...) 
+#|     initialize: function (path = NULL, rmd = FALSE, jekyll = TRUE, ...) 
 #|     isolate_blocks: function () 
 #|     n_problems: active binding
-#|     path: /tmp/RtmpDlAWmb/PBREADME623e2d755f64/swcarpentry--r-novi ...
+#|     path: /tmp/RtmpjVit9F/PBREADME29b7975b150/swcarpentry--r-novic ...
 #|     reset: function () 
 #|     rmd: TRUE
 #|     show_problems: active binding
@@ -111,19 +96,19 @@ head(rng$challenges())
 #| 
 #| $`03-seeking-help.Rmd`
 #| {xml_nodeset (3)}
-#| [1] <block_quote sourcepos="105:1-121:14" ktag="{: .challenge}">\n  <heading sourcepos="105:3-105:16" ...
-#| [2] <block_quote sourcepos="123:1-153:14" ktag="{: .challenge}">\n  <heading sourcepos="123:3-123:16" ...
-#| [3] <block_quote sourcepos="155:1-172:14" ktag="{: .challenge}">\n  <heading sourcepos="155:3-155:16" ...
+#| [1] <block_quote sourcepos="119:1-135:14" ktag="{: .challenge}">\n  <heading sourcepos="119:3-119:16" ...
+#| [2] <block_quote sourcepos="137:1-167:14" ktag="{: .challenge}">\n  <heading sourcepos="137:3-137:16" ...
+#| [3] <block_quote sourcepos="169:1-186:14" ktag="{: .challenge}">\n  <heading sourcepos="169:3-169:16" ...
 #| 
 #| $`04-data-structures-part1.Rmd`
 #| {xml_nodeset (7)}
 #| [1] <block_quote sourcepos="329:1-343:14" ktag="{: .challenge}">\n  <heading sourcepos="329:3-329:16" ...
-#| [2] <block_quote sourcepos="393:1-421:14" ktag="{: .challenge}">\n  <heading sourcepos="393:3-393:16" ...
-#| [3] <block_quote sourcepos="482:1-541:14" ktag="{: .challenge}">\n  <heading sourcepos="482:3-482:16" ...
-#| [4] <block_quote sourcepos="563:1-583:14" ktag="{: .challenge}">\n  <heading sourcepos="563:3-563:16" ...
-#| [5] <block_quote sourcepos="586:1-609:14" ktag="{: .challenge}">\n  <heading sourcepos="586:3-586:16" ...
-#| [6] <block_quote sourcepos="612:1-632:14" ktag="{: .challenge}">\n  <heading sourcepos="612:3-612:16" ...
-#| [7] <block_quote sourcepos="635:1-663:14" ktag="{: .challenge}">\n  <heading sourcepos="635:3-635:16" ...
+#| [2] <block_quote sourcepos="413:1-441:14" ktag="{: .challenge}">\n  <heading sourcepos="413:3-413:16" ...
+#| [3] <block_quote sourcepos="502:1-561:14" ktag="{: .challenge}">\n  <heading sourcepos="502:3-502:16" ...
+#| [4] <block_quote sourcepos="583:1-603:14" ktag="{: .challenge}">\n  <heading sourcepos="583:3-583:16" ...
+#| [5] <block_quote sourcepos="606:1-629:14" ktag="{: .challenge}">\n  <heading sourcepos="606:3-606:16" ...
+#| [6] <block_quote sourcepos="632:1-652:14" ktag="{: .challenge}">\n  <heading sourcepos="632:3-632:16" ...
+#| [7] <block_quote sourcepos="655:1-683:14" ktag="{: .challenge}">\n  <heading sourcepos="655:3-655:16" ...
 #| 
 #| $`05-data-structures-part2.Rmd`
 #| {xml_nodeset (5)}
@@ -160,20 +145,20 @@ head(rng$solutions())
 #| 
 #| $`03-seeking-help.Rmd`
 #| {xml_nodeset (3)}
-#| [1] <block_quote sourcepos="114:3-121:14" ktag="{: .solution}">\n  <heading sourcepos="114:5-114:30"  ...
-#| [2] <block_quote sourcepos="128:3-153:14" ktag="{: .solution}">\n  <heading sourcepos="128:5-128:30"  ...
-#| [3] <block_quote sourcepos="163:3-172:14" ktag="{: .solution}">\n  <heading sourcepos="163:5-163:30"  ...
+#| [1] <block_quote sourcepos="128:3-135:14" ktag="{: .solution}">\n  <heading sourcepos="128:5-128:30"  ...
+#| [2] <block_quote sourcepos="142:3-167:14" ktag="{: .solution}">\n  <heading sourcepos="142:5-142:30"  ...
+#| [3] <block_quote sourcepos="177:3-186:14" ktag="{: .solution}">\n  <heading sourcepos="177:5-177:30"  ...
 #| 
 #| $`04-data-structures-part1.Rmd`
 #| {xml_nodeset (8)}
 #| [1] <block_quote sourcepos="222:3-231:15" ktag="{: .solution}">\n  <heading sourcepos="222:5-222:19"  ...
 #| [2] <block_quote sourcepos="335:3-341:7" ktag="{: .solution}">\n  <heading sourcepos="335:5-335:30" l ...
-#| [3] <block_quote sourcepos="400:3-421:14" ktag="{: .solution}">\n  <heading sourcepos="400:5-400:30"  ...
-#| [4] <block_quote sourcepos="499:3-541:14" ktag="{: .solution}">\n  <heading sourcepos="499:5-499:30"  ...
-#| [5] <block_quote sourcepos="570:3-583:14" ktag="{: .solution}">\n  <heading sourcepos="570:5-570:30"  ...
-#| [6] <block_quote sourcepos="595:3-607:7" ktag="{: .solution}">\n  <heading sourcepos="595:5-595:30" l ...
-#| [7] <block_quote sourcepos="621:3-630:3" ktag="{: .solution}">\n  <heading sourcepos="621:5-621:30" l ...
-#| [8] <block_quote sourcepos="650:3-661:7" ktag="{: .solution}">\n  <heading sourcepos="650:5-650:30" l ...
+#| [3] <block_quote sourcepos="420:3-441:14" ktag="{: .solution}">\n  <heading sourcepos="420:5-420:30"  ...
+#| [4] <block_quote sourcepos="519:3-561:14" ktag="{: .solution}">\n  <heading sourcepos="519:5-519:30"  ...
+#| [5] <block_quote sourcepos="590:3-603:14" ktag="{: .solution}">\n  <heading sourcepos="590:5-590:30"  ...
+#| [6] <block_quote sourcepos="615:3-627:7" ktag="{: .solution}">\n  <heading sourcepos="615:5-615:30" l ...
+#| [7] <block_quote sourcepos="641:3-650:3" ktag="{: .solution}">\n  <heading sourcepos="641:5-641:30" l ...
+#| [8] <block_quote sourcepos="670:3-681:7" ktag="{: .solution}">\n  <heading sourcepos="670:5-670:30" l ...
 #| 
 #| $`05-data-structures-part2.Rmd`
 #| {xml_nodeset (5)}
@@ -240,7 +225,7 @@ such a way that will streamline this process
 
 First, let’s inspect how the file looks at the moment:
 
-```` r
+``` r
 fun <- rng$episodes$`10-functions.Rmd`
 fun$write(d, format = "Rmd")
 cat(readLines(fs::path(d, fun$name), n = 70), sep = "\n")
@@ -314,11 +299,11 @@ cat(readLines(fs::path(d, fun$name), n = 70), sep = "\n")
 #| 
 #| We define `fahr_to_kelvin()` by assigning it to the output of `function`. The
 #| list of argument names are contained within parentheses.   Next, the
-````
+```
 
 Now, we can apply the transformation chain in the order we specifed:
 
-```` r
+``` r
 fun$
   unblock()$         # transform block quotes
   use_sandpaper()$   # convert code block decorators and modify setup chunk
@@ -397,14 +382,14 @@ cat(readLines(fs::path(d, fun$name), n = 70), sep = "\n")
 #| 
 #| ```{r}
 #| fahr_to_kelvin <- function(temp) {
-````
+```
 
 ## Reset
 
 All changes can be reset to the initial state with the `$reset()`
 method:
 
-```` r
+``` r
 fun$
   reset()$
   write(d, format = "Rmd")
@@ -479,4 +464,4 @@ cat(readLines(fs::path(d, fun$name), n = 70), sep = "\n")
 #| 
 #| We define `fahr_to_kelvin()` by assigning it to the output of `function`. The
 #| list of argument names are contained within parentheses.   Next, the
-````
+```
