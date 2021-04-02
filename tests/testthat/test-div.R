@@ -101,6 +101,20 @@ test_that("label_div_tags() will clean clustered pandoc divs", {
 })
 
 
+test_that("label_div_tags() will throw an error if there are missing tags", {
+
+  ci <- Sys.getenv("CI")
+  withr::defer(Sys.setenv(CI = ci))
+
+  Sys.setenv(CI = "")
+  ex <- tinkr::yarn$new(file.path(test_path(), "examples", "mismatched-div.txt"), sourcepos = TRUE)
+  expect_error(label_div_tags(ex), "mismatched-div.txt:5\t| tag: challenge, fixed = TRUE")
+  Sys.setenv(CI = "true")
+  expect_error(label_div_tags(ex), "::warning file=.+?mismatched-div[.]txt,line=5")
+
+})
+
+
 test_that("a mix of div tags can be read", {
 
 

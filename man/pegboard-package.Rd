@@ -6,7 +6,7 @@
 \alias{pegboard-package}
 \title{pegboard: Explore and Manipulate Markdown Curricula from the Carpentries}
 \description{
-The Carpentries (https://carpentries.org>) curricula is made of of
+The Carpentries (<https://carpentries.org>) curricula is made of of
     lessons that are hosted as websites. Each lesson represents between a half
     day to two days of instruction and contains several episodes, which are
     written as 'kramdown'-flavored 'markdown' documents and converted to HTML

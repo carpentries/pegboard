@@ -1,3 +1,10 @@
+# pegboard 0.0.0.9012
+
+ - Lesson class will now work with {sandpaper} (#24) with a new parameter `jekyll`
+ - Episode class gains new slot called `extras` to handle the sandpaper
+   non-episodic things
+ - A better error message is thrown with `Episode$label_divs()`.
+
 # pegboard 0.0.0.9011
 
  - Swap {git2r} dependency for {gert}, which has a smoother interface and matches

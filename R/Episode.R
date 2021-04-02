@@ -21,6 +21,64 @@ Episode <- R6::R6Class("Episode",
     #' @field ns \[`xml_document`\] an xml namespace set to the file name
     ns = NULL,
 
+    #' @description Create a new Episode
+    #' @param path \[`character`\] path to a markdown episode file on disk
+    #' @param process_tags \[`logical`\] if `TRUE` (default), kramdown tags will
+    #'   be processed into attributes of the parent nodes. If `FALSE`, these
+    #'   tags will be treated as text
+    #' @param fix_links \[`logical`\] if `TRUE` (default), links pointing to
+    #'   liquid tags (e.g. `{{ page.root }}`) and included links (those supplied
+    #'   by a call to `{\% import links.md \%}`) will be appropriately processed
+    #'   as valid links.
+    #' @return A new Episode object with extracted XML data
+    #' @examples
+    #' scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
+    #' scope$name
+    #' scope$lesson
+    #' scope$challenges
+    initialize = function(path = NULL, process_tags = TRUE, fix_links = TRUE) {
+      if (!file.exists(path)) {
+        stop(glue::glue("the file '{path}' does not exist"))
+      }
+      default <- list(
+        yaml = NULL,
+        body = xml2::xml_missing()
+      )
+      TOX <- purrr::safely(tinkr::yarn$new, otherwise = default, quiet = FALSE)
+      lsn <- TOX(path, sourcepos = TRUE)
+      if (!is.null(lsn$error)) {
+        private$record_problem(lsn$error)
+      }
+      lsn <- lsn$result
+
+      # Process the kramdown tags
+      if (process_tags) {
+        tags <- kramdown_tags(lsn$body)
+        blocks <- tags[are_blocks(tags)]
+        tags   <- tags[!are_blocks(tags)]
+        # recording problems to inspect later
+        bproblem <- purrr::map(blocks, set_ktag_block)
+        cproblem <- purrr::map(tags, set_ktag_code)
+        bproblem <- bproblem[!purrr::map_lgl(bproblem, is.null)]
+        cproblem <- cproblem[!purrr::map_lgl(cproblem, is.null)]
+        if (length(bproblem) > 0) {
+          private$record_problem(list(blocks = bproblem))
+        }
+        if (length(cproblem) > 0) {
+          private$record_problem(list(code = cproblem))
+        }
+      }
+
+      if (fix_links) fix_links(lsn$body)
+
+      # Initialize the object
+      self$path <- lsn$path
+      self$yaml <- lsn$yaml
+      self$body <- lsn$body
+      self$ns   <- lsn$ns
+    },
+
+
     #' @description return all `block_quote` elements within the Episode
     #' @param type the type of block quote in the Jekyll syntax like ".challenge",
     #'   ".discussion", or ".solution"
@@ -59,7 +117,7 @@ Episode <- R6::R6Class("Episode",
     #' label all the div elements within the Episode to extract them with 
     #' `$get_divs()`
     label_divs = function() {
-      label_div_tags(self$body)
+      label_div_tags(self)
       return(invisible(self))
     },
     
@@ -309,69 +367,12 @@ Episode <- R6::R6Class("Episode",
         purrr::walk(self$get_blocks(), to_dovetail, token = token)
       } else {
         purrr::walk(self$get_blocks(level = 0), replace_with_div)
-        label_div_tags(self$body)
+        label_div_tags(self)
       }
       private$mutations['unblock'] <- TRUE
       invisible(self)
-    },
-
-    #' @description Create a new Episode
-    #' @param path \[`character`\] path to a markdown episode file on disk
-    #' @param process_tags \[`logical`\] if `TRUE` (default), kramdown tags will
-    #'   be processed into attributes of the parent nodes. If `FALSE`, these
-    #'   tags will be treated as text
-    #' @param fix_links \[`logical`\] if `TRUE` (default), links pointing to
-    #'   liquid tags (e.g. `{{ page.root }}`) and included links (those supplied
-    #'   by a call to `{\% import links.md \%}`) will be appropriately processed
-    #'   as valid links.
-    #' @return A new Episode object with extracted XML data
-    #' @examples
-    #' scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
-    #' scope$name
-    #' scope$lesson
-    #' scope$challenges
-    initialize = function(path = NULL, process_tags = TRUE, fix_links = TRUE) {
-      if (!file.exists(path)) {
-        stop(glue::glue("the file '{path}' does not exist"))
-      }
-      default <- list(
-        yaml = NULL,
-        body = xml2::xml_missing()
-      )
-      TOX <- purrr::safely(tinkr::to_xml, otherwise = default, quiet = FALSE)
-      lsn <- TOX(path, sourcepos = TRUE)
-      if (!is.null(lsn$error)) {
-        private$record_problem(lsn$error)
-      }
-      lsn <- lsn$result
-
-      # Process the kramdown tags
-      if (process_tags) {
-        tags <- kramdown_tags(lsn$body)
-        blocks <- tags[are_blocks(tags)]
-        tags   <- tags[!are_blocks(tags)]
-        # recording problems to inspect later
-        bproblem <- purrr::map(blocks, set_ktag_block)
-        cproblem <- purrr::map(tags, set_ktag_code)
-        bproblem <- bproblem[!purrr::map_lgl(bproblem, is.null)]
-        cproblem <- cproblem[!purrr::map_lgl(cproblem, is.null)]
-        if (length(bproblem) > 0) {
-          private$record_problem(list(blocks = bproblem))
-        }
-        if (length(cproblem) > 0) {
-          private$record_problem(list(code = cproblem))
-        }
-      }
-
-      if (fix_links) fix_links(lsn$body)
-
-      # Initialize the object
-      self$path <- path
-      self$yaml <- lsn$yaml
-      self$body <- lsn$body
-      self$ns   <- xml2::xml_ns(lsn$body)
     }
-  ),
+),
   active = list(
     #' @field show_problems \[`list`\] a list of all the problems that occurred in parsing the episode
     show_problems = function() {

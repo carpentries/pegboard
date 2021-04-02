@@ -14,6 +14,14 @@ between RMarkdown and markdown episodes
 \examples{
 
 ## ------------------------------------------------
+## Method `Lesson$new`
+## ------------------------------------------------
+
+frg <- Lesson$new(lesson_fragment())
+frg$path
+frg$episodes
+
+## ------------------------------------------------
 ## Method `Lesson$thin`
 ## ------------------------------------------------
 
@@ -35,21 +43,19 @@ frg$reset()$episodes[[1]]$body # reset
 
 frg <- Lesson$new(lesson_fragment())
 frg$isolate_blocks()$body # only one challenge block_quote
-
-## ------------------------------------------------
-## Method `Lesson$new`
-## ------------------------------------------------
-
-frg <- Lesson$new(lesson_fragment())
-frg$path
-frg$episodes
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
 \item{\code{path}}{[\code{character}] path to Lesson directory}
 
-\item{\code{episodes}}{[\code{list}] list of \link{Episode} class objects.}
+\item{\code{episodes}}{[\code{list}] list of \link{Episode} class objects representing
+the episodes of the lesson.}
+
+\item{\code{extra}}{[\code{list}] list of \link{Episode} class objects representing
+the extra markdown components including index, setup, information
+for learners, information for instructors, and learner profiles. This
+is not processed for the jekyll lessons.}
 
 \item{\code{rmd}}{[\code{logical}] when \code{TRUE}, the episodes represent RMarkdown
 files, default is \code{FALSE} for markdown files.}
@@ -70,15 +76,58 @@ files, default is \code{FALSE} for markdown files.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
+\item \href{#method-new}{\code{Lesson$new()}}
 \item \href{#method-blocks}{\code{Lesson$blocks()}}
 \item \href{#method-challenges}{\code{Lesson$challenges()}}
 \item \href{#method-solutions}{\code{Lesson$solutions()}}
 \item \href{#method-thin}{\code{Lesson$thin()}}
 \item \href{#method-reset}{\code{Lesson$reset()}}
 \item \href{#method-isolate_blocks}{\code{Lesson$isolate_blocks()}}
-\item \href{#method-new}{\code{Lesson$new()}}
 \item \href{#method-clone}{\code{Lesson$clone()}}
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
+\subsection{Method \code{new()}}{
+create a new Lesson object from a directory
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Lesson$new(path = NULL, rmd = FALSE, jekyll = TRUE, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{path}}{[\code{character}] path to a lesson directory. This must have a
+folder called \verb{_episodes} within that contains markdown episodes}
+
+\item{\code{rmd}}{[\code{logical}] when \code{TRUE}, the imported files will be the
+source RMarkdown files. Defaults to \code{FALSE}, which reads the rendered
+markdown files.}
+
+\item{\code{jekyll}}{[\code{logical}] when \code{TRUE} (default), the structure of the
+lesson is assumed to be derived from the carpentries/styles repository.
+When \code{FALSE}, The structure is assumed to be a {sandpaper} lesson and
+extra content for learners, instructors, and profiles will be populated.}
+
+\item{\code{...}}{arguments passed on to \link[=Episode]{Episode$new}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+a new Lesson object that contains a list of \link{Episode} objects in
+\verb{$episodes}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{frg <- Lesson$new(lesson_fragment())
+frg$path
+frg$episodes
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-blocks"></a>}}
@@ -224,44 +273,6 @@ the Episode object, invisibly
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{frg <- Lesson$new(lesson_fragment())
 frg$isolate_blocks()$body # only one challenge block_quote
-}
-\if{html}{\out{</div>}}
-
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
-\subsection{Method \code{new()}}{
-create a new Lesson object from a directory
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Lesson$new(path = NULL, rmd = FALSE, ...)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{path}}{[\code{character}] path to a lesson directory. This must have a
-folder called \verb{_episodes} within that contains markdown episodes}
-
-\item{\code{rmd}}{[\code{logical}] when \code{TRUE}, the imported files will be the
-source RMarkdown files. Defaults to \code{FALSE}, which reads the rendered
-markdown files.}
-
-\item{\code{...}}{arguments passed on to \link[=Episode]{Episode$new}}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-a new Lesson object that contains a list of \link{Episode} objects in
-\verb{$episodes}
-}
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{frg <- Lesson$new(lesson_fragment())
-frg$path
-frg$episodes
 }
 \if{html}{\out{</div>}}
 

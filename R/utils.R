@@ -25,6 +25,29 @@ element_df <- function(node) {
 
 # nocov end
 
+stop_if_no_path <- function(path) {
+  if (!fs::dir_exists(path)) {
+    msg <- "the directory '{path}' does not exist or is not a directory"
+    stop(glue::glue(msg), call. = FALSE)
+  }
+}
+
+read_markdown_files <- function(src, ...) {
+  # Grabbing ONLY the markdown files (there are other sources of detritus)
+  the_episodes <- fs::dir_ls(src, glob = "*md")
+
+  if (!any(grepl("\\.R?md$", the_episodes))) {
+    stop(glue::glue("The {src} directory must have (R)markdown files"),
+      call. = FALSE
+    )
+  }
+
+  episodes <- purrr::map(the_episodes, Episode$new, ...)
+  # Names of the episodes will be the filename, not the basename
+  names(episodes) <- fs::path_file(the_episodes)
+  return(episodes)
+}
+
 # Get a character vector of the namespace
 NS <- function(x, generic = TRUE) {
   if (generic) {
@@ -244,3 +267,4 @@ challenge_is_sibling <- function(node) {
   name <- as.character(substitute(name))
   get(name, envir = asNamespace(pkg), inherits = FALSE)
 }
+
