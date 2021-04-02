@@ -223,6 +223,14 @@ find_between_tags <- function(tag, body, ns = "pb", find = "dtag[@label='{tag}']
 #' ex$body
 #' pegboard:::clear_div_labels(ex$body)
 label_div_tags <- function(body) {
+  if (!inherits(body, "xml_document")) {
+    path <- body$path
+    yaml <- length(body$yaml)
+    body <- body$body
+  } else {
+    path <- NULL
+    yaml <- NULL
+  }
   # Clean up the div tags 
   clear_div_labels(body)
   any_divs <- clean_div_tags(body)
@@ -230,7 +238,7 @@ label_div_tags <- function(body) {
   if (!any_divs && length(nodes) == 0) {
     return(invisible(body))
   }
-  divtab <- make_div_table(nodes)
+  divtab <- make_div_table(nodes, path = path, yaml = yaml)
   purrr::walk2(nodes, divtab, add_pegboard_nodes)
   invisible(body)
 }
@@ -319,10 +327,10 @@ clear_div_labels <- function(body) {
 #' nodes <- pegboard:::find_div_tags(ex$body)
 #' divs  <- pegboard:::make_div_table(nodes)
 #' do.call("rbind", divs)
-make_div_table <- function(nodes) {
+make_div_table <- function(nodes, path = NULL, yaml = NULL) {
   types <- xml2::xml_name(nodes)
   # list to store parsed nodes in
-  divs        <- vector(mode = "list", length = length(types))
+  lines <- divs <- vector(mode = "list", length = length(types))
   fenced_divs <- types == "paragraph"
   
   # Grab all the fenced div text, which consists of finding the text nodes that
@@ -332,6 +340,7 @@ make_div_table <- function(nodes) {
     chills <- glue::glue(".//node()[{pblock}]")
     chills <- purrr::map(nodes[fenced_divs], ~xml2::xml_find_all(.x, chills))
     divs[fenced_divs] <- purrr::map(chills, xml2::xml_text)
+    lines[fenced_divs] <- purrr::map(chills, get_linestart)
   }
   # Grab all of the native div text, stripping out any content that happens to
   # be between div tags (it's happened before, even after cleaning). 
@@ -340,13 +349,30 @@ make_div_table <- function(nodes) {
     # Clean content between divs (we don't particularly care about them
     ndivs <- gsub("[>]([^<]|(?<=[`])[<])+?([<]?)", ">\n\\2", ndivs, perl = TRUE)
     divs[!fenced_divs] <- strsplit(trimws(ndivs), "\n")
+    lines[!fenced_divs] <- rep(get_linestart(nodes[!fenced_divs]), 
+      lengths(divs[!fenced_divs])
+    )
   }
   res <- data.frame(
     node = rep(seq_along(divs), lengths(divs)),
     div  = unlist(divs, use.names = FALSE),
+    line = unlist(lines),
     stringsAsFactors = FALSE
   )
-  labels    <- find_div_pairs(res$div)
+ 
+  labels    <- tryCatch(find_div_pairs(res$div), error = function(e) e)
+  if (inherits(labels, "error")) {
+    div <- sub("^:+", "  [close]", get_div_class(res$div))
+    if (Sys.getenv("CI") == "") {
+      msg <- "{path}:{res$line + yaml}\t | tag: {div}"
+    } else {
+      msg <- "::warning file={path},line={res$line + yaml}::Possibly mismatched section tag"
+    }
+    msg <- c(glue::glue("There was at least one mismatched section tag in {path}."),
+     "Here are the locations of all the tags I found:", 
+     glue::glue(msg))
+    stop(glue::glue_collapse(msg, sep = "\n"))
+  }
   # find the divs that are closing tags
   ends      <- duplicated(labels)
   # create the label by querying the class

@@ -4,7 +4,7 @@
 \alias{make_div_table}
 \title{Create a data frame describing the divs associated with nodes.}
 \usage{
-make_div_table(nodes)
+make_div_table(nodes, path = NULL, yaml = NULL)
 }
 \arguments{
 \item{nodes}{a nodelist containing native div and fenced div tags in

@@ -4,7 +4,10 @@
 \alias{lesson_fragment}
 \title{An example lesson fragment}
 \usage{
-lesson_fragment()
+lesson_fragment(name = "lesson-fragment")
+}
+\arguments{
+\item{name}{the name of the lesson fragment}
 }
 \value{
 a path to a lesson fragment that contains one \verb{_episodes} directory

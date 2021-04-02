@@ -13,12 +13,54 @@ Lesson <- R6::R6Class("Lesson",
     #' @field path \[`character`\] path to Lesson directory
     path = NULL,
 
-    #' @field episodes \[`list`\] list of [Episode] class objects.
+    #' @field episodes \[`list`\] list of [Episode] class objects representing
+    #'   the episodes of the lesson.
     episodes = NULL,
+
+    #' @field extra \[`list`\] list of [Episode] class objects representing
+    #'   the extra markdown components including index, setup, information
+    #'   for learners, information for instructors, and learner profiles. This
+    #'   is not processed for the jekyll lessons.
+    extra = NULL,
 
     #' @field rmd \[`logical`\] when `TRUE`, the episodes represent RMarkdown
     #'   files, default is `FALSE` for markdown files.
     rmd = FALSE,
+
+    #' @description create a new Lesson object from a directory
+    #' @param path \[`character`\] path to a lesson directory. This must have a
+    #'   folder called `_episodes` within that contains markdown episodes
+    #' @param rmd \[`logical`\] when `TRUE`, the imported files will be the
+    #'   source RMarkdown files. Defaults to `FALSE`, which reads the rendered
+    #'   markdown files.
+    #' @param jekyll \[`logical`\] when `TRUE` (default), the structure of the
+    #'   lesson is assumed to be derived from the carpentries/styles repository.
+    #'   When `FALSE`, The structure is assumed to be a {sandpaper} lesson and
+    #'   extra content for learners, instructors, and profiles will be populated.
+    #' @param ... arguments passed on to [Episode$new][Episode]
+    #' @return a new Lesson object that contains a list of [Episode] objects in
+    #' `$episodes`
+    #' @examples
+    #' frg <- Lesson$new(lesson_fragment())
+    #' frg$path
+    #' frg$episodes
+    initialize = function(path = NULL, rmd = FALSE, jekyll = TRUE, ...) {
+      stop_if_no_path(path)
+      if (jekyll) {
+        jeky <- read_jekyll_episodes(path, rmd, ...)
+        self$episodes <- jeky$episodes
+        self$rmd <- jeky$rmd
+      } else {
+        # Modern lessons do not need to have tags processed because there are 
+        # no tags!!!
+        extra_paths <- fs::path(path, c("instructors", "learners", "profiles"))
+        self$episodes <- read_markdown_files(
+          fs::path(path, "episodes"), process_tags = FALSE, ...)
+        self$extra <- read_markdown_files(
+          c(path, extra_paths), process_tags = FALSE, ...)
+      }
+      self$path <- path
+    },
 
     #' @description
     #' Gather all of the blocks from the lesson in a list of xml_nodeset objects
@@ -120,54 +162,6 @@ Lesson <- R6::R6Class("Lesson",
     isolate_blocks = function() {
       purrr::walk(self$episodes, ~.x$isolate_blocks())
       invisible(self)
-    },
-
-    #' @description create a new Lesson object from a directory
-    #' @param path \[`character`\] path to a lesson directory. This must have a
-    #'   folder called `_episodes` within that contains markdown episodes
-    #' @param rmd \[`logical`\] when `TRUE`, the imported files will be the
-    #'   source RMarkdown files. Defaults to `FALSE`, which reads the rendered
-    #'   markdown files.
-    #' @param ... arguments passed on to [Episode$new][Episode]
-    #' @return a new Lesson object that contains a list of [Episode] objects in
-    #' `$episodes`
-    #' @examples
-    #' frg <- Lesson$new(lesson_fragment())
-    #' frg$path
-    #' frg$episodes
-    initialize = function(path = NULL, rmd = FALSE, ...) {
-
-      if (!fs::dir_exists(path)) {
-        stop(glue::glue("the directory '{path}' does not exist or is not a directory"))
-      }
-
-      md_src <- fs::path(path, "_episodes")
-      rmd_src <- fs::path(path, "_episodes_rmd")
-
-      if (!rmd && fs::dir_exists(md_src)) {
-        src <- md_src
-      } else if (fs::dir_exists(rmd_src) && (rmd || !fs::dir_exists(md_src))) {
-        if (!rmd) {
-          message("could not find _episodes/, using _episodes_rmd/ as the source")
-          rmd <- TRUE
-        }
-        src <- rmd_src
-      } else {
-        stop(glue::glue("could not find either _episodes/ or _episodes_rmd/ in {path}"))
-      }
-
-      # Grabbing ONLY the markdown files (there are other sources of detritus)
-      the_episodes <- fs::dir_ls(src, glob = "*md")
-
-      if (!any(grepl("\\.R?md$", the_episodes))) {
-        stop(glue::glue("The {src} directory must have (R)markdown files"))
-      }
-
-      self$episodes <- purrr::map(the_episodes, Episode$new, ...)
-      # Names of the episodes will be the filename, not the basename
-      names(self$episodes) <- fs::path_file(the_episodes)
-      self$path <- path
-      self$rmd  <- rmd
     }
   ),
   active = list(

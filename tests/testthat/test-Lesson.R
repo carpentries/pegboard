@@ -10,6 +10,11 @@ test_that("Lesson class will fail if given a bad path", {
 
 })
 
+test_that("Sandpaper lessons can be read", {
+  snd <- Lesson$new(path = lesson_fragment("sandpaper-fragment"), jekyll = FALSE)
+  expect_is(snd, "Lesson")
+})
+
 test_that("Lesson class contains the right stuff", {
 
   expect_is(frg, "Lesson")

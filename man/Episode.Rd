@@ -18,6 +18,15 @@ destructively modified in the conversion.
 \examples{
 
 ## ------------------------------------------------
+## Method `Episode$new`
+## ------------------------------------------------
+
+scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
+scope$name
+scope$lesson
+scope$challenges
+
+## ------------------------------------------------
 ## Method `Episode$get_blocks`
 ## ------------------------------------------------
 
@@ -86,15 +95,6 @@ loop$get_blocks() # all the blocks in the episode
 loop$unblock()
 loop$get_blocks() # no blocks
 loop$code # now there are two blocks with challenge tags
-
-## ------------------------------------------------
-## Method `Episode$new`
-## ------------------------------------------------
-
-scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
-scope$name
-scope$lesson
-scope$challenges
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -141,6 +141,7 @@ scope$challenges
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
+\item \href{#method-new}{\code{Episode$new()}}
 \item \href{#method-get_blocks}{\code{Episode$get_blocks()}}
 \item \href{#method-label_divs}{\code{Episode$label_divs()}}
 \item \href{#method-get_divs}{\code{Episode$get_divs()}}
@@ -157,9 +158,48 @@ scope$challenges
 \item \href{#method-reset}{\code{Episode$reset()}}
 \item \href{#method-isolate_blocks}{\code{Episode$isolate_blocks()}}
 \item \href{#method-unblock}{\code{Episode$unblock()}}
-\item \href{#method-new}{\code{Episode$new()}}
 \item \href{#method-clone}{\code{Episode$clone()}}
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
+\subsection{Method \code{new()}}{
+Create a new Episode
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Episode$new(path = NULL, process_tags = TRUE, fix_links = TRUE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{path}}{[\code{character}] path to a markdown episode file on disk}
+
+\item{\code{process_tags}}{[\code{logical}] if \code{TRUE} (default), kramdown tags will
+be processed into attributes of the parent nodes. If \code{FALSE}, these
+tags will be treated as text}
+
+\item{\code{fix_links}}{[\code{logical}] if \code{TRUE} (default), links pointing to
+liquid tags (e.g. \code{{{ page.root }}}) and included links (those supplied
+by a call to \verb{\{\\\% import links.md \\\%\}}) will be appropriately processed
+as valid links.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A new Episode object with extracted XML data
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
+scope$name
+scope$lesson
+scope$challenges
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_blocks"></a>}}
@@ -512,46 +552,6 @@ loop$get_blocks() # all the blocks in the episode
 loop$unblock()
 loop$get_blocks() # no blocks
 loop$code # now there are two blocks with challenge tags
-}
-\if{html}{\out{</div>}}
-
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
-\subsection{Method \code{new()}}{
-Create a new Episode
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Episode$new(path = NULL, process_tags = TRUE, fix_links = TRUE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{path}}{[\code{character}] path to a markdown episode file on disk}
-
-\item{\code{process_tags}}{[\code{logical}] if \code{TRUE} (default), kramdown tags will
-be processed into attributes of the parent nodes. If \code{FALSE}, these
-tags will be treated as text}
-
-\item{\code{fix_links}}{[\code{logical}] if \code{TRUE} (default), links pointing to
-liquid tags (e.g. \code{{{ page.root }}}) and included links (those supplied
-by a call to \verb{\{\\\% import links.md \\\%\}}) will be appropriately processed
-as valid links.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A new Episode object with extracted XML data
-}
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
-scope$name
-scope$lesson
-scope$challenges
 }
 \if{html}{\out{</div>}}
 
