@@ -195,3 +195,9 @@ Link to [Home]({{ page.root }}/index.html) and to [shell]({{ site.swc_pages }}/s
 ![Carpentries logo](https://carpentries.org/assets/img/TheCarpentries.svg)
 
 ![Non-working image](../no-workie.svg)
+
+This text includes a [link that isn't parsed correctly by commonmark]({{ page.root }}{% link
+index.md %}). The rest of the text should be properly parsed.
+
+
+{% include links.md %}

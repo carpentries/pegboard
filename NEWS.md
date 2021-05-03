@@ -1,3 +1,8 @@
+# pegboard 0.0.0.9013
+
+ - The omnipresent `{% include links.md %}` is now removed on sandpaper
+   conversion.
+
 # pegboard 0.0.0.9012
 
  - Lesson class will now work with {sandpaper} (#24) with a new parameter `jekyll`

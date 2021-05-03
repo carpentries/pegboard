@@ -10,14 +10,21 @@ use_sandpaper <- function(body, rmd = TRUE) {
     return(invisible(body))
   }
   fix_sandpaper_links(body)
+  # Remove {% include links.md %}
+  lnks <- xml2::xml_find_all(body, 
+    ".//md:text[contains(text(),'include links.md') and contains(text(),'{%')]",
+    ns = get_ns(body)
+  )
+  xml2::xml_remove(lnks)
   # Fix the code tags
   langs      <- get_code(body, "", "@ktag") # grab all of the tags
   any_python <- any(grepl("python", xml2::xml_attr(langs, "ktag")))
   purrr::walk(langs, liquid_to_commonmark, make_rmd = rmd)
+ 
   has_setup_chunk <- xml2::xml_find_lgl(
     body, 
     # setup is the first code block that is not included
-    glue::glue("boolean(./md:code_block[1][@language='r' and @include='FALSE'])"),
+    "boolean(./md:code_block[1][@language='r' and @include='FALSE'])",
     get_ns(body)
   )
   if (has_setup_chunk || rmd) {

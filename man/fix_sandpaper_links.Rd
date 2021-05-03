@@ -26,15 +26,22 @@ The transformation will be to remove relative paths ("../") and replace
 Jekyll templating (e.g. "{{ page.root }}" and "{{ site.swc_pages }}" with
 either nothing or the link to software carpentry, respectively.
 }
+\note{
+This is absolutely NOT comprehensive and some links will fail to be
+converted. If this happens, please report an issue:
+\url{https://github.com/carpentries/pegboard/issues/new/}
+}
 \examples{
 
 loop <- fs::path(lesson_fragment(), "_episodes", "14-looping-data-sets.md")
 e <- Episode$new(loop)
 b <- e$body
+# Links that exist
 xml2::xml_find_all(b, ".//d1:image")
 xml2::xml_find_all(b, ".//d1:html_block")
 xml2::xml_find_all(b, ".//d1:link[contains(@destination, '{{')]")
 fix_sandpaper_links(b)
+# links that were fixed
 xml2::xml_find_all(b, ".//d1:image")
 xml2::xml_find_all(b, ".//d1:html_block")
 xml2::xml_find_all(b, ".//d1:link[contains(@destination, '{{')]")
