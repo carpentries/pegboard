@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9012</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9013</span>
       </span>
     </div>
 
@@ -146,6 +146,12 @@
 <span class="op">)</span>
 <span class="va">SWC</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html">glue</a></span><span class="op">(</span><span class="st">"swcarpentry/{swc_core_lessons}"</span><span class="op">)</span>, <span class="va">get_lesson</span>, path <span class="op">=</span> <span class="va">swc_path</span><span class="op">)</span>
 <span class="co">#&gt; Loading required namespace: gert</span>
+<span class="co">#&gt; Warning in readLines(path, encoding = encoding): incomplete final line found</span>
+<span class="co">#&gt; on '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpKzU2Gb/SWCa73388f7e63/</span>
+<span class="co">#&gt; swcarpentry--python-novice-gapminder/_episodes/04-built-in.md'</span>
+<span class="co">#&gt; Warning in readLines(path, encoding = encoding): incomplete final line found</span>
+<span class="co">#&gt; on '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpKzU2Gb/SWCa73388f7e63/</span>
+<span class="co">#&gt; swcarpentry--python-novice-gapminder/_episodes/14-looping-data-sets.md'</span>
 <span class="co">#&gt; could not find _episodes/, using _episodes_rmd/ as the source</span>
 <span class="co">#&gt; could not find _episodes/, using _episodes_rmd/ as the source</span>
 <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">SWC</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">swc_core_lessons</span></code></pre></div>
@@ -154,7 +160,7 @@
 <code class="sourceCode R"><span class="va">relationships</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dfr</a></span><span class="op">(</span><span class="va">SWC</span>, <span class="op">~</span><span class="va">.x</span><span class="op">$</span><span class="fu">challenges</span><span class="op">(</span>graph <span class="op">=</span> <span class="cn">TRUE</span>, recurse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, .id <span class="op">=</span> <span class="st">"Lesson"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">relationships</span>
-<span class="co">#&gt; # A tibble: 4,702 x 7</span>
+<span class="co">#&gt; # A tibble: 4,705 x 7</span>
 <span class="co">#&gt;    Lesson       Episode       Block from      to        pos          level</span>
 <span class="co">#&gt;    &lt;chr&gt;        &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;        &lt;int&gt;</span>
 <span class="co">#&gt;  1 shell-novice 02-filedir.md 1     challenge heading   318:1-334:14     1</span>
@@ -167,7 +173,7 @@
 <span class="co">#&gt;  8 shell-novice 02-filedir.md 1     paragraph challenge 328:5-334:14     2</span>
 <span class="co">#&gt;  9 shell-novice 02-filedir.md 2     challenge heading   336:1-351:14     1</span>
 <span class="co">#&gt; 10 shell-novice 02-filedir.md 2     heading   paragraph 336:3-336:43     1</span>
-<span class="co">#&gt; # … with 4,692 more rows</span>
+<span class="co">#&gt; # … with 4,695 more rows</span>
 
 <span class="va">curr_graph</span> <span class="op">&lt;-</span> <span class="va">relationships</span> <span class="op">%&gt;%</span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>level <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span>
@@ -279,7 +285,7 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#cilsjbvuxw .gt_table {
+#lsdkucfzud .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -304,7 +310,7 @@
   border-left-color: #D3D3D3;
 }
 
-#cilsjbvuxw .gt_heading {
+#lsdkucfzud .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -316,7 +322,7 @@
   border-right-color: #D3D3D3;
 }
 
-#cilsjbvuxw .gt_title {
+#lsdkucfzud .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -326,7 +332,7 @@
   border-bottom-width: 0;
 }
 
-#cilsjbvuxw .gt_subtitle {
+#lsdkucfzud .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -336,13 +342,13 @@
   border-top-width: 0;
 }
 
-#cilsjbvuxw .gt_bottom_border {
+#lsdkucfzud .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#cilsjbvuxw .gt_col_headings {
+#lsdkucfzud .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -357,7 +363,7 @@
   border-right-color: #D3D3D3;
 }
 
-#cilsjbvuxw .gt_col_heading {
+#lsdkucfzud .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -377,7 +383,7 @@
   overflow-x: hidden;
 }
 
-#cilsjbvuxw .gt_column_spanner_outer {
+#lsdkucfzud .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -389,15 +395,15 @@
   padding-right: 4px;
 }
 
-#cilsjbvuxw .gt_column_spanner_outer:first-child {
+#lsdkucfzud .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#cilsjbvuxw .gt_column_spanner_outer:last-child {
+#lsdkucfzud .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#cilsjbvuxw .gt_column_spanner {
+#lsdkucfzud .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -409,7 +415,7 @@
   width: 100%;
 }
 
-#cilsjbvuxw .gt_group_heading {
+#lsdkucfzud .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -431,7 +437,7 @@
   vertical-align: middle;
 }
 
-#cilsjbvuxw .gt_empty_group_heading {
+#lsdkucfzud .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -446,15 +452,15 @@
   vertical-align: middle;
 }
 
-#cilsjbvuxw .gt_from_md > :first-child {
+#lsdkucfzud .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#cilsjbvuxw .gt_from_md > :last-child {
+#lsdkucfzud .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#cilsjbvuxw .gt_row {
+#lsdkucfzud .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -473,7 +479,7 @@
   overflow-x: hidden;
 }
 
-#cilsjbvuxw .gt_stub {
+#lsdkucfzud .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -485,7 +491,7 @@
   padding-left: 12px;
 }
 
-#cilsjbvuxw .gt_summary_row {
+#lsdkucfzud .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -495,7 +501,7 @@
   padding-right: 5px;
 }
 
-#cilsjbvuxw .gt_first_summary_row {
+#lsdkucfzud .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -505,7 +511,7 @@
   border-top-color: #D3D3D3;
 }
 
-#cilsjbvuxw .gt_grand_summary_row {
+#lsdkucfzud .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -515,7 +521,7 @@
   padding-right: 5px;
 }
 
-#cilsjbvuxw .gt_first_grand_summary_row {
+#lsdkucfzud .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -525,11 +531,11 @@
   border-top-color: #D3D3D3;
 }
 
-#cilsjbvuxw .gt_striped {
+#lsdkucfzud .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#cilsjbvuxw .gt_table_body {
+#lsdkucfzud .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -538,7 +544,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#cilsjbvuxw .gt_footnotes {
+#lsdkucfzud .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -552,13 +558,13 @@
   border-right-color: #D3D3D3;
 }
 
-#cilsjbvuxw .gt_footnote {
+#lsdkucfzud .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#cilsjbvuxw .gt_sourcenotes {
+#lsdkucfzud .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -572,46 +578,46 @@
   border-right-color: #D3D3D3;
 }
 
-#cilsjbvuxw .gt_sourcenote {
+#lsdkucfzud .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#cilsjbvuxw .gt_left {
+#lsdkucfzud .gt_left {
   text-align: left;
 }
 
-#cilsjbvuxw .gt_center {
+#lsdkucfzud .gt_center {
   text-align: center;
 }
 
-#cilsjbvuxw .gt_right {
+#lsdkucfzud .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#cilsjbvuxw .gt_font_normal {
+#lsdkucfzud .gt_font_normal {
   font-weight: normal;
 }
 
-#cilsjbvuxw .gt_font_bold {
+#lsdkucfzud .gt_font_bold {
   font-weight: bold;
 }
 
-#cilsjbvuxw .gt_font_italic {
+#lsdkucfzud .gt_font_italic {
   font-style: italic;
 }
 
-#cilsjbvuxw .gt_super {
+#lsdkucfzud .gt_super {
   font-size: 65%;
 }
 
-#cilsjbvuxw .gt_footnote_marks {
+#lsdkucfzud .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="cilsjbvuxw" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="table gt_table">
+<div id="lsdkucfzud" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="table gt_table">
 <colgroup>
 <col style="width:140px;">
 <col style="width:80px;">
@@ -630,12 +636,12 @@
 <tr>
 <td class="gt_row gt_left">Lesson</td>
       <td class="gt_row gt_right">416</td>
-      <td class="gt_row gt_right">87.21&amp;percnt;</td>
+      <td class="gt_row gt_right">87.39&amp;percnt;</td>
     </tr>
 <tr>
 <td class="gt_row gt_left gt_striped">Paragraph</td>
-      <td class="gt_row gt_right gt_striped">12</td>
-      <td class="gt_row gt_right gt_striped">2.52&amp;percnt;</td>
+      <td class="gt_row gt_right gt_striped">13</td>
+      <td class="gt_row gt_right gt_striped">2.73&amp;percnt;</td>
     </tr>
 <tr>
 <td class="gt_row gt_left">Solution</td>
@@ -644,8 +650,8 @@
     </tr>
 <tr>
 <td class="gt_row gt_left gt_striped">Code block</td>
-      <td class="gt_row gt_right gt_striped">3</td>
-      <td class="gt_row gt_right gt_striped">0.63&amp;percnt;</td>
+      <td class="gt_row gt_right gt_striped">2</td>
+      <td class="gt_row gt_right gt_striped">0.42&amp;percnt;</td>
     </tr>
 <tr>
 <td class="gt_row gt_left">Heading</td>
@@ -663,7 +669,7 @@
 <tr>
 <td class="gt_row gt_left">Heading</td>
       <td class="gt_row gt_right">436</td>
-      <td class="gt_row gt_right">91.40&amp;percnt;</td>
+      <td class="gt_row gt_right">91.60&amp;percnt;</td>
     </tr>
 <tr>
 <td class="gt_row gt_left gt_striped">Code block</td>
@@ -1281,13 +1287,13 @@
 <span class="co">#&gt; #' the relationship between the minimum and maximum GDP per capita</span>
 <span class="co">#&gt; #' among the countries in Asia for each year in the data set.</span>
 <span class="co">#&gt; #' What relationship do you see (if any)?</span>
+<span class="co">#&gt; #'</span>
+<span class="co">#&gt; #' @solution Solution</span>
 <span class="co">#&gt; #' </span>
 <span class="co">#&gt; #' ```</span>
 <span class="co">#&gt; data_asia = pd.read_csv('data/gapminder_gdp_asia.csv', index_col='country')</span>
 <span class="co">#&gt; data_asia.describe().T.plot(kind='scatter', x='min', y='max')</span>
 <span class="co">#&gt; #' ```</span>
-<span class="co">#&gt; #'</span>
-<span class="co">#&gt; #' @solution Solution</span>
 <span class="co">#&gt; #' </span>
 <span class="co">#&gt; #' ![Correlations Solution 1](../fig/9_correlations_solution1.svg)</span>
 <span class="co">#&gt; #' </span>
@@ -1382,13 +1388,13 @@
 <span class="co">#&gt;     result = result + word</span>
 <span class="co">#&gt; print(result)</span>
 <span class="co">#&gt; #' ```</span>
-<span class="co">#&gt; #' </span>
+<span class="co">#&gt; #'</span>
 <span class="co">#&gt; #' @end</span>
 <span class="co">#&gt; #' </span>
-<span class="co">#&gt; #' ```</span>
-<span class="co">#&gt; # Create acronym: ["red", "green", "blue"] =&gt; "RGB"</span>
-<span class="co">#&gt; # write the whole thing</span>
-<span class="co">#&gt; #' ```</span>
+<span class="co">#&gt; #' **Create an acronym:** Starting from the list `["red", "green", "blue"]`, create the acronym `"RGB"` using</span>
+<span class="co">#&gt; #' a for loop.</span>
+<span class="co">#&gt; #'#' </span>
+<span class="co">#&gt; #' **Hint:** You may need to use a string method to properly format the acronym.</span>
 <span class="co">#&gt; #'</span>
 <span class="co">#&gt; #' @solution Solution</span>
 <span class="co">#&gt; #' </span>
