@@ -10,6 +10,10 @@
 #' Jekyll templating (e.g. "{{ page.root }}" and "{{ site.swc_pages }}" with
 #' either nothing or the link to software carpentry, respectively. 
 #'
+#' @note This is absolutely NOT comprehensive and some links will fail to be 
+#' converted. If this happens, please report an issue: 
+#' <https://github.com/carpentries/pegboard/issues/new/>
+#'
 #' @param body an XML node
 #' @return the body, invisibly
 #' @export
@@ -18,10 +22,12 @@
 #' loop <- fs::path(lesson_fragment(), "_episodes", "14-looping-data-sets.md")
 #' e <- Episode$new(loop)
 #' b <- e$body
+#' # Links that exist
 #' xml2::xml_find_all(b, ".//d1:image")
 #' xml2::xml_find_all(b, ".//d1:html_block")
 #' xml2::xml_find_all(b, ".//d1:link[contains(@destination, '{{')]")
 #' fix_sandpaper_links(b)
+#' # links that were fixed
 #' xml2::xml_find_all(b, ".//d1:image")
 #' xml2::xml_find_all(b, ".//d1:html_block")
 #' xml2::xml_find_all(b, ".//d1:link[contains(@destination, '{{')]")
@@ -41,6 +47,26 @@ fix_sandpaper_links <- function(body) {
   )
   links <- xml2::xml_find_all(body, link_search)
   lattr <- xml2::xml_attr(links, "destination")
+  # We will run into situations where commonmark doesn't know what to do with
+  # something like 
+  # 
+  # [link]({{ page.root }}/{% link 
+  # thing.md %})
+  missing_links <- grepl("{%", lattr, fixed = TRUE) &
+    !grepl("%}", lattr, fixed = TRUE)
+  if (any(missing_links)) {
+    ml <- links[missing_links]
+    txt <- xml2::xml_find_first(ml, 
+      glue::glue(".//following-sibling::{ns}:text[contains(text(), '%}')]")
+    )
+    irl_txt <- xml2::xml_text(txt)
+    pattern <- "^(.+?) ?[%][}][)](.*?)$"
+    lattr[missing_links] <- sub(pattern, "\\1", irl_txt, perl = TRUE)
+    lattr[missing_links] <- sub('[.]R?md$', '.html', lattr[missing_links])
+    xml2::xml_set_text(txt,
+      sub(pattern, "\\2", irl_txt, perl = TRUE)
+    )
+  }
   xml2::xml_set_attr(links, "destination", replace_links(lattr))
 
   image <- xml2::xml_find_all(body, img_search)

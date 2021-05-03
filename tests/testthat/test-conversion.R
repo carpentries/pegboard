@@ -53,10 +53,12 @@ test_that("Episodes can be converted to use sandpaper", {
     xml2::xml_attr(rel_links, "destination"),
     c(NA, "../no-workie.svg")
   )
-  expect_length(jek_links, 2)
+  expect_length(jek_links, 3)
   expect_equal(
     xml2::xml_attr(jek_links, "destination"),
-    c("{{ page.root }}/index.html", "{{ site.swc_pages }}/shell-novice")
+    c("{{ page.root }}/index.html", 
+      "{{ site.swc_pages }}/shell-novice", 
+      "{{ page.root }}{% link")
   )
 
   # With RMD -------------------------------------------------------------------
@@ -78,7 +80,7 @@ test_that("Episodes can be converted to use sandpaper", {
   expect_match(xml2::xml_text(rel_links[[1]]), '"no-workie.svg"', fixed = TRUE)
   expect_equal(
     xml2::xml_attr(jek_links, "destination"),
-    c("index.html", "https://swcarpentry.github.io/shell-novice")
+    c("index.html", "https://swcarpentry.github.io/shell-novice", "index.html")
   )
 
   liquid_links <- xml2::xml_find_all(
