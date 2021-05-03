@@ -39,6 +39,13 @@ test_that("Episodes can be converted to use sandpaper", {
     ".//d1:link[contains(@destination, '{{')]"
   )
 
+  liquid_links <- xml2::xml_find_all(
+    e$body,
+    ".//d1:text[contains(text(),'include links.md') and contains(text(),'{%')]"
+  )
+  expect_length(liquid_links, 1)
+  expect_equal(xml2::xml_text(liquid_links), "{% include links.md %}")
+
   expect_length(e$code, 11)
   expect_length(rel_links, 2)
   expect_equal(xml_name(rel_links), c("html_block", "image"))
@@ -73,6 +80,12 @@ test_that("Episodes can be converted to use sandpaper", {
     xml2::xml_attr(jek_links, "destination"),
     c("index.html", "https://swcarpentry.github.io/shell-novice")
   )
+
+  liquid_links <- xml2::xml_find_all(
+    e$body,
+    ".//d1:text[contains(text(),'include links.md') and contains(text(),'{%')]"
+  )
+  expect_length(liquid_links, 0)
 
   # output needs to be explicitly removed
   expect_length(e$output, 4) 

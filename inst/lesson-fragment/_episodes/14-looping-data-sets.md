@@ -195,3 +195,5 @@ Link to [Home]({{ page.root }}/index.html) and to [shell]({{ site.swc_pages }}/s
 ![Carpentries logo](https://carpentries.org/assets/img/TheCarpentries.svg)
 
 ![Non-working image](../no-workie.svg)
+
+{% include links.md %}
