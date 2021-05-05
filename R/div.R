@@ -58,6 +58,9 @@ make_div <- function(what, fenced = TRUE) {
 replace_with_div <- function(block) {
   # Grab the type of block and filter out markup
   type <- gsub("[{:}.]", "", xml2::xml_attr(block, "ktag"))
+  if (all(is.na(type))) {
+    return(invisible(block))
+  }
   # make a div tag
   div   <- make_div(type)
   open  <- xml2::xml_child(div, 1)

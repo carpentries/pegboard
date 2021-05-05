@@ -145,3 +145,34 @@ test_that("a mix of div tags can be read", {
 
 })
 
+
+test_that("a bare block quote will be left alone when converting to divs", {
+
+  tmp <- tempfile()
+  withr::local_file(tmp)
+  txt <- glue::glue("# h1
+
+    > This is a block quote
+    
+    > This is a callout
+    {: .callout}", .open = "^", .close = "$")
+
+  writeLines(txt, tmp)
+
+  e <- Episode$new(tmp)
+  expect_length(e$get_blocks(), 2)
+  expect_length(e$unblock()$get_blocks(), 1)
+  expect_length(e$get_divs(), 1)
+
+})
+
+
+
+
+
+
+
+
+
+
+

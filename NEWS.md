@@ -1,3 +1,9 @@
+# pegboard 0.0.0.9014
+
+ - Innocent block quotes that have not been sullied by the ruthless kramdown
+   postfix operators are kept as block quotes instead of failing on `$unblock()`
+   conversion. 
+
 # pegboard 0.0.0.9013
 
  - The omnipresent `{% include links.md %}` is now removed on sandpaper
