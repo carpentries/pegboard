@@ -99,7 +99,7 @@ replace_with_div <- function(block) {
 #' loop$unblock() # removing blockquotes and replacing with div tags
 #' pegboard:::get_divs(loop$body, 'challenge') # all challenge blocks
 #' pegboard:::get_divs(loop$body, 'solution') # all solution blocks
-get_divs <- function(body, type = NULL){
+get_divs <- function(body, type = NULL, include = FALSE){
   ns    <- get_ns(body)
   if (!any(ns == "http://carpentries.org/pegboard/")) {
     return(list())
@@ -116,7 +116,7 @@ get_divs <- function(body, type = NULL){
   # 5. Define search pattern
   res   <- purrr::map(
     tags[valid], 
-    ~find_between_tags(.x, body, "pb", "dtag[@label='{tag}']")
+    ~find_between_tags(.x, body, "pb", "dtag[@label='{tag}']", include = include)
   )
   names(res) <- tags[valid]
   res
@@ -128,6 +128,7 @@ get_divs <- function(body, type = NULL){
 #' @param body an xml document
 #' @param ns the namespace from the body
 #' @param find an xpath element to search for (without namespace tag)
+#' @param include if `TRUE`, the tags themselves will be included in the output
 #' @return a nodeset between tags that have the dtag attribute matching `tag`
 #' @keywords internal div
 #' @seealso [get_divs()] for finding labelled tags, 
@@ -148,14 +149,9 @@ get_divs <- function(body, type = NULL){
 #' tags
 #' # grab the contents of the first div tag
 #' pegboard:::find_between_tags(tags[[1]], loop$body)
-find_between_tags <- function(tag, body, ns = "pb", find = "dtag[@label='{tag}']") {
+find_between_tags <- function(tag, body, ns = "pb", find = "dtag[@label='{tag}']", include = FALSE) {
   block  <- glue::glue("{ns}:{glue::glue(find)}")
-  after  <- "following-sibling::"
-  before <- "preceding-sibling::"
-  after_first_tag <- glue::glue("{after}{block}")
-  before_last_tag <- glue::glue("{before}md:*[{before}{block}]")
-  xpath <- glue::glue(".//{after_first_tag}/{before_last_tag}")
-  xml2::xml_find_all(body, xpath, get_ns(body))
+  tinkr::find_between(body, get_ns(body), pattern = block, include = include)
 }
 
 #' Add labels to div tags in the form of a "dtag" node with a paired "label"

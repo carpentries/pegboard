@@ -112,8 +112,11 @@ Episode <- R6::R6Class("Episode",
     #' @description
     #' return all div elements within the Episode
     #' @param type the type of div tag (e.g. 'challenge' or 'solution')
-    get_divs = function(type = NULL) {
-      get_divs(self$body, type = type)
+    #' @param include `\[logical\]` if `TRUE`, the div tags will be included in
+    #' the output. Defaults to `FALSE`, which will only return the text between
+    #' the div tags.
+    get_divs = function(type = NULL, include = FALSE) {
+      get_divs(self$body, type = type, include = include)
     },
 
     #' @description

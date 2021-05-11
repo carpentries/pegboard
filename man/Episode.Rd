@@ -282,13 +282,17 @@ label all the div elements within the Episode to extract them with
 \subsection{Method \code{get_divs()}}{
 return all div elements within the Episode
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Episode$get_divs(type = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Episode$get_divs(type = NULL, include = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{type}}{the type of div tag (e.g. 'challenge' or 'solution')}
+
+\item{\code{include}}{\verb{\[logical\]} if \code{TRUE}, the div tags will be included in
+the output. Defaults to \code{FALSE}, which will only return the text between
+the div tags.}
 }
 \if{html}{\out{</div>}}
 }

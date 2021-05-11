@@ -4,7 +4,13 @@
 \alias{find_between_tags}
 \title{Find nodes between two nodes with a given dtag}
 \usage{
-find_between_tags(tag, body, ns = "pb", find = "dtag[@label='{tag}']")
+find_between_tags(
+  tag,
+  body,
+  ns = "pb",
+  find = "dtag[@label='{tag}']",
+  include = FALSE
+)
 }
 \arguments{
 \item{tag}{an integer representing a unique dtag attribute}
@@ -14,6 +20,8 @@ find_between_tags(tag, body, ns = "pb", find = "dtag[@label='{tag}']")
 \item{ns}{the namespace from the body}
 
 \item{find}{an xpath element to search for (without namespace tag)}
+
+\item{include}{if \code{TRUE}, the tags themselves will be included in the output}
 }
 \value{
 a nodeset between tags that have the dtag attribute matching \code{tag}
