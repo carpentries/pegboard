@@ -60,6 +60,15 @@ scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
 scope$get_challenge_graph()
 
 ## ------------------------------------------------
+## Method `Episode$show`
+## ------------------------------------------------
+
+scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
+scope$head()
+scope$tail()
+scope$show()
+
+## ------------------------------------------------
 ## Method `Episode$write`
 ## ------------------------------------------------
 
@@ -444,8 +453,23 @@ scope$get_challenge_graph()
 \if{html}{\out{<a id="method-show"></a>}}
 \if{latex}{\out{\hypertarget{method-show}{}}}
 \subsection{Method \code{show()}}{
+show the markdown contents on the screen
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Episode$show()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+a character vector with one line for each line of output
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
+scope$head()
+scope$tail()
+scope$show()
+}
+\if{html}{\out{</div>}}
+
 }
 
 }
@@ -453,19 +477,41 @@ scope$get_challenge_graph()
 \if{html}{\out{<a id="method-head"></a>}}
 \if{latex}{\out{\hypertarget{method-head}{}}}
 \subsection{Method \code{head()}}{
+show the first n lines of markdown contents on the screen
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Episode$head(n = 6L)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{n}}{the number of lines to show from the top}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+a character vector with one line for each line of output
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-tail"></a>}}
 \if{latex}{\out{\hypertarget{method-tail}{}}}
 \subsection{Method \code{tail()}}{
+show the first n lines of markdown contents on the screen
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Episode$tail(n = 6L)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{n}}{the number of lines to show from the top}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+a character vector with one line for each line of output
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-write"></a>}}
