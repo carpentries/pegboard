@@ -42,6 +42,8 @@ Suggests:
     gt,
     rlang
 Additional_repositories: https://carpentries.github.io/drat/ 
+Remotes:
+  ropensci/tinkr#42
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

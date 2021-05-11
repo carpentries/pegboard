@@ -96,18 +96,8 @@ loop$unblock()
 loop$get_blocks() # no blocks
 loop$code # now there are two blocks with challenge tags
 }
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{path}}{[\code{character}] path to file on disk}
-
-\item{\code{yaml}}{[\code{character}] text block at head of file}
-
-\item{\code{body}}{[\code{xml_document}] an xml document of the episode}
-
-\item{\code{ns}}{[\code{xml_document}] an xml namespace set to the file name}
-}
-\if{html}{\out{</div>}}
+\section{Super class}{
+\code{\link[tinkr:yarn]{tinkr::yarn}} -> \code{Episode}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
@@ -154,12 +144,23 @@ loop$code # now there are two blocks with challenge tags
 \item \href{#method-move_keypoints}{\code{Episode$move_keypoints()}}
 \item \href{#method-move_questions}{\code{Episode$move_questions()}}
 \item \href{#method-get_challenge_graph}{\code{Episode$get_challenge_graph()}}
+\item \href{#method-show}{\code{Episode$show()}}
+\item \href{#method-head}{\code{Episode$head()}}
+\item \href{#method-tail}{\code{Episode$tail()}}
 \item \href{#method-write}{\code{Episode$write()}}
 \item \href{#method-reset}{\code{Episode$reset()}}
 \item \href{#method-isolate_blocks}{\code{Episode$isolate_blocks()}}
 \item \href{#method-unblock}{\code{Episode$unblock()}}
 \item \href{#method-clone}{\code{Episode$clone()}}
 }
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="tinkr" data-topic="yarn" data-id="add_md">}\href{../../tinkr/html/yarn.html#method-add_md}{\code{tinkr::yarn$add_md()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="tinkr" data-topic="yarn" data-id="protect_math">}\href{../../tinkr/html/yarn.html#method-protect_math}{\code{tinkr::yarn$protect_math()}}\out{</span>}
+}
+\out{</details>}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
@@ -436,6 +437,33 @@ scope$get_challenge_graph()
 }
 \if{html}{\out{</div>}}
 
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-show"></a>}}
+\if{latex}{\out{\hypertarget{method-show}{}}}
+\subsection{Method \code{show()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Episode$show()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-head"></a>}}
+\if{latex}{\out{\hypertarget{method-head}{}}}
+\subsection{Method \code{head()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Episode$head(n = 6L)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-tail"></a>}}
+\if{latex}{\out{\hypertarget{method-tail}{}}}
+\subsection{Method \code{tail()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Episode$tail(n = 6L)}\if{html}{\out{</div>}}
 }
 
 }
