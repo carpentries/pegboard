@@ -359,18 +359,9 @@ make_div_table <- function(nodes, path = NULL, yaml = NULL) {
     stringsAsFactors = FALSE
   )
  
-  labels    <- tryCatch(find_div_pairs(res$div), error = function(e) e)
+  labels <- tryCatch(find_div_pairs(res$div), error = function(e) e)
   if (inherits(labels, "error")) {
-    div <- sub("^:+", "  [close]", get_div_class(res$div))
-    if (Sys.getenv("CI") == "") {
-      msg <- "{path}:{res$line + yaml}\t | tag: {div}"
-    } else {
-      msg <- "::warning file={path},line={res$line + yaml}::Possibly mismatched section tag"
-    }
-    msg <- c(glue::glue("There was at least one mismatched section tag in {path}."),
-     "Here are the locations of all the tags I found:", 
-     glue::glue(msg))
-    stop(glue::glue_collapse(msg, sep = "\n"))
+    raise_div_error(res, path, yaml, type = labels$message)
   }
   # find the divs that are closing tags
   ends      <- duplicated(labels)
@@ -380,6 +371,28 @@ make_div_table <- function(nodes, path = NULL, yaml = NULL) {
   # tell us if the tag should go before or after the node
   res$pos   <- ifelse(ends, "after", "before")
   split(res, res$node)
+}
+
+# Raise an error when divs are unbalanced
+#
+# @param res a data frame containing 
+#   - node: a unique identifier for each div element
+#   - div a each div element
+#   - line the line number of the div element
+# @param path the path of the file containing the div
+# @param yaml an integer offset representing the length of the yaml header
+raise_div_error <- function(res, path, yaml, type) {
+  div <- sub(div_close_regex(), "  [close]", get_div_class(res$div))
+  ci <- Sys.getenv("CI") != ""
+  if (ci) {
+    msg <- "::warning file={path},line={res$line + yaml}::Possibly mismatched section tag"
+  } else {
+    msg <- "{path}:{res$line + yaml}\t | tag: {div}"
+  }
+  msg <- c(glue::glue("Missing {type} section (div) tag in {path}."),
+    if (ci) "" else "Here is a list of all tags in the file:", 
+    glue::glue(msg))
+  stop(glue::glue_collapse(msg, sep = "\n"), call. = FALSE)
 }
 
 #' Add a pegboard node before or after a node
@@ -660,6 +673,10 @@ get_div_class <- function(div) {
   trimws(sub('^(.+?class[=]["\']|[:]{3,}?)([- a-zA-Z0-9]+?)(["\'].+?|[:]*?)$', '\\2', div))
 }
 
+div_close_regex <- function() {
+  "(^ *?[<][/]div[>] *?\n?$|^[:]{3,80}$)"
+} 
+
 #' Make paired labels for opening and closing div tags
 #'
 #' @param nodes a character vector of div open and close tags
@@ -686,17 +703,26 @@ get_div_class <- function(div) {
 #'   "</div>", 
 #' "</div>")
 #' pegboard:::find_div_pairs(nodes)
-find_div_pairs <- function(divs, close = "(^ *?[<][/]div[>] *?\n?$|^[:]{3,80}$)") {
-  n_item <- length(divs)
-  n_tags <- n_item / 2
-  if (n_tags != sum(grepl(close, divs))) { 
-    stop("the number of closing tags must equal the number of opening tags")
-  }
+find_div_pairs <- function(divs, close = div_close_regex()) {
   pairs <- sub(close, ")", divs)
-  find_nested_pairs(pairs, n_tags, n_item)
+  pairs[pairs != ")"] <- "("
+  close_tags <- sum(pairs == ")")
+  open_tags  <- sum(pairs == "(")
+  if (close_tags != open_tags) {
+    tags <- c(open = open_tags, close = close_tags)
+    bad <- if (open_tags < close_tags) 1L else 2L
+    cli::cli_alert_danger("A section (div) tag mis-match was detected.")
+    msg <- c("There are not enough {names(tags)[bad]} tags ({tags[bad]}) for",
+      "the number of {names(tags)[-bad]} tags ({tags[-bad]}).")
+    msg <- paste(msg, collapse = " ")
+    stop(cli::cli_alert_danger(msg, id = names(tags)[bad]), call. = FALSE)
+  }
+  label_pairs(pairs, close_tags)
 }
 
-find_nested_pairs <- function(pairs, n_tags, n_item) {
+label_pairs <- function(pairs, n_tags, reverse = FALSE) {
+  n_item <- length(pairs)
+  if (reverse) pairs <- rev(pairs)
   tag_stack <- integer(n_tags)
   labels    <- integer(n_item)
   labels[1]    <- 1L
@@ -706,7 +732,7 @@ find_nested_pairs <- function(pairs, n_tags, n_item) {
   this_tag     <- 1L
   tag_count    <- 1L
   while(this_item <= n_item) {
-    is_closed <- pairs[this_item] == ")"
+    is_closed <- pairs[this_item] == if (reverse) "(" else ")"
     # is_closed <- grepl(close, divs[this_item])
     # Tags that are closed will be labelled with the current tag on the stack
     # and then have the stack decreased
@@ -719,9 +745,9 @@ find_nested_pairs <- function(pairs, n_tags, n_item) {
       tag_count <- tag_count + 1L
       this_tag  <- this_tag  + 1L
       tag_stack[this_tag] <- tag_count
-      labels[this_item] <- tag_stack[this_tag]
+      labels[this_item]   <- tag_stack[this_tag]
     }
     this_item <- this_item + 1L
   }
-  labels
+  if (reverse) rev(labels) else labels
 }
