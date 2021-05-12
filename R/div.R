@@ -385,7 +385,9 @@ raise_div_error <- function(res, path, yaml, type) {
   div <- sub(div_close_regex(), "  [close]", get_div_class(res$div))
   ci <- Sys.getenv("CI") != ""
   if (ci) {
-    msg <- "::warning file={path},line={res$line + yaml}::Possibly mismatched section tag"
+    sub <- if (type == "close") div != "  [close]" else div == "  [close]"
+    line_msg <- glue::glue("check for the corresponding {type} tag")
+    msg <- "::warning file={path},line={res$line[sub] + yaml}::{line_msg}"
   } else {
     msg <- "{path}:{res$line + yaml}\t | tag: {div}"
   }
@@ -711,11 +713,18 @@ find_div_pairs <- function(divs, close = div_close_regex()) {
   if (close_tags != open_tags) {
     tags <- c(open = open_tags, close = close_tags)
     bad <- if (open_tags < close_tags) 1L else 2L
-    cli::cli_alert_danger("A section (div) tag mis-match was detected.")
-    msg <- c("There are not enough {names(tags)[bad]} tags ({tags[bad]}) for",
+    msg1 <- "A section (div) tag mis-match was detected."
+    msg2 <- c("There are not enough {names(tags)[bad]} tags ({tags[bad]}) for",
       "the number of {names(tags)[-bad]} tags ({tags[-bad]}).")
-    msg <- paste(msg, collapse = " ")
-    stop(cli::cli_alert_danger(msg, id = names(tags)[bad]), call. = FALSE)
+    msg <- paste(msg2, collapse = " ")
+    if (requireNamespace("cli")) {
+      cli::cli_alert_danger(msg1)
+      stop(cli::cli_alert_danger(msg, id = names(tags)[bad]), call. = FALSE)
+    } else {
+      message(msg1)
+      message(glue::glue(msg))
+      stop(names(tags)[bad], call. = FALSE)
+    }
   }
   label_pairs(pairs, close_tags)
 }

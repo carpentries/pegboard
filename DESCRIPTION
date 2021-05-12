@@ -40,6 +40,7 @@ Suggests:
     ggraph,
     ggplot2,
     gt,
+    cli,
     rlang
 Additional_repositories: https://carpentries.github.io/drat/ 
 Encoding: UTF-8

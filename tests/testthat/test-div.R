@@ -110,7 +110,7 @@ test_that("label_div_tags() will throw an error if there are missing tags", {
   ex <- tinkr::yarn$new(file.path(test_path(), "examples", "mismatched-div.txt"), sourcepos = TRUE)
   expect_error(label_div_tags(ex), "mismatched-div.txt:5\t| tag: challenge, fixed = TRUE")
   Sys.setenv(CI = "true")
-  expect_error(label_div_tags(ex), "::warning file=.+?mismatched-div[.]txt,line=5")
+  expect_error(label_div_tags(ex), "::warning file=.+?mismatched-div[.]txt,line=5::check for the corresponding close tag")
 
 })
 
