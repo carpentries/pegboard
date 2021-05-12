@@ -4,7 +4,7 @@
 \alias{get_divs}
 \title{Get paired div blocks}
 \usage{
-get_divs(body, type = NULL)
+get_divs(body, type = NULL, include = FALSE)
 }
 \arguments{
 \item{body}{an xml document}

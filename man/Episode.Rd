@@ -60,6 +60,15 @@ scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
 scope$get_challenge_graph()
 
 ## ------------------------------------------------
+## Method `Episode$show`
+## ------------------------------------------------
+
+scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
+scope$head()
+scope$tail()
+scope$show()
+
+## ------------------------------------------------
 ## Method `Episode$write`
 ## ------------------------------------------------
 
@@ -96,18 +105,8 @@ loop$unblock()
 loop$get_blocks() # no blocks
 loop$code # now there are two blocks with challenge tags
 }
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{path}}{[\code{character}] path to file on disk}
-
-\item{\code{yaml}}{[\code{character}] text block at head of file}
-
-\item{\code{body}}{[\code{xml_document}] an xml document of the episode}
-
-\item{\code{ns}}{[\code{xml_document}] an xml namespace set to the file name}
-}
-\if{html}{\out{</div>}}
+\section{Super class}{
+\code{\link[tinkr:yarn]{tinkr::yarn}} -> \code{Episode}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
@@ -154,12 +153,23 @@ loop$code # now there are two blocks with challenge tags
 \item \href{#method-move_keypoints}{\code{Episode$move_keypoints()}}
 \item \href{#method-move_questions}{\code{Episode$move_questions()}}
 \item \href{#method-get_challenge_graph}{\code{Episode$get_challenge_graph()}}
+\item \href{#method-show}{\code{Episode$show()}}
+\item \href{#method-head}{\code{Episode$head()}}
+\item \href{#method-tail}{\code{Episode$tail()}}
 \item \href{#method-write}{\code{Episode$write()}}
 \item \href{#method-reset}{\code{Episode$reset()}}
 \item \href{#method-isolate_blocks}{\code{Episode$isolate_blocks()}}
 \item \href{#method-unblock}{\code{Episode$unblock()}}
 \item \href{#method-clone}{\code{Episode$clone()}}
 }
+}
+\if{html}{
+\out{<details open ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="tinkr" data-topic="yarn" data-id="add_md">}\href{../../tinkr/html/yarn.html#method-add_md}{\code{tinkr::yarn$add_md()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="tinkr" data-topic="yarn" data-id="protect_math">}\href{../../tinkr/html/yarn.html#method-protect_math}{\code{tinkr::yarn$protect_math()}}\out{</span>}
+}
+\out{</details>}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
@@ -272,13 +282,17 @@ label all the div elements within the Episode to extract them with
 \subsection{Method \code{get_divs()}}{
 return all div elements within the Episode
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Episode$get_divs(type = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Episode$get_divs(type = NULL, include = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{type}}{the type of div tag (e.g. 'challenge' or 'solution')}
+
+\item{\code{include}}{\verb{\[logical\]} if \code{TRUE}, the div tags will be included in
+the output. Defaults to \code{FALSE}, which will only return the text between
+the div tags.}
 }
 \if{html}{\out{</div>}}
 }
@@ -438,6 +452,70 @@ scope$get_challenge_graph()
 
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-show"></a>}}
+\if{latex}{\out{\hypertarget{method-show}{}}}
+\subsection{Method \code{show()}}{
+show the markdown contents on the screen
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Episode$show()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+a character vector with one line for each line of output
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
+scope$head()
+scope$tail()
+scope$show()
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-head"></a>}}
+\if{latex}{\out{\hypertarget{method-head}{}}}
+\subsection{Method \code{head()}}{
+show the first n lines of markdown contents on the screen
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Episode$head(n = 6L)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{n}}{the number of lines to show from the top}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+a character vector with one line for each line of output
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-tail"></a>}}
+\if{latex}{\out{\hypertarget{method-tail}{}}}
+\subsection{Method \code{tail()}}{
+show the first n lines of markdown contents on the screen
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Episode$tail(n = 6L)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{n}}{the number of lines to show from the top}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+a character vector with one line for each line of output
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-write"></a>}}

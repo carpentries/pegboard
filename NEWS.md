@@ -1,3 +1,8 @@
+# pegboard 0.0.0.9015
+
+ - the Episode class is now a sub-class of the tinkr::yarn class and gains the
+   `show()`, `head()`, `tail()`, and `protect_math()` methods.
+
 # pegboard 0.0.0.9014
 
  - Innocent block quotes that have not been sullied by the ruthless kramdown

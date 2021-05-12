@@ -7,20 +7,8 @@
 #' has method specific to the Carpentries episodes.
 #' @export
 Episode <- R6::R6Class("Episode",
+  inherit = tinkr::yarn,
   public = list(
-
-    #' @field path \[`character`\] path to file on disk
-    path = NULL,
-
-    #' @field yaml \[`character`\] text block at head of file
-    yaml = NULL,
-
-    #' @field body \[`xml_document`\] an xml document of the episode
-    body = NULL,
-
-    #' @field ns \[`xml_document`\] an xml namespace set to the file name
-    ns = NULL,
-
     #' @description Create a new Episode
     #' @param path \[`character`\] path to a markdown episode file on disk
     #' @param process_tags \[`logical`\] if `TRUE` (default), kramdown tags will
@@ -44,7 +32,7 @@ Episode <- R6::R6Class("Episode",
         yaml = NULL,
         body = xml2::xml_missing()
       )
-      TOX <- purrr::safely(tinkr::yarn$new, otherwise = default, quiet = FALSE)
+      TOX <- purrr::safely(super$initialize, otherwise = default, quiet = FALSE)
       lsn <- TOX(path, sourcepos = TRUE)
       if (!is.null(lsn$error)) {
         private$record_problem(lsn$error)
@@ -124,8 +112,11 @@ Episode <- R6::R6Class("Episode",
     #' @description
     #' return all div elements within the Episode
     #' @param type the type of div tag (e.g. 'challenge' or 'solution')
-    get_divs = function(type = NULL) {
-      get_divs(self$body, type = type)
+    #' @param include `\[logical\]` if `TRUE`, the div tags will be included in
+    #' the output. Defaults to `FALSE`, which will only return the text between
+    #' the div tags.
+    get_divs = function(type = NULL, include = FALSE) {
+      get_divs(self$body, type = type, include = include)
     },
 
     #' @description
@@ -271,6 +262,31 @@ Episode <- R6::R6Class("Episode",
     #' scope$get_challenge_graph()
     get_challenge_graph = function(recurse = TRUE) {
       purrr::map_dfr(self$challenges, feature_graph, recurse = recurse, .id = "Block")
+    },
+
+    #' @description show the markdown contents on the screen
+    #' @return a character vector with one line for each line of output
+    #' @examples
+    #' scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
+    #' scope$head()
+    #' scope$tail()
+    #' scope$show()
+    show = function() {
+      super$show(get_stylesheet())
+    },
+
+    #' @description show the first n lines of markdown contents on the screen
+    #' @param n the number of lines to show from the top 
+    #' @return a character vector with one line for each line of output
+    head = function(n = 6L) {
+      super$head(n, get_stylesheet())
+    },
+
+    #' @description show the first n lines of markdown contents on the screen
+    #' @param n the number of lines to show from the top 
+    #' @return a character vector with one line for each line of output
+    tail = function(n = 6L) {
+      super$tail(n, get_stylesheet())
     },
 
     #' @description write the episode to disk as markdown
