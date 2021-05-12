@@ -692,7 +692,11 @@ find_div_pairs <- function(divs, close = "(^ *?[<][/]div[>] *?\n?$|^[:]{3,80}$)"
   if (n_tags != sum(grepl(close, divs))) { 
     stop("the number of closing tags must equal the number of opening tags")
   }
+  pairs <- sub(close, ")", divs)
+  find_nested_pairs(pairs, n_tags, n_item)
+}
 
+find_nested_pairs <- function(pairs, n_tags, n_item) {
   tag_stack <- integer(n_tags)
   labels    <- integer(n_item)
   labels[1]    <- 1L
@@ -702,7 +706,8 @@ find_div_pairs <- function(divs, close = "(^ *?[<][/]div[>] *?\n?$|^[:]{3,80}$)"
   this_tag     <- 1L
   tag_count    <- 1L
   while(this_item <= n_item) {
-    is_closed <- grepl(close, divs[this_item])
+    is_closed <- pairs[this_item] == ")"
+    # is_closed <- grepl(close, divs[this_item])
     # Tags that are closed will be labelled with the current tag on the stack
     # and then have the stack decreased
     if (is_closed) {
