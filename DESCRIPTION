@@ -17,7 +17,7 @@ Description: The Carpentries (<https://carpentries.org>) curricula is made of of
 License: MIT + file LICENSE
 Imports:
     fs,
-    tinkr,
+    tinkr (>= 0.0.0.9000),
     xml2,
     purrr,
     glue,
