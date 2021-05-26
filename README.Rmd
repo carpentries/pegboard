@@ -29,7 +29,9 @@ knitr::opts_chunk$set(
 > https://en.wikipedia.org/wiki/Pegboard
 
 The {pegboard} package is a way to explore the Carpentries' lessons via their
-XML representation. This package makes heavy use of rOpenSci's [{tinkr}](https://docs.ropensci.org/tinkr/) and [{xml2}](https://cran.r-project.org/package=xml2). 
+XML representation. This package makes heavy use of rOpenSci's
+[{tinkr}](https://docs.ropensci.org/tinkr/) and
+[{xml2}](https://cran.r-project.org/package=xml2). 
 
 There are two [{R6}](https://cran.r-project.org/package=R6) objects in the
 package:
@@ -39,11 +41,16 @@ package:
 
 ## Installation
 
-This package is currently in development, but you can install it via {remotes}:
+{pegboard} is not currently on CRAN, but it can be installed from our
+[Carpentries Universe](https://carpentries.r-universe.dev/ui#builds)
+(updated every hour) with the following commands:
 
 ``` r
-if (!requireNamespace("remotes", quietly = TRUE)) install.packages("remotes")
-remotes::install_github("carpentries/pegboard")
+options(repos = c(
+  carpentries = "https://carpentries.r-universe.dev/", 
+  CRAN = "https://cran.rstudio.com/"
+))
+install.packages("pegboard")
 ```
 
 ## Example
@@ -94,8 +101,7 @@ First, let's inspect how the file looks at the moment:
 
 ```{r inspect the file}
 fun <- rng$episodes$`10-functions.Rmd`
-fun$write(d, format = "Rmd")
-cat(readLines(fs::path(d, fun$name), n = 70), sep = "\n")
+fun$head(70)
 ```
 
 Now, we can apply the transformation chain in the order we specifed:
@@ -107,8 +113,7 @@ fun$
   move_questions()$  # ...
   move_objectives()$
   move_keypoints()$
-  write(d, format = "Rmd")
-cat(readLines(fs::path(d, fun$name), n = 70), sep = "\n")
+  head(70)
 ```
 
 ## Reset
@@ -118,7 +123,6 @@ All changes can be reset to the initial state with the `$reset()` method:
 ```{r reset}
 fun$
   reset()$
-  write(d, format = "Rmd")
-cat(readLines(fs::path(d, fun$name), n = 70), sep = "\n")
+  head(70)
 ```
 
