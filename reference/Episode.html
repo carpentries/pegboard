@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9014</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9015</span>
       </span>
     </div>
 
@@ -143,18 +143,9 @@ has method specific to the Carpentries episodes.</p>
     <p>The current XLST spec for tinkr does not support kramdown, which
 the Carpentries Episodes are styled with, thus some block tags will be
 destructively modified in the conversion.</p>
-    <h2 class="hasAnchor" id="public-fields"><a class="anchor" href="#public-fields"></a>Public fields</h2>
+    <h2 class="hasAnchor" id="super-class"><a class="anchor" href="#super-class"></a>Super class</h2>
 
-    <p><div class="r6-fields"></p><dl>
-<dt><code>path</code></dt><dd><p>[<code>character</code>] path to file on disk</p></dd>
-
-<dt><code>yaml</code></dt><dd><p>[<code>character</code>] text block at head of file</p></dd>
-
-<dt><code>body</code></dt><dd><p>[<code>xml_document</code>] an xml document of the episode</p></dd>
-
-<dt><code>ns</code></dt><dd><p>[<code>xml_document</code>] an xml namespace set to the file name</p></dd>
-
-</dl><p></div></p>
+    <p><code><a href='https://docs.ropensci.org/tinkr/reference/yarn.html'>tinkr::yarn</a></code> -&gt; <code>Episode</code></p>
     <h2 class="hasAnchor" id="active-bindings"><a class="anchor" href="#active-bindings"></a>Active bindings</h2>
 
     <p><div class="r6-active-bindings"></p><dl>
@@ -202,13 +193,23 @@ destructively modified in the conversion.</p>
 <li><p><a href='#method-move_keypoints'><code>Episode$move_keypoints()</code></a></p></li>
 <li><p><a href='#method-move_questions'><code>Episode$move_questions()</code></a></p></li>
 <li><p><a href='#method-get_challenge_graph'><code>Episode$get_challenge_graph()</code></a></p></li>
+<li><p><a href='#method-show'><code>Episode$show()</code></a></p></li>
+<li><p><a href='#method-head'><code>Episode$head()</code></a></p></li>
+<li><p><a href='#method-tail'><code>Episode$tail()</code></a></p></li>
 <li><p><a href='#method-write'><code>Episode$write()</code></a></p></li>
 <li><p><a href='#method-reset'><code>Episode$reset()</code></a></p></li>
 <li><p><a href='#method-isolate_blocks'><code>Episode$isolate_blocks()</code></a></p></li>
 <li><p><a href='#method-unblock'><code>Episode$unblock()</code></a></p></li>
 <li><p><a href='#method-clone'><code>Episode$clone()</code></a></p></li>
 </ul>
-<p><hr>
+<p><details open ><summary>Inherited methods</summary>
+<ul>
+<li><p><span class="pkg-link" data-pkg="tinkr" data-topic="yarn" data-id="add_md"><a href='../../tinkr/html/yarn.html#method-add_md'><code>tinkr::yarn$add_md()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="tinkr" data-topic="yarn" data-id="protect_math"><a href='../../tinkr/html/yarn.html#method-protect_math'><code>tinkr::yarn$protect_math()</code></a></span></p></li>
+</ul>
+</details>
+
+<hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
 <p>Create a new Episode</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>Episode</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>path <span class='op'>=</span> <span class='cn'>NULL</span>, process_tags <span class='op'>=</span> <span class='cn'>TRUE</span>, fix_links <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
@@ -287,11 +288,15 @@ scope$get_blocks(".solution", level = 2)
 <p><hr>
 <a id="method-get_divs"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='get_divs.html'>get_divs()</a></code></h3>
 <p>return all div elements within the Episode</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Episode</span><span class='op'>$</span><span class='fu'>get_divs</span><span class='op'>(</span>type <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Episode</span><span class='op'>$</span><span class='fu'>get_divs</span><span class='op'>(</span>type <span class='op'>=</span> <span class='cn'>NULL</span>, include <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>type</code></dt><dd><p>the type of div tag (e.g. 'challenge' or 'solution')</p></dd>
+
+<dt><code>include</code></dt><dd><p><code>\[logical\]</code> if <code>TRUE</code>, the div tags will be included in
+the output. Defaults to <code>FALSE</code>, which will only return the text between
+the div tags.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
@@ -392,6 +397,44 @@ within the challenges in the Episode:</p><ul>
 <span class='va'>scope</span><span class='op'>$</span><span class='fu'>get_challenge_graph</span><span class='op'>(</span><span class='op'>)</span>
 </pre><p></div></p>
 
+<p><hr>
+<a id="method-show"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>show()</code></h3>
+<p>show the markdown contents on the screen</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>Episode</span><span class='op'>$</span><span class='fu'>show</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<p>a character vector with one line for each line of output</p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
+<p><div class="r example copy"></p><pre><span class='va'>scope</span> <span class='op'>&lt;-</span> <span class='va'>Episode</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"_episodes"</span>, <span class='st'>"17-scope.md"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>scope</span><span class='op'>$</span><span class='fu'>head</span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>scope</span><span class='op'>$</span><span class='fu'>tail</span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>scope</span><span class='op'>$</span><span class='fu'>show</span><span class='op'>(</span><span class='op'>)</span>
+</pre><p></div></p>
+
+<p><hr>
+<a id="method-head"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/utils/head.html'>head()</a></code></h3>
+<p>show the first n lines of markdown contents on the screen</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>Episode</span><span class='op'>$</span><span class='fu'>head</span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>6L</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>n</code></dt><dd><p>the number of lines to show from the top</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<p>a character vector with one line for each line of output</p>
+<p><hr>
+<a id="method-tail"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/utils/head.html'>tail()</a></code></h3>
+<p>show the first n lines of markdown contents on the screen</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>Episode</span><span class='op'>$</span><span class='fu'>tail</span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>6L</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>n</code></dt><dd><p>the number of lines to show from the top</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<p>a character vector with one line for each line of output</p>
 <p><hr>
 <a id="method-write"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/write.html'>write()</a></code></h3>
 <p>write the episode to disk as markdown</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
@@ -538,12 +581,143 @@ kramdown tag. Note that this is a destructive process.</p><h4 class='hasAnchor' 
 #&gt; 8     2       list code_block  66:3-72:1     1
 #&gt; 9     2 code_block     lesson  73:3-93:5     1</div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
+<span class='co'>## Method `Episode$show`</span>
+<span class='co'>## ------------------------------------------------</span>
+
+<span class='va'>scope</span> <span class='op'>&lt;-</span> <span class='va'>Episode</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"_episodes"</span>, <span class='st'>"17-scope.md"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>scope</span><span class='op'>$</span><span class='fu'>head</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ---
+#&gt; title: "Variable Scope"
+#&gt; teaching: 10
+#&gt; exercises: 10
+#&gt; questions:
+#&gt; - "How do function calls actually work?"</div><div class='input'><span class='va'>scope</span><span class='op'>$</span><span class='fu'>tail</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; &gt; 
+#&gt; &gt; KeyError: 'Friday'
+#&gt; &gt; ```
+#&gt; &gt; {: .error}
+#&gt; {: .challenge}
+#&gt; </div><div class='input'><span class='va'>scope</span><span class='op'>$</span><span class='fu'>show</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ---
+#&gt; title: "Variable Scope"
+#&gt; teaching: 10
+#&gt; exercises: 10
+#&gt; questions:
+#&gt; - "How do function calls actually work?"
+#&gt; - "How can I determine where errors occurred?"
+#&gt; objectives:
+#&gt; - "Identify local and global variables."
+#&gt; - "Identify parameters as local variables."
+#&gt; - "Read a traceback and determine the file, function, and line number on which the error occurred, the type of error, and the error message."
+#&gt; keypoints:
+#&gt; - "The scope of a variable is the part of a program that can 'see' that variable."
+#&gt; ---
+#&gt; 
+#&gt; ## The scope of a variable is the part of a program that can 'see' that variable.
+#&gt; 
+#&gt; - There are only so many sensible names for variables.
+#&gt; - People using functions shouldn't have to worry about
+#&gt;   what variable names the author of the function used.
+#&gt; - People writing functions shouldn't have to worry about
+#&gt;   what variable names the function's caller uses.
+#&gt; - The part of a program in which a variable is visible is called its *scope*.
+#&gt; 
+#&gt; ```
+#&gt; pressure = 103.9
+#&gt; 
+#&gt; def adjust(t):
+#&gt;     temperature = t * 1.43 / pressure
+#&gt;     return temperature
+#&gt; ```
+#&gt; {: .language-python}
+#&gt; 
+#&gt; - `pressure` is a *global variable*.
+#&gt;   - Defined outside any particular function.
+#&gt;   - Visible everywhere.
+#&gt; - `t` and `temperature` are *local variables* in `adjust`.
+#&gt;   - Defined in the function.
+#&gt;   - Not visible in the main program.
+#&gt;   - Remember: a function parameter is a variable
+#&gt;     that is automatically assigned a value when the function is called.
+#&gt; 
+#&gt; ```
+#&gt; print('adjusted:', adjust(0.9))
+#&gt; print('temperature after call:', temperature)
+#&gt; ```
+#&gt; {: .language-python}
+#&gt; 
+#&gt; ```
+#&gt; adjusted: 0.01238691049085659
+#&gt; ```
+#&gt; {: .output}
+#&gt; 
+#&gt; ```
+#&gt; Traceback (most recent call last):
+#&gt;   File "/Users/swcarpentry/foo.py", line 8, in &lt;module&gt;
+#&gt;     print('temperature after call:', temperature)
+#&gt; NameError: name 'temperature' is not defined
+#&gt; ```
+#&gt; {: .error}
+#&gt; 
+#&gt; &gt; ## Local and Global Variable Use
+#&gt; &gt; 
+#&gt; &gt; Trace the values of all variables in this program as it is executed.
+#&gt; &gt; (Use '---' as the value of variables before and after they exist.)
+#&gt; &gt; 
+#&gt; &gt; ```
+#&gt; &gt; limit = 100
+#&gt; &gt; 
+#&gt; &gt; def clip(value):
+#&gt; &gt;     return min(max(0.0, value), limit)
+#&gt; &gt; 
+#&gt; &gt; value = -22.5
+#&gt; &gt; print(clip(value))
+#&gt; &gt; ```
+#&gt; &gt; {: .language-python}
+#&gt; {: .challenge}
+#&gt; 
+#&gt; &gt; ## Reading Error Messages
+#&gt; &gt; 
+#&gt; &gt; Read the traceback below, and identify the following:
+#&gt; &gt; 
+#&gt; &gt; 1. How many levels does the traceback have?
+#&gt; &gt; 2. What is the file name where the error occurred?
+#&gt; &gt; 3. What is the function name where the error occurred?
+#&gt; &gt; 4. On which line number in this function did the error occur?
+#&gt; &gt; 5. What is the type of error?
+#&gt; &gt; 6. What is the error message?
+#&gt; &gt; 
+#&gt; &gt; ```
+#&gt; &gt; ---------------------------------------------------------------------------
+#&gt; &gt; KeyError                                  Traceback (most recent call last)
+#&gt; &gt; &lt;ipython-input-2-e4c4cbafeeb5&gt; in &lt;module&gt;()
+#&gt; &gt;       1 import errors_02
+#&gt; &gt; ----&gt; 2 errors_02.print_friday_message()
+#&gt; &gt; 
+#&gt; &gt; /Users/ghopper/thesis/code/errors_02.py in print_friday_message()
+#&gt; &gt;      13
+#&gt; &gt;      14 def print_friday_message():
+#&gt; &gt; ---&gt; 15     print_message("Friday")
+#&gt; &gt; 
+#&gt; &gt; /Users/ghopper/thesis/code/errors_02.py in print_message(day)
+#&gt; &gt;       9         "sunday": "Aw, the weekend is almost over."
+#&gt; &gt;      10     }
+#&gt; &gt; ---&gt; 11     print(messages[day])
+#&gt; &gt;      12
+#&gt; &gt;      13
+#&gt; &gt; 
+#&gt; &gt; KeyError: 'Friday'
+#&gt; &gt; ```
+#&gt; &gt; {: .error}
+#&gt; {: .challenge}
+#&gt; </div><div class='input'>
+<span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `Episode$write`</span>
 <span class='co'>## ------------------------------------------------</span>
 
 <span class='va'>scope</span> <span class='op'>&lt;-</span> <span class='va'>Episode</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"_episodes"</span>, <span class='st'>"17-scope.md"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>scope</span><span class='op'>$</span><span class='fu'>write</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Creating temporary directory '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpRp8DjS/dira1f29ab6c2'</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Creating temporary directory '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/Rtmp8bNyAz/dird6b7131e95b'</span></div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `Episode$reset`</span>
 <span class='co'>## ------------------------------------------------</span>
