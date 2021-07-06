@@ -136,7 +136,7 @@ set_ktag_block <- function(tags) {
   # When this happens, we need to find the nested block quote and
   # get its parents
   if (!balanced && length(parents) < length(are_tags) && length(parents) == 1) {
-    blq <- glue::glue(".//{ns}:block_quote[not(@ktag)]/*")
+    blq <- glue::glue(".//{ns}block_quote[not(@ktag)]/*")
     if (xml2::xml_find_lgl(parents, glue::glue("boolean({blq})"))) {
       parents <- xml2::xml_parents(
         xml2::xml_find_first(parents, blq)
@@ -214,7 +214,7 @@ set_ktag_code <- function(tag) {
     problems <- c(problems, list(element = tag, reason = msg))
   } else {
     # Find the end of the challenge block ------------------------------------
-    code_block_sib <- glue::glue(".//preceding-sibling::{ns}:code_block[1]")
+    code_block_sib <- glue::glue(".//preceding-sibling::{ns}code_block[1]")
     the_block      <- xml2::xml_find_first(tag, code_block_sib)
 
     # Assign the tag attribute -----------------------------------------------

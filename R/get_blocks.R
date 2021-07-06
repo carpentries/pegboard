@@ -30,7 +30,7 @@ get_blocks <- function(body, type = NULL, level = 0) {
   ns <- NS(body)
 
   # Gather all block quotes with increasing nesting levels
-  BLOCK_QUOTE <- glue::glue("{ns}:block_quote")
+  BLOCK_QUOTE <- glue::glue("{ns}block_quote")
   IS_TYPE     <- block_type(ns = ns, type = type)
   # "chip off the ol' block"
   OL_BLOCK    <- glue::glue("ancestor::{BLOCK_QUOTE}")
