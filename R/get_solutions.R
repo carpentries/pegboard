@@ -44,7 +44,7 @@ get_solutions <- function(body, type = c("block", "div", "chunk"), parent = NULL
     return(out)
   }
   # Namespace for the document is listed in the attributes
-  ns <- attr(xml2::xml_ns(body), "names")[[1]]
+  ns <- NS(body)
 
   # convenience namespace aliases
   bq <- glue::glue("{ns}block_quote")

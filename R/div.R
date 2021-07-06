@@ -245,7 +245,7 @@ label_div_tags <- function(body) {
 
 #' @rdname div_labels
 find_div_tags <- function(body) {
-  ns     <- "md"
+  ns     <- "md:"
   # Find all div tags in html blocks or fenced div tags in paragraphs
   pblock <- "starts-with(text(), ':::')"
   divs   <- ".//{ns}html_block[contains(text(), '<div') or contains(text(), '</div')]"
