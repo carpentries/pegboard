@@ -19,7 +19,7 @@ get_list_block <- function(self, type = "questions", in_yaml = TRUE) {
   # TODO: remove this if we determine that {dovetail} is an impossibility
   if (is.null(q)) {
     ns <- NS(self$body)
-    xpath <- ".//{ns}:code_block[@info='{{{type}}}' or @language='{type}']"
+    xpath <- ".//{ns}code_block[@info='{{{type}}}' or @language='{type}']"
     xpath <- glue::glue(xpath)
     q <- xml2::xml_find_first(self$body, xpath)
   } else {

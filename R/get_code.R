@@ -30,10 +30,10 @@ get_code <- function(body, type = ".language-", attr = "@ktag") {
   # be code blocks.
 
   # Namespace for the document is listed in the attributes
-  ns <- attr(xml2::xml_ns(body), "names")[[1]]
+  ns <- NS(body)
 
   # Find the end of the challenge block ----------------------------------------
-  block <- glue::glue(".//{ns}:code_block")
+  block <- glue::glue(".//{ns}code_block")
   if (is.null(attr)) {
     challenge <- block
   } else if (is.null(type)) {

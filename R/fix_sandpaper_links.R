@@ -40,10 +40,10 @@ fix_sandpaper_links <- function(body) {
   lnk_type <- glue::glue("{jek_dest} or {rel_dest}")
 
   # Fix links and markdown images
-  link_search <- glue::glue(".//{ns}:link[{lnk_type}]")
-  img_search  <- glue::glue(".//{ns}:image[{lnk_type}]")
+  link_search <- glue::glue(".//{ns}link[{lnk_type}]")
+  img_search  <- glue::glue(".//{ns}image[{lnk_type}]")
   html_search <- glue::glue(
-    ".//{ns}:html_block[{jek_text} or {rel_text}]"
+    ".//{ns}html_block[{jek_text} or {rel_text}]"
   )
   links <- xml2::xml_find_all(body, link_search)
   lattr <- xml2::xml_attr(links, "destination")
@@ -57,7 +57,7 @@ fix_sandpaper_links <- function(body) {
   if (any(missing_links)) {
     ml <- links[missing_links]
     txt <- xml2::xml_find_first(ml, 
-      glue::glue(".//following-sibling::{ns}:text[contains(text(), '%}')]")
+      glue::glue(".//following-sibling::{ns}text[contains(text(), '%}')]")
     )
     irl_txt <- xml2::xml_text(txt)
     pattern <- "^(.+?) ?[%][}][)](.*?)$"

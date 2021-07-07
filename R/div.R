@@ -150,7 +150,8 @@ get_divs <- function(body, type = NULL, include = FALSE){
 #' # grab the contents of the first div tag
 #' pegboard:::find_between_tags(tags[[1]], loop$body)
 find_between_tags <- function(tag, body, ns = "pb", find = "dtag[@label='{tag}']", include = FALSE) {
-  block  <- glue::glue("{ns}:{glue::glue(find)}")
+  ns <- paste0(ns, ":")
+  block  <- glue::glue("{ns}{glue::glue(find)}")
   tinkr::find_between(body, get_ns(body), pattern = block, include = include)
 }
 
@@ -244,11 +245,11 @@ label_div_tags <- function(body) {
 
 #' @rdname div_labels
 find_div_tags <- function(body) {
-  ns     <- "md"
+  ns     <- "md:"
   # Find all div tags in html blocks or fenced div tags in paragraphs
   pblock <- "starts-with(text(), ':::')"
-  divs   <- ".//{ns}:html_block[contains(text(), '<div') or contains(text(), '</div')]"
-  ndiv   <- ".//{ns}:paragraph[{ns}:text[{pblock}]]"
+  divs   <- ".//{ns}html_block[contains(text(), '<div') or contains(text(), '</div')]"
+  ndiv   <- ".//{ns}paragraph[{ns}text[{pblock}]]"
   xpath  <- glue::glue("{glue::glue(divs)} | {glue::glue(ndiv)}")
   nodes  <- xml2::xml_find_all(body, xpath, get_ns(body))
   nodes
@@ -597,7 +598,7 @@ clean_fenced_divs <- function(body) {
   # Find the parents and then see if they have multiple child elements that
   # need to be split off into separate paragraphs. 
   predicate <- "[starts-with(text(), ':::')]"
-  parent_xslt  <- glue::glue(".//{ns}:paragraph[{ns}:text{predicate}]")
+  parent_xslt  <- glue::glue(".//{ns}paragraph[{ns}text{predicate}]")
   is_a_tag     <- glue::glue("boolean(self::*{predicate})")
   rents        <- xml2::xml_find_all(body, parent_xslt)
   names(rents) <- xml2::xml_attr(rents, "sourcepos")

@@ -44,18 +44,18 @@ get_solutions <- function(body, type = c("block", "div", "chunk"), parent = NULL
     return(out)
   }
   # Namespace for the document is listed in the attributes
-  ns <- attr(xml2::xml_ns(body), "names")[[1]]
+  ns <- NS(body)
 
   # convenience namespace aliases
-  bq <- glue::glue("{ns}:block_quote")
+  bq <- glue::glue("{ns}block_quote")
 
   parent_tag <- block_type(ns = ns, type = parent)
   solution_tag <- block_type(ns = ns, type = ".solution")
 
   # Finding blocks that are missing tags
   #   1. The block starts with a Solution
-  solution_head <- glue::glue("{ns}:text[starts-with(text(),'Solu')]")
-  has_header    <- glue::glue("[{ns}:heading[{solution_head}] ")
+  solution_head <- glue::glue("{ns}text[starts-with(text(),'Solu')]")
+  has_header    <- glue::glue("[{ns}heading[{solution_head}] ")
   #   2. and does not have a solution tag
   no_solution_tag  <- "and not(@ktag)]"
   # Find and tag
