@@ -524,20 +524,7 @@ Episode <- R6::R6Class("Episode",
 
     deep_clone = function(name, value) {
       if (name == "body") {
-        # The new root always seems to insert an extra namespace attribtue to
-        # the nodes. This process finds those attributes and removes them.
-        new <- xml2::xml_new_root(value, .copy = TRUE)
-
-        old_text  <- xml2::xml_find_all(value, ".//node()")
-        old_attrs <- unique(unlist(purrr::map(xml2::xml_attrs(old_text), names)))
-
-        new_text  <- xml2::xml_find_all(new, ".//node()")
-        new_attrs <- unique(unlist(purrr::map(xml2::xml_attrs(new_text), names)))
-
-        dff <- setdiff(new_attrs, old_attrs)
-        xml2::xml_set_attr(new_text, dff, NULL)
-
-        new
+        xml2::read_xml(as.character(value))
       } else {
         value
       }
