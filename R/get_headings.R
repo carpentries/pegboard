@@ -31,8 +31,7 @@ validate_headings <- function(headings, message = TRUE) {
 
   VAL <- TRUE
 
-  # Level sequence validation -------------------------------------------------
-  
+  # Begin validation procedures ------------------------------------------------
   ## Second is First ----
   first_heading_is_second_level <- hlevels[[1]] == 2
   if (message && !first_heading_is_second_level) {
