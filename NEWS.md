@@ -1,3 +1,8 @@
+# pegboard 0.0.0.9016
+
+ - the Episode class now has the `$headings` active binding and the 
+   `$validate_headings()` method to validate headings.
+
 # pegboard 0.0.0.9015
 
  - the Episode class is now a sub-class of the tinkr::yarn class and gains the
