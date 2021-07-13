@@ -2,6 +2,8 @@
 
  - the Episode class now has the `$headings` active binding and the 
    `$validate_headings()` method to validate headings.
+ - We now use {testthat} 3e for our tests
+ - Cloning an Episode object is now more reliable
 
 # pegboard 0.0.0.9015
 
