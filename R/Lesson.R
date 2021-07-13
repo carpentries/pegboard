@@ -162,6 +162,14 @@ Lesson <- R6::R6Class("Lesson",
     isolate_blocks = function() {
       purrr::walk(self$episodes, ~.x$isolate_blocks())
       invisible(self)
+    },
+
+    #' @description
+    #' Validate that the heading elements meet minimum accessibility requirements
+    #' @return TRUE if the headings are valid, FALSE if otherwise with
+    #'   user-level messages.
+    validate_headings = function() {
+      
     }
   ),
   active = list(

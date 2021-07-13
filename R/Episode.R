@@ -387,12 +387,36 @@ Episode <- R6::R6Class("Episode",
       }
       private$mutations['unblock'] <- TRUE
       invisible(self)
+    },
+
+    #' @description perform validation on headings in a document.
+    #'
+    #' This will validate the following aspects of all headings:
+    #'
+    #'  - greater than level 1
+    #'  - increse sequentially (e.g. no jumps from 2 to 4)
+    #'  - unique in their own hierarchy
+    #'  - have names
+    #'  - first heading starts at level 2
+    #'
+    #' @param verbose if `TRUE` (default), a message for each rule broken will
+    #'   be issued to the stderr. if `FALSE`, this will be silent. 
+    #' @return a logical `TRUE` for valid headings and `FALSE` for invalid 
+    #'   headings.
+    #' loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
+    validate_headings = function(verbose = TRUE){
+      validate_headings(self$headings, verbose)
     }
 ),
   active = list(
     #' @field show_problems \[`list`\] a list of all the problems that occurred in parsing the episode
     show_problems = function() {
       private$problems
+    },
+
+    #' @field headings \[`xml_nodeset`\] all headings in the document
+    headings = function() {
+      get_headings(self$body)
     },
 
     #' @field tags \[`xml_nodeset`\] all the kramdown tags from the episode

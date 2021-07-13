@@ -83,6 +83,7 @@ files, default is \code{FALSE} for markdown files.}
 \item \href{#method-thin}{\code{Lesson$thin()}}
 \item \href{#method-reset}{\code{Lesson$reset()}}
 \item \href{#method-isolate_blocks}{\code{Lesson$isolate_blocks()}}
+\item \href{#method-validate_headings}{\code{Lesson$validate_headings()}}
 \item \href{#method-clone}{\code{Lesson$clone()}}
 }
 }
@@ -278,6 +279,20 @@ frg$isolate_blocks()$body # only one challenge block_quote
 
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-validate_headings"></a>}}
+\if{latex}{\out{\hypertarget{method-validate_headings}{}}}
+\subsection{Method \code{validate_headings()}}{
+Validate that the heading elements meet minimum accessibility requirements
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Lesson$validate_headings()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+TRUE if the headings are valid, FALSE if otherwise with
+user-level messages.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

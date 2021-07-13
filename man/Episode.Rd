@@ -113,6 +113,8 @@ loop$code # now there are two blocks with challenge tags
 \describe{
 \item{\code{show_problems}}{[\code{list}] a list of all the problems that occurred in parsing the episode}
 
+\item{\code{headings}}{[\code{xml_nodeset}] all headings in the document}
+
 \item{\code{tags}}{[\code{xml_nodeset}] all the kramdown tags from the episode}
 
 \item{\code{questions}}{[\code{character}] the questions from the episode}
@@ -160,6 +162,7 @@ loop$code # now there are two blocks with challenge tags
 \item \href{#method-reset}{\code{Episode$reset()}}
 \item \href{#method-isolate_blocks}{\code{Episode$isolate_blocks()}}
 \item \href{#method-unblock}{\code{Episode$unblock()}}
+\item \href{#method-validate_headings}{\code{Episode$validate_headings()}}
 \item \href{#method-clone}{\code{Episode$clone()}}
 }
 }
@@ -635,6 +638,38 @@ loop$code # now there are two blocks with challenge tags
 
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-validate_headings"></a>}}
+\if{latex}{\out{\hypertarget{method-validate_headings}{}}}
+\subsection{Method \code{validate_headings()}}{
+perform validation on headings in a document.
+
+This will validate the following aspects of all headings:
+\itemize{
+\item greater than level 1
+\item increse sequentially (e.g. no jumps from 2 to 4)
+\item unique in their own hierarchy
+\item have names
+\item first heading starts at level 2
+}
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Episode$validate_headings(verbose = TRUE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{verbose}}{if \code{TRUE} (default), a message for each rule broken will
+be issued to the stderr. if \code{FALSE}, this will be silent.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+a logical \code{TRUE} for valid headings and \code{FALSE} for invalid
+headings.
+loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
