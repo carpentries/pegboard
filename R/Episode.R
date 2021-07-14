@@ -387,12 +387,36 @@ Episode <- R6::R6Class("Episode",
       }
       private$mutations['unblock'] <- TRUE
       invisible(self)
+    },
+
+    #' @description perform validation on headings in a document.
+    #'
+    #' This will validate the following aspects of all headings:
+    #'
+    #'  - greater than level 1
+    #'  - increse sequentially (e.g. no jumps from 2 to 4)
+    #'  - unique in their own hierarchy
+    #'  - have names
+    #'  - first heading starts at level 2
+    #'
+    #' @param verbose if `TRUE` (default), a message for each rule broken will
+    #'   be issued to the stderr. if `FALSE`, this will be silent. 
+    #' @return a logical `TRUE` for valid headings and `FALSE` for invalid 
+    #'   headings.
+    #' loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
+    validate_headings = function(verbose = TRUE){
+      validate_headings(self$headings, verbose)
     }
 ),
   active = list(
     #' @field show_problems \[`list`\] a list of all the problems that occurred in parsing the episode
     show_problems = function() {
       private$problems
+    },
+
+    #' @field headings \[`xml_nodeset`\] all headings in the document
+    headings = function() {
+      get_headings(self$body)
     },
 
     #' @field tags \[`xml_nodeset`\] all the kramdown tags from the episode
@@ -500,20 +524,7 @@ Episode <- R6::R6Class("Episode",
 
     deep_clone = function(name, value) {
       if (name == "body") {
-        # The new root always seems to insert an extra namespace attribtue to
-        # the nodes. This process finds those attributes and removes them.
-        new <- xml2::xml_new_root(value, .copy = TRUE)
-
-        old_text  <- xml2::xml_find_all(value, ".//node()")
-        old_attrs <- unique(unlist(purrr::map(xml2::xml_attrs(old_text), names)))
-
-        new_text  <- xml2::xml_find_all(new, ".//node()")
-        new_attrs <- unique(unlist(purrr::map(xml2::xml_attrs(new_text), names)))
-
-        dff <- setdiff(new_attrs, old_attrs)
-        xml2::xml_set_attr(new_text, dff, NULL)
-
-        new
+        xml2::read_xml(as.character(value))
       } else {
         value
       }

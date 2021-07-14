@@ -108,12 +108,23 @@ test_that("label_div_tags() will throw an error if there are missing tags", {
 
   Sys.setenv(CI = "")
   ex <- tinkr::yarn$new(file.path(test_path(), "examples", "mismatched-div.txt"), sourcepos = TRUE)
+  suppressMessages({
   expect_error(label_div_tags(ex), "mismatched-div.txt:5\t| tag: challenge, fixed = TRUE")
   Sys.setenv(CI = "true")
   expect_error(label_div_tags(ex), "::warning file=.+?mismatched-div[.]txt,line=5::check for the corresponding close tag")
+  })
 
 })
 
+if (requireNamespace("cli", quietly = TRUE)) {
+
+  cli::test_that_cli("div CLI messages work", {
+    Sys.setenv(CI = "")
+    ex <- tinkr::yarn$new(file.path(test_path(), "examples", "mismatched-div.txt"), sourcepos = TRUE)
+    expect_snapshot(expect_error(label_div_tags(ex)))
+  })
+
+}
 
 test_that("a mix of div tags can be read", {
 

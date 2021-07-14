@@ -12,17 +12,17 @@ test_that("Lesson class will fail if given a bad path", {
 
 test_that("Sandpaper lessons can be read", {
   snd <- Lesson$new(path = lesson_fragment("sandpaper-fragment"), jekyll = FALSE)
-  expect_is(snd, "Lesson")
+  expect_s3_class(snd, "Lesson")
 })
 
 test_that("Lesson class contains the right stuff", {
 
-  expect_is(frg, "Lesson")
+  expect_s3_class(frg, "Lesson")
   expect_length(frg$episodes, 4)
-  expect_is(frg$episodes[[1]], "Episode")
-  expect_is(frg$episodes[[2]], "Episode")
-  expect_is(frg$episodes[[3]], "Episode")
-  expect_is(frg$episodes[[4]], "Episode")
+  expect_s3_class(frg$episodes[[1]], "Episode")
+  expect_s3_class(frg$episodes[[2]], "Episode")
+  expect_s3_class(frg$episodes[[3]], "Episode")
+  expect_s3_class(frg$episodes[[4]], "Episode")
   expect_true(all(purrr::map_lgl(frg$files, fs::file_exists)))
   expect_equal(names(frg$episodes), unname(purrr::map_chr(frg$episodes, "name")))
   expect_equal(frg$path, unique(purrr::map_chr(frg$episodes, "lesson")))
@@ -38,7 +38,7 @@ test_that("Lesson class can get the challenges", {
   chal <- frg$challenges()
   expect_length(chal, 4)
   expect_equal(lengths(chal), expected)
-  expect_is(chal[["17-scope.md"]], "xml_nodeset")
+  expect_s3_class(chal[["17-scope.md"]], "xml_nodeset")
 
 })
 
@@ -50,13 +50,13 @@ test_that("Lesson class can get challenge graphs", {
     ~length(xml2::xml_contents(.x)) + length(.x)
   ))
   chal <- frg$challenges(graph = TRUE, recurse = FALSE)
-  expect_is(chal, "data.frame")
+  expect_s3_class(chal, "data.frame")
   expect_named(chal, c("Episode", "Block", "from", "to", "pos", "level"))
   expect_equal(nrow(chal), n)
   # all of the elements should be top level
   expect_equal(sum(chal$level), n)
   chalr <- frg$challenges(graph = TRUE, recurse = TRUE)
-  expect_is(chalr, "data.frame")
+  expect_s3_class(chalr, "data.frame")
   expect_named(chalr, c("Episode", "Block", "from", "to", "pos", "level"))
   expect_gt(nrow(chalr), n)
 
@@ -69,7 +69,7 @@ test_that("Lesson class can get the solutions", {
   chal <- frg$solutions()
   expect_length(chal, 4)
   expect_equal(lengths(chal), expected)
-  expect_is(chal[["14-looping-data-sets.md"]], "xml_nodeset")
+  expect_s3_class(chal[["14-looping-data-sets.md"]], "xml_nodeset")
 
 })
 

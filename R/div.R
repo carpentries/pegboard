@@ -730,16 +730,43 @@ find_div_pairs <- function(divs, close = div_close_regex()) {
   label_pairs(pairs, close_tags)
 }
 
+#' Label pairs of parentheses. 
+#'
+#' This function is the labeller for [find_div_pairs()]
+#' @param pairs a vector of parentheses.
+#' @param n_tags the number of closing tags
+#' @param reverse if `TRUE`, the search from the end of the stack
+#'
+#' @return a vector of integers indicating the pair of parentheses. 
+#' @keywords internal
+#'
+#' @examples
+#'
+#' x <- c("(", "(", ")", ")")
+#' pegboard:::label_pairs(x, 2)
+#' x <- c("(", "(", ")", "(", "(", ")", ")", ")")
+#' pegboard:::label_pairs(x, 4)
 label_pairs <- function(pairs, n_tags, reverse = FALSE) {
   n_item <- length(pairs)
   if (reverse) pairs <- rev(pairs)
+
+  # Vectors --------------------------------------------------------------------
+  # The tag stack is a vector of integers (set to zero) equal to the length of
+  # the number of pairs. The value of an individual item in the stack is a label
   tag_stack <- integer(n_tags)
+  # The labels is a vector that will be our output. It contains the labels for
+  # each element in pairs
   labels    <- integer(n_item)
   labels[1]    <- 1L
   tag_stack[1] <- 1L
 
+  # Counters -------------------------------------------------------------------
+  # We walk over `this_item` to control the loop. 
+  # It follows both `pairs` and `labels`
   this_item    <- 2L
+  # This tag denotes the current position of the `tag_stack`
   this_tag     <- 1L
+  # tag_count keeps track of the current tag label
   tag_count    <- 1L
   while(this_item <= n_item) {
     is_closed <- pairs[this_item] == if (reverse) "(" else ")"

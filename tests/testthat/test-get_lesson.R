@@ -34,7 +34,7 @@ test_that("lessons can be read from local files", {
 
   frg <- get_lesson(path = lesson_fragment())
 
-  expect_is(frg, "Lesson")
+  expect_s3_class(frg, "Lesson")
   expect_equal(
     names(frg$episodes),
     c("10-lunch.md", "12-for-loops.md", "14-looping-data-sets.md", "17-scope.md")
@@ -48,12 +48,12 @@ test_that("lessons can be downloaded", {
   expect_length(fs::dir_ls(d), 0)
   lex <- get_lesson("carpentries/lesson-example", path = d)
   # the output is a Lesson object
-  expect_is(lex, "Lesson")
+  expect_s3_class(lex, "Lesson")
   # the directory exists
   expect_true(fs::dir_exists(fs::path(d, "carpentries--lesson-example", "_episodes")))
   # The episodes in the object are accounted for
   episodes <- fs::dir_ls(fs::path(d, "carpentries--lesson-example", "_episodes"))
-  expect_equal(episodes, unname(lex$files))
+  expect_equal(episodes, lex$files, ignore_attr = TRUE)
 
 })
 
@@ -67,12 +67,12 @@ test_that("lessons are accessed without re-downloading", {
   lex <- get_lesson("carpentries/lesson-example", path = d)
 
   # the output is a Lesson object
-  expect_is(lex, "Lesson")
+  expect_s3_class(lex, "Lesson")
   # the directory exists
   expect_true(fs::dir_exists(fs::path(d, "carpentries--lesson-example", "_episodes")))
   # The episodes in the object are accounted for
   episodes <- fs::dir_ls(fs::path(d, "carpentries--lesson-example", "_episodes"))
-  expect_equal(episodes, unname(lex$files))
+  expect_equal(episodes, lex$files, ignore_attr = TRUE)
 
 
 })
@@ -85,12 +85,12 @@ test_that("overwriting is possible", {
   lex <- get_lesson("carpentries/lesson-example", path = d, overwrite = TRUE)
 
   # the output is a Lesson object
-  expect_is(lex, "Lesson")
+  expect_s3_class(lex, "Lesson")
   # the directory exists
   expect_true(fs::dir_exists(fs::path(d, "carpentries--lesson-example", "_episodes")))
   # The episodes in the object are accounted for
   episodes <- fs::dir_ls(fs::path(d, "carpentries--lesson-example", "_episodes"))
-  expect_equal(episodes, unname(lex$files))
+  expect_equal(episodes, lex$files, ignore_attr = TRUE)
 
 })
 
@@ -246,8 +246,8 @@ test_that("Lesson methods work as expected", {
 
   # $episodes ------------------------------------------------------------------
   expect_named(lex$episodes, episodes[4:5])
-  expect_is(lex$episodes[[1]], "Episode")
-  expect_is(lex$episodes[[2]], "Episode")
+  expect_s3_class(lex$episodes[[1]], "Episode")
+  expect_s3_class(lex$episodes[[2]], "Episode")
 
 })
 
@@ -272,8 +272,8 @@ test_that("Lessons with Rmd sources can be downloaded", {
     fixed = TRUE
   )
 
-  expect_is(rni, "Lesson")
-  expect_is(rni$episodes[[1]], "Episode")
+  expect_s3_class(rni, "Lesson")
+  expect_s3_class(rni$episodes[[1]], "Episode")
   expect_true(rni$rmd)
 
 })

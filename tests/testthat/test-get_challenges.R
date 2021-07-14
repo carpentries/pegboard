@@ -14,5 +14,5 @@ test_that("get_challenges() returns the right number of block quotes", {
 })
 
 test_that("get_challenges() returns a", {
-  expect_is(get_challenges(frg$episodes[[expected[1]]]$body), "xml_nodeset")
+  expect_s3_class(get_challenges(frg$episodes[[expected[1]]]$body), "xml_nodeset")
 })
