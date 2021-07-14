@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9015</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9016</span>
       </span>
     </div>
 
@@ -151,6 +151,8 @@ destructively modified in the conversion.</p>
     <p><div class="r6-active-bindings"></p><dl>
 <dt><code>show_problems</code></dt><dd><p>[<code>list</code>] a list of all the problems that occurred in parsing the episode</p></dd>
 
+<dt><code>headings</code></dt><dd><p>[<code>xml_nodeset</code>] all headings in the document</p></dd>
+
 <dt><code>tags</code></dt><dd><p>[<code>xml_nodeset</code>] all the kramdown tags from the episode</p></dd>
 
 <dt><code>questions</code></dt><dd><p>[<code>character</code>] the questions from the episode</p></dd>
@@ -200,6 +202,7 @@ destructively modified in the conversion.</p>
 <li><p><a href='#method-reset'><code>Episode$reset()</code></a></p></li>
 <li><p><a href='#method-isolate_blocks'><code>Episode$isolate_blocks()</code></a></p></li>
 <li><p><a href='#method-unblock'><code>Episode$unblock()</code></a></p></li>
+<li><p><a href='#method-validate_headings'><code>Episode$validate_headings()</code></a></p></li>
 <li><p><a href='#method-clone'><code>Episode$clone()</code></a></p></li>
 </ul>
 <p><details open ><summary>Inherited methods</summary>
@@ -511,6 +514,29 @@ kramdown tag. Note that this is a destructive process.</p><h4 class='hasAnchor' 
 </pre><p></div></p>
 
 <p><hr>
+<a id="method-validate_headings"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>validate_headings()</code></h3>
+<p>perform validation on headings in a document.</p>
+<p>This will validate the following aspects of all headings:</p><ul>
+<li><p>greater than level 1</p></li>
+<li><p>increse sequentially (e.g. no jumps from 2 to 4)</p></li>
+<li><p>unique in their own hierarchy</p></li>
+<li><p>have names</p></li>
+<li><p>first heading starts at level 2</p></li>
+</ul>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>Episode</span><span class='op'>$</span><span class='fu'>validate_headings</span><span class='op'>(</span>verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>verbose</code></dt><dd><p>if <code>TRUE</code> (default), a message for each rule broken will
+be issued to the stderr. if <code>FALSE</code>, this will be silent.</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<p>a logical <code>TRUE</code> for valid headings and <code>FALSE</code> for invalid
+headings.
+loop &lt;- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))</p>
+<p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>Episode</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
@@ -717,7 +743,7 @@ kramdown tag. Note that this is a destructive process.</p><h4 class='hasAnchor' 
 
 <span class='va'>scope</span> <span class='op'>&lt;-</span> <span class='va'>Episode</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"_episodes"</span>, <span class='st'>"17-scope.md"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>scope</span><span class='op'>$</span><span class='fu'>write</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Creating temporary directory '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpNU1OzK/dir8286d13f72d'</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Creating temporary directory '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpH6BG1I/dir9e57601e336'</span></div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `Episode$reset`</span>
 <span class='co'>## ------------------------------------------------</span>

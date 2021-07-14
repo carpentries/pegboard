@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9015</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9016</span>
       </span>
     </div>
 
@@ -179,6 +179,7 @@ files, default is <code>FALSE</code> for markdown files.</p></dd>
 <li><p><a href='#method-thin'><code>Lesson$thin()</code></a></p></li>
 <li><p><a href='#method-reset'><code>Lesson$reset()</code></a></p></li>
 <li><p><a href='#method-isolate_blocks'><code>Lesson$isolate_blocks()</code></a></p></li>
+<li><p><a href='#method-validate_headings'><code>Lesson$validate_headings()</code></a></p></li>
 <li><p><a href='#method-clone'><code>Lesson$clone()</code></a></p></li>
 </ul>
 <p><hr>
@@ -310,6 +311,14 @@ kramdown tag. Note that this is a destructive process.</p><h4 class='hasAnchor' 
 </pre><p></div></p>
 
 <p><hr>
+<a id="method-validate_headings"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>validate_headings()</code></h3>
+<p>Validate that the heading elements meet minimum accessibility requirements</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>validate_headings</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<p>TRUE if the headings are valid, FALSE if otherwise with
+user-level messages.</p>
+<p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
@@ -346,6 +355,7 @@ kramdown tag. Note that this is a destructive process.</p><h4 class='hasAnchor' 
 #&gt;     get_divs: function (type = NULL, include = FALSE) 
 #&gt;     get_yaml: function () 
 #&gt;     head: function (n = 6L) 
+#&gt;     headings: active binding
 #&gt;     initialize: function (path = NULL, process_tags = TRUE, fix_links = TRUE) 
 #&gt;     isolate_blocks: function () 
 #&gt;     keypoints: active binding
@@ -372,6 +382,7 @@ kramdown tag. Note that this is a destructive process.</p><h4 class='hasAnchor' 
 #&gt;     unblock: function (token = "#'") 
 #&gt;     use_dovetail: function () 
 #&gt;     use_sandpaper: function (rmd = FALSE) 
+#&gt;     validate_headings: function (verbose = TRUE) 
 #&gt;     write: function (path = NULL, format = "md", edit = FALSE) 
 #&gt;     yaml: --- layout: break title: "Lunch" teaching: 0 exercises:  ...
 #&gt;   Private:
@@ -399,6 +410,7 @@ kramdown tag. Note that this is a destructive process.</p><h4 class='hasAnchor' 
 #&gt;     get_divs: function (type = NULL, include = FALSE) 
 #&gt;     get_yaml: function () 
 #&gt;     head: function (n = 6L) 
+#&gt;     headings: active binding
 #&gt;     initialize: function (path = NULL, process_tags = TRUE, fix_links = TRUE) 
 #&gt;     isolate_blocks: function () 
 #&gt;     keypoints: active binding
@@ -425,6 +437,7 @@ kramdown tag. Note that this is a destructive process.</p><h4 class='hasAnchor' 
 #&gt;     unblock: function (token = "#'") 
 #&gt;     use_dovetail: function () 
 #&gt;     use_sandpaper: function (rmd = FALSE) 
+#&gt;     validate_headings: function (verbose = TRUE) 
 #&gt;     write: function (path = NULL, format = "md", edit = FALSE) 
 #&gt;     yaml: --- title: "For Loops" teaching: 10 exercises: 15 questi ...
 #&gt;   Private:
@@ -452,6 +465,7 @@ kramdown tag. Note that this is a destructive process.</p><h4 class='hasAnchor' 
 #&gt;     get_divs: function (type = NULL, include = FALSE) 
 #&gt;     get_yaml: function () 
 #&gt;     head: function (n = 6L) 
+#&gt;     headings: active binding
 #&gt;     initialize: function (path = NULL, process_tags = TRUE, fix_links = TRUE) 
 #&gt;     isolate_blocks: function () 
 #&gt;     keypoints: active binding
@@ -478,6 +492,7 @@ kramdown tag. Note that this is a destructive process.</p><h4 class='hasAnchor' 
 #&gt;     unblock: function (token = "#'") 
 #&gt;     use_dovetail: function () 
 #&gt;     use_sandpaper: function (rmd = FALSE) 
+#&gt;     validate_headings: function (verbose = TRUE) 
 #&gt;     write: function (path = NULL, format = "md", edit = FALSE) 
 #&gt;     yaml: --- title: "Looping Over Data Sets" teaching: 5 exercise ...
 #&gt;   Private:
@@ -505,6 +520,7 @@ kramdown tag. Note that this is a destructive process.</p><h4 class='hasAnchor' 
 #&gt;     get_divs: function (type = NULL, include = FALSE) 
 #&gt;     get_yaml: function () 
 #&gt;     head: function (n = 6L) 
+#&gt;     headings: active binding
 #&gt;     initialize: function (path = NULL, process_tags = TRUE, fix_links = TRUE) 
 #&gt;     isolate_blocks: function () 
 #&gt;     keypoints: active binding
@@ -531,6 +547,7 @@ kramdown tag. Note that this is a destructive process.</p><h4 class='hasAnchor' 
 #&gt;     unblock: function (token = "#'") 
 #&gt;     use_dovetail: function () 
 #&gt;     use_sandpaper: function (rmd = FALSE) 
+#&gt;     validate_headings: function (verbose = TRUE) 
 #&gt;     write: function (path = NULL, format = "md", edit = FALSE) 
 #&gt;     yaml: --- title: "Variable Scope" teaching: 10 exercises: 10 q ...
 #&gt;   Private:

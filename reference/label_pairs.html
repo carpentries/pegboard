@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Convert liquid code blocks to commonmark code blocks — liquid_to_commonmark • pegboard</title>
+<title>Label pairs of parentheses. — label_pairs • pegboard</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Convert liquid code blocks to commonmark code blocks — liquid_to_commonmark" />
-<meta property="og:description" content="Liquid code blocks are generally codified by" />
+<meta property="og:title" content="Label pairs of parentheses. — label_pairs" />
+<meta property="og:description" content="This function is the labeller for find_div_pairs()" />
 
 
 
@@ -123,67 +123,45 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Convert liquid code blocks to commonmark code blocks</h1>
-    <small class="dont-index">Source: <a href='https://github.com/zkamvar/pegboard/blob/master/R/liquid_to_commonmark.R'><code>R/liquid_to_commonmark.R</code></a></small>
-    <div class="hidden name"><code>liquid_to_commonmark.Rd</code></div>
+    <h1>Label pairs of parentheses.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/zkamvar/pegboard/blob/master/R/div.R'><code>R/div.R</code></a></small>
+    <div class="hidden name"><code>label_pairs.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Liquid code blocks are generally codified by</p>
+    <p>This function is the labeller for <code><a href='find_div_pairs.html'>find_div_pairs()</a></code></p>
     </div>
 
-    <pre class="usage"><span class='fu'>liquid_to_commonmark</span><span class='op'>(</span><span class='va'>block</span>, make_rmd <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>label_pairs</span><span class='op'>(</span><span class='va'>pairs</span>, <span class='va'>n_tags</span>, reverse <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>block</th>
-      <td><p>a code block</p></td>
+      <th>pairs</th>
+      <td><p>a vector of parentheses.</p></td>
     </tr>
     <tr>
-      <th>make_rmd</th>
-      <td><p>if <code>TRUE</code>, the language will be wrapped in curly braces to
-be evaluated by RMarkdown</p></td>
+      <th>n_tags</th>
+      <td><p>the number of closing tags</p></td>
+    </tr>
+    <tr>
+      <th>reverse</th>
+      <td><p>if <code>TRUE</code>, the search from the end of the stack</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>the node, invisibly.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    
-<pre><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='st'>"code goes "</span> <span class='op'>+</span> <span class='st'>"here"</span><span class='op'>)</span>
-</pre>
-
-<p>: .language-python</p>
-<p>However, there is a simpler syntax that we can use:<div class="sourceCode python"></p><pre><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='st'>"code goes "</span> <span class='op'>+</span> <span class='st'>"here"</span><span class='op'>)</span>
-</pre><p></div></p>
-<p>This will take in a code block and convert it so that it will no longer use
-the liquid tag (which we have added as a "ktag" attribute for "kramdown" tag)</p>
+    <p>a vector of integers indicating the pair of parentheses.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='va'>frg1</span> <span class='op'>&lt;-</span> <span class='va'><a href='Lesson.html'>Lesson</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>frg2</span> <span class='op'>&lt;-</span> <span class='va'>frg1</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='va'>py1</span>  <span class='op'>&lt;-</span> <span class='fu'><a href='get_code.html'>get_code</a></span><span class='op'>(</span><span class='va'>frg1</span><span class='op'>$</span><span class='va'>episodes</span><span class='op'>[[</span><span class='st'>"17-scope.md"</span><span class='op'>]</span><span class='op'>]</span><span class='op'>$</span><span class='va'>body</span>, <span class='st'>".language"</span><span class='op'>)</span>
-<span class='va'>py2</span>  <span class='op'>&lt;-</span> <span class='fu'><a href='get_code.html'>get_code</a></span><span class='op'>(</span><span class='va'>frg2</span><span class='op'>$</span><span class='va'>episodes</span><span class='op'>[[</span><span class='st'>"17-scope.md"</span><span class='op'>]</span><span class='op'>]</span><span class='op'>$</span><span class='va'>body</span>, <span class='st'>".language"</span><span class='op'>)</span>
-<span class='va'>py1</span>
-</div><div class='output co'>#&gt; {xml_nodeset (3)}
-#&gt; [1] &lt;code_block sourcepos="10:1-16:3" xml:space="preserve" name="" ktag="{: . ...
-#&gt; [2] &lt;code_block sourcepos="28:1-31:3" xml:space="preserve" name="" ktag="{: . ...
-#&gt; [3] &lt;code_block sourcepos="50:3-58:5" xml:space="preserve" name="" ktag="{: . ...</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/invisible.html'>invisible</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>py1</span>, <span class='va'>liquid_to_commonmark</span>, make_rmd <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/invisible.html'>invisible</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>py2</span>, <span class='va'>liquid_to_commonmark</span>, make_rmd <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>py1</span>
-</div><div class='output co'>#&gt; {xml_nodeset (3)}
-#&gt; [1] &lt;code_block sourcepos="10:1-16:3" xml:space="preserve" name="" info="pyth ...
-#&gt; [2] &lt;code_block sourcepos="28:1-31:3" xml:space="preserve" name="" info="pyth ...
-#&gt; [3] &lt;code_block sourcepos="50:3-58:5" xml:space="preserve" name="" info="pyth ...</div><div class='input'><span class='va'>py2</span>
-</div><div class='output co'>#&gt; {xml_nodeset (3)}
-#&gt; [1] &lt;code_block sourcepos="10:1-16:3" xml:space="preserve" name="python-chunk ...
-#&gt; [2] &lt;code_block sourcepos="28:1-31:3" xml:space="preserve" name="python-chunk ...
-#&gt; [3] &lt;code_block sourcepos="50:3-58:5" xml:space="preserve" name="python-chunk ...</div></pre>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"("</span>, <span class='st'>"("</span>, <span class='st'>")"</span>, <span class='st'>")"</span><span class='op'>)</span>
+<span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>label_pairs</span><span class='op'>(</span><span class='va'>x</span>, <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 1 2 2 1</div><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"("</span>, <span class='st'>"("</span>, <span class='st'>")"</span>, <span class='st'>"("</span>, <span class='st'>"("</span>, <span class='st'>")"</span>, <span class='st'>")"</span>, <span class='st'>")"</span><span class='op'>)</span>
+<span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>label_pairs</span><span class='op'>(</span><span class='va'>x</span>, <span class='fl'>4</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 1 2 2 3 4 4 3 1</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
