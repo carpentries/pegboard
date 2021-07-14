@@ -21,57 +21,62 @@ get_headings <- function(body) {
 #' @noRd
 validate_headings <- function(headings, message = TRUE) {
   # no headings means that we don't need to check this
+  VAL <- c(
+    first_heading_is_second_level = TRUE,
+    all_are_greater_than_first_level = TRUE,
+    all_are_sequential = TRUE,
+    all_have_names = TRUE,
+    all_are_unique = TRUE
+  )
   if (length(headings) == 0) {
-    return(TRUE)
+    return(VAL)
   }
 
   hlevels <- as.integer(xml2::xml_attr(headings, "level"))
   hnames  <- xml2::xml_text(headings)
   no_challenge <- hnames[!c("challenge", "solution") %in% trimws(tolower(hnames))]
 
-  VAL <- TRUE
 
   # Begin validation procedures ------------------------------------------------
   ## Second is First ----
-  first_heading_is_second_level <- hlevels[[1]] == 2
-  if (message && !first_heading_is_second_level) {
+  VAL["first_heading_is_second_level"] <- hlevels[[1]] == 2
+  if (message && !VAL["first_heading_is_second_level"]) {
     issue_warning("
       The first heading must be a second level (##) heading. (It is currently level {lev[[1]]})", 
       lev = hlevels
     )
   }
-  VAL <- VAL && first_heading_is_second_level
 
   ## No Firsts ----
-  ID <- all(are_greater_than_first_level <- hlevels > 1)
-  if (message && !ID) {
+  VAL["all_are_greater_than_first_level"] <- all(greater_than_first_level <- hlevels > 1)
+  if (message && !VAL["all_are_greater_than_first_level"]) {
     issue_warning("
       First level headings are not allowed (the title is the first level heading).
       The following heading{?s} {?is/are} first level: 
       {names[bad]}", 
       names = paste("#", hnames), 
-      bad = !are_greater_than_first_level
+      bad = !greater_than_first_level
     )
   }
-  VAL <- VAL && ID
 
   ## Sequence is okay ----
-  ID <- all(are_sequential <- diff(hlevels) < 2)
-  if (message && !ID) {
+  VAL["all_are_sequential"] <- all(are_sequential <- diff(hlevels) < 2)
+  if (message && !VAL["all_are_sequential"]) {
     issue_warning("All headings must be sequential")
   }
 
-  VAL <- VAL && ID
-  # Heading text VALation
-  ID <- all(have_names <- hnames != "")
-  if (message && !ID) {
+  # Headings all have names ---
+  VAL["all_have_names"] <- all(have_names <- hnames != "")
+  if (message && !VAL["all_have_names"]) {
     issue_warning("All headings must be named")
   }
-  VAL <- VAL && ID
-  # TODO: implement this for the hierarchy
+
+  # Heading uniqueness ----
   htree <- heading_tree(headings)
   are_not_unique <- vapply(htree$children, function(i) any(duplicated(i)), logical(1))
-  if (message && any(are_not_unique)) {
+  VAL["all_are_unique"] <- !any(are_not_unique)
+
+  if (message && !VAL["all_are_unique"]) {
     dupes <- htree$children[are_not_unique]
     if (requireNamespace("cli", quietly = TRUE)) {
       htree$label <- htree$heading
@@ -86,8 +91,6 @@ validate_headings <- function(headings, message = TRUE) {
       dtree = paste(dtree, collapse = "\n")
     )
   }
-  VAL <- VAL && !any(are_not_unique)
-
   VAL
 }
 
