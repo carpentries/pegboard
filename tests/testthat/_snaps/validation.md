@@ -9,6 +9,16 @@
       # First heading throws an error
       ! All headings must be sequential
       ! All headings must be named
+      ! All headings must have unique IDs
+      The following headings are duplicated:
+      <LESSON>
+      +-[2m#[22m First heading throws an error
+      | +-[2m###[22m This heading throws another error
+      | +-[2m##[22m This heading is okay
+      | +-[2m##[22m This heading is okay <- (duplicated)
+      | +-[2m##[22m 
+      | \-[2m##[22m This last heading is okay
+      \-[2m##[22m This heading is okay <- (duplicated)
 
 # reporters will work [ansi]
 
@@ -21,6 +31,16 @@
       # First heading throws an error
       [33m![39m All headings must be sequential
       [33m![39m All headings must be named
+      [33m![39m All headings must have unique IDs
+      The following headings are duplicated:
+      <LESSON>
+      +-[2m#[22m First heading throws an error
+      | +-[2m###[22m This heading throws another error
+      | +-[2m##[22m This heading is okay
+      | +-[2m##[22m This heading is okay [7m<- (duplicated)[27m
+      | +-[2m##[22m 
+      | \-[2m##[22m This last heading is okay
+      \-[2m##[22m This heading is okay [7m<- (duplicated)[27m
 
 # reporters will work [unicode]
 
@@ -33,6 +53,16 @@
       # First heading throws an error
       ! All headings must be sequential
       ! All headings must be named
+      ! All headings must have unique IDs
+      The following headings are duplicated:
+      <LESSON>
+      ├─[2m#[22m First heading throws an error
+      │ ├─[2m###[22m This heading throws another error
+      │ ├─[2m##[22m This heading is okay
+      │ ├─[2m##[22m This heading is okay <- (duplicated)
+      │ ├─[2m##[22m 
+      │ └─[2m##[22m This last heading is okay
+      └─[2m##[22m This heading is okay <- (duplicated)
 
 # reporters will work [fancy]
 
@@ -45,4 +75,14 @@
       # First heading throws an error
       [33m![39m All headings must be sequential
       [33m![39m All headings must be named
+      [33m![39m All headings must have unique IDs
+      The following headings are duplicated:
+      <LESSON>
+      ├─[2m#[22m First heading throws an error
+      │ ├─[2m###[22m This heading throws another error
+      │ ├─[2m##[22m This heading is okay
+      │ ├─[2m##[22m This heading is okay [7m<- (duplicated)[27m
+      │ ├─[2m##[22m 
+      │ └─[2m##[22m This last heading is okay
+      └─[2m##[22m This heading is okay [7m<- (duplicated)[27m
 

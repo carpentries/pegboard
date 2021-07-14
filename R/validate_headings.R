@@ -69,16 +69,24 @@ validate_headings <- function(headings, message = TRUE) {
   }
   VAL <- VAL && ID
   # TODO: implement this for the hierarchy
-  # all_are_unique <- length(unique(no_challenge)) == length(no_challenge)
-  # if (message && !all_are_unique) {
-  #   issue_warning("All headings must have unique IDs
-  #     The following headings are duplicated:
-  #     {bad_names}
-  #     ",
-  #     bad_names = no_challenge[duplicated(no_challenge)]
-  #   )
-  # }
-  # VAL <- VAL && all_are_unique
+  htree <- heading_tree(headings)
+  are_not_unique <- vapply(htree$children, function(i) any(duplicated(i)), logical(1))
+  if (message && any(are_not_unique)) {
+    dupes <- htree$children[are_not_unique]
+    if (requireNamespace("cli", quietly = TRUE)) {
+      htree$label <- htree$heading
+      htree$trimmed <- paste(htree$heading, cli::style_inverse("<- (duplicated)"))
+      dtree <- cli::tree(htree, trim = TRUE)
+    } else {
+      dtree <- dupes$heading
+    }
+    issue_warning("All headings must have unique IDs
+      The following headings are duplicated:
+      {dtree}",
+      dtree = paste(dtree, collapse = "\n")
+    )
+  }
+  VAL <- VAL && !any(are_not_unique)
 
   VAL
 }
@@ -94,3 +102,5 @@ issue_warning <- function(msg, ...) {
     warning(glue::glue(msg))
   }
 }
+
+
