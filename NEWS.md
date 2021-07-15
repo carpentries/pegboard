@@ -1,7 +1,12 @@
+# pegboard 0.0.0.9017
+
+ - The Lesson class now respects the order of the contents in `config.yaml` 
+   (#42 via #43)
+
 # pegboard 0.0.0.9016
 
  - the Episode class now has the `$headings` active binding and the 
-   `$validate_headings()` method to validate headings.
+   `$validate_headings()` method to validate headings (#23 via #41)
  - We now use {testthat} 3e for our tests
  - Cloning an Episode object is now more reliable
 
