@@ -26,7 +26,8 @@ Imports:
     lifecycle,
     xslt,
     yaml,
-    commonmark
+    commonmark,
+    robotstxt
 Suggests:
     gert (>= 1.0.0),
     testthat,
