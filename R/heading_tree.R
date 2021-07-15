@@ -26,7 +26,8 @@ heading_tree <- function(headings) {
   hlevels <- c(0L, hlevels)
   htree   <- data.frame(
     heading = hnames,
-    children = I(vector(mode = "list", length = length(hnames)))
+    children = I(vector(mode = "list", length = length(hnames))),
+    stringsAsFactors = FALSE
   )
 
   n <- nrow(htree)
