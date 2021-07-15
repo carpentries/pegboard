@@ -10,12 +10,12 @@ heading_tree <- function(headings) {
   hlevels <- as.integer(xml2::xml_attr(headings, "level"))
   hnames  <- xml2::xml_text(headings)
   hlabels <- vapply(hlevels, switch, character(1),
-    `1` = "\033[2m#\033[22m",
-    `2` = "\033[2m##\033[22m",
-    `3` = "\033[2m###\033[22m",
-    `4` = "\033[2m####\033[22m",
-    `5` = "\033[2m#####\033[22m",
-    `6` = "\033[2m######\033[22m" 
+    `1` = "#",
+    `2` = "##",
+    `3` = "###",
+    `4` = "####",
+    `5` = "#####",
+    `6` = "######" 
   )
   hnames  <- c("<LESSON>", paste(hlabels, hnames))
   hlevels <- c(0L, hlevels)
