@@ -32,9 +32,19 @@ stop_if_no_path <- function(path) {
   }
 }
 
-read_markdown_files <- function(src, ...) {
+read_markdown_files <- function(src, cfg = character(0), ...) {
   # Grabbing ONLY the markdown files (there are other sources of detritus)
   the_episodes <- fs::dir_ls(src, glob = "*md")
+  the_names    <- fs::path_file(the_episodes)
+  if (length(cfg) && fs::file_exists(cfg)) {
+    the_dir <- fs::path_file(src)
+    the_cfg <- yaml::read_yaml(cfg)[[the_dir]]
+    if (!is.null(the_cfg)) {
+      the_order    <- match(the_cfg, the_names, nomatch = 0)
+      the_episodes <- the_episodes[the_order]
+      the_names    <- the_names[the_order]
+    }
+  }
 
   if (!any(grepl("\\.R?md$", the_episodes))) {
     stop(glue::glue("The {src} directory must have (R)markdown files"),
@@ -44,7 +54,7 @@ read_markdown_files <- function(src, ...) {
 
   episodes <- purrr::map(the_episodes, Episode$new, ...)
   # Names of the episodes will be the filename, not the basename
-  names(episodes) <- fs::path_file(the_episodes)
+  names(episodes) <- the_names
   return(episodes)
 }
 

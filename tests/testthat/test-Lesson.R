@@ -13,6 +13,7 @@ test_that("Lesson class will fail if given a bad path", {
 test_that("Sandpaper lessons can be read", {
   snd <- Lesson$new(path = lesson_fragment("sandpaper-fragment"), jekyll = FALSE)
   expect_s3_class(snd, "Lesson")
+  expect_named(snd$episodes, "intro.Rmd")
 })
 
 test_that("Lesson class contains the right stuff", {
