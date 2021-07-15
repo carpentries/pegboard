@@ -424,6 +424,18 @@ Episode <- R6::R6Class("Episode",
       get_headings(self$body)
     },
 
+    #' @field links \[`xml_nodeset`\] all links (not images) in the document
+    links = function() {
+      xpath <- ".//md:link"
+      xml2::xml_find_all(self$body, xpath, self$ns)
+    },
+
+    #' @field links \[`xml_nodeset`\] all images in the document
+    images = function() {
+      xpath <- ".//md:image"
+      xml2::xml_find_all(self$body, xpath, self$ns)
+    },
+
     #' @field tags \[`xml_nodeset`\] all the kramdown tags from the episode
     tags = function() {
       xml2::xml_find_all(self$body, ".//@ktag")
