@@ -1,7 +1,12 @@
 #' This constructs a data frame of headings for displaying to the user
 #' via the CLI package.
 #'
-#' @param headings an object of class ``
+#' @param headings an object of class `xml_nodelist`
+#' @return a data frame with two columns:
+#'  - heading: the text of the heading with ATX header levels prepended
+#'  - children: a column of lists indicating the immediate children of the 
+#'    heading. This is used to display a fancy tree from the cli package. 
+#' @noRd
 heading_tree <- function(headings) {
   if (!requireNamespace("cli")) {
     return(headings)
@@ -10,18 +15,19 @@ heading_tree <- function(headings) {
   hlevels <- as.integer(xml2::xml_attr(headings, "level"))
   hnames  <- xml2::xml_text(headings)
   hlabels <- vapply(hlevels, switch, character(1),
-    `1` = "\033[2m#\033[22m",
-    `2` = "\033[2m##\033[22m",
-    `3` = "\033[2m###\033[22m",
-    `4` = "\033[2m####\033[22m",
-    `5` = "\033[2m#####\033[22m",
-    `6` = "\033[2m######\033[22m" 
+    `1` = "#",
+    `2` = "##",
+    `3` = "###",
+    `4` = "####",
+    `5` = "#####",
+    `6` = "######" 
   )
   hnames  <- c("<LESSON>", paste(hlabels, hnames))
   hlevels <- c(0L, hlevels)
   htree   <- data.frame(
     heading = hnames,
-    children = I(vector(mode = "list", length = length(hnames)))
+    children = I(vector(mode = "list", length = length(hnames))),
+    stringsAsFactors = FALSE
   )
 
   n <- nrow(htree)

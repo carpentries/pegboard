@@ -53,11 +53,20 @@ Lesson <- R6::R6Class("Lesson",
       } else {
         # Modern lessons do not need to have tags processed because there are 
         # no tags!!!
+        episode_path <- fs::path(path, "episodes")
         extra_paths <- fs::path(path, c("instructors", "learners", "profiles"))
+        cfg <- fs::dir_ls(path, regexp = "config[.]ya?ml")
+
         self$episodes <- read_markdown_files(
-          fs::path(path, "episodes"), process_tags = FALSE, ...)
-        self$extra <- read_markdown_files(
-          c(path, extra_paths), process_tags = FALSE, ...)
+          episode_path, cfg, process_tags = FALSE, ...)
+
+        standard_files <- read_markdown_files(path, process_tags = FALSE, ...)
+
+        extra_files <- purrr::flatten(purrr::map(extra_paths,
+          read_markdown_files, cfg, process_tags = FALSE, ...))
+
+        self$extra <- c(standard_files, extra_files)
+
       }
       self$path <- path
     },
