@@ -1,7 +1,12 @@
 #' This constructs a data frame of headings for displaying to the user
 #' via the CLI package.
 #'
-#' @param headings an object of class ``
+#' @param headings an object of class `xml_nodelist`
+#' @return a data frame with two columns:
+#'  - heading: the text of the heading with ATX header levels prepended
+#'  - children: a column of lists indicating the immediate children of the 
+#'    heading. This is used to display a fancy tree from the cli package. 
+#' @noRd
 heading_tree <- function(headings) {
   if (!requireNamespace("cli")) {
     return(headings)
