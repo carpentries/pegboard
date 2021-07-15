@@ -403,7 +403,12 @@ Episode <- R6::R6Class("Episode",
     #'   be issued to the stderr. if `FALSE`, this will be silent. 
     #' @return a logical `TRUE` for valid headings and `FALSE` for invalid 
     #'   headings.
+    #' @examples
+    #' # Example: There are multiple headings called "Solution" that are not
+    #' # nested within a higher-level heading and will throw an error
     #' loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
+    #' loop$validate_headings()
+    #' 
     validate_headings = function(verbose = TRUE){
       validate_headings(self$headings, verbose)
     }

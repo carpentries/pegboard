@@ -104,6 +104,16 @@ loop$get_blocks() # all the blocks in the episode
 loop$unblock()
 loop$get_blocks() # no blocks
 loop$code # now there are two blocks with challenge tags
+
+## ------------------------------------------------
+## Method `Episode$validate_headings`
+## ------------------------------------------------
+
+# Example: There are multiple headings called "Solution" that are not
+# nested within a higher-level heading and will throw an error
+loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
+loop$validate_headings()
+
 }
 \section{Super class}{
 \code{\link[tinkr:yarn]{tinkr::yarn}} -> \code{Episode}
@@ -668,8 +678,19 @@ be issued to the stderr. if \code{FALSE}, this will be silent.}
 \subsection{Returns}{
 a logical \code{TRUE} for valid headings and \code{FALSE} for invalid
 headings.
-loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
 }
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# Example: There are multiple headings called "Solution" that are not
+# nested within a higher-level heading and will throw an error
+loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
+loop$validate_headings()
+
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
