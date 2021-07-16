@@ -1,3 +1,7 @@
+---
+title: "Errors in Headings"
+---
+
 # First heading throws an error
 
 ### This heading throws another error

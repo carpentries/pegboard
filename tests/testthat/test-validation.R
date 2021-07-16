@@ -6,8 +6,16 @@ test_that("invalid headings can be caught without the reporters", {
   expect_false(all(res))
 })
 
+test_that("reporters will work without CLI", {
+  withr::with_options(list("pegboard.no-cli" = TRUE), {
+    expect_snapshot(expect_false(all(vh$validate_headings())))
+  })
+})
+
 if (requireNamespace("cli", quietly = TRUE)) {
   cli::test_that_cli("reporters will work", {
     expect_snapshot(expect_false(all(vh$validate_headings())))
   })
 }
+
+

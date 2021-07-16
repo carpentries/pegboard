@@ -20,7 +20,9 @@ test_that("errors are okay", {
     fs::dir_delete(locked_dir)
   })
 
-  expect_error(get_lesson(), "please provide a lesson")
+  suppressMessages({
+    expect_error(get_lesson(), "please provide a lesson")
+  })
   msg <- glue::glue("directory must have \\(R\\)markdown files")
   expect_error(get_lesson(path = dd), msg)
 

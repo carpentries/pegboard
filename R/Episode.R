@@ -410,7 +410,7 @@ Episode <- R6::R6Class("Episode",
     #' loop$validate_headings()
     #' 
     validate_headings = function(verbose = TRUE){
-      validate_headings(self$headings, verbose)
+      validate_headings(self$headings, self$get_yaml()$title, verbose)
     }
 ),
   active = list(

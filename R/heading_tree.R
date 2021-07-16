@@ -7,13 +7,13 @@
 #'  - children: a column of lists indicating the immediate children of the 
 #'    heading. This is used to display a fancy tree from the cli package. 
 #' @noRd
-heading_tree <- function(headings) {
-  if (!requireNamespace("cli")) {
-    return(headings)
-  }
+heading_tree <- function(headings, lname = NULL, suffix = NULL) {
 
+  lname   <- if (is.null(lname)) "<LESSON>" else dQuote(lname)
   hlevels <- as.integer(xml2::xml_attr(headings, "level"))
   hnames  <- xml2::xml_text(headings)
+  hnames  <- c(lname, hnames)
+  hlevels <- c(1L, hlevels)
   hlabels <- vapply(hlevels, switch, character(1),
     `1` = "#",
     `2` = "##",
@@ -22,11 +22,12 @@ heading_tree <- function(headings) {
     `5` = "#####",
     `6` = "######" 
   )
-  hnames  <- c("<LESSON>", paste(hlabels, hnames))
-  hlevels <- c(0L, hlevels)
+  hlevels[1] <- 0L
+  hlabels[1] <- "# Lesson:"
   htree   <- data.frame(
     heading = hnames,
     children = I(vector(mode = "list", length = length(hnames))),
+    labels = paste(hlabels, hnames, suffix),
     stringsAsFactors = FALSE
   )
 
@@ -57,10 +58,11 @@ heading_tree <- function(headings) {
     }
     htree$children[[heading]] <- hnames[child_ids]
   }
+
   # Final trimming. The top root must only contain immediate children
   all_children <- unique(unlist(htree$children[-1], use.names = FALSE))
-  has_kids <- lengths(htree$children) != 0
-  not_a_child <- !htree$heading %in% all_children
+  has_kids     <- lengths(htree$children) != 0
+  not_a_child  <- !htree$heading %in% all_children
   htree$children[[1]] <- htree$heading[has_kids | not_a_child][-1]
 
   htree
