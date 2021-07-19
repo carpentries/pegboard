@@ -80,28 +80,16 @@ validate_headings <- function(headings, lesson = NULL, message = TRUE) {
   }
 
   # Heading uniqueness ----
-  htree      <- heading_tree(headings, lesson, suffix = c("", hlabels))
-  not_unique <- vapply(htree$children, function(i) any(duplicated(i)), logical(1))
-  if (has_cli) {
-    htree$trimmed <- paste(htree$label, cli::style_inverse("(duplicated)"))
-  } else {
-    the_levels <- c(0L, hlevels)
-    dtree <- htree$labels
-    for (i in which(not_unique)) {
-      this_level     <- the_levels[i]
-      the_children   <- the_levels == this_level + 1L
-      the_duplicated <- the_children & duplicated(htree$heading)
-      dtree          <- append_labels(
-        l = dtree,
-        i = the_duplicated,
-        e = "(duplicated)",
-        cli = FALSE
-      )
-    }
-    pad <- vapply(the_levels, function(i) paste(rep("-", i), collapse = ""), character(1))
-    dtree <- paste0(pad, dtree)
+  htree     <- heading_tree(headings, lesson, suffix = c("", hlabels))
+  any_duplicates <- label_duplicates(htree, cli = has_cli)
+  VAL["all_are_unique"] <- any_duplicates$test
+  htree <- any_duplicates$tree
+  if (!has_cli) {
+    pad <- vapply(htree$level, function(i) {
+      paste(rep("-", i), collapse = "")
+    }, character(1))
+    dtree <- paste0(pad, htree$label)
   }
-  VAL["all_are_unique"] <- !any(not_unique)
 
   if (message && !VAL["all_are_unique"]) {
     issue_warning("All headings must have unique IDs.", cli = has_cli)
@@ -109,7 +97,7 @@ validate_headings <- function(headings, lesson = NULL, message = TRUE) {
   if (message) {
     if (has_cli) {
       cli::cli_rule("Heading structure")
-      cli::cat_print(cli::tree(htree, trim = FALSE))
+      cli::cat_print(cli::tree(htree, trim = TRUE))
       cli::cli_rule()
     } else {
       message(paste(dtree, collapse = "\n"))

@@ -1,3 +1,7 @@
+# pegboard 0.0.0.9018
+
+- `Episode$validate_headings()` now properly displays duplicated headings.
+
 # pegboard 0.0.0.9017
 
  - The Lesson class now respects the order of the contents in `config.yaml` 
