@@ -125,6 +125,10 @@ loop$validate_headings()
 
 \item{\code{headings}}{[\code{xml_nodeset}] all headings in the document}
 
+\item{\code{links}}{[\code{xml_nodeset}] all links (not images) in the document}
+
+\item{\code{images}}{[\code{xml_nodeset}] all images in the document}
+
 \item{\code{tags}}{[\code{xml_nodeset}] all the kramdown tags from the episode}
 
 \item{\code{questions}}{[\code{character}] the questions from the episode}
@@ -190,7 +194,12 @@ loop$validate_headings()
 \subsection{Method \code{new()}}{
 Create a new Episode
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Episode$new(path = NULL, process_tags = TRUE, fix_links = TRUE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Episode$new(
+  path = NULL,
+  process_tags = TRUE,
+  fix_links = TRUE,
+  fix_liquid = FALSE
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -206,6 +215,11 @@ tags will be treated as text}
 liquid tags (e.g. \code{{{ page.root }}}) and included links (those supplied
 by a call to \verb{\{\\\% import links.md \\\%\}}) will be appropriately processed
 as valid links.}
+
+\item{\code{fix_liquid}}{[\code{logical}] defaults to \code{FALSE}, which means data is
+immediately passed to \link[tinkr:yarn]{tinkr::yarn}. If \code{TRUE}, all liquid variables
+in relative links have spaces removed to allow the commonmark parser to
+interpret them as links.}
 }
 \if{html}{\out{</div>}}
 }
