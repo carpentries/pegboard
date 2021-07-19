@@ -8,6 +8,16 @@ test_that("conversions with empty bodies won't result in an error", {
 
 })
 
+test_that("Episodes with commonmark-violating liquid relative links can be read", {
+  lnsp <- test_path("examples", "link-split.md")
+  withr::defer(rm("lnsp"))
+  # Not fixing liquid will make the parser sad
+  expect_error(Episode$new(lnsp))
+  # fixing liquid will resucue us!
+  expect_snapshot(cat(Episode$new(lnsp, fix_liquid = TRUE)$show(), sep = "\n"))
+})
+
+
 test_that("Episodes can be converted to use sandpaper", {
 
   loop <- fs::path(lesson_fragment(), "_episodes", "14-looping-data-sets.md")

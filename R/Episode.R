@@ -18,13 +18,17 @@ Episode <- R6::R6Class("Episode",
     #'   liquid tags (e.g. `{{ page.root }}`) and included links (those supplied
     #'   by a call to `{\% import links.md \%}`) will be appropriately processed
     #'   as valid links.
+    #' @param fix_liquid \[`logical`\] defaults to `FALSE`, which means data is
+    #'   immediately passed to [tinkr::yarn]. If `TRUE`, all liquid variables
+    #'   in relative links have spaces removed to allow the commonmark parser to
+    #'   interpret them as links.
     #' @return A new Episode object with extracted XML data
     #' @examples
     #' scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
     #' scope$name
     #' scope$lesson
     #' scope$challenges
-    initialize = function(path = NULL, process_tags = TRUE, fix_links = TRUE) {
+    initialize = function(path = NULL, process_tags = TRUE, fix_links = TRUE, fix_liquid = FALSE) {
       if (!file.exists(path)) {
         stop(glue::glue("the file '{path}' does not exist"))
       }
@@ -33,7 +37,13 @@ Episode <- R6::R6Class("Episode",
         body = xml2::xml_missing()
       )
       TOX <- purrr::safely(super$initialize, otherwise = default, quiet = FALSE)
-      lsn <- TOX(path, sourcepos = TRUE)
+      if (fix_liquid) {
+        tmp <- fix_liquid_relative_link(path)
+        lsn <- TOX(tmp, sourcepos = TRUE)
+        close(tmp)
+      } else {
+        lsn <- TOX(path, sourcepos = TRUE)
+      }
       if (!is.null(lsn$error)) {
         private$record_problem(lsn$error)
       }

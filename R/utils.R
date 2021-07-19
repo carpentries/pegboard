@@ -58,6 +58,28 @@ read_markdown_files <- function(src, cfg = character(0), ...) {
   return(episodes)
 }
 
+#' Remove spaces in relative links with liquid variables
+#'
+#' Liquid has a syntax that wraps variables in double moustache braces that may
+#' or may not have spaces within the moustaches. For example, to get the link
+#' of the page root, you would use {{ page.root }} to make it more readable.
+#' However, this violates the expectation of the commonmark parser and makes it
+#' think “oh, this is just ordinary text”. 
+#' 
+#' This function fixes the issue by removing the spaces within the braces. 
+#'
+#' @param path path to an MD file
+#' @param encoding encoding of the text, defaults to UTF-8
+fix_liquid_relative_link <- function(path, encoding = "UTF-8") {
+  f <- readLines(path, encoding = encoding)
+  # Find all similar to:
+  #
+  # [match1]: {{ match2 }}match3
+  reliquid_link <- "(^\\[.+?\\]: )\\{\\{ (.+?) \\}\\}(.*)$"
+  # replace everything and place in a textConnection
+  textConnection(gsub(reliquid_link, "\\1{{\\2}}\\3", f, perl = TRUE))
+}
+
 # Get a character vector of the namespace
 NS <- function(x, generic = TRUE) {
   if (generic) {
