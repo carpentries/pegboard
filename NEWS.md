@@ -1,3 +1,9 @@
+# pegboard 0.0.0.9019
+
+- `Episode$new()` gains the argument `fix_liquid`, which fixes liquid variables
+  in relative links before they are passed to {tinkr} 
+  (https://github.com/carpentries/pegboard/issues/46)
+
 # pegboard 0.0.0.9018
 
 - `Episode$validate_headings()` now properly displays duplicated headings.

@@ -70,7 +70,7 @@ Episode <- R6::R6Class("Episode",
       if (fix_links) fix_links(lsn$body)
 
       # Initialize the object
-      self$path <- lsn$path
+      self$path <- path
       self$yaml <- lsn$yaml
       self$body <- lsn$body
       self$ns   <- lsn$ns

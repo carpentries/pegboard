@@ -10,11 +10,14 @@ test_that("conversions with empty bodies won't result in an error", {
 
 test_that("Episodes with commonmark-violating liquid relative links can be read", {
   lnsp <- test_path("examples", "link-split.md")
-  withr::defer(rm("lnsp"))
+  withr::defer(rm("lnsp", "tmp"))
   # Not fixing liquid will make the parser sad
   expect_error(Episode$new(lnsp))
   # fixing liquid will resucue us!
-  expect_snapshot(cat(Episode$new(lnsp, fix_liquid = TRUE)$show(), sep = "\n"))
+  tmp <- Episode$new(lnsp, fix_liquid = TRUE)
+
+  expect_equal(basename(tmp$path), "link-split.md")
+  expect_snapshot(cat(tmp$show(), sep = "\n"))
 })
 
 

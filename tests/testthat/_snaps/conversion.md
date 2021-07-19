@@ -1,7 +1,7 @@
 # Episodes with commonmark-violating liquid relative links can be read
 
     Code
-      cat(Episode$new(lnsp, fix_liquid = TRUE)$show(), sep = "\n")
+      cat(tmp$show(), sep = "\n")
     Output
       Head here for [more examples of Icebreakers][icebreakers].
       
