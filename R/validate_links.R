@@ -27,28 +27,50 @@ validate_links <- function(yrn) {
   path <- basename(yrn$path)
   VLD <- c(
     enforce_https = TRUE,
+    internal_okay = TRUE,
     all_reachable = TRUE,
     img_alt_text  = TRUE,
     NULL
   )
   # Enforce all links do not use http. This one is pretty straightforward to
   # check. 
-  VLD["enforce_https"] <- !any(has_http <- link_table$scheme == "http")
-  if (!VLD["enforce_https"]) {
-    with_http <- link_table[link_table$scheme, , drop = FALSE]
+  VLD["enforce_https"] <- validate_https(link_table, path)
+  VLD["img_alt_text"]  <- validate_alt_text(link_table, path)
+  VLD
+}
+
+validate_internal_okay <- function(lt, path) {
+  res <- !any(has_http <- lt$scheme == "http")
+  if (!res) {
+    with_http    <- lt[lt$scheme, , drop = FALSE]
     link_sources <- glue::glue("{path}:{with_http$sourcepos}")
     issue_warning("Links must use HTTPS, not HTTP:
       {lnks}",
     lnks = glue::glue("{with_http$orig} ({link_sources})")
    )
   }
-  VLD["img_alt_text"] <- validate_alt_text(link_table, path)
-  VLD
+  res
 }
+
+
+validate_https <- function(lt, path) {
+  res <- !any(has_http <- lt$scheme == "http")
+  if (!res) {
+    with_http    <- lt[lt$scheme, , drop = FALSE]
+    link_sources <- glue::glue("{path}:{with_http$sourcepos}")
+    issue_warning("Links must use HTTPS, not HTTP:
+      {lnks}",
+    lnks = glue::glue("{with_http$orig} ({link_sources})")
+   )
+  }
+  res
+}
+
 
 validate_alt_text <- function(lt, path) {
   img <- lt$type == "image"
-  res <- !any(no_alt_text <- lt$text[lt$type == "image"])
+  alt_text <- lt$text[lt$type == "image"]
+  res <- !any(is.na(alt_text) | alt_text == "")
   if (!res) {
     img_sources <- glue::glue("{path}:{lt$sourcepos[img]}")
     issue_warning("Images need alt-text
