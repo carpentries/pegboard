@@ -27,7 +27,7 @@ resolve_links(txt, type)
 
 links_within_text_regex()
 
-text_to_links(txt, ns = NULL, type)
+text_to_links(txt, ns = NULL, type, sourcepos = NULL)
 
 make_link(txt, pattern, type = "rel_link")
 }
@@ -39,6 +39,9 @@ make_link(txt, pattern, type = "rel_link")
 \item{txt}{text derived from \code{xml2::xml_text()}}
 
 \item{ns}{a namespace object}
+
+\item{sourcepos}{defaults to NULL. If this is not NULL, it's the sourcepos
+attribute of the text node(s) and will be applied to the new nodes.}
 
 \item{pattern}{a regular expression that is used for splitting the link
 from the surrounding text.}

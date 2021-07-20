@@ -9,6 +9,7 @@ test_that("conversions with empty bodies won't result in an error", {
 })
 
 test_that("Episodes with commonmark-violating liquid relative links can be read", {
+
   lnsp <- test_path("examples", "link-split.md")
   withr::defer(rm("lnsp", "tmp"))
   # Not fixing liquid will make the parser sad
@@ -61,12 +62,14 @@ test_that("Episodes can be converted to use sandpaper", {
 
   expect_length(e$code, 11)
   expect_length(rel_links, 2)
+  expect_true(all(!is.na(get_linestart(rel_links))))
   expect_equal(xml_name(rel_links), c("html_block", "image"))
   expect_equal(
     xml2::xml_attr(rel_links, "destination"),
     c(NA, "../no-workie.svg")
   )
   expect_length(jek_links, 3)
+  expect_true(all(!is.na(get_linestart(jek_links))))
   expect_equal(
     xml2::xml_attr(jek_links, "destination"),
     c("{{ page.root }}/index.html", 

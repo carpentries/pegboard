@@ -65,7 +65,12 @@ find_lesson_links <- function(body, type = "rel_link") {
 #' @return `resolve_links()`: modified text nodes
 #' @rdname fix_links
 resolve_links <- function(txt, type) {
-  lnks <- text_to_links(xml2::xml_text(txt), xml2::xml_ns(txt), type)
+  lnks <- text_to_links(
+    txt       = xml2::xml_text(txt),
+    ns        = xml2::xml_ns(txt),
+    type      = type,
+    sourcepos = xml2::xml_attr(txt, "sourcepos")
+  )
   purrr::walk(lnks, ~xml2::xml_add_sibling(txt, .x, .where = "before"))
   xml2::xml_remove(txt)
   lnks
@@ -114,6 +119,8 @@ links_within_text_regex <- function() {
 #' @param txt text derived from `xml2::xml_text()`
 #' @param ns a namespace object
 #' @param type the type of link as defined in [LINKS].
+#' @param sourcepos defaults to NULL. If this is not NULL, it's the sourcepos
+#'   attribute of the text node(s) and will be applied to the new nodes.
 #' @return `text_to_links()`: if ns is NULL: a character vector of XML text
 #'   nodes, otherwise, new XML text nodes.
 #' @rdname fix_links
@@ -124,7 +131,7 @@ links_within_text_regex <- function() {
 #' md <- c(md = "http://commonmark.org/xml/1.0")
 #' class(md) <- "xml_namespace"
 #' pegboard:::text_to_links(txt, md, "rel_link")
-text_to_links <- function(txt, ns = NULL, type) {
+text_to_links <- function(txt, ns = NULL, type, sourcepos = NULL) {
 
   regex_helpers <- links_within_text_regex()
   rgx <- regex_helpers["to_split"]
@@ -136,8 +143,11 @@ text_to_links <- function(txt, ns = NULL, type) {
   texts[are_links]  <- purrr::map_chr(texts[are_links], make_link, pattern = lnk, type = type)
   texts[!are_links] <- glue::glue("<text>{texts[!are_links]}</text>")
   if (!is.null(ns)) {
+    # TODO: fix this process for creating new nodes. Use the process from 
+    # {tinkr} to do this. 
     texts <- xml_new_paragraph(glue::glue_collapse(texts), ns, tag = FALSE)
     texts <- xml2::xml_children(texts)
+    xml2::xml_set_attr(texts, "sourcepos", sourcepos)
   }
   texts
 }
@@ -155,6 +165,7 @@ make_link <- function(txt, pattern, type = "rel_link") {
   if (type[1] == "rel") {
     # relative tags are processed
     txt <- if (type[2] == "image") sub("^\\!\\[", '', txt) else txt
+    # split the link text and text into a two-element vector
     text_link <- rev(strsplit(txt, pattern, perl = TRUE)[[1]])
     link <- glue::glue_collapse(text_link, sep = "'><text>")
     glue::glue("<{type[2]} destination='{link}</text></{type[2]}>")
