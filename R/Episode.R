@@ -112,6 +112,24 @@ Episode <- R6::R6Class("Episode",
     },
 
     #' @description
+    #' fetch the image sources and optionally process them for easier parsing.
+    #' The default version of this function is equivalent to the active binding
+    #' `$images`.
+    #'
+    #' @param process if `TRUE`, images will be processed via the internal
+    #' function [process_images()], which will add the `alt` attribute, if
+    #' available and extract img nodes from HTML blocks. 
+    #' @return an `xml_nodelist`
+    #' @examples
+    #'
+    #' loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
+    #' loop$get_images()
+    #' loop$get_images(process = TRUE)
+    get_images = function(process = FALSE) {
+      get_images(self, process = process)
+    },
+
+    #' @description
     #' label all the div elements within the Episode to extract them with 
     #' `$get_divs()`
     label_divs = function() {
@@ -440,10 +458,9 @@ Episode <- R6::R6Class("Episode",
       xml2::xml_find_all(self$body, xpath, self$ns)
     },
 
-    #' @field images \[`xml_nodeset`\] all images in the document
+    #' @field images \[`xml_nodeset`\] all image sources in the document
     images = function() {
-      xpath <- ".//md:image | .//md:html_block[starts-with(text(), '<img')]"
-      xml2::xml_find_all(self$body, xpath, self$ns)
+      get_images(self, process = FALSE)
     },
 
     #' @field tags \[`xml_nodeset`\] all the kramdown tags from the episode

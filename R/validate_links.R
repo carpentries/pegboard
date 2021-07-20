@@ -109,12 +109,8 @@ make_link_table <- function(yrn) {
   yml_lines <- length(yrn$yaml)
   # Combining nodesets forces these to be lists, meaning that we have to use
   # mappers here.
-  limg      <- c(yrn$links, yrn$images)
+  limg      <- c(yrn$links, yrn$get_images(process = TRUE))
   types     <- purrr::map_chr(limg, xml2::xml_name)
-  limg      <- c(
-    limg[types != "html_block"], 
-    extract_image_nodes(limg[types == "html_block"])
-  )
   urls      <- purrr::map_chr(limg, xml2::xml_attr, "destination")
   url_table <- xml2::url_parse(urls)
 
@@ -130,11 +126,3 @@ make_link_table <- function(yrn) {
   url_table[order(url_table$sourcepos), ]
 }
 
-extract_image_nodes <- function(html_blocks) {
-  res <- purrr::map(html_blocks, 
-    ~xml2::xml_find_all(xml2::read_html(xml2::xml_text(.x)), ".//img")
-  )
-  srcpos <- purrr::map_chr(html_blocks, ~xml2::xml_attr(.x, "sourcepos"))
-  purrr::walk(res, ~xml2::xml_set_attr(.x, "destination", xml2::xml_attr(.x, "src")))
-  purrr::walk2(res, srcpos, ~xml2::xml_set_attr(.x, "sourcepos", .y))
-}

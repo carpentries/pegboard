@@ -53,6 +53,15 @@ scope$get_blocks(".solution", level = 2)
 }
 
 ## ------------------------------------------------
+## Method `Episode$get_images`
+## ------------------------------------------------
+
+
+loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
+loop$get_images()
+loop$get_images(process = TRUE)
+
+## ------------------------------------------------
 ## Method `Episode$get_challenge_graph`
 ## ------------------------------------------------
 
@@ -127,7 +136,7 @@ loop$validate_headings()
 
 \item{\code{links}}{[\code{xml_nodeset}] all links (not images) in the document}
 
-\item{\code{images}}{[\code{xml_nodeset}] all images in the document}
+\item{\code{images}}{[\code{xml_nodeset}] all image sources in the document}
 
 \item{\code{tags}}{[\code{xml_nodeset}] all the kramdown tags from the episode}
 
@@ -158,6 +167,7 @@ loop$validate_headings()
 \itemize{
 \item \href{#method-new}{\code{Episode$new()}}
 \item \href{#method-get_blocks}{\code{Episode$get_blocks()}}
+\item \href{#method-get_images}{\code{Episode$get_images()}}
 \item \href{#method-label_divs}{\code{Episode$label_divs()}}
 \item \href{#method-get_divs}{\code{Episode$get_divs()}}
 \item \href{#method-get_yaml}{\code{Episode$get_yaml()}}
@@ -286,6 +296,41 @@ scope$get_blocks(".solution", level = 2)
   # There are eight solution blocks:
   dsp1$get_blocks(".solution", level = 2L)
 }
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get_images"></a>}}
+\if{latex}{\out{\hypertarget{method-get_images}{}}}
+\subsection{Method \code{get_images()}}{
+fetch the image sources and optionally process them for easier parsing.
+The default version of this function is equivalent to the active binding
+\verb{$images}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Episode$get_images(process = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{process}}{if \code{TRUE}, images will be processed via the internal
+function \code{\link[=process_images]{process_images()}}, which will add the \code{alt} attribute, if
+available and extract img nodes from HTML blocks.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+an \code{xml_nodelist}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{
+loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
+loop$get_images()
+loop$get_images(process = TRUE)
 }
 \if{html}{\out{</div>}}
 
