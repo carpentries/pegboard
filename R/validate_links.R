@@ -88,16 +88,31 @@ make_link_table <- function(yrn) {
   # Combining nodesets forces these to be lists, meaning that we have to use
   # mappers here.
   limg      <- c(yrn$links, yrn$images)
+  types     <- purrr::map_chr(limg, xml2::xml_name)
+  limg      <- c(
+    limg[types != "html_block"], 
+    extract_image_nodes(limg[types == "html_block"])
+  )
   urls      <- purrr::map_chr(limg, xml2::xml_attr, "destination")
   url_table <- xml2::url_parse(urls)
 
   url_table$orig      <- urls
   url_table$text      <- purrr::map_chr(limg, xml2::xml_text)
+  url_table$alt       <- purrr::map_chr(limg, xml2::xml_attr, "alt")
   url_table$title     <- purrr::map_chr(limg, xml2::xml_attr, "title")
   url_table$type      <- purrr::map_chr(limg, xml2::xml_name)
   url_table$rel       <- purrr::map_chr(limg, xml2::xml_attr, "rel")
   url_table$anchor    <- !is.na(purrr::map_chr(limg, xml2::xml_attr, "anchor"))
   url_table$sourcepos <- purrr::map_int(limg, get_linestart) + yml_lines
 
-  url_table
+  url_table[order(url_table$sourcepos), ]
+}
+
+extract_image_nodes <- function(html_blocks) {
+  res <- purrr::map(html_blocks, 
+    ~xml2::xml_find_all(xml2::read_html(xml2::xml_text(.x)), ".//img")
+  )
+  srcpos <- purrr::map_chr(html_blocks, ~xml2::xml_attr(.x, "sourcepos"))
+  purrr::walk(res, ~xml2::xml_set_attr(.x, "destination", xml2::xml_attr(.x, "src")))
+  purrr::walk2(res, srcpos, ~xml2::xml_set_attr(.x, "sourcepos", .y))
 }

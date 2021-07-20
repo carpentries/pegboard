@@ -442,7 +442,7 @@ Episode <- R6::R6Class("Episode",
 
     #' @field images \[`xml_nodeset`\] all images in the document
     images = function() {
-      xpath <- ".//md:image"
+      xpath <- ".//md:image | .//md:html_block[starts-with(text(), '<img')]"
       xml2::xml_find_all(self$body, xpath, self$ns)
     },
 
