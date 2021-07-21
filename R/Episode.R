@@ -437,8 +437,27 @@ Episode <- R6::R6Class("Episode",
     #' loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
     #' loop$validate_headings()
     #' 
-    validate_headings = function(verbose = TRUE){
+    validate_headings = function(verbose = TRUE) {
       validate_headings(self$headings, self$get_yaml()$title, verbose)
+    },
+    
+    #' @description perform validation on links and images in a document.
+    #'
+    #' This will validate the following aspects of links
+    #'
+    #'  - use HTTPS protocol
+    #'  - images have alt text
+    #'  - local links are reachable
+    #'  - \[future\] outside links are reachable
+    #' @param verbose if `TRUE` (default), a message for each rule broken will
+    #'   be issued to the stderr. if `FALSE`, this will be silent. 
+    #' @return a logical `TRUE` for valid links and `FALSE` for invalid 
+    #'   links.
+    #' @examples
+    #' loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
+    #' loop$validate_links()
+    validate_links = function(verbose = TRUE) {
+      validate_links(self, verbose)
     }
 ),
   active = list(

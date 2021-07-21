@@ -123,6 +123,13 @@ loop$code # now there are two blocks with challenge tags
 loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
 loop$validate_headings()
 
+
+## ------------------------------------------------
+## Method `Episode$validate_links`
+## ------------------------------------------------
+
+loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
+loop$validate_links()
 }
 \section{Super class}{
 \code{\link[tinkr:yarn]{tinkr::yarn}} -> \code{Episode}
@@ -187,6 +194,7 @@ loop$validate_headings()
 \item \href{#method-isolate_blocks}{\code{Episode$isolate_blocks()}}
 \item \href{#method-unblock}{\code{Episode$unblock()}}
 \item \href{#method-validate_headings}{\code{Episode$validate_headings()}}
+\item \href{#method-validate_links}{\code{Episode$validate_links()}}
 \item \href{#method-clone}{\code{Episode$clone()}}
 }
 }
@@ -745,6 +753,45 @@ headings.
 loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
 loop$validate_headings()
 
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-validate_links"></a>}}
+\if{latex}{\out{\hypertarget{method-validate_links}{}}}
+\subsection{Method \code{validate_links()}}{
+perform validation on links and images in a document.
+
+This will validate the following aspects of links
+\itemize{
+\item use HTTPS protocol
+\item images have alt text
+\item local links are reachable
+\item [future] outside links are reachable
+}
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Episode$validate_links(verbose = TRUE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{verbose}}{if \code{TRUE} (default), a message for each rule broken will
+be issued to the stderr. if \code{FALSE}, this will be silent.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+a logical \code{TRUE} for valid links and \code{FALSE} for invalid
+links.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
+loop$validate_links()
 }
 \if{html}{\out{</div>}}
 

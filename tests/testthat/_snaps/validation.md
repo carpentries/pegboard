@@ -1,4 +1,4 @@
-# reporters will work without CLI
+# headings reporters will work without CLI
 
     Code
       expect_false(all(vh$validate_headings()))
@@ -35,7 +35,34 @@
       --## Solution  (duplicated)
       ---### ZNK test links and images 
 
-# reporters will work [plain]
+# links reporters will work without CLI
+
+    Code
+      expect_false(all(cats$validate_links()))
+    Message <simpleMessage>
+      ! Images need alt-text
+      image-test.md:8
+      image-test.md:12
+      image-test.md:16
+      image-test.md:20
+      image-test.md:24
+      image-test.md:29
+      image-test.md:36
+      image-test.md:41
+      image-test.md:41
+
+---
+
+    Code
+      expect_equal(sum(loop$validate_links()), 3L)
+    Message <simpleMessage>
+      ! Images need alt-text
+      14-looping-data-sets.md:189
+      14-looping-data-sets.md:191
+      14-looping-data-sets.md:195
+      14-looping-data-sets.md:197
+
+# headings reporters will work [plain]
 
     Code
       expect_false(all(vh$validate_headings()))
@@ -58,7 +85,7 @@
     Message <cliMessage>
       --------------------------------------------------------------------------------
 
-# reporters will work [ansi]
+# headings reporters will work [ansi]
 
     Code
       expect_false(all(vh$validate_headings()))
@@ -81,7 +108,7 @@
     Message <cliMessage>
       --------------------------------------------------------------------------------
 
-# reporters will work [unicode]
+# headings reporters will work [unicode]
 
     Code
       expect_false(all(vh$validate_headings()))
@@ -104,7 +131,7 @@
     Message <cliMessage>
       ────────────────────────────────────────────────────────────────────────────────
 
-# reporters will work [fancy]
+# headings reporters will work [fancy]
 
     Code
       expect_false(all(vh$validate_headings()))
@@ -127,7 +154,7 @@
     Message <cliMessage>
       ────────────────────────────────────────────────────────────────────────────────
 
-# duplciate reporting works [plain]
+# duplciate headings reporting works [plain]
 
     Code
       expect_equal(sum(loop$validate_headings()), 4L)
@@ -149,7 +176,7 @@
     Message <cliMessage>
       --------------------------------------------------------------------------------
 
-# duplciate reporting works [ansi]
+# duplciate headings reporting works [ansi]
 
     Code
       expect_equal(sum(loop$validate_headings()), 4L)
@@ -171,7 +198,7 @@
     Message <cliMessage>
       --------------------------------------------------------------------------------
 
-# duplciate reporting works [unicode]
+# duplciate headings reporting works [unicode]
 
     Code
       expect_equal(sum(loop$validate_headings()), 4L)
@@ -193,7 +220,7 @@
     Message <cliMessage>
       ────────────────────────────────────────────────────────────────────────────────
 
-# duplciate reporting works [fancy]
+# duplciate headings reporting works [fancy]
 
     Code
       expect_equal(sum(loop$validate_headings()), 4L)
@@ -214,4 +241,68 @@
         └─### ZNK test links and images 
     Message <cliMessage>
       ────────────────────────────────────────────────────────────────────────────────
+
+# links reporters will work [plain]
+
+    Code
+      expect_false(all(cats$validate_links()))
+    Message <simpleMessage>
+      ! Images need alt-text
+      image-test.md:8
+      image-test.md:12
+      image-test.md:16
+      image-test.md:20
+      image-test.md:24
+      image-test.md:29
+      image-test.md:36
+      image-test.md:41
+      image-test.md:41
+
+# links reporters will work [ansi]
+
+    Code
+      expect_false(all(cats$validate_links()))
+    Message <simpleMessage>
+      ! Images need alt-text
+      image-test.md:8
+      image-test.md:12
+      image-test.md:16
+      image-test.md:20
+      image-test.md:24
+      image-test.md:29
+      image-test.md:36
+      image-test.md:41
+      image-test.md:41
+
+# links reporters will work [unicode]
+
+    Code
+      expect_false(all(cats$validate_links()))
+    Message <simpleMessage>
+      ! Images need alt-text
+      image-test.md:8
+      image-test.md:12
+      image-test.md:16
+      image-test.md:20
+      image-test.md:24
+      image-test.md:29
+      image-test.md:36
+      image-test.md:41
+      image-test.md:41
+
+# links reporters will work [fancy]
+
+    Code
+      expect_false(all(cats$validate_links()))
+    Message <simpleMessage>
+      ! Images need alt-text
+      image-test.md:8
+      image-test.md:12
+      image-test.md:16
+      image-test.md:20
+      image-test.md:24
+      image-test.md:29
+      image-test.md:36
+      image-test.md:41
+      image-test.md:41
 

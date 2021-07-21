@@ -4,10 +4,12 @@
 \alias{validate_links}
 \title{Validate Links in a markdown document}
 \usage{
-validate_links(yrn)
+validate_links(yrn, verbose = TRUE)
 }
 \arguments{
 \item{yrn}{a \link[tinkr:yarn]{tinkr::yarn} or \link{Episode} object.}
+
+\item{verbose}{if TRUE (default), messages will be printed as the validator works.}
 }
 \value{
 a data frame containing the links, locations, and indicators if they
