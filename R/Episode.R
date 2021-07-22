@@ -22,13 +22,14 @@ Episode <- R6::R6Class("Episode",
     #'   immediately passed to [tinkr::yarn]. If `TRUE`, all liquid variables
     #'   in relative links have spaces removed to allow the commonmark parser to
     #'   interpret them as links.
+    #' @param ... arguments passed on to [tinkr::yarn] and [tinkr::to_xml()]
     #' @return A new Episode object with extracted XML data
     #' @examples
     #' scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
     #' scope$name
     #' scope$lesson
     #' scope$challenges
-    initialize = function(path = NULL, process_tags = TRUE, fix_links = TRUE, fix_liquid = FALSE) {
+    initialize = function(path = NULL, process_tags = TRUE, fix_links = TRUE, fix_liquid = FALSE, ...) {
       if (!file.exists(path)) {
         stop(glue::glue("the file '{path}' does not exist"))
       }
@@ -39,10 +40,10 @@ Episode <- R6::R6Class("Episode",
       TOX <- purrr::safely(super$initialize, otherwise = default, quiet = FALSE)
       if (fix_liquid) {
         tmp <- fix_liquid_relative_link(path)
-        lsn <- TOX(tmp, sourcepos = TRUE)
+        lsn <- TOX(tmp, sourcepos = TRUE, ...)
         close(tmp)
       } else {
-        lsn <- TOX(path, sourcepos = TRUE)
+        lsn <- TOX(path, sourcepos = TRUE, ...)
       }
       if (!is.null(lsn$error)) {
         private$record_problem(lsn$error)

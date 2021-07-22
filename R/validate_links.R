@@ -93,6 +93,7 @@ validate_internal_okay <- function(yrn, lt = NULL, verbose = TRUE, cli = TRUE) {
   if (any(cross_page)) {
     neighbors <- get_lesson_files(yrn$lesson)
     no_file <- !lt$path %in% glue::glue("{neighbors}")
+    is_anchor <- purrr::map_lgl(lt$path %in% lt$rel, identical, TRUE)
     res <- res & !any(cross_page & no_file)
   }
   if (verbose && !res) {
@@ -105,8 +106,18 @@ validate_internal_okay <- function(yrn, lt = NULL, verbose = TRUE, cli = TRUE) {
         lnks = glue::glue("{bad_fragment$orig} ({link_sources})")
       )
     }
-    if (any(cross_page & no_file)) {
-      bad_files <- lt[cross_page & no_file, , drop = FALSE]
+    if (any(cross_page & is_anchor)) {
+      a <- lt[cross_page & is_anchor, , drop = FALSE]
+      link_sources <- glue::glue("{path}:{a$sourcepos}")
+      link_fmt <- glue::glue("[{a$text}]({a$orig}) -> [{a$text}][{a$orig}]")
+      issue_warning("Relative links that are incorrectly formatted:
+        {glue::glue_collapse(lnks, sep = '\n')}", 
+        cli,
+        lnks = glue::glue("{link_fmt} ({link_sources})")
+      )
+    }
+    if (any(cross_page & no_file & !is_anchor)) {
+      bad_files <- lt[cross_page & no_file & !is_anchor, , drop = FALSE]
       link_sources <- glue::glue("{path}:{bad_files$sourcepos}")
       issue_warning("These files do not exist in the lesson:
         {glue::glue_collapse(lnks, sep = '\n')}", 
@@ -124,8 +135,13 @@ get_lesson_files <- function(lesson_path) {
   the_files <- the_files[fs::is_file(the_files)]
   the_files <- fs::path_rel(the_files, lesson_path)
   md <- grepl("*md$", fs::path_ext(the_files))
+  # check for both .html and bare file names
   the_files[md] <- fs::path_ext_set(the_files[md], "html")
-  gsub("(episodes|profiles|learners|instructors)/", "", the_files)
+  the_files <- c(the_files, 
+    fs::path_ext_remove(the_files[md]),
+    paste0(fs::path_ext_remove(the_files[md]), "/")
+  )
+  gsub("(episodes|profiles|learners|instructors|_extras|_episodes|_episodes_rmd)/", "", the_files)
 }
 
 clean_headings <- function(headings) {

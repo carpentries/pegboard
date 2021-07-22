@@ -65,11 +65,13 @@
             'link' (link-test.md:18)
       'this link' (link-test.md:18)
       ! Links must use HTTPS, not HTTP:
-            http://example.com (link-test.md:31)
+            http://example.com (link-test.md:41)
       ! The following anchors do not exist in the file:
               #bad-fragment (link-test.md:22)
+      ! Relative links that are incorrectly formatted:
+              [should be a relative link](rel-image) -> [should be a relative link][rel-image] (link-test.md:36)
       ! These files do not exist in the lesson:
-              incorrect-link.html (link-test.md:27)
+              incorrect-link.html (link-test.md:29)
 
 # headings reporters will work [plain]
 
@@ -269,11 +271,13 @@
       'link' (link-test.md:18)
       'this link' (link-test.md:18)
       ! Links must use HTTPS, not HTTP:
-      http://example.com (link-test.md:31)
+      http://example.com (link-test.md:41)
       ! The following anchors do not exist in the file:
       #bad-fragment (link-test.md:22)
+      ! Relative links that are incorrectly formatted:
+      [should be a relative link](rel-image) -> [should be a relative link][rel-image] (link-test.md:36)
       ! These files do not exist in the lesson:
-      incorrect-link.html (link-test.md:27)
+      incorrect-link.html (link-test.md:29)
 
 # links reporters will work [ansi]
 
@@ -293,11 +297,13 @@
       'link' (link-test.md:18)
       'this link' (link-test.md:18)
       [33m![39m Links must use HTTPS, not HTTP:
-      http://example.com (link-test.md:31)
+      http://example.com (link-test.md:41)
       [33m![39m The following anchors do not exist in the file:
       #bad-fragment (link-test.md:22)
+      [33m![39m Relative links that are incorrectly formatted:
+      [should be a relative link](rel-image) -> [should be a relative link][rel-image] (link-test.md:36)
       [33m![39m These files do not exist in the lesson:
-      incorrect-link.html (link-test.md:27)
+      incorrect-link.html (link-test.md:29)
 
 # links reporters will work [unicode]
 
@@ -317,11 +323,13 @@
       'link' (link-test.md:18)
       'this link' (link-test.md:18)
       ! Links must use HTTPS, not HTTP:
-      http://example.com (link-test.md:31)
+      http://example.com (link-test.md:41)
       ! The following anchors do not exist in the file:
       #bad-fragment (link-test.md:22)
+      ! Relative links that are incorrectly formatted:
+      [should be a relative link](rel-image) -> [should be a relative link][rel-image] (link-test.md:36)
       ! These files do not exist in the lesson:
-      incorrect-link.html (link-test.md:27)
+      incorrect-link.html (link-test.md:29)
 
 # links reporters will work [fancy]
 
@@ -341,9 +349,11 @@
       'link' (link-test.md:18)
       'this link' (link-test.md:18)
       [33m![39m Links must use HTTPS, not HTTP:
-      http://example.com (link-test.md:31)
+      http://example.com (link-test.md:41)
       [33m![39m The following anchors do not exist in the file:
       #bad-fragment (link-test.md:22)
+      [33m![39m Relative links that are incorrectly formatted:
+      [should be a relative link](rel-image) -> [should be a relative link][rel-image] (link-test.md:36)
       [33m![39m These files do not exist in the lesson:
-      incorrect-link.html (link-test.md:27)
+      incorrect-link.html (link-test.md:29)
 
