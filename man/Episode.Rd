@@ -216,7 +216,8 @@ Create a new Episode
   path = NULL,
   process_tags = TRUE,
   fix_links = TRUE,
-  fix_liquid = FALSE
+  fix_liquid = FALSE,
+  ...
 )}\if{html}{\out{</div>}}
 }
 
@@ -238,6 +239,8 @@ as valid links.}
 immediately passed to \link[tinkr:yarn]{tinkr::yarn}. If \code{TRUE}, all liquid variables
 in relative links have spaces removed to allow the commonmark parser to
 interpret them as links.}
+
+\item{\code{...}}{arguments passed on to \link[tinkr:yarn]{tinkr::yarn} and \code{\link[tinkr:to_xml]{tinkr::to_xml()}}}
 }
 \if{html}{\out{</div>}}
 }

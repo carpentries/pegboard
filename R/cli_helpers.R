@@ -4,6 +4,7 @@
 #' @param cli if `TRUE`, the CLI package will be used to issue the message,
 #'   defaults to `FALSE`, which means that the message will be issued via 
 #'   message and glue.
+#' @param ... named arguments to be evaluated in the message via glue or CLI
 #' 
 #' @return nothing, invisibly; used for side-effect
 #' @rdname cli_helpers

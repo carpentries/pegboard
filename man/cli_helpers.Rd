@@ -14,6 +14,8 @@ append_labels(l, i = TRUE, e = "", cli = FALSE, f = "style_inverse")
 
 \item{cli}{if \code{TRUE}, stylizes \code{e} with \code{f}}
 
+\item{...}{named arguments to be evaluated in the message via glue or CLI}
+
 \item{l}{a vector/list of characters}
 
 \item{i}{the index of elements to append}
