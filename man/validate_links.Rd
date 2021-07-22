@@ -39,4 +39,18 @@ a page and have the correct capitalisation.
 Anchors are located at the end of URLs that start with a \verb{#} sign. These are
 used to indicate a section of the documenation.
 }
+
+\subsection{Alt-text (for images)}{
+
+All images must have associated alt-text. In pandoc, this is acheived by
+writing the \code{alt} attribute in curly braces after the image:
+\verb{![image caption](link)\{alt='alt text'\}}
+}
+
+\subsection{Descriptive text}{
+
+All links must have descriptive text associated with them, which is
+beneficial for screen readers scanning the links on a page to not have a
+list full of "link", "link", "link".
+}
 }

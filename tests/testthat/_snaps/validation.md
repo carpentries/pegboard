@@ -61,6 +61,22 @@
       14-looping-data-sets.md:191
       14-looping-data-sets.md:195
       14-looping-data-sets.md:197
+      ! These files do not exist in the lesson:
+              ../no-workie.svg (14-looping-data-sets.md:191)
+      ../no-workie.svg (14-looping-data-sets.md:197)
+
+---
+
+    Code
+      expect_equal(sum(link$validate_links()), 3L)
+    Message <simpleMessage>
+      ! Link text should be more descriptive than 'link':
+            'link' (link-test.md:18)
+      'this link' (link-test.md:18)
+      ! The following anchors do not exist in the file:
+              #bad-fragment (link-test.md:22)
+      ! These files do not exist in the lesson:
+              incorrect-link.html (link-test.md:27)
 
 # headings reporters will work [plain]
 
@@ -246,7 +262,7 @@
 
     Code
       expect_false(all(cats$validate_links()))
-    Message <simpleMessage>
+    Message <cliMessage>
       ! Images need alt-text
       image-test.md:8
       image-test.md:12
@@ -257,13 +273,26 @@
       image-test.md:36
       image-test.md:41
       image-test.md:41
+
+---
+
+    Code
+      expect_equal(sum(link$validate_links()), 3L)
+    Message <cliMessage>
+      ! Link text should be more descriptive than 'link':
+      'link' (link-test.md:18)
+      'this link' (link-test.md:18)
+      ! The following anchors do not exist in the file:
+      #bad-fragment (link-test.md:22)
+      ! These files do not exist in the lesson:
+      incorrect-link.html (link-test.md:27)
 
 # links reporters will work [ansi]
 
     Code
       expect_false(all(cats$validate_links()))
-    Message <simpleMessage>
-      ! Images need alt-text
+    Message <cliMessage>
+      [33m![39m Images need alt-text
       image-test.md:8
       image-test.md:12
       image-test.md:16
@@ -273,12 +302,25 @@
       image-test.md:36
       image-test.md:41
       image-test.md:41
+
+---
+
+    Code
+      expect_equal(sum(link$validate_links()), 3L)
+    Message <cliMessage>
+      [33m![39m Link text should be more descriptive than 'link':
+      'link' (link-test.md:18)
+      'this link' (link-test.md:18)
+      [33m![39m The following anchors do not exist in the file:
+      #bad-fragment (link-test.md:22)
+      [33m![39m These files do not exist in the lesson:
+      incorrect-link.html (link-test.md:27)
 
 # links reporters will work [unicode]
 
     Code
       expect_false(all(cats$validate_links()))
-    Message <simpleMessage>
+    Message <cliMessage>
       ! Images need alt-text
       image-test.md:8
       image-test.md:12
@@ -289,13 +331,26 @@
       image-test.md:36
       image-test.md:41
       image-test.md:41
+
+---
+
+    Code
+      expect_equal(sum(link$validate_links()), 3L)
+    Message <cliMessage>
+      ! Link text should be more descriptive than 'link':
+      'link' (link-test.md:18)
+      'this link' (link-test.md:18)
+      ! The following anchors do not exist in the file:
+      #bad-fragment (link-test.md:22)
+      ! These files do not exist in the lesson:
+      incorrect-link.html (link-test.md:27)
 
 # links reporters will work [fancy]
 
     Code
       expect_false(all(cats$validate_links()))
-    Message <simpleMessage>
-      ! Images need alt-text
+    Message <cliMessage>
+      [33m![39m Images need alt-text
       image-test.md:8
       image-test.md:12
       image-test.md:16
@@ -305,4 +360,17 @@
       image-test.md:36
       image-test.md:41
       image-test.md:41
+
+---
+
+    Code
+      expect_equal(sum(link$validate_links()), 3L)
+    Message <cliMessage>
+      [33m![39m Link text should be more descriptive than 'link':
+      'link' (link-test.md:18)
+      'this link' (link-test.md:18)
+      [33m![39m The following anchors do not exist in the file:
+      #bad-fragment (link-test.md:22)
+      [33m![39m These files do not exist in the lesson:
+      incorrect-link.html (link-test.md:27)
 
