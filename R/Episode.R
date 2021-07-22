@@ -556,7 +556,13 @@ Episode <- R6::R6Class("Episode",
 
     #' @field lesson \[`character`\] the path to the lesson where the episode is from
     lesson = function() {
-      fs::path_dir(fs::path_dir(self$path))
+      lsn <- fs::path_dir(self$path)
+      sub_folders <- c("episodes", "learners", "instructors", "profiles",
+      "_episodes", "_episodes_rmd", "_extras")
+      if (basename(lsn) %in% sub_folders) {
+        lsn <- fs::path_dir(lsn)
+      }
+      lsn
     }
   ),
   private = list(
@@ -569,6 +575,7 @@ Episode <- R6::R6Class("Episode",
     record_problem = function(x) {
       private$problems <- c(private$problems, x)
     },
+
     mutations = c(
       unblock           = FALSE, # have kramdown blocks been converted?
       use_dovetail      = FALSE, # are we keeping challenges in code blocks?
