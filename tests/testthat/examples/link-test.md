@@ -25,3 +25,7 @@ This link is [absolutely incorrect](#bad-fragment)
 
 This [link will go to the image test](image-test.html), but [this link is 
 wrong](incorrect-link.html)
+
+## HTTP links
+
+This [link uses http, which is no bueno](http://example.com)

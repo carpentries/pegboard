@@ -142,12 +142,11 @@ clean_headings <- function(headings) {
 validate_https <- function(lt, path, verbose = TRUE, cli = TRUE) {
   res <- !any(has_http <- lt$scheme == "http")
   if (verbose && !res) {
-    with_http    <- lt[lt$scheme, , drop = FALSE]
-    link_sources <- glue::glue("{path}:{with_http$sourcepos}")
+    link_sources <- glue::glue("{path}:{lt$sourcepos[has_http]}")
     issue_warning("Links must use HTTPS, not HTTP:
       {glue::glue_collapse(lnks, sep = '\n')}",
       cli,
-      lnks = glue::glue("{with_http$orig} ({link_sources})")
+      lnks = glue::glue("{lt$orig[has_http]} ({link_sources})")
     )
   }
   res
@@ -156,11 +155,10 @@ validate_https <- function(lt, path, verbose = TRUE, cli = TRUE) {
 
 validate_alt_text <- function(lt, path, verbose = TRUE, cli = TRUE) {
   img <- lt$type %in% c("image", "img")
-  alt_text <- lt$alt[img]
-  res <- !any(is.na(alt_text) | alt_text == "")
+  res <- !any(no_alt <- img & (is.na(lt$alt) | lt$alt == ""))
   if (verbose && !res) {
-    img_sources <- glue::glue("{path}:{lt$sourcepos[img]}")
-    issue_warning("Images need alt-text
+    img_sources <- glue::glue("{lt$orig[no_alt]} ({path}:{lt$sourcepos[no_alt]})")
+    issue_warning("Images need alt-text:
       {imgs}",
       cli,
       imgs = glue::glue_collapse(img_sources, "\n")

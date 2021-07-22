@@ -27,7 +27,7 @@ test_that("links reporters will work without CLI", {
   withr::with_options(list("pegboard.no-cli" = TRUE), {
     expect_snapshot(expect_false(all(cats$validate_links())))
     expect_snapshot(expect_equal(sum(loop$validate_links()), 3L))
-    expect_snapshot(expect_equal(sum(link$validate_links()), 3L))
+    expect_snapshot(expect_equal(sum(link$validate_links()), 2L))
   })
 
 })
@@ -43,7 +43,7 @@ if (requireNamespace("cli", quietly = TRUE)) {
 
   cli::test_that_cli("links reporters will work", {
     expect_snapshot(expect_false(all(cats$validate_links())))
-    expect_snapshot(expect_equal(sum(link$validate_links()), 3L))
+    expect_snapshot(expect_equal(sum(link$validate_links()), 2L))
   })
 }
 

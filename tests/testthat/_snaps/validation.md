@@ -40,27 +40,18 @@
     Code
       expect_false(all(cats$validate_links()))
     Message <simpleMessage>
-      ! Images need alt-text
-      image-test.md:8
-      image-test.md:12
-      image-test.md:16
-      image-test.md:20
-      image-test.md:24
-      image-test.md:29
-      image-test.md:36
-      image-test.md:41
-      image-test.md:41
+      ! Images need alt-text:
+      https://placekitten.com/g/102/102 (image-test.md:12)
+      https://placekitten.com/g/109/109 (image-test.md:41)
 
 ---
 
     Code
       expect_equal(sum(loop$validate_links()), 3L)
     Message <simpleMessage>
-      ! Images need alt-text
-      14-looping-data-sets.md:189
-      14-looping-data-sets.md:191
-      14-looping-data-sets.md:195
-      14-looping-data-sets.md:197
+      ! Images need alt-text:
+      https://carpentries.org/assets/img/TheCarpentries.svg (14-looping-data-sets.md:195)
+      ../no-workie.svg (14-looping-data-sets.md:197)
       ! These files do not exist in the lesson:
               ../no-workie.svg (14-looping-data-sets.md:191)
       ../no-workie.svg (14-looping-data-sets.md:197)
@@ -68,11 +59,13 @@
 ---
 
     Code
-      expect_equal(sum(link$validate_links()), 3L)
+      expect_equal(sum(link$validate_links()), 2L)
     Message <simpleMessage>
       ! Link text should be more descriptive than 'link':
             'link' (link-test.md:18)
       'this link' (link-test.md:18)
+      ! Links must use HTTPS, not HTTP:
+            http://example.com (link-test.md:31)
       ! The following anchors do not exist in the file:
               #bad-fragment (link-test.md:22)
       ! These files do not exist in the lesson:
@@ -263,25 +256,20 @@
     Code
       expect_false(all(cats$validate_links()))
     Message <cliMessage>
-      ! Images need alt-text
-      image-test.md:8
-      image-test.md:12
-      image-test.md:16
-      image-test.md:20
-      image-test.md:24
-      image-test.md:29
-      image-test.md:36
-      image-test.md:41
-      image-test.md:41
+      ! Images need alt-text:
+      https://placekitten.com/g/102/102 (image-test.md:12)
+      https://placekitten.com/g/109/109 (image-test.md:41)
 
 ---
 
     Code
-      expect_equal(sum(link$validate_links()), 3L)
+      expect_equal(sum(link$validate_links()), 2L)
     Message <cliMessage>
       ! Link text should be more descriptive than 'link':
       'link' (link-test.md:18)
       'this link' (link-test.md:18)
+      ! Links must use HTTPS, not HTTP:
+      http://example.com (link-test.md:31)
       ! The following anchors do not exist in the file:
       #bad-fragment (link-test.md:22)
       ! These files do not exist in the lesson:
@@ -292,25 +280,20 @@
     Code
       expect_false(all(cats$validate_links()))
     Message <cliMessage>
-      [33m![39m Images need alt-text
-      image-test.md:8
-      image-test.md:12
-      image-test.md:16
-      image-test.md:20
-      image-test.md:24
-      image-test.md:29
-      image-test.md:36
-      image-test.md:41
-      image-test.md:41
+      [33m![39m Images need alt-text:
+      https://placekitten.com/g/102/102 (image-test.md:12)
+      https://placekitten.com/g/109/109 (image-test.md:41)
 
 ---
 
     Code
-      expect_equal(sum(link$validate_links()), 3L)
+      expect_equal(sum(link$validate_links()), 2L)
     Message <cliMessage>
       [33m![39m Link text should be more descriptive than 'link':
       'link' (link-test.md:18)
       'this link' (link-test.md:18)
+      [33m![39m Links must use HTTPS, not HTTP:
+      http://example.com (link-test.md:31)
       [33m![39m The following anchors do not exist in the file:
       #bad-fragment (link-test.md:22)
       [33m![39m These files do not exist in the lesson:
@@ -321,25 +304,20 @@
     Code
       expect_false(all(cats$validate_links()))
     Message <cliMessage>
-      ! Images need alt-text
-      image-test.md:8
-      image-test.md:12
-      image-test.md:16
-      image-test.md:20
-      image-test.md:24
-      image-test.md:29
-      image-test.md:36
-      image-test.md:41
-      image-test.md:41
+      ! Images need alt-text:
+      https://placekitten.com/g/102/102 (image-test.md:12)
+      https://placekitten.com/g/109/109 (image-test.md:41)
 
 ---
 
     Code
-      expect_equal(sum(link$validate_links()), 3L)
+      expect_equal(sum(link$validate_links()), 2L)
     Message <cliMessage>
       ! Link text should be more descriptive than 'link':
       'link' (link-test.md:18)
       'this link' (link-test.md:18)
+      ! Links must use HTTPS, not HTTP:
+      http://example.com (link-test.md:31)
       ! The following anchors do not exist in the file:
       #bad-fragment (link-test.md:22)
       ! These files do not exist in the lesson:
@@ -350,25 +328,20 @@
     Code
       expect_false(all(cats$validate_links()))
     Message <cliMessage>
-      [33m![39m Images need alt-text
-      image-test.md:8
-      image-test.md:12
-      image-test.md:16
-      image-test.md:20
-      image-test.md:24
-      image-test.md:29
-      image-test.md:36
-      image-test.md:41
-      image-test.md:41
+      [33m![39m Images need alt-text:
+      https://placekitten.com/g/102/102 (image-test.md:12)
+      https://placekitten.com/g/109/109 (image-test.md:41)
 
 ---
 
     Code
-      expect_equal(sum(link$validate_links()), 3L)
+      expect_equal(sum(link$validate_links()), 2L)
     Message <cliMessage>
       [33m![39m Link text should be more descriptive than 'link':
       'link' (link-test.md:18)
       'this link' (link-test.md:18)
+      [33m![39m Links must use HTTPS, not HTTP:
+      http://example.com (link-test.md:31)
       [33m![39m The following anchors do not exist in the file:
       #bad-fragment (link-test.md:22)
       [33m![39m These files do not exist in the lesson:
