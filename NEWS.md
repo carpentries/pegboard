@@ -1,8 +1,23 @@
 # pegboard 0.0.0.9019
 
+## NEW FEATURES
+
+- The Episode class now has the `$links` and `$images` active bindings that
+  extracts the links and images (markdown and HTML) from the document.
+- `make_link_table()` creates a table of links parsed via `xml2::url_parse()`
+  with additional information about caption and alternative text (for images).
+- The Episode class now has the `$validate_links()` method, which will validate
+  links and images for common errors. 
+
+## BUG FIXES
+
 - `Episode$new()` gains the argument `fix_liquid`, which fixes liquid variables
   in relative links before they are passed to {tinkr} 
   (https://github.com/carpentries/pegboard/issues/46)
+- Post-processed links via `fix_links()` retains their `sourcepos` attribute
+  (fixed in e5508cc9c9a3821381293bdac12647edfbc0608e).
+- `Episode$lesson` no longer assumes that the episode is inside a sub-folder
+  (fixed in 63432ef83ecc41a6aab53fe768e8eaec107278d5).
 
 # pegboard 0.0.0.9018
 
