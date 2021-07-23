@@ -109,6 +109,7 @@ test_that("Episodes can be converted to use sandpaper", {
   # output needs to be explicitly removed
   expect_length(e$output, 4) 
   expect_match(xml2::xml_attr(e$output, "info"), "output")
+  skip_on_os("windows") # shQuote behaves _slightly_ differently and puts double quotes instead of single quotes
   expect_snapshot(cat(e$use_sandpaper(rmd = TRUE)$tail(15), sep = "\n"))
 
   # Without RMD ----------------------------------------------------------------
@@ -128,6 +129,7 @@ test_that("Episodes can be converted to use sandpaper", {
   # output needs to be explicitly removed
   expect_length(e$output, 4) 
   expect_match(xml2::xml_attr(e$output, "info"), "output")
+  skip_on_os("windows") # shQuote behaves _slightly_ differently and puts double quotes instead of single quotes
   expect_snapshot(cat(e$use_sandpaper(rmd = FALSE)$tail(15), sep = "\n"))
 
 })
