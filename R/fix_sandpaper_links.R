@@ -72,6 +72,7 @@ fix_sandpaper_links <- function(body) {
   image <- xml2::xml_find_all(body, img_search)
   iattr <- xml2::xml_attr(image, "destination")
   xml2::xml_set_attr(image, "destination", replace_links(iattr))
+  make_pandoc_alt(xml2::xml_find_all(body, glue::glue(".//{ns}image")))
 
   # Fix links in html nodes (e.g. raw HTML that was inserted to markdown, like
   # <img src="../fig"/>

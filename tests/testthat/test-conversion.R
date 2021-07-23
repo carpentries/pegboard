@@ -76,6 +76,7 @@ test_that("Episodes can be converted to use sandpaper", {
       "{{ site.swc_pages }}/shell-novice", 
       "{{ page.root }}{% link")
   )
+  expect_snapshot(cat(e$tail(15), sep = "\n"))
 
   # With RMD -------------------------------------------------------------------
   expect_length(e$use_sandpaper(rmd = TRUE)$code, 12)
@@ -108,6 +109,7 @@ test_that("Episodes can be converted to use sandpaper", {
   # output needs to be explicitly removed
   expect_length(e$output, 4) 
   expect_match(xml2::xml_attr(e$output, "info"), "output")
+  expect_snapshot(cat(e$use_sandpaper(rmd = TRUE)$tail(15), sep = "\n"))
 
   # Without RMD ----------------------------------------------------------------
   expect_length(e$reset()$use_sandpaper(rmd = FALSE)$code, 11)
@@ -126,6 +128,7 @@ test_that("Episodes can be converted to use sandpaper", {
   # output needs to be explicitly removed
   expect_length(e$output, 4) 
   expect_match(xml2::xml_attr(e$output, "info"), "output")
+  expect_snapshot(cat(e$use_sandpaper(rmd = FALSE)$tail(15), sep = "\n"))
 
 })
 

@@ -199,7 +199,7 @@ Episode <- R6::R6Class("Episode",
       if (!rmd && private$mutations['use_sandpaper_md']) {
         return(invisible(self))
       }
-      use_sandpaper(self$body, rmd)
+      self$body <- use_sandpaper(self$body, rmd)
       type <- if (rmd) 'use_sandpaper_rmd' else 'use_sandpaper_md'
       private$mutations[type] <- TRUE
       invisible(self)
@@ -474,7 +474,7 @@ Episode <- R6::R6Class("Episode",
 
     #' @field links \[`xml_nodeset`\] all links (not images) in the document
     links = function() {
-      xpath <- ".//md:link"
+      xpath <- ".//md:link | .//md:text[klink]"
       xml2::xml_find_all(self$body, xpath, self$ns)
     },
 

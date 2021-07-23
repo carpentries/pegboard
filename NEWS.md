@@ -8,6 +8,10 @@
   with additional information about caption and alternative text (for images).
 - The Episode class now has the `$validate_links()` method, which will validate
   links and images for common errors. 
+- `Episode$use_sandpaper()` now converts images to use alt text over captions.
+  Images that had `![alt](link)` are converted to `![](link){alt='alt'}` because
+  pandoc uses everything in square brackets to be caption text. NOTE: this now
+  makes a copy of the XML document.
 
 ## BUG FIXES
 
