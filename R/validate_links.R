@@ -59,6 +59,21 @@ validate_links <- function(yrn, verbose = TRUE) {
   VLD
 }
 
+
+validate_known_rot <- function(lt, path, verbose = TRUE, cli = TRUE) {
+  # There are some links that are notorious for link rot. In these cases, we 
+  # should absolutely invalidate them.
+  rotten <- c(
+    # NOTE: Add new rotten URLs with their solutions here
+    "exts.ggplot2.tidyverse.org/" = "(www.)?ggplot2-exts.org",
+    NULL
+  )
+  res <- !any(matched <- vapply(rotten, grepl, logical(nrow(lt)), lt$server))
+  if (verbose && !res) {
+    bad_links <- lt$server[rowSums(res) > 0L]
+  }
+}
+
 validate_descriptive <- function(lt, path, verbose = TRUE, cli = TRUE) {
   res <- !any(bad <- tolower(lt$text) %in% c("link", "this link", "a link"))
   if (verbose && !res) {
@@ -91,8 +106,7 @@ validate_internal_okay <- function(yrn, lt = NULL, verbose = TRUE, cli = TRUE) {
     no_match <- FALSE
   }
   if (any(cross_page)) {
-    neighbors <- get_lesson_files(yrn$lesson)
-    no_file <- !lt$path %in% glue::glue("{neighbors}")
+    no_file <- !test_file_existence(lt$path, fs::path_dir(yrn$path))
     is_anchor <- purrr::map_lgl(lt$path %in% lt$rel, identical, TRUE)
     res <- res & !any(cross_page & no_file)
   }
@@ -129,19 +143,18 @@ validate_internal_okay <- function(yrn, lt = NULL, verbose = TRUE, cli = TRUE) {
   res
 }
 
-get_lesson_files <- function(lesson_path) {
-  the_files <- fs::dir_ls(lesson_path, 
-    recurse = TRUE, regexp = "site/*", invert = TRUE)
-  the_files <- the_files[fs::is_file(the_files)]
-  the_files <- fs::path_rel(the_files, lesson_path)
-  md <- grepl("*md$", fs::path_ext(the_files))
-  # check for both .html and bare file names
-  the_files[md] <- fs::path_ext_set(the_files[md], "html")
-  the_files <- c(the_files, 
-    fs::path_ext_remove(the_files[md]),
-    paste0(fs::path_ext_remove(the_files[md]), "/")
-  )
-  gsub("(episodes|profiles|learners|instructors|_extras|_episodes|_episodes_rmd)/", "", the_files)
+test_file_existence <- function(paths, home) {
+  # Add home path, assuming that we can link out from the episode and it will
+  # link back to something real
+  call_me_maybe  <- fs::path_norm(fs::path(home, paths))
+  # Catch the folders and the images
+  exists_organic <- fs::file_exists(call_me_maybe)
+  # Catch markdown files to be translated to HTML
+  exists_md      <- fs::file_exists(fs::path_ext_set(call_me_maybe, "md"))
+  # Catch R Markdown files to be translated to HTML
+  exists_rmd     <- fs::file_exists(fs::path_ext_set(call_me_maybe, "Rmd"))
+  # Return the winners
+  exists_organic | exists_md | exists_rmd
 }
 
 clean_headings <- function(headings) {

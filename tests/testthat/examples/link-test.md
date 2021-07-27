@@ -26,9 +26,10 @@ This [relative link goes to label 1][rel-label-1]
 ## Cross-Lesson links {#cross-lesson}
 
 This [link will go to the image test](image-test.html), but [this link is 
-wrong](incorrect-link.html)
+wrong](incorrect-link.html). 
 
-[This link also goes to image test](image-test)
+[This link also goes to image test](image-test) and [_this_ link goes to
+image test as well](./image-test.html)
 [This link also goes to image test, but with a slash](image-test/), though this
 may not work for us because it implies that there is an `index.html` hiding in
 there.
