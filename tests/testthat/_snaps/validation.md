@@ -165,7 +165,7 @@
     Message <cliMessage>
       ────────────────────────────────────────────────────────────────────────────────
 
-# duplciate headings reporting works [plain]
+# duplicate headings reporting works [plain]
 
     Code
       expect_equal(sum(loop$validate_headings()), 4L)
@@ -187,7 +187,7 @@
     Message <cliMessage>
       --------------------------------------------------------------------------------
 
-# duplciate headings reporting works [ansi]
+# duplicate headings reporting works [ansi]
 
     Code
       expect_equal(sum(loop$validate_headings()), 4L)
@@ -209,7 +209,7 @@
     Message <cliMessage>
       --------------------------------------------------------------------------------
 
-# duplciate headings reporting works [unicode]
+# duplicate headings reporting works [unicode]
 
     Code
       expect_equal(sum(loop$validate_headings()), 4L)
@@ -231,7 +231,7 @@
     Message <cliMessage>
       ────────────────────────────────────────────────────────────────────────────────
 
-# duplciate headings reporting works [fancy]
+# duplicate headings reporting works [fancy]
 
     Code
       expect_equal(sum(loop$validate_headings()), 4L)
@@ -356,4 +356,3 @@
       [should be a relative link](rel-image) -> [should be a relative link][rel-image] (link-test.md:37)
       [33m![39m These files do not exist in the lesson:
       incorrect-link.html (link-test.md:29)
-

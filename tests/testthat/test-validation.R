@@ -37,7 +37,7 @@ if (requireNamespace("cli", quietly = TRUE)) {
     expect_snapshot(expect_false(all(vh$validate_headings())))
   })
 
-  cli::test_that_cli("duplciate headings reporting works", {
+  cli::test_that_cli("duplicate headings reporting works", {
     expect_snapshot(expect_equal(sum(loop$validate_headings()), 4L))
   })
 
@@ -46,4 +46,3 @@ if (requireNamespace("cli", quietly = TRUE)) {
     expect_snapshot(expect_equal(sum(link$validate_links()), 2L))
   })
 }
-
