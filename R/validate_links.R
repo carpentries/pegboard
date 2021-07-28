@@ -143,10 +143,40 @@ validate_internal_okay <- function(yrn, lt = NULL, verbose = TRUE, cli = TRUE) {
   res
 }
 
+# TODO: adjust expectations based on what we want to do with the links.
+# We have a situation here where we want to know: Which links represent the
+# truth?
+#
+# 1. Links relative to the top-level directory?
+# 2. Links relative to everything in site/built (markdown output)?
+# 3. Links relative to site/docs (HTML output)?
+#
+# At the moment, we are validating for (1) and I think that's where we want to
+# stay because that's the one that will allow for the most portability since 
+# you can predict how to transfer the files to new structures. 
+#
+# TODO: add Episode$sandpaper to be `TRUE` if the _initial_ state was a
+#   sandpaper lesson and `FALSE` otherwise, so we know what to expect.
 test_file_existence <- function(paths, home) {
   # Add home path, assuming that we can link out from the episode and it will
   # link back to something real
-  call_me_maybe  <- fs::path_norm(fs::path(home, paths))
+  exists_here <- exists_at_all(fs::path_norm(fs::path(home, paths)))
+  # The folders that we can possibly inspect
+  maybe <- c(# sandpaper folders
+    ".", "episodes", "learners", "instructors", "profiles", 
+    # styles folders
+    "_episodes", "_episodes_rmd", "_extras", "_includes"
+  )
+  # Eliminate folders that don't actually exist
+  probably <- maybe[fs::file_exists(fs::path(home, "..", maybe))]
+  # Check in those folders for these files
+  exists_folders <- purrr::map_dfr(probably, exists_in_folder, paths, home)
+  # Return if any of them exist
+  exists_here | purrr::map_lgl(exists_folders, any, na.rm = TRUE)
+
+}
+
+exists_at_all <- function(call_me_maybe) {
   # Catch the folders and the images
   exists_organic <- fs::file_exists(call_me_maybe)
   # Catch markdown files to be translated to HTML
@@ -155,6 +185,15 @@ test_file_existence <- function(paths, home) {
   exists_rmd     <- fs::file_exists(fs::path_ext_set(call_me_maybe, "Rmd"))
   # Return the winners
   exists_organic | exists_md | exists_rmd
+
+}
+
+exists_in_folder <- function(folder = "_extras", paths, home) {
+  # Adding a backtrack to a higher folder
+  the_paths <- fs::path_norm(fs::path(home, "..", folder, paths))
+  res <- exists_at_all(the_paths)
+  names(res) <- seq(paths)
+  res
 }
 
 clean_headings <- function(headings) {
