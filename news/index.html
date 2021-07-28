@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9018</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9019</span>
       </span>
     </div>
 
@@ -126,6 +126,33 @@
       <small>Source: <a href='https://github.com/zkamvar/pegboard/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="pegboard-0009019" class="section level1">
+<h1 class="page-header" data-toc-text="0.0.0.9019">
+<a href="#pegboard-0009019" class="anchor"></a>pegboard 0.0.0.9019</h1>
+<div id="new-features" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-features" class="anchor"></a>NEW FEATURES</h2>
+<ul>
+<li>The Episode class now has the <code>$links</code> and <code>$images</code> active bindings that extracts the links and images (markdown and HTML) from the document.</li>
+<li>
+<code><a href="../reference/make_link_table.html">make_link_table()</a></code> creates a table of links parsed via <code><a href="http://xml2.r-lib.org/reference/url_parse.html">xml2::url_parse()</a></code> with additional information about caption and alternative text (for images).</li>
+<li>The Episode class now has the <code>$validate_links()</code> method, which will validate links and images for common errors such as not using https and unresolved relative links.</li>
+<li>
+<code>Episode$use_sandpaper()</code> now converts images to use alt text over captions. Images that had <code>![alt](link)</code> are converted to <code>![](link){alt='alt'}</code> because pandoc uses everything in square brackets to be caption text. NOTE: this now makes a copy of the XML document.</li>
+</ul>
+</div>
+<div id="bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes" class="anchor"></a>BUG FIXES</h2>
+<ul>
+<li>
+<code>Episode$new()</code> gains the argument <code>fix_liquid</code>, which fixes liquid variables in relative links before they are passed to {tinkr} (<a href="https://github.com/carpentries/pegboard/issues/46" class="uri">https://github.com/carpentries/pegboard/issues/46</a>)</li>
+<li>Post-processed links via <code><a href="../reference/fix_links.html">fix_links()</a></code> retains their <code>sourcepos</code> attribute (fixed in e5508cc9c9a3821381293bdac12647edfbc0608e).</li>
+<li>
+<code>Episode$lesson</code> no longer assumes that the episode is inside a sub-folder (fixed in 63432ef83ecc41a6aab53fe768e8eaec107278d5).</li>
+</ul>
+</div>
+</div>
     <div id="pegboard-0009018" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.0.9018">
 <a href="#pegboard-0009018" class="anchor"></a>pegboard 0.0.0.9018</h1>

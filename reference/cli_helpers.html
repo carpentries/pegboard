@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Isolate all blocks within a document that have a kramdown tag — isolate_kram_blocks • pegboard</title>
+<title>Issue a warning via CLI if it exists or send a message — issue_warning • pegboard</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,9 @@
 
 
 
-<meta property="og:title" content="Isolate all blocks within a document that have a kramdown tag — isolate_kram_blocks" />
-<meta property="og:description" content="Isolate all blocks within a document that have a kramdown tag" />
+<meta property="og:title" content="Issue a warning via CLI if it exists or send a message — issue_warning" />
+<meta property="og:description" content="Issue a warning via CLI if it exists or send a message
+Append a stylized label to elements of a vector" />
 
 
 
@@ -123,36 +124,68 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Isolate all blocks within a document that have a kramdown tag</h1>
-    <small class="dont-index">Source: <a href='https://github.com/zkamvar/pegboard/blob/master/R/isolate_kram_blocks.R'><code>R/isolate_kram_blocks.R</code></a></small>
-    <div class="hidden name"><code>isolate_kram_blocks.Rd</code></div>
+    <h1>Issue a warning via CLI if it exists or send a message</h1>
+    <small class="dont-index">Source: <a href='https://github.com/zkamvar/pegboard/blob/master/R/cli_helpers.R'><code>R/cli_helpers.R</code></a></small>
+    <div class="hidden name"><code>cli_helpers.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Isolate all blocks within a document that have a kramdown tag</p>
+    <p>Issue a warning via CLI if it exists or send a message</p>
+<p>Append a stylized label to elements of a vector</p>
     </div>
 
-    <pre class="usage"><span class='fu'>isolate_kram_blocks</span><span class='op'>(</span><span class='va'>body</span>, predicate <span class='op'>=</span> <span class='st'>""</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>issue_warning</span><span class='op'>(</span><span class='va'>msg</span>, cli <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>append_labels</span><span class='op'>(</span><span class='va'>l</span>, i <span class='op'>=</span> <span class='cn'>TRUE</span>, e <span class='op'>=</span> <span class='st'>""</span>, cli <span class='op'>=</span> <span class='cn'>FALSE</span>, f <span class='op'>=</span> <span class='st'>"style_inverse"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>body</th>
-      <td><p>an xml document</p></td>
+      <th>msg</th>
+      <td><p>the message as a glue or CLI string</p></td>
     </tr>
     <tr>
-      <th>predicate</th>
-      <td><p>an XPath conditional statement in square brackets or an
-empty string. This can be used to filter on such attributes such as line
-number.</p></td>
+      <th>cli</th>
+      <td><p>if <code>TRUE</code>, stylizes <code>e</code> with <code>f</code></p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>named arguments to be evaluated in the message via glue or CLI</p></td>
+    </tr>
+    <tr>
+      <th>l</th>
+      <td><p>a vector/list of characters</p></td>
+    </tr>
+    <tr>
+      <th>i</th>
+      <td><p>the index of elements to append</p></td>
+    </tr>
+    <tr>
+      <th>e</th>
+      <td><p>the new element to append to each element</p></td>
+    </tr>
+    <tr>
+      <th>f</th>
+      <td><p>a function from <span class="pkg">cli</span> that will transform <code>e</code></p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>the modified body, invisibly</p>
+    <p>nothing, invisibly; used for side-effect</p>
+<p>, <code>l</code>, appended</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>
+<span class='va'>x2</span> <span class='op'>&lt;-</span> <span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>append_labels</span><span class='op'>(</span><span class='va'>x</span>, 
+  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>3</span><span class='op'>)</span>, 
+  <span class='st'>"appended"</span>, 
+  cli <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"cli"</span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, 
+  f <span class='op'>=</span> <span class='st'>"col_cyan"</span>
+<span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'>glue</span><span class='fu'>::</span><span class='fu'><a href='https://glue.tidyverse.org/reference/glue.html'>glue</a></span><span class='op'>(</span><span class='st'>"[{x}]-&gt;[{x2}]"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [a]-&gt;[a <span style='color: #00BBBB;'>appended</span>] [b]-&gt;[b] [c]-&gt;[c <span style='color: #00BBBB;'>appended</span>] [d]-&gt;[d] [e]-&gt;[e]</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -40,7 +40,33 @@
 
 
 <meta property="og:title" content="Finds and fixes unresolved links within an Episode — fix_links" />
-<meta property="og:description" content="Finds and fixes unresolved links within an Episode" />
+<meta property="og:description" content="LINKS: A list of XPath predicates
+There are two reasons why commonmark would not recognise a link:
+The link is a relative link and the anchor is in another ~~castle~~ file.
+The link source uses a liquid variable that contains spaces.
+
+
+Because of this, we need to find these unparsed links in the document and
+re-parse them as valid links.
+fix_link_type(): Fixes all links in the document based on the type of link
+find_lesson_link(): Finds all text nodes that contain the link type
+resolve_links(): Operates on an individual text node within a paragraph.
+modify underlying text to new nodes, splitting off links
+inserts all the modified nodes before the text node
+remove the old text node
+
+
+links_within_text_regex(): finding different types of links within markdown
+text can be challenging because it involves characters used in regex for
+grouping and character classes. In general, I want to do two things with text
+that I get back from a document:
+split the links out from the text
+identify which parts of the resulting vector are links.
+
+
+This way, I can convert the links to links and the text to text.
+text_to_links(): Splits links away from text and returns a nodeset to insert
+make_link(): makes a link depending on the link type" />
 
 
 
@@ -72,7 +98,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9018</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9019</span>
       </span>
     </div>
 
@@ -129,24 +155,125 @@
     </div>
 
     <div class="ref-description">
-    <p>Finds and fixes unresolved links within an Episode</p>
+    <p><code>LINKS</code>: A list of XPath predicates</p>
+<p>There are two reasons why commonmark would not recognise a link:</p><ol>
+<li><p>The link is a relative link and the anchor is in another ~~castle~~ file.</p></li>
+<li><p>The link source uses a liquid variable that contains spaces.</p></li>
+</ol>
+
+<p>Because of this, we need to find these unparsed links in the document and
+re-parse them as valid links.</p>
+<p><code>fix_link_type()</code>: Fixes all links in the document based on the type of link</p>
+<p><code>find_lesson_link()</code>: Finds all text nodes that contain the link type</p>
+<p><code>resolve_links()</code>: Operates on an individual text node within a paragraph.</p><ol>
+<li><p>modify underlying text to new nodes, splitting off links</p></li>
+<li><p>inserts all the modified nodes before the text node</p></li>
+<li><p>remove the old text node</p></li>
+</ol>
+
+<p><code>links_within_text_regex()</code>: finding different types of links within markdown
+text can be challenging because it involves characters used in regex for
+grouping and character classes. In general, I want to do two things with text
+that I get back from a document:</p><ol>
+<li><p>split the links out from the text</p></li>
+<li><p>identify which parts of the resulting vector are links.</p></li>
+</ol>
+
+<p>This way, I can convert the links to links and the text to text.</p>
+<p><code>text_to_links()</code>: Splits links away from text and returns a nodeset to insert</p>
+<p><code>make_link()</code>: makes a link depending on the link type</p>
     </div>
 
-    <pre class="usage"><span class='fu'>fix_links</span><span class='op'>(</span><span class='va'>body</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>fix_links</span><span class='op'>(</span><span class='va'>body</span><span class='op'>)</span>
+
+<span class='va'>LINKS</span>
+
+<span class='fu'>fix_link_type</span><span class='op'>(</span><span class='va'>type</span>, <span class='va'>body</span><span class='op'>)</span>
+
+<span class='fu'>find_lesson_links</span><span class='op'>(</span><span class='va'>body</span>, type <span class='op'>=</span> <span class='st'>"rel_link"</span><span class='op'>)</span>
+
+<span class='fu'>resolve_links</span><span class='op'>(</span><span class='va'>txt</span>, <span class='va'>type</span><span class='op'>)</span>
+
+<span class='fu'>links_within_text_regex</span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='fu'>text_to_links</span><span class='op'>(</span><span class='va'>txt</span>, ns <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>type</span>, sourcepos <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+
+<span class='fu'>make_link</span><span class='op'>(</span><span class='va'>txt</span>, <span class='va'>pattern</span>, type <span class='op'>=</span> <span class='st'>"rel_link"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>body</th>
-      <td><p>the body of an episode</p></td>
+      <td><p>an XML document.</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>the type of link as defined in LINKS.</p></td>
+    </tr>
+    <tr>
+      <th>txt</th>
+      <td><p>text derived from <code><a href='http://xml2.r-lib.org/reference/xml_text.html'>xml2::xml_text()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>ns</th>
+      <td><p>a namespace object</p></td>
+    </tr>
+    <tr>
+      <th>sourcepos</th>
+      <td><p>defaults to NULL. If this is not NULL, it's the sourcepos
+attribute of the text node(s) and will be applied to the new nodes.</p></td>
+    </tr>
+    <tr>
+      <th>pattern</th>
+      <td><p>a regular expression that is used for splitting the link
+from the surrounding text.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>An object of class <code>list</code> of length 4.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>the modified body</p>
+    <p><code>fix_links()</code>: the modified body</p>
+<p><code>fix_link_type()</code>: the xml document with new nodes added</p>
+<p><code>find_lesson_links()</code>: an xml nodeset of text nodes containing the
+links that match the link type</p>
+<p><code>resolve_links()</code>: modified text nodes</p>
+<p><code>text_to_links()</code>: if ns is NULL: a character vector of XML text
+nodes, otherwise, new XML text nodes.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>helpers</span> <span class='op'>&lt;-</span> <span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>links_within_text_regex</span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>helpers</span>
+</div><div class='output co'>#&gt;                                         to_split 
+#&gt; "(?&lt;!(\\]|\\)|\\!))\\[|\\](?!(\\]|\\[|\\())|\\)" 
+#&gt;                                       find_links 
+#&gt;                           "(?&lt;!\\[)\\](\\[|\\()" </div><div class='input'><span class='va'>txt</span> <span class='op'>&lt;-</span> <span class='st'>"text ![image text](a.png) with [a link](b.org) and text"</span>
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/strsplit.html'>strsplit</a></span><span class='op'>(</span><span class='va'>txt</span>, <span class='va'>helpers</span><span class='op'>[</span><span class='st'>"to_split"</span><span class='op'>]</span>, perl <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>
+<span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;                        res
+#&gt; 1 text ![image text](a.png
+#&gt; 2                    with 
+#&gt; 3            a link](b.org
+#&gt; 4                 and text</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span><span class='op'>(</span><span class='va'>helpers</span><span class='op'>[</span><span class='st'>"find_links"</span><span class='op'>]</span>, <span class='va'>res</span>, perl <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1]  TRUE FALSE  TRUE FALSE</div><div class='input'><span class='va'>txt</span> <span class='op'>&lt;-</span> <span class='st'>"Some text [and a link]({{ page.root }}/link.to#thing), 
+some other text [and another link][link-to-thing]."</span>
+<span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>text_to_links</span><span class='op'>(</span><span class='va'>txt</span>, type <span class='op'>=</span> <span class='st'>"rel_link"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "&lt;text&gt;Some text &lt;/text&gt;"                                                         
+#&gt; [2] "&lt;link destination='{{ page.root }}/link.to#thing'&gt;&lt;text&gt;and a link&lt;/text&gt;&lt;/link&gt;"
+#&gt; [3] "&lt;text&gt;, \nsome other text &lt;/text&gt;"                                               
+#&gt; [4] "&lt;link destination='link-to-thing'&gt;&lt;text&gt;and another link&lt;/text&gt;&lt;/link&gt;"          
+#&gt; [5] "&lt;text&gt;.&lt;/text&gt;"                                                                  </div><div class='input'><span class='va'>md</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>md <span class='op'>=</span> <span class='st'>"http://commonmark.org/xml/1.0"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>md</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='st'>"xml_namespace"</span>
+<span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>text_to_links</span><span class='op'>(</span><span class='va'>txt</span>, <span class='va'>md</span>, <span class='st'>"rel_link"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; {xml_nodeset (5)}
+#&gt; [1] &lt;text&gt;Some text &lt;/text&gt;
+#&gt; [2] &lt;link destination="{{ page.root }}/link.to#thing"&gt;\n  &lt;text&gt;and a link&lt;/t ...
+#&gt; [3] &lt;text&gt;, \nsome other text &lt;/text&gt;
+#&gt; [4] &lt;link destination="link-to-thing"&gt;\n  &lt;text&gt;and another link&lt;/text&gt;\n&lt;/link&gt;
+#&gt; [5] &lt;text&gt;.&lt;/text&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

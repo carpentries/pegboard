@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Isolate all blocks within a document that have a kramdown tag — isolate_kram_blocks • pegboard</title>
+<title>Validate Links in a markdown document — validate_links • pegboard</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,10 @@
 
 
 
-<meta property="og:title" content="Isolate all blocks within a document that have a kramdown tag — isolate_kram_blocks" />
-<meta property="og:description" content="Isolate all blocks within a document that have a kramdown tag" />
+<meta property="og:title" content="Validate Links in a markdown document — validate_links" />
+<meta property="og:description" content="This function will validate that links do not throw an error in markdown
+documents. This will include links to images and will respect robots.txt for
+websites." />
 
 
 
@@ -123,35 +125,72 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Isolate all blocks within a document that have a kramdown tag</h1>
-    <small class="dont-index">Source: <a href='https://github.com/zkamvar/pegboard/blob/master/R/isolate_kram_blocks.R'><code>R/isolate_kram_blocks.R</code></a></small>
-    <div class="hidden name"><code>isolate_kram_blocks.Rd</code></div>
+    <h1>Validate Links in a markdown document</h1>
+    <small class="dont-index">Source: <a href='https://github.com/zkamvar/pegboard/blob/master/R/validate_links.R'><code>R/validate_links.R</code></a></small>
+    <div class="hidden name"><code>validate_links.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Isolate all blocks within a document that have a kramdown tag</p>
+    <p>This function will validate that links do not throw an error in markdown
+documents. This will include links to images and will respect robots.txt for
+websites.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>isolate_kram_blocks</span><span class='op'>(</span><span class='va'>body</span>, predicate <span class='op'>=</span> <span class='st'>""</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>validate_links</span><span class='op'>(</span><span class='va'>yrn</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>body</th>
-      <td><p>an xml document</p></td>
+      <th>yrn</th>
+      <td><p>a <a href='https://docs.ropensci.org/tinkr/reference/yarn.html'>tinkr::yarn</a> or <a href='Episode.html'>Episode</a> object.</p></td>
     </tr>
     <tr>
-      <th>predicate</th>
-      <td><p>an XPath conditional statement in square brackets or an
-empty string. This can be used to filter on such attributes such as line
-number.</p></td>
+      <th>verbose</th>
+      <td><p>if TRUE (default), messages will be printed as the validator works.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>the modified body, invisibly</p>
+    <p>a data frame containing the links, locations, and indicators if they
+passed tests</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>External links</h3>
+
+
+<p>These links must start with a valid and secure protocol. This means that we
+will enforce HTTPS over HTTP. Any link with HTTP will be flagged. Most
+importantly, these links must not return an error code &gt; 399.</p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Cross-lesson links</h3>
+
+
+<p>These links will have no protocol, but should resolve to the HTML version of
+a page and have the correct capitalisation.</p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Anchors (aka fragments)</h3>
+
+
+<p>Anchors are located at the end of URLs that start with a <code>#</code> sign. These are
+used to indicate a section of the documenation.</p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Alt-text (for images)</h3>
+
+
+<p>All images must have associated alt-text. In pandoc, this is acheived by
+writing the <code>alt</code> attribute in curly braces after the image:
+<code>![image caption](link){alt='alt text'}</code></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Descriptive text</h3>
+
+
+<p>All links must have descriptive text associated with them, which is
+beneficial for screen readers scanning the links on a page to not have a
+list full of "link", "link", "link".</p>
+
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

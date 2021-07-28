@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9018</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9019</span>
       </span>
     </div>
 
@@ -153,6 +153,10 @@ destructively modified in the conversion.</p>
 
 <dt><code>headings</code></dt><dd><p>[<code>xml_nodeset</code>] all headings in the document</p></dd>
 
+<dt><code>links</code></dt><dd><p>[<code>xml_nodeset</code>] all links (not images) in the document</p></dd>
+
+<dt><code>images</code></dt><dd><p>[<code>xml_nodeset</code>] all image sources in the document</p></dd>
+
 <dt><code>tags</code></dt><dd><p>[<code>xml_nodeset</code>] all the kramdown tags from the episode</p></dd>
 
 <dt><code>questions</code></dt><dd><p>[<code>character</code>] the questions from the episode</p></dd>
@@ -184,6 +188,7 @@ destructively modified in the conversion.</p>
 <ul>
 <li><p><a href='#method-new'><code>Episode$new()</code></a></p></li>
 <li><p><a href='#method-get_blocks'><code>Episode$get_blocks()</code></a></p></li>
+<li><p><a href='#method-get_images'><code>Episode$get_images()</code></a></p></li>
 <li><p><a href='#method-label_divs'><code>Episode$label_divs()</code></a></p></li>
 <li><p><a href='#method-get_divs'><code>Episode$get_divs()</code></a></p></li>
 <li><p><a href='#method-get_yaml'><code>Episode$get_yaml()</code></a></p></li>
@@ -203,6 +208,7 @@ destructively modified in the conversion.</p>
 <li><p><a href='#method-isolate_blocks'><code>Episode$isolate_blocks()</code></a></p></li>
 <li><p><a href='#method-unblock'><code>Episode$unblock()</code></a></p></li>
 <li><p><a href='#method-validate_headings'><code>Episode$validate_headings()</code></a></p></li>
+<li><p><a href='#method-validate_links'><code>Episode$validate_links()</code></a></p></li>
 <li><p><a href='#method-clone'><code>Episode$clone()</code></a></p></li>
 </ul>
 <p><details open ><summary>Inherited methods</summary>
@@ -215,7 +221,13 @@ destructively modified in the conversion.</p>
 <hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
 <p>Create a new Episode</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Episode</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>path <span class='op'>=</span> <span class='cn'>NULL</span>, process_tags <span class='op'>=</span> <span class='cn'>TRUE</span>, fix_links <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Episode</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+  path <span class='op'>=</span> <span class='cn'>NULL</span>,
+  process_tags <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  fix_links <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  fix_liquid <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -229,6 +241,13 @@ tags will be treated as text</p></dd>
 liquid tags (e.g. <code>{{ page.root }}</code>) and included links (those supplied
 by a call to <code>{\% import links.md \%}</code>) will be appropriately processed
 as valid links.</p></dd>
+
+<dt><code>fix_liquid</code></dt><dd><p>[<code>logical</code>] defaults to <code>FALSE</code>, which means data is
+immediately passed to <a href='https://docs.ropensci.org/tinkr/reference/yarn.html'>tinkr::yarn</a>. If <code>TRUE</code>, all liquid variables
+in relative links have spaces removed to allow the commonmark parser to
+interpret them as links.</p></dd>
+
+<dt><code>...</code></dt><dd><p>arguments passed on to <a href='https://docs.ropensci.org/tinkr/reference/yarn.html'>tinkr::yarn</a> and <code><a href='https://docs.ropensci.org/tinkr/reference/to_xml.html'>tinkr::to_xml()</a></code></p></dd>
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
@@ -280,6 +299,29 @@ scope$get_blocks(".solution", level = 2)
   # There are eight solution blocks:
   dsp1$get_blocks(".solution", level = 2L)
 }
+</pre><p></div></p>
+
+<p><hr>
+<a id="method-get_images"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='get_images.html'>get_images()</a></code></h3>
+<p>fetch the image sources and optionally process them for easier parsing.
+The default version of this function is equivalent to the active binding
+<code>$images</code>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>Episode</span><span class='op'>$</span><span class='fu'>get_images</span><span class='op'>(</span>process <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>process</code></dt><dd><p>if <code>TRUE</code>, images will be processed via the internal
+function <code><a href='process_images.html'>process_images()</a></code>, which will add the <code>alt</code> attribute, if
+available and extract img nodes from HTML blocks.</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<p>an <code>xml_nodelist</code></p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
+<p><div class="r example copy"></p><pre>
+<span class='va'>loop</span> <span class='op'>&lt;-</span> <span class='va'>Episode</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"_episodes"</span>, <span class='st'>"14-looping-data-sets.md"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>loop</span><span class='op'>$</span><span class='fu'>get_images</span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>loop</span><span class='op'>$</span><span class='fu'>get_images</span><span class='op'>(</span>process <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </pre><p></div></p>
 
 <p><hr>
@@ -544,6 +586,32 @@ headings.</p>
 </pre><p></div></p>
 
 <p><hr>
+<a id="method-validate_links"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='validate_links.html'>validate_links()</a></code></h3>
+<p>perform validation on links and images in a document.</p>
+<p>This will validate the following aspects of links</p><ul>
+<li><p>use HTTPS protocol</p></li>
+<li><p>images have alt text</p></li>
+<li><p>local links are reachable</p></li>
+<li><p>[future] outside links are reachable</p></li>
+</ul>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>Episode</span><span class='op'>$</span><span class='fu'>validate_links</span><span class='op'>(</span>verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>verbose</code></dt><dd><p>if <code>TRUE</code> (default), a message for each rule broken will
+be issued to the stderr. if <code>FALSE</code>, this will be silent.</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<p>a logical <code>TRUE</code> for valid links and <code>FALSE</code> for invalid
+links.</p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
+<p><div class="r example copy"></p><pre><span class='va'>loop</span> <span class='op'>&lt;-</span> <span class='va'>Episode</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"_episodes"</span>, <span class='st'>"14-looping-data-sets.md"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>loop</span><span class='op'>$</span><span class='fu'>validate_links</span><span class='op'>(</span><span class='op'>)</span>
+</pre><p></div></p>
+
+<p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>Episode</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
@@ -597,6 +665,23 @@ headings.</p>
   <span class='va'>dsp1</span><span class='op'>$</span><span class='fu'>get_blocks</span><span class='op'>(</span><span class='st'>".solution"</span>, level <span class='op'>=</span> <span class='fl'>2L</span><span class='op'>)</span>
 <span class='op'>}</span>
 
+<span class='co'>## ------------------------------------------------</span>
+<span class='co'>## Method `Episode$get_images`</span>
+<span class='co'>## ------------------------------------------------</span>
+
+
+<span class='va'>loop</span> <span class='op'>&lt;-</span> <span class='va'>Episode</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"_episodes"</span>, <span class='st'>"14-looping-data-sets.md"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>loop</span><span class='op'>$</span><span class='fu'>get_images</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; {xml_nodeset (4)}
+#&gt; [1] &lt;html_block sourcepos="174:1-174:86" xml:space="preserve"&gt;&amp;lt;img src="ht ...
+#&gt; [2] &lt;html_block sourcepos="176:1-176:49" xml:space="preserve"&gt;&amp;lt;img src=".. ...
+#&gt; [3] &lt;image sourcepos="180:1-180:74" destination="https://carpentries.org/asse ...
+#&gt; [4] &lt;image sourcepos="182:1-182:38" destination="../no-workie.svg" title=""&gt;\ ...</div><div class='input'><span class='va'>loop</span><span class='op'>$</span><span class='fu'>get_images</span><span class='op'>(</span>process <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; {xml_nodeset (4)}
+#&gt; [1] &lt;img src="https://carpentries.org/assets/img/TheCarpentries.svg" alt="boo ...
+#&gt; [2] &lt;img src="../no-workie.svg" alt="books as clubs" destination="../no-worki ...
+#&gt; [3] &lt;image sourcepos="180:1-180:74" destination="https://carpentries.org/asse ...
+#&gt; [4] &lt;image sourcepos="182:1-182:38" destination="../no-workie.svg" title=""&gt;\ ...</div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `Episode$get_challenge_graph`</span>
 <span class='co'>## ------------------------------------------------</span>
@@ -750,7 +835,7 @@ headings.</p>
 
 <span class='va'>scope</span> <span class='op'>&lt;-</span> <span class='va'>Episode</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"_episodes"</span>, <span class='st'>"17-scope.md"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>scope</span><span class='op'>$</span><span class='fu'>write</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Creating temporary directory '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpZmIWHU/dir87941f7b038'</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Creating temporary directory '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpInSEBe/dir15192ae06d6f'</span></div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `Episode$reset`</span>
 <span class='co'>## ------------------------------------------------</span>
@@ -855,7 +940,19 @@ headings.</p>
 #&gt;                             TRUE                             TRUE 
 #&gt;                   all_are_unique 
 #&gt;                            FALSE </div><div class='input'>
-</div></pre>
+
+<span class='co'>## ------------------------------------------------</span>
+<span class='co'>## Method `Episode$validate_links`</span>
+<span class='co'>## ------------------------------------------------</span>
+
+<span class='va'>loop</span> <span class='op'>&lt;-</span> <span class='va'>Episode</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"_episodes"</span>, <span class='st'>"14-looping-data-sets.md"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>loop</span><span class='op'>$</span><span class='fu'>validate_links</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> Images need alt-text:</span>
+#&gt; <span class='message'>https://carpentries.org/assets/img/TheCarpentries.svg (14-looping-data-sets.md:195)</span>
+#&gt; <span class='message'>../no-workie.svg (14-looping-data-sets.md:197)</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> These files do not exist in the lesson:</span>
+#&gt; <span class='message'>../no-workie.svg (14-looping-data-sets.md:191)</span>
+#&gt; <span class='message'>../no-workie.svg (14-looping-data-sets.md:197)</span></div><div class='output co'>#&gt; enforce_https internal_okay all_reachable  img_alt_text   descriptive 
+#&gt;          TRUE         FALSE          TRUE         FALSE          TRUE </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
