@@ -18,13 +18,18 @@ Episode <- R6::R6Class("Episode",
     #'   liquid tags (e.g. `{{ page.root }}`) and included links (those supplied
     #'   by a call to `{\% import links.md \%}`) will be appropriately processed
     #'   as valid links.
+    #' @param fix_liquid \[`logical`\] defaults to `FALSE`, which means data is
+    #'   immediately passed to [tinkr::yarn]. If `TRUE`, all liquid variables
+    #'   in relative links have spaces removed to allow the commonmark parser to
+    #'   interpret them as links.
+    #' @param ... arguments passed on to [tinkr::yarn] and [tinkr::to_xml()]
     #' @return A new Episode object with extracted XML data
     #' @examples
     #' scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
     #' scope$name
     #' scope$lesson
     #' scope$challenges
-    initialize = function(path = NULL, process_tags = TRUE, fix_links = TRUE) {
+    initialize = function(path = NULL, process_tags = TRUE, fix_links = TRUE, fix_liquid = FALSE, ...) {
       if (!file.exists(path)) {
         stop(glue::glue("the file '{path}' does not exist"))
       }
@@ -33,7 +38,13 @@ Episode <- R6::R6Class("Episode",
         body = xml2::xml_missing()
       )
       TOX <- purrr::safely(super$initialize, otherwise = default, quiet = FALSE)
-      lsn <- TOX(path, sourcepos = TRUE)
+      if (fix_liquid) {
+        tmp <- fix_liquid_relative_link(path)
+        lsn <- TOX(tmp, sourcepos = TRUE, ...)
+        close(tmp)
+      } else {
+        lsn <- TOX(path, sourcepos = TRUE, ...)
+      }
       if (!is.null(lsn$error)) {
         private$record_problem(lsn$error)
       }
@@ -60,7 +71,7 @@ Episode <- R6::R6Class("Episode",
       if (fix_links) fix_links(lsn$body)
 
       # Initialize the object
-      self$path <- lsn$path
+      self$path <- path
       self$yaml <- lsn$yaml
       self$body <- lsn$body
       self$ns   <- lsn$ns
@@ -99,6 +110,24 @@ Episode <- R6::R6Class("Episode",
     #' }
     get_blocks = function(type = NULL, level = 1L) {
       get_blocks(self$body, type = type, level = level)
+    },
+
+    #' @description
+    #' fetch the image sources and optionally process them for easier parsing.
+    #' The default version of this function is equivalent to the active binding
+    #' `$images`.
+    #'
+    #' @param process if `TRUE`, images will be processed via the internal
+    #' function [process_images()], which will add the `alt` attribute, if
+    #' available and extract img nodes from HTML blocks. 
+    #' @return an `xml_nodelist`
+    #' @examples
+    #'
+    #' loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
+    #' loop$get_images()
+    #' loop$get_images(process = TRUE)
+    get_images = function(process = FALSE) {
+      get_images(self, process = process)
     },
 
     #' @description
@@ -170,7 +199,7 @@ Episode <- R6::R6Class("Episode",
       if (!rmd && private$mutations['use_sandpaper_md']) {
         return(invisible(self))
       }
-      use_sandpaper(self$body, rmd)
+      self$body <- use_sandpaper(self$body, rmd)
       type <- if (rmd) 'use_sandpaper_rmd' else 'use_sandpaper_md'
       private$mutations[type] <- TRUE
       invisible(self)
@@ -409,8 +438,27 @@ Episode <- R6::R6Class("Episode",
     #' loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
     #' loop$validate_headings()
     #' 
-    validate_headings = function(verbose = TRUE){
+    validate_headings = function(verbose = TRUE) {
       validate_headings(self$headings, self$get_yaml()$title, verbose)
+    },
+    
+    #' @description perform validation on links and images in a document.
+    #'
+    #' This will validate the following aspects of links
+    #'
+    #'  - use HTTPS protocol
+    #'  - images have alt text
+    #'  - local links are reachable
+    #'  - \[future\] outside links are reachable
+    #' @param verbose if `TRUE` (default), a message for each rule broken will
+    #'   be issued to the stderr. if `FALSE`, this will be silent. 
+    #' @return a logical `TRUE` for valid links and `FALSE` for invalid 
+    #'   links.
+    #' @examples
+    #' loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
+    #' loop$validate_links()
+    validate_links = function(verbose = TRUE) {
+      validate_links(self, verbose)
     }
 ),
   active = list(
@@ -422,6 +470,17 @@ Episode <- R6::R6Class("Episode",
     #' @field headings \[`xml_nodeset`\] all headings in the document
     headings = function() {
       get_headings(self$body)
+    },
+
+    #' @field links \[`xml_nodeset`\] all links (not images) in the document
+    links = function() {
+      xpath <- ".//md:link | .//md:text[klink]"
+      xml2::xml_find_all(self$body, xpath, self$ns)
+    },
+
+    #' @field images \[`xml_nodeset`\] all image sources in the document
+    images = function() {
+      get_images(self, process = FALSE)
     },
 
     #' @field tags \[`xml_nodeset`\] all the kramdown tags from the episode
@@ -498,7 +557,13 @@ Episode <- R6::R6Class("Episode",
 
     #' @field lesson \[`character`\] the path to the lesson where the episode is from
     lesson = function() {
-      fs::path_dir(fs::path_dir(self$path))
+      lsn <- fs::path_dir(self$path)
+      sub_folders <- c("episodes", "learners", "instructors", "profiles",
+      "_episodes", "_episodes_rmd", "_extras")
+      if (basename(lsn) %in% sub_folders) {
+        lsn <- fs::path_dir(lsn)
+      }
+      lsn
     }
   ),
   private = list(
@@ -511,6 +576,7 @@ Episode <- R6::R6Class("Episode",
     record_problem = function(x) {
       private$problems <- c(private$problems, x)
     },
+
     mutations = c(
       unblock           = FALSE, # have kramdown blocks been converted?
       use_dovetail      = FALSE, # are we keeping challenges in code blocks?

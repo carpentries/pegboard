@@ -46,5 +46,5 @@ use_sandpaper <- function(body, rmd = TRUE) {
     txt <- c(txt, "# Generated with {pegboard}")
     xml2::xml_set_text(setup, paste(as.character(txt), collapse = "\n"))
   }
-  invisible(return(body))
+  invisible(return(xml2::read_xml(as.character(body))))
 }

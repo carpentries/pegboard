@@ -53,6 +53,15 @@ scope$get_blocks(".solution", level = 2)
 }
 
 ## ------------------------------------------------
+## Method `Episode$get_images`
+## ------------------------------------------------
+
+
+loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
+loop$get_images()
+loop$get_images(process = TRUE)
+
+## ------------------------------------------------
 ## Method `Episode$get_challenge_graph`
 ## ------------------------------------------------
 
@@ -114,6 +123,13 @@ loop$code # now there are two blocks with challenge tags
 loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
 loop$validate_headings()
 
+
+## ------------------------------------------------
+## Method `Episode$validate_links`
+## ------------------------------------------------
+
+loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
+loop$validate_links()
 }
 \section{Super class}{
 \code{\link[tinkr:yarn]{tinkr::yarn}} -> \code{Episode}
@@ -124,6 +140,10 @@ loop$validate_headings()
 \item{\code{show_problems}}{[\code{list}] a list of all the problems that occurred in parsing the episode}
 
 \item{\code{headings}}{[\code{xml_nodeset}] all headings in the document}
+
+\item{\code{links}}{[\code{xml_nodeset}] all links (not images) in the document}
+
+\item{\code{images}}{[\code{xml_nodeset}] all image sources in the document}
 
 \item{\code{tags}}{[\code{xml_nodeset}] all the kramdown tags from the episode}
 
@@ -154,6 +174,7 @@ loop$validate_headings()
 \itemize{
 \item \href{#method-new}{\code{Episode$new()}}
 \item \href{#method-get_blocks}{\code{Episode$get_blocks()}}
+\item \href{#method-get_images}{\code{Episode$get_images()}}
 \item \href{#method-label_divs}{\code{Episode$label_divs()}}
 \item \href{#method-get_divs}{\code{Episode$get_divs()}}
 \item \href{#method-get_yaml}{\code{Episode$get_yaml()}}
@@ -173,6 +194,7 @@ loop$validate_headings()
 \item \href{#method-isolate_blocks}{\code{Episode$isolate_blocks()}}
 \item \href{#method-unblock}{\code{Episode$unblock()}}
 \item \href{#method-validate_headings}{\code{Episode$validate_headings()}}
+\item \href{#method-validate_links}{\code{Episode$validate_links()}}
 \item \href{#method-clone}{\code{Episode$clone()}}
 }
 }
@@ -190,7 +212,13 @@ loop$validate_headings()
 \subsection{Method \code{new()}}{
 Create a new Episode
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Episode$new(path = NULL, process_tags = TRUE, fix_links = TRUE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Episode$new(
+  path = NULL,
+  process_tags = TRUE,
+  fix_links = TRUE,
+  fix_liquid = FALSE,
+  ...
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -206,6 +234,13 @@ tags will be treated as text}
 liquid tags (e.g. \code{{{ page.root }}}) and included links (those supplied
 by a call to \verb{\{\\\% import links.md \\\%\}}) will be appropriately processed
 as valid links.}
+
+\item{\code{fix_liquid}}{[\code{logical}] defaults to \code{FALSE}, which means data is
+immediately passed to \link[tinkr:yarn]{tinkr::yarn}. If \code{TRUE}, all liquid variables
+in relative links have spaces removed to allow the commonmark parser to
+interpret them as links.}
+
+\item{\code{...}}{arguments passed on to \link[tinkr:yarn]{tinkr::yarn} and \code{\link[tinkr:to_xml]{tinkr::to_xml()}}}
 }
 \if{html}{\out{</div>}}
 }
@@ -272,6 +307,41 @@ scope$get_blocks(".solution", level = 2)
   # There are eight solution blocks:
   dsp1$get_blocks(".solution", level = 2L)
 }
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get_images"></a>}}
+\if{latex}{\out{\hypertarget{method-get_images}{}}}
+\subsection{Method \code{get_images()}}{
+fetch the image sources and optionally process them for easier parsing.
+The default version of this function is equivalent to the active binding
+\verb{$images}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Episode$get_images(process = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{process}}{if \code{TRUE}, images will be processed via the internal
+function \code{\link[=process_images]{process_images()}}, which will add the \code{alt} attribute, if
+available and extract img nodes from HTML blocks.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+an \code{xml_nodelist}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{
+loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
+loop$get_images()
+loop$get_images(process = TRUE)
 }
 \if{html}{\out{</div>}}
 
@@ -686,6 +756,45 @@ headings.
 loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
 loop$validate_headings()
 
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-validate_links"></a>}}
+\if{latex}{\out{\hypertarget{method-validate_links}{}}}
+\subsection{Method \code{validate_links()}}{
+perform validation on links and images in a document.
+
+This will validate the following aspects of links
+\itemize{
+\item use HTTPS protocol
+\item images have alt text
+\item local links are reachable
+\item [future] outside links are reachable
+}
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Episode$validate_links(verbose = TRUE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{verbose}}{if \code{TRUE} (default), a message for each rule broken will
+be issued to the stderr. if \code{FALSE}, this will be silent.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+a logical \code{TRUE} for valid links and \code{FALSE} for invalid
+links.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
+loop$validate_links()
 }
 \if{html}{\out{</div>}}
 

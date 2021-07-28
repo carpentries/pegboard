@@ -8,6 +8,20 @@ test_that("conversions with empty bodies won't result in an error", {
 
 })
 
+test_that("Episodes with commonmark-violating liquid relative links can be read", {
+
+  lnsp <- test_path("examples", "link-split.md")
+  withr::defer(rm("lnsp", "tmp"))
+  # Not fixing liquid will make the parser sad
+  expect_error(Episode$new(lnsp))
+  # fixing liquid will resucue us!
+  tmp <- Episode$new(lnsp, fix_liquid = TRUE)
+
+  expect_equal(basename(tmp$path), "link-split.md")
+  expect_snapshot(cat(tmp$show(), sep = "\n"))
+})
+
+
 test_that("Episodes can be converted to use sandpaper", {
 
   loop <- fs::path(lesson_fragment(), "_episodes", "14-looping-data-sets.md")
@@ -48,18 +62,21 @@ test_that("Episodes can be converted to use sandpaper", {
 
   expect_length(e$code, 11)
   expect_length(rel_links, 2)
+  expect_true(all(!is.na(get_linestart(rel_links))))
   expect_equal(xml_name(rel_links), c("html_block", "image"))
   expect_equal(
     xml2::xml_attr(rel_links, "destination"),
     c(NA, "../no-workie.svg")
   )
   expect_length(jek_links, 3)
+  expect_true(all(!is.na(get_linestart(jek_links))))
   expect_equal(
     xml2::xml_attr(jek_links, "destination"),
     c("{{ page.root }}/index.html", 
       "{{ site.swc_pages }}/shell-novice", 
       "{{ page.root }}{% link")
   )
+  expect_snapshot(cat(e$tail(15), sep = "\n"))
 
   # With RMD -------------------------------------------------------------------
   expect_length(e$use_sandpaper(rmd = TRUE)$code, 12)
@@ -92,6 +109,8 @@ test_that("Episodes can be converted to use sandpaper", {
   # output needs to be explicitly removed
   expect_length(e$output, 4) 
   expect_match(xml2::xml_attr(e$output, "info"), "output")
+  skip_on_os("windows") # shQuote behaves _slightly_ differently and puts double quotes instead of single quotes
+  expect_snapshot(cat(e$use_sandpaper(rmd = TRUE)$tail(15), sep = "\n"))
 
   # Without RMD ----------------------------------------------------------------
   expect_length(e$reset()$use_sandpaper(rmd = FALSE)$code, 11)
@@ -110,6 +129,8 @@ test_that("Episodes can be converted to use sandpaper", {
   # output needs to be explicitly removed
   expect_length(e$output, 4) 
   expect_match(xml2::xml_attr(e$output, "info"), "output")
+  skip_on_os("windows") # shQuote behaves _slightly_ differently and puts double quotes instead of single quotes
+  expect_snapshot(cat(e$use_sandpaper(rmd = FALSE)$tail(15), sep = "\n"))
 
 })
 

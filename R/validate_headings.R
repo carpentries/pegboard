@@ -106,20 +106,3 @@ validate_headings <- function(headings, lesson = NULL, message = TRUE) {
   VAL
 }
 
-issue_warning <- function(msg, cli = FALSE, ...) {
-  l <- list(...)
-  for (i in names(l)) {
-    assign(i, l[[i]])
-  }
-  if (cli) {
-    cli::cli_alert_warning(msg)
-  } else {
-    message("! ", glue::glue(msg))
-  }
-}
-
-append_labels <- function(l, i, e, cli) {
-  e <- if (cli) cli::style_inverse(e) else e
-  l[i] <- paste(l[i], e)
-  l
-}
