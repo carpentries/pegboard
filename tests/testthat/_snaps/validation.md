@@ -356,3 +356,4 @@
       [should be a relative link](rel-image) -> [should be a relative link][rel-image] (link-test.md:37)
       [33m![39m These files do not exist in the lesson:
       incorrect-link.html (link-test.md:29)
+

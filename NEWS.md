@@ -7,7 +7,8 @@
 - `make_link_table()` creates a table of links parsed via `xml2::url_parse()`
   with additional information about caption and alternative text (for images).
 - The Episode class now has the `$validate_links()` method, which will validate
-  links and images for common errors. 
+  links and images for common errors such as not using https and unresolved
+  relative links.
 - `Episode$use_sandpaper()` now converts images to use alt text over captions.
   Images that had `![alt](link)` are converted to `![](link){alt='alt'}` because
   pandoc uses everything in square brackets to be caption text. NOTE: this now
