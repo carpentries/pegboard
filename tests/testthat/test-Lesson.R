@@ -32,6 +32,18 @@ test_that("Lesson class contains the right stuff", {
 
 })
 
+if (requireNamespace("cli")) {
+  cli::test_that_cli("Lessons can be validated", {
+    expect_snapshot(frg$validate_headings())
+    expect_snapshot(frg$validate_links())
+  })
+}
+
+test_that("Lessons can be _quietly_ validated", {
+  expect_snapshot(frg$validate_headings(verbose = FALSE))
+  expect_snapshot(frg$validate_links(verbose = FALSE))
+})
+
 test_that("Lesson class can get the challenges", {
 
 

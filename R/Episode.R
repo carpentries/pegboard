@@ -422,16 +422,17 @@ Episode <- R6::R6Class("Episode",
     #'
     #' This will validate the following aspects of all headings:
     #'
-    #'  - greater than level 1
-    #'  - increse sequentially (e.g. no jumps from 2 to 4)
-    #'  - unique in their own hierarchy
-    #'  - have names
-    #'  - first heading starts at level 2
+    #'  - first heading starts at level 2 (`first_heading_is_second_level`)
+    #'  - greater than level 1 (`all_are_greater_than_first_level`)
+    #'  - increse sequentially (e.g. no jumps from 2 to 4) (`all_are_sequential`)
+    #'  - have names (`all_have_names`)
+    #'  - unique in their own hierarchy (`all_are_unique`)
     #'
     #' @param verbose if `TRUE` (default), a message for each rule broken will
     #'   be issued to the stderr. if `FALSE`, this will be silent. 
-    #' @return a logical `TRUE` for valid headings and `FALSE` for invalid 
-    #'   headings.
+    #' @return a logical vector of length five summarizing the results of the
+    #'   five aspects listed above: `TRUE` for valid headings and `FALSE` for
+    #'   invalid headings.
     #' @examples
     #' # Example: There are multiple headings called "Solution" that are not
     #' # nested within a higher-level heading and will throw an error

@@ -34,10 +34,16 @@
 #' beneficial for screen readers scanning the links on a page to not have a
 #' list full of "link", "link", "link".
 #'
+#' @note At the moment, we do not currently test if all links are reachable.
+#'   This is a feature planned for the future.
+#'
+#'   This function is internal. Please use the methods for the [Episode] and
+#'   [Lesson] classes.
+#'
 #' @param yrn a [tinkr::yarn] or [Episode] object.
 #' @param verbose if TRUE (default), messages will be printed as the validator works.
-#' @return a data frame containing the links, locations, and indicators if they
-#' passed tests
+#' @return a vector of logical values indicating the tests that passed.
+#' @keywords internal
 validate_links <- function(yrn, verbose = TRUE) {
   has_cli <- is.null(getOption("pegboard.no-cli")) &&
     requireNamespace("cli", quietly = TRUE)

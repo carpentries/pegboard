@@ -1,3 +1,10 @@
+# pegboard 0.0.0.9020
+
+## NEW FEATURES
+
+- The `Lesson` class now has the `$validate_links()` and `$validate_headings()`
+  methods. 
+
 # pegboard 0.0.0.9019
 
 ## NEW FEATURES
