@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9019</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9020</span>
       </span>
     </div>
 
@@ -139,6 +139,10 @@
     <p>Lessons are made of up several episodes within the <code>_episodes/</code> directory of
 a lesson. This class keeps track of several episodes and allows us to switch
 between RMarkdown and markdown episodes</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>internal functions <code><a href='validate_links.html'>validate_links()</a></code> and <code><a href='validate_headings.html'>validate_headings()</a></code>
+for details.</p></div>
     <h2 class="hasAnchor" id="public-fields"><a class="anchor" href="#public-fields"></a>Public fields</h2>
 
     <p><div class="r6-fields"></p><dl>
@@ -180,6 +184,7 @@ files, default is <code>FALSE</code> for markdown files.</p></dd>
 <li><p><a href='#method-reset'><code>Lesson$reset()</code></a></p></li>
 <li><p><a href='#method-isolate_blocks'><code>Lesson$isolate_blocks()</code></a></p></li>
 <li><p><a href='#method-validate_headings'><code>Lesson$validate_headings()</code></a></p></li>
+<li><p><a href='#method-validate_links'><code>Lesson$validate_links()</code></a></p></li>
 <li><p><a href='#method-clone'><code>Lesson$clone()</code></a></p></li>
 </ul>
 <p><hr>
@@ -311,13 +316,57 @@ kramdown tag. Note that this is a destructive process.</p><h4 class='hasAnchor' 
 </pre><p></div></p>
 
 <p><hr>
-<a id="method-validate_headings"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>validate_headings()</code></h3>
+<a id="method-validate_headings"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='validate_headings.html'>validate_headings()</a></code></h3>
 <p>Validate that the heading elements meet minimum accessibility requirements</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>validate_headings</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>validate_headings</span><span class='op'>(</span>verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
 
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>verbose</code></dt><dd><p>if <code>TRUE</code>, the heading tree will be printed to the console
+with any warnings assocated with the validators</p></dd>
+
+</dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>TRUE if the headings are valid, FALSE if otherwise with
-user-level messages.</p>
+<p>a wide data frame with five rows and the number of columns equal
+to the number of episodes in the lesson with an extra column indicating
+the type of validation. See <code><a href='validate_headings.html'>validate_headings()</a></code> for details.</p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
+<p><div class="r example copy"></p><pre><span class='va'>frg</span> <span class='op'>&lt;-</span> <span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>frg</span><span class='op'>$</span><span class='fu'>validate_headings</span><span class='op'>(</span><span class='op'>)</span>
+</pre><p></div></p>
+
+<p><hr>
+<a id="method-validate_links"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='validate_links.html'>validate_links()</a></code></h3>
+<p>Validate that the links and images are valid and accessible</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Validation variables</h4>
+
+<ul>
+<li><p>External links use HTTPS (<code>enforce_https</code>)</p></li>
+<li><p>Internal links exist (<code>internal_okay</code>)</p></li>
+<li><p>External links are reachable (<code>all_reachable</code>) (planned)</p></li>
+<li><p>Images have alt text (<code>img_alt_text</code>)</p></li>
+<li><p>Link text is descriptive (<code>descriptive</code>)</p></li>
+</ul>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>validate_links</span><span class='op'>(</span>verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>verbose</code></dt><dd><p>if <code>TRUE</code> (default), Any failed tests will be printed to
+the console as a message giving information of where in the document
+the failing links/images appear.</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<p>a wide data frame with five rows and the number of columns equal
+to the number of episodes in the lesson with an extra column indicating
+the type of validation. See the same method in the <a href='Episode.html'>Episode</a> class for
+details.</p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
+<p><div class="r example copy"></p><pre><span class='va'>frg</span> <span class='op'>&lt;-</span> <span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>frg</span><span class='op'>$</span><span class='fu'>validate_links</span><span class='op'>(</span><span class='op'>)</span>
+</pre><p></div></p>
+
 <p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
@@ -605,7 +654,76 @@ user-level messages.</p>
 
 <span class='va'>frg</span> <span class='op'>&lt;-</span> <span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>frg</span><span class='op'>$</span><span class='fu'>isolate_blocks</span><span class='op'>(</span><span class='op'>)</span><span class='op'>$</span><span class='va'>body</span> <span class='co'># only one challenge block_quote</span>
-</div><div class='output co'>#&gt; NULL</div></pre>
+</div><div class='output co'>#&gt; NULL</div><div class='input'>
+<span class='co'>## ------------------------------------------------</span>
+<span class='co'>## Method `Lesson$validate_headings`</span>
+<span class='co'>## ------------------------------------------------</span>
+
+<span class='va'>frg</span> <span class='op'>&lt;-</span> <span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>frg</span><span class='op'>$</span><span class='fu'>validate_headings</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> All headings must have unique IDs.</span></div><div class='output co'>#&gt; <span class='message'>── Heading structure ───────────────────────────────────────────────────────────</span></div><div class='output co'>#&gt; # Lesson: “For Loops” 
+#&gt; ├─## A for loop executes commands once for each value in a collection. 
+#&gt; ├─## A for loop is made up of a collection, a loop variable, and a body. 
+#&gt; ├─## The first line of the for loop must end with a colon, and the body must be 
+#&gt; ├─## Loop variables can be called anything. 
+#&gt; ├─## The body of a loop can contain many statements. 
+#&gt; ├─## Use range to iterate over a sequence of numbers. 
+#&gt; ├─## The Accumulator pattern turns many values into one. 
+#&gt; ├─## Classifying Errors 
+#&gt; ├─## Solution  (duplicated)
+#&gt; ├─## Tracing Execution 
+#&gt; ├─## Solution  (duplicated)
+#&gt; ├─## Reversing a String 
+#&gt; ├─## Solution  (duplicated)
+#&gt; ├─## Practice Accumulating 
+#&gt; ├─## Solution  (duplicated)
+#&gt; ├─## Solution  (duplicated)
+#&gt; ├─## Solution  (duplicated)
+#&gt; ├─## Solution  (duplicated)
+#&gt; ├─## Cumulative Sum 
+#&gt; ├─## Solution  (duplicated)
+#&gt; ├─## Identifying Variable Name Errors 
+#&gt; ├─## Solution  (duplicated)
+#&gt; ├─## Identifying Item Errors 
+#&gt; └─## Solution  (duplicated)</div><div class='output co'>#&gt; <span class='message'>────────────────────────────────────────────────────────────────────────────────</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> All headings must have unique IDs.</span></div><div class='output co'>#&gt; <span class='message'>── Heading structure ───────────────────────────────────────────────────────────</span></div><div class='output co'>#&gt; # Lesson: “Looping Over Data Sets” 
+#&gt; ├─## Use a for loop to process files given a list of their names. 
+#&gt; ├─## Use glob.glob to find sets of files whose names match a pattern. 
+#&gt; ├─## Use glob and for to process batches of files. 
+#&gt; ├─## Determining Matches 
+#&gt; ├─## Solution  (duplicated)
+#&gt; ├─## Minimum File Size 
+#&gt; ├─## Solution  (duplicated)
+#&gt; ├─## Comparing Data 
+#&gt; └─## Solution  (duplicated)
+#&gt;   └─### ZNK test links and images </div><div class='output co'>#&gt; <span class='message'>────────────────────────────────────────────────────────────────────────────────</span></div><div class='output co'>#&gt; <span class='message'>── Heading structure ───────────────────────────────────────────────────────────</span></div><div class='output co'>#&gt; # Lesson: “Variable Scope” 
+#&gt; ├─## The scope of a variable is the part of a program that can 'see' that variab
+#&gt; ├─## Local and Global Variable Use 
+#&gt; └─## Reading Error Messages </div><div class='output co'>#&gt; <span class='message'>────────────────────────────────────────────────────────────────────────────────</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 5 × 5</span>
+#&gt;   type           `10-lunch.md` `12-for-loops.m… `14-looping-data-… `17-scope.md`
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>        
+#&gt; <span style='color: #BCBCBC;'>1</span> first_heading… TRUE          TRUE             TRUE               TRUE         
+#&gt; <span style='color: #BCBCBC;'>2</span> all_are_great… TRUE          TRUE             TRUE               TRUE         
+#&gt; <span style='color: #BCBCBC;'>3</span> all_are_seque… TRUE          TRUE             TRUE               TRUE         
+#&gt; <span style='color: #BCBCBC;'>4</span> all_have_names TRUE          TRUE             TRUE               TRUE         
+#&gt; <span style='color: #BCBCBC;'>5</span> all_are_unique TRUE          FALSE            FALSE              TRUE         </div><div class='input'>
+<span class='co'>## ------------------------------------------------</span>
+<span class='co'>## Method `Lesson$validate_links`</span>
+<span class='co'>## ------------------------------------------------</span>
+
+<span class='va'>frg</span> <span class='op'>&lt;-</span> <span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>frg</span><span class='op'>$</span><span class='fu'>validate_links</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> Images need alt-text:</span>
+#&gt; <span class='message'>https://carpentries.org/assets/img/TheCarpentries.svg (14-looping-data-sets.md:195)</span>
+#&gt; <span class='message'>../no-workie.svg (14-looping-data-sets.md:197)</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> These files do not exist in the lesson:</span>
+#&gt; <span class='message'>../no-workie.svg (14-looping-data-sets.md:191)</span>
+#&gt; <span class='message'>../no-workie.svg (14-looping-data-sets.md:197)</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 5 × 5</span>
+#&gt;   type          `10-lunch.md` `12-for-loops.md` `14-looping-data-… `17-scope.md`
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>        
+#&gt; <span style='color: #BCBCBC;'>1</span> enforce_https TRUE          TRUE              TRUE               TRUE         
+#&gt; <span style='color: #BCBCBC;'>2</span> internal_okay TRUE          TRUE              FALSE              TRUE         
+#&gt; <span style='color: #BCBCBC;'>3</span> all_reachable TRUE          TRUE              TRUE               TRUE         
+#&gt; <span style='color: #BCBCBC;'>4</span> img_alt_text  TRUE          TRUE              FALSE              TRUE         
+#&gt; <span style='color: #BCBCBC;'>5</span> descriptive   TRUE          TRUE              TRUE               TRUE         </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

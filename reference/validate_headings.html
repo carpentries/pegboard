@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Remove spaces in relative links with liquid variables — fix_liquid_relative_link • pegboard</title>
+<title>Validate headings — validate_headings • pegboard</title>
 
 
 <!-- jquery -->
@@ -39,12 +39,8 @@
 
 
 
-<meta property="og:title" content="Remove spaces in relative links with liquid variables — fix_liquid_relative_link" />
-<meta property="og:description" content="Liquid has a syntax that wraps variables in double moustache braces that may
-or may not have spaces within the moustaches. For example, to get the link
-of the page root, you would use  page.root  to make it more readable.
-However, this violates the expectation of the commonmark parser and makes it
-think “oh, this is just ordinary text”." />
+<meta property="og:title" content="Validate headings — validate_headings" />
+<meta property="og:description" content="This will validate the following aspects of all headings:" />
 
 
 
@@ -127,37 +123,51 @@ think “oh, this is just ordinary text”." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Remove spaces in relative links with liquid variables</h1>
-    <small class="dont-index">Source: <a href='https://github.com/zkamvar/pegboard/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
-    <div class="hidden name"><code>fix_liquid_relative_link.Rd</code></div>
+    <h1>Validate headings</h1>
+    <small class="dont-index">Source: <a href='https://github.com/zkamvar/pegboard/blob/master/R/validate_headings.R'><code>R/validate_headings.R</code></a></small>
+    <div class="hidden name"><code>validate_headings.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Liquid has a syntax that wraps variables in double moustache braces that may
-or may not have spaces within the moustaches. For example, to get the link
-of the page root, you would use  page.root  to make it more readable.
-However, this violates the expectation of the commonmark parser and makes it
-think “oh, this is just ordinary text”.</p>
+    <p>This will validate the following aspects of all headings:</p>
     </div>
 
-    <pre class="usage"><span class='fu'>fix_liquid_relative_link</span><span class='op'>(</span><span class='va'>path</span>, encoding <span class='op'>=</span> <span class='st'>"UTF-8"</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>validate_headings</span><span class='op'>(</span><span class='va'>headings</span>, lesson <span class='op'>=</span> <span class='cn'>NULL</span>, message <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>path</th>
-      <td><p>path to an MD file</p></td>
+      <th>headings</th>
+      <td><p>an object of xml_nodelist.</p></td>
     </tr>
     <tr>
-      <th>encoding</th>
-      <td><p>encoding of the text, defaults to UTF-8</p></td>
+      <th>message</th>
+      <td><p>if <code>TRUE</code> (default), a message will be issued for each error,
+otherwise, they will be silent.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>a logical vector of length five summarizing the results of the
+five aspects listed above: <code>TRUE</code> for valid headings and <code>FALSE</code> for
+invalid headings.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function fixes the issue by removing the spaces within the braces.</p>
+    
+<ul>
+<li><p>first heading starts at level 2 (<code>first_heading_is_second_level</code>)</p></li>
+<li><p>greater than level 1 (<code>all_are_greater_than_first_level</code>)</p></li>
+<li><p>increse sequentially (e.g. no jumps from 2 to 4) (<code>all_are_sequential</code>)</p></li>
+<li><p>have names (<code>all_have_names</code>)</p></li>
+<li><p>unique in their own hierarchy (<code>all_are_unique</code>)</p></li>
+</ul>
+
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>This is an internal function implemented for the <a href='Episode.html'>Episode</a> and <a href='Lesson.html'>Lesson</a>
+classes.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
