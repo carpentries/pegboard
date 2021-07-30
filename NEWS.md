@@ -1,4 +1,13 @@
+# pegboard 0.0.0.9020
+
+## NEW FEATURES
+
+- The `Lesson` class now has the `$validate_links()` and `$validate_headings()`
+  methods. (@zkamvar, #48)
+
 # pegboard 0.0.0.9019
+
+NOTE: All of these are from (@zkamvar, #44)
 
 ## NEW FEATURES
 
@@ -8,11 +17,11 @@
   with additional information about caption and alternative text (for images).
 - The Episode class now has the `$validate_links()` method, which will validate
   links and images for common errors such as not using https and unresolved
-  relative links.
+  relative links. 
 - `Episode$use_sandpaper()` now converts images to use alt text over captions.
   Images that had `![alt](link)` are converted to `![](link){alt='alt'}` because
   pandoc uses everything in square brackets to be caption text. NOTE: this now
-  makes a copy of the XML document.
+  makes a copy of the XML document. 
 
 ## BUG FIXES
 
@@ -27,6 +36,7 @@
 # pegboard 0.0.0.9018
 
 - `Episode$validate_headings()` now properly displays duplicated headings.
+  (@zkamvar, #45)
 
 # pegboard 0.0.0.9017
 

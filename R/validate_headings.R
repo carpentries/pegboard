@@ -11,14 +11,25 @@ get_headings <- function(body) {
 }
 
 
-#' Validate heading 
+#' Validate headings
 #' 
-#' @param headings an object of xml_nodelist. 
+#' This will validate the following aspects of all headings:
+#'
+#'  - first heading starts at level 2 (`first_heading_is_second_level`)
+#'  - greater than level 1 (`all_are_greater_than_first_level`)
+#'  - increse sequentially (e.g. no jumps from 2 to 4) (`all_are_sequential`)
+#'  - have names (`all_have_names`)
+#'  - unique in their own hierarchy (`all_are_unique`)
+#'
+#' @note This is an internal function implemented for the [Episode] and [Lesson]
+#'   classes. 
+#' @param headings an object of xml_nodelist.
 #' @param message if `TRUE` (default), a message will be issued for each error,
 #'   otherwise, they will be silent.
-#' @return a boolean, `TRUE` if the headings are valid and `FALSE` if they are 
-#'   invalid
-#' @noRd
+#' @return a logical vector of length five summarizing the results of the
+#'   five aspects listed above: `TRUE` for valid headings and `FALSE` for
+#'   invalid headings.
+#' @keywords internal
 validate_headings <- function(headings, lesson = NULL, message = TRUE) {
   has_cli <- is.null(getOption("pegboard.no-cli")) &&
     requireNamespace("cli", quietly = TRUE)

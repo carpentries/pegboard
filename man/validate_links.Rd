@@ -12,8 +12,7 @@ validate_links(yrn, verbose = TRUE)
 \item{verbose}{if TRUE (default), messages will be printed as the validator works.}
 }
 \value{
-a data frame containing the links, locations, and indicators if they
-passed tests
+a vector of logical values indicating the tests that passed.
 }
 \description{
 This function will validate that links do not throw an error in markdown
@@ -54,3 +53,11 @@ beneficial for screen readers scanning the links on a page to not have a
 list full of "link", "link", "link".
 }
 }
+\note{
+At the moment, we do not currently test if all links are reachable.
+This is a feature planned for the future.
+
+This function is internal. Please use the methods for the \link{Episode} and
+\link{Lesson} classes.
+}
+\keyword{internal}

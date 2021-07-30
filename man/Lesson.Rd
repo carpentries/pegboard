@@ -43,6 +43,24 @@ frg$reset()$episodes[[1]]$body # reset
 
 frg <- Lesson$new(lesson_fragment())
 frg$isolate_blocks()$body # only one challenge block_quote
+
+## ------------------------------------------------
+## Method `Lesson$validate_headings`
+## ------------------------------------------------
+
+frg <- Lesson$new(lesson_fragment())
+frg$validate_headings()
+
+## ------------------------------------------------
+## Method `Lesson$validate_links`
+## ------------------------------------------------
+
+frg <- Lesson$new(lesson_fragment())
+frg$validate_links()
+}
+\seealso{
+internal functions \code{\link[=validate_links]{validate_links()}} and \code{\link[=validate_headings]{validate_headings()}}
+for details.
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -84,6 +102,7 @@ files, default is \code{FALSE} for markdown files.}
 \item \href{#method-reset}{\code{Lesson$reset()}}
 \item \href{#method-isolate_blocks}{\code{Lesson$isolate_blocks()}}
 \item \href{#method-validate_headings}{\code{Lesson$validate_headings()}}
+\item \href{#method-validate_links}{\code{Lesson$validate_links()}}
 \item \href{#method-clone}{\code{Lesson$clone()}}
 }
 }
@@ -286,13 +305,74 @@ frg$isolate_blocks()$body # only one challenge block_quote
 \subsection{Method \code{validate_headings()}}{
 Validate that the heading elements meet minimum accessibility requirements
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Lesson$validate_headings()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Lesson$validate_headings(verbose = TRUE)}\if{html}{\out{</div>}}
 }
 
-\subsection{Returns}{
-TRUE if the headings are valid, FALSE if otherwise with
-user-level messages.
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{verbose}}{if \code{TRUE}, the heading tree will be printed to the console
+with any warnings assocated with the validators}
 }
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+a wide data frame with five rows and the number of columns equal
+to the number of episodes in the lesson with an extra column indicating
+the type of validation. See \code{\link[=validate_headings]{validate_headings()}} for details.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{frg <- Lesson$new(lesson_fragment())
+frg$validate_headings()
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-validate_links"></a>}}
+\if{latex}{\out{\hypertarget{method-validate_links}{}}}
+\subsection{Method \code{validate_links()}}{
+Validate that the links and images are valid and accessible
+\subsection{Validation variables}{
+\itemize{
+\item External links use HTTPS (\code{enforce_https})
+\item Internal links exist (\code{internal_okay})
+\item External links are reachable (\code{all_reachable}) (planned)
+\item Images have alt text (\code{img_alt_text})
+\item Link text is descriptive (\code{descriptive})
+}
+}
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Lesson$validate_links(verbose = TRUE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{verbose}}{if \code{TRUE} (default), Any failed tests will be printed to
+the console as a message giving information of where in the document
+the failing links/images appear.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+a wide data frame with five rows and the number of columns equal
+to the number of episodes in the lesson with an extra column indicating
+the type of validation. See the same method in the \link{Episode} class for
+details.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{frg <- Lesson$new(lesson_fragment())
+frg$validate_links()
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

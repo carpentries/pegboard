@@ -727,11 +727,11 @@ perform validation on headings in a document.
 
 This will validate the following aspects of all headings:
 \itemize{
-\item greater than level 1
-\item increse sequentially (e.g. no jumps from 2 to 4)
-\item unique in their own hierarchy
-\item have names
-\item first heading starts at level 2
+\item first heading starts at level 2 (\code{first_heading_is_second_level})
+\item greater than level 1 (\code{all_are_greater_than_first_level})
+\item increse sequentially (e.g. no jumps from 2 to 4) (\code{all_are_sequential})
+\item have names (\code{all_have_names})
+\item unique in their own hierarchy (\code{all_are_unique})
 }
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Episode$validate_headings(verbose = TRUE)}\if{html}{\out{</div>}}
@@ -746,8 +746,9 @@ be issued to the stderr. if \code{FALSE}, this will be silent.}
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-a logical \code{TRUE} for valid headings and \code{FALSE} for invalid
-headings.
+a logical vector of length five summarizing the results of the
+five aspects listed above: \code{TRUE} for valid headings and \code{FALSE} for
+invalid headings.
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}

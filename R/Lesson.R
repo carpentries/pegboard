@@ -175,10 +175,50 @@ Lesson <- R6::R6Class("Lesson",
 
     #' @description
     #' Validate that the heading elements meet minimum accessibility requirements
-    #' @return TRUE if the headings are valid, FALSE if otherwise with
-    #'   user-level messages.
-    validate_headings = function() {
-      
+    #' @param verbose if `TRUE`, the heading tree will be printed to the console
+    #'   with any warnings assocated with the validators
+    #' @return a wide data frame with five rows and the number of columns equal
+    #'   to the number of episodes in the lesson with an extra column indicating
+    #'   the type of validation. See [validate_headings()] for details.
+    #' @examples
+    #' frg <- Lesson$new(lesson_fragment())
+    #' frg$validate_headings()
+    validate_headings = function(verbose = TRUE) {
+      res <- purrr::map_dfc(self$episodes, ~.x$validate_headings(verbose = verbose))
+      n <- length(res)
+      res$type <- names(res[[1]])
+      res <- res[c(n + 1L, 1:n)]
+      res
+    },
+    #' @description
+    #' Validate that the links and images are valid and accessible
+    #' 
+    #' ## Validation variables
+    #'
+    #'  - External links use HTTPS (`enforce_https`)
+    #'  - Internal links exist (`internal_okay`)
+    #'  - External links are reachable (`all_reachable`) (planned)
+    #'  - Images have alt text (`img_alt_text`)
+    #'  - Link text is descriptive (`descriptive`)
+    #'
+    #' @param verbose if `TRUE` (default), Any failed tests will be printed to
+    #'   the console as a message giving information of where in the document
+    #'   the failing links/images appear.
+    #' @return a wide data frame with five rows and the number of columns equal
+    #'   to the number of episodes in the lesson with an extra column indicating
+    #'   the type of validation. See the same method in the [Episode] class for 
+    #'   details.
+    #' @seealso internal functions [validate_links()] and [validate_headings()]
+    #'   for details.
+    #' @examples
+    #' frg <- Lesson$new(lesson_fragment())
+    #' frg$validate_links()
+    validate_links = function(verbose = TRUE) {
+      res <- purrr::map_dfc(self$episodes, ~.x$validate_links(verbose = verbose))
+      n <- length(res)
+      res$type <- names(res[[1]])
+      res <- res[c(n + 1L, 1:n)]
+      res
     }
   ),
   active = list(

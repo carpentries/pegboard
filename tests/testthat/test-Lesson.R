@@ -32,6 +32,22 @@ test_that("Lesson class contains the right stuff", {
 
 })
 
+if (requireNamespace("cli")) {
+  cli::test_that_cli("Lessons can be validated", {
+    expect_snapshot(vhead <- frg$validate_headings())
+    expect_equal(colSums(vhead[-1]), c(5, 4, 4, 5), ignore_attr = TRUE)
+    expect_snapshot(vlink <- frg$validate_links())
+    expect_equal(colSums(vlink[-1]), c(5, 5, 3, 5), ignore_attr = TRUE)
+  })
+}
+
+test_that("Lessons can be _quietly_ validated", {
+  expect_silent(vhead <- frg$validate_headings(verbose = FALSE))
+  expect_equal(colSums(vhead[-1]), c(5, 4, 4, 5), ignore_attr = TRUE)
+  expect_silent(vlink <- frg$validate_links(verbose = FALSE))
+  expect_equal(colSums(vlink[-1]), c(5, 5, 3, 5), ignore_attr = TRUE)
+})
+
 test_that("Lesson class can get the challenges", {
 
 
