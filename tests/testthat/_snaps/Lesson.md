@@ -1,7 +1,7 @@
 # Lessons can be validated [plain]
 
     Code
-      frg$validate_headings()
+      vhead <- frg$validate_headings()
     Message <cliMessage>
       ! All headings must have unique IDs.
       -- Heading structure -----------------------------------------------------------
@@ -57,20 +57,11 @@
       \-## Reading Error Messages 
     Message <cliMessage>
       --------------------------------------------------------------------------------
-    Output
-      # A tibble: 5 x 5
-        type           `10-lunch.md` `12-for-loops.m~ `14-looping-data-~ `17-scope.md`
-        <chr>          <lgl>         <lgl>            <lgl>              <lgl>        
-      1 first_heading~ TRUE          TRUE             TRUE               TRUE         
-      2 all_are_great~ TRUE          TRUE             TRUE               TRUE         
-      3 all_are_seque~ TRUE          TRUE             TRUE               TRUE         
-      4 all_have_names TRUE          TRUE             TRUE               TRUE         
-      5 all_are_unique TRUE          FALSE            FALSE              TRUE         
 
 ---
 
     Code
-      frg$validate_links()
+      vlink <- frg$validate_links()
     Message <cliMessage>
       ! Images need alt-text:
       https://carpentries.org/assets/img/TheCarpentries.svg (14-looping-data-sets.md:195)
@@ -78,20 +69,11 @@
       ! These files do not exist in the lesson:
       ../no-workie.svg (14-looping-data-sets.md:191)
       ../no-workie.svg (14-looping-data-sets.md:197)
-    Output
-      # A tibble: 5 x 5
-        type       `10-lunch.md` `12-for-loops.md` `14-looping-data-set~ `17-scope.md`
-        <chr>      <lgl>         <lgl>             <lgl>                 <lgl>        
-      1 enforce_h~ TRUE          TRUE              TRUE                  TRUE         
-      2 internal_~ TRUE          TRUE              FALSE                 TRUE         
-      3 all_reach~ TRUE          TRUE              TRUE                  TRUE         
-      4 img_alt_t~ TRUE          TRUE              FALSE                 TRUE         
-      5 descripti~ TRUE          TRUE              TRUE                  TRUE         
 
 # Lessons can be validated [ansi]
 
     Code
-      frg$validate_headings()
+      vhead <- frg$validate_headings()
     Message <cliMessage>
       [33m![39m All headings must have unique IDs.
       -- Heading structure -----------------------------------------------------------
@@ -147,20 +129,11 @@
       \-## Reading Error Messages 
     Message <cliMessage>
       --------------------------------------------------------------------------------
-    Output
-      [90m# A tibble: 5 x 5[39m
-        type           `10-lunch.md` `12-for-loops.m~ `14-looping-data-~ `17-scope.md`
-        [3m[90m<chr>[39m[23m          [3m[90m<lgl>[39m[23m         [3m[90m<lgl>[39m[23m            [3m[90m<lgl>[39m[23m              [3m[90m<lgl>[39m[23m        
-      [90m1[39m first_heading~ TRUE          TRUE             TRUE               TRUE         
-      [90m2[39m all_are_great~ TRUE          TRUE             TRUE               TRUE         
-      [90m3[39m all_are_seque~ TRUE          TRUE             TRUE               TRUE         
-      [90m4[39m all_have_names TRUE          TRUE             TRUE               TRUE         
-      [90m5[39m all_are_unique TRUE          FALSE            FALSE              TRUE         
 
 ---
 
     Code
-      frg$validate_links()
+      vlink <- frg$validate_links()
     Message <cliMessage>
       [33m![39m Images need alt-text:
       https://carpentries.org/assets/img/TheCarpentries.svg (14-looping-data-sets.md:195)
@@ -168,20 +141,11 @@
       [33m![39m These files do not exist in the lesson:
       ../no-workie.svg (14-looping-data-sets.md:191)
       ../no-workie.svg (14-looping-data-sets.md:197)
-    Output
-      [90m# A tibble: 5 x 5[39m
-        type       `10-lunch.md` `12-for-loops.md` `14-looping-data-set~ `17-scope.md`
-        [3m[90m<chr>[39m[23m      [3m[90m<lgl>[39m[23m         [3m[90m<lgl>[39m[23m             [3m[90m<lgl>[39m[23m                 [3m[90m<lgl>[39m[23m        
-      [90m1[39m enforce_h~ TRUE          TRUE              TRUE                  TRUE         
-      [90m2[39m internal_~ TRUE          TRUE              FALSE                 TRUE         
-      [90m3[39m all_reach~ TRUE          TRUE              TRUE                  TRUE         
-      [90m4[39m img_alt_t~ TRUE          TRUE              FALSE                 TRUE         
-      [90m5[39m descripti~ TRUE          TRUE              TRUE                  TRUE         
 
 # Lessons can be validated [unicode]
 
     Code
-      frg$validate_headings()
+      vhead <- frg$validate_headings()
     Message <cliMessage>
       ! All headings must have unique IDs.
       ── Heading structure ───────────────────────────────────────────────────────────
@@ -237,20 +201,11 @@
       └─## Reading Error Messages 
     Message <cliMessage>
       ────────────────────────────────────────────────────────────────────────────────
-    Output
-      # A tibble: 5 × 5
-        type           `10-lunch.md` `12-for-loops.m… `14-looping-data-… `17-scope.md`
-        <chr>          <lgl>         <lgl>            <lgl>              <lgl>        
-      1 first_heading… TRUE          TRUE             TRUE               TRUE         
-      2 all_are_great… TRUE          TRUE             TRUE               TRUE         
-      3 all_are_seque… TRUE          TRUE             TRUE               TRUE         
-      4 all_have_names TRUE          TRUE             TRUE               TRUE         
-      5 all_are_unique TRUE          FALSE            FALSE              TRUE         
 
 ---
 
     Code
-      frg$validate_links()
+      vlink <- frg$validate_links()
     Message <cliMessage>
       ! Images need alt-text:
       https://carpentries.org/assets/img/TheCarpentries.svg (14-looping-data-sets.md:195)
@@ -258,20 +213,11 @@
       ! These files do not exist in the lesson:
       ../no-workie.svg (14-looping-data-sets.md:191)
       ../no-workie.svg (14-looping-data-sets.md:197)
-    Output
-      # A tibble: 5 × 5
-        type       `10-lunch.md` `12-for-loops.md` `14-looping-data-set… `17-scope.md`
-        <chr>      <lgl>         <lgl>             <lgl>                 <lgl>        
-      1 enforce_h… TRUE          TRUE              TRUE                  TRUE         
-      2 internal_… TRUE          TRUE              FALSE                 TRUE         
-      3 all_reach… TRUE          TRUE              TRUE                  TRUE         
-      4 img_alt_t… TRUE          TRUE              FALSE                 TRUE         
-      5 descripti… TRUE          TRUE              TRUE                  TRUE         
 
 # Lessons can be validated [fancy]
 
     Code
-      frg$validate_headings()
+      vhead <- frg$validate_headings()
     Message <cliMessage>
       [33m![39m All headings must have unique IDs.
       ── Heading structure ───────────────────────────────────────────────────────────
@@ -327,20 +273,11 @@
       └─## Reading Error Messages 
     Message <cliMessage>
       ────────────────────────────────────────────────────────────────────────────────
-    Output
-      [90m# A tibble: 5 × 5[39m
-        type           `10-lunch.md` `12-for-loops.m… `14-looping-data-… `17-scope.md`
-        [3m[90m<chr>[39m[23m          [3m[90m<lgl>[39m[23m         [3m[90m<lgl>[39m[23m            [3m[90m<lgl>[39m[23m              [3m[90m<lgl>[39m[23m        
-      [90m1[39m first_heading… TRUE          TRUE             TRUE               TRUE         
-      [90m2[39m all_are_great… TRUE          TRUE             TRUE               TRUE         
-      [90m3[39m all_are_seque… TRUE          TRUE             TRUE               TRUE         
-      [90m4[39m all_have_names TRUE          TRUE             TRUE               TRUE         
-      [90m5[39m all_are_unique TRUE          FALSE            FALSE              TRUE         
 
 ---
 
     Code
-      frg$validate_links()
+      vlink <- frg$validate_links()
     Message <cliMessage>
       [33m![39m Images need alt-text:
       https://carpentries.org/assets/img/TheCarpentries.svg (14-looping-data-sets.md:195)
@@ -348,41 +285,4 @@
       [33m![39m These files do not exist in the lesson:
       ../no-workie.svg (14-looping-data-sets.md:191)
       ../no-workie.svg (14-looping-data-sets.md:197)
-    Output
-      [90m# A tibble: 5 × 5[39m
-        type       `10-lunch.md` `12-for-loops.md` `14-looping-data-set… `17-scope.md`
-        [3m[90m<chr>[39m[23m      [3m[90m<lgl>[39m[23m         [3m[90m<lgl>[39m[23m             [3m[90m<lgl>[39m[23m                 [3m[90m<lgl>[39m[23m        
-      [90m1[39m enforce_h… TRUE          TRUE              TRUE                  TRUE         
-      [90m2[39m internal_… TRUE          TRUE              FALSE                 TRUE         
-      [90m3[39m all_reach… TRUE          TRUE              TRUE                  TRUE         
-      [90m4[39m img_alt_t… TRUE          TRUE              FALSE                 TRUE         
-      [90m5[39m descripti… TRUE          TRUE              TRUE                  TRUE         
-
-# Lessons can be _quietly_ validated
-
-    Code
-      frg$validate_headings(verbose = FALSE)
-    Output
-      # A tibble: 5 x 5
-        type           `10-lunch.md` `12-for-loops.m~ `14-looping-data-~ `17-scope.md`
-        <chr>          <lgl>         <lgl>            <lgl>              <lgl>        
-      1 first_heading~ TRUE          TRUE             TRUE               TRUE         
-      2 all_are_great~ TRUE          TRUE             TRUE               TRUE         
-      3 all_are_seque~ TRUE          TRUE             TRUE               TRUE         
-      4 all_have_names TRUE          TRUE             TRUE               TRUE         
-      5 all_are_unique TRUE          FALSE            FALSE              TRUE         
-
----
-
-    Code
-      frg$validate_links(verbose = FALSE)
-    Output
-      # A tibble: 5 x 5
-        type       `10-lunch.md` `12-for-loops.md` `14-looping-data-set~ `17-scope.md`
-        <chr>      <lgl>         <lgl>             <lgl>                 <lgl>        
-      1 enforce_h~ TRUE          TRUE              TRUE                  TRUE         
-      2 internal_~ TRUE          TRUE              FALSE                 TRUE         
-      3 all_reach~ TRUE          TRUE              TRUE                  TRUE         
-      4 img_alt_t~ TRUE          TRUE              FALSE                 TRUE         
-      5 descripti~ TRUE          TRUE              TRUE                  TRUE         
 
