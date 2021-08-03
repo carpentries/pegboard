@@ -81,6 +81,7 @@ validate_known_rot <- function(lt, path, verbose = TRUE, cli = TRUE) {
 }
 
 validate_descriptive <- function(lt, path, verbose = TRUE, cli = TRUE) {
+  # NOTE: invalidate "here" links as well
   res <- !any(bad <- tolower(lt$text) %in% c("link", "this link", "a link"))
   if (verbose && !res) {
     just_link    <- lt[bad, , drop = FALSE]
