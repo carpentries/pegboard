@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9020</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9021</span>
       </span>
     </div>
 
@@ -589,11 +589,14 @@ invalid headings.</p>
 <p><hr>
 <a id="method-validate_links"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='validate_links.html'>validate_links()</a></code></h3>
 <p>perform validation on links and images in a document.</p>
-<p>This will validate the following aspects of links</p><ul>
-<li><p>use HTTPS protocol</p></li>
-<li><p>images have alt text</p></li>
-<li><p>local links are reachable</p></li>
-<li><p>[future] outside links are reachable</p></li>
+<p>This will validate the following aspects of links. See <code><a href='validate_links.html'>validate_links()</a></code>
+for details.</p><ul>
+<li><p>External links use HTTPS (<code>enforce_https</code>)</p></li>
+<li><p>Internal links exist (<code>internal_okay</code>)</p></li>
+<li><p>External links are reachable (<code>all_reachable</code>) (planned)</p></li>
+<li><p>Images have alt text (<code>img_alt_text</code>)</p></li>
+<li><p>Link text is descriptive (<code>descriptive</code>)</p></li>
+<li><p>Link text is more than a single letter (<code>link_length</code>)</p></li>
 </ul>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>Episode</span><span class='op'>$</span><span class='fu'>validate_links</span><span class='op'>(</span>verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
@@ -836,7 +839,7 @@ links.</p>
 
 <span class='va'>scope</span> <span class='op'>&lt;-</span> <span class='va'>Episode</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"_episodes"</span>, <span class='st'>"17-scope.md"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>scope</span><span class='op'>$</span><span class='fu'>write</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Creating temporary directory '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpQXtiof/dir94a60a6cc1d'</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Creating temporary directory '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/Rtmp9MlTpb/dir9875563335b'</span></div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `Episode$reset`</span>
 <span class='co'>## ------------------------------------------------</span>
@@ -948,12 +951,14 @@ links.</p>
 
 <span class='va'>loop</span> <span class='op'>&lt;-</span> <span class='va'>Episode</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"_episodes"</span>, <span class='st'>"14-looping-data-sets.md"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>loop</span><span class='op'>$</span><span class='fu'>validate_links</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> Images need alt-text:</span>
-#&gt; <span class='message'>https://carpentries.org/assets/img/TheCarpentries.svg (14-looping-data-sets.md:195)</span>
-#&gt; <span class='message'>../no-workie.svg (14-looping-data-sets.md:197)</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> These files do not exist in the lesson:</span>
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> These files do not exist in the lesson:</span>
 #&gt; <span class='message'>../no-workie.svg (14-looping-data-sets.md:191)</span>
+#&gt; <span class='message'>../no-workie.svg (14-looping-data-sets.md:197)</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> Images need alt-text:</span>
+#&gt; <span class='message'>https://carpentries.org/assets/img/TheCarpentries.svg (14-looping-data-sets.md:195)</span>
 #&gt; <span class='message'>../no-workie.svg (14-looping-data-sets.md:197)</span></div><div class='output co'>#&gt; enforce_https internal_okay all_reachable  img_alt_text   descriptive 
-#&gt;          TRUE         FALSE          TRUE         FALSE          TRUE </div></pre>
+#&gt;          TRUE         FALSE          TRUE         FALSE          TRUE 
+#&gt;   link_length 
+#&gt;          TRUE </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

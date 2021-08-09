@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9020</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9021</span>
       </span>
     </div>
 
@@ -139,10 +139,6 @@
     <p>Lessons are made of up several episodes within the <code>_episodes/</code> directory of
 a lesson. This class keeps track of several episodes and allows us to switch
 between RMarkdown and markdown episodes</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>internal functions <code><a href='validate_links.html'>validate_links()</a></code> and <code><a href='validate_headings.html'>validate_headings()</a></code>
-for details.</p></div>
     <h2 class="hasAnchor" id="public-fields"><a class="anchor" href="#public-fields"></a>Public fields</h2>
 
     <p><div class="r6-fields"></p><dl>
@@ -317,7 +313,16 @@ kramdown tag. Note that this is a destructive process.</p><h4 class='hasAnchor' 
 
 <p><hr>
 <a id="method-validate_headings"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='validate_headings.html'>validate_headings()</a></code></h3>
-<p>Validate that the heading elements meet minimum accessibility requirements</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p>Validate that the heading elements meet minimum accessibility
+requirements. See the internal <code><a href='validate_headings.html'>validate_headings()</a></code> for deails.</p>
+<p>This will validate the following aspects of all headings:</p><ul>
+<li><p>first heading starts at level 2 (<code>first_heading_is_second_level</code>)</p></li>
+<li><p>greater than level 1 (<code>all_are_greater_than_first_level</code>)</p></li>
+<li><p>increse sequentially (e.g. no jumps from 2 to 4) (<code>all_are_sequential</code>)</p></li>
+<li><p>have names (<code>all_have_names</code>)</p></li>
+<li><p>unique in their own hierarchy (<code>all_are_unique</code>)</p></li>
+</ul>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>validate_headings</span><span class='op'>(</span>verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
@@ -337,7 +342,8 @@ the type of validation. See <code><a href='validate_headings.html'>validate_head
 
 <p><hr>
 <a id="method-validate_links"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='validate_links.html'>validate_links()</a></code></h3>
-<p>Validate that the links and images are valid and accessible</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Validation variables</h4>
+<p>Validate that the links and images are valid and accessible. See the
+internal <code><a href='validate_links.html'>validate_links()</a></code> for details.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Validation variables</h4>
 
 <ul>
 <li><p>External links use HTTPS (<code>enforce_https</code>)</p></li>
@@ -345,6 +351,7 @@ the type of validation. See <code><a href='validate_headings.html'>validate_head
 <li><p>External links are reachable (<code>all_reachable</code>) (planned)</p></li>
 <li><p>Images have alt text (<code>img_alt_text</code>)</p></li>
 <li><p>Link text is descriptive (<code>descriptive</code>)</p></li>
+<li><p>Link text is more than a single letter (<code>link_length</code>)</p></li>
 </ul>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
@@ -712,18 +719,19 @@ details.</p>
 
 <span class='va'>frg</span> <span class='op'>&lt;-</span> <span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>frg</span><span class='op'>$</span><span class='fu'>validate_links</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> Images need alt-text:</span>
-#&gt; <span class='message'>https://carpentries.org/assets/img/TheCarpentries.svg (14-looping-data-sets.md:195)</span>
-#&gt; <span class='message'>../no-workie.svg (14-looping-data-sets.md:197)</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> These files do not exist in the lesson:</span>
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> These files do not exist in the lesson:</span>
 #&gt; <span class='message'>../no-workie.svg (14-looping-data-sets.md:191)</span>
-#&gt; <span class='message'>../no-workie.svg (14-looping-data-sets.md:197)</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 5 × 5</span>
+#&gt; <span class='message'>../no-workie.svg (14-looping-data-sets.md:197)</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> Images need alt-text:</span>
+#&gt; <span class='message'>https://carpentries.org/assets/img/TheCarpentries.svg (14-looping-data-sets.md:195)</span>
+#&gt; <span class='message'>../no-workie.svg (14-looping-data-sets.md:197)</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 6 × 5</span>
 #&gt;   type          `10-lunch.md` `12-for-loops.md` `14-looping-data-… `17-scope.md`
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>        
 #&gt; <span style='color: #BCBCBC;'>1</span> enforce_https TRUE          TRUE              TRUE               TRUE         
 #&gt; <span style='color: #BCBCBC;'>2</span> internal_okay TRUE          TRUE              FALSE              TRUE         
 #&gt; <span style='color: #BCBCBC;'>3</span> all_reachable TRUE          TRUE              TRUE               TRUE         
 #&gt; <span style='color: #BCBCBC;'>4</span> img_alt_text  TRUE          TRUE              FALSE              TRUE         
-#&gt; <span style='color: #BCBCBC;'>5</span> descriptive   TRUE          TRUE              TRUE               TRUE         </div></pre>
+#&gt; <span style='color: #BCBCBC;'>5</span> descriptive   TRUE          TRUE              TRUE               TRUE         
+#&gt; <span style='color: #BCBCBC;'>6</span> link_length   TRUE          TRUE              TRUE               TRUE         </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

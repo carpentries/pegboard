@@ -74,7 +74,7 @@ websites." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9020</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9021</span>
       </span>
     </div>
 
@@ -157,38 +157,58 @@ websites.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>External links</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Link Validity</h3>
+
+
+<p>All links must resolve to a specific location. If it does not exist, then the
+link is invalid.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>External links</h4>
 
 
 <p>These links must start with a valid and secure protocol. This means that we
 will enforce HTTPS over HTTP. Any link with HTTP will be flagged. Most
 importantly, these links must not return an error code &gt; 399.</p>
 
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Cross-lesson links</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Cross-lesson links</h4>
 
 
 <p>These links will have no protocol, but should resolve to the HTML version of
 a page and have the correct capitalisation.</p>
 
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Anchors (aka fragments)</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Anchors (aka fragments)</h4>
 
 
 <p>Anchors are located at the end of URLs that start with a <code>#</code> sign. These are
 used to indicate a section of the documenation.</p>
 
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Alt-text (for images)</h3>
+
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Accessibility (a11y)</h3>
+
+
+<p>Accessibillity ensures that your links are accurate and descriptive for
+people who have slow connections or use screen reader technology.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Alt-text (for images)</h4>
 
 
 <p>All images must have associated alt-text. In pandoc, this is acheived by
 writing the <code>alt</code> attribute in curly braces after the image:
-<code>![image caption](link){alt='alt text'}</code></p>
+<code>![image caption](link){alt='alt text'}</code>:
+<a href='https://webaim.org/techniques/alttext/'>https://webaim.org/techniques/alttext/</a></p>
 
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Descriptive text</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Descriptive text</h4>
 
 
 <p>All links must have descriptive text associated with them, which is
 beneficial for screen readers scanning the links on a page to not have a
-list full of "link", "link", "link".</p>
+list full of "link", "link", "link":
+<a href='https://webaim.org/techniques/hypertext/link_text#uninformative'>https://webaim.org/techniques/hypertext/link_text#uninformative</a></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Text length</h4>
+
+
+<p>Link text length must be greater than 1:
+<a href='https://webaim.org/techniques/hypertext/link_text#link_length'>https://webaim.org/techniques/hypertext/link_text#link_length</a></p>
+
+
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 

@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9020</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9021</span>
       </span>
     </div>
 
@@ -152,10 +152,10 @@
 <span class="va">SWC</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html">glue</a></span><span class="op">(</span><span class="st">"swcarpentry/{swc_core_lessons}"</span><span class="op">)</span>, <span class="va">get_lesson</span>, path <span class="op">=</span> <span class="va">swc_path</span><span class="op">)</span>
 <span class="co">#&gt; Loading required namespace: gert</span>
 <span class="co">#&gt; Warning in readLines(path, encoding = encoding): incomplete final line found</span>
-<span class="co">#&gt; on '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/Rtmpww1hj1/SWC9bb5b36e4b8/</span>
+<span class="co">#&gt; on '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpAkyqJY/SWC9ee73489d9d/</span>
 <span class="co">#&gt; swcarpentry--python-novice-gapminder/_episodes/04-built-in.md'</span>
 <span class="co">#&gt; Warning in readLines(path, encoding = encoding): incomplete final line found</span>
-<span class="co">#&gt; on '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/Rtmpww1hj1/SWC9bb5b36e4b8/</span>
+<span class="co">#&gt; on '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpAkyqJY/SWC9ee73489d9d/</span>
 <span class="co">#&gt; swcarpentry--python-novice-gapminder/_episodes/14-looping-data-sets.md'</span>
 <span class="co">#&gt; could not find _episodes/, using _episodes_rmd/ as the source</span>
 <span class="co">#&gt; could not find _episodes/, using _episodes_rmd/ as the source</span>
@@ -169,7 +169,7 @@
 <code class="sourceCode R"><span class="va">relationships</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dfr</a></span><span class="op">(</span><span class="va">SWC</span>, <span class="op">~</span><span class="va">.x</span><span class="op">$</span><span class="fu">challenges</span><span class="op">(</span>graph <span class="op">=</span> <span class="cn">TRUE</span>, recurse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, .id <span class="op">=</span> <span class="st">"Lesson"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">relationships</span>
-<span class="co">#&gt; # A tibble: 4,720 × 7</span>
+<span class="co">#&gt; # A tibble: 4,727 × 7</span>
 <span class="co">#&gt;    Lesson       Episode       Block from      to        pos          level</span>
 <span class="co">#&gt;    &lt;chr&gt;        &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;        &lt;int&gt;</span>
 <span class="co">#&gt;  1 shell-novice 02-filedir.md 1     challenge heading   268:1-284:14     1</span>
@@ -182,7 +182,7 @@
 <span class="co">#&gt;  8 shell-novice 02-filedir.md 1     paragraph challenge 278:5-284:14     2</span>
 <span class="co">#&gt;  9 shell-novice 02-filedir.md 2     challenge heading   286:1-301:14     1</span>
 <span class="co">#&gt; 10 shell-novice 02-filedir.md 2     heading   paragraph 286:3-286:43     1</span>
-<span class="co">#&gt; # … with 4,710 more rows</span>
+<span class="co">#&gt; # … with 4,717 more rows</span>
 
 <span class="va">curr_graph</span> <span class="op">&lt;-</span> <span class="va">relationships</span> <span class="op">%&gt;%</span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>level <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span>
@@ -195,7 +195,7 @@
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_map.html">group_map</a></span><span class="op">(</span><span class="op">~</span><span class="fu"><a href="https://tidygraph.data-imaginist.com/reference/tbl_graph.html">as_tbl_graph</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">curr_graph</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
-<span class="co">#&gt; # A tbl_graph: 8 nodes and 136 edges</span>
+<span class="co">#&gt; # A tbl_graph: 8 nodes and 135 edges</span>
 <span class="co">#&gt; #</span>
 <span class="co">#&gt; # A directed multigraph with 1 component</span>
 <span class="co">#&gt; #</span>
@@ -210,13 +210,13 @@
 <span class="co">#&gt; 6 code_block</span>
 <span class="co">#&gt; # … with 2 more rows</span>
 <span class="co">#&gt; #</span>
-<span class="co">#&gt; # Edge Data: 136 × 5</span>
+<span class="co">#&gt; # Edge Data: 135 × 5</span>
 <span class="co">#&gt;    from    to Lesson     Episode      level    </span>
 <span class="co">#&gt;   &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;    </span>
 <span class="co">#&gt; 1     1     2 git-novice 01-basics.md Challenge</span>
 <span class="co">#&gt; 2     2     3 git-novice 01-basics.md Challenge</span>
 <span class="co">#&gt; 3     3     4 git-novice 01-basics.md Challenge</span>
-<span class="co">#&gt; # … with 133 more rows</span></code></pre></div>
+<span class="co">#&gt; # … with 132 more rows</span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">walk</a></span><span class="op">(</span>
   <span class="va">curr_graph</span>, 
@@ -315,12 +315,12 @@
 
 <span class="co">#&gt; Warning: `columns = vars(...)` has been deprecated in gt 0.3.0:</span>
 <span class="co">#&gt; * please use `columns = c(...)` instead</span></code></pre></div>
-<div id="xylubzpoeb" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="kvrleztfeb" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#xylubzpoeb .gt_table {
+#kvrleztfeb .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -345,7 +345,7 @@
   border-left-color: #D3D3D3;
 }
 
-#xylubzpoeb .gt_heading {
+#kvrleztfeb .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -357,7 +357,7 @@
   border-right-color: #D3D3D3;
 }
 
-#xylubzpoeb .gt_title {
+#kvrleztfeb .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -367,23 +367,23 @@
   border-bottom-width: 0;
 }
 
-#xylubzpoeb .gt_subtitle {
+#kvrleztfeb .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
   padding-top: 0;
-  padding-bottom: 4px;
+  padding-bottom: 6px;
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
 
-#xylubzpoeb .gt_bottom_border {
+#kvrleztfeb .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#xylubzpoeb .gt_col_headings {
+#kvrleztfeb .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -398,7 +398,7 @@
   border-right-color: #D3D3D3;
 }
 
-#xylubzpoeb .gt_col_heading {
+#kvrleztfeb .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -418,7 +418,7 @@
   overflow-x: hidden;
 }
 
-#xylubzpoeb .gt_column_spanner_outer {
+#kvrleztfeb .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -430,27 +430,27 @@
   padding-right: 4px;
 }
 
-#xylubzpoeb .gt_column_spanner_outer:first-child {
+#kvrleztfeb .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#xylubzpoeb .gt_column_spanner_outer:last-child {
+#kvrleztfeb .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#xylubzpoeb .gt_column_spanner {
+#kvrleztfeb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
   vertical-align: bottom;
   padding-top: 5px;
-  padding-bottom: 6px;
+  padding-bottom: 5px;
   overflow-x: hidden;
   display: inline-block;
   width: 100%;
 }
 
-#xylubzpoeb .gt_group_heading {
+#kvrleztfeb .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -472,7 +472,7 @@
   vertical-align: middle;
 }
 
-#xylubzpoeb .gt_empty_group_heading {
+#kvrleztfeb .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -487,15 +487,15 @@
   vertical-align: middle;
 }
 
-#xylubzpoeb .gt_from_md > :first-child {
+#kvrleztfeb .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#xylubzpoeb .gt_from_md > :last-child {
+#kvrleztfeb .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#xylubzpoeb .gt_row {
+#kvrleztfeb .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -514,7 +514,7 @@
   overflow-x: hidden;
 }
 
-#xylubzpoeb .gt_stub {
+#kvrleztfeb .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -526,7 +526,7 @@
   padding-left: 12px;
 }
 
-#xylubzpoeb .gt_summary_row {
+#kvrleztfeb .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -536,7 +536,7 @@
   padding-right: 5px;
 }
 
-#xylubzpoeb .gt_first_summary_row {
+#kvrleztfeb .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -546,7 +546,7 @@
   border-top-color: #D3D3D3;
 }
 
-#xylubzpoeb .gt_grand_summary_row {
+#kvrleztfeb .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -556,7 +556,7 @@
   padding-right: 5px;
 }
 
-#xylubzpoeb .gt_first_grand_summary_row {
+#kvrleztfeb .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -566,11 +566,11 @@
   border-top-color: #D3D3D3;
 }
 
-#xylubzpoeb .gt_striped {
+#kvrleztfeb .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#xylubzpoeb .gt_table_body {
+#kvrleztfeb .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -579,7 +579,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#xylubzpoeb .gt_footnotes {
+#kvrleztfeb .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -593,13 +593,13 @@
   border-right-color: #D3D3D3;
 }
 
-#xylubzpoeb .gt_footnote {
+#kvrleztfeb .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#xylubzpoeb .gt_sourcenotes {
+#kvrleztfeb .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -613,41 +613,41 @@
   border-right-color: #D3D3D3;
 }
 
-#xylubzpoeb .gt_sourcenote {
+#kvrleztfeb .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#xylubzpoeb .gt_left {
+#kvrleztfeb .gt_left {
   text-align: left;
 }
 
-#xylubzpoeb .gt_center {
+#kvrleztfeb .gt_center {
   text-align: center;
 }
 
-#xylubzpoeb .gt_right {
+#kvrleztfeb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xylubzpoeb .gt_font_normal {
+#kvrleztfeb .gt_font_normal {
   font-weight: normal;
 }
 
-#xylubzpoeb .gt_font_bold {
+#kvrleztfeb .gt_font_bold {
   font-weight: bold;
 }
 
-#xylubzpoeb .gt_font_italic {
+#kvrleztfeb .gt_font_italic {
   font-style: italic;
 }
 
-#xylubzpoeb .gt_super {
+#kvrleztfeb .gt_super {
   font-size: 65%;
 }
 
-#xylubzpoeb .gt_footnote_marks {
+#kvrleztfeb .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 65%;
@@ -671,8 +671,8 @@
     </tr>
 <tr>
 <td class="gt_row gt_left">Lesson</td>
-<td class="gt_row gt_right">417</td>
-<td class="gt_row gt_right">87.42&amp;percnt;</td>
+<td class="gt_row gt_right">418</td>
+<td class="gt_row gt_right">87.63&amp;percnt;</td>
 </tr>
 <tr>
 <td class="gt_row gt_left gt_striped">Paragraph</td>
@@ -704,8 +704,8 @@
     </tr>
 <tr>
 <td class="gt_row gt_left">Heading</td>
-<td class="gt_row gt_right">437</td>
-<td class="gt_row gt_right">91.61&amp;percnt;</td>
+<td class="gt_row gt_right">438</td>
+<td class="gt_row gt_right">91.82&amp;percnt;</td>
 </tr>
 <tr>
 <td class="gt_row gt_left gt_striped">Code block</td>
