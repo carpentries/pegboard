@@ -174,7 +174,17 @@ Lesson <- R6::R6Class("Lesson",
     },
 
     #' @description
-    #' Validate that the heading elements meet minimum accessibility requirements
+    #' Validate that the heading elements meet minimum accessibility 
+    #' requirements. See the internal [validate_headings()] for deails.
+    #'
+    #' This will validate the following aspects of all headings:
+    #'
+    #'  - first heading starts at level 2 (`first_heading_is_second_level`)
+    #'  - greater than level 1 (`all_are_greater_than_first_level`)
+    #'  - increse sequentially (e.g. no jumps from 2 to 4) (`all_are_sequential`)
+    #'  - have names (`all_have_names`)
+    #'  - unique in their own hierarchy (`all_are_unique`)
+    #'
     #' @param verbose if `TRUE`, the heading tree will be printed to the console
     #'   with any warnings assocated with the validators
     #' @return a wide data frame with five rows and the number of columns equal
@@ -191,7 +201,8 @@ Lesson <- R6::R6Class("Lesson",
       res
     },
     #' @description
-    #' Validate that the links and images are valid and accessible
+    #' Validate that the links and images are valid and accessible. See the
+    #' internal [validate_links()] for details.
     #' 
     #' ## Validation variables
     #'
@@ -200,6 +211,7 @@ Lesson <- R6::R6Class("Lesson",
     #'  - External links are reachable (`all_reachable`) (planned)
     #'  - Images have alt text (`img_alt_text`)
     #'  - Link text is descriptive (`descriptive`)
+    #'  - Link text is more than a single letter (`link_length`)
     #'
     #' @param verbose if `TRUE` (default), Any failed tests will be printed to
     #'   the console as a message giving information of where in the document
@@ -208,8 +220,6 @@ Lesson <- R6::R6Class("Lesson",
     #'   to the number of episodes in the lesson with an extra column indicating
     #'   the type of validation. See the same method in the [Episode] class for 
     #'   details.
-    #' @seealso internal functions [validate_links()] and [validate_headings()]
-    #'   for details.
     #' @examples
     #' frg <- Lesson$new(lesson_fragment())
     #' frg$validate_links()

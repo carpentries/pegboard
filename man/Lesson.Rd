@@ -58,10 +58,6 @@ frg$validate_headings()
 frg <- Lesson$new(lesson_fragment())
 frg$validate_links()
 }
-\seealso{
-internal functions \code{\link[=validate_links]{validate_links()}} and \code{\link[=validate_headings]{validate_headings()}}
-for details.
-}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -303,7 +299,17 @@ frg$isolate_blocks()$body # only one challenge block_quote
 \if{html}{\out{<a id="method-validate_headings"></a>}}
 \if{latex}{\out{\hypertarget{method-validate_headings}{}}}
 \subsection{Method \code{validate_headings()}}{
-Validate that the heading elements meet minimum accessibility requirements
+Validate that the heading elements meet minimum accessibility
+requirements. See the internal \code{\link[=validate_headings]{validate_headings()}} for deails.
+
+This will validate the following aspects of all headings:
+\itemize{
+\item first heading starts at level 2 (\code{first_heading_is_second_level})
+\item greater than level 1 (\code{all_are_greater_than_first_level})
+\item increse sequentially (e.g. no jumps from 2 to 4) (\code{all_are_sequential})
+\item have names (\code{all_have_names})
+\item unique in their own hierarchy (\code{all_are_unique})
+}
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Lesson$validate_headings(verbose = TRUE)}\if{html}{\out{</div>}}
 }
@@ -335,7 +341,8 @@ frg$validate_headings()
 \if{html}{\out{<a id="method-validate_links"></a>}}
 \if{latex}{\out{\hypertarget{method-validate_links}{}}}
 \subsection{Method \code{validate_links()}}{
-Validate that the links and images are valid and accessible
+Validate that the links and images are valid and accessible. See the
+internal \code{\link[=validate_links]{validate_links()}} for details.
 \subsection{Validation variables}{
 \itemize{
 \item External links use HTTPS (\code{enforce_https})
@@ -343,6 +350,7 @@ Validate that the links and images are valid and accessible
 \item External links are reachable (\code{all_reachable}) (planned)
 \item Images have alt text (\code{img_alt_text})
 \item Link text is descriptive (\code{descriptive})
+\item Link text is more than a single letter (\code{link_length})
 }
 }
 \subsection{Usage}{

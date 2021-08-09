@@ -769,12 +769,15 @@ loop$validate_headings()
 \subsection{Method \code{validate_links()}}{
 perform validation on links and images in a document.
 
-This will validate the following aspects of links
+This will validate the following aspects of links. See \code{\link[=validate_links]{validate_links()}}
+for details.
 \itemize{
-\item use HTTPS protocol
-\item images have alt text
-\item local links are reachable
-\item [future] outside links are reachable
+\item External links use HTTPS (\code{enforce_https})
+\item Internal links exist (\code{internal_okay})
+\item External links are reachable (\code{all_reachable}) (planned)
+\item Images have alt text (\code{img_alt_text})
+\item Link text is descriptive (\code{descriptive})
+\item Link text is more than a single letter (\code{link_length})
 }
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Episode$validate_links(verbose = TRUE)}\if{html}{\out{</div>}}

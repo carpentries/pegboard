@@ -63,11 +63,11 @@
     Code
       vlink <- frg$validate_links()
     Message <cliMessage>
-      ! Images need alt-text:
-      https://carpentries.org/assets/img/TheCarpentries.svg (14-looping-data-sets.md:195)
-      ../no-workie.svg (14-looping-data-sets.md:197)
       ! These files do not exist in the lesson:
       ../no-workie.svg (14-looping-data-sets.md:191)
+      ../no-workie.svg (14-looping-data-sets.md:197)
+      ! Images need alt-text:
+      https://carpentries.org/assets/img/TheCarpentries.svg (14-looping-data-sets.md:195)
       ../no-workie.svg (14-looping-data-sets.md:197)
 
 # Lessons can be validated [ansi]
@@ -135,11 +135,11 @@
     Code
       vlink <- frg$validate_links()
     Message <cliMessage>
-      [33m![39m Images need alt-text:
-      https://carpentries.org/assets/img/TheCarpentries.svg (14-looping-data-sets.md:195)
-      ../no-workie.svg (14-looping-data-sets.md:197)
       [33m![39m These files do not exist in the lesson:
       ../no-workie.svg (14-looping-data-sets.md:191)
+      ../no-workie.svg (14-looping-data-sets.md:197)
+      [33m![39m Images need alt-text:
+      https://carpentries.org/assets/img/TheCarpentries.svg (14-looping-data-sets.md:195)
       ../no-workie.svg (14-looping-data-sets.md:197)
 
 # Lessons can be validated [unicode]
@@ -207,11 +207,11 @@
     Code
       vlink <- frg$validate_links()
     Message <cliMessage>
-      ! Images need alt-text:
-      https://carpentries.org/assets/img/TheCarpentries.svg (14-looping-data-sets.md:195)
-      ../no-workie.svg (14-looping-data-sets.md:197)
       ! These files do not exist in the lesson:
       ../no-workie.svg (14-looping-data-sets.md:191)
+      ../no-workie.svg (14-looping-data-sets.md:197)
+      ! Images need alt-text:
+      https://carpentries.org/assets/img/TheCarpentries.svg (14-looping-data-sets.md:195)
       ../no-workie.svg (14-looping-data-sets.md:197)
 
 # Lessons can be validated [fancy]
@@ -279,10 +279,10 @@
     Code
       vlink <- frg$validate_links()
     Message <cliMessage>
-      [33m![39m Images need alt-text:
-      https://carpentries.org/assets/img/TheCarpentries.svg (14-looping-data-sets.md:195)
-      ../no-workie.svg (14-looping-data-sets.md:197)
       [33m![39m These files do not exist in the lesson:
       ../no-workie.svg (14-looping-data-sets.md:191)
+      ../no-workie.svg (14-looping-data-sets.md:197)
+      [33m![39m Images need alt-text:
+      https://carpentries.org/assets/img/TheCarpentries.svg (14-looping-data-sets.md:195)
       ../no-workie.svg (14-looping-data-sets.md:197)
 

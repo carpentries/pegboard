@@ -20,6 +20,10 @@ documents. This will include links to images and will respect robots.txt for
 websites.
 }
 \details{
+\subsection{Link Validity}{
+
+All links must resolve to a specific location. If it does not exist, then the
+link is invalid.
 \subsection{External links}{
 
 These links must start with a valid and secure protocol. This means that we
@@ -39,18 +43,34 @@ Anchors are located at the end of URLs that start with a \verb{#} sign. These ar
 used to indicate a section of the documenation.
 }
 
+}
+
+\subsection{Accessibility (a11y)}{
+
+Accessibillity ensures that your links are accurate and descriptive for
+people who have slow connections or use screen reader technology.
 \subsection{Alt-text (for images)}{
 
 All images must have associated alt-text. In pandoc, this is acheived by
 writing the \code{alt} attribute in curly braces after the image:
-\verb{![image caption](link)\{alt='alt text'\}}
+\verb{![image caption](link)\{alt='alt text'\}}:
+\url{https://webaim.org/techniques/alttext/}
 }
 
 \subsection{Descriptive text}{
 
 All links must have descriptive text associated with them, which is
 beneficial for screen readers scanning the links on a page to not have a
-list full of "link", "link", "link".
+list full of "link", "link", "link":
+\url{https://webaim.org/techniques/hypertext/link_text#uninformative}
+}
+
+\subsection{Text length}{
+
+Link text length must be greater than 1:
+\url{https://webaim.org/techniques/hypertext/link_text#link_length}
+}
+
 }
 }
 \note{
