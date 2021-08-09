@@ -6,33 +6,50 @@
 #'
 #' @details
 #'
-#' ## External links
+#' ## Link Validity
+#'
+#' All links must resolve to a specific location. If it does not exist, then the
+#' link is invalid.
+#'
+#' ### External links
 #'
 #' These links must start with a valid and secure protocol. This means that we
 #' will enforce HTTPS over HTTP. Any link with HTTP will be flagged. Most
 #' importantly, these links must not return an error code > 399.
 #'
-#' ## Cross-lesson links
+#' ### Cross-lesson links
 #'
 #' These links will have no protocol, but should resolve to the HTML version of
 #' a page and have the correct capitalisation.
 #'
-#' ## Anchors (aka fragments)
+#' ### Anchors (aka fragments)
 #'
 #' Anchors are located at the end of URLs that start with a `#` sign. These are
 #' used to indicate a section of the documenation.
 #'
-#' ## Alt-text (for images)
+#' ## Accessibility (a11y)
+#' 
+#' Accessibillity ensures that your links are accurate and descriptive for 
+#' people who have slow connections or use screen reader technology. 
+#'
+#' ### Alt-text (for images)
 #'
 #' All images must have associated alt-text. In pandoc, this is acheived by
 #' writing the `alt` attribute in curly braces after the image: 
-#' `![image caption](link){alt='alt text'}`
+#' `![image caption](link){alt='alt text'}`:
+#' <https://webaim.org/techniques/alttext/>
 #'
-#' ## Descriptive text
+#' ### Descriptive text
 #'
 #' All links must have descriptive text associated with them, which is 
 #' beneficial for screen readers scanning the links on a page to not have a
-#' list full of "link", "link", "link".
+#' list full of "link", "link", "link":
+#' <https://webaim.org/techniques/hypertext/link_text#uninformative>
+#'
+#' ### Text length
+#'
+#' Link text length must be greater than 1: 
+#' <https://webaim.org/techniques/hypertext/link_text#link_length>
 #'
 #' @note At the moment, we do not currently test if all links are reachable.
 #'   This is a feature planned for the future.
@@ -56,12 +73,14 @@ validate_links <- function(yrn, verbose = TRUE) {
     all_reachable = TRUE,
     img_alt_text  = TRUE,
     descriptive   = TRUE,
+    link_length   = TRUE,
     NULL
   )
-  VLD["descriptive"]   <- validate_descriptive(link_table, path, verbose, has_cli)
   VLD["enforce_https"] <- validate_https(link_table, path, verbose, has_cli)
-  VLD["img_alt_text"]  <- validate_alt_text(link_table, path, verbose, has_cli)
   VLD["internal_okay"] <- validate_internal_okay(yrn, link_table, verbose, has_cli)
+  VLD["img_alt_text"]  <- validate_alt_text(link_table, path, verbose, has_cli)
+  VLD["descriptive"]   <- validate_descriptive(link_table, path, verbose, has_cli)
+  VLD["link_length"]   <- validate_link_length(link_table, path, verbose, has_cli)
   VLD
 }
 
@@ -82,11 +101,44 @@ validate_known_rot <- function(lt, path, verbose = TRUE, cli = TRUE) {
 
 validate_descriptive <- function(lt, path, verbose = TRUE, cli = TRUE) {
   # NOTE: invalidate "here" links as well
-  res <- !any(bad <- tolower(lt$text) %in% c("link", "this link", "a link"))
+  more <- paste0("(for )?", c("more", "more info(rmation)?"))
+  uninformative <- paste0(
+    "^([[:punct:]]*(",
+    paste(
+      c("link", "this", "this link", "a link", "link to",
+        paste0(c("here", "click here", "over here"), "( for)?"),
+        paste0(c(more, "read more", "read on"), "( about)?")
+      ),
+      collapse = ")|("
+    ), 
+    ")[[:punct:]]*)$"
+  )
+  bad <- grepl(uninformative, trimws(lt$text), 
+    ignore.case = TRUE, perl = TRUE)
+  res <- !any(bad)
   if (verbose && !res) {
     just_link    <- lt[bad, , drop = FALSE]
     link_sources <- glue::glue("{path}:{just_link$sourcepos}")
-    issue_warning("Link text should be more descriptive than {sQuote('link')}:
+    issue_warning("Avoid uninformative link phrases:
+      <https://webaim.org/techniques/hypertext/link_text#uninformative>
+      {glue::glue_collapse(lnks, sep = '\n')}",
+      cli,
+      lnks = glue::glue("{sQuote(just_link$text)} ({link_sources})")
+    )
+  }
+  res
+}
+
+validate_link_length <- function(lt, path, verbose = TRUE, cli = TRUE) {
+  # must not be a single letter or empty
+  # we will catch images in another test
+  bad <- grepl("^.?$", trimws(lt$text)) & lt$type == "link"
+  res <- !any(bad)
+  if (verbose && !res) {
+    just_link    <- lt[bad, , drop = FALSE]
+    link_sources <- glue::glue("{path}:{just_link$sourcepos}")
+    issue_warning("Avoid single-letter or missing link text:
+      <https://webaim.org/techniques/hypertext/link_text#link_length>
       {glue::glue_collapse(lnks, sep = '\n')}",
       cli,
       lnks = glue::glue("{sQuote(just_link$text)} ({link_sources})")

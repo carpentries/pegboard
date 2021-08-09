@@ -41,6 +41,35 @@ This link [is a relative link that works][rel-image]
 
 This [link uses http, which is no bueno](http://example.com)
 
+## Link text
+
+If we have [link text that is informative](https://example.com/link-text#good),
+it will pass.
+
+If we have links like 
+[this][bad-link-text]
+[link][bad-link-text]
+[this link][bad-link-text]
+[a link][bad-link-text]
+[link to][bad-link-text]
+[here][bad-link-text]
+[here for][bad-link-text]
+[click here for][bad-link-text]
+[over here for][bad-link-text]
+[more][bad-link-text]
+[more about][bad-link-text]
+[for more about][bad-link-text]
+[for more info about][bad-link-text]
+[for more information about][bad-link-text]
+[read more about][bad-link-text]
+[read more][bad-link-text]
+[read on][bad-link-text]
+[read on about][bad-link-text],
+[a][bad-link-text],
+[][bad-link-text]
+they will fail.
+
 
 [rel-label-1]: #label-1
 [rel-image]: image-test.html
+[bad-link-text]: https://example.com/link-text#bad
