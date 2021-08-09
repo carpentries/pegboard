@@ -1,3 +1,10 @@
+# pegboard 0.0.0.9021
+
+## NEW FEATURES
+
+- Link validation now checks for more general uninformative link text and empty
+  links (@zkamvar, #49)
+
 # pegboard 0.0.0.9020
 
 ## NEW FEATURES
