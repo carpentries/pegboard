@@ -445,12 +445,16 @@ Episode <- R6::R6Class("Episode",
     
     #' @description perform validation on links and images in a document.
     #'
-    #' This will validate the following aspects of links
+    #' This will validate the following aspects of links. See [validate_links()]
+    #' for details.
     #'
-    #'  - use HTTPS protocol
-    #'  - images have alt text
-    #'  - local links are reachable
-    #'  - \[future\] outside links are reachable
+    #'  - External links use HTTPS (`enforce_https`)
+    #'  - Internal links exist (`internal_okay`)
+    #'  - External links are reachable (`all_reachable`) (planned)
+    #'  - Images have alt text (`img_alt_text`)
+    #'  - Link text is descriptive (`descriptive`)
+    #'  - Link text is more than a single letter (`link_length`)
+    #'
     #' @param verbose if `TRUE` (default), a message for each rule broken will
     #'   be issued to the stderr. if `FALSE`, this will be silent. 
     #' @return a logical `TRUE` for valid links and `FALSE` for invalid 

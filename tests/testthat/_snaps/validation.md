@@ -47,13 +47,13 @@
 ---
 
     Code
-      expect_equal(sum(loop$validate_links()), 3L)
+      expect_equal(sum(loop$validate_links()), 4L)
     Message <simpleMessage>
-      ! Images need alt-text:
-      https://carpentries.org/assets/img/TheCarpentries.svg (14-looping-data-sets.md:195)
-      ../no-workie.svg (14-looping-data-sets.md:197)
       ! These files do not exist in the lesson:
               ../no-workie.svg (14-looping-data-sets.md:191)
+      ../no-workie.svg (14-looping-data-sets.md:197)
+      ! Images need alt-text:
+      https://carpentries.org/assets/img/TheCarpentries.svg (14-looping-data-sets.md:195)
       ../no-workie.svg (14-looping-data-sets.md:197)
 
 ---
@@ -61,9 +61,6 @@
     Code
       expect_equal(sum(link$validate_links()), 2L)
     Message <simpleMessage>
-      ! Link text should be more descriptive than 'link':
-            'link' (link-test.md:18)
-      'this link' (link-test.md:18)
       ! Links must use HTTPS, not HTTP:
             http://example.com (link-test.md:42)
       ! The following anchors do not exist in the file:
@@ -72,6 +69,32 @@
               [should be a relative link](rel-image) -> [should be a relative link][rel-image] (link-test.md:37)
       ! These files do not exist in the lesson:
               incorrect-link.html (link-test.md:29)
+      ! Avoid uninformative link phrases:
+            <https://webaim.org/techniques/hypertext/link_text#uninformative>
+            'link' (link-test.md:18)
+      'this link' (link-test.md:18)
+      'this' (link-test.md:50)
+      'link' (link-test.md:51)
+      'this link' (link-test.md:52)
+      'a link' (link-test.md:53)
+      'link to' (link-test.md:54)
+      'here' (link-test.md:55)
+      'here for' (link-test.md:56)
+      'click here for' (link-test.md:57)
+      'over here for' (link-test.md:58)
+      'more' (link-test.md:59)
+      'more about' (link-test.md:60)
+      'for more about' (link-test.md:61)
+      'for more info about' (link-test.md:62)
+      'for more information about' (link-test.md:63)
+      'read more about' (link-test.md:64)
+      'read more' (link-test.md:65)
+      'read on' (link-test.md:66)
+      'read on about' (link-test.md:67)
+      ! Avoid single-letter or missing link text:
+            <https://webaim.org/techniques/hypertext/link_text#link_length>
+            'a' (link-test.md:68)
+      '' (link-test.md:69)
 
 # headings reporters will work [plain]
 
@@ -267,9 +290,6 @@
     Code
       expect_equal(sum(link$validate_links()), 2L)
     Message <cliMessage>
-      ! Link text should be more descriptive than 'link':
-      'link' (link-test.md:18)
-      'this link' (link-test.md:18)
       ! Links must use HTTPS, not HTTP:
       http://example.com (link-test.md:42)
       ! The following anchors do not exist in the file:
@@ -278,6 +298,32 @@
       [should be a relative link](rel-image) -> [should be a relative link][rel-image] (link-test.md:37)
       ! These files do not exist in the lesson:
       incorrect-link.html (link-test.md:29)
+      ! Avoid uninformative link phrases:
+      <https://webaim.org/techniques/hypertext/link_text#uninformative>
+      'link' (link-test.md:18)
+      'this link' (link-test.md:18)
+      'this' (link-test.md:50)
+      'link' (link-test.md:51)
+      'this link' (link-test.md:52)
+      'a link' (link-test.md:53)
+      'link to' (link-test.md:54)
+      'here' (link-test.md:55)
+      'here for' (link-test.md:56)
+      'click here for' (link-test.md:57)
+      'over here for' (link-test.md:58)
+      'more' (link-test.md:59)
+      'more about' (link-test.md:60)
+      'for more about' (link-test.md:61)
+      'for more info about' (link-test.md:62)
+      'for more information about' (link-test.md:63)
+      'read more about' (link-test.md:64)
+      'read more' (link-test.md:65)
+      'read on' (link-test.md:66)
+      'read on about' (link-test.md:67)
+      ! Avoid single-letter or missing link text:
+      <https://webaim.org/techniques/hypertext/link_text#link_length>
+      'a' (link-test.md:68)
+      '' (link-test.md:69)
 
 # links reporters will work [ansi]
 
@@ -293,9 +339,6 @@
     Code
       expect_equal(sum(link$validate_links()), 2L)
     Message <cliMessage>
-      [33m![39m Link text should be more descriptive than 'link':
-      'link' (link-test.md:18)
-      'this link' (link-test.md:18)
       [33m![39m Links must use HTTPS, not HTTP:
       http://example.com (link-test.md:42)
       [33m![39m The following anchors do not exist in the file:
@@ -304,6 +347,32 @@
       [should be a relative link](rel-image) -> [should be a relative link][rel-image] (link-test.md:37)
       [33m![39m These files do not exist in the lesson:
       incorrect-link.html (link-test.md:29)
+      [33m![39m Avoid uninformative link phrases:
+      <https://webaim.org/techniques/hypertext/link_text#uninformative>
+      'link' (link-test.md:18)
+      'this link' (link-test.md:18)
+      'this' (link-test.md:50)
+      'link' (link-test.md:51)
+      'this link' (link-test.md:52)
+      'a link' (link-test.md:53)
+      'link to' (link-test.md:54)
+      'here' (link-test.md:55)
+      'here for' (link-test.md:56)
+      'click here for' (link-test.md:57)
+      'over here for' (link-test.md:58)
+      'more' (link-test.md:59)
+      'more about' (link-test.md:60)
+      'for more about' (link-test.md:61)
+      'for more info about' (link-test.md:62)
+      'for more information about' (link-test.md:63)
+      'read more about' (link-test.md:64)
+      'read more' (link-test.md:65)
+      'read on' (link-test.md:66)
+      'read on about' (link-test.md:67)
+      [33m![39m Avoid single-letter or missing link text:
+      <https://webaim.org/techniques/hypertext/link_text#link_length>
+      'a' (link-test.md:68)
+      '' (link-test.md:69)
 
 # links reporters will work [unicode]
 
@@ -319,9 +388,6 @@
     Code
       expect_equal(sum(link$validate_links()), 2L)
     Message <cliMessage>
-      ! Link text should be more descriptive than 'link':
-      'link' (link-test.md:18)
-      'this link' (link-test.md:18)
       ! Links must use HTTPS, not HTTP:
       http://example.com (link-test.md:42)
       ! The following anchors do not exist in the file:
@@ -330,6 +396,32 @@
       [should be a relative link](rel-image) -> [should be a relative link][rel-image] (link-test.md:37)
       ! These files do not exist in the lesson:
       incorrect-link.html (link-test.md:29)
+      ! Avoid uninformative link phrases:
+      <https://webaim.org/techniques/hypertext/link_text#uninformative>
+      'link' (link-test.md:18)
+      'this link' (link-test.md:18)
+      'this' (link-test.md:50)
+      'link' (link-test.md:51)
+      'this link' (link-test.md:52)
+      'a link' (link-test.md:53)
+      'link to' (link-test.md:54)
+      'here' (link-test.md:55)
+      'here for' (link-test.md:56)
+      'click here for' (link-test.md:57)
+      'over here for' (link-test.md:58)
+      'more' (link-test.md:59)
+      'more about' (link-test.md:60)
+      'for more about' (link-test.md:61)
+      'for more info about' (link-test.md:62)
+      'for more information about' (link-test.md:63)
+      'read more about' (link-test.md:64)
+      'read more' (link-test.md:65)
+      'read on' (link-test.md:66)
+      'read on about' (link-test.md:67)
+      ! Avoid single-letter or missing link text:
+      <https://webaim.org/techniques/hypertext/link_text#link_length>
+      'a' (link-test.md:68)
+      '' (link-test.md:69)
 
 # links reporters will work [fancy]
 
@@ -345,9 +437,6 @@
     Code
       expect_equal(sum(link$validate_links()), 2L)
     Message <cliMessage>
-      [33m![39m Link text should be more descriptive than 'link':
-      'link' (link-test.md:18)
-      'this link' (link-test.md:18)
       [33m![39m Links must use HTTPS, not HTTP:
       http://example.com (link-test.md:42)
       [33m![39m The following anchors do not exist in the file:
@@ -356,4 +445,30 @@
       [should be a relative link](rel-image) -> [should be a relative link][rel-image] (link-test.md:37)
       [33m![39m These files do not exist in the lesson:
       incorrect-link.html (link-test.md:29)
+      [33m![39m Avoid uninformative link phrases:
+      <https://webaim.org/techniques/hypertext/link_text#uninformative>
+      'link' (link-test.md:18)
+      'this link' (link-test.md:18)
+      'this' (link-test.md:50)
+      'link' (link-test.md:51)
+      'this link' (link-test.md:52)
+      'a link' (link-test.md:53)
+      'link to' (link-test.md:54)
+      'here' (link-test.md:55)
+      'here for' (link-test.md:56)
+      'click here for' (link-test.md:57)
+      'over here for' (link-test.md:58)
+      'more' (link-test.md:59)
+      'more about' (link-test.md:60)
+      'for more about' (link-test.md:61)
+      'for more info about' (link-test.md:62)
+      'for more information about' (link-test.md:63)
+      'read more about' (link-test.md:64)
+      'read more' (link-test.md:65)
+      'read on' (link-test.md:66)
+      'read on about' (link-test.md:67)
+      [33m![39m Avoid single-letter or missing link text:
+      <https://webaim.org/techniques/hypertext/link_text#link_length>
+      'a' (link-test.md:68)
+      '' (link-test.md:69)
 
