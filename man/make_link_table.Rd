@@ -20,7 +20,7 @@ a data frame containing the following columns:
 \item query anything after a "?" in a URL
 \item fragment navigation within a page; anything after "#" in a URL
 \item orig the original, unparsed URL
-\item text the text associated with the URL
+\item text the text associated with the URL (stripped of markup)
 \item title the title (if any) of the URL
 \item type the type of URL (image or link)
 \item rel if it's a relative URL, the name of the anchor, otherwise NA.

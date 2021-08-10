@@ -10,7 +10,7 @@
 #' - query anything after a "?" in a URL
 #' - fragment navigation within a page; anything after "#" in a URL
 #' - orig the original, unparsed URL
-#' - text the text associated with the URL
+#' - text the text associated with the URL (stripped of markup)
 #' - title the title (if any) of the URL
 #' - type the type of URL (image or link)
 #' - rel if it's a relative URL, the name of the anchor, otherwise NA.
@@ -31,7 +31,7 @@ make_link_table <- function(yrn) {
   url_table <- xml2::url_parse(urls)
 
   url_table$orig      <- urls
-  url_table$text      <- purrr::map_chr(limg, xml2::xml_text)
+  url_table$text      <- purrr::map_chr(limg, get_link_text)
   url_table$alt       <- purrr::map_chr(limg, xml2::xml_attr, "alt")
   url_table$title     <- purrr::map_chr(limg, xml2::xml_attr, "title")
   url_table$type      <- purrr::map_chr(limg, xml2::xml_name)
@@ -39,6 +39,10 @@ make_link_table <- function(yrn) {
   url_table$anchor    <- !is.na(purrr::map_chr(limg, xml2::xml_attr, "anchor"))
   url_table$sourcepos <- purrr::map_int(limg, get_linestart) + yml_lines
 
-  url_table[order(url_table$sourcepos), ]
+  url_table[order(url_table$sourcepos), , drop = FALSE]
 }
 
+get_link_text <- function(link) {
+  res <- purrr::map_chr(xml2::xml_children(link), xml2::xml_text)
+  paste(res[res != ""], collapse = " ")
+}

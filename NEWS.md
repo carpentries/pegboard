@@ -4,6 +4,7 @@
 
 - Link validation now checks for more general uninformative link text and empty
   links (@zkamvar, #49)
+- `make_link_table()` will treat linebreaks in link text as a space character.
 
 # pegboard 0.0.0.9020
 
