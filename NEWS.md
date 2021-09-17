@@ -7,6 +7,7 @@
   attempt to label divs in the episode (with a warning if there is no success).
 - The `Lesson` class will now run the `$confirm_sandpaper()` method for all
   markdown files if `jekyll = FALSE`. 
+- `Lesson$new()` will now default to the current working directory.
 
 ## MISC
 

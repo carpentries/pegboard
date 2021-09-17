@@ -29,7 +29,8 @@ Lesson <- R6::R6Class("Lesson",
 
     #' @description create a new Lesson object from a directory
     #' @param path \[`character`\] path to a lesson directory. This must have a
-    #'   folder called `_episodes` within that contains markdown episodes
+    #'   folder called `_episodes` within that contains markdown episodes. 
+    #'   Defaults to the current working directory.
     #' @param rmd \[`logical`\] when `TRUE`, the imported files will be the
     #'   source RMarkdown files. Defaults to `FALSE`, which reads the rendered
     #'   markdown files.
@@ -44,15 +45,13 @@ Lesson <- R6::R6Class("Lesson",
     #' frg <- Lesson$new(lesson_fragment())
     #' frg$path
     #' frg$episodes
-    initialize = function(path = NULL, rmd = FALSE, jekyll = TRUE, ...) {
+    initialize = function(path = ".", rmd = FALSE, jekyll = TRUE, ...) {
       stop_if_no_path(path)
       if (jekyll) {
         jeky <- read_jekyll_episodes(path, rmd, ...)
         self$episodes <- jeky$episodes
         self$rmd <- jeky$rmd
       } else {
-        # Modern lessons do not need to have tags processed because there are 
-        # no tags!!!
         episode_path <- fs::path(path, "episodes")
         extra_paths <- fs::path(path, c("instructors", "learners", "profiles"))
         cfg <- fs::dir_ls(path, regexp = "config[.]ya?ml")
