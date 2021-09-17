@@ -46,7 +46,8 @@ test_that("lessons can be read from local files", {
 
 test_that("lessons can be downloaded", {
 
-  testthat::skip_if_offline()
+  skip_if_offline()
+  skip_on_os("windows")
   expect_length(fs::dir_ls(d), 0)
   lex <- get_lesson("carpentries/lesson-example", path = d)
   # the output is a Lesson object
@@ -61,7 +62,8 @@ test_that("lessons can be downloaded", {
 
 test_that("lessons are accessed without re-downloading", {
 
-  testthat::skip_if_offline()
+  skip_if_offline()
+  skip_on_os("windows")
 
   # The lesson already exists in the directory
   expect_length(fs::dir_ls(d), 1)
@@ -80,7 +82,8 @@ test_that("lessons are accessed without re-downloading", {
 })
 
 test_that("overwriting is possible", {
-  testthat::skip_if_offline()
+  skip_if_offline()
+  skip_on_os("windows")
 
   expect_length(fs::dir_ls(d), 1)
 
@@ -98,7 +101,8 @@ test_that("overwriting is possible", {
 
 test_that("Lesson flags will be passed down", {
 
-  testthat::skip_if_offline()
+  skip_if_offline()
+  skip_on_os("windows")
 
   # The lesson already exists in the directory
   expect_length(fs::dir_ls(d), 1)
@@ -126,7 +130,8 @@ test_that("Lesson flags will be passed down", {
 
 test_that("Lesson methods work as expected", {
 
-  testthat::skip_if_offline()
+  skip_if_offline()
+  skip_on_os("windows")
 
   # The lesson already exists in the directory
   expect_length(fs::dir_ls(d), 1)
@@ -255,6 +260,9 @@ test_that("Lesson methods work as expected", {
 
 test_that("code with embedded div tags are parsed correctly", {
 
+  skip_if_offline()
+  skip_on_os("windows")
+
   suppressMessages(lex <- get_lesson("carpentries/lesson-example"))
   expect_length(lex$episodes[[4]]$get_blocks(), 12)
   expect_length(lex$episodes[[4]]$unblock()$get_divs(), 15)
@@ -266,6 +274,8 @@ test_that("code with embedded div tags are parsed correctly", {
 test_that("Lessons with Rmd sources can be downloaded", {
 
   skip_if_offline()
+  skip_on_os("windows")
+
   expect_false(fs::dir_exists(fs::path(d, "swcarpentry--r-novice-inflammation")))
 
   expect_message(
