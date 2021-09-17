@@ -173,6 +173,7 @@ loop$validate_links()
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{Episode$new()}}
+\item \href{#method-confirm_sandpaper}{\code{Episode$confirm_sandpaper()}}
 \item \href{#method-get_blocks}{\code{Episode$get_blocks()}}
 \item \href{#method-get_images}{\code{Episode$get_images()}}
 \item \href{#method-label_divs}{\code{Episode$label_divs()}}
@@ -256,6 +257,20 @@ scope$challenges
 }
 \if{html}{\out{</div>}}
 
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-confirm_sandpaper"></a>}}
+\if{latex}{\out{\hypertarget{method-confirm_sandpaper}{}}}
+\subsection{Method \code{confirm_sandpaper()}}{
+enforce that the episode is a {sandpaper} episode withtout
+going through the conversion steps. The default Episodes from pegboard
+were assumed to be generated using Jekyll with kramdown syntax. This is
+a bit of a kludge to bypass the normal checks for kramdown syntax and
+just assume pandoc syntax
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Episode$confirm_sandpaper()}\if{html}{\out{</div>}}
 }
 
 }
