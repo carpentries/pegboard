@@ -1,3 +1,17 @@
+# pegboard 0.0.0.9022
+
+## NEW FEATURES
+
+- The `Episode` class now gains the `$confirm_sandpaper()` method to bypass the
+  assumption that all Episodes start as kramdown-formatted documents and will
+  attempt to label divs in the episode (with a warning if there is no success).
+- The `Lesson` class will now run the `$confirm_sandpaper()` method for all
+  markdown files if `jekyll = FALSE`. 
+
+## MISC
+
+- The internal `get_list_block()` will no longer auto-label divs. 
+
 # pegboard 0.0.0.9021
 
 ## NEW FEATURES
