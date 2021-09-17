@@ -78,6 +78,29 @@ Episode <- R6::R6Class("Episode",
     },
 
 
+    #' @description enforce that the episode is a {sandpaper} episode withtout
+    #' going through the conversion steps. The default Episodes from pegboard
+    #' were assumed to be generated using Jekyll with kramdown syntax. This is
+    #' a bit of a kludge to bypass the normal checks for kramdown syntax and 
+    #' just assume pandoc syntax
+    confirm_sandpaper = function() {
+      ok <- c("unblock", "use_sandpaper_md", "use_sandpaper_rmd",
+        "move_questions", "move_objectives", "move_keypoints")
+      muts <- private$mutations
+      muts[ok] <- TRUE
+      private$mutations <- muts
+      invisible(
+        tryCatch(self$label_divs(),
+          error = function(e) {
+            msg <- glue::glue("
+              {e$message}
+              Section (div) tags for {self$name} will not be labelled"
+            )
+            warning(msg, call. = FALSE)
+            self
+          })
+      )
+    },
     #' @description return all `block_quote` elements within the Episode
     #' @param type the type of block quote in the Jekyll syntax like ".challenge",
     #'   ".discussion", or ".solution"
@@ -111,7 +134,6 @@ Episode <- R6::R6Class("Episode",
     get_blocks = function(type = NULL, level = 1L) {
       get_blocks(self$body, type = type, level = level)
     },
-
     #' @description
     #' fetch the image sources and optionally process them for easier parsing.
     #' The default version of this function is equivalent to the active binding
@@ -129,7 +151,6 @@ Episode <- R6::R6Class("Episode",
     get_images = function(process = FALSE) {
       get_images(self, process = process)
     },
-
     #' @description
     #' label all the div elements within the Episode to extract them with 
     #' `$get_divs()`
@@ -137,7 +158,6 @@ Episode <- R6::R6Class("Episode",
       label_div_tags(self)
       return(invisible(self))
     },
-    
     #' @description
     #' return all div elements within the Episode
     #' @param type the type of div tag (e.g. 'challenge' or 'solution')
@@ -147,13 +167,11 @@ Episode <- R6::R6Class("Episode",
     get_divs = function(type = NULL, include = FALSE) {
       get_divs(self$body, type = type, include = include)
     },
-
     #' @description
     #' Extract the yaml metadata from the episode
     get_yaml = function() {
       yaml::yaml.load(self$yaml)
     },
-    
     #' @description
     #' Ammend or add a setup code block to use `{dovetail}`
     #' 
@@ -176,7 +194,6 @@ Episode <- R6::R6Class("Episode",
       private$mutations['use_dovetail'] <- TRUE
       invisible(self)
     },
-
     #' @description
     #' Use the sandpaper package for processing
     #'
@@ -204,7 +221,6 @@ Episode <- R6::R6Class("Episode",
       private$mutations[type] <- TRUE
       invisible(self)
     },
-
     #' @description
     #' Remove error blocks
     remove_error = function() {
@@ -215,7 +231,6 @@ Episode <- R6::R6Class("Episode",
       private$mutations['remove_error'] <- TRUE
       invisible(self)
     },
-    
     #' @description
     #' Remove output blocks
     remove_output = function() {
@@ -226,7 +241,6 @@ Episode <- R6::R6Class("Episode",
       private$mutations['remove_output'] <- TRUE
       invisible(self)
     },
-    
     #' @description 
     #' move the objectives yaml item to the body
     move_objectives = function() {
@@ -240,7 +254,6 @@ Episode <- R6::R6Class("Episode",
       private$mutations['move_objectives'] <- TRUE
       invisible(self)
     },
-    
     #' @description 
     #' move the keypoints yaml item to the body
     move_keypoints = function() {
@@ -254,7 +267,6 @@ Episode <- R6::R6Class("Episode",
       private$mutations['move_keypoints'] <- TRUE
       invisible(self)
     },
-
     #' @description 
     #' move the questions yaml item to the body
     move_questions = function() {
@@ -268,7 +280,6 @@ Episode <- R6::R6Class("Episode",
       private$mutations['move_questions'] <- TRUE
       invisible(self)
     },
-
     #' @description
     #' Create a graph of the top-level elements for the challenges.
     #'
@@ -292,7 +303,6 @@ Episode <- R6::R6Class("Episode",
     get_challenge_graph = function(recurse = TRUE) {
       purrr::map_dfr(self$challenges, feature_graph, recurse = recurse, .id = "Block")
     },
-
     #' @description show the markdown contents on the screen
     #' @return a character vector with one line for each line of output
     #' @examples
@@ -303,21 +313,18 @@ Episode <- R6::R6Class("Episode",
     show = function() {
       super$show(get_stylesheet())
     },
-
     #' @description show the first n lines of markdown contents on the screen
     #' @param n the number of lines to show from the top 
     #' @return a character vector with one line for each line of output
     head = function(n = 6L) {
       super$head(n, get_stylesheet())
     },
-
     #' @description show the first n lines of markdown contents on the screen
     #' @param n the number of lines to show from the top 
     #' @return a character vector with one line for each line of output
     tail = function(n = 6L) {
       super$tail(n, get_stylesheet())
     },
-
     #' @description write the episode to disk as markdown
     #'
     #' @param path the path to write your file to. Defaults to an empty
@@ -360,7 +367,6 @@ Episode <- R6::R6Class("Episode",
       # nocov end
       return(invisible(self))
     },
-
     #' @description
     #' Re-read episode from disk
     #' @return the episode object
@@ -376,7 +382,6 @@ Episode <- R6::R6Class("Episode",
       private$mutations <- private$mutations & FALSE
       return(invisible(self))
     },
-
     #' @description
     #' Remove all elements except for those within block quotes that have a
     #' kramdown tag. Note that this is a destructive process.
@@ -393,7 +398,6 @@ Episode <- R6::R6Class("Episode",
       private$mutations['isolate_blocks'] <- TRUE
       invisible(self)
     },
-
     #' @description convert challenge blocks to roxygen-like code blocks
     #' @param token the token to use to indicate non-code, Defaults to "#'"
     #' @return the Episode object, invisibly
@@ -417,7 +421,6 @@ Episode <- R6::R6Class("Episode",
       private$mutations['unblock'] <- TRUE
       invisible(self)
     },
-
     #' @description perform validation on headings in a document.
     #'
     #' This will validate the following aspects of all headings:
@@ -471,43 +474,35 @@ Episode <- R6::R6Class("Episode",
     show_problems = function() {
       private$problems
     },
-
     #' @field headings \[`xml_nodeset`\] all headings in the document
     headings = function() {
       get_headings(self$body)
     },
-
     #' @field links \[`xml_nodeset`\] all links (not images) in the document
     links = function() {
       xpath <- ".//md:link | .//md:text[klink]"
       xml2::xml_find_all(self$body, xpath, self$ns)
     },
-
     #' @field images \[`xml_nodeset`\] all image sources in the document
     images = function() {
       get_images(self, process = FALSE)
     },
-
     #' @field tags \[`xml_nodeset`\] all the kramdown tags from the episode
     tags = function() {
       xml2::xml_find_all(self$body, ".//@ktag")
     },
-
     #' @field questions \[`character`\] the questions from the episode
     questions = function() {
       get_list_block(self, type = "questions", in_yaml = !private$mutations['move_questions'])
     },
-
     #' @field keypoints \[`character`\] the keypoints from the episode
     keypoints = function() {
       get_list_block(self, type = "keypoints", in_yaml = !private$mutations['move_keypoints'])
     },
-
     #' @field objectives \[`character`\] the objectives from the episode
     objectives = function() {
       get_list_block(self, type = "objectives", in_yaml = !private$mutations['move_objectives'])
     },
-
     #' @field challenges \[`xml_nodeset`\] all the challenges blocks from the episode
     challenges = function() {
       if (!private$mutations['unblock']) {
@@ -519,7 +514,6 @@ Episode <- R6::R6Class("Episode",
       }
       get_challenges(self$body, type = type)
     },
-
     #' @field solutions \[`xml_nodeset`\] all the solutions blocks from the episode
     solutions = function() {
       if (!private$mutations['unblock']) {
@@ -531,7 +525,6 @@ Episode <- R6::R6Class("Episode",
       }
       get_solutions(self$body, type = type)
     },
-
     #' @field output \[`xml_nodeset`\] all the output blocks from the episode
     output = function() {
       if (any(private$mutations[c('use_sandpaper_md', 'use_sandpaper_rmd')])) {
@@ -540,7 +533,6 @@ Episode <- R6::R6Class("Episode",
         get_code(self$body, ".output")
       }
     },
-
     #' @field error \[`xml_nodeset`\] all the error blocks from the episode
     error = function() {
       if (any(private$mutations[c('use_sandpaper_md', 'use_sandpaper_rmd')])) {
@@ -549,17 +541,14 @@ Episode <- R6::R6Class("Episode",
         get_code(self$body, ".error")
       }
     },
-
     #' @field code \[`xml_nodeset`\] all the code blocks from the episode
     code = function() {
       get_code(self$body, type = NULL, attr = NULL)
     },
-
     #' @field name \[`character`\] the name of the source file without the path
     name = function() {
       fs::path_file(self$path)
     },
-
     #' @field lesson \[`character`\] the path to the lesson where the episode is from
     lesson = function() {
       lsn <- fs::path_dir(self$path)
@@ -577,11 +566,9 @@ Episode <- R6::R6Class("Episode",
       yml[[what]] <- NULL
       self$yaml <- c("---", strsplit(yaml::as.yaml(yml), "\n")[[1]], "---")
     },
-
     record_problem = function(x) {
       private$problems <- c(private$problems, x)
     },
-
     mutations = c(
       unblock           = FALSE, # have kramdown blocks been converted?
       use_dovetail      = FALSE, # are we keeping challenges in code blocks?
@@ -595,9 +582,7 @@ Episode <- R6::R6Class("Episode",
       remove_output     = FALSE, # have output been removed?
       NULL
     ),
-
     problems = list(),
-
     deep_clone = function(name, value) {
       if (name == "body") {
         xml2::read_xml(as.character(value))

@@ -15,5 +15,5 @@ read_jekyll_episodes <- function(path = NULL, rmd = FALSE, ...) {
     stop(glue::glue("could not find either _episodes/ or _episodes_rmd/ in {path}"))
   }
 
-  return(list(episodes = read_markdown_files(src, ...), rmd = rmd))
+  return(list(episodes = read_markdown_files(src, sandpaper = FALSE, ...), rmd = rmd))
 }
