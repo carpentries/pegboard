@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9021</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9022</span>
       </span>
     </div>
 
@@ -126,12 +126,33 @@
       <small>Source: <a href='https://github.com/zkamvar/pegboard/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="pegboard-0009021" class="section level1">
-<h1 class="page-header" data-toc-text="0.0.0.9021">
-<a href="#pegboard-0009021" class="anchor"></a>pegboard 0.0.0.9021</h1>
+    <div id="pegboard-0009022" class="section level1">
+<h1 class="page-header" data-toc-text="0.0.0.9022">
+<a href="#pegboard-0009022" class="anchor"></a>pegboard 0.0.0.9022</h1>
 <div id="new-features" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-features" class="anchor"></a>NEW FEATURES</h2>
+<ul>
+<li>The <code>Episode</code> class now gains the <code>$confirm_sandpaper()</code> method to bypass the assumption that all Episodes start as kramdown-formatted documents and will attempt to label divs in the episode (with a warning if there is no success).</li>
+<li>The <code>Lesson</code> class will now run the <code>$confirm_sandpaper()</code> method for all markdown files if <code>jekyll = FALSE</code>.</li>
+<li>
+<code>Lesson$new()</code> will now default to the current working directory.</li>
+</ul>
+</div>
+<div id="misc" class="section level2">
+<h2 class="hasAnchor">
+<a href="#misc" class="anchor"></a>MISC</h2>
+<ul>
+<li>The internal <code><a href="../reference/get_list_block.html">get_list_block()</a></code> will no longer auto-label divs.</li>
+</ul>
+</div>
+</div>
+    <div id="pegboard-0009021" class="section level1">
+<h1 class="page-header" data-toc-text="0.0.0.9021">
+<a href="#pegboard-0009021" class="anchor"></a>pegboard 0.0.0.9021</h1>
+<div id="new-features-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-features-1" class="anchor"></a>NEW FEATURES</h2>
 <ul>
 <li>Link validation now checks for more general uninformative link text and empty links (<a href='https://github.com/zkamvar'>@zkamvar</a>, <a href='https://github.com/zkamvar/pegboard/issues/49'>#49</a>)</li>
 <li>
@@ -142,9 +163,9 @@
     <div id="pegboard-0009020" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.0.9020">
 <a href="#pegboard-0009020" class="anchor"></a>pegboard 0.0.0.9020</h1>
-<div id="new-features-1" class="section level2">
+<div id="new-features-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features-1" class="anchor"></a>NEW FEATURES</h2>
+<a href="#new-features-2" class="anchor"></a>NEW FEATURES</h2>
 <ul>
 <li>The <code>Lesson</code> class now has the <code>$validate_links()</code> and <code>$validate_headings()</code> methods. (<a href='https://github.com/zkamvar'>@zkamvar</a>, <a href='https://github.com/zkamvar/pegboard/issues/48'>#48</a>)</li>
 </ul>
@@ -154,9 +175,9 @@
 <h1 class="page-header" data-toc-text="0.0.0.9019">
 <a href="#pegboard-0009019" class="anchor"></a>pegboard 0.0.0.9019</h1>
 <p>NOTE: All of these are from (<a href='https://github.com/zkamvar'>@zkamvar</a>, <a href='https://github.com/zkamvar/pegboard/issues/44'>#44</a>)</p>
-<div id="new-features-2" class="section level2">
+<div id="new-features-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features-2" class="anchor"></a>NEW FEATURES</h2>
+<a href="#new-features-3" class="anchor"></a>NEW FEATURES</h2>
 <ul>
 <li>The Episode class now has the <code>$links</code> and <code>$images</code> active bindings that extracts the links and images (markdown and HTML) from the document.</li>
 <li>
