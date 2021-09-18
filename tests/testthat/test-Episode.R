@@ -31,6 +31,23 @@ test_that("Episodes can be created and are valid", {
 
 })
 
+
+test_that("$confirm_sandpaper() does not error on mismatched divs", {
+  e <- Episode$new(test_path("examples", "mismatched-div.txt"), 
+    process_tags = FALSE, fix_links = FALSE, fix_liquid = FALSE)
+  suppressMessages({
+    suppressWarnings({
+      expect_warning(e$confirm_sandpaper(), 
+        "Section (div) tags for mismatched-div.txt will not be labelled",
+        fixed = TRUE
+      ) %>%
+      expect_message("mis-match was detected")
+    })
+  })
+  expect_s3_class(e, "Episode")
+})
+
+
 test_that("Episodes can be reset if needed", {
 
   scope <- fs::path(lesson_fragment(), "_episodes", "17-scope.md")

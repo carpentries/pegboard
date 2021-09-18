@@ -37,7 +37,7 @@ get_list_block <- function(self, type = "questions", in_yaml = TRUE) {
     q <- strsplit(txt, "\n")[[1]]
   } else {
     # In order to get the divs, we must first ensure that they are labelled
-    q <- get_divs(self$label_divs()$body, type)
+    q <- get_divs(self$body, type)
     if (length(q)) {
       q <- q[[1]]
     } else {

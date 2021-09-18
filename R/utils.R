@@ -32,7 +32,7 @@ stop_if_no_path <- function(path) {
   }
 }
 
-read_markdown_files <- function(src, cfg = character(0), ...) {
+read_markdown_files <- function(src, cfg = character(0), sandpaper = TRUE, ...) {
   # Grabbing ONLY the markdown files (there are other sources of detritus)
   the_episodes <- fs::dir_ls(src, glob = "*md")
   the_names    <- fs::path_file(the_episodes)
@@ -53,6 +53,10 @@ read_markdown_files <- function(src, cfg = character(0), ...) {
   }
 
   episodes <- purrr::map(the_episodes, Episode$new, ...)
+  if (sandpaper) {
+    purrr::walk(episodes, ~.x$confirm_sandpaper())
+  }
+
   # Names of the episodes will be the filename, not the basename
   names(episodes) <- the_names
   return(episodes)

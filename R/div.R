@@ -774,6 +774,7 @@ label_pairs <- function(pairs, n_tags, reverse = FALSE) {
     # Tags that are closed will be labelled with the current tag on the stack
     # and then have the stack decreased
     if (is_closed) {
+      # This will error whenever there are too many closing tags (odd number)
       labels[this_item]   <- tag_stack[this_tag]
       tag_stack[this_tag] <- 0L
       this_tag <- this_tag - 1L

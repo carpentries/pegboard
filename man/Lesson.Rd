@@ -108,14 +108,15 @@ files, default is \code{FALSE} for markdown files.}
 \subsection{Method \code{new()}}{
 create a new Lesson object from a directory
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Lesson$new(path = NULL, rmd = FALSE, jekyll = TRUE, ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Lesson$new(path = ".", rmd = FALSE, jekyll = TRUE, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{path}}{[\code{character}] path to a lesson directory. This must have a
-folder called \verb{_episodes} within that contains markdown episodes}
+folder called \verb{_episodes} within that contains markdown episodes.
+Defaults to the current working directory.}
 
 \item{\code{rmd}}{[\code{logical}] when \code{TRUE}, the imported files will be the
 source RMarkdown files. Defaults to \code{FALSE}, which reads the rendered

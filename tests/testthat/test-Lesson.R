@@ -14,6 +14,9 @@ test_that("Sandpaper lessons can be read", {
   snd <- Lesson$new(path = lesson_fragment("sandpaper-fragment"), jekyll = FALSE)
   expect_s3_class(snd, "Lesson")
   expect_named(snd$episodes, "intro.Rmd")
+  # sandpaper lessons will have their divs pre-labeled.
+  expect_length(snd$challenges()[[1]], 1L)
+  expect_length(snd$solutions()[[1]], 2L)
 })
 
 test_that("Lesson class contains the right stuff", {

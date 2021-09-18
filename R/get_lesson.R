@@ -15,8 +15,10 @@
 #' @export
 #' @examples
 #'
-#' png <- get_lesson("swcarpentry/python-novice-gapminder")
-#' str(png, max.level = 1)
+#' if (interactive()) {
+#'   png <- get_lesson("swcarpentry/python-novice-gapminder")
+#'   str(png, max.level = 1)
+#' }
 get_lesson <- function(lesson = NULL, path = tempdir(), overwrite = FALSE, ...) {
   if (!requireNamespace("gert", quietly = FALSE)) {
     stop("Please install the {gert} package to use this feature.")
