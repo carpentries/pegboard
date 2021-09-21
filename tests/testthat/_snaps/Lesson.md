@@ -6,7 +6,7 @@
       ! All headings must have unique IDs.
       -- Heading structure -----------------------------------------------------------
     Output
-      # Lesson: "For Loops" 
+      # Episode: "For Loops" 
       +-## A for loop executes commands once for each value in a collection. 
       +-## A for loop is made up of a collection, a loop variable, and a body. 
       +-## The first line of the for loop must end with a colon, and the body must be 
@@ -36,7 +36,7 @@
       ! All headings must have unique IDs.
       -- Heading structure -----------------------------------------------------------
     Output
-      # Lesson: "Looping Over Data Sets" 
+      # Episode: "Looping Over Data Sets" 
       +-## Use a for loop to process files given a list of their names. 
       +-## Use glob.glob to find sets of files whose names match a pattern. 
       +-## Use glob and for to process batches of files. 
@@ -47,14 +47,6 @@
       +-## Comparing Data 
       \-## Solution  (duplicated)
         \-### ZNK test links and images 
-    Message <cliMessage>
-      --------------------------------------------------------------------------------
-      -- Heading structure -----------------------------------------------------------
-    Output
-      # Lesson: "Variable Scope" 
-      +-## The scope of a variable is the part of a program that can 'see' that variab
-      +-## Local and Global Variable Use 
-      \-## Reading Error Messages 
     Message <cliMessage>
       --------------------------------------------------------------------------------
 
@@ -79,7 +71,7 @@
       [33m![39m All headings must have unique IDs.
       -- Heading structure -----------------------------------------------------------
     Output
-      # Lesson: "For Loops" 
+      # Episode: "For Loops" 
       +-## A for loop executes commands once for each value in a collection. 
       +-## A for loop is made up of a collection, a loop variable, and a body. 
       +-## The first line of the for loop must end with a colon, and the body must be 
@@ -109,7 +101,7 @@
       [33m![39m All headings must have unique IDs.
       -- Heading structure -----------------------------------------------------------
     Output
-      # Lesson: "Looping Over Data Sets" 
+      # Episode: "Looping Over Data Sets" 
       +-## Use a for loop to process files given a list of their names. 
       +-## Use glob.glob to find sets of files whose names match a pattern. 
       +-## Use glob and for to process batches of files. 
@@ -120,14 +112,6 @@
       +-## Comparing Data 
       \-## Solution  [7m(duplicated)[27m
         \-### ZNK test links and images 
-    Message <cliMessage>
-      --------------------------------------------------------------------------------
-      -- Heading structure -----------------------------------------------------------
-    Output
-      # Lesson: "Variable Scope" 
-      +-## The scope of a variable is the part of a program that can 'see' that variab
-      +-## Local and Global Variable Use 
-      \-## Reading Error Messages 
     Message <cliMessage>
       --------------------------------------------------------------------------------
 
@@ -152,7 +136,7 @@
       ! All headings must have unique IDs.
       ── Heading structure ───────────────────────────────────────────────────────────
     Output
-      # Lesson: "For Loops" 
+      # Episode: "For Loops" 
       ├─## A for loop executes commands once for each value in a collection. 
       ├─## A for loop is made up of a collection, a loop variable, and a body. 
       ├─## The first line of the for loop must end with a colon, and the body must be 
@@ -182,7 +166,7 @@
       ! All headings must have unique IDs.
       ── Heading structure ───────────────────────────────────────────────────────────
     Output
-      # Lesson: "Looping Over Data Sets" 
+      # Episode: "Looping Over Data Sets" 
       ├─## Use a for loop to process files given a list of their names. 
       ├─## Use glob.glob to find sets of files whose names match a pattern. 
       ├─## Use glob and for to process batches of files. 
@@ -193,14 +177,6 @@
       ├─## Comparing Data 
       └─## Solution  (duplicated)
         └─### ZNK test links and images 
-    Message <cliMessage>
-      ────────────────────────────────────────────────────────────────────────────────
-      ── Heading structure ───────────────────────────────────────────────────────────
-    Output
-      # Lesson: "Variable Scope" 
-      ├─## The scope of a variable is the part of a program that can 'see' that variab
-      ├─## Local and Global Variable Use 
-      └─## Reading Error Messages 
     Message <cliMessage>
       ────────────────────────────────────────────────────────────────────────────────
 
@@ -225,7 +201,7 @@
       [33m![39m All headings must have unique IDs.
       ── Heading structure ───────────────────────────────────────────────────────────
     Output
-      # Lesson: "For Loops" 
+      # Episode: "For Loops" 
       ├─## A for loop executes commands once for each value in a collection. 
       ├─## A for loop is made up of a collection, a loop variable, and a body. 
       ├─## The first line of the for loop must end with a colon, and the body must be 
@@ -255,7 +231,7 @@
       [33m![39m All headings must have unique IDs.
       ── Heading structure ───────────────────────────────────────────────────────────
     Output
-      # Lesson: "Looping Over Data Sets" 
+      # Episode: "Looping Over Data Sets" 
       ├─## Use a for loop to process files given a list of their names. 
       ├─## Use glob.glob to find sets of files whose names match a pattern. 
       ├─## Use glob and for to process batches of files. 
@@ -266,14 +242,6 @@
       ├─## Comparing Data 
       └─## Solution  [7m(duplicated)[27m
         └─### ZNK test links and images 
-    Message <cliMessage>
-      ────────────────────────────────────────────────────────────────────────────────
-      ── Heading structure ───────────────────────────────────────────────────────────
-    Output
-      # Lesson: "Variable Scope" 
-      ├─## The scope of a variable is the part of a program that can 'see' that variab
-      ├─## Local and Global Variable Use 
-      └─## Reading Error Messages 
     Message <cliMessage>
       ────────────────────────────────────────────────────────────────────────────────
 

@@ -8,7 +8,7 @@
       ! All headings must be sequential.
       ! All headings must be named.
       ! All headings must have unique IDs.
-      # Lesson: "Errors in Headings" 
+      # Episode: "Errors in Headings" 
       -# First heading throws an error (must be level 2) (first level heading)
       ---### This heading throws another error  (non-sequential heading jump)
       --## This heading is okay  (duplicated)
@@ -23,7 +23,7 @@
       expect_equal(sum(loop$validate_headings()), 4L)
     Message <simpleMessage>
       ! All headings must have unique IDs.
-      # Lesson: "Looping Over Data Sets" 
+      # Episode: "Looping Over Data Sets" 
       --## Use a for loop to process files given a list of their names. 
       --## Use glob.glob to find sets of files whose names match a pattern. 
       --## Use glob and for to process batches of files. 
@@ -110,7 +110,7 @@
       ! All headings must have unique IDs.
       -- Heading structure -----------------------------------------------------------
     Output
-      # Lesson: "Errors in Headings" 
+      # Episode: "Errors in Headings" 
       +-# First heading throws an error (must be level 2) (first level heading)
       | +-### This heading throws another error  (non-sequential heading jump)
       | +-## This heading is okay  (duplicated)
@@ -133,7 +133,7 @@
       [33m![39m All headings must have unique IDs.
       -- Heading structure -----------------------------------------------------------
     Output
-      # Lesson: "Errors in Headings" 
+      # Episode: "Errors in Headings" 
       +-# First heading throws an error [7m(must be level 2)[27m [7m(first level heading)[27m
       | +-### This heading throws another error  [7m(non-sequential heading jump)[27m
       | +-## This heading is okay  [7m(duplicated)[27m
@@ -156,7 +156,7 @@
       ! All headings must have unique IDs.
       ── Heading structure ───────────────────────────────────────────────────────────
     Output
-      # Lesson: "Errors in Headings" 
+      # Episode: "Errors in Headings" 
       ├─# First heading throws an error (must be level 2) (first level heading)
       │ ├─### This heading throws another error  (non-sequential heading jump)
       │ ├─## This heading is okay  (duplicated)
@@ -179,7 +179,7 @@
       [33m![39m All headings must have unique IDs.
       ── Heading structure ───────────────────────────────────────────────────────────
     Output
-      # Lesson: "Errors in Headings" 
+      # Episode: "Errors in Headings" 
       ├─# First heading throws an error [7m(must be level 2)[27m [7m(first level heading)[27m
       │ ├─### This heading throws another error  [7m(non-sequential heading jump)[27m
       │ ├─## This heading is okay  [7m(duplicated)[27m
@@ -198,7 +198,7 @@
       ! All headings must have unique IDs.
       -- Heading structure -----------------------------------------------------------
     Output
-      # Lesson: "Looping Over Data Sets" 
+      # Episode: "Looping Over Data Sets" 
       +-## Use a for loop to process files given a list of their names. 
       +-## Use glob.glob to find sets of files whose names match a pattern. 
       +-## Use glob and for to process batches of files. 
@@ -220,7 +220,7 @@
       [33m![39m All headings must have unique IDs.
       -- Heading structure -----------------------------------------------------------
     Output
-      # Lesson: "Looping Over Data Sets" 
+      # Episode: "Looping Over Data Sets" 
       +-## Use a for loop to process files given a list of their names. 
       +-## Use glob.glob to find sets of files whose names match a pattern. 
       +-## Use glob and for to process batches of files. 
@@ -242,7 +242,7 @@
       ! All headings must have unique IDs.
       ── Heading structure ───────────────────────────────────────────────────────────
     Output
-      # Lesson: "Looping Over Data Sets" 
+      # Episode: "Looping Over Data Sets" 
       ├─## Use a for loop to process files given a list of their names. 
       ├─## Use glob.glob to find sets of files whose names match a pattern. 
       ├─## Use glob and for to process batches of files. 
@@ -264,7 +264,7 @@
       [33m![39m All headings must have unique IDs.
       ── Heading structure ───────────────────────────────────────────────────────────
     Output
-      # Lesson: "Looping Over Data Sets" 
+      # Episode: "Looping Over Data Sets" 
       ├─## Use a for loop to process files given a list of their names. 
       ├─## Use glob.glob to find sets of files whose names match a pattern. 
       ├─## Use glob and for to process batches of files. 

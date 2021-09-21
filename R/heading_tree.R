@@ -9,7 +9,7 @@
 #' @noRd
 heading_tree <- function(headings, lname = NULL, suffix = NULL) {
 
-  lname   <- if (is.null(lname)) "<LESSON>" else dQuote(lname)
+  lname   <- if (is.null(lname)) "<EPISODE>" else dQuote(lname)
   hlevels <- as.integer(xml2::xml_attr(headings, "level"))
   hnames  <- xml2::xml_text(headings)
   hnames  <- c(lname, hnames)
@@ -23,7 +23,7 @@ heading_tree <- function(headings, lname = NULL, suffix = NULL) {
     `6` = "######" 
   )
   hlevels[1] <- 0L
-  hlabels[1] <- "# Lesson:"
+  hlabels[1] <- "# Episode:"
   hnames <- paste(hlabels, hnames)
   htree <- data.frame(
     heading  = hnames,

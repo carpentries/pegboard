@@ -105,7 +105,7 @@ validate_headings <- function(headings, lesson = NULL, message = TRUE) {
   if (message && !VAL["all_are_unique"]) {
     issue_warning("All headings must have unique IDs.", cli = has_cli)
   }
-  if (message) {
+  if (message && any(!VAL)) {
     if (has_cli) {
       cli::cli_rule("Heading structure")
       cli::cat_print(cli::tree(htree, trim = TRUE))
