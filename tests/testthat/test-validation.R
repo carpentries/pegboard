@@ -16,19 +16,19 @@ test_that("invalid alt text can be caught without reporters", {
 
 
 test_that("headings reporters will work without CLI", {
-  withr::with_options(list("pegboard.no-cli" = TRUE), {
-    expect_snapshot(expect_false(all(vh$validate_headings())))
-    expect_snapshot(expect_equal(sum(loop$validate_headings()), 4L))
-  })
+
+  withr::local_options(list("pegboard.no-cli" = TRUE))
+  expect_snapshot(expect_false(all(vh$validate_headings())))
+  expect_snapshot(expect_equal(sum(loop$validate_headings()), 4L))
+
 })
 
 test_that("links reporters will work without CLI", {
 
-  withr::with_options(list("pegboard.no-cli" = TRUE), {
-    expect_snapshot(expect_false(all(cats$validate_links())))
-    expect_snapshot(expect_equal(sum(loop$validate_links()), 4L))
-    expect_snapshot(expect_equal(sum(link$validate_links()), 2L))
-  })
+  withr::local_options(list("pegboard.no-cli" = TRUE))
+  expect_snapshot(expect_false(all(cats$validate_links())))
+  expect_snapshot(expect_equal(sum(loop$validate_links()), 4L))
+  expect_snapshot(expect_equal(sum(link$validate_links()), 2L))
 
 })
 
@@ -46,3 +46,10 @@ if (requireNamespace("cli", quietly = TRUE)) {
     expect_snapshot(expect_equal(sum(link$validate_links()), 2L))
   })
 }
+
+test_that("links reporters will work on CI", {
+
+  withr::local_envvar(list(CI = "true"))
+  expect_snapshot(expect_equal(sum(link$validate_links()), 2L))
+
+})

@@ -64,11 +64,12 @@
       vlink <- frg$validate_links()
     Message <cliMessage>
       ! These files do not exist in the lesson:
-      ../no-workie.svg (14-looping-data-sets.md:191)
-      ../no-workie.svg (14-looping-data-sets.md:197)
+      14-looping-data-sets.md:191	../no-workie.svg [missing file]
+      14-looping-data-sets.md:197	../no-workie.svg [missing file]
       ! Images need alt-text:
-      https://carpentries.org/assets/img/TheCarpentries.svg (14-looping-data-sets.md:195)
-      ../no-workie.svg (14-looping-data-sets.md:197)
+      <https://webaim.org/techniques/hypertext/link_text#alt_link>
+      14-looping-data-sets.md:195	https://carpentries.org/assets/img/TheCarpentries.svg [missing alt text]
+      14-looping-data-sets.md:197	../no-workie.svg [missing alt text]
 
 # Lessons can be validated [ansi]
 
@@ -136,11 +137,12 @@
       vlink <- frg$validate_links()
     Message <cliMessage>
       [33m![39m These files do not exist in the lesson:
-      ../no-workie.svg (14-looping-data-sets.md:191)
-      ../no-workie.svg (14-looping-data-sets.md:197)
+      14-looping-data-sets.md:191	../no-workie.svg [missing file]
+      14-looping-data-sets.md:197	../no-workie.svg [missing file]
       [33m![39m Images need alt-text:
-      https://carpentries.org/assets/img/TheCarpentries.svg (14-looping-data-sets.md:195)
-      ../no-workie.svg (14-looping-data-sets.md:197)
+      <https://webaim.org/techniques/hypertext/link_text#alt_link>
+      14-looping-data-sets.md:195	https://carpentries.org/assets/img/TheCarpentries.svg [missing alt text]
+      14-looping-data-sets.md:197	../no-workie.svg [missing alt text]
 
 # Lessons can be validated [unicode]
 
@@ -208,11 +210,12 @@
       vlink <- frg$validate_links()
     Message <cliMessage>
       ! These files do not exist in the lesson:
-      ../no-workie.svg (14-looping-data-sets.md:191)
-      ../no-workie.svg (14-looping-data-sets.md:197)
+      14-looping-data-sets.md:191	../no-workie.svg [missing file]
+      14-looping-data-sets.md:197	../no-workie.svg [missing file]
       ! Images need alt-text:
-      https://carpentries.org/assets/img/TheCarpentries.svg (14-looping-data-sets.md:195)
-      ../no-workie.svg (14-looping-data-sets.md:197)
+      <https://webaim.org/techniques/hypertext/link_text#alt_link>
+      14-looping-data-sets.md:195	https://carpentries.org/assets/img/TheCarpentries.svg [missing alt text]
+      14-looping-data-sets.md:197	../no-workie.svg [missing alt text]
 
 # Lessons can be validated [fancy]
 
@@ -280,9 +283,10 @@
       vlink <- frg$validate_links()
     Message <cliMessage>
       [33m![39m These files do not exist in the lesson:
-      ../no-workie.svg (14-looping-data-sets.md:191)
-      ../no-workie.svg (14-looping-data-sets.md:197)
+      14-looping-data-sets.md:191	../no-workie.svg [missing file]
+      14-looping-data-sets.md:197	../no-workie.svg [missing file]
       [33m![39m Images need alt-text:
-      https://carpentries.org/assets/img/TheCarpentries.svg (14-looping-data-sets.md:195)
-      ../no-workie.svg (14-looping-data-sets.md:197)
+      <https://webaim.org/techniques/hypertext/link_text#alt_link>
+      14-looping-data-sets.md:195	https://carpentries.org/assets/img/TheCarpentries.svg [missing alt text]
+      14-looping-data-sets.md:197	../no-workie.svg [missing alt text]
 

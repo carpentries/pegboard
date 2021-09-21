@@ -84,7 +84,6 @@ validate_links <- function(yrn, verbose = TRUE) {
   VLD
 }
 
-
 validate_known_rot <- function(lt, path, verbose = TRUE, cli = TRUE) {
   # There are some links that are notorious for link rot. In these cases, we 
   # should absolutely invalidate them.
@@ -118,13 +117,14 @@ validate_descriptive <- function(lt, path, verbose = TRUE, cli = TRUE) {
   res <- !any(bad)
   if (verbose && !res) {
     just_link    <- lt[bad, , drop = FALSE]
-    link_sources <- glue::glue("{path}:{just_link$sourcepos}")
+    link_sources <- line_report(
+      msg = glue::glue("{sQuote(just_link$text)} [uninformative]"), 
+      path = path, 
+      pos = just_link$sourcepos
+    )
     issue_warning("Avoid uninformative link phrases:
       <https://webaim.org/techniques/hypertext/link_text#uninformative>
-      {glue::glue_collapse(lnks, sep = '\n')}",
-      cli,
-      lnks = glue::glue("{sQuote(just_link$text)} ({link_sources})")
-    )
+      {lnks}", cli, lnks = link_sources)
   }
   res
 }
@@ -136,13 +136,14 @@ validate_link_length <- function(lt, path, verbose = TRUE, cli = TRUE) {
   res <- !any(bad)
   if (verbose && !res) {
     just_link    <- lt[bad, , drop = FALSE]
-    link_sources <- glue::glue("{path}:{just_link$sourcepos}")
+    link_sources <- line_report(
+      msg = glue::glue("{sQuote(just_link$text)} [length]"), 
+      path = path, 
+      pos = just_link$sourcepos
+    )
     issue_warning("Avoid single-letter or missing link text:
       <https://webaim.org/techniques/hypertext/link_text#link_length>
-      {glue::glue_collapse(lnks, sep = '\n')}",
-      cli,
-      lnks = glue::glue("{sQuote(just_link$text)} ({link_sources})")
-    )
+      {lnks}", cli, lnks = link_sources)
   }
   res
 }
@@ -172,30 +173,36 @@ validate_internal_okay <- function(yrn, lt = NULL, verbose = TRUE, cli = TRUE) {
   if (verbose && !res) {
     if (any(in_page & no_match)) {
       bad_fragment <- lt[in_page & no_match, , drop = FALSE]
-      link_sources <- glue::glue("{path}:{bad_fragment$sourcepos}")
+      link_sources <- line_report(
+        msg = glue::glue("{bad_fragment$orig} [missing anchor]"), 
+        path = path, 
+        pos = bad_fragment$sourcepos
+      )
       issue_warning("The following anchors do not exist in the file:
-        {glue::glue_collapse(lnks, sep = '\n')}", 
-        cli,
-        lnks = glue::glue("{bad_fragment$orig} ({link_sources})")
+        {lnks}", cli, lnks = link_sources
       )
     }
     if (any(cross_page & is_anchor)) {
       a <- lt[cross_page & is_anchor, , drop = FALSE]
-      link_sources <- glue::glue("{path}:{a$sourcepos}")
       link_fmt <- glue::glue("[{a$text}]({a$orig}) -> [{a$text}][{a$orig}]")
+      link_sources <- line_report(
+        msg = glue::glue("{link_fmt} [format]"),
+        path = path, 
+        pos = a$sourcepos
+      )
       issue_warning("Relative links that are incorrectly formatted:
-        {glue::glue_collapse(lnks, sep = '\n')}", 
-        cli,
-        lnks = glue::glue("{link_fmt} ({link_sources})")
+        {lnks}", cli, lnks = link_sources
       )
     }
     if (any(cross_page & no_file & !is_anchor)) {
       bad_files <- lt[cross_page & no_file & !is_anchor, , drop = FALSE]
-      link_sources <- glue::glue("{path}:{bad_files$sourcepos}")
+      link_sources <- line_report(
+        msg = glue::glue("{bad_files$orig} [missing file]"),
+        path = path, 
+        pos = bad_files$sourcepos
+      )
       issue_warning("These files do not exist in the lesson:
-        {glue::glue_collapse(lnks, sep = '\n')}", 
-        cli,
-        lnks = glue::glue("{bad_files$orig} ({link_sources})")
+        {lnks}", cli, lnks = link_sources
       )
     }
   }
@@ -269,11 +276,14 @@ clean_headings <- function(headings) {
 validate_https <- function(lt, path, verbose = TRUE, cli = TRUE) {
   res <- !any(has_http <- lt$scheme == "http")
   if (verbose && !res) {
-    link_sources <- glue::glue("{path}:{lt$sourcepos[has_http]}")
+    lt <- lt[has_http, , drop = FALSE]
+    link_sources <- line_report(
+      msg = glue::glue("{lt$orig} [HTTP protocol]"),
+      path = path, 
+      pos = lt$sourcepos
+    )
     issue_warning("Links must use HTTPS, not HTTP:
-      {glue::glue_collapse(lnks, sep = '\n')}",
-      cli,
-      lnks = glue::glue("{lt$orig[has_http]} ({link_sources})")
+      {lnks}", cli, lnks = link_sources
     )
   }
   res
@@ -284,11 +294,15 @@ validate_alt_text <- function(lt, path, verbose = TRUE, cli = TRUE) {
   img <- lt$type %in% c("image", "img")
   res <- !any(no_alt <- img & (is.na(lt$alt) | lt$alt == ""))
   if (verbose && !res) {
-    img_sources <- glue::glue("{lt$orig[no_alt]} ({path}:{lt$sourcepos[no_alt]})")
+    lt <- lt[no_alt, , drop = FALSE]
+    link_sources <- line_report(
+      msg = glue::glue("{lt$orig} [missing alt text]"),
+      path = path, 
+      pos = lt$sourcepos
+    )
     issue_warning("Images need alt-text:
-      {imgs}",
-      cli,
-      imgs = glue::glue_collapse(img_sources, "\n")
+      <https://webaim.org/techniques/hypertext/link_text#alt_link>
+      {lnks}", cli, lnks = link_sources
     )
   }
   res
