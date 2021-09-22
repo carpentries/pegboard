@@ -117,3 +117,23 @@ validate_headings <- function(headings, lesson = NULL, message = TRUE) {
   VAL
 }
 
+
+validate_heading_sequential <- function(hd, path, verbose = TRUE, cli = TRUE) {
+  are_sequential <- diff(hd$level) < 2
+  res <- all(are_sequential)
+  bad <- !c(TRUE, are_sequential)
+  if (verbose && !res) {
+    bh <- hd[bad, , drop = FALSE]
+    link_sources <- line_report(
+      msg = glue::glue("(level {bh$level}) {sQuote(bh$heading)} [non-sequential heading jump]"),
+      path = path,
+      pos = bh$pos,
+      sep = " "
+    )
+    issue_warning("Child headings must be sequential.
+      <https://webaim.org/techniques/semanticstructure/#headings>
+      {lnks}", cli, lnks = link_sources)
+  }
+  bad
+}
+
