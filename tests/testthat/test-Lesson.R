@@ -37,6 +37,7 @@ test_that("Lesson class contains the right stuff", {
 
 if (requireNamespace("cli")) {
   cli::test_that_cli("Lessons can be validated", {
+    withr::local_envvar(list(CI = 'true'))
     expect_snapshot(vhead <- frg$validate_headings())
     expect_equal(colSums(vhead[-1]), c(5, 4, 4, 5), ignore_attr = TRUE)
     expect_snapshot(vlink <- frg$validate_links())

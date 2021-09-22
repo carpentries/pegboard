@@ -1,3 +1,9 @@
+# pegboard 0.0.0.9023
+
+## MISC
+
+- validation messages have been revamped to be more consistent across messages.
+
 # pegboard 0.0.0.9022
 
 ## NEW FEATURES
