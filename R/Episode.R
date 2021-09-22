@@ -443,7 +443,7 @@ Episode <- R6::R6Class("Episode",
     #' loop$validate_headings()
     #' 
     validate_headings = function(verbose = TRUE) {
-      validate_headings(self$headings, self$get_yaml()$title, verbose)
+      validate_headings(self$headings, self$get_yaml()$title, offset = length(self$yaml), verbose)
     },
     
     #' @description perform validation on links and images in a document.

@@ -4,7 +4,7 @@
 \alias{validate_headings}
 \title{Validate headings}
 \usage{
-validate_headings(headings, lesson = NULL, message = TRUE)
+validate_headings(headings, lesson = NULL, offset = 5L, message = TRUE)
 }
 \arguments{
 \item{headings}{an object of xml_nodelist.}

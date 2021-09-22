@@ -30,7 +30,7 @@ get_headings <- function(body) {
 #'   five aspects listed above: `TRUE` for valid headings and `FALSE` for
 #'   invalid headings.
 #' @keywords internal
-validate_headings <- function(headings, lesson = NULL, message = TRUE) {
+validate_headings <- function(headings, lesson = NULL, offset = 5L, message = TRUE) {
   has_cli <- is.null(getOption("pegboard.no-cli")) &&
     requireNamespace("cli", quietly = TRUE)
   # no headings means that we don't need to check this
@@ -45,9 +45,10 @@ validate_headings <- function(headings, lesson = NULL, message = TRUE) {
     return(VAL)
   }
 
-  hlevels <- as.integer(xml2::xml_attr(headings, "level"))
-  hlabels <- character(length(headings))
-  hnames  <- xml2::xml_text(headings)
+  htab <- make_heading_table(headings, offset)
+  hlevels <- htab$level
+  hlabels <- character(nrow(htab))
+  hnames  <- htab$heading
   no_challenge <- hnames[!c("challenge", "solution") %in% trimws(tolower(hnames))]
 
 
@@ -91,7 +92,7 @@ validate_headings <- function(headings, lesson = NULL, message = TRUE) {
   }
 
   # Heading uniqueness ----
-  htree     <- heading_tree(headings, lesson, suffix = c("", hlabels))
+  htree     <- heading_tree(htab, lesson, suffix = c("", hlabels))
   any_duplicates <- label_duplicates(htree, cli = has_cli)
   VAL["all_are_unique"] <- any_duplicates$test
   htree <- any_duplicates$tree

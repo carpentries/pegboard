@@ -1,19 +1,18 @@
 #' This constructs a data frame of headings for displaying to the user
 #' via the CLI package.
 #'
-#' @param headings an object of class `xml_nodelist`
+#' @param headings a table of headings that contains headings with the text of
+#'   the heading, the level and the position
 #' @return a data frame with two columns:
 #'  - heading: the text of the heading with ATX header levels prepended
 #'  - children: a column of lists indicating the immediate children of the 
 #'    heading. This is used to display a fancy tree from the cli package. 
 #' @noRd
-heading_tree <- function(headings, lname = NULL, suffix = NULL) {
+heading_tree <- function(htab, lname = NULL, suffix = NULL) {
 
   lname   <- if (is.null(lname)) "<EPISODE>" else dQuote(lname)
-  hlevels <- as.integer(xml2::xml_attr(headings, "level"))
-  hnames  <- xml2::xml_text(headings)
-  hnames  <- c(lname, hnames)
-  hlevels <- c(1L, hlevels)
+  hnames  <- c(lname, htab$heading)
+  hlevels <- c(1L, htab$level)
   hlabels <- vapply(hlevels, switch, character(1),
     `1` = "#",
     `2` = "##",
