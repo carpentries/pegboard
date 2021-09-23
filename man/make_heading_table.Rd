@@ -18,6 +18,7 @@ a data frame with three columns:
 \item heading the text of the heading
 \item level the heading level
 \item pos the position of the heading in the document
+\item node the node containing the heading
 }
 }
 \description{

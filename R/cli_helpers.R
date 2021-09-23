@@ -21,6 +21,7 @@ issue_warning <- function(msg, cli = FALSE, ...) {
   invisible()
 }
 
+
 #' Create a single character that reports line errors
 #'
 #' @param path path to the file to report

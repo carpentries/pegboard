@@ -123,7 +123,6 @@ loop$code # now there are two blocks with challenge tags
 loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
 loop$validate_headings()
 
-
 ## ------------------------------------------------
 ## Method `Episode$validate_links`
 ## ------------------------------------------------
@@ -743,13 +742,13 @@ perform validation on headings in a document.
 This will validate the following aspects of all headings:
 \itemize{
 \item first heading starts at level 2 (\code{first_heading_is_second_level})
-\item greater than level 1 (\code{all_are_greater_than_first_level})
-\item increse sequentially (e.g. no jumps from 2 to 4) (\code{all_are_sequential})
-\item have names (\code{all_have_names})
-\item unique in their own hierarchy (\code{all_are_unique})
+\item greater than level 1 (\code{greater_than_first_level})
+\item increse sequentially (e.g. no jumps from 2 to 4) (\code{are_sequential})
+\item have names (\code{have_names})
+\item unique in their own hierarchy (\code{are_unique})
 }
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Episode$validate_headings(verbose = TRUE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Episode$validate_headings(verbose = TRUE, warn = TRUE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -757,13 +756,27 @@ This will validate the following aspects of all headings:
 \describe{
 \item{\code{verbose}}{if \code{TRUE} (default), a message for each rule broken will
 be issued to the stderr. if \code{FALSE}, this will be silent.}
+
+\item{\code{warn}}{if \code{TRUE} (default), a warning will be issued if there are
+any failures in the tests.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-a logical vector of length five summarizing the results of the
-five aspects listed above: \code{TRUE} for valid headings and \code{FALSE} for
-invalid headings.
+a data frame with a variable number of rows and the follwoing
+columns:
+\itemize{
+\item \strong{episode} the filename of the episode
+\item \strong{heading} the text from a heading
+\item \strong{level} the heading level
+\item \strong{pos} the position of the heading in the document
+\item \strong{node} the XML node that represents the heading
+\item (the next five columns are the tests listed above)
+\item \strong{path} the path to the file.
+}
+
+Each row in the data frame represents an individual heading across the
+Lesson. See \code{\link[=validate_headings]{validate_headings()}} for more details.
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
@@ -771,7 +784,6 @@ invalid headings.
 # nested within a higher-level heading and will throw an error
 loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
 loop$validate_headings()
-
 }
 \if{html}{\out{</div>}}
 

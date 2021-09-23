@@ -24,117 +24,112 @@ get_headings <- function(body) {
 #' @note This is an internal function implemented for the [Episode] and [Lesson]
 #'   classes. 
 #' @param headings an object of xml_nodelist.
-#' @param message if `TRUE` (default), a message will be issued for each error,
-#'   otherwise, they will be silent.
-#' @return a logical vector of length five summarizing the results of the
-#'   five aspects listed above: `TRUE` for valid headings and `FALSE` for
-#'   invalid headings.
+#' @param title the title of the document
+#' @param offset the number of lines to offset the position (equal to the size
+#'   of the yaml header).
+#' @return a list with two elements:
+#'   1. a data frame that contains the results of [make_heading_table()] and
+#'      logical columns for each test where `FALSE` indicates a failed test for
+#'      a given heading.
+#'   2. a data frame that can be printed as a tree with `show_heading_tree()`
 #' @keywords internal
-validate_headings <- function(headings, lesson = NULL, offset = 5L, message = TRUE) {
+#' @rdname validate_headings
+validate_headings <- function(headings, title = NULL, offset = 5L) {
   has_cli <- is.null(getOption("pegboard.no-cli")) &&
     requireNamespace("cli", quietly = TRUE)
   # no headings means that we don't need to check this
-  VAL <- c(
-    first_heading_is_second_level = TRUE,
-    all_are_greater_than_first_level = TRUE,
-    all_are_sequential = TRUE,
-    all_have_names = TRUE,
-    all_are_unique = TRUE
-  )
   if (length(headings) == 0) {
-    return(VAL)
+    return(NULL)
   }
 
   htab <- make_heading_table(headings, offset)
-  hlevels <- htab$level
-  hlabels <- character(nrow(htab))
-  hnames  <- htab$heading
-  no_challenge <- hnames[!c("challenge", "solution") %in% trimws(tolower(hnames))]
+  VAL  <- htab
+  VAL[names(heading_tests)] <- TRUE
 
+  VAL <- headings_first_heading_is_second_level(VAL)
+  VAL <- headings_greater_than_first_level(VAL)
+  VAL <- headings_are_sequential(VAL)
+  VAL <- headings_have_names(VAL)
 
-  # Begin validation procedures ------------------------------------------------
-  ## Second is First ----
-  VAL["first_heading_is_second_level"] <- hlevels[[1]] == 2
-  if (message && !VAL["first_heading_is_second_level"]) {
-    issue_warning("
-      The first heading must be level 2 (It is currently level {lev[[1]]}).", 
-      cli = has_cli,
-      lev = hlevels
-    )
-    err <- "(must be level 2)"
-    hlabels[1] <- if (has_cli) cli::style_inverse(err) else err
-  }
-
-  ## No Firsts ----
-  VAL["all_are_greater_than_first_level"] <- all(greater_than_first_level <- hlevels > 1)
-  if (message && !VAL["all_are_greater_than_first_level"]) {
-    issue_warning("First level headings are not allowed.", cli = has_cli)
-    hlabels <- append_labels(l = hlabels, i = !greater_than_first_level, 
-      e = "(first level heading)", cli = has_cli)
-  }
-
-  ## Sequence is okay ----
-  VAL["all_are_sequential"] <- all(are_sequential <- diff(hlevels) < 2)
-  if (message && !VAL["all_are_sequential"]) {
-    issue_warning("All headings must be sequential.", has_cli)
-
-    hlabels <- append_labels(l = hlabels, i = !c(TRUE, are_sequential), 
-      e = "(non-sequential heading jump)", cli = has_cli)
-  }
-
-  # Headings all have names ---
-  VAL["all_have_names"] <- all(have_names <- hnames != "")
-  if (message && !VAL["all_have_names"]) {
-    issue_warning("All headings must be named.", cli = has_cli)
-
-    hlabels <- append_labels(l = hlabels, i = !have_names, 
-      e = "(no name)", cli = has_cli)
-  }
-
-  # Heading uniqueness ----
-  htree     <- heading_tree(htab, lesson, suffix = c("", hlabels))
+  # Test for unique headings ---------------
+  # 
+  # This is a bit more involved because we have to consider the heading level
+  # (e.g. a level 2 heading is not the same as a level 3 heading, even though
+  # they may have the same name.
+  VAL   <- collect_labels(VAL, cli = has_cli)
+  htree <- heading_tree(htab, title, suffix = c("", VAL$labels))
   any_duplicates <- label_duplicates(htree, cli = has_cli)
-  VAL["all_are_unique"] <- any_duplicates$test
+  VAL$are_unique <- any_duplicates$test[-1]
   htree <- any_duplicates$tree
-  if (!has_cli) {
-    pad <- vapply(htree$level, function(i) {
+  return(list(results = VAL[names(VAL) != "labels"], tree = htree))
+}
+
+#' @rdname validate_headings
+#' @param tree a data frame produced via `validate_headings()`
+show_heading_tree <- function(tree) {
+  has_cli <- is.null(getOption("pegboard.no-cli")) &&
+    requireNamespace("cli", quietly = TRUE)
+  if (has_cli) {
+    cli::cli_rule("Heading structure")
+    cli::cat_print(cli::tree(tree, trim = TRUE))
+    cli::cli_rule()
+  } else {
+    pad <- vapply(tree$level, function(i) {
       paste(rep("-", i), collapse = "")
     }, character(1))
-    dtree <- paste0(pad, htree$label)
+    dtree <- paste0(pad, tree$label)
+    message(paste(dtree, collapse = "\n"))
   }
+}
 
-  if (message && !VAL["all_are_unique"]) {
-    issue_warning("All headings must have unique IDs.", cli = has_cli)
-  }
-  if (message && any(!VAL)) {
-    if (has_cli) {
-      cli::cli_rule("Heading structure")
-      cli::cat_print(cli::tree(htree, trim = TRUE))
-      cli::cli_rule()
-    } else {
-      message(paste(dtree, collapse = "\n"))
-    }
-  }
+#' @rdname validate_headings
+heading_tests <- c(
+  first_heading_is_second_level = "(must be level 2)",
+  greater_than_first_level = "(first level heading)",
+  are_sequential = "(non-sequential heading jump)",
+  have_names = "(no name)",
+  are_unique = "(duplicated)",
+  NULL
+)
+
+heading_info <- c(
+  first_heading_is_second_level = "First heading must be level 2",
+  greater_than_first_level = "Level 1 headings are not allowed",
+  are_sequential = "Headings must be sequential",
+  have_names = "Headings must be named",
+  are_unique = "Headings must be unique",
+  NULL
+)
+
+#' @rdname validate_headings
+#' @param VAL a data frame that contains the results of [make_heading_table()]
+#'   and logical columns that match the name of the test.
+headings_first_heading_is_second_level <- function(VAL) {
+  VAL$first_heading_is_second_level[[1]] <- VAL$level[[1]] == 2
   VAL
 }
 
-
-validate_heading_sequential <- function(hd, path, verbose = TRUE, cli = TRUE) {
-  are_sequential <- diff(hd$level) < 2
-  res <- all(are_sequential)
-  bad <- !c(TRUE, are_sequential)
-  if (verbose && !res) {
-    bh <- hd[bad, , drop = FALSE]
-    link_sources <- line_report(
-      msg = glue::glue("(level {bh$level}) {sQuote(bh$heading)} [non-sequential heading jump]"),
-      path = path,
-      pos = bh$pos,
-      sep = " "
-    )
-    issue_warning("Child headings must be sequential.
-      <https://webaim.org/techniques/semanticstructure/#headings>
-      {lnks}", cli, lnks = link_sources)
-  }
-  bad
+#' @rdname validate_headings
+headings_greater_than_first_level <- function(VAL) {
+  VAL$greater_than_first_level <- VAL$level > 1L
+  VAL
 }
 
+#' @rdname validate_headings
+headings_are_sequential <- function(VAL) {
+  are_sequential <- diff(VAL$level) < 2
+  VAL$are_sequential <- c(TRUE, are_sequential)
+  VAL
+}
+
+#' @rdname validate_headings
+headings_have_names <- function(VAL) {
+  VAL$have_names <- trimws(VAL$heading) != ""
+  VAL
+}
+
+#' @rdname validate_headings
+headings_are_unique <- function(VAL) {
+  VAL$are_unique[-1] <- VAL$level[-1] > 1L
+  VAL
+}

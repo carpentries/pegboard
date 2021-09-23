@@ -1,15 +1,24 @@
 # headings reporters will work without CLI
 
     Code
-      expect_false(all(vh$validate_headings()))
+      res <- vh$validate_headings()
     Message <simpleMessage>
-      ! The first heading must be level 2 (It is currently level 1).
-      ! First level headings are not allowed.
-      ! All headings must be sequential.
-      ! All headings must be named.
-      ! All headings must have unique IDs.
+      ! There were errors in 5 headings
+      
+      - First heading must be level 2
+      - Level 1 headings are not allowed
+      - Headings must be sequential
+      - Headings must be named
+      - Headings must be unique
+      <https://webaim.org/techniques/semanticstructure/#headings>
+      
+      validation-headings.md:5  (must be level 2) (first level heading)
+      validation-headings.md:7  (non-sequential heading jump)
+      validation-headings.md:9  (duplicated)
+      validation-headings.md:11  (duplicated)
+      validation-headings.md:18  (no name)
       # Episode: "Errors in Headings" 
-      -# First heading throws an error (must be level 2) (first level heading)
+      -# First heading throws an error  (must be level 2) (first level heading)
       ---### This heading throws another error  (non-sequential heading jump)
       --## This heading is okay  (duplicated)
       --## This heading is okay  (duplicated)
@@ -20,9 +29,16 @@
 ---
 
     Code
-      expect_equal(sum(loop$validate_headings()), 4L)
+      res <- loop$validate_headings()
     Message <simpleMessage>
-      ! All headings must have unique IDs.
+      ! There were errors in 3 headings
+      
+      - Headings must be unique
+      <https://webaim.org/techniques/semanticstructure/#headings>
+      
+      _episodes/14-looping-data-sets.md:119  (duplicated)
+      _episodes/14-looping-data-sets.md:143  (duplicated)
+      _episodes/14-looping-data-sets.md:162  (duplicated)
       # Episode: "Looping Over Data Sets" 
       --## Use a for loop to process files given a list of their names. 
       --## Use glob.glob to find sets of files whose names match a pattern. 
@@ -34,6 +50,67 @@
       --## Comparing Data 
       --## Solution  (duplicated)
       ---### ZNK test links and images 
+
+# headings reporters will work on CI
+
+    Code
+      res <- vh$validate_headings()
+    Message <cliMessage>
+      ! There were errors in 5 headings
+      
+      - First heading must be level 2
+      - Level 1 headings are not allowed
+      - Headings must be sequential
+      - Headings must be named
+      - Headings must be unique
+      <https://webaim.org/techniques/semanticstructure/#headings>
+      
+      ::warning file=validation-headings.md,line=5:: (must be level 2) (first level heading)
+      ::warning file=validation-headings.md,line=7:: (non-sequential heading jump)
+      ::warning file=validation-headings.md,line=9:: (duplicated)
+      ::warning file=validation-headings.md,line=11:: (duplicated)
+      ::warning file=validation-headings.md,line=18:: (no name)
+      -- Heading structure -----------------------------------------------------------
+    Output
+      # Episode: "Errors in Headings" 
+      +-# First heading throws an error  (must be level 2) (first level heading)
+      | +-### This heading throws another error  (non-sequential heading jump)
+      | +-## This heading is okay  (duplicated)
+      | +-## This heading is okay  (duplicated)
+      | | \-### This heading is okay 
+      | +-##   (no name)
+      | \-## This last heading is okay 
+    Message <cliMessage>
+      --------------------------------------------------------------------------------
+
+---
+
+    Code
+      res <- loop$validate_headings()
+    Message <cliMessage>
+      ! There were errors in 3 headings
+      
+      - Headings must be unique
+      <https://webaim.org/techniques/semanticstructure/#headings>
+      
+      ::warning file=_episodes/14-looping-data-sets.md,line=119:: (duplicated)
+      ::warning file=_episodes/14-looping-data-sets.md,line=143:: (duplicated)
+      ::warning file=_episodes/14-looping-data-sets.md,line=162:: (duplicated)
+      -- Heading structure -----------------------------------------------------------
+    Output
+      # Episode: "Looping Over Data Sets" 
+      +-## Use a for loop to process files given a list of their names. 
+      +-## Use glob.glob to find sets of files whose names match a pattern. 
+      +-## Use glob and for to process batches of files. 
+      +-## Determining Matches 
+      +-## Solution  (duplicated)
+      +-## Minimum File Size 
+      +-## Solution  (duplicated)
+      +-## Comparing Data 
+      \-## Solution  (duplicated)
+        \-### ZNK test links and images 
+    Message <cliMessage>
+      --------------------------------------------------------------------------------
 
 # links reporters will work without CLI
 
@@ -101,17 +178,26 @@
 # headings reporters will work [plain]
 
     Code
-      expect_false(all(vh$validate_headings()))
+      res <- vh$validate_headings()
     Message <cliMessage>
-      ! The first heading must be level 2 (It is currently level 1).
-      ! First level headings are not allowed.
-      ! All headings must be sequential.
-      ! All headings must be named.
-      ! All headings must have unique IDs.
+      ! There were errors in 5 headings
+      
+      - First heading must be level 2
+      - Level 1 headings are not allowed
+      - Headings must be sequential
+      - Headings must be named
+      - Headings must be unique
+      <https://webaim.org/techniques/semanticstructure/#headings>
+      
+      validation-headings.md:5  (must be level 2) (first level heading)
+      validation-headings.md:7  (non-sequential heading jump)
+      validation-headings.md:9  (duplicated)
+      validation-headings.md:11  (duplicated)
+      validation-headings.md:18  (no name)
       -- Heading structure -----------------------------------------------------------
     Output
       # Episode: "Errors in Headings" 
-      +-# First heading throws an error (must be level 2) (first level heading)
+      +-# First heading throws an error  (must be level 2) (first level heading)
       | +-### This heading throws another error  (non-sequential heading jump)
       | +-## This heading is okay  (duplicated)
       | +-## This heading is okay  (duplicated)
@@ -124,17 +210,26 @@
 # headings reporters will work [ansi]
 
     Code
-      expect_false(all(vh$validate_headings()))
+      res <- vh$validate_headings()
     Message <cliMessage>
-      [33m![39m The first heading must be level 2 (It is currently level 1).
-      [33m![39m First level headings are not allowed.
-      [33m![39m All headings must be sequential.
-      [33m![39m All headings must be named.
-      [33m![39m All headings must have unique IDs.
+      [33m![39m There were errors in 5 headings
+      
+      - First heading must be level 2
+      - Level 1 headings are not allowed
+      - Headings must be sequential
+      - Headings must be named
+      - Headings must be unique
+      <https://webaim.org/techniques/semanticstructure/#headings>
+      
+      validation-headings.md:5  (must be level 2) (first level heading)
+      validation-headings.md:7  (non-sequential heading jump)
+      validation-headings.md:9  (duplicated)
+      validation-headings.md:11  (duplicated)
+      validation-headings.md:18  (no name)
       -- Heading structure -----------------------------------------------------------
     Output
       # Episode: "Errors in Headings" 
-      +-# First heading throws an error [7m(must be level 2)[27m [7m(first level heading)[27m
+      +-# First heading throws an error  [7m(must be level 2)[27m [7m(first level heading)[27m
       | +-### This heading throws another error  [7m(non-sequential heading jump)[27m
       | +-## This heading is okay  [7m(duplicated)[27m
       | +-## This heading is okay  [7m(duplicated)[27m
@@ -147,17 +242,26 @@
 # headings reporters will work [unicode]
 
     Code
-      expect_false(all(vh$validate_headings()))
+      res <- vh$validate_headings()
     Message <cliMessage>
-      ! The first heading must be level 2 (It is currently level 1).
-      ! First level headings are not allowed.
-      ! All headings must be sequential.
-      ! All headings must be named.
-      ! All headings must have unique IDs.
+      ! There were errors in 5 headings
+      
+      - First heading must be level 2
+      - Level 1 headings are not allowed
+      - Headings must be sequential
+      - Headings must be named
+      - Headings must be unique
+      <https://webaim.org/techniques/semanticstructure/#headings>
+      
+      validation-headings.md:5  (must be level 2) (first level heading)
+      validation-headings.md:7  (non-sequential heading jump)
+      validation-headings.md:9  (duplicated)
+      validation-headings.md:11  (duplicated)
+      validation-headings.md:18  (no name)
       ── Heading structure ───────────────────────────────────────────────────────────
     Output
       # Episode: "Errors in Headings" 
-      ├─# First heading throws an error (must be level 2) (first level heading)
+      ├─# First heading throws an error  (must be level 2) (first level heading)
       │ ├─### This heading throws another error  (non-sequential heading jump)
       │ ├─## This heading is okay  (duplicated)
       │ ├─## This heading is okay  (duplicated)
@@ -170,111 +274,32 @@
 # headings reporters will work [fancy]
 
     Code
-      expect_false(all(vh$validate_headings()))
+      res <- vh$validate_headings()
     Message <cliMessage>
-      [33m![39m The first heading must be level 2 (It is currently level 1).
-      [33m![39m First level headings are not allowed.
-      [33m![39m All headings must be sequential.
-      [33m![39m All headings must be named.
-      [33m![39m All headings must have unique IDs.
+      [33m![39m There were errors in 5 headings
+      
+      - First heading must be level 2
+      - Level 1 headings are not allowed
+      - Headings must be sequential
+      - Headings must be named
+      - Headings must be unique
+      <https://webaim.org/techniques/semanticstructure/#headings>
+      
+      validation-headings.md:5  (must be level 2) (first level heading)
+      validation-headings.md:7  (non-sequential heading jump)
+      validation-headings.md:9  (duplicated)
+      validation-headings.md:11  (duplicated)
+      validation-headings.md:18  (no name)
       ── Heading structure ───────────────────────────────────────────────────────────
     Output
       # Episode: "Errors in Headings" 
-      ├─# First heading throws an error [7m(must be level 2)[27m [7m(first level heading)[27m
+      ├─# First heading throws an error  [7m(must be level 2)[27m [7m(first level heading)[27m
       │ ├─### This heading throws another error  [7m(non-sequential heading jump)[27m
       │ ├─## This heading is okay  [7m(duplicated)[27m
       │ ├─## This heading is okay  [7m(duplicated)[27m
       │ │ └─### This heading is okay 
       │ ├─##   [7m(no name)[27m
       │ └─## This last heading is okay 
-    Message <cliMessage>
-      ────────────────────────────────────────────────────────────────────────────────
-
-# duplicate headings reporting works [plain]
-
-    Code
-      expect_equal(sum(loop$validate_headings()), 4L)
-    Message <cliMessage>
-      ! All headings must have unique IDs.
-      -- Heading structure -----------------------------------------------------------
-    Output
-      # Episode: "Looping Over Data Sets" 
-      +-## Use a for loop to process files given a list of their names. 
-      +-## Use glob.glob to find sets of files whose names match a pattern. 
-      +-## Use glob and for to process batches of files. 
-      +-## Determining Matches 
-      +-## Solution  (duplicated)
-      +-## Minimum File Size 
-      +-## Solution  (duplicated)
-      +-## Comparing Data 
-      \-## Solution  (duplicated)
-        \-### ZNK test links and images 
-    Message <cliMessage>
-      --------------------------------------------------------------------------------
-
-# duplicate headings reporting works [ansi]
-
-    Code
-      expect_equal(sum(loop$validate_headings()), 4L)
-    Message <cliMessage>
-      [33m![39m All headings must have unique IDs.
-      -- Heading structure -----------------------------------------------------------
-    Output
-      # Episode: "Looping Over Data Sets" 
-      +-## Use a for loop to process files given a list of their names. 
-      +-## Use glob.glob to find sets of files whose names match a pattern. 
-      +-## Use glob and for to process batches of files. 
-      +-## Determining Matches 
-      +-## Solution  [7m(duplicated)[27m
-      +-## Minimum File Size 
-      +-## Solution  [7m(duplicated)[27m
-      +-## Comparing Data 
-      \-## Solution  [7m(duplicated)[27m
-        \-### ZNK test links and images 
-    Message <cliMessage>
-      --------------------------------------------------------------------------------
-
-# duplicate headings reporting works [unicode]
-
-    Code
-      expect_equal(sum(loop$validate_headings()), 4L)
-    Message <cliMessage>
-      ! All headings must have unique IDs.
-      ── Heading structure ───────────────────────────────────────────────────────────
-    Output
-      # Episode: "Looping Over Data Sets" 
-      ├─## Use a for loop to process files given a list of their names. 
-      ├─## Use glob.glob to find sets of files whose names match a pattern. 
-      ├─## Use glob and for to process batches of files. 
-      ├─## Determining Matches 
-      ├─## Solution  (duplicated)
-      ├─## Minimum File Size 
-      ├─## Solution  (duplicated)
-      ├─## Comparing Data 
-      └─## Solution  (duplicated)
-        └─### ZNK test links and images 
-    Message <cliMessage>
-      ────────────────────────────────────────────────────────────────────────────────
-
-# duplicate headings reporting works [fancy]
-
-    Code
-      expect_equal(sum(loop$validate_headings()), 4L)
-    Message <cliMessage>
-      [33m![39m All headings must have unique IDs.
-      ── Heading structure ───────────────────────────────────────────────────────────
-    Output
-      # Episode: "Looping Over Data Sets" 
-      ├─## Use a for loop to process files given a list of their names. 
-      ├─## Use glob.glob to find sets of files whose names match a pattern. 
-      ├─## Use glob and for to process batches of files. 
-      ├─## Determining Matches 
-      ├─## Solution  [7m(duplicated)[27m
-      ├─## Minimum File Size 
-      ├─## Solution  [7m(duplicated)[27m
-      ├─## Comparing Data 
-      └─## Solution  [7m(duplicated)[27m
-        └─### ZNK test links and images 
     Message <cliMessage>
       ────────────────────────────────────────────────────────────────────────────────
 

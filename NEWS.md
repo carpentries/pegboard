@@ -3,6 +3,9 @@
 ## MISC
 
 - validation messages have been revamped to be more consistent across messages.
+- `Lesson$validate_headings()` and `Episode$validate_headings()` now return a
+  data frame that contains information for each individual heading instead of
+  the high-level summary. 
 
 # pegboard 0.0.0.9022
 

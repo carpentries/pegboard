@@ -74,6 +74,7 @@ label_duplicates <- function(htree, cli = FALSE) {
   get_duplicated <- function(i) duplicated(i) | duplicated(i, fromLast = TRUE)
   the_clones <- lapply(htree$children, get_duplicated)
   has_twins <- vapply(the_clones, any, logical(1))
+  are_unique <- logical(length(the_clones)) | TRUE
 
   dtree <- htree$labels
   for (i in which(has_twins)) {
@@ -86,6 +87,7 @@ label_duplicates <- function(htree, cli = FALSE) {
       e = if (cli) cli::style_inverse("(duplicated)") else "(duplicated)",
       cli = FALSE
     )
+    are_unique <- are_unique & !the_duplicated
     # This part is needed to fix a feature in CLI that assumes unordered data
     # 
     # If there is a child of a duplicated node, CLI does not know where to put
@@ -103,7 +105,7 @@ label_duplicates <- function(htree, cli = FALSE) {
     }
   }
   htree$labels <- dtree
-  list(test = !any(has_twins), tree = htree)
+  list(test = are_unique, tree = htree)
 }
 
 

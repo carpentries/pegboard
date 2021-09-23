@@ -3,7 +3,6 @@
     Code
       vhead <- frg$validate_headings()
     Message <cliMessage>
-      ! All headings must have unique IDs.
       -- Heading structure -----------------------------------------------------------
     Output
       # Episode: "For Loops" 
@@ -33,7 +32,6 @@
       \-## Solution  (duplicated)
     Message <cliMessage>
       --------------------------------------------------------------------------------
-      ! All headings must have unique IDs.
       -- Heading structure -----------------------------------------------------------
     Output
       # Episode: "Looping Over Data Sets" 
@@ -49,6 +47,24 @@
         \-### ZNK test links and images 
     Message <cliMessage>
       --------------------------------------------------------------------------------
+      ! There were errors in 13 headings
+      
+      - Headings must be unique
+      <https://webaim.org/techniques/semanticstructure/#headings>
+      
+      ::warning file=_episodes/12-for-loops.md,line=183:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=200:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=227:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=252:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=270:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=289:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=305:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=336:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=371:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=400:: (duplicated)
+      ::warning file=_episodes/14-looping-data-sets.md,line=119:: (duplicated)
+      ::warning file=_episodes/14-looping-data-sets.md,line=143:: (duplicated)
+      ::warning file=_episodes/14-looping-data-sets.md,line=162:: (duplicated)
 
 ---
 
@@ -68,7 +84,6 @@
     Code
       vhead <- frg$validate_headings()
     Message <cliMessage>
-      [33m![39m All headings must have unique IDs.
       -- Heading structure -----------------------------------------------------------
     Output
       # Episode: "For Loops" 
@@ -98,7 +113,6 @@
       \-## Solution  [7m(duplicated)[27m
     Message <cliMessage>
       --------------------------------------------------------------------------------
-      [33m![39m All headings must have unique IDs.
       -- Heading structure -----------------------------------------------------------
     Output
       # Episode: "Looping Over Data Sets" 
@@ -114,6 +128,24 @@
         \-### ZNK test links and images 
     Message <cliMessage>
       --------------------------------------------------------------------------------
+      [33m![39m There were errors in 13 headings
+      
+      - Headings must be unique
+      <https://webaim.org/techniques/semanticstructure/#headings>
+      
+      ::warning file=_episodes/12-for-loops.md,line=183:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=200:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=227:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=252:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=270:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=289:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=305:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=336:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=371:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=400:: (duplicated)
+      ::warning file=_episodes/14-looping-data-sets.md,line=119:: (duplicated)
+      ::warning file=_episodes/14-looping-data-sets.md,line=143:: (duplicated)
+      ::warning file=_episodes/14-looping-data-sets.md,line=162:: (duplicated)
 
 ---
 
@@ -133,7 +165,6 @@
     Code
       vhead <- frg$validate_headings()
     Message <cliMessage>
-      ! All headings must have unique IDs.
       ── Heading structure ───────────────────────────────────────────────────────────
     Output
       # Episode: "For Loops" 
@@ -163,7 +194,6 @@
       └─## Solution  (duplicated)
     Message <cliMessage>
       ────────────────────────────────────────────────────────────────────────────────
-      ! All headings must have unique IDs.
       ── Heading structure ───────────────────────────────────────────────────────────
     Output
       # Episode: "Looping Over Data Sets" 
@@ -179,6 +209,24 @@
         └─### ZNK test links and images 
     Message <cliMessage>
       ────────────────────────────────────────────────────────────────────────────────
+      ! There were errors in 13 headings
+      
+      - Headings must be unique
+      <https://webaim.org/techniques/semanticstructure/#headings>
+      
+      ::warning file=_episodes/12-for-loops.md,line=183:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=200:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=227:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=252:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=270:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=289:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=305:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=336:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=371:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=400:: (duplicated)
+      ::warning file=_episodes/14-looping-data-sets.md,line=119:: (duplicated)
+      ::warning file=_episodes/14-looping-data-sets.md,line=143:: (duplicated)
+      ::warning file=_episodes/14-looping-data-sets.md,line=162:: (duplicated)
 
 ---
 
@@ -198,7 +246,6 @@
     Code
       vhead <- frg$validate_headings()
     Message <cliMessage>
-      [33m![39m All headings must have unique IDs.
       ── Heading structure ───────────────────────────────────────────────────────────
     Output
       # Episode: "For Loops" 
@@ -228,7 +275,6 @@
       └─## Solution  [7m(duplicated)[27m
     Message <cliMessage>
       ────────────────────────────────────────────────────────────────────────────────
-      [33m![39m All headings must have unique IDs.
       ── Heading structure ───────────────────────────────────────────────────────────
     Output
       # Episode: "Looping Over Data Sets" 
@@ -244,6 +290,24 @@
         └─### ZNK test links and images 
     Message <cliMessage>
       ────────────────────────────────────────────────────────────────────────────────
+      [33m![39m There were errors in 13 headings
+      
+      - Headings must be unique
+      <https://webaim.org/techniques/semanticstructure/#headings>
+      
+      ::warning file=_episodes/12-for-loops.md,line=183:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=200:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=227:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=252:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=270:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=289:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=305:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=336:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=371:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=400:: (duplicated)
+      ::warning file=_episodes/14-looping-data-sets.md,line=119:: (duplicated)
+      ::warning file=_episodes/14-looping-data-sets.md,line=143:: (duplicated)
+      ::warning file=_episodes/14-looping-data-sets.md,line=162:: (duplicated)
 
 ---
 

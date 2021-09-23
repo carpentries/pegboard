@@ -8,6 +8,7 @@
 #'   - heading the text of the heading
 #'   - level the heading level
 #'   - pos the position of the heading in the document
+#'   - node the node containing the heading
 #' @keywords internal
 #' @examples
 #' path <- file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md")
@@ -18,6 +19,7 @@ make_heading_table <- function(headings, offset = 5L) {
     heading = xml2::xml_text(headings),
     level   = as.integer(xml2::xml_attr(headings, "level")),
     pos     = purrr::map_int(headings, get_linestart) + offset,
+    node    = I(c(headings)),
     stringsAsFactors = FALSE
   )
 }
