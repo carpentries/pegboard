@@ -84,6 +84,131 @@ validate_links <- function(yrn, verbose = TRUE) {
   VLD
 }
 
+link_enforce_https <- function(VAL) {
+  VAL$enforce_https <- !VAL$scheme == "http"
+  VAL
+}
+
+link_all_reachable <- function(VAL) {
+  # TODO: implement a link checker for external links This is unfortunately
+  # difficult and time-consuming due to robots.txt and other protocols/issues.
+  # Maybe httr2 might be able to help solve this
+  VAL
+}
+
+link_img_alt_text <- function(VAL) {
+  img <- VAL$type %in% c("image", "img")
+  okay <- !(is.na(VAL$alt) | VAL$alt == "")
+  VAL$img_alt_text[img] <- okay[img]
+  VAL
+}
+
+link_length <- function(VAL) {
+  is_link <- VAL$type == "link"
+  VAL$link_length[is_link] <- !grepl("^.?$", trimws(VAL$text[is_link]))
+  VAL
+}
+
+link_descriptive <- function(VAL) {
+  more <- paste0("(for )?", c("more", "more info(rmation)?"))
+  uninformative <- paste0(
+    "^([[:punct:]]*(",
+    paste(
+      c("link", "this", "this link", "a link", "link to",
+        paste0(c("here", "click here", "over here"), "( for)?"),
+        paste0(c(more, "read more", "read on"), "( about)?")
+      ),
+      collapse = ")|("
+    ), 
+    ")[[:punct:]]*)$"
+  )
+  bad <- grepl(uninformative, trimws(VAL$text), ignore.case = TRUE, perl = TRUE)
+  VAL$descriptive <- !bad
+  VAL
+}
+
+# Create a list of logical vectors from a link table. These vectors indicate the
+# source of a given link.
+link_source_list <- function(lt) {
+  internal <- lt$server == "" & lt$scheme == "" & is.na(lt$port) & lt$user == ""
+  list(
+    external   = !internal,
+    internal   = internal,
+    in_page    = internal & lt$path == "" & lt$fragment != "",
+    cross_page = internal & lt$path != "",
+    is_anchor  = purrr::map_lgl(lt$path %in% lt$rel, identical, TRUE),
+    NULL
+  )
+}
+
+link_internal_anchor <- function(VAL, source_list, headings) {
+  in_page <- source_list$in_page
+  if (any(in_page)) {
+    headings <- xml2::xml_text(headings)
+    headings <- clean_headings(headings)
+    VAL$internal_anchor[in_page] <- VAL$fragment[in_page] %in% headings
+  }
+  VAL
+}
+link_internal_file <- function(VAL, source_list, root) {
+  to_check <- source_list$cross_page & !source_list$is_anchor
+  if (any(to_check)) {
+    VAL$internal_file[to_check] <- test_file_existence(VAL$path[to_check], root)
+  }
+  VAL
+}
+link_internal_well_formed <- function(VAL, source_list) {
+  to_flag <- source_list$cross_page & source_list$is_anchor
+  VAL$internal_well_formed[to_flag] <- FALSE 
+  VAL
+}
+
+
+link_tests <- c(
+  enforce_https = "[needs HTTPS] {orig}",
+  internal_anchor = "[missing anchor] {orig}",
+  internal_file = "[missing file] {orig}",
+  internal_well_formed = "[incorrect formatting]: [{text}][{orig}] -> [{text}]({orig})",
+  all_reachable = "",
+  img_alt_text  = "[missing alt-text] {orig}",
+  descriptive   = "[uninformative text] {sQuote(text)}",
+  link_length   = "[text too short] {sQuote(text)}",
+  NULL
+)
+link_info <- c(
+  enforce_https = "Links must use HTTPS <https://https.cio.gov/everything/>",
+  internal_anchor = "Some link anchors for relative links (e.g. [anchor]: link) are missing",
+  internal_file = "Some linked internal files do not exist",
+  internal_well_formed = "Some links were incorrectly formatted",
+  all_reachable = "",
+  img_alt_text  = "Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>",
+  descriptive   = "Avoid uninformative link phrases <https://webaim.org/techniques/hypertext/link_text#uninformative>",
+  link_length   = "Avoid single-letter or missing link text <https://webaim.org/techniques/hypertext/link_text#link_length>",
+  NULL
+)
+
+new_validate_links <- function(yrn, verbose = TRUE) {
+  has_cli <- is.null(getOption("pegboard.no-cli")) &&
+    requireNamespace("cli", quietly = TRUE)
+
+  link_table <- make_link_table(yrn)
+  path <- basename(yrn$path)
+  VAL <- link_table
+  VAL[names(link_tests)] <- TRUE
+  source_list <- link_source_list(VAL)
+  VAL <- link_enforce_https(VAL)
+  VAL <- link_internal_anchor(VAL, source_list, yrn$headings)
+  VAL <- link_internal_file(VAL, source_list, yrn$lesson)
+  VAL <- link_internal_well_formed(VAL, source_list)
+  VAL <- link_all_reachable(VAL)
+  VAL <- link_img_alt_text(VAL)
+  VAL <- link_descriptive(VAL)
+  VAL <- link_length(VAL)
+  VAL$filepath <- fs::path_rel(yrn$path, yrn$lesson)
+  VAL
+
+}
+
 validate_known_rot <- function(lt, path, verbose = TRUE, cli = TRUE) {
   # There are some links that are notorious for link rot. In these cases, we 
   # should absolutely invalidate them.
@@ -99,7 +224,6 @@ validate_known_rot <- function(lt, path, verbose = TRUE, cli = TRUE) {
 }
 
 validate_descriptive <- function(lt, path, verbose = TRUE, cli = TRUE) {
-  # NOTE: invalidate "here" links as well
   more <- paste0("(for )?", c("more", "more info(rmation)?"))
   uninformative <- paste0(
     "^([[:punct:]]*(",
