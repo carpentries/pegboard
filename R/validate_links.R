@@ -89,7 +89,7 @@ validate_links <- function(yrn) {
   source_list <- link_source_list(VAL)
   VAL <- link_enforce_https(VAL)
   VAL <- link_internal_anchor(VAL, source_list, yrn$headings)
-  VAL <- link_internal_file(VAL, source_list, yrn$lesson)
+  VAL <- link_internal_file(VAL, source_list, fs::path_dir(yrn$path))
   VAL <- link_internal_well_formed(VAL, source_list)
   VAL <- link_all_reachable(VAL)
   VAL <- link_img_alt_text(VAL)
