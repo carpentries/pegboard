@@ -1,3 +1,18 @@
+# pegboard 0.0.0.9023
+
+## MISC
+
+- validation messages have been revamped to be more consistent across messages.
+- All validation methods in `Episode` and `Lesson` now return data frames that 
+  contain detailed information for each element and what tests were passed and
+  what were failed for downstream analysis. Importantly, they all will contain
+  a column called "node", which points to the exact XML node containing the
+  link/image/heading for inspection/manipulation.
+- validation reporting is no longer grouped by error
+- link validation information has been switched to show the error message and
+  then the problematic aspect/fix
+- heading validation now works on continuous integration
+
 # pegboard 0.0.0.9022
 
 ## NEW FEATURES

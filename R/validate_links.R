@@ -58,31 +58,166 @@
 #'   [Lesson] classes.
 #'
 #' @param yrn a [tinkr::yarn] or [Episode] object.
-#' @param verbose if TRUE (default), messages will be printed as the validator works.
 #' @return a vector of logical values indicating the tests that passed.
 #' @keywords internal
-validate_links <- function(yrn, verbose = TRUE) {
+#' @rdname validate_links
+#' @examples
+#' l <- Lesson$new(lesson_fragment())
+#' e <- l$episodes[[3]]
+#' # Our link validators run a series of tests on links and images and return a 
+#' # data frame with information about the links (via xml2::url_parse), along 
+#' # with the results of the tests
+#' v <- pegboard:::validate_links(e)
+#' names(v)
+#' v
+#' # The validator does not produce any warnings or messages, but this data
+#' # frame can be passed on to other functions that will throw them for us. We
+#' # have a function that will throw a warning/message for each link that
+#' # fails the tests. These messages are controlled by `link_tests` and 
+#' # `link_info`.
+#' pegboard:::link_tests
+#' pegboard:::link_info
+#' pegboard:::throw_link_warnings(v)
+validate_links <- function(yrn) {
   has_cli <- is.null(getOption("pegboard.no-cli")) &&
     requireNamespace("cli", quietly = TRUE)
+  VAL <- make_link_table(yrn)
+  if (length(VAL) == 0L || is.null(VAL)) {
+    return(invisible(NULL))
+  }
+  VAL[names(link_tests)] <- TRUE
+  source_list <- link_source_list(VAL)
+  VAL <- link_enforce_https(VAL)
+  VAL <- link_internal_anchor(VAL, source_list, yrn$headings)
+  VAL <- link_internal_file(VAL, source_list, fs::path_dir(yrn$path))
+  VAL <- link_internal_well_formed(VAL, source_list)
+  VAL <- link_all_reachable(VAL)
+  VAL <- link_img_alt_text(VAL)
+  VAL <- link_descriptive(VAL)
+  VAL <- link_length(VAL)
+  VAL
+}
 
-  link_table <- make_link_table(yrn)
-  path <- basename(yrn$path)
-  VLD <- c(
-    enforce_https = TRUE,
-    internal_okay = TRUE,
-    all_reachable = TRUE,
-    img_alt_text  = TRUE,
-    descriptive   = TRUE,
-    link_length   = TRUE,
+#' @rdname validate_links
+link_enforce_https <- function(VAL) {
+  VAL$enforce_https <- !VAL$scheme == "http"
+  VAL
+}
+
+#' @rdname validate_links
+link_all_reachable <- function(VAL) {
+  # TODO: implement a link checker for external links This is unfortunately
+  # difficult and time-consuming due to robots.txt and other protocols/issues.
+  # Maybe httr2 might be able to help solve this
+  VAL
+}
+
+#' @rdname validate_links
+link_img_alt_text <- function(VAL) {
+  img <- VAL$type %in% c("image", "img")
+  okay <- !(is.na(VAL$alt) | VAL$alt == "")
+  VAL$img_alt_text[img] <- okay[img]
+  VAL
+}
+
+#' @rdname validate_links
+link_length <- function(VAL) {
+  is_link <- VAL$type == "link"
+  VAL$link_length[is_link] <- !grepl("^.?$", trimws(VAL$text[is_link]))
+  VAL
+}
+
+#' @rdname validate_links
+link_descriptive <- function(VAL) {
+  more <- paste0("(for )?", c("more", "more info(rmation)?"))
+  uninformative <- paste0(
+    "^([[:punct:]]*(",
+    paste(
+      c("link", "this", "this link", "a link", "link to",
+        paste0(c("here", "click here", "over here"), "( for)?"),
+        paste0(c(more, "read more", "read on"), "( about)?")
+      ),
+      collapse = ")|("
+    ), 
+    ")[[:punct:]]*)$"
+  )
+  bad <- grepl(uninformative, trimws(VAL$text), ignore.case = TRUE, perl = TRUE)
+  VAL$descriptive <- !bad
+  VAL
+}
+
+#' @rdname validate_links
+#' @param lt the output of [make_link_table()]
+link_source_list <- function(lt) {
+  # Create a list of logical vectors from a link table. These vectors indicate
+  # the source of a given link.
+  internal <- lt$server == "" & lt$scheme == "" & is.na(lt$port) & lt$user == ""
+  list(
+    external   = !internal,
+    internal   = internal,
+    in_page    = internal & lt$path == "" & lt$fragment != "",
+    cross_page = internal & lt$path != "",
+    is_anchor  = purrr::map_lgl(lt$path %in% lt$rel, identical, TRUE),
     NULL
   )
-  VLD["enforce_https"] <- validate_https(link_table, path, verbose, has_cli)
-  VLD["internal_okay"] <- validate_internal_okay(yrn, link_table, verbose, has_cli)
-  VLD["img_alt_text"]  <- validate_alt_text(link_table, path, verbose, has_cli)
-  VLD["descriptive"]   <- validate_descriptive(link_table, path, verbose, has_cli)
-  VLD["link_length"]   <- validate_link_length(link_table, path, verbose, has_cli)
-  VLD
 }
+
+#' @rdname validate_links
+#' @param source_list output of `link_source_list`
+#' @param headings an `xml_nodeset` of headings
+link_internal_anchor <- function(VAL, source_list, headings) {
+  in_page <- source_list$in_page
+  if (any(in_page)) {
+    headings <- xml2::xml_text(headings)
+    headings <- clean_headings(headings)
+    VAL$internal_anchor[in_page] <- VAL$fragment[in_page] %in% headings
+  }
+  VAL
+}
+
+#' @rdname validate_links
+#' @param root the root path to the lesson that contains this file.
+link_internal_file <- function(VAL, source_list, root) {
+  to_check <- source_list$cross_page & !source_list$is_anchor
+  if (any(to_check)) {
+    VAL$internal_file[to_check] <- test_file_existence(VAL$path[to_check], root)
+  }
+  VAL
+}
+
+#' @rdname validate_links
+link_internal_well_formed <- function(VAL, source_list) {
+  to_flag <- source_list$cross_page & source_list$is_anchor
+  VAL$internal_well_formed[to_flag] <- FALSE 
+  VAL
+}
+
+
+#' @rdname validate_links
+link_tests <- c(
+  enforce_https = "[needs HTTPS] {orig}",
+  internal_anchor = "[missing anchor] {orig}",
+  internal_file = "[missing file] {orig}",
+  internal_well_formed = "[incorrect formatting]: [{text}][{orig}] -> [{text}]({orig})",
+  all_reachable = "",
+  img_alt_text  = "[missing alt-text]",
+  descriptive   = "[uninformative text] {sQuote(text)}",
+  link_length   = "[text too short] {sQuote(text)}",
+  NULL
+)
+
+#' @rdname validate_links
+link_info <- c(
+  enforce_https = "Links must use HTTPS <https://https.cio.gov/everything/>",
+  internal_anchor = "Some link anchors for relative links (e.g. [anchor]: link) are missing",
+  internal_file = "Some linked internal files do not exist",
+  internal_well_formed = "Some links were incorrectly formatted",
+  all_reachable = "",
+  img_alt_text  = "Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>",
+  descriptive   = "Avoid uninformative link phrases <https://webaim.org/techniques/hypertext/link_text#uninformative>",
+  link_length   = "Avoid single-letter or missing link text <https://webaim.org/techniques/hypertext/link_text#link_length>",
+  NULL
+)
 
 
 validate_known_rot <- function(lt, path, verbose = TRUE, cli = TRUE) {
@@ -97,109 +232,6 @@ validate_known_rot <- function(lt, path, verbose = TRUE, cli = TRUE) {
   if (verbose && !res) {
     bad_links <- lt$server[rowSums(res) > 0L]
   }
-}
-
-validate_descriptive <- function(lt, path, verbose = TRUE, cli = TRUE) {
-  # NOTE: invalidate "here" links as well
-  more <- paste0("(for )?", c("more", "more info(rmation)?"))
-  uninformative <- paste0(
-    "^([[:punct:]]*(",
-    paste(
-      c("link", "this", "this link", "a link", "link to",
-        paste0(c("here", "click here", "over here"), "( for)?"),
-        paste0(c(more, "read more", "read on"), "( about)?")
-      ),
-      collapse = ")|("
-    ), 
-    ")[[:punct:]]*)$"
-  )
-  bad <- grepl(uninformative, trimws(lt$text), 
-    ignore.case = TRUE, perl = TRUE)
-  res <- !any(bad)
-  if (verbose && !res) {
-    just_link    <- lt[bad, , drop = FALSE]
-    link_sources <- glue::glue("{path}:{just_link$sourcepos}")
-    issue_warning("Avoid uninformative link phrases:
-      <https://webaim.org/techniques/hypertext/link_text#uninformative>
-      {glue::glue_collapse(lnks, sep = '\n')}",
-      cli,
-      lnks = glue::glue("{sQuote(just_link$text)} ({link_sources})")
-    )
-  }
-  res
-}
-
-validate_link_length <- function(lt, path, verbose = TRUE, cli = TRUE) {
-  # must not be a single letter or empty
-  # we will catch images in another test
-  bad <- grepl("^.?$", trimws(lt$text)) & lt$type == "link"
-  res <- !any(bad)
-  if (verbose && !res) {
-    just_link    <- lt[bad, , drop = FALSE]
-    link_sources <- glue::glue("{path}:{just_link$sourcepos}")
-    issue_warning("Avoid single-letter or missing link text:
-      <https://webaim.org/techniques/hypertext/link_text#link_length>
-      {glue::glue_collapse(lnks, sep = '\n')}",
-      cli,
-      lnks = glue::glue("{sQuote(just_link$text)} ({link_sources})")
-    )
-  }
-  res
-}
-
-validate_internal_okay <- function(yrn, lt = NULL, verbose = TRUE, cli = TRUE) {
-  if (is.null(lt)) {
-    lt <- make_link_table(yrn)
-  }
-  headings   <- xml2::xml_text(yrn$headings)
-  path       <- basename(yrn$path)
-  internal   <- lt$server == "" & lt$scheme == "" & is.na(lt$port) & lt$user == ""
-  cross_page <- internal & lt$path != ""
-  in_page    <- internal & lt$path == "" & lt$fragment != ""
-  res <- TRUE
-  if (any(in_page)) {
-    our_headings <- clean_headings(headings)
-    no_match <- !lt$fragment %in% our_headings
-    res <- res & !any(in_page & no_match)
-  } else {
-    no_match <- FALSE
-  }
-  if (any(cross_page)) {
-    no_file <- !test_file_existence(lt$path, fs::path_dir(yrn$path))
-    is_anchor <- purrr::map_lgl(lt$path %in% lt$rel, identical, TRUE)
-    res <- res & !any(cross_page & no_file)
-  }
-  if (verbose && !res) {
-    if (any(in_page & no_match)) {
-      bad_fragment <- lt[in_page & no_match, , drop = FALSE]
-      link_sources <- glue::glue("{path}:{bad_fragment$sourcepos}")
-      issue_warning("The following anchors do not exist in the file:
-        {glue::glue_collapse(lnks, sep = '\n')}", 
-        cli,
-        lnks = glue::glue("{bad_fragment$orig} ({link_sources})")
-      )
-    }
-    if (any(cross_page & is_anchor)) {
-      a <- lt[cross_page & is_anchor, , drop = FALSE]
-      link_sources <- glue::glue("{path}:{a$sourcepos}")
-      link_fmt <- glue::glue("[{a$text}]({a$orig}) -> [{a$text}][{a$orig}]")
-      issue_warning("Relative links that are incorrectly formatted:
-        {glue::glue_collapse(lnks, sep = '\n')}", 
-        cli,
-        lnks = glue::glue("{link_fmt} ({link_sources})")
-      )
-    }
-    if (any(cross_page & no_file & !is_anchor)) {
-      bad_files <- lt[cross_page & no_file & !is_anchor, , drop = FALSE]
-      link_sources <- glue::glue("{path}:{bad_files$sourcepos}")
-      issue_warning("These files do not exist in the lesson:
-        {glue::glue_collapse(lnks, sep = '\n')}", 
-        cli,
-        lnks = glue::glue("{bad_files$orig} ({link_sources})")
-      )
-    }
-  }
-  res
 }
 
 # TODO: adjust expectations based on what we want to do with the links.
@@ -255,6 +287,7 @@ exists_in_folder <- function(folder = "_extras", paths, home) {
   res
 }
 
+# transform the headings to their expected anchors
 clean_headings <- function(headings) {
   anchor_regex <- ".*[[:space:]][{].*(<?#)([^[:space:]]+).*[}]"
   anchor_swapped <- gsub(anchor_regex, "\\2", headings, perl = TRUE)
@@ -264,33 +297,5 @@ clean_headings <- function(headings) {
   lower_dash <- gsub("[[:punct:][:space:]]+", "-", tolower(emoji_eliminated))
   trim_dash <- gsub("[-]$", "", gsub("^[-]", "", lower_dash))
   gsub("\\.", "-", make.unique(trim_dash))
-}
-
-validate_https <- function(lt, path, verbose = TRUE, cli = TRUE) {
-  res <- !any(has_http <- lt$scheme == "http")
-  if (verbose && !res) {
-    link_sources <- glue::glue("{path}:{lt$sourcepos[has_http]}")
-    issue_warning("Links must use HTTPS, not HTTP:
-      {glue::glue_collapse(lnks, sep = '\n')}",
-      cli,
-      lnks = glue::glue("{lt$orig[has_http]} ({link_sources})")
-    )
-  }
-  res
-}
-
-
-validate_alt_text <- function(lt, path, verbose = TRUE, cli = TRUE) {
-  img <- lt$type %in% c("image", "img")
-  res <- !any(no_alt <- img & (is.na(lt$alt) | lt$alt == ""))
-  if (verbose && !res) {
-    img_sources <- glue::glue("{lt$orig[no_alt]} ({path}:{lt$sourcepos[no_alt]})")
-    issue_warning("Images need alt-text:
-      {imgs}",
-      cli,
-      imgs = glue::glue_collapse(img_sources, "\n")
-    )
-  }
-  res
 }
 

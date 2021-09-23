@@ -179,25 +179,35 @@ Lesson <- R6::R6Class("Lesson",
     #' This will validate the following aspects of all headings:
     #'
     #'  - first heading starts at level 2 (`first_heading_is_second_level`)
-    #'  - greater than level 1 (`all_are_greater_than_first_level`)
-    #'  - increse sequentially (e.g. no jumps from 2 to 4) (`all_are_sequential`)
-    #'  - have names (`all_have_names`)
-    #'  - unique in their own hierarchy (`all_are_unique`)
+    #'  - greater than level 1 (`greater_than_first_level`)
+    #'  - increse sequentially (e.g. no jumps from 2 to 4) (`are_sequential`)
+    #'  - have names (`have_names`)
+    #'  - unique in their own hierarchy (`are_unique`)
     #'
     #' @param verbose if `TRUE`, the heading tree will be printed to the console
     #'   with any warnings assocated with the validators
-    #' @return a wide data frame with five rows and the number of columns equal
-    #'   to the number of episodes in the lesson with an extra column indicating
-    #'   the type of validation. See [validate_headings()] for details.
+    #' @return a data frame with a variable number of rows and the follwoing 
+    #'   columns:
+    #'    - **episode** the filename of the episode
+    #'    - **heading** the text from a heading
+    #'    - **level** the heading level
+    #'    - **pos** the position of the heading in the document
+    #'    - **node** the XML node that represents the heading
+    #'    - (the next five columns are the tests listed above)
+    #'    - **path** the path to the file. 
+    #'   
+    #'   Each row in the data frame represents an individual heading across the
+    #'   Lesson. See [validate_headings()] for more details.
     #' @examples
     #' frg <- Lesson$new(lesson_fragment())
     #' frg$validate_headings()
     validate_headings = function(verbose = TRUE) {
-      res <- purrr::map_dfc(self$episodes, ~.x$validate_headings(verbose = verbose))
-      n <- length(res)
-      res$type <- names(res[[1]])
-      res <- res[c(n + 1L, 1:n)]
-      res
+      res <- purrr::map_dfr(self$episodes, 
+        ~.x$validate_headings(verbose = verbose, warn = FALSE),
+        .id = "episode"
+      )
+      throw_heading_warnings(res)
+      invisible(res)
     },
     #' @description
     #' Validate that the links and images are valid and accessible. See the
@@ -222,12 +232,10 @@ Lesson <- R6::R6Class("Lesson",
     #' @examples
     #' frg <- Lesson$new(lesson_fragment())
     #' frg$validate_links()
-    validate_links = function(verbose = TRUE) {
-      res <- purrr::map_dfc(self$episodes, ~.x$validate_links(verbose = verbose))
-      n <- length(res)
-      res$type <- names(res[[1]])
-      res <- res[c(n + 1L, 1:n)]
-      res
+    validate_links = function() {
+      res <- purrr::map_dfr(self$episodes, ~.x$validate_links(warn = FALSE))
+      throw_link_warnings(res)
+      invisible(res)
     }
   ),
   active = list(

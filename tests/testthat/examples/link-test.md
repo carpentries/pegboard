@@ -37,6 +37,9 @@ there.
 This link [should be a relative link](rel-image).
 This link [is a relative link that works][rel-image]
 
+This link [goes to an internal nested file](files/thing.txt), but this internal
+link [does not exist](files/ohno.txt)
+
 ## HTTP links
 
 This [link uses http, which is no bueno](http://example.com)

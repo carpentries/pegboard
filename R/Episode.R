@@ -426,24 +426,47 @@ Episode <- R6::R6Class("Episode",
     #' This will validate the following aspects of all headings:
     #'
     #'  - first heading starts at level 2 (`first_heading_is_second_level`)
-    #'  - greater than level 1 (`all_are_greater_than_first_level`)
-    #'  - increse sequentially (e.g. no jumps from 2 to 4) (`all_are_sequential`)
-    #'  - have names (`all_have_names`)
-    #'  - unique in their own hierarchy (`all_are_unique`)
+    #'  - greater than level 1 (`greater_than_first_level`)
+    #'  - increse sequentially (e.g. no jumps from 2 to 4) (`are_sequential`)
+    #'  - have names (`have_names`)
+    #'  - unique in their own hierarchy (`are_unique`)
     #'
     #' @param verbose if `TRUE` (default), a message for each rule broken will
     #'   be issued to the stderr. if `FALSE`, this will be silent. 
-    #' @return a logical vector of length five summarizing the results of the
-    #'   five aspects listed above: `TRUE` for valid headings and `FALSE` for
-    #'   invalid headings.
+    #' @param warn if `TRUE` (default), a warning will be issued if there are
+    #'   any failures in the tests.
+    #' @return a data frame with a variable number of rows and the follwoing 
+    #'   columns:
+    #'    - **episode** the filename of the episode
+    #'    - **heading** the text from a heading
+    #'    - **level** the heading level
+    #'    - **pos** the position of the heading in the document
+    #'    - **node** the XML node that represents the heading
+    #'    - (the next five columns are the tests listed above)
+    #'    - **path** the path to the file. 
+    #'   
+    #'   Each row in the data frame represents an individual heading across the
+    #'   Lesson. See [validate_headings()] for more details.
     #' @examples
     #' # Example: There are multiple headings called "Solution" that are not
     #' # nested within a higher-level heading and will throw an error
     #' loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
     #' loop$validate_headings()
-    #' 
-    validate_headings = function(verbose = TRUE) {
-      validate_headings(self$headings, self$get_yaml()$title, verbose)
+    validate_headings = function(verbose = TRUE, warn = TRUE) {
+      out <- validate_headings(self$headings, self$get_yaml()$title, offset = length(self$yaml))
+      if (is.null(out)) {
+        return(out)
+      }
+      res <- out$result
+      res$path <- fs::path_rel(self$path, self$lesson)
+      failures <- !all(apply(res[names(heading_tests)], MARGIN = 2L, all))
+      if (warn) {
+        throw_heading_warnings(res)
+      }
+      if (verbose && failures) {
+        show_heading_tree(out$tree)
+      }
+      invisible(res)
     },
     
     #' @description perform validation on links and images in a document.
@@ -458,15 +481,20 @@ Episode <- R6::R6Class("Episode",
     #'  - Link text is descriptive (`descriptive`)
     #'  - Link text is more than a single letter (`link_length`)
     #'
-    #' @param verbose if `TRUE` (default), a message for each rule broken will
-    #'   be issued to the stderr. if `FALSE`, this will be silent. 
+    #' @param warn if `TRUE` (default), a warning message will be if there are
+    #'   any links determined to be invalid. Set to `FALSE` if you want the
+    #'   table for processing later.
     #' @return a logical `TRUE` for valid links and `FALSE` for invalid 
     #'   links.
     #' @examples
     #' loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
     #' loop$validate_links()
-    validate_links = function(verbose = TRUE) {
-      validate_links(self, verbose)
+    validate_links = function(warn = TRUE) {
+      res <- validate_links(self)
+      if (warn) {
+        throw_link_warnings(res)
+      }
+      invisible(res)
     }
 ),
   active = list(

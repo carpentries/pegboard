@@ -21,6 +21,24 @@ issue_warning <- function(msg, cli = FALSE, ...) {
   invisible()
 }
 
+
+#' Create a single character that reports line errors
+#'
+#' @param path path to the file to report
+#' @param pos position of the error
+#' @param type the type of warning that should be thrown (defaults to warning)
+#' @param sep a character to use to separate the human message and the line number
+#' @rdname cli_helpers
+line_report <- function(msg = "", path, pos, sep = "\t", type = "warning") {
+  ci <- Sys.getenv("CI") != ""
+  if (ci) {
+    res <- "::{type} file={path},line={pos}::{msg}"
+  } else {
+    res <- "{path}:{pos}{sep}{msg}"
+  }
+  glue::glue_collapse(glue::glue(res), sep = "\n")
+}
+
 #' Append a stylized label to elements of a vector
 #'
 #' @param l a vector/list of characters

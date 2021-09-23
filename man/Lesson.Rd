@@ -306,10 +306,10 @@ requirements. See the internal \code{\link[=validate_headings]{validate_headings
 This will validate the following aspects of all headings:
 \itemize{
 \item first heading starts at level 2 (\code{first_heading_is_second_level})
-\item greater than level 1 (\code{all_are_greater_than_first_level})
-\item increse sequentially (e.g. no jumps from 2 to 4) (\code{all_are_sequential})
-\item have names (\code{all_have_names})
-\item unique in their own hierarchy (\code{all_are_unique})
+\item greater than level 1 (\code{greater_than_first_level})
+\item increse sequentially (e.g. no jumps from 2 to 4) (\code{are_sequential})
+\item have names (\code{have_names})
+\item unique in their own hierarchy (\code{are_unique})
 }
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Lesson$validate_headings(verbose = TRUE)}\if{html}{\out{</div>}}
@@ -324,9 +324,20 @@ with any warnings assocated with the validators}
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-a wide data frame with five rows and the number of columns equal
-to the number of episodes in the lesson with an extra column indicating
-the type of validation. See \code{\link[=validate_headings]{validate_headings()}} for details.
+a data frame with a variable number of rows and the follwoing
+columns:
+\itemize{
+\item \strong{episode} the filename of the episode
+\item \strong{heading} the text from a heading
+\item \strong{level} the heading level
+\item \strong{pos} the position of the heading in the document
+\item \strong{node} the XML node that represents the heading
+\item (the next five columns are the tests listed above)
+\item \strong{path} the path to the file.
+}
+
+Each row in the data frame represents an individual heading across the
+Lesson. See \code{\link[=validate_headings]{validate_headings()}} for more details.
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
@@ -355,7 +366,7 @@ internal \code{\link[=validate_links]{validate_links()}} for details.
 }
 }
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Lesson$validate_links(verbose = TRUE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Lesson$validate_links()}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

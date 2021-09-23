@@ -3,10 +3,9 @@
     Code
       vhead <- frg$validate_headings()
     Message <cliMessage>
-      ! All headings must have unique IDs.
       -- Heading structure -----------------------------------------------------------
     Output
-      # Lesson: "For Loops" 
+      # Episode: "For Loops" 
       +-## A for loop executes commands once for each value in a collection. 
       +-## A for loop is made up of a collection, a loop variable, and a body. 
       +-## The first line of the for loop must end with a colon, and the body must be 
@@ -33,10 +32,9 @@
       \-## Solution  (duplicated)
     Message <cliMessage>
       --------------------------------------------------------------------------------
-      ! All headings must have unique IDs.
       -- Heading structure -----------------------------------------------------------
     Output
-      # Lesson: "Looping Over Data Sets" 
+      # Episode: "Looping Over Data Sets" 
       +-## Use a for loop to process files given a list of their names. 
       +-## Use glob.glob to find sets of files whose names match a pattern. 
       +-## Use glob and for to process batches of files. 
@@ -49,36 +47,47 @@
         \-### ZNK test links and images 
     Message <cliMessage>
       --------------------------------------------------------------------------------
-      -- Heading structure -----------------------------------------------------------
-    Output
-      # Lesson: "Variable Scope" 
-      +-## The scope of a variable is the part of a program that can 'see' that variab
-      +-## Local and Global Variable Use 
-      \-## Reading Error Messages 
-    Message <cliMessage>
-      --------------------------------------------------------------------------------
+      ! There were errors in 13/37 headings
+      
+      - Headings must be unique
+      <https://webaim.org/techniques/semanticstructure/#headings>
+      
+      ::warning file=_episodes/12-for-loops.md,line=183:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=200:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=227:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=252:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=270:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=289:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=305:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=336:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=371:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=400:: (duplicated)
+      ::warning file=_episodes/14-looping-data-sets.md,line=119:: (duplicated)
+      ::warning file=_episodes/14-looping-data-sets.md,line=143:: (duplicated)
+      ::warning file=_episodes/14-looping-data-sets.md,line=162:: (duplicated)
 
 ---
 
     Code
       vlink <- frg$validate_links()
     Message <cliMessage>
-      ! These files do not exist in the lesson:
-      ../no-workie.svg (14-looping-data-sets.md:191)
-      ../no-workie.svg (14-looping-data-sets.md:197)
-      ! Images need alt-text:
-      https://carpentries.org/assets/img/TheCarpentries.svg (14-looping-data-sets.md:195)
-      ../no-workie.svg (14-looping-data-sets.md:197)
+      ! There were errors in 3/13 links
+      
+      - Some linked internal files do not exist
+      - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
+      
+      ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file] ../no-workie.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [missing alt-text]
+      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [missing alt-text]
 
 # Lessons can be validated [ansi]
 
     Code
       vhead <- frg$validate_headings()
     Message <cliMessage>
-      [33m![39m All headings must have unique IDs.
       -- Heading structure -----------------------------------------------------------
     Output
-      # Lesson: "For Loops" 
+      # Episode: "For Loops" 
       +-## A for loop executes commands once for each value in a collection. 
       +-## A for loop is made up of a collection, a loop variable, and a body. 
       +-## The first line of the for loop must end with a colon, and the body must be 
@@ -105,10 +114,9 @@
       \-## Solution  [7m(duplicated)[27m
     Message <cliMessage>
       --------------------------------------------------------------------------------
-      [33m![39m All headings must have unique IDs.
       -- Heading structure -----------------------------------------------------------
     Output
-      # Lesson: "Looping Over Data Sets" 
+      # Episode: "Looping Over Data Sets" 
       +-## Use a for loop to process files given a list of their names. 
       +-## Use glob.glob to find sets of files whose names match a pattern. 
       +-## Use glob and for to process batches of files. 
@@ -121,36 +129,47 @@
         \-### ZNK test links and images 
     Message <cliMessage>
       --------------------------------------------------------------------------------
-      -- Heading structure -----------------------------------------------------------
-    Output
-      # Lesson: "Variable Scope" 
-      +-## The scope of a variable is the part of a program that can 'see' that variab
-      +-## Local and Global Variable Use 
-      \-## Reading Error Messages 
-    Message <cliMessage>
-      --------------------------------------------------------------------------------
+      [33m![39m There were errors in 13/37 headings
+      
+      - Headings must be unique
+      <https://webaim.org/techniques/semanticstructure/#headings>
+      
+      ::warning file=_episodes/12-for-loops.md,line=183:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=200:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=227:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=252:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=270:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=289:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=305:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=336:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=371:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=400:: (duplicated)
+      ::warning file=_episodes/14-looping-data-sets.md,line=119:: (duplicated)
+      ::warning file=_episodes/14-looping-data-sets.md,line=143:: (duplicated)
+      ::warning file=_episodes/14-looping-data-sets.md,line=162:: (duplicated)
 
 ---
 
     Code
       vlink <- frg$validate_links()
     Message <cliMessage>
-      [33m![39m These files do not exist in the lesson:
-      ../no-workie.svg (14-looping-data-sets.md:191)
-      ../no-workie.svg (14-looping-data-sets.md:197)
-      [33m![39m Images need alt-text:
-      https://carpentries.org/assets/img/TheCarpentries.svg (14-looping-data-sets.md:195)
-      ../no-workie.svg (14-looping-data-sets.md:197)
+      [33m![39m There were errors in 3/13 links
+      
+      - Some linked internal files do not exist
+      - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
+      
+      ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file] ../no-workie.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [missing alt-text]
+      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [missing alt-text]
 
 # Lessons can be validated [unicode]
 
     Code
       vhead <- frg$validate_headings()
     Message <cliMessage>
-      ! All headings must have unique IDs.
       ── Heading structure ───────────────────────────────────────────────────────────
     Output
-      # Lesson: "For Loops" 
+      # Episode: "For Loops" 
       ├─## A for loop executes commands once for each value in a collection. 
       ├─## A for loop is made up of a collection, a loop variable, and a body. 
       ├─## The first line of the for loop must end with a colon, and the body must be 
@@ -177,10 +196,9 @@
       └─## Solution  (duplicated)
     Message <cliMessage>
       ────────────────────────────────────────────────────────────────────────────────
-      ! All headings must have unique IDs.
       ── Heading structure ───────────────────────────────────────────────────────────
     Output
-      # Lesson: "Looping Over Data Sets" 
+      # Episode: "Looping Over Data Sets" 
       ├─## Use a for loop to process files given a list of their names. 
       ├─## Use glob.glob to find sets of files whose names match a pattern. 
       ├─## Use glob and for to process batches of files. 
@@ -193,36 +211,47 @@
         └─### ZNK test links and images 
     Message <cliMessage>
       ────────────────────────────────────────────────────────────────────────────────
-      ── Heading structure ───────────────────────────────────────────────────────────
-    Output
-      # Lesson: "Variable Scope" 
-      ├─## The scope of a variable is the part of a program that can 'see' that variab
-      ├─## Local and Global Variable Use 
-      └─## Reading Error Messages 
-    Message <cliMessage>
-      ────────────────────────────────────────────────────────────────────────────────
+      ! There were errors in 13/37 headings
+      
+      - Headings must be unique
+      <https://webaim.org/techniques/semanticstructure/#headings>
+      
+      ::warning file=_episodes/12-for-loops.md,line=183:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=200:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=227:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=252:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=270:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=289:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=305:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=336:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=371:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=400:: (duplicated)
+      ::warning file=_episodes/14-looping-data-sets.md,line=119:: (duplicated)
+      ::warning file=_episodes/14-looping-data-sets.md,line=143:: (duplicated)
+      ::warning file=_episodes/14-looping-data-sets.md,line=162:: (duplicated)
 
 ---
 
     Code
       vlink <- frg$validate_links()
     Message <cliMessage>
-      ! These files do not exist in the lesson:
-      ../no-workie.svg (14-looping-data-sets.md:191)
-      ../no-workie.svg (14-looping-data-sets.md:197)
-      ! Images need alt-text:
-      https://carpentries.org/assets/img/TheCarpentries.svg (14-looping-data-sets.md:195)
-      ../no-workie.svg (14-looping-data-sets.md:197)
+      ! There were errors in 3/13 links
+      
+      - Some linked internal files do not exist
+      - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
+      
+      ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file] ../no-workie.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [missing alt-text]
+      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [missing alt-text]
 
 # Lessons can be validated [fancy]
 
     Code
       vhead <- frg$validate_headings()
     Message <cliMessage>
-      [33m![39m All headings must have unique IDs.
       ── Heading structure ───────────────────────────────────────────────────────────
     Output
-      # Lesson: "For Loops" 
+      # Episode: "For Loops" 
       ├─## A for loop executes commands once for each value in a collection. 
       ├─## A for loop is made up of a collection, a loop variable, and a body. 
       ├─## The first line of the for loop must end with a colon, and the body must be 
@@ -249,10 +278,9 @@
       └─## Solution  [7m(duplicated)[27m
     Message <cliMessage>
       ────────────────────────────────────────────────────────────────────────────────
-      [33m![39m All headings must have unique IDs.
       ── Heading structure ───────────────────────────────────────────────────────────
     Output
-      # Lesson: "Looping Over Data Sets" 
+      # Episode: "Looping Over Data Sets" 
       ├─## Use a for loop to process files given a list of their names. 
       ├─## Use glob.glob to find sets of files whose names match a pattern. 
       ├─## Use glob and for to process batches of files. 
@@ -265,24 +293,36 @@
         └─### ZNK test links and images 
     Message <cliMessage>
       ────────────────────────────────────────────────────────────────────────────────
-      ── Heading structure ───────────────────────────────────────────────────────────
-    Output
-      # Lesson: "Variable Scope" 
-      ├─## The scope of a variable is the part of a program that can 'see' that variab
-      ├─## Local and Global Variable Use 
-      └─## Reading Error Messages 
-    Message <cliMessage>
-      ────────────────────────────────────────────────────────────────────────────────
+      [33m![39m There were errors in 13/37 headings
+      
+      - Headings must be unique
+      <https://webaim.org/techniques/semanticstructure/#headings>
+      
+      ::warning file=_episodes/12-for-loops.md,line=183:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=200:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=227:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=252:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=270:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=289:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=305:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=336:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=371:: (duplicated)
+      ::warning file=_episodes/12-for-loops.md,line=400:: (duplicated)
+      ::warning file=_episodes/14-looping-data-sets.md,line=119:: (duplicated)
+      ::warning file=_episodes/14-looping-data-sets.md,line=143:: (duplicated)
+      ::warning file=_episodes/14-looping-data-sets.md,line=162:: (duplicated)
 
 ---
 
     Code
       vlink <- frg$validate_links()
     Message <cliMessage>
-      [33m![39m These files do not exist in the lesson:
-      ../no-workie.svg (14-looping-data-sets.md:191)
-      ../no-workie.svg (14-looping-data-sets.md:197)
-      [33m![39m Images need alt-text:
-      https://carpentries.org/assets/img/TheCarpentries.svg (14-looping-data-sets.md:195)
-      ../no-workie.svg (14-looping-data-sets.md:197)
+      [33m![39m There were errors in 3/13 links
+      
+      - Some linked internal files do not exist
+      - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
+      
+      ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file] ../no-workie.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [missing alt-text]
+      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [missing alt-text]
 

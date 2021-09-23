@@ -386,16 +386,18 @@ raise_div_error <- function(res, path, yaml, type) {
   div <- sub(div_close_regex(), "  [close]", get_div_class(res$div))
   ci <- Sys.getenv("CI") != ""
   if (ci) {
-    sub <- if (type == "close") div != "  [close]" else div == "  [close]"
+    sub      <- if (type == "close") div != "  [close]" else div == "  [close]"
+    pre_msg  <- ""
     line_msg <- glue::glue("check for the corresponding {type} tag")
-    msg <- "::warning file={path},line={res$line[sub] + yaml}::{line_msg}"
   } else {
-    msg <- "{path}:{res$line + yaml}\t | tag: {div}"
+    sub      <- TRUE
+    pre_msg  <- "Here is a list of all the tags in the file:\n"
+    line_msg <- glue::glue("| tag: {div}")
   }
-  msg <- c(glue::glue("Missing {type} section (div) tag in {path}."),
-    if (ci) "" else "Here is a list of all tags in the file:", 
-    glue::glue(msg))
-  stop(glue::glue_collapse(msg, sep = "\n"), call. = FALSE)
+  msg <- line_report(msg = line_msg, path = path, pos = res$line[sub] + yaml)
+  msg <- glue::glue("Missing {type} section (div) tag in {path}.
+      {pre_msg}{msg}")
+  stop(msg, call. = FALSE)
 }
 
 #' Add a pegboard node before or after a node
