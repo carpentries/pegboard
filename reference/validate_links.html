@@ -74,7 +74,7 @@ websites." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9022</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9023</span>
       </span>
     </div>
 
@@ -136,7 +136,29 @@ documents. This will include links to images and will respect robots.txt for
 websites.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>validate_links</span><span class='op'>(</span><span class='va'>yrn</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>validate_links</span><span class='op'>(</span><span class='va'>yrn</span><span class='op'>)</span>
+
+<span class='fu'>link_enforce_https</span><span class='op'>(</span><span class='va'>VAL</span><span class='op'>)</span>
+
+<span class='fu'>link_all_reachable</span><span class='op'>(</span><span class='va'>VAL</span><span class='op'>)</span>
+
+<span class='fu'>link_img_alt_text</span><span class='op'>(</span><span class='va'>VAL</span><span class='op'>)</span>
+
+<span class='fu'>link_length</span><span class='op'>(</span><span class='va'>VAL</span><span class='op'>)</span>
+
+<span class='fu'>link_descriptive</span><span class='op'>(</span><span class='va'>VAL</span><span class='op'>)</span>
+
+<span class='fu'>link_source_list</span><span class='op'>(</span><span class='va'>lt</span><span class='op'>)</span>
+
+<span class='fu'>link_internal_anchor</span><span class='op'>(</span><span class='va'>VAL</span>, <span class='va'>source_list</span>, <span class='va'>headings</span><span class='op'>)</span>
+
+<span class='fu'>link_internal_file</span><span class='op'>(</span><span class='va'>VAL</span>, <span class='va'>source_list</span>, <span class='va'>root</span><span class='op'>)</span>
+
+<span class='fu'>link_internal_well_formed</span><span class='op'>(</span><span class='va'>VAL</span>, <span class='va'>source_list</span><span class='op'>)</span>
+
+<span class='va'>link_tests</span>
+
+<span class='va'>link_info</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -146,11 +168,27 @@ websites.</p>
       <td><p>a <a href='https://docs.ropensci.org/tinkr/reference/yarn.html'>tinkr::yarn</a> or <a href='Episode.html'>Episode</a> object.</p></td>
     </tr>
     <tr>
-      <th>verbose</th>
-      <td><p>if TRUE (default), messages will be printed as the validator works.</p></td>
+      <th>lt</th>
+      <td><p>the output of <code><a href='make_link_table.html'>make_link_table()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>source_list</th>
+      <td><p>output of <code>link_source_list</code></p></td>
+    </tr>
+    <tr>
+      <th>headings</th>
+      <td><p>an <code>xml_nodeset</code> of headings</p></td>
+    </tr>
+    <tr>
+      <th>root</th>
+      <td><p>the root path to the lesson that contains this file.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>An object of class <code>character</code> of length 8.</p>
+<p>An object of class <code>character</code> of length 8.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>a vector of logical values indicating the tests that passed.</p>
@@ -217,6 +255,172 @@ This is a feature planned for the future.</p>
 <p>This function is internal. Please use the methods for the <a href='Episode.html'>Episode</a> and
 <a href='Lesson.html'>Lesson</a> classes.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>l</span> <span class='op'>&lt;-</span> <span class='va'><a href='Lesson.html'>Lesson</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>e</span> <span class='op'>&lt;-</span> <span class='va'>l</span><span class='op'>$</span><span class='va'>episodes</span><span class='op'>[[</span><span class='fl'>3</span><span class='op'>]</span><span class='op'>]</span>
+<span class='co'># Our link validators run a series of tests on links and images and return a </span>
+<span class='co'># data frame with information about the links (via xml2::url_parse), along </span>
+<span class='co'># with the results of the tests</span>
+<span class='va'>v</span> <span class='op'>&lt;-</span> <span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>validate_links</span><span class='op'>(</span><span class='va'>e</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>v</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  [1] "scheme"               "server"               "port"                
+#&gt;  [4] "user"                 "path"                 "query"               
+#&gt;  [7] "fragment"             "orig"                 "text"                
+#&gt; [10] "alt"                  "title"                "type"                
+#&gt; [13] "rel"                  "anchor"               "sourcepos"           
+#&gt; [16] "filepath"             "node"                 "enforce_https"       
+#&gt; [19] "internal_anchor"      "internal_file"        "internal_well_formed"
+#&gt; [22] "all_reachable"        "img_alt_text"         "descriptive"         
+#&gt; [25] "link_length"         </div><div class='input'><span class='va'>v</span>
+</div><div class='output co'>#&gt;    scheme            server       port user
+#&gt; 1   https   docs.python.org         NA     
+#&gt; 2   https   docs.python.org         NA     
+#&gt; 3   https   docs.python.org         NA     
+#&gt; 4   https pandas.pydata.org         NA     
+#&gt; 5   https   docs.python.org         NA     
+#&gt; 9   https   carpentries.org         NA     
+#&gt; 10                                  NA     
+#&gt; 6                                32702     
+#&gt; 7                           1113816504     
+#&gt; 11  https   carpentries.org         NA     
+#&gt; 12                                  NA     
+#&gt; 8                                32702     
+#&gt;                                                             path query
+#&gt; 1                                           /3/library/glob.html      
+#&gt; 2                                           /3/library/glob.html      
+#&gt; 3                                           /3/library/glob.html      
+#&gt; 4  /pandas-docs/stable/reference/api/pandas.DataFrame.shape.html      
+#&gt; 5                                       /3/library/stdtypes.html      
+#&gt; 9                                 /assets/img/TheCarpentries.svg      
+#&gt; 10                                              ../no-workie.svg      
+#&gt; 6                                                                     
+#&gt; 7                                                                     
+#&gt; 11                                /assets/img/TheCarpentries.svg      
+#&gt; 12                                              ../no-workie.svg      
+#&gt; 8                                                                     
+#&gt;     fragment
+#&gt; 1  glob.glob
+#&gt; 2           
+#&gt; 3           
+#&gt; 4           
+#&gt; 5  str.split
+#&gt; 9           
+#&gt; 10          
+#&gt; 6           
+#&gt; 7           
+#&gt; 11          
+#&gt; 12          
+#&gt; 8           
+#&gt;                                                                                      orig
+#&gt; 1                                   https://docs.python.org/3/library/glob.html#glob.glob
+#&gt; 2                                             https://docs.python.org/3/library/glob.html
+#&gt; 3                                             https://docs.python.org/3/library/glob.html
+#&gt; 4  https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.shape.html
+#&gt; 5                               https://docs.python.org/3/library/stdtypes.html#str.split
+#&gt; 9                                   https://carpentries.org/assets/img/TheCarpentries.svg
+#&gt; 10                                                                       ../no-workie.svg
+#&gt; 6                                                              {{ page.root }}/index.html
+#&gt; 7                                                       {{ site.swc_pages }}/shell-novice
+#&gt; 11                                  https://carpentries.org/assets/img/TheCarpentries.svg
+#&gt; 12                                                                       ../no-workie.svg
+#&gt; 8                                                                  {{ page.root }}{% link
+#&gt;                                              text            alt title  type
+#&gt; 1                                       glob.glob           &lt;NA&gt;        link
+#&gt; 2                                            glob           &lt;NA&gt;        link
+#&gt; 3                                            glob           &lt;NA&gt;        link
+#&gt; 4                                    shape method           &lt;NA&gt;        link
+#&gt; 5                                           split           &lt;NA&gt;        link
+#&gt; 9                                                 books as clubs  &lt;NA&gt;   img
+#&gt; 10                                                books as clubs  &lt;NA&gt;   img
+#&gt; 6                                            Home           &lt;NA&gt;  &lt;NA&gt;  link
+#&gt; 7                                           shell           &lt;NA&gt;  &lt;NA&gt;  link
+#&gt; 11                               Carpentries logo           &lt;NA&gt;       image
+#&gt; 12                              Non-working image           &lt;NA&gt;       image
+#&gt; 8  link that isn't parsed correctly by commonmark           &lt;NA&gt;  &lt;NA&gt;  link
+#&gt;     rel anchor sourcepos                          filepath         node
+#&gt; 1  &lt;NA&gt;  FALSE        51 _episodes/14-looping-data-sets.md &lt;link so....
+#&gt; 2  &lt;NA&gt;  FALSE        57 _episodes/14-looping-data-sets.md &lt;link so....
+#&gt; 3  &lt;NA&gt;  FALSE        58 _episodes/14-looping-data-sets.md &lt;link so....
+#&gt; 4  &lt;NA&gt;  FALSE       140 _episodes/14-looping-data-sets.md &lt;link so....
+#&gt; 5  &lt;NA&gt;  FALSE       163 _episodes/14-looping-data-sets.md &lt;link so....
+#&gt; 9  &lt;NA&gt;  FALSE       189 _episodes/14-looping-data-sets.md &lt;img src....
+#&gt; 10 &lt;NA&gt;  FALSE       191 _episodes/14-looping-data-sets.md &lt;img src....
+#&gt; 6  &lt;NA&gt;  FALSE       193 _episodes/14-looping-data-sets.md &lt;link xm....
+#&gt; 7  &lt;NA&gt;  FALSE       193 _episodes/14-looping-data-sets.md &lt;link xm....
+#&gt; 11 &lt;NA&gt;  FALSE       195 _episodes/14-looping-data-sets.md &lt;image s....
+#&gt; 12 &lt;NA&gt;  FALSE       197 _episodes/14-looping-data-sets.md &lt;image s....
+#&gt; 8  &lt;NA&gt;  FALSE       199 _episodes/14-looping-data-sets.md &lt;link xm....
+#&gt;    enforce_https internal_anchor internal_file internal_well_formed
+#&gt; 1           TRUE            TRUE          TRUE                 TRUE
+#&gt; 2           TRUE            TRUE          TRUE                 TRUE
+#&gt; 3           TRUE            TRUE          TRUE                 TRUE
+#&gt; 4           TRUE            TRUE          TRUE                 TRUE
+#&gt; 5           TRUE            TRUE          TRUE                 TRUE
+#&gt; 9           TRUE            TRUE          TRUE                 TRUE
+#&gt; 10          TRUE            TRUE         FALSE                 TRUE
+#&gt; 6           TRUE            TRUE          TRUE                 TRUE
+#&gt; 7           TRUE            TRUE          TRUE                 TRUE
+#&gt; 11          TRUE            TRUE          TRUE                 TRUE
+#&gt; 12          TRUE            TRUE         FALSE                 TRUE
+#&gt; 8           TRUE            TRUE          TRUE                 TRUE
+#&gt;    all_reachable img_alt_text descriptive link_length
+#&gt; 1           TRUE         TRUE        TRUE        TRUE
+#&gt; 2           TRUE         TRUE        TRUE        TRUE
+#&gt; 3           TRUE         TRUE        TRUE        TRUE
+#&gt; 4           TRUE         TRUE        TRUE        TRUE
+#&gt; 5           TRUE         TRUE        TRUE        TRUE
+#&gt; 9           TRUE         TRUE        TRUE        TRUE
+#&gt; 10          TRUE         TRUE        TRUE        TRUE
+#&gt; 6           TRUE         TRUE        TRUE        TRUE
+#&gt; 7           TRUE         TRUE        TRUE        TRUE
+#&gt; 11          TRUE        FALSE        TRUE        TRUE
+#&gt; 12          TRUE        FALSE        TRUE        TRUE
+#&gt; 8           TRUE         TRUE        TRUE        TRUE</div><div class='input'><span class='co'># The validator does not produce any warnings or messages, but this data</span>
+<span class='co'># frame can be passed on to other functions that will throw them for us. We</span>
+<span class='co'># have a function that will throw a warning/message for each link that</span>
+<span class='co'># fails the tests. These messages are controlled by `link_tests` and </span>
+<span class='co'># `link_info`.</span>
+<span class='fu'>pegboard</span><span class='fu'>:::</span><span class='va'>link_tests</span>
+</div><div class='output co'>#&gt;                                                  enforce_https 
+#&gt;                                         "[needs HTTPS] {orig}" 
+#&gt;                                                internal_anchor 
+#&gt;                                      "[missing anchor] {orig}" 
+#&gt;                                                  internal_file 
+#&gt;                                        "[missing file] {orig}" 
+#&gt;                                           internal_well_formed 
+#&gt; "[incorrect formatting]: [{text}][{orig}] -&gt; [{text}]({orig})" 
+#&gt;                                                  all_reachable 
+#&gt;                                                             "" 
+#&gt;                                                   img_alt_text 
+#&gt;                                           "[missing alt-text]" 
+#&gt;                                                    descriptive 
+#&gt;                          "[uninformative text] {sQuote(text)}" 
+#&gt;                                                    link_length 
+#&gt;                              "[text too short] {sQuote(text)}" </div><div class='input'><span class='fu'>pegboard</span><span class='fu'>:::</span><span class='va'>link_info</span>
+</div><div class='output co'>#&gt;                                                                                              enforce_https 
+#&gt;                                                 "Links must use HTTPS &lt;https://https.cio.gov/everything/&gt;" 
+#&gt;                                                                                            internal_anchor 
+#&gt;                                   "Some link anchors for relative links (e.g. [anchor]: link) are missing" 
+#&gt;                                                                                              internal_file 
+#&gt;                                                                  "Some linked internal files do not exist" 
+#&gt;                                                                                       internal_well_formed 
+#&gt;                                                                    "Some links were incorrectly formatted" 
+#&gt;                                                                                              all_reachable 
+#&gt;                                                                                                         "" 
+#&gt;                                                                                               img_alt_text 
+#&gt;                        "Images need alt-text &lt;https://webaim.org/techniques/hypertext/link_text#alt_link&gt;" 
+#&gt;                                                                                                descriptive 
+#&gt;       "Avoid uninformative link phrases &lt;https://webaim.org/techniques/hypertext/link_text#uninformative&gt;" 
+#&gt;                                                                                                link_length 
+#&gt; "Avoid single-letter or missing link text &lt;https://webaim.org/techniques/hypertext/link_text#link_length&gt;" </div><div class='input'><span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>throw_link_warnings</span><span class='op'>(</span><span class='va'>v</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> There were errors in 3/12 links</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>- Some linked internal files do not exist</span>
+#&gt; <span class='message'>- Images need alt-text &lt;https://webaim.org/techniques/hypertext/link_text#alt_link&gt;</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file] ../no-workie.svg</span>
+#&gt; <span class='message'>::warning file=_episodes/14-looping-data-sets.md,line=195:: [missing alt-text]</span>
+#&gt; <span class='message'>::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [missing alt-text]</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

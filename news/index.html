@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9022</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9023</span>
       </span>
     </div>
 
@@ -126,6 +126,21 @@
       <small>Source: <a href='https://github.com/zkamvar/pegboard/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="pegboard-0009023" class="section level1">
+<h1 class="page-header" data-toc-text="0.0.0.9023">
+<a href="#pegboard-0009023" class="anchor"></a>pegboard 0.0.0.9023</h1>
+<div id="misc" class="section level2">
+<h2 class="hasAnchor">
+<a href="#misc" class="anchor"></a>MISC</h2>
+<ul>
+<li>validation messages have been revamped to be more consistent across messages.</li>
+<li>All validation methods in <code>Episode</code> and <code>Lesson</code> now return data frames that contain detailed information for each element and what tests were passed and what were failed for downstream analysis. Importantly, they all will contain a column called “node”, which points to the exact XML node containing the link/image/heading for inspection/manipulation.</li>
+<li>validation reporting is no longer grouped by error</li>
+<li>link validation information has been switched to show the error message and then the problematic aspect/fix</li>
+<li>heading validation now works on continuous integration</li>
+</ul>
+</div>
+</div>
     <div id="pegboard-0009022" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.0.9022">
 <a href="#pegboard-0009022" class="anchor"></a>pegboard 0.0.0.9022</h1>
@@ -139,9 +154,9 @@
 <code>Lesson$new()</code> will now default to the current working directory.</li>
 </ul>
 </div>
-<div id="misc" class="section level2">
+<div id="misc-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#misc" class="anchor"></a>MISC</h2>
+<a href="#misc-1" class="anchor"></a>MISC</h2>
 <ul>
 <li>The internal <code><a href="../reference/get_list_block.html">get_list_block()</a></code> will no longer auto-label divs.</li>
 </ul>

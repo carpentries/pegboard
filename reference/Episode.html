@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9022</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9023</span>
       </span>
     </div>
 
@@ -570,30 +570,42 @@ kramdown tag. Note that this is a destructive process.</p><h4 class='hasAnchor' 
 <p>perform validation on headings in a document.</p>
 <p>This will validate the following aspects of all headings:</p><ul>
 <li><p>first heading starts at level 2 (<code>first_heading_is_second_level</code>)</p></li>
-<li><p>greater than level 1 (<code>all_are_greater_than_first_level</code>)</p></li>
-<li><p>increse sequentially (e.g. no jumps from 2 to 4) (<code>all_are_sequential</code>)</p></li>
-<li><p>have names (<code>all_have_names</code>)</p></li>
-<li><p>unique in their own hierarchy (<code>all_are_unique</code>)</p></li>
+<li><p>greater than level 1 (<code>greater_than_first_level</code>)</p></li>
+<li><p>increse sequentially (e.g. no jumps from 2 to 4) (<code>are_sequential</code>)</p></li>
+<li><p>have names (<code>have_names</code>)</p></li>
+<li><p>unique in their own hierarchy (<code>are_unique</code>)</p></li>
 </ul>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Episode</span><span class='op'>$</span><span class='fu'>validate_headings</span><span class='op'>(</span>verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Episode</span><span class='op'>$</span><span class='fu'>validate_headings</span><span class='op'>(</span>verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>verbose</code></dt><dd><p>if <code>TRUE</code> (default), a message for each rule broken will
 be issued to the stderr. if <code>FALSE</code>, this will be silent.</p></dd>
 
+<dt><code>warn</code></dt><dd><p>if <code>TRUE</code> (default), a warning will be issued if there are
+any failures in the tests.</p></dd>
+
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>a logical vector of length five summarizing the results of the
-five aspects listed above: <code>TRUE</code> for valid headings and <code>FALSE</code> for
-invalid headings.</p>
+<p>a data frame with a variable number of rows and the follwoing
+columns:</p><ul>
+<li><p><strong>episode</strong> the filename of the episode</p></li>
+<li><p><strong>heading</strong> the text from a heading</p></li>
+<li><p><strong>level</strong> the heading level</p></li>
+<li><p><strong>pos</strong> the position of the heading in the document</p></li>
+<li><p><strong>node</strong> the XML node that represents the heading</p></li>
+<li><p>(the next five columns are the tests listed above)</p></li>
+<li><p><strong>path</strong> the path to the file.</p></li>
+</ul>
+
+<p>Each row in the data frame represents an individual heading across the
+Lesson. See <code><a href='validate_headings.html'>validate_headings()</a></code> for more details.</p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
 <p><div class="r example copy"></p><pre><span class='co'># Example: There are multiple headings called "Solution" that are not</span>
 <span class='co'># nested within a higher-level heading and will throw an error</span>
 <span class='va'>loop</span> <span class='op'>&lt;-</span> <span class='va'>Episode</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"_episodes"</span>, <span class='st'>"14-looping-data-sets.md"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>loop</span><span class='op'>$</span><span class='fu'>validate_headings</span><span class='op'>(</span><span class='op'>)</span>
-
 </pre><p></div></p>
 
 <p><hr>
@@ -609,12 +621,13 @@ for details.</p><ul>
 <li><p>Link text is more than a single letter (<code>link_length</code>)</p></li>
 </ul>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Episode</span><span class='op'>$</span><span class='fu'>validate_links</span><span class='op'>(</span>verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Episode</span><span class='op'>$</span><span class='fu'>validate_links</span><span class='op'>(</span>warn <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>verbose</code></dt><dd><p>if <code>TRUE</code> (default), a message for each rule broken will
-be issued to the stderr. if <code>FALSE</code>, this will be silent.</p></dd>
+<dt><code>warn</code></dt><dd><p>if <code>TRUE</code> (default), a warning message will be if there are
+any links determined to be invalid. Set to <code>FALSE</code> if you want the
+table for processing later.</p></dd>
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
@@ -849,7 +862,7 @@ links.</p>
 
 <span class='va'>scope</span> <span class='op'>&lt;-</span> <span class='va'>Episode</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"_episodes"</span>, <span class='st'>"17-scope.md"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>scope</span><span class='op'>$</span><span class='fu'>write</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Creating temporary directory '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpuhilbN/dir142c5049ea9'</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Creating temporary directory '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/Rtmpg1pH8Y/dire01616ce37f'</span></div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `Episode$reset`</span>
 <span class='co'>## ------------------------------------------------</span>
@@ -938,7 +951,14 @@ links.</p>
 <span class='co'># nested within a higher-level heading and will throw an error</span>
 <span class='va'>loop</span> <span class='op'>&lt;-</span> <span class='va'>Episode</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"_episodes"</span>, <span class='st'>"14-looping-data-sets.md"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>loop</span><span class='op'>$</span><span class='fu'>validate_headings</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> All headings must have unique IDs.</span></div><div class='output co'>#&gt; <span class='message'>── Heading structure ───────────────────────────────────────────────────────────</span></div><div class='output co'>#&gt; # Lesson: “Looping Over Data Sets” 
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> There were errors in 3/10 headings</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>- Headings must be unique</span>
+#&gt; <span class='message'>&lt;https://webaim.org/techniques/semanticstructure/#headings&gt;</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>::warning file=_episodes/14-looping-data-sets.md,line=119:: (duplicated)</span>
+#&gt; <span class='message'>::warning file=_episodes/14-looping-data-sets.md,line=143:: (duplicated)</span>
+#&gt; <span class='message'>::warning file=_episodes/14-looping-data-sets.md,line=162:: (duplicated)</span></div><div class='output co'>#&gt; <span class='message'>── Heading structure ───────────────────────────────────────────────────────────</span></div><div class='output co'>#&gt; # Episode: “Looping Over Data Sets” 
 #&gt; ├─## Use a for loop to process files given a list of their names. 
 #&gt; ├─## Use glob.glob to find sets of files whose names match a pattern. 
 #&gt; ├─## Use glob and for to process batches of files. 
@@ -948,27 +968,21 @@ links.</p>
 #&gt; ├─## Solution  (duplicated)
 #&gt; ├─## Comparing Data 
 #&gt; └─## Solution  (duplicated)
-#&gt;   └─### ZNK test links and images </div><div class='output co'>#&gt; <span class='message'>────────────────────────────────────────────────────────────────────────────────</span></div><div class='output co'>#&gt;    first_heading_is_second_level all_are_greater_than_first_level 
-#&gt;                             TRUE                             TRUE 
-#&gt;               all_are_sequential                   all_have_names 
-#&gt;                             TRUE                             TRUE 
-#&gt;                   all_are_unique 
-#&gt;                            FALSE </div><div class='input'>
-
+#&gt;   └─### ZNK test links and images </div><div class='output co'>#&gt; <span class='message'>────────────────────────────────────────────────────────────────────────────────</span></div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `Episode$validate_links`</span>
 <span class='co'>## ------------------------------------------------</span>
 
 <span class='va'>loop</span> <span class='op'>&lt;-</span> <span class='va'>Episode</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"_episodes"</span>, <span class='st'>"14-looping-data-sets.md"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>loop</span><span class='op'>$</span><span class='fu'>validate_links</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> These files do not exist in the lesson:</span>
-#&gt; <span class='message'>../no-workie.svg (14-looping-data-sets.md:191)</span>
-#&gt; <span class='message'>../no-workie.svg (14-looping-data-sets.md:197)</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> Images need alt-text:</span>
-#&gt; <span class='message'>https://carpentries.org/assets/img/TheCarpentries.svg (14-looping-data-sets.md:195)</span>
-#&gt; <span class='message'>../no-workie.svg (14-looping-data-sets.md:197)</span></div><div class='output co'>#&gt; enforce_https internal_okay all_reachable  img_alt_text   descriptive 
-#&gt;          TRUE         FALSE          TRUE         FALSE          TRUE 
-#&gt;   link_length 
-#&gt;          TRUE </div></pre>
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> There were errors in 3/12 links</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>- Some linked internal files do not exist</span>
+#&gt; <span class='message'>- Images need alt-text &lt;https://webaim.org/techniques/hypertext/link_text#alt_link&gt;</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file] ../no-workie.svg</span>
+#&gt; <span class='message'>::warning file=_episodes/14-looping-data-sets.md,line=195:: [missing alt-text]</span>
+#&gt; <span class='message'>::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [missing alt-text]</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

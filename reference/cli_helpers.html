@@ -41,6 +41,7 @@
 
 <meta property="og:title" content="Issue a warning via CLI if it exists or send a message — issue_warning" />
 <meta property="og:description" content="Issue a warning via CLI if it exists or send a message
+Create a single character that reports line errors
 Append a stylized label to elements of a vector" />
 
 
@@ -73,7 +74,7 @@ Append a stylized label to elements of a vector" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9022</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9023</span>
       </span>
     </div>
 
@@ -125,16 +126,19 @@ Append a stylized label to elements of a vector" />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Issue a warning via CLI if it exists or send a message</h1>
-    <small class="dont-index">Source: <a href='https://github.com/zkamvar/pegboard/blob/master/R/cli_helpers.R'><code>R/cli_helpers.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/zkamvar/pegboard/blob/master/R/utils-cli.R'><code>R/utils-cli.R</code></a></small>
     <div class="hidden name"><code>cli_helpers.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>Issue a warning via CLI if it exists or send a message</p>
+<p>Create a single character that reports line errors</p>
 <p>Append a stylized label to elements of a vector</p>
     </div>
 
     <pre class="usage"><span class='fu'>issue_warning</span><span class='op'>(</span><span class='va'>msg</span>, cli <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>line_report</span><span class='op'>(</span>msg <span class='op'>=</span> <span class='st'>""</span>, <span class='va'>path</span>, <span class='va'>pos</span>, sep <span class='op'>=</span> <span class='st'>"\t"</span>, type <span class='op'>=</span> <span class='st'>"warning"</span><span class='op'>)</span>
 
 <span class='fu'>append_labels</span><span class='op'>(</span><span class='va'>l</span>, i <span class='op'>=</span> <span class='cn'>TRUE</span>, e <span class='op'>=</span> <span class='st'>""</span>, cli <span class='op'>=</span> <span class='cn'>FALSE</span>, f <span class='op'>=</span> <span class='st'>"style_inverse"</span><span class='op'>)</span></pre>
 
@@ -152,6 +156,22 @@ Append a stylized label to elements of a vector" />
     <tr>
       <th>...</th>
       <td><p>named arguments to be evaluated in the message via glue or CLI</p></td>
+    </tr>
+    <tr>
+      <th>path</th>
+      <td><p>path to the file to report</p></td>
+    </tr>
+    <tr>
+      <th>pos</th>
+      <td><p>position of the error</p></td>
+    </tr>
+    <tr>
+      <th>sep</th>
+      <td><p>a character to use to separate the human message and the line number</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>the type of warning that should be thrown (defaults to warning)</p></td>
     </tr>
     <tr>
       <th>l</th>
