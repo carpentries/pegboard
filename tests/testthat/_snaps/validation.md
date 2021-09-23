@@ -121,8 +121,8 @@
       
       - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
-      image-test.md:12  [missing alt-text] https://placekitten.com/g/102/102
-      image-test.md:41  [missing alt-text] https://placekitten.com/g/109/109
+      image-test.md:12  [missing alt-text]
+      image-test.md:41  [missing alt-text]
 
 ---
 
@@ -135,8 +135,8 @@
       - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
       _episodes/14-looping-data-sets.md:191  [missing file] ../no-workie.svg
-      _episodes/14-looping-data-sets.md:195  [missing alt-text] https://carpentries.org/assets/img/TheCarpentries.svg
-      _episodes/14-looping-data-sets.md:197  [missing file] ../no-workie.svg [missing alt-text] ../no-workie.svg
+      _episodes/14-looping-data-sets.md:195  [missing alt-text]
+      _episodes/14-looping-data-sets.md:197  [missing file] ../no-workie.svg [missing alt-text]
 
 ---
 
@@ -316,8 +316,8 @@
       
       - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
-      image-test.md:12  [missing alt-text] https://placekitten.com/g/102/102
-      image-test.md:41  [missing alt-text] https://placekitten.com/g/109/109
+      image-test.md:12  [missing alt-text]
+      image-test.md:41  [missing alt-text]
 
 ---
 
@@ -369,8 +369,8 @@
       
       - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
-      image-test.md:12  [missing alt-text] https://placekitten.com/g/102/102
-      image-test.md:41  [missing alt-text] https://placekitten.com/g/109/109
+      image-test.md:12  [missing alt-text]
+      image-test.md:41  [missing alt-text]
 
 ---
 
@@ -422,8 +422,8 @@
       
       - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
-      image-test.md:12  [missing alt-text] https://placekitten.com/g/102/102
-      image-test.md:41  [missing alt-text] https://placekitten.com/g/109/109
+      image-test.md:12  [missing alt-text]
+      image-test.md:41  [missing alt-text]
 
 ---
 
@@ -475,8 +475,8 @@
       
       - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
-      image-test.md:12  [missing alt-text] https://placekitten.com/g/102/102
-      image-test.md:41  [missing alt-text] https://placekitten.com/g/109/109
+      image-test.md:12  [missing alt-text]
+      image-test.md:41  [missing alt-text]
 
 ---
 

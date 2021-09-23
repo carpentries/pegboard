@@ -1,16 +1,3 @@
-#' Get all headings in the XML document
-#'
-#' @param body an XML document
-#'
-#' @return an object of class `xml_nodeset` with all the headings in the
-#'  document.
-#' @noRd
-get_headings <- function(body) {
-  ns <- NS(body)
-  xml2::xml_find_all(body, glue::glue(".//{ns}heading"))
-}
-
-
 #' Validate headings
 #' 
 #' This will validate the following aspects of all headings:
@@ -34,6 +21,27 @@ get_headings <- function(body) {
 #'   2. a data frame that can be printed as a tree with `show_heading_tree()`
 #' @keywords internal
 #' @rdname validate_headings
+#' @examples
+#' l <- Lesson$new(lesson_fragment())
+#' e <- l$episodes[[3]]
+#' # Our headings validators run a series of tests on headings and return a data
+#' # frame with information about the headings along with the results of the
+#' # tests
+#' v <- pegboard:::validate_headings(e$headings, e$get_yaml()$title, length(e$yaml))
+#' names(v)
+#' v$results
+#' v$results$path <- fs::path_rel(e$path, e$lesson)
+#' # The validator does not produce any warnings or messages, but this data
+#' # frame can be passed on to other functions that will throw them for us. We
+#' # have a function that will throw a warning/message for each heading that
+#' # fails the tests. These messages are controlled by `heading_tests` and 
+#' # `heading_info`.
+#' pegboard:::heading_tests
+#' pegboard:::heading_info
+#' pegboard:::throw_heading_warnings(v$results)
+#' # Because the headings are best understood in tree form we have a utility
+#' # that will print the heading tree with the associated errors:
+#' pegboard:::show_heading_tree(v$tree)
 validate_headings <- function(headings, title = NULL, offset = 5L) {
   has_cli <- is.null(getOption("pegboard.no-cli")) &&
     requireNamespace("cli", quietly = TRUE)
@@ -64,23 +72,6 @@ validate_headings <- function(headings, title = NULL, offset = 5L) {
   return(list(results = VAL[names(VAL) != "labels"], tree = htree))
 }
 
-#' @rdname validate_headings
-#' @param tree a data frame produced via `validate_headings()`
-show_heading_tree <- function(tree) {
-  has_cli <- is.null(getOption("pegboard.no-cli")) &&
-    requireNamespace("cli", quietly = TRUE)
-  if (has_cli) {
-    cli::cli_rule("Heading structure")
-    cli::cat_print(cli::tree(tree, trim = TRUE))
-    cli::cli_rule()
-  } else {
-    pad <- vapply(tree$level, function(i) {
-      paste(rep("-", i), collapse = "")
-    }, character(1))
-    dtree <- paste0(pad, tree$label)
-    message(paste(dtree, collapse = "\n"))
-  }
-}
 
 #' @rdname validate_headings
 heading_tests <- c(
@@ -92,6 +83,7 @@ heading_tests <- c(
   NULL
 )
 
+#' @rdname validate_headings
 heading_info <- c(
   first_heading_is_second_level = "First heading must be level 2",
   greater_than_first_level = "Level 1 headings are not allowed",

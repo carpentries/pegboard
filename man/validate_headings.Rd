@@ -3,8 +3,8 @@
 \docType{data}
 \name{validate_headings}
 \alias{validate_headings}
-\alias{show_heading_tree}
 \alias{heading_tests}
+\alias{heading_info}
 \alias{headings_first_heading_is_second_level}
 \alias{headings_greater_than_first_level}
 \alias{headings_are_sequential}
@@ -13,13 +13,15 @@
 \title{Validate headings}
 \format{
 An object of class \code{character} of length 5.
+
+An object of class \code{character} of length 5.
 }
 \usage{
 validate_headings(headings, title = NULL, offset = 5L)
 
-show_heading_tree(tree)
-
 heading_tests
+
+heading_info
 
 headings_first_heading_is_second_level(VAL)
 
@@ -38,8 +40,6 @@ headings_are_unique(VAL)
 
 \item{offset}{the number of lines to offset the position (equal to the size
 of the yaml header).}
-
-\item{tree}{a data frame produced via \code{validate_headings()}}
 
 \item{VAL}{a data frame that contains the results of \code{\link[=make_heading_table]{make_heading_table()}}
 and logical columns that match the name of the test.}
@@ -68,6 +68,28 @@ This will validate the following aspects of all headings:
 \note{
 This is an internal function implemented for the \link{Episode} and \link{Lesson}
 classes.
+}
+\examples{
+l <- Lesson$new(lesson_fragment())
+e <- l$episodes[[3]]
+# Our headings validators run a series of tests on headings and return a data
+# frame with information about the headings along with the results of the
+# tests
+v <- pegboard:::validate_headings(e$headings, e$get_yaml()$title, length(e$yaml))
+names(v)
+v$results
+v$results$path <- fs::path_rel(e$path, e$lesson)
+# The validator does not produce any warnings or messages, but this data
+# frame can be passed on to other functions that will throw them for us. We
+# have a function that will throw a warning/message for each heading that
+# fails the tests. These messages are controlled by `heading_tests` and 
+# `heading_info`.
+pegboard:::heading_tests
+pegboard:::heading_info
+pegboard:::throw_heading_warnings(v$results)
+# Because the headings are best understood in tree form we have a utility
+# that will print the heading tree with the associated errors:
+pegboard:::show_heading_tree(v$tree)
 }
 \keyword{datasets}
 \keyword{internal}

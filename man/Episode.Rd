@@ -807,14 +807,15 @@ for details.
 \item Link text is more than a single letter (\code{link_length})
 }
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Episode$validate_links(verbose = TRUE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Episode$validate_links(warn = TRUE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{verbose}}{if \code{TRUE} (default), a message for each rule broken will
-be issued to the stderr. if \code{FALSE}, this will be silent.}
+\item{\code{warn}}{if \code{TRUE} (default), a warning message will be if there are
+any links determined to be invalid. Set to \code{FALSE} if you want the
+table for processing later.}
 }
 \if{html}{\out{</div>}}
 }

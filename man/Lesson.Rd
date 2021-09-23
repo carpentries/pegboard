@@ -366,7 +366,7 @@ internal \code{\link[=validate_links]{validate_links()}} for details.
 }
 }
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Lesson$validate_links(verbose = TRUE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Lesson$validate_links()}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

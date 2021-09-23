@@ -206,7 +206,7 @@ Lesson <- R6::R6Class("Lesson",
         ~.x$validate_headings(verbose = verbose, warn = FALSE),
         .id = "episode"
       )
-      throw_header_warnings(res)
+      throw_heading_warnings(res)
       invisible(res)
     },
     #' @description

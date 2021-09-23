@@ -461,7 +461,7 @@ Episode <- R6::R6Class("Episode",
       res$path <- fs::path_rel(self$path, self$lesson)
       failures <- !all(apply(res[names(heading_tests)], MARGIN = 2L, all))
       if (warn) {
-        throw_header_warnings(res)
+        throw_heading_warnings(res)
       }
       if (verbose && failures) {
         show_heading_tree(out$tree)
@@ -481,15 +481,16 @@ Episode <- R6::R6Class("Episode",
     #'  - Link text is descriptive (`descriptive`)
     #'  - Link text is more than a single letter (`link_length`)
     #'
-    #' @param verbose if `TRUE` (default), a message for each rule broken will
-    #'   be issued to the stderr. if `FALSE`, this will be silent. 
+    #' @param warn if `TRUE` (default), a warning message will be if there are
+    #'   any links determined to be invalid. Set to `FALSE` if you want the
+    #'   table for processing later.
     #' @return a logical `TRUE` for valid links and `FALSE` for invalid 
     #'   links.
     #' @examples
     #' loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
     #' loop$validate_links()
     validate_links = function(warn = TRUE) {
-      res <- new_validate_links(self)
+      res <- validate_links(self)
       if (warn) {
         throw_link_warnings(res)
       }

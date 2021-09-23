@@ -77,8 +77,8 @@
       - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
       ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file] ../no-workie.svg
-      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [missing alt-text] https://carpentries.org/assets/img/TheCarpentries.svg
-      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [missing alt-text] ../no-workie.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [missing alt-text]
+      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [missing alt-text]
 
 # Lessons can be validated [ansi]
 
@@ -159,8 +159,8 @@
       - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
       ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file] ../no-workie.svg
-      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [missing alt-text] https://carpentries.org/assets/img/TheCarpentries.svg
-      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [missing alt-text] ../no-workie.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [missing alt-text]
+      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [missing alt-text]
 
 # Lessons can be validated [unicode]
 
@@ -241,8 +241,8 @@
       - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
       ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file] ../no-workie.svg
-      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [missing alt-text] https://carpentries.org/assets/img/TheCarpentries.svg
-      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [missing alt-text] ../no-workie.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [missing alt-text]
+      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [missing alt-text]
 
 # Lessons can be validated [fancy]
 
@@ -323,6 +323,6 @@
       - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
       ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file] ../no-workie.svg
-      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [missing alt-text] https://carpentries.org/assets/img/TheCarpentries.svg
-      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [missing alt-text] ../no-workie.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [missing alt-text]
+      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [missing alt-text]
 

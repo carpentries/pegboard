@@ -1,4 +1,4 @@
-throw_header_warnings <- function(VAL) {
+throw_heading_warnings <- function(VAL) {
   if (length(VAL) == 0 || nrow(VAL) == 0) {
     return(invisible(NULL))
   }
