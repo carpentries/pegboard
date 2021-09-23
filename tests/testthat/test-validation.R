@@ -7,7 +7,7 @@ withr::defer(rm(list = c("vh", "loop", "cats", "link")))
 test_that("invalid headings can be caught without the reporters", {
   suppressMessages({
     expect_message(res <- vh$validate_headings(verbose = FALSE), 
-      "There were errors in 5 headings")
+      "There were errors in 5/7 headings")
   })
   expect_equal(sum(res$first_heading_is_second_level), 6)
   expect_equal(sum(res$greater_than_first_level), 6)
