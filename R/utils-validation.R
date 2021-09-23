@@ -18,6 +18,25 @@ throw_header_warnings <- function(VAL) {
 
     {reports}", cli = has_cli, n = nrow(err), N = nrow(VAL), infos = infos, reports = reports)
 }
+
+throw_link_warnings <- function(VAL) {
+  has_cli <- is.null(getOption("pegboard.no-cli")) &&
+    requireNamespace("cli", quietly = TRUE)
+  VAL <- collect_labels(VAL, cli = FALSE, link_tests)
+  err <- VAL[VAL$label != '', ]
+  # No errors throw no warnings
+  if (nrow(err) == 0) {
+    return(invisible(NULL))
+  }
+  
+  reports <- line_report(msg = err$label, err$filepath, err$sourcepos, sep = " ")
+  failed <- !apply(err[names(link_tests)], MARGIN = 2, all)
+  infos <- paste("-", link_info[failed], collapse = "\n")
+  issue_warning("There were errors in {n}/{N} links
+
+    {infos}
+
+    {reports}", cli = has_cli, n = nrow(err), N = nrow(VAL), infos = infos, reports = reports)
 }
 
 #' @param VAL a data frame containing the results of tests
