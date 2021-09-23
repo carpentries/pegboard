@@ -17,8 +17,15 @@ test_that("invalid headings can be caught without the reporters", {
 })
 
 test_that("invalid alt text can be caught without reporters", {
-  expect_silent(res <- cats$validate_links(verbose = FALSE))
-  expect_false(res["img_alt_text"])
+  expect_silent(res <- cats$validate_links(warn = FALSE))
+  expect_equal(sum(res$enforce_https), 9)
+  expect_equal(sum(res$internal_anchor), 9)
+  expect_equal(sum(res$internal_file), 9)
+  expect_equal(sum(res$internal_well_formed), 9)
+  expect_equal(sum(res$all_reachable), 9)
+  expect_equal(sum(res$img_alt_text), 7)
+  expect_equal(sum(res$descriptive), 9)
+  expect_equal(sum(res$link_length), 9)
 })
 
 
@@ -54,7 +61,6 @@ test_that("headings reporters will work on CI", {
   expect_equal(sum(res$are_unique), 5)
 
   expect_snapshot(res <- loop$validate_headings())
-  expect_s3_class(res, "data.frame")
   expect_equal(nrow(res), 10)
   expect_equal(sum(res$first_heading_is_second_level), 10)
   expect_equal(sum(res$greater_than_first_level), 10)
@@ -67,9 +73,9 @@ test_that("headings reporters will work on CI", {
 test_that("links reporters will work without CLI", {
 
   withr::local_options(list("pegboard.no-cli" = TRUE))
-  expect_snapshot(expect_false(all(cats$validate_links())))
-  expect_snapshot(expect_equal(sum(loop$validate_links()), 4L))
-  expect_snapshot(expect_equal(sum(link$validate_links()), 2L))
+  expect_snapshot(cats$validate_links())
+  expect_snapshot(loop$validate_links())
+  expect_snapshot(link$validate_links())
 
 })
 
@@ -86,14 +92,14 @@ if (requireNamespace("cli", quietly = TRUE)) {
 
 
   cli::test_that_cli("links reporters will work", {
-    expect_snapshot(expect_false(all(cats$validate_links())))
-    expect_snapshot(expect_equal(sum(link$validate_links()), 2L))
+    expect_snapshot(cats$validate_links())
+    expect_snapshot(link$validate_links())
   })
 }
 
 test_that("links reporters will work on CI", {
 
   withr::local_envvar(list(CI = "true"))
-  expect_snapshot(expect_equal(sum(link$validate_links()), 2L))
+  expect_snapshot(link$validate_links())
 
 })

@@ -232,12 +232,10 @@ Lesson <- R6::R6Class("Lesson",
     #' @examples
     #' frg <- Lesson$new(lesson_fragment())
     #' frg$validate_links()
-    validate_links = function(verbose = TRUE) {
-      res <- purrr::map_dfc(self$episodes, ~.x$validate_links(verbose = verbose))
-      n <- length(res)
-      res$type <- names(res[[1]])
-      res <- res[c(n + 1L, 1:n)]
-      res
+    validate_links = function() {
+      res <- purrr::map_dfr(self$episodes, ~.x$validate_links(warn = FALSE))
+      throw_link_warnings(res)
+      invisible(res)
     }
   ),
   active = list(

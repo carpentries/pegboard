@@ -26,6 +26,9 @@ make_link_table <- function(yrn) {
   # Combining nodesets forces these to be lists, meaning that we have to use
   # mappers here.
   limg      <- c(yrn$links, yrn$get_images(process = TRUE))
+  if (length(limg) == 0) {
+    return(NULL)
+  }
   types     <- purrr::map_chr(limg, xml2::xml_name)
   urls      <- purrr::map_chr(limg, xml2::xml_attr, "destination")
   url_table <- xml2::url_parse(urls)
@@ -38,6 +41,8 @@ make_link_table <- function(yrn) {
   url_table$rel       <- purrr::map_chr(limg, xml2::xml_attr, "rel")
   url_table$anchor    <- !is.na(purrr::map_chr(limg, xml2::xml_attr, "anchor"))
   url_table$sourcepos <- purrr::map_int(limg, get_linestart) + yml_lines
+  url_table$filepath  <- fs::path_rel(yrn$path, yrn$lesson)
+  url_table$node      <- I(c(limg))
 
   url_table[order(url_table$sourcepos), , drop = FALSE]
 }

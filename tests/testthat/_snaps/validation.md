@@ -115,65 +115,69 @@
 # links reporters will work without CLI
 
     Code
-      expect_false(all(cats$validate_links()))
+      cats$validate_links()
     Message <simpleMessage>
-      ! Images need alt-text:
-      <https://webaim.org/techniques/hypertext/link_text#alt_link>
-      image-test.md:12	https://placekitten.com/g/102/102 [missing alt text]
-      image-test.md:41	https://placekitten.com/g/109/109 [missing alt text]
+      ! There were errors in 2/9 links
+      
+      - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
+      
+      image-test.md:12  [missing alt-text] https://placekitten.com/g/102/102
+      image-test.md:41  [missing alt-text] https://placekitten.com/g/109/109
 
 ---
 
     Code
-      expect_equal(sum(loop$validate_links()), 4L)
+      loop$validate_links()
     Message <simpleMessage>
-      ! These files do not exist in the lesson:
-      14-looping-data-sets.md:191	../no-workie.svg [missing file]
-      14-looping-data-sets.md:197	../no-workie.svg [missing file]
-      ! Images need alt-text:
-      <https://webaim.org/techniques/hypertext/link_text#alt_link>
-      14-looping-data-sets.md:195	https://carpentries.org/assets/img/TheCarpentries.svg [missing alt text]
-      14-looping-data-sets.md:197	../no-workie.svg [missing alt text]
+      ! There were errors in 3/12 links
+      
+      - Some linked internal files do not exist
+      - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
+      
+      _episodes/14-looping-data-sets.md:191  [missing file] ../no-workie.svg
+      _episodes/14-looping-data-sets.md:195  [missing alt-text] https://carpentries.org/assets/img/TheCarpentries.svg
+      _episodes/14-looping-data-sets.md:197  [missing file] ../no-workie.svg [missing alt-text] ../no-workie.svg
 
 ---
 
     Code
-      expect_equal(sum(link$validate_links()), 2L)
+      link$validate_links()
     Message <simpleMessage>
-      ! Links must use HTTPS, not HTTP:
-      link-test.md:42	http://example.com [HTTP protocol]
-      ! The following anchors do not exist in the file:
-      link-test.md:22	#bad-fragment [missing anchor]
-      ! Relative links that are incorrectly formatted:
-      link-test.md:37	[should be a relative link](rel-image) -> [should be a relative link][rel-image] [format]
-      ! These files do not exist in the lesson:
-      link-test.md:29	incorrect-link.html [missing file]
-      ! Avoid uninformative link phrases:
-      <https://webaim.org/techniques/hypertext/link_text#uninformative>
-      link-test.md:18	'link' [uninformative]
-      link-test.md:18	'this link' [uninformative]
-      link-test.md:50	'this' [uninformative]
-      link-test.md:51	'link' [uninformative]
-      link-test.md:52	'this link' [uninformative]
-      link-test.md:53	'a link' [uninformative]
-      link-test.md:54	'link to' [uninformative]
-      link-test.md:55	'here' [uninformative]
-      link-test.md:56	'here for' [uninformative]
-      link-test.md:57	'click here for' [uninformative]
-      link-test.md:58	'over here for' [uninformative]
-      link-test.md:59	'more' [uninformative]
-      link-test.md:60	'more about' [uninformative]
-      link-test.md:61	'for more about' [uninformative]
-      link-test.md:62	'for more info about' [uninformative]
-      link-test.md:63	'for more information about' [uninformative]
-      link-test.md:64	'read more about' [uninformative]
-      link-test.md:65	'read more' [uninformative]
-      link-test.md:66	'read on' [uninformative]
-      link-test.md:67	'read on about' [uninformative]
-      ! Avoid single-letter or missing link text:
-      <https://webaim.org/techniques/hypertext/link_text#link_length>
-      link-test.md:68	'a' [length]
-      link-test.md:69	'' [length]
+      ! There were errors in 26/39 links
+      
+      - Links must use HTTPS <https://https.cio.gov/everything/>
+      - Some link anchors for relative links (e.g. [anchor]: link) are missing
+      - Some linked internal files do not exist
+      - Some links were incorrectly formatted
+      - Avoid uninformative link phrases <https://webaim.org/techniques/hypertext/link_text#uninformative>
+      - Avoid single-letter or missing link text <https://webaim.org/techniques/hypertext/link_text#link_length>
+      
+      link-test.md:18  [uninformative text] 'link'
+      link-test.md:18  [uninformative text] 'this link'
+      link-test.md:22  [missing anchor] #bad-fragment
+      link-test.md:29  [missing file] incorrect-link.html
+      link-test.md:37  [incorrect formatting]: [should be a relative link][rel-image] -> [should be a relative link](rel-image)
+      link-test.md:42  [needs HTTPS] http://example.com
+      link-test.md:50  [uninformative text] 'this'
+      link-test.md:51  [uninformative text] 'link'
+      link-test.md:52  [uninformative text] 'this link'
+      link-test.md:53  [uninformative text] 'a link'
+      link-test.md:54  [uninformative text] 'link to'
+      link-test.md:55  [uninformative text] 'here'
+      link-test.md:56  [uninformative text] 'here for'
+      link-test.md:57  [uninformative text] 'click here for'
+      link-test.md:58  [uninformative text] 'over here for'
+      link-test.md:59  [uninformative text] 'more'
+      link-test.md:60  [uninformative text] 'more about'
+      link-test.md:61  [uninformative text] 'for more about'
+      link-test.md:62  [uninformative text] 'for more info about'
+      link-test.md:63  [uninformative text] 'for more information about'
+      link-test.md:64  [uninformative text] 'read more about'
+      link-test.md:65  [uninformative text] 'read more'
+      link-test.md:66  [uninformative text] 'read on'
+      link-test.md:67  [uninformative text] 'read on about'
+      link-test.md:68  [text too short] 'a'
+      link-test.md:69  [text too short] ''
 
 # headings reporters will work [plain]
 
@@ -306,240 +310,253 @@
 # links reporters will work [plain]
 
     Code
-      expect_false(all(cats$validate_links()))
+      cats$validate_links()
     Message <cliMessage>
-      ! Images need alt-text:
-      <https://webaim.org/techniques/hypertext/link_text#alt_link>
-      image-test.md:12	https://placekitten.com/g/102/102 [missing alt text]
-      image-test.md:41	https://placekitten.com/g/109/109 [missing alt text]
+      ! There were errors in 2/9 links
+      
+      - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
+      
+      image-test.md:12  [missing alt-text] https://placekitten.com/g/102/102
+      image-test.md:41  [missing alt-text] https://placekitten.com/g/109/109
 
 ---
 
     Code
-      expect_equal(sum(link$validate_links()), 2L)
+      link$validate_links()
     Message <cliMessage>
-      ! Links must use HTTPS, not HTTP:
-      link-test.md:42	http://example.com [HTTP protocol]
-      ! The following anchors do not exist in the file:
-      link-test.md:22	#bad-fragment [missing anchor]
-      ! Relative links that are incorrectly formatted:
-      link-test.md:37	[should be a relative link](rel-image) -> [should be a relative link][rel-image] [format]
-      ! These files do not exist in the lesson:
-      link-test.md:29	incorrect-link.html [missing file]
-      ! Avoid uninformative link phrases:
-      <https://webaim.org/techniques/hypertext/link_text#uninformative>
-      link-test.md:18	'link' [uninformative]
-      link-test.md:18	'this link' [uninformative]
-      link-test.md:50	'this' [uninformative]
-      link-test.md:51	'link' [uninformative]
-      link-test.md:52	'this link' [uninformative]
-      link-test.md:53	'a link' [uninformative]
-      link-test.md:54	'link to' [uninformative]
-      link-test.md:55	'here' [uninformative]
-      link-test.md:56	'here for' [uninformative]
-      link-test.md:57	'click here for' [uninformative]
-      link-test.md:58	'over here for' [uninformative]
-      link-test.md:59	'more' [uninformative]
-      link-test.md:60	'more about' [uninformative]
-      link-test.md:61	'for more about' [uninformative]
-      link-test.md:62	'for more info about' [uninformative]
-      link-test.md:63	'for more information about' [uninformative]
-      link-test.md:64	'read more about' [uninformative]
-      link-test.md:65	'read more' [uninformative]
-      link-test.md:66	'read on' [uninformative]
-      link-test.md:67	'read on about' [uninformative]
-      ! Avoid single-letter or missing link text:
-      <https://webaim.org/techniques/hypertext/link_text#link_length>
-      link-test.md:68	'a' [length]
-      link-test.md:69	'' [length]
+      ! There were errors in 26/39 links
+      
+      - Links must use HTTPS <https://https.cio.gov/everything/>
+      - Some link anchors for relative links (e.g. [anchor]: link) are missing
+      - Some linked internal files do not exist
+      - Some links were incorrectly formatted
+      - Avoid uninformative link phrases <https://webaim.org/techniques/hypertext/link_text#uninformative>
+      - Avoid single-letter or missing link text <https://webaim.org/techniques/hypertext/link_text#link_length>
+      
+      link-test.md:18  [uninformative text] 'link'
+      link-test.md:18  [uninformative text] 'this link'
+      link-test.md:22  [missing anchor] #bad-fragment
+      link-test.md:29  [missing file] incorrect-link.html
+      link-test.md:37  [incorrect formatting]: [should be a relative link][rel-image] -> [should be a relative link](rel-image)
+      link-test.md:42  [needs HTTPS] http://example.com
+      link-test.md:50  [uninformative text] 'this'
+      link-test.md:51  [uninformative text] 'link'
+      link-test.md:52  [uninformative text] 'this link'
+      link-test.md:53  [uninformative text] 'a link'
+      link-test.md:54  [uninformative text] 'link to'
+      link-test.md:55  [uninformative text] 'here'
+      link-test.md:56  [uninformative text] 'here for'
+      link-test.md:57  [uninformative text] 'click here for'
+      link-test.md:58  [uninformative text] 'over here for'
+      link-test.md:59  [uninformative text] 'more'
+      link-test.md:60  [uninformative text] 'more about'
+      link-test.md:61  [uninformative text] 'for more about'
+      link-test.md:62  [uninformative text] 'for more info about'
+      link-test.md:63  [uninformative text] 'for more information about'
+      link-test.md:64  [uninformative text] 'read more about'
+      link-test.md:65  [uninformative text] 'read more'
+      link-test.md:66  [uninformative text] 'read on'
+      link-test.md:67  [uninformative text] 'read on about'
+      link-test.md:68  [text too short] 'a'
+      link-test.md:69  [text too short] ''
 
 # links reporters will work [ansi]
 
     Code
-      expect_false(all(cats$validate_links()))
+      cats$validate_links()
     Message <cliMessage>
-      [33m![39m Images need alt-text:
-      <https://webaim.org/techniques/hypertext/link_text#alt_link>
-      image-test.md:12	https://placekitten.com/g/102/102 [missing alt text]
-      image-test.md:41	https://placekitten.com/g/109/109 [missing alt text]
+      [33m![39m There were errors in 2/9 links
+      
+      - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
+      
+      image-test.md:12  [missing alt-text] https://placekitten.com/g/102/102
+      image-test.md:41  [missing alt-text] https://placekitten.com/g/109/109
 
 ---
 
     Code
-      expect_equal(sum(link$validate_links()), 2L)
+      link$validate_links()
     Message <cliMessage>
-      [33m![39m Links must use HTTPS, not HTTP:
-      link-test.md:42	http://example.com [HTTP protocol]
-      [33m![39m The following anchors do not exist in the file:
-      link-test.md:22	#bad-fragment [missing anchor]
-      [33m![39m Relative links that are incorrectly formatted:
-      link-test.md:37	[should be a relative link](rel-image) -> [should be a relative link][rel-image] [format]
-      [33m![39m These files do not exist in the lesson:
-      link-test.md:29	incorrect-link.html [missing file]
-      [33m![39m Avoid uninformative link phrases:
-      <https://webaim.org/techniques/hypertext/link_text#uninformative>
-      link-test.md:18	'link' [uninformative]
-      link-test.md:18	'this link' [uninformative]
-      link-test.md:50	'this' [uninformative]
-      link-test.md:51	'link' [uninformative]
-      link-test.md:52	'this link' [uninformative]
-      link-test.md:53	'a link' [uninformative]
-      link-test.md:54	'link to' [uninformative]
-      link-test.md:55	'here' [uninformative]
-      link-test.md:56	'here for' [uninformative]
-      link-test.md:57	'click here for' [uninformative]
-      link-test.md:58	'over here for' [uninformative]
-      link-test.md:59	'more' [uninformative]
-      link-test.md:60	'more about' [uninformative]
-      link-test.md:61	'for more about' [uninformative]
-      link-test.md:62	'for more info about' [uninformative]
-      link-test.md:63	'for more information about' [uninformative]
-      link-test.md:64	'read more about' [uninformative]
-      link-test.md:65	'read more' [uninformative]
-      link-test.md:66	'read on' [uninformative]
-      link-test.md:67	'read on about' [uninformative]
-      [33m![39m Avoid single-letter or missing link text:
-      <https://webaim.org/techniques/hypertext/link_text#link_length>
-      link-test.md:68	'a' [length]
-      link-test.md:69	'' [length]
+      [33m![39m There were errors in 26/39 links
+      
+      - Links must use HTTPS <https://https.cio.gov/everything/>
+      - Some link anchors for relative links (e.g. [anchor]: link) are missing
+      - Some linked internal files do not exist
+      - Some links were incorrectly formatted
+      - Avoid uninformative link phrases <https://webaim.org/techniques/hypertext/link_text#uninformative>
+      - Avoid single-letter or missing link text <https://webaim.org/techniques/hypertext/link_text#link_length>
+      
+      link-test.md:18  [uninformative text] 'link'
+      link-test.md:18  [uninformative text] 'this link'
+      link-test.md:22  [missing anchor] #bad-fragment
+      link-test.md:29  [missing file] incorrect-link.html
+      link-test.md:37  [incorrect formatting]: [should be a relative link][rel-image] -> [should be a relative link](rel-image)
+      link-test.md:42  [needs HTTPS] http://example.com
+      link-test.md:50  [uninformative text] 'this'
+      link-test.md:51  [uninformative text] 'link'
+      link-test.md:52  [uninformative text] 'this link'
+      link-test.md:53  [uninformative text] 'a link'
+      link-test.md:54  [uninformative text] 'link to'
+      link-test.md:55  [uninformative text] 'here'
+      link-test.md:56  [uninformative text] 'here for'
+      link-test.md:57  [uninformative text] 'click here for'
+      link-test.md:58  [uninformative text] 'over here for'
+      link-test.md:59  [uninformative text] 'more'
+      link-test.md:60  [uninformative text] 'more about'
+      link-test.md:61  [uninformative text] 'for more about'
+      link-test.md:62  [uninformative text] 'for more info about'
+      link-test.md:63  [uninformative text] 'for more information about'
+      link-test.md:64  [uninformative text] 'read more about'
+      link-test.md:65  [uninformative text] 'read more'
+      link-test.md:66  [uninformative text] 'read on'
+      link-test.md:67  [uninformative text] 'read on about'
+      link-test.md:68  [text too short] 'a'
+      link-test.md:69  [text too short] ''
 
 # links reporters will work [unicode]
 
     Code
-      expect_false(all(cats$validate_links()))
+      cats$validate_links()
     Message <cliMessage>
-      ! Images need alt-text:
-      <https://webaim.org/techniques/hypertext/link_text#alt_link>
-      image-test.md:12	https://placekitten.com/g/102/102 [missing alt text]
-      image-test.md:41	https://placekitten.com/g/109/109 [missing alt text]
+      ! There were errors in 2/9 links
+      
+      - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
+      
+      image-test.md:12  [missing alt-text] https://placekitten.com/g/102/102
+      image-test.md:41  [missing alt-text] https://placekitten.com/g/109/109
 
 ---
 
     Code
-      expect_equal(sum(link$validate_links()), 2L)
+      link$validate_links()
     Message <cliMessage>
-      ! Links must use HTTPS, not HTTP:
-      link-test.md:42	http://example.com [HTTP protocol]
-      ! The following anchors do not exist in the file:
-      link-test.md:22	#bad-fragment [missing anchor]
-      ! Relative links that are incorrectly formatted:
-      link-test.md:37	[should be a relative link](rel-image) -> [should be a relative link][rel-image] [format]
-      ! These files do not exist in the lesson:
-      link-test.md:29	incorrect-link.html [missing file]
-      ! Avoid uninformative link phrases:
-      <https://webaim.org/techniques/hypertext/link_text#uninformative>
-      link-test.md:18	'link' [uninformative]
-      link-test.md:18	'this link' [uninformative]
-      link-test.md:50	'this' [uninformative]
-      link-test.md:51	'link' [uninformative]
-      link-test.md:52	'this link' [uninformative]
-      link-test.md:53	'a link' [uninformative]
-      link-test.md:54	'link to' [uninformative]
-      link-test.md:55	'here' [uninformative]
-      link-test.md:56	'here for' [uninformative]
-      link-test.md:57	'click here for' [uninformative]
-      link-test.md:58	'over here for' [uninformative]
-      link-test.md:59	'more' [uninformative]
-      link-test.md:60	'more about' [uninformative]
-      link-test.md:61	'for more about' [uninformative]
-      link-test.md:62	'for more info about' [uninformative]
-      link-test.md:63	'for more information about' [uninformative]
-      link-test.md:64	'read more about' [uninformative]
-      link-test.md:65	'read more' [uninformative]
-      link-test.md:66	'read on' [uninformative]
-      link-test.md:67	'read on about' [uninformative]
-      ! Avoid single-letter or missing link text:
-      <https://webaim.org/techniques/hypertext/link_text#link_length>
-      link-test.md:68	'a' [length]
-      link-test.md:69	'' [length]
+      ! There were errors in 26/39 links
+      
+      - Links must use HTTPS <https://https.cio.gov/everything/>
+      - Some link anchors for relative links (e.g. [anchor]: link) are missing
+      - Some linked internal files do not exist
+      - Some links were incorrectly formatted
+      - Avoid uninformative link phrases <https://webaim.org/techniques/hypertext/link_text#uninformative>
+      - Avoid single-letter or missing link text <https://webaim.org/techniques/hypertext/link_text#link_length>
+      
+      link-test.md:18  [uninformative text] 'link'
+      link-test.md:18  [uninformative text] 'this link'
+      link-test.md:22  [missing anchor] #bad-fragment
+      link-test.md:29  [missing file] incorrect-link.html
+      link-test.md:37  [incorrect formatting]: [should be a relative link][rel-image] -> [should be a relative link](rel-image)
+      link-test.md:42  [needs HTTPS] http://example.com
+      link-test.md:50  [uninformative text] 'this'
+      link-test.md:51  [uninformative text] 'link'
+      link-test.md:52  [uninformative text] 'this link'
+      link-test.md:53  [uninformative text] 'a link'
+      link-test.md:54  [uninformative text] 'link to'
+      link-test.md:55  [uninformative text] 'here'
+      link-test.md:56  [uninformative text] 'here for'
+      link-test.md:57  [uninformative text] 'click here for'
+      link-test.md:58  [uninformative text] 'over here for'
+      link-test.md:59  [uninformative text] 'more'
+      link-test.md:60  [uninformative text] 'more about'
+      link-test.md:61  [uninformative text] 'for more about'
+      link-test.md:62  [uninformative text] 'for more info about'
+      link-test.md:63  [uninformative text] 'for more information about'
+      link-test.md:64  [uninformative text] 'read more about'
+      link-test.md:65  [uninformative text] 'read more'
+      link-test.md:66  [uninformative text] 'read on'
+      link-test.md:67  [uninformative text] 'read on about'
+      link-test.md:68  [text too short] 'a'
+      link-test.md:69  [text too short] ''
 
 # links reporters will work [fancy]
 
     Code
-      expect_false(all(cats$validate_links()))
+      cats$validate_links()
     Message <cliMessage>
-      [33m![39m Images need alt-text:
-      <https://webaim.org/techniques/hypertext/link_text#alt_link>
-      image-test.md:12	https://placekitten.com/g/102/102 [missing alt text]
-      image-test.md:41	https://placekitten.com/g/109/109 [missing alt text]
+      [33m![39m There were errors in 2/9 links
+      
+      - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
+      
+      image-test.md:12  [missing alt-text] https://placekitten.com/g/102/102
+      image-test.md:41  [missing alt-text] https://placekitten.com/g/109/109
 
 ---
 
     Code
-      expect_equal(sum(link$validate_links()), 2L)
+      link$validate_links()
     Message <cliMessage>
-      [33m![39m Links must use HTTPS, not HTTP:
-      link-test.md:42	http://example.com [HTTP protocol]
-      [33m![39m The following anchors do not exist in the file:
-      link-test.md:22	#bad-fragment [missing anchor]
-      [33m![39m Relative links that are incorrectly formatted:
-      link-test.md:37	[should be a relative link](rel-image) -> [should be a relative link][rel-image] [format]
-      [33m![39m These files do not exist in the lesson:
-      link-test.md:29	incorrect-link.html [missing file]
-      [33m![39m Avoid uninformative link phrases:
-      <https://webaim.org/techniques/hypertext/link_text#uninformative>
-      link-test.md:18	'link' [uninformative]
-      link-test.md:18	'this link' [uninformative]
-      link-test.md:50	'this' [uninformative]
-      link-test.md:51	'link' [uninformative]
-      link-test.md:52	'this link' [uninformative]
-      link-test.md:53	'a link' [uninformative]
-      link-test.md:54	'link to' [uninformative]
-      link-test.md:55	'here' [uninformative]
-      link-test.md:56	'here for' [uninformative]
-      link-test.md:57	'click here for' [uninformative]
-      link-test.md:58	'over here for' [uninformative]
-      link-test.md:59	'more' [uninformative]
-      link-test.md:60	'more about' [uninformative]
-      link-test.md:61	'for more about' [uninformative]
-      link-test.md:62	'for more info about' [uninformative]
-      link-test.md:63	'for more information about' [uninformative]
-      link-test.md:64	'read more about' [uninformative]
-      link-test.md:65	'read more' [uninformative]
-      link-test.md:66	'read on' [uninformative]
-      link-test.md:67	'read on about' [uninformative]
-      [33m![39m Avoid single-letter or missing link text:
-      <https://webaim.org/techniques/hypertext/link_text#link_length>
-      link-test.md:68	'a' [length]
-      link-test.md:69	'' [length]
+      [33m![39m There were errors in 26/39 links
+      
+      - Links must use HTTPS <https://https.cio.gov/everything/>
+      - Some link anchors for relative links (e.g. [anchor]: link) are missing
+      - Some linked internal files do not exist
+      - Some links were incorrectly formatted
+      - Avoid uninformative link phrases <https://webaim.org/techniques/hypertext/link_text#uninformative>
+      - Avoid single-letter or missing link text <https://webaim.org/techniques/hypertext/link_text#link_length>
+      
+      link-test.md:18  [uninformative text] 'link'
+      link-test.md:18  [uninformative text] 'this link'
+      link-test.md:22  [missing anchor] #bad-fragment
+      link-test.md:29  [missing file] incorrect-link.html
+      link-test.md:37  [incorrect formatting]: [should be a relative link][rel-image] -> [should be a relative link](rel-image)
+      link-test.md:42  [needs HTTPS] http://example.com
+      link-test.md:50  [uninformative text] 'this'
+      link-test.md:51  [uninformative text] 'link'
+      link-test.md:52  [uninformative text] 'this link'
+      link-test.md:53  [uninformative text] 'a link'
+      link-test.md:54  [uninformative text] 'link to'
+      link-test.md:55  [uninformative text] 'here'
+      link-test.md:56  [uninformative text] 'here for'
+      link-test.md:57  [uninformative text] 'click here for'
+      link-test.md:58  [uninformative text] 'over here for'
+      link-test.md:59  [uninformative text] 'more'
+      link-test.md:60  [uninformative text] 'more about'
+      link-test.md:61  [uninformative text] 'for more about'
+      link-test.md:62  [uninformative text] 'for more info about'
+      link-test.md:63  [uninformative text] 'for more information about'
+      link-test.md:64  [uninformative text] 'read more about'
+      link-test.md:65  [uninformative text] 'read more'
+      link-test.md:66  [uninformative text] 'read on'
+      link-test.md:67  [uninformative text] 'read on about'
+      link-test.md:68  [text too short] 'a'
+      link-test.md:69  [text too short] ''
 
 # links reporters will work on CI
 
     Code
-      expect_equal(sum(link$validate_links()), 2L)
+      link$validate_links()
     Message <cliMessage>
-      ! Links must use HTTPS, not HTTP:
-      ::warning file=link-test.md,line=42::http://example.com [HTTP protocol]
-      ! The following anchors do not exist in the file:
-      ::warning file=link-test.md,line=22::#bad-fragment [missing anchor]
-      ! Relative links that are incorrectly formatted:
-      ::warning file=link-test.md,line=37::[should be a relative link](rel-image) -> [should be a relative link][rel-image] [format]
-      ! These files do not exist in the lesson:
-      ::warning file=link-test.md,line=29::incorrect-link.html [missing file]
-      ! Avoid uninformative link phrases:
-      <https://webaim.org/techniques/hypertext/link_text#uninformative>
-      ::warning file=link-test.md,line=18::'link' [uninformative]
-      ::warning file=link-test.md,line=18::'this link' [uninformative]
-      ::warning file=link-test.md,line=50::'this' [uninformative]
-      ::warning file=link-test.md,line=51::'link' [uninformative]
-      ::warning file=link-test.md,line=52::'this link' [uninformative]
-      ::warning file=link-test.md,line=53::'a link' [uninformative]
-      ::warning file=link-test.md,line=54::'link to' [uninformative]
-      ::warning file=link-test.md,line=55::'here' [uninformative]
-      ::warning file=link-test.md,line=56::'here for' [uninformative]
-      ::warning file=link-test.md,line=57::'click here for' [uninformative]
-      ::warning file=link-test.md,line=58::'over here for' [uninformative]
-      ::warning file=link-test.md,line=59::'more' [uninformative]
-      ::warning file=link-test.md,line=60::'more about' [uninformative]
-      ::warning file=link-test.md,line=61::'for more about' [uninformative]
-      ::warning file=link-test.md,line=62::'for more info about' [uninformative]
-      ::warning file=link-test.md,line=63::'for more information about' [uninformative]
-      ::warning file=link-test.md,line=64::'read more about' [uninformative]
-      ::warning file=link-test.md,line=65::'read more' [uninformative]
-      ::warning file=link-test.md,line=66::'read on' [uninformative]
-      ::warning file=link-test.md,line=67::'read on about' [uninformative]
-      ! Avoid single-letter or missing link text:
-      <https://webaim.org/techniques/hypertext/link_text#link_length>
-      ::warning file=link-test.md,line=68::'a' [length]
-      ::warning file=link-test.md,line=69::'' [length]
+      ! There were errors in 26/39 links
+      
+      - Links must use HTTPS <https://https.cio.gov/everything/>
+      - Some link anchors for relative links (e.g. [anchor]: link) are missing
+      - Some linked internal files do not exist
+      - Some links were incorrectly formatted
+      - Avoid uninformative link phrases <https://webaim.org/techniques/hypertext/link_text#uninformative>
+      - Avoid single-letter or missing link text <https://webaim.org/techniques/hypertext/link_text#link_length>
+      
+      ::warning file=link-test.md,line=18:: [uninformative text] 'link'
+      ::warning file=link-test.md,line=18:: [uninformative text] 'this link'
+      ::warning file=link-test.md,line=22:: [missing anchor] #bad-fragment
+      ::warning file=link-test.md,line=29:: [missing file] incorrect-link.html
+      ::warning file=link-test.md,line=37:: [incorrect formatting]: [should be a relative link][rel-image] -> [should be a relative link](rel-image)
+      ::warning file=link-test.md,line=42:: [needs HTTPS] http://example.com
+      ::warning file=link-test.md,line=50:: [uninformative text] 'this'
+      ::warning file=link-test.md,line=51:: [uninformative text] 'link'
+      ::warning file=link-test.md,line=52:: [uninformative text] 'this link'
+      ::warning file=link-test.md,line=53:: [uninformative text] 'a link'
+      ::warning file=link-test.md,line=54:: [uninformative text] 'link to'
+      ::warning file=link-test.md,line=55:: [uninformative text] 'here'
+      ::warning file=link-test.md,line=56:: [uninformative text] 'here for'
+      ::warning file=link-test.md,line=57:: [uninformative text] 'click here for'
+      ::warning file=link-test.md,line=58:: [uninformative text] 'over here for'
+      ::warning file=link-test.md,line=59:: [uninformative text] 'more'
+      ::warning file=link-test.md,line=60:: [uninformative text] 'more about'
+      ::warning file=link-test.md,line=61:: [uninformative text] 'for more about'
+      ::warning file=link-test.md,line=62:: [uninformative text] 'for more info about'
+      ::warning file=link-test.md,line=63:: [uninformative text] 'for more information about'
+      ::warning file=link-test.md,line=64:: [uninformative text] 'read more about'
+      ::warning file=link-test.md,line=65:: [uninformative text] 'read more'
+      ::warning file=link-test.md,line=66:: [uninformative text] 'read on'
+      ::warning file=link-test.md,line=67:: [uninformative text] 'read on about'
+      ::warning file=link-test.md,line=68:: [text too short] 'a'
+      ::warning file=link-test.md,line=69:: [text too short] ''
 

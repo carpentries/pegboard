@@ -1,4 +1,7 @@
 throw_header_warnings <- function(VAL) {
+  if (length(VAL) == 0 || nrow(VAL) == 0) {
+    return(invisible(NULL))
+  }
   has_cli <- is.null(getOption("pegboard.no-cli")) &&
     requireNamespace("cli", quietly = TRUE)
   VAL <- collect_labels(VAL, cli = FALSE, heading_tests)
@@ -20,6 +23,9 @@ throw_header_warnings <- function(VAL) {
 }
 
 throw_link_warnings <- function(VAL) {
+  if (length(VAL) == 0 || nrow(VAL) == 0) {
+    return(invisible(NULL))
+  }
   has_cli <- is.null(getOption("pegboard.no-cli")) &&
     requireNamespace("cli", quietly = TRUE)
   VAL <- collect_labels(VAL, cli = FALSE, link_tests)

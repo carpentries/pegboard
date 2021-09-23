@@ -187,13 +187,13 @@ link_info <- c(
   NULL
 )
 
-new_validate_links <- function(yrn, verbose = TRUE) {
+new_validate_links <- function(yrn) {
   has_cli <- is.null(getOption("pegboard.no-cli")) &&
     requireNamespace("cli", quietly = TRUE)
-
-  link_table <- make_link_table(yrn)
-  path <- basename(yrn$path)
-  VAL <- link_table
+  VAL <- make_link_table(yrn)
+  if (length(VAL) == 0L || is.null(VAL)) {
+    return(invisible(NULL))
+  }
   VAL[names(link_tests)] <- TRUE
   source_list <- link_source_list(VAL)
   VAL <- link_enforce_https(VAL)
@@ -204,9 +204,7 @@ new_validate_links <- function(yrn, verbose = TRUE) {
   VAL <- link_img_alt_text(VAL)
   VAL <- link_descriptive(VAL)
   VAL <- link_length(VAL)
-  VAL$filepath <- fs::path_rel(yrn$path, yrn$lesson)
   VAL
-
 }
 
 validate_known_rot <- function(lt, path, verbose = TRUE, cli = TRUE) {

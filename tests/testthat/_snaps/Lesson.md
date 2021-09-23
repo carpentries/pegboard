@@ -71,13 +71,14 @@
     Code
       vlink <- frg$validate_links()
     Message <cliMessage>
-      ! These files do not exist in the lesson:
-      ::warning file=14-looping-data-sets.md,line=191::../no-workie.svg [missing file]
-      ::warning file=14-looping-data-sets.md,line=197::../no-workie.svg [missing file]
-      ! Images need alt-text:
-      <https://webaim.org/techniques/hypertext/link_text#alt_link>
-      ::warning file=14-looping-data-sets.md,line=195::https://carpentries.org/assets/img/TheCarpentries.svg [missing alt text]
-      ::warning file=14-looping-data-sets.md,line=197::../no-workie.svg [missing alt text]
+      ! There were errors in 3/13 links
+      
+      - Some linked internal files do not exist
+      - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
+      
+      ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file] ../no-workie.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [missing alt-text] https://carpentries.org/assets/img/TheCarpentries.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [missing alt-text] ../no-workie.svg
 
 # Lessons can be validated [ansi]
 
@@ -152,13 +153,14 @@
     Code
       vlink <- frg$validate_links()
     Message <cliMessage>
-      [33m![39m These files do not exist in the lesson:
-      ::warning file=14-looping-data-sets.md,line=191::../no-workie.svg [missing file]
-      ::warning file=14-looping-data-sets.md,line=197::../no-workie.svg [missing file]
-      [33m![39m Images need alt-text:
-      <https://webaim.org/techniques/hypertext/link_text#alt_link>
-      ::warning file=14-looping-data-sets.md,line=195::https://carpentries.org/assets/img/TheCarpentries.svg [missing alt text]
-      ::warning file=14-looping-data-sets.md,line=197::../no-workie.svg [missing alt text]
+      [33m![39m There were errors in 3/13 links
+      
+      - Some linked internal files do not exist
+      - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
+      
+      ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file] ../no-workie.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [missing alt-text] https://carpentries.org/assets/img/TheCarpentries.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [missing alt-text] ../no-workie.svg
 
 # Lessons can be validated [unicode]
 
@@ -233,13 +235,14 @@
     Code
       vlink <- frg$validate_links()
     Message <cliMessage>
-      ! These files do not exist in the lesson:
-      ::warning file=14-looping-data-sets.md,line=191::../no-workie.svg [missing file]
-      ::warning file=14-looping-data-sets.md,line=197::../no-workie.svg [missing file]
-      ! Images need alt-text:
-      <https://webaim.org/techniques/hypertext/link_text#alt_link>
-      ::warning file=14-looping-data-sets.md,line=195::https://carpentries.org/assets/img/TheCarpentries.svg [missing alt text]
-      ::warning file=14-looping-data-sets.md,line=197::../no-workie.svg [missing alt text]
+      ! There were errors in 3/13 links
+      
+      - Some linked internal files do not exist
+      - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
+      
+      ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file] ../no-workie.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [missing alt-text] https://carpentries.org/assets/img/TheCarpentries.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [missing alt-text] ../no-workie.svg
 
 # Lessons can be validated [fancy]
 
@@ -314,11 +317,12 @@
     Code
       vlink <- frg$validate_links()
     Message <cliMessage>
-      [33m![39m These files do not exist in the lesson:
-      ::warning file=14-looping-data-sets.md,line=191::../no-workie.svg [missing file]
-      ::warning file=14-looping-data-sets.md,line=197::../no-workie.svg [missing file]
-      [33m![39m Images need alt-text:
-      <https://webaim.org/techniques/hypertext/link_text#alt_link>
-      ::warning file=14-looping-data-sets.md,line=195::https://carpentries.org/assets/img/TheCarpentries.svg [missing alt text]
-      ::warning file=14-looping-data-sets.md,line=197::../no-workie.svg [missing alt text]
+      [33m![39m There were errors in 3/13 links
+      
+      - Some linked internal files do not exist
+      - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
+      
+      ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file] ../no-workie.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [missing alt-text] https://carpentries.org/assets/img/TheCarpentries.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [missing alt-text] ../no-workie.svg
 

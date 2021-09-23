@@ -488,8 +488,12 @@ Episode <- R6::R6Class("Episode",
     #' @examples
     #' loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
     #' loop$validate_links()
-    validate_links = function(verbose = TRUE) {
-      validate_links(self, verbose)
+    validate_links = function(warn = TRUE) {
+      res <- new_validate_links(self)
+      if (warn) {
+        throw_link_warnings(res)
+      }
+      invisible(res)
     }
 ),
   active = list(
