@@ -3,7 +3,7 @@
     Code
       res <- vh$validate_headings()
     Message <simpleMessage>
-      ! There were errors in 5 headings
+      ! There were errors in 5/7 headings
       
       - First heading must be level 2
       - Level 1 headings are not allowed
@@ -31,7 +31,7 @@
     Code
       res <- loop$validate_headings()
     Message <simpleMessage>
-      ! There were errors in 3 headings
+      ! There were errors in 3/10 headings
       
       - Headings must be unique
       <https://webaim.org/techniques/semanticstructure/#headings>
@@ -56,7 +56,7 @@
     Code
       res <- vh$validate_headings()
     Message <cliMessage>
-      ! There were errors in 5 headings
+      ! There were errors in 5/7 headings
       
       - First heading must be level 2
       - Level 1 headings are not allowed
@@ -88,7 +88,7 @@
     Code
       res <- loop$validate_headings()
     Message <cliMessage>
-      ! There were errors in 3 headings
+      ! There were errors in 3/10 headings
       
       - Headings must be unique
       <https://webaim.org/techniques/semanticstructure/#headings>
@@ -180,7 +180,7 @@
     Code
       res <- vh$validate_headings()
     Message <cliMessage>
-      ! There were errors in 5 headings
+      ! There were errors in 5/7 headings
       
       - First heading must be level 2
       - Level 1 headings are not allowed
@@ -212,7 +212,7 @@
     Code
       res <- vh$validate_headings()
     Message <cliMessage>
-      [33m![39m There were errors in 5 headings
+      [33m![39m There were errors in 5/7 headings
       
       - First heading must be level 2
       - Level 1 headings are not allowed
@@ -244,7 +244,7 @@
     Code
       res <- vh$validate_headings()
     Message <cliMessage>
-      ! There were errors in 5 headings
+      ! There were errors in 5/7 headings
       
       - First heading must be level 2
       - Level 1 headings are not allowed
@@ -276,7 +276,7 @@
     Code
       res <- vh$validate_headings()
     Message <cliMessage>
-      [33m![39m There were errors in 5 headings
+      [33m![39m There were errors in 5/7 headings
       
       - First heading must be level 2
       - Level 1 headings are not allowed

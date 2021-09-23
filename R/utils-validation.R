@@ -11,12 +11,13 @@ throw_header_warnings <- function(VAL) {
   reports <- line_report(msg = err$label, err$path, err$pos, sep = " ")
   failed <- !apply(err[names(heading_tests)], MARGIN = 2, all)
   infos <- paste("-", heading_info[failed], collapse = "\n")
-  issue_warning("There were errors in {n} headings
+  issue_warning("There were errors in {n}/{N} headings
 
     {infos}
     <https://webaim.org/techniques/semanticstructure/#headings>
 
-    {reports}", cli = has_cli, n = nrow(err), infos = infos, reports = reports)
+    {reports}", cli = has_cli, n = nrow(err), N = nrow(VAL), infos = infos, reports = reports)
+}
 }
 
 #' @param VAL a data frame containing the results of tests

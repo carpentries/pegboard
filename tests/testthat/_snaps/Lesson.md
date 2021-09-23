@@ -47,7 +47,7 @@
         \-### ZNK test links and images 
     Message <cliMessage>
       --------------------------------------------------------------------------------
-      ! There were errors in 13 headings
+      ! There were errors in 13/37 headings
       
       - Headings must be unique
       <https://webaim.org/techniques/semanticstructure/#headings>
@@ -128,7 +128,7 @@
         \-### ZNK test links and images 
     Message <cliMessage>
       --------------------------------------------------------------------------------
-      [33m![39m There were errors in 13 headings
+      [33m![39m There were errors in 13/37 headings
       
       - Headings must be unique
       <https://webaim.org/techniques/semanticstructure/#headings>
@@ -209,7 +209,7 @@
         └─### ZNK test links and images 
     Message <cliMessage>
       ────────────────────────────────────────────────────────────────────────────────
-      ! There were errors in 13 headings
+      ! There were errors in 13/37 headings
       
       - Headings must be unique
       <https://webaim.org/techniques/semanticstructure/#headings>
@@ -290,7 +290,7 @@
         └─### ZNK test links and images 
     Message <cliMessage>
       ────────────────────────────────────────────────────────────────────────────────
-      [33m![39m There were errors in 13 headings
+      [33m![39m There were errors in 13/37 headings
       
       - Headings must be unique
       <https://webaim.org/techniques/semanticstructure/#headings>
