@@ -96,7 +96,7 @@ Episode <- R6::R6Class("Episode",
               {e$message}
               Section (div) tags for {self$name} will not be labelled"
             )
-            warning(msg, call. = FALSE)
+            message(msg, call. = FALSE)
             self
           })
       )
