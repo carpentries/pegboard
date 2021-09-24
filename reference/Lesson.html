@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9023</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9024</span>
       </span>
     </div>
 
@@ -179,6 +179,7 @@ files, default is <code>FALSE</code> for markdown files.</p></dd>
 <li><p><a href='#method-thin'><code>Lesson$thin()</code></a></p></li>
 <li><p><a href='#method-reset'><code>Lesson$reset()</code></a></p></li>
 <li><p><a href='#method-isolate_blocks'><code>Lesson$isolate_blocks()</code></a></p></li>
+<li><p><a href='#method-handout'><code>Lesson$handout()</code></a></p></li>
 <li><p><a href='#method-validate_headings'><code>Lesson$validate_headings()</code></a></p></li>
 <li><p><a href='#method-validate_links'><code>Lesson$validate_links()</code></a></p></li>
 <li><p><a href='#method-clone'><code>Lesson$clone()</code></a></p></li>
@@ -313,6 +314,29 @@ kramdown tag. Note that this is a destructive process.</p><h4 class='hasAnchor' 
 </pre><p></div></p>
 
 <p><hr>
+<a id="method-handout"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>handout()</code></h3>
+<p>create a handout for all episodes in the lesson</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>handout</span><span class='op'>(</span>path <span class='op'>=</span> <span class='cn'>NULL</span>, solution <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>path</code></dt><dd><p>the path to the R Markdown file to be written. If <code>NULL</code>
+(default), no file will be written and the lines of the output document
+will be returned.</p></dd>
+
+<dt><code>solution</code></dt><dd><p>if <code>TRUE</code> solutions will be retained. Defaults to <code>FALSE</code></p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<p>if <code>path = NULL</code>, a character vector, otherwise, the object
+itself is returned.</p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
+<p><div class="r example copy"></p><pre><span class='va'>lsn</span> <span class='op'>&lt;-</span> <span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='st'>"sandpaper-fragment"</span><span class='op'>)</span>, jekyll <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='va'>lsn</span><span class='op'>$</span><span class='fu'>handout</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='va'>lsn</span><span class='op'>$</span><span class='fu'>handout</span><span class='op'>(</span>solution <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
+</pre><p></div></p>
+
+<p><hr>
 <a id="method-validate_headings"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='validate_headings.html'>validate_headings()</a></code></h3>
 <p>Validate that the heading elements meet minimum accessibility
 requirements. See the internal <code><a href='validate_headings.html'>validate_headings()</a></code> for deails.</p>
@@ -423,6 +447,7 @@ details.</p>
 #&gt;     get_divs: function (type = NULL, include = FALSE) 
 #&gt;     get_images: function (process = FALSE) 
 #&gt;     get_yaml: function () 
+#&gt;     handout: function (path = NULL, solutions = FALSE) 
 #&gt;     head: function (n = 6L) 
 #&gt;     headings: active binding
 #&gt;     images: active binding
@@ -483,6 +508,7 @@ details.</p>
 #&gt;     get_divs: function (type = NULL, include = FALSE) 
 #&gt;     get_images: function (process = FALSE) 
 #&gt;     get_yaml: function () 
+#&gt;     handout: function (path = NULL, solutions = FALSE) 
 #&gt;     head: function (n = 6L) 
 #&gt;     headings: active binding
 #&gt;     images: active binding
@@ -543,6 +569,7 @@ details.</p>
 #&gt;     get_divs: function (type = NULL, include = FALSE) 
 #&gt;     get_images: function (process = FALSE) 
 #&gt;     get_yaml: function () 
+#&gt;     handout: function (path = NULL, solutions = FALSE) 
 #&gt;     head: function (n = 6L) 
 #&gt;     headings: active binding
 #&gt;     images: active binding
@@ -603,6 +630,7 @@ details.</p>
 #&gt;     get_divs: function (type = NULL, include = FALSE) 
 #&gt;     get_images: function (process = FALSE) 
 #&gt;     get_yaml: function () 
+#&gt;     handout: function (path = NULL, solutions = FALSE) 
 #&gt;     head: function (n = 6L) 
 #&gt;     headings: active binding
 #&gt;     images: active binding
@@ -677,6 +705,46 @@ details.</p>
 <span class='va'>frg</span> <span class='op'>&lt;-</span> <span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>frg</span><span class='op'>$</span><span class='fu'>isolate_blocks</span><span class='op'>(</span><span class='op'>)</span><span class='op'>$</span><span class='va'>body</span> <span class='co'># only one challenge block_quote</span>
 </div><div class='output co'>#&gt; NULL</div><div class='input'>
+<span class='co'>## ------------------------------------------------</span>
+<span class='co'>## Method `Lesson$handout`</span>
+<span class='co'>## ------------------------------------------------</span>
+
+<span class='va'>lsn</span> <span class='op'>&lt;-</span> <span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='st'>"sandpaper-fragment"</span><span class='op'>)</span>, jekyll <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='va'>lsn</span><span class='op'>$</span><span class='fu'>handout</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ## Using RMarkdown
+#&gt; 
+#&gt; ## Challenge 1: Can you do it?
+#&gt; 
+#&gt; What is the output of this command?
+#&gt; 
+#&gt; ```{r, eval=FALSE}
+#&gt; paste("This", "new", "template", "looks", "good")
+#&gt; ```</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='va'>lsn</span><span class='op'>$</span><span class='fu'>handout</span><span class='op'>(</span>solution <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ## Using RMarkdown
+#&gt; 
+#&gt; ## Challenge 1: Can you do it?
+#&gt; 
+#&gt; What is the output of this command?
+#&gt; 
+#&gt; ```{r, eval=FALSE}
+#&gt; paste("This", "new", "template", "looks", "good")
+#&gt; ```
+#&gt; 
+#&gt; :::::::::::::::::::::::: solution
+#&gt; 
+#&gt; ## Output
+#&gt; 
+#&gt; ```{r, echo=FALSE}
+#&gt; paste("This", "new", "template", "looks", "good")
+#&gt; ```
+#&gt; 
+#&gt; ::::::::::::::::::::::::::::::::::
+#&gt; 
+#&gt; ## Challenge 2: how do you nest solutions within challenge blocks?
+#&gt; 
+#&gt; :::::::::::::::::::::::: solution
+#&gt; 
+#&gt; You can add a line with at least three colons and a `solution` tag.</div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `Lesson$validate_headings`</span>
 <span class='co'>## ------------------------------------------------</span>

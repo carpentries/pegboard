@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Check if a node is after another node — after_thing • pegboard</title>
+<title>Trim div fences from output — trim_fence • pegboard</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Check if a node is after another node — after_thing" />
-<meta property="og:description" content="Check if a node is after another node" />
+<meta property="og:title" content="Trim div fences from output — trim_fence" />
+<meta property="og:description" content="Trim div fences from output" />
 
 
 
@@ -123,35 +123,29 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Check if a node is after another node</h1>
-    <small class="dont-index">Source: <a href='https://github.com/zkamvar/pegboard/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
-    <div class="hidden name"><code>after_thing.Rd</code></div>
+    <h1>Trim div fences from output</h1>
+    <small class="dont-index">Source: <a href='https://github.com/zkamvar/pegboard/blob/master/R/isolate_elements.R'><code>R/isolate_elements.R</code></a></small>
+    <div class="hidden name"><code>trim_fence.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Check if a node is after another node</p>
+    <p>Trim div fences from output</p>
     </div>
 
-    <pre class="usage"><span class='fu'>after_thing</span><span class='op'>(</span><span class='va'>body</span>, thing <span class='op'>=</span> <span class='st'>"code_block"</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>trim_fence</span><span class='op'>(</span><span class='va'>nodes</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>body</th>
-      <td><p>an XML node</p></td>
-    </tr>
-    <tr>
-      <th>thing</th>
-      <td><p>the name of the XML node for the node to be after,
-defaults to "code_block"</p></td>
+      <th>nodes</th>
+      <td><p>an xml_nodeset whose first and last node are div fences</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a single boolean value indicating if the node has a
-single sibling that is a code block</p>
+    <p>the nodeset without div fences</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

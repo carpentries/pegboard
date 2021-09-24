@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9023</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9024</span>
       </span>
     </div>
 
@@ -205,6 +205,7 @@ destructively modified in the conversion.</p>
 <li><p><a href='#method-head'><code>Episode$head()</code></a></p></li>
 <li><p><a href='#method-tail'><code>Episode$tail()</code></a></p></li>
 <li><p><a href='#method-write'><code>Episode$write()</code></a></p></li>
+<li><p><a href='#method-handout'><code>Episode$handout()</code></a></p></li>
 <li><p><a href='#method-reset'><code>Episode$reset()</code></a></p></li>
 <li><p><a href='#method-isolate_blocks'><code>Episode$isolate_blocks()</code></a></p></li>
 <li><p><a href='#method-unblock'><code>Episode$unblock()</code></a></p></li>
@@ -512,6 +513,32 @@ create a file with the correct extension in the path</p></dd>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
 <p><div class="r example copy"></p><pre><span class='va'>scope</span> <span class='op'>&lt;-</span> <span class='va'>Episode</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"_episodes"</span>, <span class='st'>"17-scope.md"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>scope</span><span class='op'>$</span><span class='fu'>write</span><span class='op'>(</span><span class='op'>)</span>
+</pre><p></div></p>
+
+<p><hr>
+<a id="method-handout"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>handout()</code></h3>
+<p>Create a trimmed-down RMarkdown document that strips prose and contains
+only important code chunks and challenge blocks without solutions.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>Episode</span><span class='op'>$</span><span class='fu'>handout</span><span class='op'>(</span>path <span class='op'>=</span> <span class='cn'>NULL</span>, solutions <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>path</code></dt><dd><p>(handout) a path to an R Markdown file to write. If this is
+<code>NULL</code>, no file will be written and the lines of the output will be
+returned.</p></dd>
+
+<dt><code>solutions</code></dt><dd><p>if <code>TRUE</code>, include solutions in the output. Defaults to
+<code>FALSE</code>, which removes the solution blocks.</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<p>a character vector if <code>path = NULL</code>, otherwise, it is called for
+the side effect of creating a file.</p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
+<p><div class="r example copy"></p><pre><span class='va'>lsn</span> <span class='op'>&lt;-</span> <span class='va'><a href='Lesson.html'>Lesson</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='st'>"sandpaper-fragment"</span><span class='op'>)</span>, jekyll <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='va'>e</span> <span class='op'>&lt;-</span> <span class='va'>lsn</span><span class='op'>$</span><span class='va'>episodes</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>
+<span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='va'>e</span><span class='op'>$</span><span class='fu'>handout</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='va'>e</span><span class='op'>$</span><span class='fu'>handout</span><span class='op'>(</span>solution <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
 </pre><p></div></p>
 
 <p><hr>
@@ -862,7 +889,44 @@ links.</p>
 
 <span class='va'>scope</span> <span class='op'>&lt;-</span> <span class='va'>Episode</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"_episodes"</span>, <span class='st'>"17-scope.md"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>scope</span><span class='op'>$</span><span class='fu'>write</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Creating temporary directory '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpEVM6pT/dir114b7dbba268'</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Creating temporary directory '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/Rtmp62XzBZ/direa21b1c6c00'</span></div><div class='input'>
+<span class='co'>## ------------------------------------------------</span>
+<span class='co'>## Method `Episode$handout`</span>
+<span class='co'>## ------------------------------------------------</span>
+
+<span class='va'>lsn</span> <span class='op'>&lt;-</span> <span class='va'><a href='Lesson.html'>Lesson</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='st'>"sandpaper-fragment"</span><span class='op'>)</span>, jekyll <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='va'>e</span> <span class='op'>&lt;-</span> <span class='va'>lsn</span><span class='op'>$</span><span class='va'>episodes</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>
+<span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='va'>e</span><span class='op'>$</span><span class='fu'>handout</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ## Challenge 1: Can you do it?
+#&gt; 
+#&gt; What is the output of this command?
+#&gt; 
+#&gt; ```{r, eval=FALSE}
+#&gt; paste("This", "new", "template", "looks", "good")
+#&gt; ```</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='va'>e</span><span class='op'>$</span><span class='fu'>handout</span><span class='op'>(</span>solution <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ## Challenge 1: Can you do it?
+#&gt; 
+#&gt; What is the output of this command?
+#&gt; 
+#&gt; ```{r, eval=FALSE}
+#&gt; paste("This", "new", "template", "looks", "good")
+#&gt; ```
+#&gt; 
+#&gt; :::::::::::::::::::::::: solution
+#&gt; 
+#&gt; ## Output
+#&gt; 
+#&gt; ```{r, echo=FALSE}
+#&gt; paste("This", "new", "template", "looks", "good")
+#&gt; ```
+#&gt; 
+#&gt; ::::::::::::::::::::::::::::::::::
+#&gt; 
+#&gt; ## Challenge 2: how do you nest solutions within challenge blocks?
+#&gt; 
+#&gt; :::::::::::::::::::::::: solution
+#&gt; 
+#&gt; You can add a line with at least three colons and a `solution` tag.</div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `Episode$reset`</span>
 <span class='co'>## ------------------------------------------------</span>
