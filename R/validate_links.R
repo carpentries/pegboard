@@ -261,7 +261,8 @@ test_file_existence <- function(paths, home) {
   # Eliminate folders that don't actually exist
   probably <- maybe[fs::file_exists(fs::path(home, "..", maybe))]
   # Check in those folders for these files
-  exists_folders <- purrr::map_dfr(probably, exists_in_folder, paths, home)
+  exists_folders <- purrr::transpose(purrr::map(probably, exists_in_folder, paths, home))
+  exists_folders <- purrr::map(exists_folders, purrr::flatten_lgl)
   # Return if any of them exist
   exists_here | purrr::map_lgl(exists_folders, any, na.rm = TRUE)
 
