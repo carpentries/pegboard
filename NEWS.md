@@ -12,6 +12,7 @@
 - link validation information has been switched to show the error message and
   then the problematic aspect/fix
 - heading validation now works on continuous integration
+- these functions no longer rely on dplyr being installed
 
 # pegboard 0.0.0.9022
 
