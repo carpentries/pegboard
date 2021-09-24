@@ -1,3 +1,81 @@
+# Sandpaper lessons can create handouts
+
+    Code
+      cat(snd$handout())
+    Output
+      ## Using RMarkdown
+      
+      ## Challenge 1: Can you do it?
+      
+      What is the output of this command?
+      
+      ```{r, eval=FALSE}
+      paste("This", "new", "template", "looks", "good")
+      ```
+
+---
+
+    Code
+      cat(snd$handout(solution = TRUE))
+    Output
+      ## Using RMarkdown
+      
+      ## Challenge 1: Can you do it?
+      
+      What is the output of this command?
+      
+      ```{r, eval=FALSE}
+      paste("This", "new", "template", "looks", "good")
+      ```
+      
+      :::::::::::::::::::::::: solution
+      
+      ## Output
+      
+      ```{r, echo=FALSE}
+      paste("This", "new", "template", "looks", "good")
+      ```
+      
+      ::::::::::::::::::::::::::::::::::
+      
+      ## Challenge 2: how do you nest solutions within challenge blocks?
+      
+      :::::::::::::::::::::::: solution
+      
+      You can add a line with at least three colons and a `solution` tag.
+
+---
+
+    Code
+      cat(tinkr::yarn$new(tmp)$show(), sep = "\n")
+    Output
+      ## Using RMarkdown
+      
+      ## Challenge 1: Can you do it?
+      
+      What is the output of this command?
+      
+      ```{r, eval=FALSE}
+      paste("This", "new", "template", "looks", "good")
+      ```
+      
+      :::::::::::::::::::::::: solution
+      
+      ## Output
+      
+      ```{r, echo=FALSE}
+      paste("This", "new", "template", "looks", "good")
+      ```
+      
+      ::::::::::::::::::::::::::::::::::
+      
+      ## Challenge 2: how do you nest solutions within challenge blocks?
+      
+      :::::::::::::::::::::::: solution
+      
+      You can add a line with at least three colons and a `solution` tag.
+      
+
 # Lessons can be validated [plain]
 
     Code

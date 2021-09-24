@@ -1,3 +1,12 @@
+# pegboard 0.0.0.9024
+
+## NEW FEATURES
+
+- `Episode$handout()` will create trimmed-down R Markdown document with only
+  challenge blocks and code chunks with `purl = TRUE`, that can be passed to
+  `knitr::purl()` for processing into an R code handout. 
+- `Lesson$handout()` will create a concatenated version of `Episode$handout()`.
+
 # pegboard 0.0.0.9023
 
 ## MISC

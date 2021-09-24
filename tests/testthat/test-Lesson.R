@@ -19,6 +19,22 @@ test_that("Sandpaper lessons can be read", {
   expect_length(snd$solutions()[[1]], 2L)
 })
 
+test_that("Sandpaper lessons can create handouts", {
+
+  # handout can have solution and no solution
+  snd <- Lesson$new(path = lesson_fragment("sandpaper-fragment"), jekyll = FALSE)
+  expect_snapshot(cat(snd$handout()))
+  expect_snapshot(cat(snd$handout(solution = TRUE)))
+  tmp <- fs::file_temp(ext = "Rmd")
+  # handout can write to a file
+  expect_false(fs::file_exists(tmp))
+  expect_length(snd$handout(tmp, solution = TRUE)$solutions, 1L)
+  expect_true(fs::file_exists(tmp))
+  # the handout can be read by tinkr
+  expect_snapshot(cat(tinkr::yarn$new(tmp)$show(), sep = "\n"))
+
+})
+
 test_that("Lesson class contains the right stuff", {
 
   expect_s3_class(frg, "Lesson")

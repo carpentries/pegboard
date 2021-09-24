@@ -172,6 +172,32 @@ Lesson <- R6::R6Class("Lesson",
       invisible(self)
     },
 
+    #' @description create a handout for all episodes in the lesson
+    #' @param path the path to the R Markdown file to be written. If `NULL`
+    #'   (default), no file will be written and the lines of the output document
+    #'   will be returned.
+    #' @param solution if `TRUE` solutions will be retained. Defaults to `FALSE`
+    #' @return if `path = NULL`, a character vector, otherwise, the object
+    #'   itself is returned.
+    #' @examples
+    #' lsn <- Lesson$new(lesson_fragment("sandpaper-fragment"), jekyll = FALSE)
+    #' cat(lsn$handout())
+    #' cat(lsn$handout(solution = TRUE))
+    handout = function(path = NULL, solution = FALSE) {
+      hands <- purrr::map(self$episodes, 
+        ~paste0("## ", .x$get_yaml()["title"], "\n\n", 
+          .x$handout(solution = solution)
+        )
+      )
+      squish <- purrr::flatten_chr(hands)
+      if (is.null(path)) {
+        return(invisible(squish))
+      } else {
+        writeLines(squish, con = path)
+      }
+      return(self)
+    },
+
     #' @description
     #' Validate that the heading elements meet minimum accessibility 
     #' requirements. See the internal [validate_headings()] for deails.
