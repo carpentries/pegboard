@@ -6,7 +6,8 @@
 isolate_elements <- function(body, ...) {
   guts <- xml2::xml_children(body)
   all_pos <- xml2::xml_attr(guts, "sourcepos")
-  element_list <- purrr::flatten(c(...))
+  element_list <- purrr::map(c(...), ~xml2::xml_find_all(.x, "self::*"))
+  element_list <- purrr::flatten(element_list)
   pos <- purrr::map_chr(element_list, xml2::xml_attr, "sourcepos")
   purrr::walk(guts[!all_pos %in% pos], xml2::xml_remove)
   invisible(body)

@@ -69,17 +69,13 @@ test_that("handouts can be created", {
   if (requireNamespace("knitr", quietly = TRUE)) {
     expect_false(fs::file_exists(out))
     knitr::purl(rmd, out, documentation = 2, quiet = TRUE)
-    expected <- c("v <- rnorm(10)", 
+    expected <- c("echo(\"this code is retained\")",
+      "v <- rnorm(10)", 
       "the_sum <- 0", 
       "for (i in v) {\n    the_sum <- the_sum + i\n}", 
       "the_mean <- the_sum/length(v)"
     )
     expect_true(fs::file_exists(out))
-    expected <- c("v <- rnorm(10)", 
-      "the_sum <- 0", 
-      "for (i in v) {\n    the_sum <- the_sum + i\n}", 
-      "the_mean <- the_sum/length(v)"
-    )
     expect_equal(as.character(parse(out)), expected)
   }
 

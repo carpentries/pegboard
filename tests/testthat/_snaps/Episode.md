@@ -3,6 +3,10 @@
     Code
       cat(e$handout())
     Output
+      ```{r retained, purl=TRUE}
+      echo("this code is retained")
+      ```
+      
       ### A challenge
       
       Text text
@@ -30,6 +34,10 @@
     Code
       cat(e$handout(solution = TRUE))
     Output
+      ```{r retained, purl=TRUE}
+      echo("this code is retained")
+      ```
+      
       ### A challenge
       
       Text text
@@ -75,6 +83,10 @@
     Code
       cat(tinkr::yarn$new(rmd)$show(), sep = "\n")
     Output
+      ```{r retained, purl=TRUE}
+      echo("this code is retained")
+      ```
+      
       ### A challenge
       
       Text text

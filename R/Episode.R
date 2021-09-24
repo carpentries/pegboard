@@ -389,7 +389,8 @@ Episode <- R6::R6Class("Episode",
         purrr::walk(cp$solutions, xml2::xml_remove)
       }
       challenges <- purrr::map(cp$challenges, trim_fence)
-      code       <- xml2::xml_find_all(cp$code, ".//*[@purl='TRUE']")
+      code <- cp$code
+      code <- code[xml2::xml_attr(code, "purl") %in% "TRUE"]
       isolate_elements(cp$body, challenges, code)
       cp$yaml <- c()
       res <- tinkr::to_md(cp, path = path, stylesheet_path = get_stylesheet())
