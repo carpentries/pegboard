@@ -1,0 +1,76 @@
+---
+title: handout
+teaching: 1
+examples: 1
+---
+
+## Example
+
+text text
+
+text text
+
+ - list
+ - item
+ - item
+
+```{r skipped}
+echo("this code is skipped")
+```
+
+```{r retained, purl = TRUE}
+echo("this code is retained")
+```
+
+::: challenge
+
+### A challenge
+
+Text text
+
+1. task 
+2. task
+
+```{r challenge}
+v <- rnorm(10)
+the_sum <- 0
+for (i in v) {
+  the_sum <- the_sum + i
+}
+the_mean <- the_sum / length(v)
+```
+
+How do you simplify this?
+
+:::: solution
+
+You can use the `mean()` function
+
+```{r}
+mean(rnorm(10))
+```
+
+::::
+
+:::
+
+
+Text that will no longer exist
+
+
+:::::: challenge
+
+### Smol challenge
+
+A small challenge here with just text
+
+
+:::: solution
+
+```{r}
+cat("this is the solution")
+```
+
+::::
+
+:::

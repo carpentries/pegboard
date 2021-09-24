@@ -85,6 +85,15 @@ scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
 scope$write()
 
 ## ------------------------------------------------
+## Method `Episode$handout`
+## ------------------------------------------------
+
+lsn <- Lesson$new(lesson_fragment("sandpaper-fragment"), jekyll = FALSE)
+e <- lsn$episodes[[1]]
+cat(e$handout())
+cat(e$handout(solution = TRUE))
+
+## ------------------------------------------------
 ## Method `Episode$reset`
 ## ------------------------------------------------
 
@@ -190,6 +199,7 @@ loop$validate_links()
 \item \href{#method-head}{\code{Episode$head()}}
 \item \href{#method-tail}{\code{Episode$tail()}}
 \item \href{#method-write}{\code{Episode$write()}}
+\item \href{#method-handout}{\code{Episode$handout()}}
 \item \href{#method-reset}{\code{Episode$reset()}}
 \item \href{#method-isolate_blocks}{\code{Episode$isolate_blocks()}}
 \item \href{#method-unblock}{\code{Episode$unblock()}}
@@ -644,6 +654,44 @@ the episode object
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
 scope$write()
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-handout"></a>}}
+\if{latex}{\out{\hypertarget{method-handout}{}}}
+\subsection{Method \code{handout()}}{
+Create a trimmed-down RMarkdown document that strips prose and contains
+only important code chunks and challenge blocks without solutions.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Episode$handout(path = NULL, solutions = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{path}}{(handout) a path to an R Markdown file to write. If this is
+\code{NULL}, no file will be written and the lines of the output will be
+returned.}
+
+\item{\code{solutions}}{if \code{TRUE}, include solutions in the output. Defaults to
+\code{FALSE}, which removes the solution blocks.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+a character vector if \code{path = NULL}, otherwise, it is called for
+the side effect of creating a file.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{lsn <- Lesson$new(lesson_fragment("sandpaper-fragment"), jekyll = FALSE)
+e <- lsn$episodes[[1]]
+cat(e$handout())
+cat(e$handout(solution = TRUE))
 }
 \if{html}{\out{</div>}}
 

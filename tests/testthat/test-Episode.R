@@ -44,6 +44,43 @@ test_that("$confirm_sandpaper() does not error on mismatched divs", {
   expect_s3_class(e, "Episode")
 })
 
+test_that("handouts can be created", {
+
+  e <- Episode$new(test_path("examples", "handout.Rmd"), 
+    process_tags = FALSE, fix_links = FALSE, fix_liquid = FALSE)
+  e$confirm_sandpaper()
+  expect_length(e$solutions, 2)
+  # handout by itself returns the text
+  expect_snapshot(cat(e$handout()))
+  # the object is not affected by this
+  expect_length(e$solutions, 2)
+  expect_snapshot(cat(e$handout(solution = TRUE)))
+  rmd <- fs::file_temp(ext = "Rmd")
+  out <- fs::file_temp(ext = "R")
+  withr::local_file(c(rmd, out))
+  
+  # handout with a file returns the original Episode object
+  expect_false(fs::file_exists(rmd))
+  # The object is still not affected by the handout
+  expect_length(e$handout(rmd)$solutions, 2)
+  expect_true(fs::file_exists(rmd))
+  expect_snapshot(cat(tinkr::yarn$new(rmd)$show(), sep = "\n"))
+
+  if (requireNamespace("knitr", quietly = TRUE)) {
+    expect_false(fs::file_exists(out))
+    knitr::purl(rmd, out, documentation = 2, quiet = TRUE)
+    expected <- c("echo(\"this code is retained\")",
+      "v <- rnorm(10)", 
+      "the_sum <- 0", 
+      "for (i in v) {\n    the_sum <- the_sum + i\n}", 
+      "the_mean <- the_sum/length(v)"
+    )
+    expect_true(fs::file_exists(out))
+    expect_equal(as.character(parse(out)), expected)
+  }
+
+})
+
 
 test_that("Episodes can be reset if needed", {
 

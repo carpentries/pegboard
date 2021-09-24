@@ -45,6 +45,14 @@ frg <- Lesson$new(lesson_fragment())
 frg$isolate_blocks()$body # only one challenge block_quote
 
 ## ------------------------------------------------
+## Method `Lesson$handout`
+## ------------------------------------------------
+
+lsn <- Lesson$new(lesson_fragment("sandpaper-fragment"), jekyll = FALSE)
+cat(lsn$handout())
+cat(lsn$handout(solution = TRUE))
+
+## ------------------------------------------------
 ## Method `Lesson$validate_headings`
 ## ------------------------------------------------
 
@@ -97,6 +105,7 @@ files, default is \code{FALSE} for markdown files.}
 \item \href{#method-thin}{\code{Lesson$thin()}}
 \item \href{#method-reset}{\code{Lesson$reset()}}
 \item \href{#method-isolate_blocks}{\code{Lesson$isolate_blocks()}}
+\item \href{#method-handout}{\code{Lesson$handout()}}
 \item \href{#method-validate_headings}{\code{Lesson$validate_headings()}}
 \item \href{#method-validate_links}{\code{Lesson$validate_links()}}
 \item \href{#method-clone}{\code{Lesson$clone()}}
@@ -290,6 +299,41 @@ the Episode object, invisibly
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{frg <- Lesson$new(lesson_fragment())
 frg$isolate_blocks()$body # only one challenge block_quote
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-handout"></a>}}
+\if{latex}{\out{\hypertarget{method-handout}{}}}
+\subsection{Method \code{handout()}}{
+create a handout for all episodes in the lesson
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Lesson$handout(path = NULL, solution = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{path}}{the path to the R Markdown file to be written. If \code{NULL}
+(default), no file will be written and the lines of the output document
+will be returned.}
+
+\item{\code{solution}}{if \code{TRUE} solutions will be retained. Defaults to \code{FALSE}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+if \code{path = NULL}, a character vector, otherwise, the object
+itself is returned.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{lsn <- Lesson$new(lesson_fragment("sandpaper-fragment"), jekyll = FALSE)
+cat(lsn$handout())
+cat(lsn$handout(solution = TRUE))
 }
 \if{html}{\out{</div>}}
 

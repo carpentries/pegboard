@@ -368,6 +368,39 @@ Episode <- R6::R6Class("Episode",
       return(invisible(self))
     },
     #' @description
+    #' Create a trimmed-down RMarkdown document that strips prose and contains
+    #' only important code chunks and challenge blocks without solutions.
+    #' @param path (handout) a path to an R Markdown file to write. If this is
+    #'   `NULL`, no file will be written and the lines of the output will be
+    #'   returned.
+    #' @param solutions if `TRUE`, include solutions in the output. Defaults to
+    #'   `FALSE`, which removes the solution blocks.
+    #' @return a character vector if `path = NULL`, otherwise, it is called for
+    #'   the side effect of creating a file.
+    #' @examples
+    #' lsn <- Lesson$new(lesson_fragment("sandpaper-fragment"), jekyll = FALSE)
+    #' e <- lsn$episodes[[1]]
+    #' cat(e$handout())
+    #' cat(e$handout(solution = TRUE))
+    handout = function(path = NULL, solutions = FALSE) {
+      cp <- self$clone(deep = TRUE)
+      cp$unblock()$use_sandpaper()
+      if (!solutions) {
+        purrr::walk(cp$solutions, xml2::xml_remove)
+      }
+      challenges <- purrr::map(cp$challenges, trim_fence)
+      code <- cp$code
+      code <- code[xml2::xml_attr(code, "purl") %in% "TRUE"]
+      isolate_elements(cp$body, challenges, code)
+      cp$yaml <- c()
+      res <- tinkr::to_md(cp, path = path, stylesheet_path = get_stylesheet())
+      if (is.null(path)) {
+        invisible(res)
+      } else {
+        invisible(self)
+      }
+    },
+    #' @description
     #' Re-read episode from disk
     #' @return the episode object
     #' @examples
