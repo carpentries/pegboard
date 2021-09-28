@@ -65,7 +65,7 @@ Here, we can see the nodes that did not pass our tests by using the `link_tests`
 vector, which is an internal vector defining the inline messages printed for 
 each failed test, to filter the output:
 
-```{r show-invalid}
+```{r show-invalid-links}
 # get the subset of rows that did not pass all the tests
 invalid <- !apply(links[names(link_tests)], MARGIN = 1L, all)
 # return the nodes
