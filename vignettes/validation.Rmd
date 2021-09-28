@@ -1,0 +1,137 @@
+---
+title: "Validation of Lesson Elements"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Validation of Lesson Elements}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#|",
+  R.options = list(width = 100, str = strOptions(strict.width = "cut"))
+)
+```
+
+## Introduction
+
+This package is designed to parse the structure of the Markdown and R Markdown
+files inside a Carpentries-style lesson. To ensure consistent lesson structure,
+it has built-in validators that will inspect headings, links, and callout
+sections. This document will help you become familiar with the output of the
+validators and how they can be used to update a lesson.
+
+Lesson authors and contributors will likely only see the output of these
+validators and not need to interact with them directly. For example, we have a
+lesson that contains some mal-formed links and headings:
+
+```{r setup}
+library(pegboard)
+lsn <- Lesson$new(lesson_fragment())
+# validation
+lsn$validate_links()
+lsn$validate_headings(verbose = FALSE)
+```
+
+We can see that there is informative and actionable output produced that will
+allow lesson authors to make targeted changes in their files. The next sections
+will detail how we can work with the output of these methods.
+
+## Link Validation
+
+Each of the validation methods will produce messages (aka stderr) for the user,
+but they also produce a data frame as output that contains detailed information
+about each link and what tests it passed or did not pass. You can find out what
+tests are run on links by accessing the help page for `validate_links` by typing 
+`?validate_links` in your R console.
+
+If we want to inspect this data frame, we can assign it to a new variable:
+
+```{r validation1}
+links <- lsn$validate_links()
+str(links, max.level = 1)
+```
+
+This data frame is combined output of three sources:
+
+1. the output of [xml2::url_parse()]
+2. the source data containing the original source file (filepath), line number
+   (pos), and XML node (node)
+3. the tests performed as logical vectors, which can be extracted programmatically
+
+Here, we can see the nodes that did not pass our tests by using the `link_tests`
+vector, which is an internal vector defining the inline messages printed for 
+each failed test, to filter the output:
+
+```{r show-invalid-links}
+# get the subset of rows that did not pass all the tests
+invalid <- !apply(links[names(link_tests)], MARGIN = 1L, all)
+# return the nodes
+links$node[invalid]
+```
+
+For context, this is what the document looks like at those positions:
+
+```{r tail-link, echo = FALSE}
+lsn$episodes[["14-looping-data-sets.md"]]$tail(17)
+```
+
+### Headings
+
+Validation of headings operate similarly to links as it produces a data frame
+along with the message output that can be further inspected and manipulated. You
+can find out more by accessing the help documentation for `validate_headings` by
+typing `?validate_headings` in your R console.
+
+```{r heading-validation}
+headings <- lsn$validate_headings(verbose = TRUE)
+str(headings, max.level = 1)
+```
+
+This particular data frame has fewer rows because there are fewer moving parts
+to headings than links, but they are indeed important. The process for getting 
+the subset of invalid headings is similar: use the `heading_tests` vector from
+pegboard to subset the rows that failed:
+
+
+```{r show-invalid}
+# get the subset of rows that did not pass all the tests
+invalid <- !apply(headings[names(heading_tests)], MARGIN = 1L, all)
+# return the nodes
+headings$node[invalid]
+```
+
+
+## Internal testing
+
+For testing, we have created some documents that have extreme cases of links and
+headings that failed to show all the features of our examples:
+
+```{r show-test-examples}
+lnk <- Episode$new(testthat::test_path("examples", "link-test.md"))
+hd  <- Episode$new(testthat::test_path("examples", "validation-headings.md"))
+```
+
+### Links
+
+The links example has _several_ mistakes covering our possibilities:
+
+```{r show-link-test}
+lnk$show()
+lnk$validate_links()
+```
+
+### Headings
+
+The headings example also has several mistakes, and demonstrates the value of
+having a visual heading tree displayed on output when `verbose = TRUE`
+
+```{r show-heading-test}
+hd$show()
+hd$validate_headings(verbose = TRUE)
+```
+
+
+

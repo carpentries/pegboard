@@ -74,6 +74,7 @@ validate_headings <- function(headings, title = NULL, offset = 5L) {
 
 
 #' @rdname validate_headings
+#' @export
 heading_tests <- c(
   first_heading_is_second_level = "(must be level 2)",
   greater_than_first_level = "(first level heading)",

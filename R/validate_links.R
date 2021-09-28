@@ -194,6 +194,7 @@ link_internal_well_formed <- function(VAL, source_list) {
 
 
 #' @rdname validate_links
+#' @export
 link_tests <- c(
   enforce_https = "[needs HTTPS] {orig}",
   internal_anchor = "[missing anchor] {orig}",
