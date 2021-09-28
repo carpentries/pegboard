@@ -110,8 +110,9 @@ For testing, we have created some documents that have extreme cases of links and
 headings that failed to show all the features of our examples:
 
 ```{r show-test-examples}
-lnk <- Episode$new(testthat::test_path("examples", "link-test.md"))
-hd  <- Episode$new(testthat::test_path("examples", "validation-headings.md"))
+ex <- system.file("tests/testthat/examples", package = "pegboard")
+lnk <- Episode$new(fs::path(ex, "link-test.md"))
+hd  <- Episode$new(fs::path(ex, "validation-headings.md"))
 ```
 
 ### Links
