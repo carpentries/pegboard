@@ -40,6 +40,9 @@
 
 
 <meta property="og:title" content="Function reference" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:creator" content="@zkamvar" />
+<meta name="twitter:site" content="@thecarpentries" />
 
 
 
@@ -94,7 +97,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/swc-survey.html">Software Carpentry Survey</a>
+      <a href="../articles/articles/swc-survey.html">Software Carpentry Survey</a>
     </li>
   </ul>
 </li>
@@ -136,8 +139,8 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
+          <h2 id="section-classes" class="hasAnchor"><a href="#section-classes" class="anchor"></a>Classes</h2>
+          <p class="section-desc"><p>R6 Classes that parse and manipulate Lesson content based on the {tinkr} yarn class. All of the public-facing operations take place through the methods in these classes.</p></p>
         </th>
       </tr>
       
@@ -148,22 +151,116 @@
       <tr>
         
         <td>
-          <p><code><a href="Episode.html">Episode</a></code> </p>
-        </td>
-        <td><p>Class representing XML source of a Carpentries episode</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="Lesson.html">Lesson</a></code> </p>
         </td>
         <td><p>Class to contain a single Lesson by the Carpentries</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="cli_helpers.html">issue_warning()</a></code> <code><a href="cli_helpers.html">line_report()</a></code> <code><a href="cli_helpers.html">append_labels()</a></code> </p>
+          <p><code><a href="Episode.html">Episode</a></code> </p>
         </td>
-        <td><p>Issue a warning via CLI if it exists or send a message</p></td>
+        <td><p>Class representing XML source of a Carpentries episode</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-validation-reference" class="hasAnchor"><a href="#section-validation-reference" class="anchor"></a>Validation Reference</h2>
+          <p class="section-desc"><p>Reference documentation for validation procedures</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="validate_headings.html">validate_headings()</a></code> <code><a href="validate_headings.html">heading_tests</a></code> <code><a href="validate_headings.html">heading_info</a></code> <code><a href="validate_headings.html">headings_first_heading_is_second_level()</a></code> <code><a href="validate_headings.html">headings_greater_than_first_level()</a></code> <code><a href="validate_headings.html">headings_are_sequential()</a></code> <code><a href="validate_headings.html">headings_have_names()</a></code> <code><a href="validate_headings.html">headings_are_unique()</a></code> </p>
+        </td>
+        <td><p>Validate headings</p></td>
       </tr><tr>
+        
+        <td>
+          <p><code><a href="validate_links.html">validate_links()</a></code> <code><a href="validate_links.html">link_enforce_https()</a></code> <code><a href="validate_links.html">link_all_reachable()</a></code> <code><a href="validate_links.html">link_img_alt_text()</a></code> <code><a href="validate_links.html">link_length()</a></code> <code><a href="validate_links.html">link_descriptive()</a></code> <code><a href="validate_links.html">link_source_list()</a></code> <code><a href="validate_links.html">link_internal_anchor()</a></code> <code><a href="validate_links.html">link_internal_file()</a></code> <code><a href="validate_links.html">link_internal_well_formed()</a></code> <code><a href="validate_links.html">link_tests</a></code> <code><a href="validate_links.html">link_info</a></code> </p>
+        </td>
+        <td><p>Validate Links in a markdown document</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="heading_utils.html">get_headings()</a></code> <code><a href="heading_utils.html">show_heading_tree()</a></code> </p>
+        </td>
+        <td><p>Get all headings in the XML document</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section--internal-div-utilities" class="hasAnchor"><a href="#section--internal-div-utilities" class="anchor"></a>[Internal] Div Utilities</h2>
+          <p class="section-desc"><p>These functions help parse, clean, and label divs (both pandoc fenced divs and HTML divs) in the document for parsing.</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="get_divs.html">get_divs()</a></code> </p>
+        </td>
+        <td><p>Get paired div blocks</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="find_between_tags.html">find_between_tags()</a></code> </p>
+        </td>
+        <td><p>Find nodes between two nodes with a given dtag</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="div_labels.html">label_div_tags()</a></code> <code><a href="div_labels.html">find_div_tags()</a></code> <code><a href="div_labels.html">clear_div_labels()</a></code> </p>
+        </td>
+        <td><p>Add labels to div tags in the form of a "dtag" node with a paired "label"
+attribute.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="find_div_pairs.html">find_div_pairs()</a></code> </p>
+        </td>
+        <td><p>Make paired labels for opening and closing div tags</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="clean_div_tags.html">clean_div_tags()</a></code> </p>
+        </td>
+        <td><p>Clean the div tags from an xml document</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="clean_fenced_divs.html">clean_fenced_divs()</a></code> </p>
+        </td>
+        <td><p>Clean pandoc fenced divs and place them in their own paragraph elements</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="trim_fence.html">trim_fence()</a></code> </p>
+        </td>
+        <td><p>Trim div fences from output</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section--internal-kramdown-parsers-accessors-and-translators" class="hasAnchor"><a href="#section--internal-kramdown-parsers-accessors-and-translators" class="anchor"></a>[Internal] Kramdown Parsers, Accessors, and Translators</h2>
+          <p class="section-desc"><p>Styles-era Carpentries lessons used kramdown syntax, which has a very different set of features (such as postfix tags and liquid templating) that require extra post-processing. These functions processed this syntax and offerd ways of translating it to the more common pandoc syntax. (Note, this is a non-exhaustive list).</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
         
         <td>
           <p><code><a href="fix_links.html">fix_links()</a></code> <code><a href="fix_links.html">LINKS</a></code> <code><a href="fix_links.html">fix_link_type()</a></code> <code><a href="fix_links.html">find_lesson_links()</a></code> <code><a href="fix_links.html">resolve_links()</a></code> <code><a href="fix_links.html">links_within_text_regex()</a></code> <code><a href="fix_links.html">text_to_links()</a></code> <code><a href="fix_links.html">make_link()</a></code> </p>
@@ -178,21 +275,9 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="fix_sandpaper_links.html">fix_sandpaper_links()</a></code> </p>
-        </td>
-        <td><p>Fix relative and jekyll links to be compatible with sandpaper</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="get_blocks.html">get_blocks()</a></code> </p>
         </td>
         <td><p>Gather blocks from the XML body of a carpentries lesson</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_challenges.html">get_challenges()</a></code> </p>
-        </td>
-        <td><p>Gather challenges from the XML body of a carpentries lesson</p></td>
       </tr><tr>
         
         <td>
@@ -202,63 +287,33 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="get_lesson.html">get_lesson()</a></code> </p>
-        </td>
-        <td><p>Get a carpentries lesson in XML format</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_solutions.html">get_solutions()</a></code> </p>
-        </td>
-        <td><p>Gather solutions from the XML body of a carpentries lesson</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="heading_utils.html">get_headings()</a></code> <code><a href="heading_utils.html">show_heading_tree()</a></code> </p>
-        </td>
-        <td><p>Get all headings in the XML document</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="isolate_elements.html">isolate_elements()</a></code> </p>
-        </td>
-        <td><p>Isolate elements in an XML document by source position</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="lesson_fragment.html">lesson_fragment()</a></code> </p>
-        </td>
-        <td><p>An example lesson fragment</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="liquid_to_commonmark.html">liquid_to_commonmark()</a></code> </p>
         </td>
         <td><p>Convert liquid code blocks to commonmark code blocks</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="make_link_table.html">make_link_table()</a></code> </p>
+          <p><code><a href="elevate_children.html">elevate_children()</a></code> </p>
         </td>
-        <td><p>Create a table of parsed URLs from a single Episode object.</p></td>
+        <td><p>elevate all children of a node</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="make_pandoc_alt.html">make_pandoc_alt()</a></code> </p>
+          <p><code><a href="kramdown_tags.html">kramdown_tags()</a></code> </p>
         </td>
-        <td><p>Add alt text to images when transforming from jekyll to sandpaper</p></td>
+        <td><p>Find all kramdown tags within the document</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="set_alt_attr.html">set_alt_attr()</a></code> </p>
+          <p><code><a href="set_ktag_block.html">set_ktag_block()</a></code> </p>
         </td>
-        <td><p>Set the alt text for a nodeset of images</p></td>
+        <td><p>add the kramdown tags as attributes of special blocks</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="trim_fence.html">trim_fence()</a></code> </p>
+          <p><code><a href="are_blocks.html">are_blocks()</a></code> </p>
         </td>
-        <td><p>Trim div fences from output</p></td>
+        <td><p>test if the children of a given nodeset are kramdown blocks</p></td>
       </tr>
     </tbody>
     </table>
