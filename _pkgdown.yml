@@ -1,0 +1,69 @@
+home:
+  title: The Carpentries Lesson Validator
+  description: Parse, Transform, and Validate Carpentries Lessons
+
+template:
+  opengraph:
+    twitter:
+      creator: "@zkamvar"
+      site: "@thecarpentries"
+      card: summary
+
+reference:
+ - title: "Classes"
+   desc: >
+     R6 Classes that parse and manipulate Lesson content based on the {tinkr}
+     yarn class. All of the public-facing operations take place through the
+     methods in these classes.
+ - contents:
+   - Lesson
+   - Episode
+ - title: "Validation Reference"
+   desc: >
+     Reference documentation for validation procedures
+ - contents:
+   - validate_headings
+   - validate_links
+   - cli_helpers
+   - show_heading_tree
+ - title: "[Internal] Div Utilities"
+   desc: >
+     These functions help parse, clean, and label divs (both pandoc fenced divs
+     and HTML divs) in the document for parsing.
+ - contents:
+   - get_divs
+   - find_between_tags
+   - label_div_tags
+   - find_div_pairs
+   - clean_div_tags
+   - clean_fenced_divs
+   - trim_fence
+ - title: "[Internal] Kramdown Parsers, Accessors, and Translators"
+   desc: >
+     Styles-era Carpentries lessons used kramdown syntax, which has a very 
+     different set of features (such as postfix tags and liquid templating)
+     that require extra post-processing. These functions processed this syntax
+     and offerd ways of translating it to the more common pandoc syntax. (Note,
+     this is a non-exhaustive list).
+ - contents:
+   - fix_links
+   - fix_liquid_relative_link
+   - get_blocks
+   - get_code
+   - liquid_to_commonmark
+   - elevate_children
+   - kramdown_tags
+   - set_ktag_block
+   - are_blocks
+
+
+articles:
+ - title: "Developer Guides"
+   navbar: ~
+   contents:
+     - validation
+ - title: "Historical Analysis"
+   navbar: ~
+   contents:
+    - articles/swc-survey
+
