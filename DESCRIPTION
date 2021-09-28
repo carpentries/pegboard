@@ -29,6 +29,7 @@ Imports:
     commonmark
 Suggests:
     gert (>= 1.0.0),
+    here,
     testthat,
     withr,
     covr,
