@@ -1,10 +1,5 @@
 ---
 title: "Validation of Lesson Elements"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Validation of Lesson Elements}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}
@@ -110,7 +105,7 @@ For testing, we have created some documents that have extreme cases of links and
 headings that failed to show all the features of our examples:
 
 ```{r show-test-examples}
-ex <- system.file("tests/testthat/examples", package = "pegboard")
+ex  <- here::here("tests/testthat/examples")
 lnk <- Episode$new(fs::path(ex, "link-test.md"))
 hd  <- Episode$new(fs::path(ex, "validation-headings.md"))
 ```
