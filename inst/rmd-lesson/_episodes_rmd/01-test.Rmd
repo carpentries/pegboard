@@ -1,0 +1,32 @@
+---
+title: "Intro to Raster Data"
+teaching: 30
+exercises: 20
+questions:
+-  "What is a raster dataset?"
+objectives:
+-  "Describe the fundamental attributes of a raster dataset."
+keypoints:
+- "The GeoTIFF file format includes metadata about the raster data." 
+source: Rmd
+---
+
+```{r setup, echo=FALSE}
+source("../bin/chunk-options.R")
+source("../setup.R") # NB downloads ~180 MB
+knitr_fig_path("01-")
+knitr::opts_chunk$set(fig.height = 6)
+```
+
+```{r load-libraries, echo = FALSE, results='hide', message = FALSE, warning = FALSE}
+library(raster)
+library(rgdal)
+library(ggplot2)
+library(dplyr)
+```
+
+> ## Things You'll Need To Complete This Episode
+>
+> See the [lesson homepage]({{ site.baseurl }}) for detailed information about the software,
+> data, and other prerequisites you will need to work through the examples in this episode.
+{: .prereq}

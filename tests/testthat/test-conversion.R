@@ -21,6 +21,28 @@ test_that("Episodes with commonmark-violating liquid relative links can be read"
   expect_snapshot(cat(tmp$show(), sep = "\n"))
 })
 
+test_that("Episodes without include=FALSE in setup chunk are still valid", {
+
+  rast <- fs::path(lesson_fragment("rmd-lesson"), "_episodes_rmd", "01-test.Rmd")
+  e <- Episode$new(rast, process_tags = TRUE, fix_links = FALSE)
+  setup <- get_setup_chunk(e$body)
+  # The includes of the setup chunk is NA
+  expect_true(is.na(xml2::xml_attr(setup, "includes")))
+  old_setup_code <- parse(text = xml2::xml_text(setup))
+  expect_length(old_setup_code, 4)
+  expect_match(as.character(old_setup_code)[1], 'bin/chunk-options.R')
+  expect_match(as.character(old_setup_code)[3], 'knitr_fig_path')
+
+  e$use_sandpaper()
+  setup <- get_setup_chunk(e$body)
+  setup_code <- parse(text = xml2::xml_text(setup))
+  expect_true(is.na(xml2::xml_attr(setup, "includes")))
+  expect_length(setup_code, 2)
+  expect_equal(setup_code[1], old_setup_code[2], ignore_attr = TRUE)
+  expect_equal(setup_code[2], old_setup_code[4], ignore_attr = TRUE)
+
+})
+
 
 test_that("Episodes can be converted to use sandpaper", {
 
