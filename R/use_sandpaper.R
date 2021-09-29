@@ -24,7 +24,7 @@ use_sandpaper <- function(body, rmd = TRUE) {
   has_setup_chunk <- xml2::xml_find_lgl(
     body, 
     # setup is the first code block that is not included
-    "boolean(./md:code_block[1][@language='r' and @include='FALSE'])",
+    "boolean(./md:code_block[1][@language='r' and (@name='setup' or @include='FALSE')])",
     get_ns(body)
   )
   if (has_setup_chunk || rmd) {
