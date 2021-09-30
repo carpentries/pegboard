@@ -1,3 +1,10 @@
+# pegboard 0.0.0.9025
+
+## BUG FIX
+
+- RMarkdown episodes that had a setup chunk without specifying `includes` are 
+  now considered to have valid setup chunks and can have those chunks converted.
+
 # pegboard 0.0.0.9024
 
 ## NEW FEATURES
