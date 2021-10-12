@@ -119,7 +119,7 @@ test_that("Episodes can be converted to use sandpaper", {
   expect_match(xml2::xml_text(rel_links[[1]]), '"no-workie.svg"', fixed = TRUE)
   expect_equal(
     xml2::xml_attr(jek_links, "destination"),
-    c("index.html", "https://swcarpentry.github.io/shell-novice", "index.html")
+    c("index.html", "https://swcarpentry.github.io/shell-novice", "index.md")
   )
 
   liquid_links <- xml2::xml_find_all(

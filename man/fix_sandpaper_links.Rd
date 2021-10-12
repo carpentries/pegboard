@@ -4,10 +4,12 @@
 \alias{fix_sandpaper_links}
 \title{Fix relative and jekyll links to be compatible with {sandpaper}}
 \usage{
-fix_sandpaper_links(body)
+fix_sandpaper_links(body, yml = list())
 }
 \arguments{
-\item{body}{an XML node}
+\item{body}{an XML document}
+
+\item{yml}{the list of key/value pairs derived from the \verb{_config.yml} file}
 }
 \value{
 the body, invisibly
@@ -36,13 +38,8 @@ converted. If this happens, please report an issue:
 loop <- fs::path(lesson_fragment(), "_episodes", "14-looping-data-sets.md")
 e <- Episode$new(loop)
 b <- e$body
-# Links that exist
-xml2::xml_find_all(b, ".//d1:image")
-xml2::xml_find_all(b, ".//d1:html_block")
-xml2::xml_find_all(b, ".//d1:link[contains(@destination, '{{')]")
-fix_sandpaper_links(b)
-# links that were fixed
-xml2::xml_find_all(b, ".//d1:image")
-xml2::xml_find_all(b, ".//d1:html_block")
-xml2::xml_find_all(b, ".//d1:link[contains(@destination, '{{')]")
+pegboard:::make_link_table(e)$orig
+suppressWarnings(yml <- yaml::read_yaml(file.path(e$lesson, "_config.yml")))
+fix_sandpaper_links(b, yml)
+pegboard:::make_link_table(e)$orig
 }

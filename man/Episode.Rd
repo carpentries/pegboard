@@ -454,13 +454,15 @@ language information at the top of the code block)
 lesson.
 }
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Episode$use_sandpaper(rmd = FALSE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Episode$use_sandpaper(rmd = FALSE, yml = list())}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{rmd}}{if \code{TRUE}, lessons will be converted to RMarkdown documents}
+
+\item{\code{yml}}{the list derived from the yml file for the episode}
 }
 \if{html}{\out{</div>}}
 }

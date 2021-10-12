@@ -2,14 +2,16 @@
 #'
 #' @param body the xml body of an episode
 #' @param rmd if `TRUE`, the chunks will be converted to RMarkdown chunks
+#' @param yml a list derived from the `_config.yml` file that defines the site
+#'   variables.
 #' @return the body
 #' @noRd
-use_sandpaper <- function(body, rmd = TRUE) {
+use_sandpaper <- function(body, rmd = TRUE, yml = list()) {
   if (inherits(body, "xml_missing")) {
     warning("episode body missing", call. = FALSE)
     return(invisible(body))
   }
-  fix_sandpaper_links(body)
+  fix_sandpaper_links(body, yml)
   # Remove {% include links.md %}
   lnks <- xml2::xml_find_all(body, 
     ".//md:text[contains(text(),'include links.md') and contains(text(),'{%')]",
