@@ -209,14 +209,21 @@ Episode <- R6::R6Class("Episode",
     #'    lesson.
     #'
     #' @param rmd if `TRUE`, lessons will be converted to RMarkdown documents
-    use_sandpaper = function(rmd = FALSE) {
+    #' @param yml the list derived from the yml file for the episode
+    use_sandpaper = function(rmd = FALSE, yml = list()) {
       if (rmd && private$mutations['use_sandpaper_rmd']) {
         return(invisible(self))
       }
       if (!rmd && private$mutations['use_sandpaper_md']) {
         return(invisible(self))
       }
-      self$body <- use_sandpaper(self$body, rmd)
+      if (length(yml) == 0) {
+        pth <- fs::path(self$lesson, "_config.yml")
+        if (fs::file_exists(pth)) {
+          suppressWarnings(yml <- yaml::read_yaml(pth))
+        }
+      }
+      self$body <- use_sandpaper(self$body, rmd, yml)
       type <- if (rmd) 'use_sandpaper_rmd' else 'use_sandpaper_md'
       private$mutations[type] <- TRUE
       invisible(self)

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document SYSTEM "CommonMark.dtd">
+<document xmlns="http://commonmark.org/xml/1.0">
+  <paragraph>
+    <link xmlns="http://commonmark.org/xml/1.0" destination="{{ site.training_site }}/icebreakers/index.html" sourcepos="24:3-24:102">
+      <text>icebreaker question</text>
+      </link><link xmlns="http://commonmark.org/xml/1.0" destination="{{ site.coc }}" sourcepos="32:1-32:97">
+      <text>Code of Conduct</text>
+      </link><link xmlns="http://commonmark.org/xml/1.0" destination="{{ site.coc }}" sourcepos="140:1-140:104">
+      <text>Code of Conduct</text>
+      </link><link sourcepos="154:290-154:313" destination="https://excalidraw.com" title="">
+      <text sourcepos="154:134-154:155" xml:space="preserve">https://excalidraw.com</text>
+      </link><link xmlns="http://commonmark.org/xml/1.0" destination="{{ page.root }}/02-practice-learning/" sourcepos="15:1-15:73">
+      <text>earlier topic</text>
+      </link><link xmlns="http://commonmark.org/xml/1.0" destination="{{ page.root }}/17-live/" sourcepos="260:1-260:81">
+      <text>participatory live coding</text>
+      </link><link xmlns="http://commonmark.org/xml/1.0" destination="{{ page.root }}/11-practice-teaching/" sourcepos="5:1-5:90">
+      <text>later</text>
+      </link><link xmlns="http://commonmark.org/xml/1.0" destination="{{ page.root }}{% link _episodes/03-expertise.md %}#expertise-and-teaching" sourcepos="72:3-72:243">
+      <text>expert awareness gaps</text>
+      </link><link xmlns="http://commonmark.org/xml/1.0" destination="{{ page.root }}/17-live/" sourcepos="144:3-144:164">
+      <text>participatory live coding</text>
+      </link><link xmlns="http://commonmark.org/xml/1.0" destination="{{ page.root }}/04-expertise/" sourcepos="202:5-202:86">
+      <text>previous lesson</text>
+      </link><link sourcepos="95:25-95:76" destination="https://udlguidelines.cast.org" title="" rel="CAST">
+      <text sourcepos="95:26-95:69" xml:space="preserve">Universal Design in Learning (UDL) Framework</text>
+      </link><link xmlns="http://commonmark.org/xml/1.0" destination="{{ site.coc }}" sourcepos="237:1-237:62">
+      <text>Code of Conduct</text>
+      </link><link xmlns="http://commonmark.org/xml/1.0" destination="{{ site.coc }}" sourcepos="240:1-240:34">
+      <text>Code of Conduct</text>
+      </link><link destination="https://udlguidelines.cast.org" title="" anchor="true">
+      <text>CAST</text>
+      </link><link sourcepos="73:32-73:53" destination="{{page.root}}/files/papers/fincher-warrens-questions-2007.pdf" title="" rel="fincher-warren">
+      <text sourcepos="73:33-73:36" xml:space="preserve">2007</text>
+      </link><link sourcepos="73:56-73:78" destination="{{page.root}}/files/papers/fincher-stories-change-2012.pdf" title="" rel="fincher-stories">
+      <text sourcepos="73:57-73:60" xml:space="preserve">2012</text>
+      </link><link sourcepos="73:85-73:107" destination="{{page.root}}/files/papers/barker-practice-adoption-2015.pdf" title="" rel="barker-practice">
+      <text sourcepos="73:86-73:89" xml:space="preserve">2015</text>
+      </link><link destination="{{page.root}}/files/papers/fincher-warrens-questions-2007.pdf" title="" anchor="true">
+      <text>fincher-warren</text>
+      </link><link destination="{{page.root}}/files/papers/fincher-stories-change-2012.pdf" title="" anchor="true">
+      <text>fincher-stories</text>
+      </link><link destination="{{page.root}}/files/papers/barker-practice-adoption-2015.pdf" title="" anchor="true">
+      <text>barker-practice</text>
+      </link><link xmlns="http://commonmark.org/xml/1.0" destination="{{ page.root }}/17-live/" sourcepos="14:5-14:70">
+      <text>live coding exercises</text>
+      </link><link sourcepos="22:13-22:126" destination="{{ site.dc_site }}/OpenRefine-ecology-lesson/01-working-with-openrefine" title="">
+      <text sourcepos="22:14-22:50" xml:space="preserve">Faceting and Clustering in OpenRefine</text>
+      </link><link sourcepos="23:13-23:97" destination="{{ site.dc_site }}/sql-ecology-lesson/01-sql-basic-queries/" title="">
+      <text sourcepos="23:14-23:33" xml:space="preserve">Basic Queries in SQL</text>
+      </link><link sourcepos="24:13-24:103" destination="{{ site.dc_site }}/R-ecology-lesson/02-starting-with-data.html" title="">
+      <text sourcepos="24:14-24:36" xml:space="preserve">Starting with Data in R</text>
+      </link><link sourcepos="25:13-25:109" destination="{{ site.dc_site }}/python-ecology-lesson/02-starting-with-data/" title="">
+      <text sourcepos="25:14-25:41" xml:space="preserve">Starting with Data in Python</text>
+      </link><link sourcepos="33:13-33:114" destination="{{ site.swc_pages }}/shell-novice/03-create/" title="">
+      <text sourcepos="33:14-33:65" xml:space="preserve">Working with Files and Directories in the Unix Shell</text>
+      </link><link sourcepos="34:13-34:84" destination="{{ site.swc_pages }}/git-novice/04-changes/" title="">
+      <text sourcepos="34:14-34:36" xml:space="preserve">Tracking Changes in Git</text>
+      </link><link sourcepos="35:13-35:88" destination="{{ site.swc_pages }}/sql-novice-survey/01-select/" title="">
+      <text sourcepos="35:14-35:34" xml:space="preserve">Selecting Data in SQL</text>
+      </link><link sourcepos="36:13-36:112" destination="{{ site.swc_pages }}/python-novice-inflammation/04-loop/" title="">
+      <text sourcepos="36:14-36:51" xml:space="preserve">Repeating Actions with Loops in Python</text>
+      </link><link sourcepos="37:13-37:109" destination="{{ site.swc_pages }}/r-novice-gapminder/05-data-structures-part2/" title="">
+      <text sourcepos="37:14-37:39" xml:space="preserve">Exploring Data Frames in R</text>
+      </link><link xmlns="http://commonmark.org/xml/1.0" destination="{{ page.root }}/demos_rubric/" sourcepos="40:3-40:159">
+      <text>rubric</text>
+      </link><link xmlns="http://commonmark.org/xml/1.0" destination="{{ site.carpentries_site }}" sourcepos="7:1-7:93">
+      <text>The Carpentries</text>
+      </link><link xmlns="http://commonmark.org/xml/1.0" destination="{{ site.swc_site }}" sourcepos="12:1-12:125">
+      <text>Software Carpentry</text>
+      </link><link xmlns="http://commonmark.org/xml/1.0" destination="{{ site.dc_site }}" sourcepos="13:1-13:131">
+      <text>Data Carpentry</text>
+      </link><link xmlns="http://commonmark.org/xml/1.0" destination="{{ site.lc_site }}" sourcepos="15:1-15:167">
+      <text>Library Carpentry</text>
+      </link><link xmlns="http://commonmark.org/xml/1.0" destination="{{ site.carpentries_site }}" sourcepos="18:1-18:46">
+      <text>The Carpentries</text>
+      </link><link xmlns="http://commonmark.org/xml/1.0" destination="{{ site.lc_site }}" sourcepos="23:1-23:48">
+      <text>Library Carpentry</text>
+      </link><link xmlns="http://commonmark.org/xml/1.0" destination="{{ page.root }}{% link LICENSE.md %}" sourcepos="82:1-82:103">
+      <text>open license</text>
+      </link><link xmlns="http://commonmark.org/xml/1.0" destination="{{ site.example_repo }}" sourcepos="174:1-174:69">
+      <text>The Carpentries lesson example repository</text>
+      </link><link xmlns="http://commonmark.org/xml/1.0" destination="{{ page.root }}{% link _episodes/05-memory.md %}#why-guided-practice-is-important" sourcepos="55:6-55:108">
+      <text>discussed earlier</text>
+      </link><link xmlns="http://commonmark.org/xml/1.0" destination="{{ page.root }}{% link _episodes/09-motivation.md %}" sourcepos="71:1-71:124">
+      <text>we learned earlier</text>
+      </link><link xmlns="http://commonmark.org/xml/1.0" destination="{{ page.root }}{% link _episodes/09-motivation.md %}" sourcepos="106:25-106:257">
+      <text>error framing</text>
+      </link><link xmlns="http://commonmark.org/xml/1.0" destination="{{ page.root }}{% link _episodes/10-eia.md %}" sourcepos="188:1-188:84">
+      <text>earlier episode</text>
+      </link><link xmlns="http://commonmark.org/xml/1.0" destination="{{ page.root }}/{% link _episodes/06-feedback.md %}#minute-cards" sourcepos="365:3-365:93">
+      <text>yesterday</text>
+      </link><link sourcepos="104:15-104:57" destination="{{page.root}}/icebreakers/" title="" rel="icebreakers">
+      <text sourcepos="104:16-104:43" xml:space="preserve">more examples of Icebreakers</text>
+      </link><link destination="{{page.root}}/icebreakers/" title="" anchor="true">
+      <text>icebreakers</text>
+      </link><link sourcepos="25:8-25:72" destination="{{site.instructor_post_survey}}" title="">
+      <text sourcepos="25:9-25:38" xml:space="preserve">~5 minute post-workshop survey</text>
+    </link>
+  </paragraph>
+</document>
