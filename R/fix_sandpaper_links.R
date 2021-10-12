@@ -83,9 +83,14 @@ fix_sandpaper_links <- function(body) {
 }
 
 replace_links <- function(links) {
+  # wrapper that adds {{ mustache }} templates around a liquid object
+  stache <- function(thing) paste0("[{][{] ?", thing, " ?[}][}][/]?")
+  # wrapper for link tags like {% link _episodes/page.md %}
+  # https://jekyllrb.com/docs/liquid/tags/
+  glasses <- function(thing) paste0("[{][%] ?link ", thing, " ?[%][}]")
   links <- gsub("[.][.][/]", "", links)
-  links <- gsub("[{][{] ?page.root ?[}][}][/]?", "", links)
-  links <- gsub("[{][{] ?site.swc_pages ?[}][}][/]?", "https://swcarpentry.github.io/", links)
+  links <- gsub(stache("page.root"), "", links)
+  links <- gsub(stache("site.swc_pages"), "https://swcarpentry.github.io/", links)
   links
 }
 
