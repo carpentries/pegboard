@@ -1,3 +1,10 @@
+# pegboard 0.0.0.9026
+
+## BUG FIX
+
+- We now use the `_config.yml` file to parse site-specific liquid template links
+  to fix #60
+
 # pegboard 0.0.0.9025
 
 ## BUG FIX
