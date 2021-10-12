@@ -49,7 +49,7 @@
       
       ![](no-workie.svg){alt='Non-working image'}
       
-      This text includes a [link that isn't parsed correctly by commonmark](index.html)
+      This text includes a [link that isn't parsed correctly by commonmark](index.md)
       . The rest of the text should be properly parsed.
       
       
@@ -70,7 +70,7 @@
       
       ![](no-workie.svg){alt='Non-working image'}
       
-      This text includes a [link that isn't parsed correctly by commonmark](index.html)
+      This text includes a [link that isn't parsed correctly by commonmark](index.md)
       . The rest of the text should be properly parsed.
       
       
