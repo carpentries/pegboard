@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9025</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9026</span>
       </span>
     </div>
 
@@ -135,14 +135,18 @@
     <p>This function will perform the transformation on three node types:</p>
     </div>
 
-    <pre class="usage"><span class='fu'>fix_sandpaper_links</span><span class='op'>(</span><span class='va'>body</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>fix_sandpaper_links</span><span class='op'>(</span><span class='va'>body</span>, yml <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>body</th>
-      <td><p>an XML node</p></td>
+      <td><p>an XML document</p></td>
+    </tr>
+    <tr>
+      <th>yml</th>
+      <td><p>the list of key/value pairs derived from the <code>_config.yml</code> file</p></td>
     </tr>
     </table>
 
@@ -172,27 +176,33 @@ converted. If this happens, please report an issue:
 <span class='va'>loop</span> <span class='op'>&lt;-</span> <span class='fu'>fs</span><span class='fu'>::</span><span class='fu'><a href='http://fs.r-lib.org/reference/path.html'>path</a></span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"_episodes"</span>, <span class='st'>"14-looping-data-sets.md"</span><span class='op'>)</span>
 <span class='va'>e</span> <span class='op'>&lt;-</span> <span class='va'><a href='Episode.html'>Episode</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>loop</span><span class='op'>)</span>
 <span class='va'>b</span> <span class='op'>&lt;-</span> <span class='va'>e</span><span class='op'>$</span><span class='va'>body</span>
-<span class='co'># Links that exist</span>
-<span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span><span class='op'>(</span><span class='va'>b</span>, <span class='st'>".//d1:image"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {xml_nodeset (2)}
-#&gt; [1] &lt;image sourcepos="180:1-180:74" destination="https://carpentries.org/asse ...
-#&gt; [2] &lt;image sourcepos="182:1-182:38" destination="../no-workie.svg" title=""&gt;\ ...</div><div class='input'><span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span><span class='op'>(</span><span class='va'>b</span>, <span class='st'>".//d1:html_block"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {xml_nodeset (2)}
-#&gt; [1] &lt;html_block sourcepos="174:1-174:86" xml:space="preserve"&gt;&amp;lt;img src="ht ...
-#&gt; [2] &lt;html_block sourcepos="176:1-176:49" xml:space="preserve"&gt;&amp;lt;img src=".. ...</div><div class='input'><span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span><span class='op'>(</span><span class='va'>b</span>, <span class='st'>".//d1:link[contains(@destination, '{{')]"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {xml_nodeset (3)}
-#&gt; [1] &lt;link xmlns="http://commonmark.org/xml/1.0" destination="{{ page.root }}/ ...
-#&gt; [2] &lt;link xmlns="http://commonmark.org/xml/1.0" destination="{{ site.swc_page ...
-#&gt; [3] &lt;link xmlns="http://commonmark.org/xml/1.0" destination="{{ page.root }}{ ...</div><div class='input'><span class='fu'>fix_sandpaper_links</span><span class='op'>(</span><span class='va'>b</span><span class='op'>)</span>
-<span class='co'># links that were fixed</span>
-<span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span><span class='op'>(</span><span class='va'>b</span>, <span class='st'>".//d1:image"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {xml_nodeset (2)}
-#&gt; [1] &lt;image sourcepos="180:1-180:74" destination="https://carpentries.org/asse ...
-#&gt; [2] &lt;image sourcepos="182:1-182:38" destination="no-workie.svg" title="" alt= ...</div><div class='input'><span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span><span class='op'>(</span><span class='va'>b</span>, <span class='st'>".//d1:html_block"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {xml_nodeset (2)}
-#&gt; [1] &lt;html_block sourcepos="174:1-174:86" xml:space="preserve"&gt;&amp;lt;img src="ht ...
-#&gt; [2] &lt;html_block sourcepos="176:1-176:49" xml:space="preserve"&gt;&amp;lt;img src="no ...</div><div class='input'><span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span><span class='op'>(</span><span class='va'>b</span>, <span class='st'>".//d1:link[contains(@destination, '{{')]"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {xml_nodeset (0)}</div></pre>
+<span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'><a href='make_link_table.html'>make_link_table</a></span><span class='op'>(</span><span class='va'>e</span><span class='op'>)</span><span class='op'>$</span><span class='va'>orig</span>
+</div><div class='output co'>#&gt;  [1] "https://docs.python.org/3/library/glob.html#glob.glob"                                 
+#&gt;  [2] "https://docs.python.org/3/library/glob.html"                                           
+#&gt;  [3] "https://docs.python.org/3/library/glob.html"                                           
+#&gt;  [4] "https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.shape.html"
+#&gt;  [5] "https://docs.python.org/3/library/stdtypes.html#str.split"                             
+#&gt;  [6] "https://carpentries.org/assets/img/TheCarpentries.svg"                                 
+#&gt;  [7] "../no-workie.svg"                                                                      
+#&gt;  [8] "{{ page.root }}/index.html"                                                            
+#&gt;  [9] "{{ site.swc_pages }}/shell-novice"                                                     
+#&gt; [10] "https://carpentries.org/assets/img/TheCarpentries.svg"                                 
+#&gt; [11] "../no-workie.svg"                                                                      
+#&gt; [12] "{{ page.root }}{% link"                                                                </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/warning.html'>suppressWarnings</a></span><span class='op'>(</span><span class='va'>yml</span> <span class='op'>&lt;-</span> <span class='fu'>yaml</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/yaml/man/read_yaml.html'>read_yaml</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='va'>e</span><span class='op'>$</span><span class='va'>lesson</span>, <span class='st'>"_config.yml"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>fix_sandpaper_links</span><span class='op'>(</span><span class='va'>b</span>, <span class='va'>yml</span><span class='op'>)</span>
+<span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'><a href='make_link_table.html'>make_link_table</a></span><span class='op'>(</span><span class='va'>e</span><span class='op'>)</span><span class='op'>$</span><span class='va'>orig</span>
+</div><div class='output co'>#&gt;  [1] "https://docs.python.org/3/library/glob.html#glob.glob"                                 
+#&gt;  [2] "https://docs.python.org/3/library/glob.html"                                           
+#&gt;  [3] "https://docs.python.org/3/library/glob.html"                                           
+#&gt;  [4] "https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.shape.html"
+#&gt;  [5] "https://docs.python.org/3/library/stdtypes.html#str.split"                             
+#&gt;  [6] "https://carpentries.org/assets/img/TheCarpentries.svg"                                 
+#&gt;  [7] "no-workie.svg"                                                                         
+#&gt;  [8] "index.html"                                                                            
+#&gt;  [9] "https://swcarpentry.github.io/shell-novice"                                            
+#&gt; [10] "https://carpentries.org/assets/img/TheCarpentries.svg"                                 
+#&gt; [11] "no-workie.svg"                                                                         
+#&gt; [12] "index.md"                                                                              </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
