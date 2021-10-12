@@ -100,6 +100,7 @@ translate_site_variables <- function(links, yml = list()) {
   vars <- yml[vapply(yml, typeof, character(1)) == "character"]
   are_links <- grepl("^http", vars)
   vars[are_links] <- paste0(vars[are_links], "/")
+  vars[are_links] <- sub("//$", "/", vars[are_links])
   for (var in names(vars)) {
     links <- gsub(stache(paste0("site.", var)), vars[var], links)
   }
