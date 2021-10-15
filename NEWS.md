@@ -1,3 +1,10 @@
+# pegboard 0.0.0.9027
+
+## NEW FEATURES
+
+ - Jekyll-based lessons will now auto-detect and read in R Markdown content if
+   it exists. The `rmd` flag for the Lesson initializer now does nothing.
+
 # pegboard 0.0.0.9026
 
 ## BUG FIX
