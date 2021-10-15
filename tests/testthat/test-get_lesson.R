@@ -55,8 +55,18 @@ test_that("lessons can be downloaded", {
   # the directory exists
   expect_true(fs::dir_exists(fs::path(d, "carpentries--lesson-example", "_episodes")))
   # The episodes in the object are accounted for
-  episodes <- fs::dir_ls(fs::path(d, "carpentries--lesson-example", "_episodes"))
-  expect_equal(episodes, lex$files, ignore_attr = TRUE)
+  episodes <- c(
+    "01-design.md",
+    "02-tooling.md",
+    "03-organization.md",
+    "04-formatting.md",
+    "05-rmarkdown-example.Rmd",
+    "06-style-guide.md",
+    "07-checking.md",
+    "08-coffee.md",
+    NULL # add NULL in case we need to rearrange or add things ;)
+  )
+  expect_named(lex$files, episodes)
 
 })
 
@@ -75,8 +85,18 @@ test_that("lessons are accessed without re-downloading", {
   # the directory exists
   expect_true(fs::dir_exists(fs::path(d, "carpentries--lesson-example", "_episodes")))
   # The episodes in the object are accounted for
-  episodes <- fs::dir_ls(fs::path(d, "carpentries--lesson-example", "_episodes"))
-  expect_equal(episodes, lex$files, ignore_attr = TRUE)
+  episodes <- c(
+    "01-design.md",
+    "02-tooling.md",
+    "03-organization.md",
+    "04-formatting.md",
+    "05-rmarkdown-example.Rmd",
+    "06-style-guide.md",
+    "07-checking.md",
+    "08-coffee.md",
+    NULL # add NULL in case we need to rearrange or add things ;)
+  )
+  expect_named(lex$files, episodes)
 
 
 })
@@ -94,8 +114,18 @@ test_that("overwriting is possible", {
   # the directory exists
   expect_true(fs::dir_exists(fs::path(d, "carpentries--lesson-example", "_episodes")))
   # The episodes in the object are accounted for
-  episodes <- fs::dir_ls(fs::path(d, "carpentries--lesson-example", "_episodes"))
-  expect_equal(episodes, lex$files, ignore_attr = TRUE)
+  episodes <- c(
+    "01-design.md",
+    "02-tooling.md",
+    "03-organization.md",
+    "04-formatting.md",
+    "05-rmarkdown-example.Rmd",
+    "06-style-guide.md",
+    "07-checking.md",
+    "08-coffee.md",
+    NULL # add NULL in case we need to rearrange or add things ;)
+  )
+  expect_named(lex$files, episodes)
 
 })
 
@@ -185,7 +215,7 @@ test_that("Lesson methods work as expected", {
   expect_equal(fs::path_file(fs::path_dir(lex$path)), fs::path_file(d))
 
   # $rmd------------------------------------------------------------------------
-  expect_false(lex$rmd)
+  expect_true(lex$rmd)
 
   # $files ---------------------------------------------------------------------
   episodes <- c(
@@ -193,7 +223,7 @@ test_that("Lesson methods work as expected", {
     "02-tooling.md",
     "03-organization.md",
     "04-formatting.md",
-    "05-rmarkdown-example.md",
+    "05-rmarkdown-example.Rmd",
     "06-style-guide.md",
     "07-checking.md",
     "08-coffee.md",
@@ -280,8 +310,7 @@ test_that("Lessons with Rmd sources can be downloaded", {
 
   expect_message(
     rni <- get_lesson("swcarpentry/r-novice-inflammation", path = d),
-    "could not find _episodes/, using _episodes_rmd/ as the source",
-    fixed = TRUE
+    "could not find _episodes/, using _episodes_rmd/ as the source"
   )
 
   expect_s3_class(rni, "Lesson")

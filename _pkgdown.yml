@@ -61,7 +61,7 @@ articles:
  - title: "Developer Guides"
    navbar: ~
    contents:
-     - validation
+     - articles/validation
  - title: "Historical Analysis"
    navbar: ~
    contents:
