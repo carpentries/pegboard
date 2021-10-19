@@ -1,3 +1,10 @@
+# pegboard 0.0.0.9028
+
+## BUG FIX
+
+ - fix in jekyll-based lesson auto-detection of RMD lessons will not error
+   for pure Rmd lessons
+
 # pegboard 0.0.0.9027
 
 ## NEW FEATURES
