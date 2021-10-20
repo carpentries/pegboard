@@ -2,6 +2,14 @@
 
 ## BUG FIX
 
+ - fix for jekyll-based lessons using `base_path.html` to define 
+  `relative_root_path` are now corrected to no longer include those directives
+  for links.
+
+# pegboard 0.0.0.9028
+
+## BUG FIX
+
  - fix in jekyll-based lesson auto-detection of RMD lessons will not error
    for pure Rmd lessons
 

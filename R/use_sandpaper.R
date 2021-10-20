@@ -18,6 +18,12 @@ use_sandpaper <- function(body, rmd = TRUE, yml = list()) {
     ns = get_ns(body)
   )
   xml2::xml_remove(lnks)
+  # Remove {% include base_path.html %}
+  bp <- xml2::xml_find_all(body, 
+    ".//md:text[contains(text(),'include base_path') and contains(text(),'{%')]",
+    ns = get_ns(body)
+  )
+  xml2::xml_remove(bp)
   # Fix the code tags
   langs      <- get_code(body, "", "@ktag") # grab all of the tags
   any_python <- any(grepl("python", xml2::xml_attr(langs, "ktag")))
