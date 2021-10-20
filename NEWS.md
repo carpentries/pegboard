@@ -1,4 +1,11 @@
-# pegboard 0.0.0.9028
+# pegboard 0.0.0.9030
+
+## BUG FIX
+
+ - replace `relative_root_path` with nothing instead on `.`, which fixes a bug
+   introduced with 0.0.0.9028.
+
+# pegboard 0.0.0.9029
 
 ## BUG FIX
 
