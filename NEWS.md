@@ -1,3 +1,10 @@
+# pegboard 0.0.0.9031
+
+## BUG FIX
+
+Images that had attributes added are now post-processed in `use_sandpaper()` and
+will retain their original attributes. 
+
 # pegboard 0.0.0.9030
 
 ## BUG FIX
