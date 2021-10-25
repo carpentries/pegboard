@@ -82,11 +82,12 @@ set_ktag_block <- function(tags) {
   nc       <- length(children)
 
   # Find out which children are tags
-
+  is_tag <- "starts-with(text(), '{:')"
+  not_post_image <- glue::glue("not(preceding-sibling::*[1]/self::{ns}image)")
   are_tags <- which(
     xml2::xml_find_lgl(
       children,
-      "boolean(starts-with(text(), '{:'))"
+      glue::glue("boolean(self::*[{is_tag} and {not_post_image}])")
     )
   )
 
