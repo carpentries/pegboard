@@ -32,6 +32,24 @@ test_that("Episodes can be created and are valid", {
 })
 
 
+
+test_that("Episodes with image tags do not error", {
+  ep <- Episode$new(test_path("examples", "post-image-tag.md"))
+  expect_length(ep$get_blocks(level = 0) , 2L)
+  expect_length(ep$tags, 3L)
+  tab <- make_link_table(ep$unblock()$use_sandpaper())
+  expected <- c("Create a new file button in the GitHub interface", 
+    "Create index.md file", "Add 'About' section to index.md file")
+  expect_equal(tab$alt, expected)
+  img <- ep$images
+  expect_length(img, 3L)
+  post_image <- xml2::xml_find_first(img, ".//self::*/following-sibling::*")
+  expect_match(xml2::xml_text(post_image), " \\.image-with-shadow ")
+  expect_match(xml2::xml_text(post_image), " width=\"900px\" ")
+
+})
+
+
 test_that("$confirm_sandpaper() does not error on mismatched divs", {
   e <- Episode$new(test_path("examples", "mismatched-div.txt"), 
     process_tags = FALSE, fix_links = FALSE, fix_liquid = FALSE)
