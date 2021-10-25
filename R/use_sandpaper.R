@@ -24,6 +24,14 @@ use_sandpaper <- function(body, rmd = TRUE, yml = list()) {
     ns = get_ns(body)
   )
   xml2::xml_remove(bp)
+  img_attrs <- xml2::xml_find_all(body, 
+    ".//md:image/following-sibling::md:text[1][starts-with(text(), '{:')]",
+    ns = get_ns(body)
+  )
+  if (length(img_attrs)) {
+    xml2::xml_set_text(img_attrs,
+      sub("{:", "{", xml2::xml_text(img_attrs), fixed = TRUE))
+  }
   # Fix the code tags
   langs      <- get_code(body, "", "@ktag") # grab all of the tags
   any_python <- any(grepl("python", xml2::xml_attr(langs, "ktag")))
