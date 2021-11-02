@@ -77,7 +77,7 @@ Append a stylized label to elements of a vector" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9031</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9032</span>
       </span>
     </div>
 
@@ -203,15 +203,16 @@ Append a stylized label to elements of a vector" />
 <p>, <code>l</code>, appended</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>
-<span class='va'>x2</span> <span class='op'>&lt;-</span> <span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>append_labels</span><span class='op'>(</span><span class='va'>x</span>, 
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>3</span><span class='op'>)</span>, 
-  <span class='st'>"appended"</span>, 
-  cli <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"cli"</span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, 
-  f <span class='op'>=</span> <span class='st'>"col_cyan"</span>
-<span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'>glue</span><span class='fu'>::</span><span class='fu'><a href='https://glue.tidyverse.org/reference/glue.html'>glue</a></span><span class='op'>(</span><span class='st'>"[{x}]-&gt;[{x2}]"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [a]-&gt;[a <span style='color: #00BBBB;'>appended</span>] [b]-&gt;[b] [c]-&gt;[c <span style='color: #00BBBB;'>appended</span>] [d]-&gt;[d] [e]-&gt;[e]</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span></span>
+<span class='r-in'><span class='va'>x2</span> <span class='op'>&lt;-</span> <span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>append_labels</span><span class='op'>(</span><span class='va'>x</span>, </span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>3</span><span class='op'>)</span>, </span>
+<span class='r-in'>  <span class='st'>"appended"</span>, </span>
+<span class='r-in'>  cli <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"cli"</span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, </span>
+<span class='r-in'>  f <span class='op'>=</span> <span class='st'>"col_cyan"</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'>glue</span><span class='fu'>::</span><span class='fu'><a href='https://glue.tidyverse.org/reference/glue.html'>glue</a></span><span class='op'>(</span><span class='st'>"[{x}]-&gt;[{x2}]"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [a]-&gt;[a <span style='color: #00BBBB;'>appended</span>] [b]-&gt;[b] [c]-&gt;[c <span style='color: #00BBBB;'>appended</span>] [d]-&gt;[d] [e]-&gt;[e]</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

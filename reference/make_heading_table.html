@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9031</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9032</span>
       </span>
     </div>
 
@@ -165,31 +165,32 @@ to 5L, which is for the two fences plus title, teaching, and exercises.</p></td>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>path</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"_episodes"</span>, <span class='st'>"14-looping-data-sets.md"</span><span class='op'>)</span>
-<span class='va'>loop</span> <span class='op'>&lt;-</span> <span class='va'><a href='Episode.html'>Episode</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>path</span><span class='op'>)</span>
-<span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>make_heading_table</span><span class='op'>(</span><span class='va'>loop</span><span class='op'>$</span><span class='va'>headings</span>, offset <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>loop</span><span class='op'>$</span><span class='va'>yaml</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                                                             heading level pos
-#&gt; 1      Use a for loop to process files given a list of their names.     2  17
-#&gt; 2  Use glob.glob to find sets of files whose names match a pattern.     2  51
-#&gt; 3                     Use glob and for to process batches of files.     2  84
-#&gt; 4                                               Determining Matches     2 110
-#&gt; 5                                                          Solution     2 119
-#&gt; 6                                                 Minimum File Size     2 125
-#&gt; 7                                                          Solution     2 143
-#&gt; 8                                                    Comparing Data     2 157
-#&gt; 9                                                          Solution     2 162
-#&gt; 10                                        ZNK test links and images     3 187
-#&gt;            node
-#&gt; 1  &lt;heading....
-#&gt; 2  &lt;heading....
-#&gt; 3  &lt;heading....
-#&gt; 4  &lt;heading....
-#&gt; 5  &lt;heading....
-#&gt; 6  &lt;heading....
-#&gt; 7  &lt;heading....
-#&gt; 8  &lt;heading....
-#&gt; 9  &lt;heading....
-#&gt; 10 &lt;heading....</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>path</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"_episodes"</span>, <span class='st'>"14-looping-data-sets.md"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>loop</span> <span class='op'>&lt;-</span> <span class='va'><a href='Episode.html'>Episode</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>path</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>make_heading_table</span><span class='op'>(</span><span class='va'>loop</span><span class='op'>$</span><span class='va'>headings</span>, offset <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>loop</span><span class='op'>$</span><span class='va'>yaml</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                                             heading level pos</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1      Use a for loop to process files given a list of their names.     2  17</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  Use glob.glob to find sets of files whose names match a pattern.     2  51</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3                     Use glob and for to process batches of files.     2  84</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4                                               Determining Matches     2 110</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5                                                          Solution     2 119</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6                                                 Minimum File Size     2 125</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7                                                          Solution     2 143</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8                                                    Comparing Data     2 157</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9                                                          Solution     2 162</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10                                        ZNK test links and images     3 187</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>            node</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  &lt;heading....</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  &lt;heading....</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3  &lt;heading....</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4  &lt;heading....</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5  &lt;heading....</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6  &lt;heading....</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7  &lt;heading....</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8  &lt;heading....</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9  &lt;heading....</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10 &lt;heading....</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

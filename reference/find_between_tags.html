@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9031</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9032</span>
       </span>
     </div>
 
@@ -185,50 +185,53 @@
 <code><a href='clean_fenced_divs.html'>clean_fenced_divs()</a></code> for cleaning cluttered pandoc div tags</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>loop</span> <span class='op'>&lt;-</span> <span class='va'><a href='Episode.html'>Episode</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"_episodes"</span>, <span class='st'>"14-looping-data-sets.md"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>loop</span><span class='op'>$</span><span class='va'>body</span> <span class='co'># a full document with block quotes and code blocks, etc</span>
-</div><div class='output co'>#&gt; {xml_document}
-#&gt; &lt;document sourcepos="1:1-188:22" xmlns="http://commonmark.org/xml/1.0"&gt;
-#&gt;  [1] &lt;heading sourcepos="2:1-2:65" level="2"&gt;\n  &lt;text sourcepos="2:4-2:9" xm ...
-#&gt;  [2] &lt;list sourcepos="4:1-6:0" type="bullet" tight="true"&gt;\n  &lt;item sourcepos ...
-#&gt;  [3] &lt;code_block sourcepos="7:1-12:3" xml:space="preserve" name="" ktag="{: . ...
-#&gt;  [4] &lt;code_block sourcepos="14:1-33:3" xml:space="preserve" name="" ktag="{:  ...
-#&gt;  [5] &lt;heading sourcepos="36:1-36:126" level="2"&gt;\n  &lt;text sourcepos="36:4-36: ...
-#&gt;  [6] &lt;list sourcepos="38:1-47:0" type="bullet" tight="true"&gt;\n  &lt;item sourcep ...
-#&gt;  [7] &lt;code_block sourcepos="48:1-51:3" xml:space="preserve" name="" ktag="{:  ...
-#&gt;  [8] &lt;code_block sourcepos="53:1-57:3" xml:space="preserve" name="" ktag="{:  ...
-#&gt;  [9] &lt;code_block sourcepos="60:1-62:3" xml:space="preserve" name="" ktag="{:  ...
-#&gt; [10] &lt;code_block sourcepos="64:1-66:3" xml:space="preserve" name="" ktag="{:  ...
-#&gt; [11] &lt;heading sourcepos="69:1-69:52" level="2"&gt;\n  &lt;text sourcepos="69:4-69:7 ...
-#&gt; [12] &lt;list sourcepos="71:1-73:0" type="bullet" tight="true"&gt;\n  &lt;item sourcep ...
-#&gt; [13] &lt;code_block sourcepos="74:1-78:3" xml:space="preserve" name="" ktag="{:  ...
-#&gt; [14] &lt;code_block sourcepos="80:1-87:3" xml:space="preserve" name="" ktag="{:  ...
-#&gt; [15] &lt;list sourcepos="90:1-94:0" type="bullet" tight="true"&gt;\n  &lt;item sourcep ...
-#&gt; [16] &lt;block_quote sourcepos="95:1-108:14" ktag="{: .challenge}"&gt;\n  &lt;heading  ...
-#&gt; [17] &lt;block_quote sourcepos="110:1-140:14" ktag="{: .challenge}"&gt;\n  &lt;heading ...
-#&gt; [18] &lt;block_quote sourcepos="142:1-170:14" ktag="{: .challenge}"&gt;\n  &lt;heading ...
-#&gt; [19] &lt;heading sourcepos="172:1-172:29" level="3"&gt;\n  &lt;text sourcepos="172:5-1 ...
-#&gt; [20] &lt;html_block sourcepos="174:1-174:86" xml:space="preserve"&gt;&amp;lt;img src="h ...
-#&gt; ...</div><div class='input'><span class='va'>loop</span><span class='op'>$</span><span class='fu'>unblock</span><span class='op'>(</span><span class='op'>)</span> <span class='co'># removing blockquotes and replacing with div tags</span>
-<span class='co'># find all the div tags</span>
-<span class='va'>ns</span> <span class='op'>&lt;-</span> <span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>get_ns</span><span class='op'>(</span><span class='va'>loop</span><span class='op'>$</span><span class='va'>body</span><span class='op'>)</span>
-<span class='va'>tags</span> <span class='op'>&lt;-</span> <span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span><span class='op'>(</span><span class='va'>loop</span><span class='op'>$</span><span class='va'>body</span>, <span class='st'>".//pb:dtag"</span>, <span class='va'>ns</span><span class='op'>)</span>
-<span class='va'>tags</span> <span class='op'>&lt;-</span> <span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_attr.html'>xml_attr</a></span><span class='op'>(</span><span class='va'>tags</span>, <span class='st'>"label"</span><span class='op'>)</span>
-<span class='va'>tags</span>
-</div><div class='output co'>#&gt;  [1] "div-1-challenge" "div-2-solution"  "div-2-solution"  "div-1-challenge"
-#&gt;  [5] "div-3-challenge" "div-4-solution"  "div-4-solution"  "div-3-challenge"
-#&gt;  [9] "div-5-challenge" "div-6-solution"  "div-6-solution"  "div-5-challenge"</div><div class='input'><span class='co'># grab the contents of the first div tag</span>
-<span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>find_between_tags</span><span class='op'>(</span><span class='va'>tags</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, <span class='va'>loop</span><span class='op'>$</span><span class='va'>body</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {xml_nodeset (9)}
-#&gt; [1] &lt;paragraph xmlns="http://commonmark.org/xml/1.0"&gt;\n  &lt;text xml:space="pre ...
-#&gt; [2] &lt;heading sourcepos="95:3-95:24" level="2"&gt;\n  &lt;text sourcepos="95:6-95:24 ...
-#&gt; [3] &lt;paragraph sourcepos="97:3-97:87"&gt;\n  &lt;text sourcepos="97:3-97:26" xml:sp ...
-#&gt; [4] &lt;list sourcepos="99:3-103:1" type="ordered" start="1" delim="period" tigh ...
-#&gt; [5] &lt;paragraph xmlns="http://commonmark.org/xml/1.0"&gt;\n  &lt;text xml:space="pre ...
-#&gt; [6] &lt;heading sourcepos="104:5-104:15" level="2"&gt;\n  &lt;text sourcepos="104:8-10 ...
-#&gt; [7] &lt;paragraph sourcepos="106:5-108:14"&gt;\n  &lt;text sourcepos="106:5-106:33" xm ...
-#&gt; [8] &lt;paragraph xmlns="http://commonmark.org/xml/1.0"&gt;\n  &lt;text xml:space="pre ...
-#&gt; [9] &lt;paragraph xmlns="http://commonmark.org/xml/1.0"&gt;\n  &lt;text xml:space="pre ...</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>loop</span> <span class='op'>&lt;-</span> <span class='va'><a href='Episode.html'>Episode</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"_episodes"</span>, <span class='st'>"14-looping-data-sets.md"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>loop</span><span class='op'>$</span><span class='va'>body</span> <span class='co'># a full document with block quotes and code blocks, etc</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {xml_document}</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;document sourcepos="1:1-188:22" xmlns="http://commonmark.org/xml/1.0"&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1] &lt;heading sourcepos="2:1-2:65" level="2"&gt;\n  &lt;text sourcepos="2:4-2:9" xm ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [2] &lt;list sourcepos="4:1-6:0" type="bullet" tight="true"&gt;\n  &lt;item sourcepos ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [3] &lt;code_block sourcepos="7:1-12:3" xml:space="preserve" name="" ktag="{: . ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [4] &lt;code_block sourcepos="14:1-33:3" xml:space="preserve" name="" ktag="{:  ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [5] &lt;heading sourcepos="36:1-36:126" level="2"&gt;\n  &lt;text sourcepos="36:4-36: ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [6] &lt;list sourcepos="38:1-47:0" type="bullet" tight="true"&gt;\n  &lt;item sourcep ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [7] &lt;code_block sourcepos="48:1-51:3" xml:space="preserve" name="" ktag="{:  ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [8] &lt;code_block sourcepos="53:1-57:3" xml:space="preserve" name="" ktag="{:  ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [9] &lt;code_block sourcepos="60:1-62:3" xml:space="preserve" name="" ktag="{:  ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [10] &lt;code_block sourcepos="64:1-66:3" xml:space="preserve" name="" ktag="{:  ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [11] &lt;heading sourcepos="69:1-69:52" level="2"&gt;\n  &lt;text sourcepos="69:4-69:7 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [12] &lt;list sourcepos="71:1-73:0" type="bullet" tight="true"&gt;\n  &lt;item sourcep ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [13] &lt;code_block sourcepos="74:1-78:3" xml:space="preserve" name="" ktag="{:  ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [14] &lt;code_block sourcepos="80:1-87:3" xml:space="preserve" name="" ktag="{:  ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [15] &lt;list sourcepos="90:1-94:0" type="bullet" tight="true"&gt;\n  &lt;item sourcep ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [16] &lt;block_quote sourcepos="95:1-108:14" ktag="{: .challenge}"&gt;\n  &lt;heading  ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [17] &lt;block_quote sourcepos="110:1-140:14" ktag="{: .challenge}"&gt;\n  &lt;heading ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [18] &lt;block_quote sourcepos="142:1-170:14" ktag="{: .challenge}"&gt;\n  &lt;heading ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [19] &lt;heading sourcepos="172:1-172:29" level="3"&gt;\n  &lt;text sourcepos="172:5-1 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [20] &lt;html_block sourcepos="174:1-174:86" xml:space="preserve"&gt;&amp;lt;img src="h ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ...</span>
+<span class='r-in'><span class='va'>loop</span><span class='op'>$</span><span class='fu'>unblock</span><span class='op'>(</span><span class='op'>)</span> <span class='co'># removing blockquotes and replacing with div tags</span></span>
+<span class='r-in'><span class='co'># find all the div tags</span></span>
+<span class='r-in'><span class='va'>ns</span> <span class='op'>&lt;-</span> <span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>get_ns</span><span class='op'>(</span><span class='va'>loop</span><span class='op'>$</span><span class='va'>body</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>tags</span> <span class='op'>&lt;-</span> <span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span><span class='op'>(</span><span class='va'>loop</span><span class='op'>$</span><span class='va'>body</span>, <span class='st'>".//pb:dtag"</span>, <span class='va'>ns</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>tags</span> <span class='op'>&lt;-</span> <span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_attr.html'>xml_attr</a></span><span class='op'>(</span><span class='va'>tags</span>, <span class='st'>"label"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>tags</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1] "div-1-challenge" "div-2-solution"  "div-2-solution"  "div-1-challenge"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [5] "div-3-challenge" "div-4-solution"  "div-4-solution"  "div-3-challenge"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [9] "div-5-challenge" "div-6-solution"  "div-6-solution"  "div-5-challenge"</span>
+<span class='r-in'><span class='co'># grab the contents of the first div tag</span></span>
+<span class='r-in'><span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>find_between_tags</span><span class='op'>(</span><span class='va'>tags</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, <span class='va'>loop</span><span class='op'>$</span><span class='va'>body</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {xml_nodeset (9)}</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] &lt;paragraph xmlns="http://commonmark.org/xml/1.0"&gt;\n  &lt;text xml:space="pre ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [2] &lt;heading sourcepos="95:3-95:24" level="2"&gt;\n  &lt;text sourcepos="95:6-95:24 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [3] &lt;paragraph sourcepos="97:3-97:87"&gt;\n  &lt;text sourcepos="97:3-97:26" xml:sp ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [4] &lt;list sourcepos="99:3-103:1" type="ordered" start="1" delim="period" tigh ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [5] &lt;paragraph xmlns="http://commonmark.org/xml/1.0"&gt;\n  &lt;text xml:space="pre ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [6] &lt;heading sourcepos="104:5-104:15" level="2"&gt;\n  &lt;text sourcepos="104:8-10 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [7] &lt;paragraph sourcepos="106:5-108:14"&gt;\n  &lt;text sourcepos="106:5-106:33" xm ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [8] &lt;paragraph xmlns="http://commonmark.org/xml/1.0"&gt;\n  &lt;text xml:space="pre ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [9] &lt;paragraph xmlns="http://commonmark.org/xml/1.0"&gt;\n  &lt;text xml:space="pre ...</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

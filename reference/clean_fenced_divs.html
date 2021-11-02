@@ -77,7 +77,7 @@ that we can track them" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9031</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9032</span>
       </span>
     </div>
 
@@ -169,65 +169,68 @@ that we can track them</p>
 <code>clean_fenced_divs()</code> for cleaning cluttered pandoc div tags</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>txt</span> <span class='op'>&lt;-</span> <span class='st'>"::::::: challenge
-## Challenge
-
-do that challenging thing.
-
-```{r}
-cat('it might be challenging to do this')
-```
-::::: solution ::::
-```{r}
-It's not that challenging
-```
-::::
-::: solution ::::::::
-We just have to try harder and use `&lt;div&gt;` tags
-
-```{r}
-cat('better faster stronger with &lt;div&gt;')
-```
-&lt;img src='https://carpentries.org/logo.svg'/&gt;
-
-What if we include some `:::` code in here or ::: like this
-
-:::::
-:::::
-
-::: good
-
-## Good divs
-
-:::"</span>
-<span class='va'>f</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/writeLines.html'>writeLines</a></span><span class='op'>(</span><span class='va'>txt</span>, <span class='va'>f</span><span class='op'>)</span>
-<span class='va'>ex</span> <span class='op'>&lt;-</span> <span class='fu'>tinkr</span><span class='fu'>::</span><span class='fu'><a href='https://docs.ropensci.org/tinkr/reference/to_xml.html'>to_xml</a></span><span class='op'>(</span><span class='va'>f</span>, sourcepos <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='va'>ex</span><span class='op'>$</span><span class='va'>body</span>
-</div><div class='output co'>#&gt; {xml_document}
-#&gt; &lt;document sourcepos="1:1-31:3" xmlns="http://commonmark.org/xml/1.0"&gt;
-#&gt;  [1] &lt;paragraph sourcepos="1:1-1:17"&gt;\n  &lt;text sourcepos="1:1-1:17" xml:space ...
-#&gt;  [2] &lt;heading sourcepos="2:1-2:12" level="2"&gt;\n  &lt;text sourcepos="2:4-2:12" x ...
-#&gt;  [3] &lt;paragraph sourcepos="4:1-4:26"&gt;\n  &lt;text sourcepos="4:1-4:26" xml:space ...
-#&gt;  [4] &lt;code_block sourcepos="6:1-8:3" xml:space="preserve" language="r" name=" ...
-#&gt;  [5] &lt;paragraph sourcepos="9:1-9:19"&gt;\n  &lt;text sourcepos="9:1-9:19" xml:space ...
-#&gt;  [6] &lt;code_block sourcepos="10:1-12:3" xml:space="preserve" language="r" name ...
-#&gt;  [7] &lt;paragraph sourcepos="13:1-15:47"&gt;\n  &lt;text sourcepos="13:1-13:4" xml:sp ...
-#&gt;  [8] &lt;code_block sourcepos="17:1-19:3" xml:space="preserve" language="r" name ...
-#&gt;  [9] &lt;html_block sourcepos="20:1-20:45" xml:space="preserve"&gt;&amp;lt;img src='htt ...
-#&gt; [10] &lt;paragraph sourcepos="22:1-22:59"&gt;\n  &lt;text sourcepos="22:1-22:24" xml:s ...
-#&gt; [11] &lt;paragraph sourcepos="24:1-25:5"&gt;\n  &lt;text sourcepos="24:1-24:5" xml:spa ...
-#&gt; [12] &lt;paragraph sourcepos="27:1-27:8"&gt;\n  &lt;text sourcepos="27:1-27:8" xml:spa ...
-#&gt; [13] &lt;heading sourcepos="29:1-29:12" level="2"&gt;\n  &lt;text sourcepos="29:4-29:1 ...
-#&gt; [14] &lt;paragraph sourcepos="31:1-31:3"&gt;\n  &lt;text sourcepos="31:1-31:3" xml:spa ...</div><div class='input'><span class='va'>predicate</span> <span class='op'>&lt;-</span> <span class='st'>".//d1:paragraph/d1:text[starts-with(text(), ':::')]"</span>
-<span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_text.html'>xml_text</a></span><span class='op'>(</span><span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span><span class='op'>(</span><span class='va'>ex</span><span class='op'>$</span><span class='va'>body</span>, <span class='va'>predicate</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "::::::: challenge"     "::::: solution ::::"   "::::"                 
-#&gt; [4] "::: solution ::::::::" ":::::"                 ":::::"                
-#&gt; [7] "::: good"              ":::"                  </div><div class='input'><span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>clean_fenced_divs</span><span class='op'>(</span><span class='va'>ex</span><span class='op'>$</span><span class='va'>body</span><span class='op'>)</span>
-<span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_text.html'>xml_text</a></span><span class='op'>(</span><span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span><span class='op'>(</span><span class='va'>ex</span><span class='op'>$</span><span class='va'>body</span>, <span class='va'>predicate</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "::::::: challenge"     "::::: solution ::::"   "::::"                 
-#&gt; [4] "::: solution ::::::::" ":::::"                 ":::::"                
-#&gt; [7] "::: good"              ":::"                  </div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>txt</span> <span class='op'>&lt;-</span> <span class='st'>"::::::: challenge</span>
+<span class='r-in'>## Challenge</span>
+<span class='r-in'></span>
+<span class='r-in'>do that challenging thing.</span>
+<span class='r-in'></span>
+<span class='r-in'>```{r}</span>
+<span class='r-in'>cat('it might be challenging to do this')</span>
+<span class='r-in'>```</span>
+<span class='r-in'>::::: solution ::::</span>
+<span class='r-in'>```{r}</span>
+<span class='r-in'>It's not that challenging</span>
+<span class='r-in'>```</span>
+<span class='r-in'>::::</span>
+<span class='r-in'>::: solution ::::::::</span>
+<span class='r-in'>We just have to try harder and use `&lt;div&gt;` tags</span>
+<span class='r-in'></span>
+<span class='r-in'>```{r}</span>
+<span class='r-in'>cat('better faster stronger with &lt;div&gt;')</span>
+<span class='r-in'>```</span>
+<span class='r-in'>&lt;img src='https://carpentries.org/logo.svg'/&gt;</span>
+<span class='r-in'></span>
+<span class='r-in'>What if we include some `:::` code in here or ::: like this</span>
+<span class='r-in'></span>
+<span class='r-in'>:::::</span>
+<span class='r-in'>:::::</span>
+<span class='r-in'></span>
+<span class='r-in'>::: good</span>
+<span class='r-in'></span>
+<span class='r-in'>## Good divs</span>
+<span class='r-in'></span>
+<span class='r-in'>:::"</span></span>
+<span class='r-in'><span class='va'>f</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/writeLines.html'>writeLines</a></span><span class='op'>(</span><span class='va'>txt</span>, <span class='va'>f</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>ex</span> <span class='op'>&lt;-</span> <span class='fu'>tinkr</span><span class='fu'>::</span><span class='fu'><a href='https://docs.ropensci.org/tinkr/reference/to_xml.html'>to_xml</a></span><span class='op'>(</span><span class='va'>f</span>, sourcepos <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>ex</span><span class='op'>$</span><span class='va'>body</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {xml_document}</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;document sourcepos="1:1-31:3" xmlns="http://commonmark.org/xml/1.0"&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1] &lt;paragraph sourcepos="1:1-1:17"&gt;\n  &lt;text sourcepos="1:1-1:17" xml:space ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [2] &lt;heading sourcepos="2:1-2:12" level="2"&gt;\n  &lt;text sourcepos="2:4-2:12" x ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [3] &lt;paragraph sourcepos="4:1-4:26"&gt;\n  &lt;text sourcepos="4:1-4:26" xml:space ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [4] &lt;code_block sourcepos="6:1-8:3" xml:space="preserve" language="r" name=" ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [5] &lt;paragraph sourcepos="9:1-9:19"&gt;\n  &lt;text sourcepos="9:1-9:19" xml:space ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [6] &lt;code_block sourcepos="10:1-12:3" xml:space="preserve" language="r" name ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [7] &lt;paragraph sourcepos="13:1-15:47"&gt;\n  &lt;text sourcepos="13:1-13:4" xml:sp ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [8] &lt;code_block sourcepos="17:1-19:3" xml:space="preserve" language="r" name ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [9] &lt;html_block sourcepos="20:1-20:45" xml:space="preserve"&gt;&amp;lt;img src='htt ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [10] &lt;paragraph sourcepos="22:1-22:59"&gt;\n  &lt;text sourcepos="22:1-22:24" xml:s ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [11] &lt;paragraph sourcepos="24:1-25:5"&gt;\n  &lt;text sourcepos="24:1-24:5" xml:spa ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [12] &lt;paragraph sourcepos="27:1-27:8"&gt;\n  &lt;text sourcepos="27:1-27:8" xml:spa ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [13] &lt;heading sourcepos="29:1-29:12" level="2"&gt;\n  &lt;text sourcepos="29:4-29:1 ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [14] &lt;paragraph sourcepos="31:1-31:3"&gt;\n  &lt;text sourcepos="31:1-31:3" xml:spa ...</span>
+<span class='r-in'><span class='va'>predicate</span> <span class='op'>&lt;-</span> <span class='st'>".//d1:paragraph/d1:text[starts-with(text(), ':::')]"</span></span>
+<span class='r-in'><span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_text.html'>xml_text</a></span><span class='op'>(</span><span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span><span class='op'>(</span><span class='va'>ex</span><span class='op'>$</span><span class='va'>body</span>, <span class='va'>predicate</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "::::::: challenge"     "::::: solution ::::"   "::::"                 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [4] "::: solution ::::::::" ":::::"                 ":::::"                </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [7] "::: good"              ":::"                  </span>
+<span class='r-in'><span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>clean_fenced_divs</span><span class='op'>(</span><span class='va'>ex</span><span class='op'>$</span><span class='va'>body</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_text.html'>xml_text</a></span><span class='op'>(</span><span class='fu'>xml2</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></span><span class='op'>(</span><span class='va'>ex</span><span class='op'>$</span><span class='va'>body</span>, <span class='va'>predicate</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "::::::: challenge"     "::::: solution ::::"   "::::"                 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [4] "::: solution ::::::::" ":::::"                 ":::::"                </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [7] "::: good"              ":::"                  </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

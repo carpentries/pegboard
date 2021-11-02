@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9031</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9032</span>
       </span>
     </div>
 
@@ -207,86 +207,94 @@ a given heading.</p></li>
 classes.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>l</span> <span class='op'>&lt;-</span> <span class='va'><a href='Lesson.html'>Lesson</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>e</span> <span class='op'>&lt;-</span> <span class='va'>l</span><span class='op'>$</span><span class='va'>episodes</span><span class='op'>[[</span><span class='fl'>3</span><span class='op'>]</span><span class='op'>]</span>
-<span class='co'># Our headings validators run a series of tests on headings and return a data</span>
-<span class='co'># frame with information about the headings along with the results of the</span>
-<span class='co'># tests</span>
-<span class='va'>v</span> <span class='op'>&lt;-</span> <span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>validate_headings</span><span class='op'>(</span><span class='va'>e</span><span class='op'>$</span><span class='va'>headings</span>, <span class='va'>e</span><span class='op'>$</span><span class='fu'>get_yaml</span><span class='op'>(</span><span class='op'>)</span><span class='op'>$</span><span class='va'>title</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>e</span><span class='op'>$</span><span class='va'>yaml</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>v</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "results" "tree"   </div><div class='input'><span class='va'>v</span><span class='op'>$</span><span class='va'>results</span>
-</div><div class='output co'>#&gt;                                                             heading level pos
-#&gt; 1      Use a for loop to process files given a list of their names.     2  17
-#&gt; 2  Use glob.glob to find sets of files whose names match a pattern.     2  51
-#&gt; 3                     Use glob and for to process batches of files.     2  84
-#&gt; 4                                               Determining Matches     2 110
-#&gt; 5                                                          Solution     2 119
-#&gt; 6                                                 Minimum File Size     2 125
-#&gt; 7                                                          Solution     2 143
-#&gt; 8                                                    Comparing Data     2 157
-#&gt; 9                                                          Solution     2 162
-#&gt; 10                                        ZNK test links and images     3 187
-#&gt;            node first_heading_is_second_level greater_than_first_level
-#&gt; 1  &lt;heading....                          TRUE                     TRUE
-#&gt; 2  &lt;heading....                          TRUE                     TRUE
-#&gt; 3  &lt;heading....                          TRUE                     TRUE
-#&gt; 4  &lt;heading....                          TRUE                     TRUE
-#&gt; 5  &lt;heading....                          TRUE                     TRUE
-#&gt; 6  &lt;heading....                          TRUE                     TRUE
-#&gt; 7  &lt;heading....                          TRUE                     TRUE
-#&gt; 8  &lt;heading....                          TRUE                     TRUE
-#&gt; 9  &lt;heading....                          TRUE                     TRUE
-#&gt; 10 &lt;heading....                          TRUE                     TRUE
-#&gt;    are_sequential have_names are_unique
-#&gt; 1            TRUE       TRUE       TRUE
-#&gt; 2            TRUE       TRUE       TRUE
-#&gt; 3            TRUE       TRUE       TRUE
-#&gt; 4            TRUE       TRUE       TRUE
-#&gt; 5            TRUE       TRUE      FALSE
-#&gt; 6            TRUE       TRUE       TRUE
-#&gt; 7            TRUE       TRUE      FALSE
-#&gt; 8            TRUE       TRUE       TRUE
-#&gt; 9            TRUE       TRUE      FALSE
-#&gt; 10           TRUE       TRUE       TRUE</div><div class='input'><span class='va'>v</span><span class='op'>$</span><span class='va'>results</span><span class='op'>$</span><span class='va'>path</span> <span class='op'>&lt;-</span> <span class='fu'>fs</span><span class='fu'>::</span><span class='fu'><a href='http://fs.r-lib.org/reference/path_math.html'>path_rel</a></span><span class='op'>(</span><span class='va'>e</span><span class='op'>$</span><span class='va'>path</span>, <span class='va'>e</span><span class='op'>$</span><span class='va'>lesson</span><span class='op'>)</span>
-<span class='co'># The validator does not produce any warnings or messages, but this data</span>
-<span class='co'># frame can be passed on to other functions that will throw them for us. We</span>
-<span class='co'># have a function that will throw a warning/message for each heading that</span>
-<span class='co'># fails the tests. These messages are controlled by `heading_tests` and </span>
-<span class='co'># `heading_info`.</span>
-<span class='fu'>pegboard</span><span class='fu'>:::</span><span class='va'>heading_tests</span>
-</div><div class='output co'>#&gt;   first_heading_is_second_level        greater_than_first_level 
-#&gt;             "(must be level 2)"         "(first level heading)" 
-#&gt;                  are_sequential                      have_names 
-#&gt; "(non-sequential heading jump)"                     "(no name)" 
-#&gt;                      are_unique 
-#&gt;                  "(duplicated)" </div><div class='input'><span class='fu'>pegboard</span><span class='fu'>:::</span><span class='va'>heading_info</span>
-</div><div class='output co'>#&gt;      first_heading_is_second_level           greater_than_first_level 
-#&gt;    "First heading must be level 2" "Level 1 headings are not allowed" 
-#&gt;                     are_sequential                         have_names 
-#&gt;      "Headings must be sequential"           "Headings must be named" 
-#&gt;                         are_unique 
-#&gt;          "Headings must be unique" </div><div class='input'><span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>throw_heading_warnings</span><span class='op'>(</span><span class='va'>v</span><span class='op'>$</span><span class='va'>results</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> There were errors in 3/10 headings</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>- Headings must be unique</span>
-#&gt; <span class='message'>&lt;https://webaim.org/techniques/semanticstructure/#headings&gt;</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>::warning file=_episodes/14-looping-data-sets.md,line=119:: (duplicated)</span>
-#&gt; <span class='message'>::warning file=_episodes/14-looping-data-sets.md,line=143:: (duplicated)</span>
-#&gt; <span class='message'>::warning file=_episodes/14-looping-data-sets.md,line=162:: (duplicated)</span></div><div class='input'><span class='co'># Because the headings are best understood in tree form we have a utility</span>
-<span class='co'># that will print the heading tree with the associated errors:</span>
-<span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'><a href='get_headings.html'>show_heading_tree</a></span><span class='op'>(</span><span class='va'>v</span><span class='op'>$</span><span class='va'>tree</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>── Heading structure ───────────────────────────────────────────────────────────</span></div><div class='output co'>#&gt; # Episode: “Looping Over Data Sets” 
-#&gt; ├─## Use a for loop to process files given a list of their names. 
-#&gt; ├─## Use glob.glob to find sets of files whose names match a pattern. 
-#&gt; ├─## Use glob and for to process batches of files. 
-#&gt; ├─## Determining Matches 
-#&gt; ├─## Solution  (duplicated)
-#&gt; ├─## Minimum File Size 
-#&gt; ├─## Solution  (duplicated)
-#&gt; ├─## Comparing Data 
-#&gt; └─## Solution  (duplicated)
-#&gt;   └─### ZNK test links and images </div><div class='output co'>#&gt; <span class='message'>────────────────────────────────────────────────────────────────────────────────</span></div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>l</span> <span class='op'>&lt;-</span> <span class='va'><a href='Lesson.html'>Lesson</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>e</span> <span class='op'>&lt;-</span> <span class='va'>l</span><span class='op'>$</span><span class='va'>episodes</span><span class='op'>[[</span><span class='fl'>3</span><span class='op'>]</span><span class='op'>]</span></span>
+<span class='r-in'><span class='co'># Our headings validators run a series of tests on headings and return a data</span></span>
+<span class='r-in'><span class='co'># frame with information about the headings along with the results of the</span></span>
+<span class='r-in'><span class='co'># tests</span></span>
+<span class='r-in'><span class='va'>v</span> <span class='op'>&lt;-</span> <span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>validate_headings</span><span class='op'>(</span><span class='va'>e</span><span class='op'>$</span><span class='va'>headings</span>, <span class='va'>e</span><span class='op'>$</span><span class='fu'>get_yaml</span><span class='op'>(</span><span class='op'>)</span><span class='op'>$</span><span class='va'>title</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>e</span><span class='op'>$</span><span class='va'>yaml</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>v</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "results" "tree"   </span>
+<span class='r-in'><span class='va'>v</span><span class='op'>$</span><span class='va'>results</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                                             heading level pos</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1      Use a for loop to process files given a list of their names.     2  17</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  Use glob.glob to find sets of files whose names match a pattern.     2  51</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3                     Use glob and for to process batches of files.     2  84</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4                                               Determining Matches     2 110</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5                                                          Solution     2 119</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6                                                 Minimum File Size     2 125</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7                                                          Solution     2 143</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8                                                    Comparing Data     2 157</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9                                                          Solution     2 162</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10                                        ZNK test links and images     3 187</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>            node first_heading_is_second_level greater_than_first_level</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  &lt;heading....                          TRUE                     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  &lt;heading....                          TRUE                     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3  &lt;heading....                          TRUE                     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4  &lt;heading....                          TRUE                     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5  &lt;heading....                          TRUE                     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6  &lt;heading....                          TRUE                     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7  &lt;heading....                          TRUE                     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8  &lt;heading....                          TRUE                     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9  &lt;heading....                          TRUE                     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10 &lt;heading....                          TRUE                     TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    are_sequential have_names are_unique</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1            TRUE       TRUE       TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2            TRUE       TRUE       TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3            TRUE       TRUE       TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4            TRUE       TRUE       TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5            TRUE       TRUE      FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6            TRUE       TRUE       TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7            TRUE       TRUE      FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8            TRUE       TRUE       TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9            TRUE       TRUE      FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10           TRUE       TRUE       TRUE</span>
+<span class='r-in'><span class='va'>v</span><span class='op'>$</span><span class='va'>results</span><span class='op'>$</span><span class='va'>path</span> <span class='op'>&lt;-</span> <span class='fu'>fs</span><span class='fu'>::</span><span class='fu'><a href='http://fs.r-lib.org/reference/path_math.html'>path_rel</a></span><span class='op'>(</span><span class='va'>e</span><span class='op'>$</span><span class='va'>path</span>, <span class='va'>e</span><span class='op'>$</span><span class='va'>lesson</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># The validator does not produce any warnings or messages, but this data</span></span>
+<span class='r-in'><span class='co'># frame can be passed on to other functions that will throw them for us. We</span></span>
+<span class='r-in'><span class='co'># have a function that will throw a warning/message for each heading that</span></span>
+<span class='r-in'><span class='co'># fails the tests. These messages are controlled by `heading_tests` and </span></span>
+<span class='r-in'><span class='co'># `heading_info`.</span></span>
+<span class='r-in'><span class='fu'>pegboard</span><span class='fu'>:::</span><span class='va'>heading_tests</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   first_heading_is_second_level        greater_than_first_level </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             "(must be level 2)"         "(first level heading)" </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                  are_sequential                      have_names </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> "(non-sequential heading jump)"                     "(no name)" </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                      are_unique </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                  "(duplicated)" </span>
+<span class='r-in'><span class='fu'>pegboard</span><span class='fu'>:::</span><span class='va'>heading_info</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      first_heading_is_second_level           greater_than_first_level </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    "First heading must be level 2" "Level 1 headings are not allowed" </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                     are_sequential                         have_names </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      "Headings must be sequential"           "Headings must be named" </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                         are_unique </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          "Headings must be unique" </span>
+<span class='r-in'><span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>throw_heading_warnings</span><span class='op'>(</span><span class='va'>v</span><span class='op'>$</span><span class='va'>results</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #BBBB00;'>!</span> There were errors in 3/10 headings</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> - Headings must be unique</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> &lt;https://webaim.org/techniques/semanticstructure/#headings&gt;</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=119:: (duplicated)</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=143:: (duplicated)</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=162:: (duplicated)</span>
+<span class='r-in'><span class='co'># Because the headings are best understood in tree form we have a utility</span></span>
+<span class='r-in'><span class='co'># that will print the heading tree with the associated errors:</span></span>
+<span class='r-in'><span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'><a href='get_headings.html'>show_heading_tree</a></span><span class='op'>(</span><span class='va'>v</span><span class='op'>$</span><span class='va'>tree</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ── Heading structure ───────────────────────────────────────────────────────────</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # Episode: “Looping Over Data Sets” </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Use a for loop to process files given a list of their names. </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Use glob.glob to find sets of files whose names match a pattern. </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Use glob and for to process batches of files. </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Determining Matches </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Solution  (duplicated)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Minimum File Size </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Solution  (duplicated)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Comparing Data </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> └─## Solution  (duplicated)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   └─### ZNK test links and images </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ────────────────────────────────────────────────────────────────────────────────</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

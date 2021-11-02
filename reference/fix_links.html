@@ -101,7 +101,7 @@ make_link(): makes a link depending on the link type" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9031</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9032</span>
       </span>
     </div>
 
@@ -251,35 +251,40 @@ links that match the link type</p>
 nodes, otherwise, new XML text nodes.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>helpers</span> <span class='op'>&lt;-</span> <span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>links_within_text_regex</span><span class='op'>(</span><span class='op'>)</span>
-<span class='va'>helpers</span>
-</div><div class='output co'>#&gt;                                         to_split 
-#&gt; "(?&lt;!(\\]|\\)|\\!))\\[|\\](?!(\\]|\\[|\\())|\\)" 
-#&gt;                                       find_links 
-#&gt;                           "(?&lt;!\\[)\\](\\[|\\()" </div><div class='input'><span class='va'>txt</span> <span class='op'>&lt;-</span> <span class='st'>"text ![image text](a.png) with [a link](b.org) and text"</span>
-<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/strsplit.html'>strsplit</a></span><span class='op'>(</span><span class='va'>txt</span>, <span class='va'>helpers</span><span class='op'>[</span><span class='st'>"to_split"</span><span class='op'>]</span>, perl <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>
-<span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                        res
-#&gt; 1 text ![image text](a.png
-#&gt; 2                    with 
-#&gt; 3            a link](b.org
-#&gt; 4                 and text</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span><span class='op'>(</span><span class='va'>helpers</span><span class='op'>[</span><span class='st'>"find_links"</span><span class='op'>]</span>, <span class='va'>res</span>, perl <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1]  TRUE FALSE  TRUE FALSE</div><div class='input'><span class='va'>txt</span> <span class='op'>&lt;-</span> <span class='st'>"Some text [and a link]({{ page.root }}/link.to#thing), 
-some other text [and another link][link-to-thing]."</span>
-<span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>text_to_links</span><span class='op'>(</span><span class='va'>txt</span>, type <span class='op'>=</span> <span class='st'>"rel_link"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "&lt;text&gt;Some text &lt;/text&gt;"                                                         
-#&gt; [2] "&lt;link destination='{{ page.root }}/link.to#thing'&gt;&lt;text&gt;and a link&lt;/text&gt;&lt;/link&gt;"
-#&gt; [3] "&lt;text&gt;, \nsome other text &lt;/text&gt;"                                               
-#&gt; [4] "&lt;link destination='link-to-thing'&gt;&lt;text&gt;and another link&lt;/text&gt;&lt;/link&gt;"          
-#&gt; [5] "&lt;text&gt;.&lt;/text&gt;"                                                                  </div><div class='input'><span class='va'>md</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>md <span class='op'>=</span> <span class='st'>"http://commonmark.org/xml/1.0"</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>md</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='st'>"xml_namespace"</span>
-<span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>text_to_links</span><span class='op'>(</span><span class='va'>txt</span>, <span class='va'>md</span>, <span class='st'>"rel_link"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {xml_nodeset (5)}
-#&gt; [1] &lt;text&gt;Some text &lt;/text&gt;
-#&gt; [2] &lt;link destination="{{ page.root }}/link.to#thing"&gt;\n  &lt;text&gt;and a link&lt;/t ...
-#&gt; [3] &lt;text&gt;, \nsome other text &lt;/text&gt;
-#&gt; [4] &lt;link destination="link-to-thing"&gt;\n  &lt;text&gt;and another link&lt;/text&gt;\n&lt;/link&gt;
-#&gt; [5] &lt;text&gt;.&lt;/text&gt;</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>helpers</span> <span class='op'>&lt;-</span> <span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>links_within_text_regex</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>helpers</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                         to_split </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> "(?&lt;!(\\]|\\)|\\!))\\[|\\](?!(\\]|\\[|\\())|\\)" </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                       find_links </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                           "(?&lt;!\\[)\\](\\[|\\()" </span>
+<span class='r-in'><span class='va'>txt</span> <span class='op'>&lt;-</span> <span class='st'>"text ![image text](a.png) with [a link](b.org) and text"</span></span>
+<span class='r-in'><span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/strsplit.html'>strsplit</a></span><span class='op'>(</span><span class='va'>txt</span>, <span class='va'>helpers</span><span class='op'>[</span><span class='st'>"to_split"</span><span class='op'>]</span>, perl <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                        res</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 text ![image text](a.png</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2                    with </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3            a link](b.org</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4                 and text</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span><span class='op'>(</span><span class='va'>helpers</span><span class='op'>[</span><span class='st'>"find_links"</span><span class='op'>]</span>, <span class='va'>res</span>, perl <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1]  TRUE FALSE  TRUE FALSE</span>
+<span class='r-in'><span class='va'>txt</span> <span class='op'>&lt;-</span> <span class='st'>"Some text [and a link]({{ page.root }}/link.to#thing), </span>
+<span class='r-in'>some other text [and another link][link-to-thing]."</span></span>
+<span class='r-in'><span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>text_to_links</span><span class='op'>(</span><span class='va'>txt</span>, type <span class='op'>=</span> <span class='st'>"rel_link"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "&lt;text&gt;Some text &lt;/text&gt;"                                                         </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [2] "&lt;link destination='{{ page.root }}/link.to#thing'&gt;&lt;text&gt;and a link&lt;/text&gt;&lt;/link&gt;"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [3] "&lt;text&gt;, \nsome other text &lt;/text&gt;"                                               </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [4] "&lt;link destination='link-to-thing'&gt;&lt;text&gt;and another link&lt;/text&gt;&lt;/link&gt;"          </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [5] "&lt;text&gt;.&lt;/text&gt;"                                                                  </span>
+<span class='r-in'><span class='va'>md</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>md <span class='op'>=</span> <span class='st'>"http://commonmark.org/xml/1.0"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>md</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='st'>"xml_namespace"</span></span>
+<span class='r-in'><span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>text_to_links</span><span class='op'>(</span><span class='va'>txt</span>, <span class='va'>md</span>, <span class='st'>"rel_link"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {xml_nodeset (5)}</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] &lt;text&gt;Some text &lt;/text&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [2] &lt;link destination="{{ page.root }}/link.to#thing"&gt;\n  &lt;text&gt;and a link&lt;/t ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [3] &lt;text&gt;, \nsome other text &lt;/text&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [4] &lt;link destination="link-to-thing"&gt;\n  &lt;text&gt;and another link&lt;/text&gt;\n&lt;/link&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [5] &lt;text&gt;.&lt;/text&gt;</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9031</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9032</span>
       </span>
     </div>
 
@@ -429,400 +429,417 @@ details.</p>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'>## ------------------------------------------------</span>
-<span class='co'>## Method `Lesson$new`</span>
-<span class='co'>## ------------------------------------------------</span>
-
-<span class='va'>frg</span> <span class='op'>&lt;-</span> <span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>frg</span><span class='op'>$</span><span class='va'>path</span>
-</div><div class='output co'>#&gt; [1] "/Users/runner/work/_temp/Library/pegboard/lesson-fragment"</div><div class='input'><span class='va'>frg</span><span class='op'>$</span><span class='va'>episodes</span>
-</div><div class='output co'>#&gt; $`10-lunch.md`
-#&gt; &lt;Episode&gt;
-#&gt;   Inherits from: &lt;yarn&gt;
-#&gt;   Public:
-#&gt;     add_md: function (md, where = 0L) 
-#&gt;     body: xml_document, xml_node
-#&gt;     challenges: active binding
-#&gt;     clone: function (deep = FALSE) 
-#&gt;     code: active binding
-#&gt;     confirm_sandpaper: function () 
-#&gt;     error: active binding
-#&gt;     get_blocks: function (type = NULL, level = 1L) 
-#&gt;     get_challenge_graph: function (recurse = TRUE) 
-#&gt;     get_divs: function (type = NULL, include = FALSE) 
-#&gt;     get_images: function (process = FALSE) 
-#&gt;     get_yaml: function () 
-#&gt;     handout: function (path = NULL, solutions = FALSE) 
-#&gt;     head: function (n = 6L) 
-#&gt;     headings: active binding
-#&gt;     images: active binding
-#&gt;     initialize: function (path = NULL, process_tags = TRUE, fix_links = TRUE, 
-#&gt;     isolate_blocks: function () 
-#&gt;     keypoints: active binding
-#&gt;     label_divs: function () 
-#&gt;     lesson: active binding
-#&gt;     links: active binding
-#&gt;     move_keypoints: function () 
-#&gt;     move_objectives: function () 
-#&gt;     move_questions: function () 
-#&gt;     name: active binding
-#&gt;     ns: http://commonmark.org/xml/1.0
-#&gt;     objectives: active binding
-#&gt;     output: active binding
-#&gt;     path: /Users/runner/work/_temp/Library/pegboard/lesson-fragmen ...
-#&gt;     protect_math: function () 
-#&gt;     questions: active binding
-#&gt;     remove_error: function () 
-#&gt;     remove_output: function () 
-#&gt;     reset: function () 
-#&gt;     show: function () 
-#&gt;     show_problems: active binding
-#&gt;     solutions: active binding
-#&gt;     tags: active binding
-#&gt;     tail: function (n = 6L) 
-#&gt;     unblock: function (token = "#'") 
-#&gt;     use_dovetail: function () 
-#&gt;     use_sandpaper: function (rmd = FALSE, yml = list()) 
-#&gt;     validate_headings: function (verbose = TRUE, warn = TRUE) 
-#&gt;     validate_links: function (warn = TRUE) 
-#&gt;     write: function (path = NULL, format = "md", edit = FALSE) 
-#&gt;     yaml: --- layout: break title: "Lunch" teaching: 0 exercises:  ...
-#&gt;   Private:
-#&gt;     clear_yaml_item: function (what) 
-#&gt;     deep_clone: function (name, value) 
-#&gt;     encoding: UTF-8
-#&gt;     md_lines: function (path = NULL, stylesheet = NULL) 
-#&gt;     mutations: FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-#&gt;     problems: list
-#&gt;     record_problem: function (x) 
-#&gt;     sourcepos: TRUE
-#&gt; 
-#&gt; $`12-for-loops.md`
-#&gt; &lt;Episode&gt;
-#&gt;   Inherits from: &lt;yarn&gt;
-#&gt;   Public:
-#&gt;     add_md: function (md, where = 0L) 
-#&gt;     body: xml_document, xml_node
-#&gt;     challenges: active binding
-#&gt;     clone: function (deep = FALSE) 
-#&gt;     code: active binding
-#&gt;     confirm_sandpaper: function () 
-#&gt;     error: active binding
-#&gt;     get_blocks: function (type = NULL, level = 1L) 
-#&gt;     get_challenge_graph: function (recurse = TRUE) 
-#&gt;     get_divs: function (type = NULL, include = FALSE) 
-#&gt;     get_images: function (process = FALSE) 
-#&gt;     get_yaml: function () 
-#&gt;     handout: function (path = NULL, solutions = FALSE) 
-#&gt;     head: function (n = 6L) 
-#&gt;     headings: active binding
-#&gt;     images: active binding
-#&gt;     initialize: function (path = NULL, process_tags = TRUE, fix_links = TRUE, 
-#&gt;     isolate_blocks: function () 
-#&gt;     keypoints: active binding
-#&gt;     label_divs: function () 
-#&gt;     lesson: active binding
-#&gt;     links: active binding
-#&gt;     move_keypoints: function () 
-#&gt;     move_objectives: function () 
-#&gt;     move_questions: function () 
-#&gt;     name: active binding
-#&gt;     ns: http://commonmark.org/xml/1.0
-#&gt;     objectives: active binding
-#&gt;     output: active binding
-#&gt;     path: /Users/runner/work/_temp/Library/pegboard/lesson-fragmen ...
-#&gt;     protect_math: function () 
-#&gt;     questions: active binding
-#&gt;     remove_error: function () 
-#&gt;     remove_output: function () 
-#&gt;     reset: function () 
-#&gt;     show: function () 
-#&gt;     show_problems: active binding
-#&gt;     solutions: active binding
-#&gt;     tags: active binding
-#&gt;     tail: function (n = 6L) 
-#&gt;     unblock: function (token = "#'") 
-#&gt;     use_dovetail: function () 
-#&gt;     use_sandpaper: function (rmd = FALSE, yml = list()) 
-#&gt;     validate_headings: function (verbose = TRUE, warn = TRUE) 
-#&gt;     validate_links: function (warn = TRUE) 
-#&gt;     write: function (path = NULL, format = "md", edit = FALSE) 
-#&gt;     yaml: --- title: "For Loops" teaching: 10 exercises: 15 questi ...
-#&gt;   Private:
-#&gt;     clear_yaml_item: function (what) 
-#&gt;     deep_clone: function (name, value) 
-#&gt;     encoding: UTF-8
-#&gt;     md_lines: function (path = NULL, stylesheet = NULL) 
-#&gt;     mutations: FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-#&gt;     problems: list
-#&gt;     record_problem: function (x) 
-#&gt;     sourcepos: TRUE
-#&gt; 
-#&gt; $`14-looping-data-sets.md`
-#&gt; &lt;Episode&gt;
-#&gt;   Inherits from: &lt;yarn&gt;
-#&gt;   Public:
-#&gt;     add_md: function (md, where = 0L) 
-#&gt;     body: xml_document, xml_node
-#&gt;     challenges: active binding
-#&gt;     clone: function (deep = FALSE) 
-#&gt;     code: active binding
-#&gt;     confirm_sandpaper: function () 
-#&gt;     error: active binding
-#&gt;     get_blocks: function (type = NULL, level = 1L) 
-#&gt;     get_challenge_graph: function (recurse = TRUE) 
-#&gt;     get_divs: function (type = NULL, include = FALSE) 
-#&gt;     get_images: function (process = FALSE) 
-#&gt;     get_yaml: function () 
-#&gt;     handout: function (path = NULL, solutions = FALSE) 
-#&gt;     head: function (n = 6L) 
-#&gt;     headings: active binding
-#&gt;     images: active binding
-#&gt;     initialize: function (path = NULL, process_tags = TRUE, fix_links = TRUE, 
-#&gt;     isolate_blocks: function () 
-#&gt;     keypoints: active binding
-#&gt;     label_divs: function () 
-#&gt;     lesson: active binding
-#&gt;     links: active binding
-#&gt;     move_keypoints: function () 
-#&gt;     move_objectives: function () 
-#&gt;     move_questions: function () 
-#&gt;     name: active binding
-#&gt;     ns: http://commonmark.org/xml/1.0
-#&gt;     objectives: active binding
-#&gt;     output: active binding
-#&gt;     path: /Users/runner/work/_temp/Library/pegboard/lesson-fragmen ...
-#&gt;     protect_math: function () 
-#&gt;     questions: active binding
-#&gt;     remove_error: function () 
-#&gt;     remove_output: function () 
-#&gt;     reset: function () 
-#&gt;     show: function () 
-#&gt;     show_problems: active binding
-#&gt;     solutions: active binding
-#&gt;     tags: active binding
-#&gt;     tail: function (n = 6L) 
-#&gt;     unblock: function (token = "#'") 
-#&gt;     use_dovetail: function () 
-#&gt;     use_sandpaper: function (rmd = FALSE, yml = list()) 
-#&gt;     validate_headings: function (verbose = TRUE, warn = TRUE) 
-#&gt;     validate_links: function (warn = TRUE) 
-#&gt;     write: function (path = NULL, format = "md", edit = FALSE) 
-#&gt;     yaml: --- title: "Looping Over Data Sets" teaching: 5 exercise ...
-#&gt;   Private:
-#&gt;     clear_yaml_item: function (what) 
-#&gt;     deep_clone: function (name, value) 
-#&gt;     encoding: UTF-8
-#&gt;     md_lines: function (path = NULL, stylesheet = NULL) 
-#&gt;     mutations: FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-#&gt;     problems: list
-#&gt;     record_problem: function (x) 
-#&gt;     sourcepos: TRUE
-#&gt; 
-#&gt; $`17-scope.md`
-#&gt; &lt;Episode&gt;
-#&gt;   Inherits from: &lt;yarn&gt;
-#&gt;   Public:
-#&gt;     add_md: function (md, where = 0L) 
-#&gt;     body: xml_document, xml_node
-#&gt;     challenges: active binding
-#&gt;     clone: function (deep = FALSE) 
-#&gt;     code: active binding
-#&gt;     confirm_sandpaper: function () 
-#&gt;     error: active binding
-#&gt;     get_blocks: function (type = NULL, level = 1L) 
-#&gt;     get_challenge_graph: function (recurse = TRUE) 
-#&gt;     get_divs: function (type = NULL, include = FALSE) 
-#&gt;     get_images: function (process = FALSE) 
-#&gt;     get_yaml: function () 
-#&gt;     handout: function (path = NULL, solutions = FALSE) 
-#&gt;     head: function (n = 6L) 
-#&gt;     headings: active binding
-#&gt;     images: active binding
-#&gt;     initialize: function (path = NULL, process_tags = TRUE, fix_links = TRUE, 
-#&gt;     isolate_blocks: function () 
-#&gt;     keypoints: active binding
-#&gt;     label_divs: function () 
-#&gt;     lesson: active binding
-#&gt;     links: active binding
-#&gt;     move_keypoints: function () 
-#&gt;     move_objectives: function () 
-#&gt;     move_questions: function () 
-#&gt;     name: active binding
-#&gt;     ns: http://commonmark.org/xml/1.0
-#&gt;     objectives: active binding
-#&gt;     output: active binding
-#&gt;     path: /Users/runner/work/_temp/Library/pegboard/lesson-fragmen ...
-#&gt;     protect_math: function () 
-#&gt;     questions: active binding
-#&gt;     remove_error: function () 
-#&gt;     remove_output: function () 
-#&gt;     reset: function () 
-#&gt;     show: function () 
-#&gt;     show_problems: active binding
-#&gt;     solutions: active binding
-#&gt;     tags: active binding
-#&gt;     tail: function (n = 6L) 
-#&gt;     unblock: function (token = "#'") 
-#&gt;     use_dovetail: function () 
-#&gt;     use_sandpaper: function (rmd = FALSE, yml = list()) 
-#&gt;     validate_headings: function (verbose = TRUE, warn = TRUE) 
-#&gt;     validate_links: function (warn = TRUE) 
-#&gt;     write: function (path = NULL, format = "md", edit = FALSE) 
-#&gt;     yaml: --- title: "Variable Scope" teaching: 10 exercises: 10 q ...
-#&gt;   Private:
-#&gt;     clear_yaml_item: function (what) 
-#&gt;     deep_clone: function (name, value) 
-#&gt;     encoding: UTF-8
-#&gt;     md_lines: function (path = NULL, stylesheet = NULL) 
-#&gt;     mutations: FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-#&gt;     problems: list
-#&gt;     record_problem: function (x) 
-#&gt;     sourcepos: TRUE
-#&gt; </div><div class='input'>
-<span class='co'>## ------------------------------------------------</span>
-<span class='co'>## Method `Lesson$thin`</span>
-<span class='co'>## ------------------------------------------------</span>
-
-<span class='va'>frg</span> <span class='op'>&lt;-</span> <span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>frg</span><span class='op'>$</span><span class='fu'>thin</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Removing 1 episode: 10-lunch.md</span></div><div class='input'>
-<span class='co'>## ------------------------------------------------</span>
-<span class='co'>## Method `Lesson$reset`</span>
-<span class='co'>## ------------------------------------------------</span>
-
-<span class='va'>frg</span> <span class='op'>&lt;-</span> <span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>frg</span><span class='op'>$</span><span class='va'>episodes</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>$</span><span class='va'>body</span>
-</div><div class='output co'>#&gt; {xml_document}
-#&gt; &lt;document sourcepos="1:1-4:131" xmlns="http://commonmark.org/xml/1.0"&gt;
-#&gt; [1] &lt;paragraph sourcepos="1:1-1:49"&gt;\n  &lt;text sourcepos="1:1-1:49" xml:space= ...
-#&gt; [2] &lt;list sourcepos="2:1-4:131" type="bullet" tight="true"&gt;\n  &lt;item sourcepo ...</div><div class='input'><span class='va'>frg</span><span class='op'>$</span><span class='fu'>isolate_blocks</span><span class='op'>(</span><span class='op'>)</span><span class='op'>$</span><span class='va'>episodes</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>$</span><span class='va'>body</span> <span class='co'># empty</span>
-</div><div class='output co'>#&gt; {xml_document}
-#&gt; &lt;document sourcepos="1:1-4:131" xmlns="http://commonmark.org/xml/1.0"&gt;</div><div class='input'><span class='va'>frg</span><span class='op'>$</span><span class='fu'>reset</span><span class='op'>(</span><span class='op'>)</span><span class='op'>$</span><span class='va'>episodes</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>$</span><span class='va'>body</span> <span class='co'># reset</span>
-</div><div class='output co'>#&gt; {xml_document}
-#&gt; &lt;document sourcepos="1:1-4:131" xmlns="http://commonmark.org/xml/1.0"&gt;
-#&gt; [1] &lt;paragraph sourcepos="1:1-1:49"&gt;\n  &lt;text sourcepos="1:1-1:49" xml:space= ...
-#&gt; [2] &lt;list sourcepos="2:1-4:131" type="bullet" tight="true"&gt;\n  &lt;item sourcepo ...</div><div class='input'>
-<span class='co'>## ------------------------------------------------</span>
-<span class='co'>## Method `Lesson$isolate_blocks`</span>
-<span class='co'>## ------------------------------------------------</span>
-
-<span class='va'>frg</span> <span class='op'>&lt;-</span> <span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>frg</span><span class='op'>$</span><span class='fu'>isolate_blocks</span><span class='op'>(</span><span class='op'>)</span><span class='op'>$</span><span class='va'>body</span> <span class='co'># only one challenge block_quote</span>
-</div><div class='output co'>#&gt; NULL</div><div class='input'>
-<span class='co'>## ------------------------------------------------</span>
-<span class='co'>## Method `Lesson$handout`</span>
-<span class='co'>## ------------------------------------------------</span>
-
-<span class='va'>lsn</span> <span class='op'>&lt;-</span> <span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='st'>"sandpaper-fragment"</span><span class='op'>)</span>, jekyll <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='va'>lsn</span><span class='op'>$</span><span class='fu'>handout</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ## Using RMarkdown
-#&gt; 
-#&gt; ## Challenge 1: Can you do it?
-#&gt; 
-#&gt; What is the output of this command?
-#&gt; 
-#&gt; ```{r, eval=FALSE}
-#&gt; paste("This", "new", "template", "looks", "good")
-#&gt; ```</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='va'>lsn</span><span class='op'>$</span><span class='fu'>handout</span><span class='op'>(</span>solution <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ## Using RMarkdown
-#&gt; 
-#&gt; ## Challenge 1: Can you do it?
-#&gt; 
-#&gt; What is the output of this command?
-#&gt; 
-#&gt; ```{r, eval=FALSE}
-#&gt; paste("This", "new", "template", "looks", "good")
-#&gt; ```
-#&gt; 
-#&gt; :::::::::::::::::::::::: solution
-#&gt; 
-#&gt; ## Output
-#&gt; 
-#&gt; ```{r, echo=FALSE}
-#&gt; paste("This", "new", "template", "looks", "good")
-#&gt; ```
-#&gt; 
-#&gt; ::::::::::::::::::::::::::::::::::
-#&gt; 
-#&gt; ## Challenge 2: how do you nest solutions within challenge blocks?
-#&gt; 
-#&gt; :::::::::::::::::::::::: solution
-#&gt; 
-#&gt; You can add a line with at least three colons and a `solution` tag.</div><div class='input'>
-<span class='co'>## ------------------------------------------------</span>
-<span class='co'>## Method `Lesson$validate_headings`</span>
-<span class='co'>## ------------------------------------------------</span>
-
-<span class='va'>frg</span> <span class='op'>&lt;-</span> <span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>frg</span><span class='op'>$</span><span class='fu'>validate_headings</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>── Heading structure ───────────────────────────────────────────────────────────</span></div><div class='output co'>#&gt; # Episode: “For Loops” 
-#&gt; ├─## A for loop executes commands once for each value in a collection. 
-#&gt; ├─## A for loop is made up of a collection, a loop variable, and a body. 
-#&gt; ├─## The first line of the for loop must end with a colon, and the body must be 
-#&gt; ├─## Loop variables can be called anything. 
-#&gt; ├─## The body of a loop can contain many statements. 
-#&gt; ├─## Use range to iterate over a sequence of numbers. 
-#&gt; ├─## The Accumulator pattern turns many values into one. 
-#&gt; ├─## Classifying Errors 
-#&gt; ├─## Solution  (duplicated)
-#&gt; ├─## Tracing Execution 
-#&gt; ├─## Solution  (duplicated)
-#&gt; ├─## Reversing a String 
-#&gt; ├─## Solution  (duplicated)
-#&gt; ├─## Practice Accumulating 
-#&gt; ├─## Solution  (duplicated)
-#&gt; ├─## Solution  (duplicated)
-#&gt; ├─## Solution  (duplicated)
-#&gt; ├─## Solution  (duplicated)
-#&gt; ├─## Cumulative Sum 
-#&gt; ├─## Solution  (duplicated)
-#&gt; ├─## Identifying Variable Name Errors 
-#&gt; ├─## Solution  (duplicated)
-#&gt; ├─## Identifying Item Errors 
-#&gt; └─## Solution  (duplicated)</div><div class='output co'>#&gt; <span class='message'>────────────────────────────────────────────────────────────────────────────────</span></div><div class='output co'>#&gt; <span class='message'>── Heading structure ───────────────────────────────────────────────────────────</span></div><div class='output co'>#&gt; # Episode: “Looping Over Data Sets” 
-#&gt; ├─## Use a for loop to process files given a list of their names. 
-#&gt; ├─## Use glob.glob to find sets of files whose names match a pattern. 
-#&gt; ├─## Use glob and for to process batches of files. 
-#&gt; ├─## Determining Matches 
-#&gt; ├─## Solution  (duplicated)
-#&gt; ├─## Minimum File Size 
-#&gt; ├─## Solution  (duplicated)
-#&gt; ├─## Comparing Data 
-#&gt; └─## Solution  (duplicated)
-#&gt;   └─### ZNK test links and images </div><div class='output co'>#&gt; <span class='message'>────────────────────────────────────────────────────────────────────────────────</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> There were errors in 13/37 headings</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>- Headings must be unique</span>
-#&gt; <span class='message'>&lt;https://webaim.org/techniques/semanticstructure/#headings&gt;</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>::warning file=_episodes/12-for-loops.md,line=183:: (duplicated)</span>
-#&gt; <span class='message'>::warning file=_episodes/12-for-loops.md,line=200:: (duplicated)</span>
-#&gt; <span class='message'>::warning file=_episodes/12-for-loops.md,line=227:: (duplicated)</span>
-#&gt; <span class='message'>::warning file=_episodes/12-for-loops.md,line=252:: (duplicated)</span>
-#&gt; <span class='message'>::warning file=_episodes/12-for-loops.md,line=270:: (duplicated)</span>
-#&gt; <span class='message'>::warning file=_episodes/12-for-loops.md,line=289:: (duplicated)</span>
-#&gt; <span class='message'>::warning file=_episodes/12-for-loops.md,line=305:: (duplicated)</span>
-#&gt; <span class='message'>::warning file=_episodes/12-for-loops.md,line=336:: (duplicated)</span>
-#&gt; <span class='message'>::warning file=_episodes/12-for-loops.md,line=371:: (duplicated)</span>
-#&gt; <span class='message'>::warning file=_episodes/12-for-loops.md,line=400:: (duplicated)</span>
-#&gt; <span class='message'>::warning file=_episodes/14-looping-data-sets.md,line=119:: (duplicated)</span>
-#&gt; <span class='message'>::warning file=_episodes/14-looping-data-sets.md,line=143:: (duplicated)</span>
-#&gt; <span class='message'>::warning file=_episodes/14-looping-data-sets.md,line=162:: (duplicated)</span></div><div class='input'>
-<span class='co'>## ------------------------------------------------</span>
-<span class='co'>## Method `Lesson$validate_links`</span>
-<span class='co'>## ------------------------------------------------</span>
-
-<span class='va'>frg</span> <span class='op'>&lt;-</span> <span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>frg</span><span class='op'>$</span><span class='fu'>validate_links</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>!</span> There were errors in 3/13 links</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>- Some linked internal files do not exist</span>
-#&gt; <span class='message'>- Images need alt-text &lt;https://webaim.org/techniques/hypertext/link_text#alt_link&gt;</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file] ../no-workie.svg</span>
-#&gt; <span class='message'>::warning file=_episodes/14-looping-data-sets.md,line=195:: [missing alt-text]</span>
-#&gt; <span class='message'>::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [missing alt-text]</span></div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='co'>## ------------------------------------------------</span></span>
+<span class='r-in'><span class='co'>## Method `Lesson$new`</span></span>
+<span class='r-in'><span class='co'>## ------------------------------------------------</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>frg</span> <span class='op'>&lt;-</span> <span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>frg</span><span class='op'>$</span><span class='va'>path</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "/Users/runner/work/_temp/Library/pegboard/lesson-fragment"</span>
+<span class='r-in'><span class='va'>frg</span><span class='op'>$</span><span class='va'>episodes</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $`10-lunch.md`</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;Episode&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Inherits from: &lt;yarn&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Public:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     add_md: function (md, where = 0L) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     body: xml_document, xml_node</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     challenges: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     clone: function (deep = FALSE) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     code: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     confirm_sandpaper: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     error: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     get_blocks: function (type = NULL, level = 1L) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     get_challenge_graph: function (recurse = TRUE) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     get_divs: function (type = NULL, include = FALSE) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     get_images: function (process = FALSE) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     get_yaml: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     handout: function (path = NULL, solutions = FALSE) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     head: function (n = 6L) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     headings: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     images: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     initialize: function (path = NULL, process_tags = TRUE, fix_links = TRUE, </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     isolate_blocks: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     keypoints: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     label_divs: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     lesson: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     links: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     move_keypoints: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     move_objectives: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     move_questions: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     name: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     ns: http://commonmark.org/xml/1.0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     objectives: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     output: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     path: /Users/runner/work/_temp/Library/pegboard/lesson-fragmen ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     protect_math: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     questions: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     remove_error: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     remove_output: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     reset: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     show: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     show_problems: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     solutions: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     tags: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     tail: function (n = 6L) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     unblock: function (token = "#'") </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     use_dovetail: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     use_sandpaper: function (rmd = FALSE, yml = list()) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     validate_headings: function (verbose = TRUE, warn = TRUE) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     validate_links: function (warn = TRUE) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     write: function (path = NULL, format = "md", edit = FALSE) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     yaml: --- layout: break title: "Lunch" teaching: 0 exercises:  ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Private:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     clear_yaml_item: function (what) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     deep_clone: function (name, value) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     encoding: UTF-8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     md_lines: function (path = NULL, stylesheet = NULL) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     mutations: FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     problems: list</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     record_problem: function (x) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     sourcepos: TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $`12-for-loops.md`</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;Episode&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Inherits from: &lt;yarn&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Public:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     add_md: function (md, where = 0L) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     body: xml_document, xml_node</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     challenges: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     clone: function (deep = FALSE) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     code: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     confirm_sandpaper: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     error: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     get_blocks: function (type = NULL, level = 1L) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     get_challenge_graph: function (recurse = TRUE) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     get_divs: function (type = NULL, include = FALSE) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     get_images: function (process = FALSE) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     get_yaml: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     handout: function (path = NULL, solutions = FALSE) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     head: function (n = 6L) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     headings: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     images: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     initialize: function (path = NULL, process_tags = TRUE, fix_links = TRUE, </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     isolate_blocks: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     keypoints: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     label_divs: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     lesson: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     links: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     move_keypoints: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     move_objectives: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     move_questions: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     name: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     ns: http://commonmark.org/xml/1.0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     objectives: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     output: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     path: /Users/runner/work/_temp/Library/pegboard/lesson-fragmen ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     protect_math: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     questions: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     remove_error: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     remove_output: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     reset: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     show: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     show_problems: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     solutions: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     tags: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     tail: function (n = 6L) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     unblock: function (token = "#'") </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     use_dovetail: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     use_sandpaper: function (rmd = FALSE, yml = list()) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     validate_headings: function (verbose = TRUE, warn = TRUE) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     validate_links: function (warn = TRUE) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     write: function (path = NULL, format = "md", edit = FALSE) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     yaml: --- title: "For Loops" teaching: 10 exercises: 15 questi ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Private:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     clear_yaml_item: function (what) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     deep_clone: function (name, value) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     encoding: UTF-8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     md_lines: function (path = NULL, stylesheet = NULL) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     mutations: FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     problems: list</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     record_problem: function (x) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     sourcepos: TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $`14-looping-data-sets.md`</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;Episode&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Inherits from: &lt;yarn&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Public:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     add_md: function (md, where = 0L) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     body: xml_document, xml_node</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     challenges: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     clone: function (deep = FALSE) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     code: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     confirm_sandpaper: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     error: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     get_blocks: function (type = NULL, level = 1L) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     get_challenge_graph: function (recurse = TRUE) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     get_divs: function (type = NULL, include = FALSE) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     get_images: function (process = FALSE) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     get_yaml: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     handout: function (path = NULL, solutions = FALSE) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     head: function (n = 6L) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     headings: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     images: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     initialize: function (path = NULL, process_tags = TRUE, fix_links = TRUE, </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     isolate_blocks: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     keypoints: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     label_divs: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     lesson: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     links: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     move_keypoints: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     move_objectives: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     move_questions: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     name: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     ns: http://commonmark.org/xml/1.0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     objectives: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     output: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     path: /Users/runner/work/_temp/Library/pegboard/lesson-fragmen ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     protect_math: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     questions: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     remove_error: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     remove_output: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     reset: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     show: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     show_problems: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     solutions: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     tags: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     tail: function (n = 6L) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     unblock: function (token = "#'") </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     use_dovetail: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     use_sandpaper: function (rmd = FALSE, yml = list()) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     validate_headings: function (verbose = TRUE, warn = TRUE) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     validate_links: function (warn = TRUE) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     write: function (path = NULL, format = "md", edit = FALSE) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     yaml: --- title: "Looping Over Data Sets" teaching: 5 exercise ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Private:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     clear_yaml_item: function (what) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     deep_clone: function (name, value) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     encoding: UTF-8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     md_lines: function (path = NULL, stylesheet = NULL) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     mutations: FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     problems: list</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     record_problem: function (x) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     sourcepos: TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $`17-scope.md`</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;Episode&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Inherits from: &lt;yarn&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Public:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     add_md: function (md, where = 0L) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     body: xml_document, xml_node</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     challenges: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     clone: function (deep = FALSE) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     code: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     confirm_sandpaper: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     error: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     get_blocks: function (type = NULL, level = 1L) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     get_challenge_graph: function (recurse = TRUE) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     get_divs: function (type = NULL, include = FALSE) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     get_images: function (process = FALSE) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     get_yaml: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     handout: function (path = NULL, solutions = FALSE) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     head: function (n = 6L) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     headings: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     images: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     initialize: function (path = NULL, process_tags = TRUE, fix_links = TRUE, </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     isolate_blocks: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     keypoints: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     label_divs: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     lesson: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     links: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     move_keypoints: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     move_objectives: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     move_questions: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     name: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     ns: http://commonmark.org/xml/1.0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     objectives: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     output: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     path: /Users/runner/work/_temp/Library/pegboard/lesson-fragmen ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     protect_math: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     questions: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     remove_error: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     remove_output: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     reset: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     show: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     show_problems: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     solutions: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     tags: active binding</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     tail: function (n = 6L) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     unblock: function (token = "#'") </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     use_dovetail: function () </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     use_sandpaper: function (rmd = FALSE, yml = list()) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     validate_headings: function (verbose = TRUE, warn = TRUE) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     validate_links: function (warn = TRUE) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     write: function (path = NULL, format = "md", edit = FALSE) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     yaml: --- title: "Variable Scope" teaching: 10 exercises: 10 q ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Private:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     clear_yaml_item: function (what) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     deep_clone: function (name, value) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     encoding: UTF-8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     md_lines: function (path = NULL, stylesheet = NULL) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     mutations: FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     problems: list</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     record_problem: function (x) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     sourcepos: TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## ------------------------------------------------</span></span>
+<span class='r-in'><span class='co'>## Method `Lesson$thin`</span></span>
+<span class='r-in'><span class='co'>## ------------------------------------------------</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>frg</span> <span class='op'>&lt;-</span> <span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>frg</span><span class='op'>$</span><span class='fu'>thin</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Removing 1 episode: 10-lunch.md</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## ------------------------------------------------</span></span>
+<span class='r-in'><span class='co'>## Method `Lesson$reset`</span></span>
+<span class='r-in'><span class='co'>## ------------------------------------------------</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>frg</span> <span class='op'>&lt;-</span> <span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>frg</span><span class='op'>$</span><span class='va'>episodes</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>$</span><span class='va'>body</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {xml_document}</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;document sourcepos="1:1-4:131" xmlns="http://commonmark.org/xml/1.0"&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] &lt;paragraph sourcepos="1:1-1:49"&gt;\n  &lt;text sourcepos="1:1-1:49" xml:space= ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [2] &lt;list sourcepos="2:1-4:131" type="bullet" tight="true"&gt;\n  &lt;item sourcepo ...</span>
+<span class='r-in'><span class='va'>frg</span><span class='op'>$</span><span class='fu'>isolate_blocks</span><span class='op'>(</span><span class='op'>)</span><span class='op'>$</span><span class='va'>episodes</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>$</span><span class='va'>body</span> <span class='co'># empty</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {xml_document}</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;document sourcepos="1:1-4:131" xmlns="http://commonmark.org/xml/1.0"&gt;</span>
+<span class='r-in'><span class='va'>frg</span><span class='op'>$</span><span class='fu'>reset</span><span class='op'>(</span><span class='op'>)</span><span class='op'>$</span><span class='va'>episodes</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>$</span><span class='va'>body</span> <span class='co'># reset</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {xml_document}</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;document sourcepos="1:1-4:131" xmlns="http://commonmark.org/xml/1.0"&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] &lt;paragraph sourcepos="1:1-1:49"&gt;\n  &lt;text sourcepos="1:1-1:49" xml:space= ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [2] &lt;list sourcepos="2:1-4:131" type="bullet" tight="true"&gt;\n  &lt;item sourcepo ...</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## ------------------------------------------------</span></span>
+<span class='r-in'><span class='co'>## Method `Lesson$isolate_blocks`</span></span>
+<span class='r-in'><span class='co'>## ------------------------------------------------</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>frg</span> <span class='op'>&lt;-</span> <span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>frg</span><span class='op'>$</span><span class='fu'>isolate_blocks</span><span class='op'>(</span><span class='op'>)</span><span class='op'>$</span><span class='va'>body</span> <span class='co'># only one challenge block_quote</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NULL</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## ------------------------------------------------</span></span>
+<span class='r-in'><span class='co'>## Method `Lesson$handout`</span></span>
+<span class='r-in'><span class='co'>## ------------------------------------------------</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>lsn</span> <span class='op'>&lt;-</span> <span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='st'>"sandpaper-fragment"</span><span class='op'>)</span>, jekyll <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='va'>lsn</span><span class='op'>$</span><span class='fu'>handout</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ## Using RMarkdown</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ## Challenge 1: Can you do it?</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> What is the output of this command?</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ```{r, eval=FALSE}</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> paste("This", "new", "template", "looks", "good")</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ```</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='va'>lsn</span><span class='op'>$</span><span class='fu'>handout</span><span class='op'>(</span>solution <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ## Using RMarkdown</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ## Challenge 1: Can you do it?</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> What is the output of this command?</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ```{r, eval=FALSE}</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> paste("This", "new", "template", "looks", "good")</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ```</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> :::::::::::::::::::::::: solution</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ## Output</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ```{r, echo=FALSE}</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> paste("This", "new", "template", "looks", "good")</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ```</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ::::::::::::::::::::::::::::::::::</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ## Challenge 2: how do you nest solutions within challenge blocks?</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> :::::::::::::::::::::::: solution</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> You can add a line with at least three colons and a `solution` tag.</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## ------------------------------------------------</span></span>
+<span class='r-in'><span class='co'>## Method `Lesson$validate_headings`</span></span>
+<span class='r-in'><span class='co'>## ------------------------------------------------</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>frg</span> <span class='op'>&lt;-</span> <span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>frg</span><span class='op'>$</span><span class='fu'>validate_headings</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ── Heading structure ───────────────────────────────────────────────────────────</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # Episode: “For Loops” </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## A for loop executes commands once for each value in a collection. </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## A for loop is made up of a collection, a loop variable, and a body. </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## The first line of the for loop must end with a colon, and the body must be </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Loop variables can be called anything. </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## The body of a loop can contain many statements. </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Use range to iterate over a sequence of numbers. </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## The Accumulator pattern turns many values into one. </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Classifying Errors </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Solution  (duplicated)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Tracing Execution </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Solution  (duplicated)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Reversing a String </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Solution  (duplicated)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Practice Accumulating </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Solution  (duplicated)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Solution  (duplicated)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Solution  (duplicated)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Solution  (duplicated)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Cumulative Sum </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Solution  (duplicated)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Identifying Variable Name Errors </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Solution  (duplicated)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Identifying Item Errors </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> └─## Solution  (duplicated)</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ────────────────────────────────────────────────────────────────────────────────</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ── Heading structure ───────────────────────────────────────────────────────────</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> # Episode: “Looping Over Data Sets” </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Use a for loop to process files given a list of their names. </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Use glob.glob to find sets of files whose names match a pattern. </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Use glob and for to process batches of files. </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Determining Matches </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Solution  (duplicated)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Minimum File Size </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Solution  (duplicated)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ├─## Comparing Data </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> └─## Solution  (duplicated)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   └─### ZNK test links and images </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ────────────────────────────────────────────────────────────────────────────────</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #BBBB00;'>!</span> There were errors in 13/37 headings</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> - Headings must be unique</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> &lt;https://webaim.org/techniques/semanticstructure/#headings&gt;</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ::warning file=_episodes/12-for-loops.md,line=183:: (duplicated)</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ::warning file=_episodes/12-for-loops.md,line=200:: (duplicated)</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ::warning file=_episodes/12-for-loops.md,line=227:: (duplicated)</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ::warning file=_episodes/12-for-loops.md,line=252:: (duplicated)</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ::warning file=_episodes/12-for-loops.md,line=270:: (duplicated)</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ::warning file=_episodes/12-for-loops.md,line=289:: (duplicated)</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ::warning file=_episodes/12-for-loops.md,line=305:: (duplicated)</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ::warning file=_episodes/12-for-loops.md,line=336:: (duplicated)</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ::warning file=_episodes/12-for-loops.md,line=371:: (duplicated)</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ::warning file=_episodes/12-for-loops.md,line=400:: (duplicated)</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=119:: (duplicated)</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=143:: (duplicated)</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=162:: (duplicated)</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## ------------------------------------------------</span></span>
+<span class='r-in'><span class='co'>## Method `Lesson$validate_links`</span></span>
+<span class='r-in'><span class='co'>## ------------------------------------------------</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>frg</span> <span class='op'>&lt;-</span> <span class='va'>Lesson</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='lesson_fragment.html'>lesson_fragment</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>frg</span><span class='op'>$</span><span class='fu'>validate_links</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #BBBB00;'>!</span> There were errors in 3/13 links</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> - Some linked internal files do not exist</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> - Images need alt-text &lt;https://webaim.org/techniques/hypertext/link_text#alt_link&gt;</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file] ../no-workie.svg</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=195:: [missing alt-text]</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [missing alt-text]</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

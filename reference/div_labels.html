@@ -78,7 +78,7 @@ attribute." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9031</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9032</span>
       </span>
     </div>
 
@@ -179,95 +179,97 @@ attribute.</p>
 <code><a href='make_div_table.html'>make_div_table()</a></code> for creating the div table used to make the tags</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>txt</span> <span class='op'>&lt;-</span> <span class='st'>"# Example with a mix of div tags
-
-&gt; PLEASE NEVER DO THE LESSONS THIS WAY
-&gt;
-&gt; I AM LITERALLY JUST TESTING A TERRIBLE EXAMPLE.
-
---------------------------------------------------------------------------------
-
-&lt;div class='challenge'&gt;
-## Challenge
-
-do that challenging thing.
-
-```{r}
-cat('it might be challenging to do this')
-```
-:::: solution
-```{r}
-It's not that challenging
-```
-:::
-&lt;div class='solution'&gt;
-We just have to try harder and use `&lt;div&gt;` tags
-
-:::::: callout
-```{r}
-cat('better faster stronger with &lt;div&gt;')
-```
-::::
-:::::: discussion
-&lt;img src='https://carpentries.org/logo.svg'/&gt;
-:::::
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div class='good'&gt;
-
-## Good divs
-
-&lt;/div&gt;
-"</span> 
-<span class='va'>tmp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/writeLines.html'>writeLines</a></span><span class='op'>(</span><span class='va'>txt</span>, <span class='va'>tmp</span><span class='op'>)</span>
-<span class='va'>ex</span> <span class='op'>&lt;-</span> <span class='fu'>tinkr</span><span class='fu'>::</span><span class='fu'><a href='https://docs.ropensci.org/tinkr/reference/to_xml.html'>to_xml</a></span><span class='op'>(</span><span class='va'>tmp</span><span class='op'>)</span>
-<span class='va'>ex</span><span class='op'>$</span><span class='va'>body</span>
-</div><div class='output co'>#&gt; {xml_document}
-#&gt; &lt;document xmlns="http://commonmark.org/xml/1.0"&gt;
-#&gt;  [1] &lt;heading level="1"&gt;\n  &lt;text xml:space="preserve"&gt;Example with a mix of  ...
-#&gt;  [2] &lt;block_quote&gt;\n  &lt;paragraph&gt;\n    &lt;text xml:space="preserve"&gt;PLEASE NEVE ...
-#&gt;  [3] &lt;thematic_break/&gt;
-#&gt;  [4] &lt;html_block xml:space="preserve"&gt;&amp;lt;div class='challenge'&amp;gt;\n## Chall ...
-#&gt;  [5] &lt;paragraph&gt;\n  &lt;text xml:space="preserve"&gt;do that challenging thing.&lt;/te ...
-#&gt;  [6] &lt;code_block xml:space="preserve" language="r" name=""&gt;cat('it might be c ...
-#&gt;  [7] &lt;paragraph&gt;\n  &lt;text xml:space="preserve"&gt;:::: solution&lt;/text&gt;\n&lt;/paragr ...
-#&gt;  [8] &lt;code_block xml:space="preserve" language="r" name=""&gt;It's not that chal ...
-#&gt;  [9] &lt;paragraph&gt;\n  &lt;text xml:space="preserve"&gt;:::&lt;/text&gt;\n&lt;/paragraph&gt;
-#&gt; [10] &lt;html_block xml:space="preserve"&gt;&amp;lt;div class='solution'&amp;gt;\nWe just h ...
-#&gt; [11] &lt;paragraph&gt;\n  &lt;text xml:space="preserve"&gt;:::::: callout&lt;/text&gt;\n&lt;/parag ...
-#&gt; [12] &lt;code_block xml:space="preserve" language="r" name=""&gt;cat('better faster ...
-#&gt; [13] &lt;paragraph&gt;\n  &lt;text xml:space="preserve"&gt;::::&lt;/text&gt;\n  &lt;softbreak/&gt;\n  ...
-#&gt; [14] &lt;html_block xml:space="preserve"&gt;&amp;lt;/div&amp;gt;\n&amp;lt;/div&amp;gt;\n&lt;/html_block&gt;
-#&gt; [15] &lt;html_block xml:space="preserve"&gt;&amp;lt;div class='good'&amp;gt;\n&lt;/html_block&gt;
-#&gt; [16] &lt;heading level="2"&gt;\n  &lt;text xml:space="preserve"&gt;Good divs&lt;/text&gt;\n&lt;/he ...
-#&gt; [17] &lt;html_block xml:space="preserve"&gt;&amp;lt;/div&amp;gt;\n&lt;/html_block&gt;</div><div class='input'><span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>label_div_tags</span><span class='op'>(</span><span class='va'>ex</span><span class='op'>$</span><span class='va'>body</span><span class='op'>)</span>
-<span class='va'>ex</span><span class='op'>$</span><span class='va'>body</span>
-</div><div class='output co'>#&gt; {xml_document}
-#&gt; &lt;document xmlns="http://commonmark.org/xml/1.0"&gt;
-#&gt;  [1] &lt;heading level="1"&gt;\n  &lt;text xml:space="preserve"&gt;Example with a mix of  ...
-#&gt;  [2] &lt;block_quote&gt;\n  &lt;paragraph&gt;\n    &lt;text xml:space="preserve"&gt;PLEASE NEVE ...
-#&gt;  [3] &lt;thematic_break/&gt;
-#&gt;  [4] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-1-challenge"/&gt;
-#&gt;  [5] &lt;html_block xmlns="http://commonmark.org/xml/1.0" xml:space="preserve"&gt;&amp; ...
-#&gt;  [6] &lt;heading xmlns="http://commonmark.org/xml/1.0" level="2"&gt;\n  &lt;text xml:s ...
-#&gt;  [7] &lt;paragraph&gt;\n  &lt;text xml:space="preserve"&gt;do that challenging thing.&lt;/te ...
-#&gt;  [8] &lt;code_block xml:space="preserve" language="r" name=""&gt;cat('it might be c ...
-#&gt;  [9] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-2-solution"/&gt;
-#&gt; [10] &lt;paragraph&gt;\n  &lt;text xml:space="preserve"&gt;:::: solution&lt;/text&gt;\n&lt;/paragr ...
-#&gt; [11] &lt;code_block xml:space="preserve" language="r" name=""&gt;It's not that chal ...
-#&gt; [12] &lt;paragraph&gt;\n  &lt;text xml:space="preserve"&gt;:::&lt;/text&gt;\n&lt;/paragraph&gt;
-#&gt; [13] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-2-solution"/&gt;
-#&gt; [14] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-3-solution"/&gt;
-#&gt; [15] &lt;html_block xmlns="http://commonmark.org/xml/1.0" xml:space="preserve"&gt;&amp; ...
-#&gt; [16] &lt;paragraph xmlns="http://commonmark.org/xml/1.0"&gt;\n  &lt;text xml:space="pr ...
-#&gt; [17] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-4-callout"/&gt;
-#&gt; [18] &lt;paragraph&gt;\n  &lt;text xml:space="preserve"&gt;:::::: callout&lt;/text&gt;\n&lt;/parag ...
-#&gt; [19] &lt;code_block xml:space="preserve" language="r" name=""&gt;cat('better faster ...
-#&gt; [20] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-5-discussion"/&gt;
-#&gt; ...</div><div class='input'><span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>clear_div_labels</span><span class='op'>(</span><span class='va'>ex</span><span class='op'>$</span><span class='va'>body</span><span class='op'>)</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>txt</span> <span class='op'>&lt;-</span> <span class='st'>"# Example with a mix of div tags</span>
+<span class='r-in'></span>
+<span class='r-in'>&gt; PLEASE NEVER DO THE LESSONS THIS WAY</span>
+<span class='r-in'>&gt;</span>
+<span class='r-in'>&gt; I AM LITERALLY JUST TESTING A TERRIBLE EXAMPLE.</span>
+<span class='r-in'></span>
+<span class='r-in'>--------------------------------------------------------------------------------</span>
+<span class='r-in'></span>
+<span class='r-in'>&lt;div class='challenge'&gt;</span>
+<span class='r-in'>## Challenge</span>
+<span class='r-in'></span>
+<span class='r-in'>do that challenging thing.</span>
+<span class='r-in'></span>
+<span class='r-in'>```{r}</span>
+<span class='r-in'>cat('it might be challenging to do this')</span>
+<span class='r-in'>```</span>
+<span class='r-in'>:::: solution</span>
+<span class='r-in'>```{r}</span>
+<span class='r-in'>It's not that challenging</span>
+<span class='r-in'>```</span>
+<span class='r-in'>:::</span>
+<span class='r-in'>&lt;div class='solution'&gt;</span>
+<span class='r-in'>We just have to try harder and use `&lt;div&gt;` tags</span>
+<span class='r-in'></span>
+<span class='r-in'>:::::: callout</span>
+<span class='r-in'>```{r}</span>
+<span class='r-in'>cat('better faster stronger with &lt;div&gt;')</span>
+<span class='r-in'>```</span>
+<span class='r-in'>::::</span>
+<span class='r-in'>:::::: discussion</span>
+<span class='r-in'>&lt;img src='https://carpentries.org/logo.svg'/&gt;</span>
+<span class='r-in'>:::::</span>
+<span class='r-in'>&lt;/div&gt;</span>
+<span class='r-in'>&lt;/div&gt;</span>
+<span class='r-in'></span>
+<span class='r-in'>&lt;div class='good'&gt;</span>
+<span class='r-in'></span>
+<span class='r-in'>## Good divs</span>
+<span class='r-in'></span>
+<span class='r-in'>&lt;/div&gt;</span>
+<span class='r-in'>"</span> </span>
+<span class='r-in'><span class='va'>tmp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/writeLines.html'>writeLines</a></span><span class='op'>(</span><span class='va'>txt</span>, <span class='va'>tmp</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>ex</span> <span class='op'>&lt;-</span> <span class='fu'>tinkr</span><span class='fu'>::</span><span class='fu'><a href='https://docs.ropensci.org/tinkr/reference/to_xml.html'>to_xml</a></span><span class='op'>(</span><span class='va'>tmp</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>ex</span><span class='op'>$</span><span class='va'>body</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {xml_document}</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;document xmlns="http://commonmark.org/xml/1.0"&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1] &lt;heading level="1"&gt;\n  &lt;text xml:space="preserve"&gt;Example with a mix of  ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [2] &lt;block_quote&gt;\n  &lt;paragraph&gt;\n    &lt;text xml:space="preserve"&gt;PLEASE NEVE ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [3] &lt;thematic_break/&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [4] &lt;html_block xml:space="preserve"&gt;&amp;lt;div class='challenge'&amp;gt;\n## Chall ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [5] &lt;paragraph&gt;\n  &lt;text xml:space="preserve"&gt;do that challenging thing.&lt;/te ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [6] &lt;code_block xml:space="preserve" language="r" name=""&gt;cat('it might be c ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [7] &lt;paragraph&gt;\n  &lt;text xml:space="preserve"&gt;:::: solution&lt;/text&gt;\n&lt;/paragr ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [8] &lt;code_block xml:space="preserve" language="r" name=""&gt;It's not that chal ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [9] &lt;paragraph&gt;\n  &lt;text xml:space="preserve"&gt;:::&lt;/text&gt;\n&lt;/paragraph&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [10] &lt;html_block xml:space="preserve"&gt;&amp;lt;div class='solution'&amp;gt;\nWe just h ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [11] &lt;paragraph&gt;\n  &lt;text xml:space="preserve"&gt;:::::: callout&lt;/text&gt;\n&lt;/parag ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [12] &lt;code_block xml:space="preserve" language="r" name=""&gt;cat('better faster ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [13] &lt;paragraph&gt;\n  &lt;text xml:space="preserve"&gt;::::&lt;/text&gt;\n  &lt;softbreak/&gt;\n  ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [14] &lt;html_block xml:space="preserve"&gt;&amp;lt;/div&amp;gt;\n&amp;lt;/div&amp;gt;\n&lt;/html_block&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [15] &lt;html_block xml:space="preserve"&gt;&amp;lt;div class='good'&amp;gt;\n&lt;/html_block&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [16] &lt;heading level="2"&gt;\n  &lt;text xml:space="preserve"&gt;Good divs&lt;/text&gt;\n&lt;/he ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [17] &lt;html_block xml:space="preserve"&gt;&amp;lt;/div&amp;gt;\n&lt;/html_block&gt;</span>
+<span class='r-in'><span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>label_div_tags</span><span class='op'>(</span><span class='va'>ex</span><span class='op'>$</span><span class='va'>body</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>ex</span><span class='op'>$</span><span class='va'>body</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {xml_document}</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;document xmlns="http://commonmark.org/xml/1.0"&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1] &lt;heading level="1"&gt;\n  &lt;text xml:space="preserve"&gt;Example with a mix of  ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [2] &lt;block_quote&gt;\n  &lt;paragraph&gt;\n    &lt;text xml:space="preserve"&gt;PLEASE NEVE ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [3] &lt;thematic_break/&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [4] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-1-challenge"/&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [5] &lt;html_block xmlns="http://commonmark.org/xml/1.0" xml:space="preserve"&gt;&amp; ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [6] &lt;heading xmlns="http://commonmark.org/xml/1.0" level="2"&gt;\n  &lt;text xml:s ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [7] &lt;paragraph&gt;\n  &lt;text xml:space="preserve"&gt;do that challenging thing.&lt;/te ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [8] &lt;code_block xml:space="preserve" language="r" name=""&gt;cat('it might be c ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [9] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-2-solution"/&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [10] &lt;paragraph&gt;\n  &lt;text xml:space="preserve"&gt;:::: solution&lt;/text&gt;\n&lt;/paragr ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [11] &lt;code_block xml:space="preserve" language="r" name=""&gt;It's not that chal ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [12] &lt;paragraph&gt;\n  &lt;text xml:space="preserve"&gt;:::&lt;/text&gt;\n&lt;/paragraph&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [13] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-2-solution"/&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [14] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-3-solution"/&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [15] &lt;html_block xmlns="http://commonmark.org/xml/1.0" xml:space="preserve"&gt;&amp; ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [16] &lt;paragraph xmlns="http://commonmark.org/xml/1.0"&gt;\n  &lt;text xml:space="pr ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [17] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-4-callout"/&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [18] &lt;paragraph&gt;\n  &lt;text xml:space="preserve"&gt;:::::: callout&lt;/text&gt;\n&lt;/parag ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [19] &lt;code_block xml:space="preserve" language="r" name=""&gt;cat('better faster ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [20] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-5-discussion"/&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ...</span>
+<span class='r-in'><span class='fu'>pegboard</span><span class='fu'>:::</span><span class='fu'>clear_div_labels</span><span class='op'>(</span><span class='va'>ex</span><span class='op'>$</span><span class='va'>body</span><span class='op'>)</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
