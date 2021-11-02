@@ -34,7 +34,9 @@ test_that("Episodes can be created and are valid", {
 
 
 test_that("Episodes with image tags do not error", {
-  ep <- Episode$new(test_path("examples", "post-image-tag.md"))
+  suppressWarnings({
+    ep <- Episode$new(test_path("examples", "post-image-tag.md"))
+  })
   expect_length(ep$get_blocks(level = 0) , 2L)
   expect_length(ep$tags, 3L)
   tab <- make_link_table(ep$unblock()$use_sandpaper())

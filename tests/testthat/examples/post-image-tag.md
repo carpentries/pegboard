@@ -1,3 +1,9 @@
+---
+title: "testing post image tag"
+root: .
+layout: page
+---
+
 To create a new file from GitHub interface,
 click the `Add file` button and select `Create new file` from the dropdown.
 
