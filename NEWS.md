@@ -1,3 +1,10 @@
+# pegboard 0.0.0.9032
+
+## BUG FIX
+
+ - The `$use_sandpaper()` method for Episode objects will now remove "root" and
+   "layout" yaml directives (@zkamvar, #68)
+
 # pegboard 0.0.0.9031
 
 ## BUG FIX

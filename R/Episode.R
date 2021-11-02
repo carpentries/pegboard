@@ -224,6 +224,13 @@ Episode <- R6::R6Class("Episode",
         }
       }
       self$body <- use_sandpaper(self$body, rmd, yml)
+
+      # Remove the common yaml offenders
+      suppressWarnings(this_yaml <- self$get_yaml())
+      this_yaml[["root"]] <- NULL
+      this_yaml[["layout"]] <- NULL
+      self$yaml <- c("---", strsplit(yaml::as.yaml(this_yaml), "\n")[[1]], "---")
+
       type <- if (rmd) 'use_sandpaper_rmd' else 'use_sandpaper_md'
       private$mutations[type] <- TRUE
       invisible(self)
@@ -493,7 +500,9 @@ Episode <- R6::R6Class("Episode",
     #' loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
     #' loop$validate_headings()
     validate_headings = function(verbose = TRUE, warn = TRUE) {
-      out <- validate_headings(self$headings, self$get_yaml()$title, offset = length(self$yaml))
+      out <- validate_headings(self$headings, 
+        self$get_yaml()$title, 
+        offset = length(self$yaml))
       if (is.null(out)) {
         return(out)
       }
