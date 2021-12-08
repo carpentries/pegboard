@@ -16,6 +16,7 @@
 #' - rel if it's a relative URL, the name of the anchor, otherwise NA.
 #' - anchor logical if the URL is an anchor
 #' - sourcepos the source position in the file
+#' @keywords internal
 #' @export
 #' @examples
 #' loop <- fs::path(lesson_fragment(), "_episodes", "14-looping-data-sets.md")

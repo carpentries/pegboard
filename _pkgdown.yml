@@ -1,13 +1,18 @@
+url: 'https://carpentries.github.io/pegboard/'
 home:
   title: The Carpentries Lesson Validator
   description: Parse, Transform, and Validate Carpentries Lessons
 
 template:
+  # bootstrap: 5
   opengraph:
     twitter:
       creator: "@zkamvar"
       site: "@thecarpentries"
       card: summary
+
+# code:
+#   width: 72
 
 reference:
  - title: "Classes"
@@ -24,8 +29,24 @@ reference:
  - contents:
    - validate_headings
    - validate_links
-   - cli_helpers
+   - issue_warning
    - show_heading_tree
+ - title: "Helper functions"
+   desc: > 
+     Miscellaneous functions that make working in Pegboard a little easier.
+ - contents:
+   - get_lesson
+   - lesson_fragment
+   - make_heading_table
+   - make_link_table
+ - title: "[Internal] functions for Episode methods"
+   desc: >
+     Functions in this category serve as internal functions that the
+     corresponding methods in the `Episode` class.
+ - contents:
+   - get_challenges
+   - get_solutions
+   - isolate_elements
  - title: "[Internal] Div Utilities"
    desc: >
      These functions help parse, clean, and label divs (both pandoc fenced divs
@@ -47,7 +68,10 @@ reference:
      this is a non-exhaustive list).
  - contents:
    - fix_links
+   - fix_sandpaper_links
    - fix_liquid_relative_link
+   - make_pandoc_alt
+   - set_alt_attr
    - get_blocks
    - get_code
    - liquid_to_commonmark

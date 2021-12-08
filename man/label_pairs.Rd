@@ -26,4 +26,16 @@ pegboard:::label_pairs(x, 2)
 x <- c("(", "(", ")", "(", "(", ")", ")", ")")
 pegboard:::label_pairs(x, 4)
 }
+\seealso{
+Other div: 
+\code{\link{clean_div_tags}()},
+\code{\link{find_between_tags}()},
+\code{\link{find_div_pairs}()},
+\code{\link{get_divs}()},
+\code{\link{label_div_tags}()},
+\code{\link{make_div_table}()},
+\code{\link{make_div}()},
+\code{\link{replace_with_div}()}
+}
+\concept{div}
 \keyword{internal}

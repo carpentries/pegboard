@@ -1,3 +1,15 @@
+# pegboard 0.0.0.9033
+
+## BUG FIX
+
+ - the `$move_*()` methods no longer create a redundant heading in the fenced
+   div (@zkamvar, #26)
+
+## DOCUMENTATION
+
+ - The pkgdown site has been updated to be more complete.
+ - the div family of functions uses the roxygen family tag to be more complete.
+
 # pegboard 0.0.0.9032
 
 ## BUG FIX

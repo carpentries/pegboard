@@ -58,7 +58,6 @@ prepare_yaml_packet <- function(yaml, what = "questions", dovetail = TRUE) {
     dots <- paste(rep(":", n), collapse = "")
     to_insert <- paste0(
       open, " ", what, "\n\n",
-      "## ", capitalize(what), "\n\n",
       " - ", to_insert, "\n\n",
       dots
     )

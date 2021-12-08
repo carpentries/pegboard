@@ -35,3 +35,4 @@ Create a table of parsed URLs from a single Episode object.
 loop <- fs::path(lesson_fragment(), "_episodes", "14-looping-data-sets.md")
 make_link_table(Episode$new(loop))
 }
+\keyword{internal}

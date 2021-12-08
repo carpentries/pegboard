@@ -25,17 +25,10 @@ expect_moved_yaml <- function(episode, class, position) {
     sprintf("Closing tag is invalid: %s", div_close)
   )
   expect(
-    identical(enames, c("paragraph", "heading", "list", "paragraph")),
+    identical(enames, c("paragraph", "list", "paragraph")),
     sprintf("The %s block is formatted improperly:\n%s", 
       class,
       paste(enames, collapse = ", ")
-    )
-  )
-  expect(
-    xml2::xml_text(divs[[2]]) == capitalize(class),
-    sprintf("The heading doesn't match %s: %s",
-      capitalize(class),
-      xml2::xml_text(divs[[2]])
     )
   )
   invisible(act$val)
