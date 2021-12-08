@@ -10,6 +10,9 @@ withr::defer({
 
 test_that("errors are okay", {
 
+  # The locked dir thing apparently doesn't work in windows
+  testthat::skip_on_os("windows")
+
   dd         <- fs::file_temp()
   locked_dir <- fs::file_temp("locked")
 
@@ -26,8 +29,6 @@ test_that("errors are okay", {
   msg <- glue::glue("directory must have \\(R\\)markdown files")
   expect_error(get_lesson(path = dd), msg)
 
-  # The locked dir thing apparently doesn't work in windows
-  testthat::skip_on_os("windows")
   expect_error(get_lesson("carpentries/lesson-example", path = locked_dir))
 
 })
