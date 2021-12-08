@@ -4,13 +4,7 @@
 #' @param what the class of block
 #' @return an xml document with commonmark namespace
 #' @keywords internal
-#' @seealso [get_divs()] for finding labelled tags, 
-#' [find_between_tags()] to extract things between the tags, 
-#' [label_div_tags()] for labelling div tags,
-#' [clean_div_tags()] for cleaning cluttered div tags,
-#' [replace_with_div()] for replacing blockquotes with div tags
-#' [find_div_pairs()] for connecting open and closing tags
-#' [clean_fenced_divs()] for cleaning cluttered pandoc div tags
+#' @family div
 #' @examples
 #' cha <- pegboard:::make_div("challenge")
 #' cha
@@ -35,13 +29,7 @@ make_div <- function(what, fenced = TRUE) {
 #' @param block a blockquote element
 #' @return the children of the element, invisibly
 #' @keywords internal div
-#' @seealso [get_divs()] for finding labelled tags, 
-#' [find_between_tags()] to extract things between the tags, 
-#' [label_div_tags()] for labelling div tags,
-#' [clean_div_tags()] for cleaning cluttered div tags,
-#' [replace_with_div()] for replacing blockquotes with div tags
-#' [find_div_pairs()] for connecting open and closing tags
-#' [clean_fenced_divs()] for cleaning cluttered pandoc div tags
+#' @family div
 #' @examples
 #' frg <- Lesson$new(lesson_fragment())
 #' lop <- frg$episodes$`14-looping-data-sets.md`
@@ -86,13 +74,7 @@ replace_with_div <- function(block) {
 #' @param type the type of div to return
 #' @return a list of nodesets
 #' @keywords internal div
-#' @seealso [get_divs()] for finding labelled tags, 
-#' [find_between_tags()] to extract things between the tags, 
-#' [label_div_tags()] for labelling div tags,
-#' [clean_div_tags()] for cleaning cluttered div tags,
-#' [replace_with_div()] for replacing blockquotes with div tags
-#' [find_div_pairs()] for connecting open and closing tags
-#' [clean_fenced_divs()] for cleaning cluttered pandoc div tags
+#' @family div
 #' @examples
 #' loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
 #' loop$body # a full document with block quotes and code blocks, etc
@@ -131,13 +113,7 @@ get_divs <- function(body, type = NULL, include = FALSE){
 #' @param include if `TRUE`, the tags themselves will be included in the output
 #' @return a nodeset between tags that have the dtag attribute matching `tag`
 #' @keywords internal div
-#' @seealso [get_divs()] for finding labelled tags, 
-#' [find_between_tags()] to extract things between the tags, 
-#' [label_div_tags()] for labelling div tags,
-#' [clean_div_tags()] for cleaning cluttered div tags,
-#' [replace_with_div()] for replacing blockquotes with div tags
-#' [find_div_pairs()] for connecting open and closing tags
-#' [clean_fenced_divs()] for cleaning cluttered pandoc div tags
+#' @family div
 #' @examples
 #' loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
 #' loop$body # a full document with block quotes and code blocks, etc
@@ -164,14 +140,7 @@ find_between_tags <- function(tag, body, ns = "pb", find = "dtag[@label='{tag}']
 #'   - `clear_div_labels()`: the document, modified
 #'   - `find_div_tags()`: a node list
 #' @keywords internal
-#' @seealso [get_divs()] for finding labelled tags, 
-#' [find_between_tags()] to extract things between the tags, 
-#' [label_div_tags()] for labelling div tags,
-#' [clean_div_tags()] for cleaning cluttered div tags,
-#' [replace_with_div()] for replacing blockquotes with div tags
-#' [find_div_pairs()] for connecting open and closing tags
-#' [clean_fenced_divs()] for cleaning cluttered pandoc div tags
-#' [make_div_table()] for creating the div table used to make the tags
+#' @family div
 #' @rdname div_labels
 #' @examples
 #' txt <- "# Example with a mix of div tags
@@ -277,7 +246,7 @@ clear_div_labels <- function(body) {
 #'   - label: label of the div pair (div-label-class)
 #'   - pos: position the label will be relative to its associated node
 #' @keywords internal
-#' @seealso [find_div_tags()], [find_div_pairs()]
+#' @family div
 #' @examples
 #' txt <- "# Example with a mix of div tags
 #' 
@@ -430,13 +399,7 @@ add_pegboard_nodes <- function(node, df) {
 #' @param body an xml document
 #' @return `TRUE` if divs were detected and cleaned, `FALSE` if there were no
 #'   divs.
-#' @seealso [get_divs()] for finding labelled tags, 
-#' [find_between_tags()] to extract things between the tags, 
-#' [label_div_tags()] for labelling div tags,
-#' [clean_div_tags()] for cleaning cluttered div tags,
-#' [replace_with_div()] for replacing blockquotes with div tags
-#' [find_div_pairs()] for connecting open and closing tags
-#' [clean_fenced_divs()] for cleaning cluttered pandoc div tags
+#' @family div
 #' @details
 #'
 #' Commonmark knows what raw HTML looks like and will read it in as an HTML
@@ -549,12 +512,6 @@ clean_div_tags <- function(body) {
 #' @return an xml document
 #' @keywords internal
 #' @note DEPRECATED.
-#' @seealso [get_divs()] for finding labelled tags, 
-#' [find_between_tags()] to extract things between the tags, 
-#' [label_div_tags()] for labelling div tags,
-#' [replace_with_div()] for replacing blockquotes with div tags
-#' [find_div_pairs()] for connecting open and closing tags
-#' [clean_fenced_divs()] for cleaning cluttered pandoc div tags
 #' @examples
 #' txt <- "::::::: challenge
 #' ## Challenge
@@ -690,13 +647,7 @@ div_close_regex <- function() {
 #'   tag. Note that the labels are produced by doing a cumulative sum of the
 #'   node depths.
 #' @keywords internal
-#' @seealso [get_divs()] for finding labelled tags, 
-#' [find_between_tags()] to extract things between the tags, 
-#' [label_div_tags()] for labelling div tags,
-#' [clean_div_tags()] for cleaning cluttered div tags,
-#' [replace_with_div()] for replacing blockquotes with div tags
-#' [find_div_pairs()] for connecting open and closing tags
-#' [clean_fenced_divs()] for cleaning cluttered pandoc div tags
+#' @family div
 #' @examples
 #' nodes <- c(
 #' "<div class='1'>", 
@@ -741,6 +692,7 @@ find_div_pairs <- function(divs, close = div_close_regex()) {
 #'
 #' @return a vector of integers indicating the pair of parentheses. 
 #' @keywords internal
+#' @family div
 #'
 #' @examples
 #'

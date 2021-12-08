@@ -61,12 +61,4 @@ xml2::xml_text(xml2::xml_find_all(ex$body, predicate))
 pegboard:::clean_fenced_divs(ex$body)
 xml2::xml_text(xml2::xml_find_all(ex$body, predicate))
 }
-\seealso{
-\code{\link[=get_divs]{get_divs()}} for finding labelled tags,
-\code{\link[=find_between_tags]{find_between_tags()}} to extract things between the tags,
-\code{\link[=label_div_tags]{label_div_tags()}} for labelling div tags,
-\code{\link[=replace_with_div]{replace_with_div()}} for replacing blockquotes with div tags
-\code{\link[=find_div_pairs]{find_div_pairs()}} for connecting open and closing tags
-\code{\link[=clean_fenced_divs]{clean_fenced_divs()}} for cleaning cluttered pandoc div tags
-}
 \keyword{internal}
