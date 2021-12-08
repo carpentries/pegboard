@@ -53,8 +53,8 @@ make_div <- function(what, fenced = TRUE) {
 #' lop$get_blocks()
 #' # add tags
 #' pegboard:::label_div_tags(lop$body)
-#' xml2::xml_find_all(lop$body, ".//d1:paragraph[@dtag]")
-#' xml2::xml_text(xml2::xml_find_all(lop$body, ".//d1:paragraph[@dtag]"))
+#' lop$get_divs()
+#' xml2::xml_text(lop$get_divs()[[1]])
 replace_with_div <- function(block) {
   # Grab the type of block and filter out markup
   type <- gsub("[{:}.]", "", xml2::xml_attr(block, "ktag"))
