@@ -1,8 +1,11 @@
 pandoc: 2.7.3
-pkgdown: 1.6.1
+pkgdown: 2.0.1
 pkgdown_sha: ~
 articles:
-  articles/swc-survey: swc-survey.html
-  articles/validation: validation.html
-last_built: 2021-11-02T16:26Z
+  swc-survey: swc-survey.html
+  validation: validation.html
+last_built: 2021-12-08T18:59Z
+urls:
+  reference: https://carpentries.github.io/pegboard/reference
+  article: https://carpentries.github.io/pegboard/articles
 

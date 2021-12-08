@@ -22,6 +22,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -34,18 +36,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9032</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.0.9033</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
@@ -57,10 +53,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/articles/validation.html">Validation of Lesson Elements</a>
+      <a href="articles/validation.html">Validation of Lesson Elements</a>
     </li>
     <li>
-      <a href="articles/articles/swc-survey.html">Software Carpentry Survey</a>
+      <a href="articles/swc-survey.html">Software Carpentry Survey</a>
     </li>
   </ul>
 </li>
@@ -70,7 +66,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/zkamvar/pegboard/">
+  <a href="https://github.com/zkamvar/pegboard/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -87,43 +83,43 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="pegboard" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#pegboard" class="anchor"></a>pegboard</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="pegboard">pegboard<a class="anchor" aria-label="anchor" href="#pegboard"></a>
+</h1></div>
 <!-- badges: start -->
 
 <blockquote>
 <p><a href="#pegboard">pegboard</a> is tempered hardboard which is pre-drilled with evenly spaced holes. The holes are used to accept pegs or hooks to support various items, such as tools in a workshop.</p>
-<p><a href="https://en.wikipedia.org/wiki/Pegboard" class="uri">https://en.wikipedia.org/wiki/Pegboard</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Pegboard" class="external-link uri">https://en.wikipedia.org/wiki/Pegboard</a></p>
 </blockquote>
-<p>The {pegboard} package is a way to explore the Carpentries’ lessons via their XML representation. This package makes heavy use of rOpenSci’s <a href="https://docs.ropensci.org/tinkr/">{tinkr}</a> and <a href="https://cran.r-project.org/package=xml2">{xml2}</a>.</p>
-<p>There are two <a href="https://cran.r-project.org/package=R6">{R6}</a> objects in the package:</p>
+<p>The {pegboard} package is a way to explore the Carpentries’ lessons via their XML representation. This package makes heavy use of rOpenSci’s <a href="https://docs.ropensci.org/tinkr/" class="external-link">{tinkr}</a> and <a href="https://cran.r-project.org/package=xml2" class="external-link">{xml2}</a>.</p>
+<p>There are two <a href="https://cran.r-project.org/package=R6" class="external-link">{R6}</a> objects in the package:</p>
 <ul>
 <li>Episode: stores the xml content of a single episode</li>
 <li>Lesson: stores all Episodes within a lesson</li>
 </ul>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<p>{pegboard} is not currently on CRAN, but it can be installed from our <a href="https://carpentries.r-universe.dev/ui#builds">Carpentries Universe</a> (updated every hour) with the following commands:</p>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>{pegboard} is not currently on CRAN, but it can be installed from our <a href="https://carpentries.r-universe.dev/ui#builds" class="external-link">Carpentries Universe</a> (updated every hour) with the following commands:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
   carpentries <span class="op">=</span> <span class="st">"https://carpentries.r-universe.dev/"</span>, 
   CRAN <span class="op">=</span> <span class="st">"https://cran.rstudio.com/"</span>
 <span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"pegboard"</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pegboard"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="example" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example" class="anchor"></a>Example</h2>
-<p>The first way to get started is to use the <code><a href="reference/get_lesson.html">get_lesson()</a></code> function, which will use <a href="https://r-lib.github.io/gert/">{gert}</a> to clone a lesson repository to your computer.</p>
+<div class="section level2">
+<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+</h2>
+<p>The first way to get started is to use the <code><a href="reference/get_lesson.html">get_lesson()</a></code> function, which will use <a href="https://r-lib.github.io/gert/" class="external-link">{gert}</a> to clone a lesson repository to your computer.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/zkamvar/pegboard">pegboard</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://xml2.r-lib.org/">xml2</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://fs.r-lib.org">fs</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/zkamvar/pegboard" class="external-link">pegboard</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org" class="external-link">purrr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://xml2.r-lib.org/" class="external-link">xml2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://fs.r-lib.org" class="external-link">fs</a></span><span class="op">)</span>
 
-<span class="va">d</span> <span class="op">&lt;-</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="http://fs.r-lib.org/reference/file_temp.html">file_temp</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"PBREADME"</span><span class="op">)</span>
+<span class="va">d</span> <span class="op">&lt;-</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="http://fs.r-lib.org/reference/file_temp.html" class="external-link">file_temp</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"PBREADME"</span><span class="op">)</span>
 <span class="va">rng</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_lesson.html">get_lesson</a></span><span class="op">(</span><span class="st">"swcarpentry/r-novice-gapminder"</span>, path <span class="op">=</span> <span class="va">d</span><span class="op">)</span>
 <span class="va">rng</span>
 <span class="co">#| &lt;Lesson&gt;</span>
@@ -147,7 +143,7 @@
 <span class="co">#|     deep_clone: function (name, value)</span>
 
 <span class="co"># Find all challenges</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">rng</span><span class="op">$</span><span class="fu">challenges</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rng</span><span class="op">$</span><span class="fu">challenges</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#| $`01-rstudio-intro.Rmd`</span>
 <span class="co">#| {xml_nodeset (5)}</span>
 <span class="co">#| [1] &lt;block_quote sourcepos="350:1-386:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
@@ -199,7 +195,7 @@
 <span class="co">#| [8] &lt;block_quote sourcepos="747:1-765:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
 
 <span class="co"># Find all solutions</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">rng</span><span class="op">$</span><span class="fu">solutions</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rng</span><span class="op">$</span><span class="fu">solutions</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#| $`01-rstudio-intro.Rmd`</span>
 <span class="co">#| {xml_nodeset (5)}</span>
 <span class="co">#| [1] &lt;block_quote sourcepos="364:3-384:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="3 ...</span>
@@ -249,7 +245,7 @@
 <span class="co">#| [8] &lt;block_quote sourcepos="755:3-763:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="7 ...</span>
 
 <span class="co"># Find all discussion blocks</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">rng</span><span class="op">$</span><span class="fu">blocks</span><span class="op">(</span><span class="st">".discussion"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rng</span><span class="op">$</span><span class="fu">blocks</span><span class="op">(</span><span class="st">".discussion"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#| $`01-rstudio-intro.Rmd`</span>
 <span class="co">#| {xml_nodeset (0)}</span>
 <span class="co">#| </span>
@@ -269,11 +265,11 @@
 <span class="co">#| $`06-data-subsetting.Rmd`</span>
 <span class="co">#| {xml_nodeset (0)}</span></code></pre></div>
 </div>
-<div id="manipulation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#manipulation" class="anchor"></a>Manipulation</h2>
-<p>At the moment, you can manipulate each episode in various ways. One of the ways that will become useful in the future is translating the episode from using the old and busted Jekyll syntax (e.g. using nested block quotes to create specialized sections and writing questions/keypoints/objectives in the YAML) to using a more intuitive system (currently being evaluated). For example, let’s say we wanted to transform an episode from Jekyll to using <a href="https://github.com/zkamvar/sandpaper#readme">{sandpaper}</a>. This would involve the following steps:</p>
-<ol>
+<div class="section level2">
+<h2 id="manipulation">Manipulation<a class="anchor" aria-label="anchor" href="#manipulation"></a>
+</h2>
+<p>At the moment, you can manipulate each episode in various ways. One of the ways that will become useful in the future is translating the episode from using the old and busted Jekyll syntax (e.g. using nested block quotes to create specialized sections and writing questions/keypoints/objectives in the YAML) to using a more intuitive system (currently being evaluated). For example, let’s say we wanted to transform an episode from Jekyll to using <a href="https://github.com/zkamvar/sandpaper#readme" class="external-link">{sandpaper}</a>. This would involve the following steps:</p>
+<ol style="list-style-type: decimal">
 <li>transforming the block quotes to native or fenced div tags (or dovetail blocks)</li>
 <li>converting code block decorators (<code>{: .language-r}</code>) and modify setup chunk</li>
 <li>moving questions, objectives, and keypoints to the body of the document</li>
@@ -433,9 +429,9 @@
 <span class="co">#| ```{r}</span>
 <span class="co">#| fahr_to_kelvin &lt;- function(temp) {</span></code></pre></div>
 </div>
-<div id="reset" class="section level2">
-<h2 class="hasAnchor">
-<a href="#reset" class="anchor"></a>Reset</h2>
+<div class="section level2">
+<h2 id="reset">Reset<a class="anchor" aria-label="anchor" href="#reset"></a>
+</h2>
 <p>All changes can be reset to the initial state with the <code>$reset()</code> method:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fun</span><span class="op">$</span>
@@ -517,54 +513,65 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/zkamvar/pegboard/">https://​github.com/​zkamvar/​pegboard/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/zkamvar/pegboard/issues">https://​github.com/​zkamvar/​pegboard/​issues</a>
-</li>
+<li><a href="https://github.com/zkamvar/pegboard/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/zkamvar/pegboard/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
+
 <div class="community">
-<h2>Community</h2>
+<h2 data-toc-skip>Community</h2>
 <ul class="list-unstyled">
 <li><a href="CONTRIBUTING.html">Contributing guide</a></li>
 <li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
 </ul>
 </div>
-<div class="developers">
-<h2>Developers</h2>
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li>Zhian N. Kamvar <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-1458-7108" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="authors.html#citation">Citing pegboard</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.tidyverse.org/lifecycle/#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
-<li><a href="https://CRAN.R-project.org/package=pegboard"><img src="https://www.r-pkg.org/badges/version/pegboard" alt="CRAN status"></a></li>
-<li><a href="https://codecov.io/gh/carpentries/pegboard?branch=main"><img src="https://codecov.io/gh/carpentries/pegboard/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
-<li><a href="https://github.com/carpentries/pegboard/actions"><img src="https://github.com/carpentries/pegboard/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li>Zhian N. Kamvar <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-1458-7108" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://www.tidyverse.org/lifecycle/#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
+<li><a href="https://CRAN.R-project.org/package=pegboard" class="external-link"><img src="https://www.r-pkg.org/badges/version/pegboard" alt="CRAN status"></a></li>
+<li><a href="https://codecov.io/gh/carpentries/pegboard?branch=main" class="external-link"><img src="https://codecov.io/gh/carpentries/pegboard/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://github.com/carpentries/pegboard/actions" class="external-link"><img src="https://github.com/carpentries/pegboard/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+</ul>
 </div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Zhian N. Kamvar.</p>
+  <p></p>
+<p>Developed by Zhian N. Kamvar.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer>
@@ -572,6 +579,8 @@
 
   
 
+
+  
 
   </body>
 </html>
