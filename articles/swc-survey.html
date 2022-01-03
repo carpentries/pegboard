@@ -11,7 +11,8 @@
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Software Carpentry Survey">
+<script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
+<meta property="og:title" content="Software Carpentry Survey">
 <meta property="og:description" content="pegboard">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:creator" content="@zkamvar">
@@ -133,7 +134,7 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://xml2.r-lib.org/" class="external-link">xml2</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://gt.rstudio.com/" class="external-link">gt</a></span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">swc_path</span> <span class="op">&lt;-</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="http://fs.r-lib.org/reference/file_temp.html" class="external-link">file_temp</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"SWC"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">swc_path</span> <span class="op">&lt;-</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/file_temp.html" class="external-link">file_temp</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"SWC"</span><span class="op">)</span>
 <span class="va">swc_core_lessons</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
   <span class="st">"shell-novice"</span>,
   <span class="st">"shell-novice-es"</span>,
@@ -149,10 +150,10 @@
 <span class="va">SWC</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"swcarpentry/{swc_core_lessons}"</span><span class="op">)</span>, <span class="va">get_lesson</span>, path <span class="op">=</span> <span class="va">swc_path</span><span class="op">)</span>
 <span class="co">#&gt; Loading required namespace: gert</span>
 <span class="co">#&gt; Warning in readLines(path, encoding = encoding): incomplete final line found on</span>
-<span class="co">#&gt; '/tmp/RtmpjXAmb9/SWC3bb73d2fea71/swcarpentry--python-novice-gapminder/_episodes/</span>
+<span class="co">#&gt; '/tmp/RtmpaEVJed/SWC40ae3244e825/swcarpentry--python-novice-gapminder/_episodes/</span>
 <span class="co">#&gt; 04-built-in.md'</span>
 <span class="co">#&gt; Warning in readLines(path, encoding = encoding): incomplete final line found on</span>
-<span class="co">#&gt; '/tmp/RtmpjXAmb9/SWC3bb73d2fea71/swcarpentry--python-novice-gapminder/_episodes/</span>
+<span class="co">#&gt; '/tmp/RtmpaEVJed/SWC40ae3244e825/swcarpentry--python-novice-gapminder/_episodes/</span>
 <span class="co">#&gt; 14-looping-data-sets.md'</span>
 <span class="co">#&gt; could not find _episodes/, using _episodes_rmd/ as the source</span>
 <span class="co">#&gt; could not find _episodes/, using _episodes_rmd/ as the source</span>
