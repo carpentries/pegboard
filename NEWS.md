@@ -1,3 +1,10 @@
+# pegboard 0.0.0.9034
+
+## BUG FIX
+
+ - `get_stylesheet()` now escapes spaces and normalizes the windows path to the
+   tinkr stylesheet before embedding it (@zkamvar, #72)
+
 # pegboard 0.0.0.9033
 
 ## BUG FIX
