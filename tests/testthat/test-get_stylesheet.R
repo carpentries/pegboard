@@ -10,7 +10,7 @@ test_that("stylesheet is properly escaped", {
   # load the test episode and confirm output
   scope <- fs::path(lesson_fragment(), "_episodes", "17-scope.md")
   e <- Episode$new(scope)
-  x <- tinkr::to_md(e, stylesheet_path = sty)
+  x <- tinkr::to_md(e, stylesheet_path = get_stylesheet())
   expect_length(x, 2)
   expect_type(x, "character")
 
