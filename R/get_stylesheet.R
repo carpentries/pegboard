@@ -1,6 +1,5 @@
-get_stylesheet <- function(sheet = "xml2md_gfm_kramdown.xsl") {
-  tink <- system.file("extdata", "xml2md_gfm.xsl", package = "tinkr")
-  tink <- gsub("\\s", "\\\\ ", fs::path_real(tink))
+get_stylesheet <- function(sheet = "xml2md_gfm_kramdown.xsl", import = system.file("extdata", "xml2md_gfm.xsl", package = "tinkr")) {
+  tink <- xml2::url_escape(import, reserved = "/")
   ours <- system.file("stylesheets", sheet, package = "pegboard")
   styl <- readLines(ours)
   styl <- sub(
