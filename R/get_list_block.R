@@ -38,13 +38,19 @@ get_list_block <- function(self, type = "questions", in_yaml = TRUE) {
   } else {
     # In order to get the divs, we must first ensure that they are labelled
     q <- get_divs(self$body, type)
-    if (length(q)) {
-      q <- q[[1]]
+    content <- length(q)
+    if (content) {
+      q <- q[[if (type == "keypoints") content else 1L]]
+      q <- q[xml2::xml_name(q) == "list"]
     } else {
       warning(glue::glue("No section called {sQuote(type)}"), call. = FALSE)
       return(character(0))
     }
-    q <- xml_to_md(q[xml2::xml_name(q) == "list"])
+    if (length(q) == 0) {
+      warning(glue::glue("{sQuote(type)} section does not contain a list"), call. = FALSE)
+      return(character(0))
+    }
+    q <- xml_to_md(q)
     q <- trimws(gsub("\n?- ", "\n", q))
     q <- strsplit(q, "\n")[[1]] 
   }

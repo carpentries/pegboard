@@ -1,3 +1,20 @@
+# pegboard 0.1.0
+
+This is a soft release of {pegboard} to coincide with the first announcement of
+The Carpentries Workbench.
+
+## IMPORTS
+
+ - {lifecycle} is no longer an imported package. We were not using it, so it
+   makes more sense to leave it out in production.
+
+## BUG FIX
+
+ - `get_list_block()` will now select the last block if there are multiple 
+  "keypoints" blocks (@zkamvar, #75)
+ - `get_list_block()` will now throw a warning if a block does not contain any
+   list elements (@zkamvar, #74)
+
 # pegboard 0.0.0.9034
 
 ## BUG FIX
