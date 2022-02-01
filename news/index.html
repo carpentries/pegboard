@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.0.9034</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
       </span>
     </div>
 
@@ -60,6 +60,21 @@
       <small>Source: <a href="https://github.com/zkamvar/pegboard/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.1.0" id="pegboard-010">pegboard 0.1.0<a class="anchor" aria-label="anchor" href="#pegboard-010"></a></h2>
+<p>This is a soft release of {pegboard} to coincide with the first announcement of The Carpentries Workbench.</p>
+<div class="section level3">
+<h3 id="imports-0-1-0">IMPORTS<a class="anchor" aria-label="anchor" href="#imports-0-1-0"></a></h3>
+<ul><li>{lifecycle} is no longer an imported package. We were not using it, so it makes more sense to leave it out in production.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fix-0-1-0">BUG FIX<a class="anchor" aria-label="anchor" href="#bug-fix-0-1-0"></a></h3>
+<ul><li>
+<code><a href="../reference/get_list_block.html">get_list_block()</a></code> will now select the last block if there are multiple “keypoints” blocks (<a href="https://github.com/zkamvar" class="external-link">@zkamvar</a>, <a href="https://github.com/zkamvar/pegboard/issues/75" class="external-link">#75</a>)</li>
+<li>
+<code><a href="../reference/get_list_block.html">get_list_block()</a></code> will now throw a warning if a block does not contain any list elements (<a href="https://github.com/zkamvar" class="external-link">@zkamvar</a>, <a href="https://github.com/zkamvar/pegboard/issues/74" class="external-link">#74</a>)</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.0.0.9034" id="pegboard-0009034">pegboard 0.0.0.9034<a class="anchor" aria-label="anchor" href="#pegboard-0009034"></a></h2>
 <div class="section level3">
@@ -368,7 +383,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer></div>
