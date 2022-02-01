@@ -23,7 +23,6 @@ Imports:
     purrr,
     glue,
     R6,
-    lifecycle,
     xslt,
     yaml,
     commonmark
@@ -54,4 +53,4 @@ RoxygenNote: 7.1.2
 URL: https://github.com/zkamvar/pegboard
 BugReports: https://github.com/zkamvar/pegboard/issues
 VignetteBuilder: knitr
-RdMacros: lifecycle
+
