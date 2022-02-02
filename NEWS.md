@@ -1,3 +1,9 @@
+# pegboard 0.1.1
+
+## MISC
+
+ - Correct mis-attribution for LICENSE
+
 # pegboard 0.1.0
 
 This is a soft release of {pegboard} to coincide with the first announcement of
