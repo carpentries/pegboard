@@ -6,6 +6,8 @@
 \alias{pegboard-package}
 \title{pegboard: Explore and Manipulate Markdown Curricula from the Carpentries}
 \description{
+\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
+
 The Carpentries (<https://carpentries.org>) curricula is made of of lessons that are hosted as websites. Each lesson represents between a half day to two days of instruction and contains several episodes, which are written as 'kramdown'-flavored 'markdown' documents and converted to HTML using the 'Jekyll' static website generator. This package builds on top of the 'tinkr' package; reads in these markdown documents to 'XML' and stores them in R6 classes for convenient exploration and manipulation of sections within episodes.
 }
 \seealso{

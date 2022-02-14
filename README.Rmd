@@ -2,6 +2,9 @@
 output: github_document
 ---
 
+# {pegboard}: Parse Source Files in The Carpentries Workbench <img src='man/figures/logo.png' align='right' alt='' width=120 />
+
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, include = FALSE}
@@ -12,8 +15,6 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 ```
-
-# pegboard
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)

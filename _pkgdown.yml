@@ -4,7 +4,7 @@ home:
   description: Parse, Transform, and Validate Carpentries Lessons
 
 template:
-  # bootstrap: 5
+  bootstrap: 5
   opengraph:
     twitter:
       creator: "@zkamvar"
