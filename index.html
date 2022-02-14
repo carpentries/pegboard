@@ -4,16 +4,23 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="Parse, Transform, and Validate Carpentries Lessons">
 <title>The Carpentries Lesson Validator • pegboard</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
-<script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
+<script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
+<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
 <meta property="og:title" content="The Carpentries Lesson Validator">
 <meta property="og:description" content="Parse, Transform, and Validate Carpentries Lessons">
+<meta property="og:image" content="https://carpentries.github.io/pegboard/logo.png">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:creator" content="@zkamvar">
 <meta name="twitter:site" content="@thecarpentries">
@@ -22,75 +29,65 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body data-spy="scroll" data-target="#toc">
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <div class="container template-home">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="index.html">pegboard</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
-      </span>
-    </div>
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
+    
+    <a class="navbar-brand me-2" href="index.html">pegboard</a>
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li>
-  <a href="reference/index.html">Reference</a>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
+
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-3">
+      <ul class="navbar-nav me-auto">
+<li class="nav-item">
+  <a class="nav-link" href="reference/index.html">Reference</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="articles/validation.html">Validation of Lesson Elements</a>
-    </li>
-    <li>
-      <a href="articles/swc-survey.html">Software Carpentry Survey</a>
-    </li>
-  </ul>
-</li>
-<li>
-  <a href="news/index.html">Changelog</a>
-</li>
-      </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/zkamvar/pegboard/" class="external-link">
-    <span class="fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
-      </ul>
-</div>
-<!--/.nav-collapse -->
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="articles/validation.html">Validation of Lesson Elements</a>
+    <a class="dropdown-item" href="articles/swc-survey.html">Software Carpentry Survey</a>
   </div>
-<!--/.container -->
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="news/index.html">Changelog</a>
+</li>
+      </ul>
+<form class="form-inline my-2 my-lg-0" role="search">
+        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="search.json" id="search-input" placeholder="Search for" autocomplete="off">
+</form>
+
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/zkamvar/pegboard/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
-<!--/.navbar -->
 
-      
-
-      </header><div class="row">
-  <div class="contents col-md-9">
-<div class="section level1">
-<div class="page-header"><h1 id="pegboard">pegboard<a class="anchor" aria-label="anchor" href="#pegboard"></a>
-</h1></div>
+    
+  </div>
+</nav><div class="container template-home">
+<div class="row">
+  <main id="main" class="col-md-9"><div class="section level1">
+<div class="page-header">
+<img src="logo.png" class="logo" alt=""><h1 id="pegboard-parse-source-files-in-the-carpentries-workbench-">{pegboard}: Parse Source Files in The Carpentries Workbench <a class="anchor" aria-label="anchor" href="#pegboard-parse-source-files-in-the-carpentries-workbench-"></a>
+</h1>
+</div>
+<!-- README.md is generated from README.Rmd. Please edit that file -->
 <!-- badges: start -->
 
 <blockquote>
-<p><a href="#pegboard">pegboard</a> is tempered hardboard which is pre-drilled with evenly spaced holes. The holes are used to accept pegs or hooks to support various items, such as tools in a workshop.</p>
+<p>[pegboard] is tempered hardboard which is pre-drilled with evenly spaced holes. The holes are used to accept pegs or hooks to support various items, such as tools in a workshop.</p>
 <p><a href="https://en.wikipedia.org/wiki/Pegboard" class="external-link uri">https://en.wikipedia.org/wiki/Pegboard</a></p>
 </blockquote>
 <p>The {pegboard} package is a way to explore the Carpentries’ lessons via their XML representation. This package makes heavy use of rOpenSci’s <a href="https://docs.ropensci.org/tinkr/" class="external-link">{tinkr}</a> and <a href="https://cran.r-project.org/package=xml2" class="external-link">{xml2}</a>.</p>
@@ -131,15 +128,18 @@
 <span class="co">#|     episodes: list</span>
 <span class="co">#|     extra: NULL</span>
 <span class="co">#|     files: active binding</span>
-<span class="co">#|     initialize: function (path = NULL, rmd = FALSE, jekyll = TRUE, ...) </span>
+<span class="co">#|     handout: function (path = NULL, solution = FALSE) </span>
+<span class="co">#|     initialize: function (path = ".", rmd = FALSE, jekyll = TRUE, ...) </span>
 <span class="co">#|     isolate_blocks: function () </span>
 <span class="co">#|     n_problems: active binding</span>
-<span class="co">#|     path: /tmp/RtmpyzsXOW/PBREADMEe29e3b91d727/swcarpentry--r-novi ...</span>
+<span class="co">#|     path: /tmp/RtmpPdPaMd/PBREADME8b1f19d96940/swcarpentry--r-novi ...</span>
 <span class="co">#|     reset: function () </span>
 <span class="co">#|     rmd: TRUE</span>
 <span class="co">#|     show_problems: active binding</span>
 <span class="co">#|     solutions: function (path = FALSE) </span>
 <span class="co">#|     thin: function (verbose = TRUE) </span>
+<span class="co">#|     validate_headings: function (verbose = TRUE) </span>
+<span class="co">#|     validate_links: function () </span>
 <span class="co">#|   Private:</span>
 <span class="co">#|     deep_clone: function (name, value)</span>
 
@@ -147,103 +147,104 @@
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rng</span><span class="op">$</span><span class="fu">challenges</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#| $`01-rstudio-intro.Rmd`</span>
 <span class="co">#| {xml_nodeset (5)}</span>
-<span class="co">#| [1] &lt;block_quote sourcepos="350:1-386:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [2] &lt;block_quote sourcepos="504:1-540:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [3] &lt;block_quote sourcepos="543:1-556:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [4] &lt;block_quote sourcepos="559:1-571:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [5] &lt;block_quote sourcepos="573:1-591:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
+<span class="co">#| [1] &lt;block_quote sourcepos="357:1-393:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="357:3 ...</span>
+<span class="co">#| [2] &lt;block_quote sourcepos="511:1-547:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="511:3 ...</span>
+<span class="co">#| [3] &lt;block_quote sourcepos="550:1-563:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="550:3 ...</span>
+<span class="co">#| [4] &lt;block_quote sourcepos="566:1-578:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="566:3 ...</span>
+<span class="co">#| [5] &lt;block_quote sourcepos="581:1-599:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="581:3 ...</span>
 <span class="co">#| </span>
 <span class="co">#| $`02-project-intro.Rmd`</span>
-<span class="co">#| {xml_nodeset (4)}</span>
-<span class="co">#| [1] &lt;block_quote sourcepos="47:1-57:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="4 ...</span>
-<span class="co">#| [2] &lt;block_quote sourcepos="68:1-74:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="6 ...</span>
-<span class="co">#| [3] &lt;block_quote sourcepos="148:1-156:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [4] &lt;block_quote sourcepos="158:1-182:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
+<span class="co">#| {xml_nodeset (5)}</span>
+<span class="co">#| [1] &lt;block_quote sourcepos="47:1-57:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="47:3-47 ...</span>
+<span class="co">#| [2] &lt;block_quote sourcepos="68:1-74:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="68:3-68 ...</span>
+<span class="co">#| [3] &lt;block_quote sourcepos="148:1-156:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="148:3 ...</span>
+<span class="co">#| [4] &lt;block_quote sourcepos="158:1-182:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="158:3 ...</span>
+<span class="co">#| [5] &lt;block_quote sourcepos="196:1-207:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="196:3 ...</span>
 <span class="co">#| </span>
 <span class="co">#| $`03-seeking-help.Rmd`</span>
 <span class="co">#| {xml_nodeset (3)}</span>
-<span class="co">#| [1] &lt;block_quote sourcepos="119:1-135:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [2] &lt;block_quote sourcepos="137:1-167:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [3] &lt;block_quote sourcepos="169:1-186:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
+<span class="co">#| [1] &lt;block_quote sourcepos="119:1-135:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="119:3 ...</span>
+<span class="co">#| [2] &lt;block_quote sourcepos="137:1-167:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="137:3 ...</span>
+<span class="co">#| [3] &lt;block_quote sourcepos="169:1-186:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="169:3 ...</span>
 <span class="co">#| </span>
 <span class="co">#| $`04-data-structures-part1.Rmd`</span>
 <span class="co">#| {xml_nodeset (7)}</span>
-<span class="co">#| [1] &lt;block_quote sourcepos="329:1-343:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [2] &lt;block_quote sourcepos="413:1-441:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [3] &lt;block_quote sourcepos="502:1-561:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [4] &lt;block_quote sourcepos="583:1-603:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [5] &lt;block_quote sourcepos="606:1-629:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [6] &lt;block_quote sourcepos="632:1-652:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [7] &lt;block_quote sourcepos="655:1-683:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
+<span class="co">#| [1] &lt;block_quote sourcepos="333:1-347:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="333:3 ...</span>
+<span class="co">#| [2] &lt;block_quote sourcepos="417:1-445:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="417:3 ...</span>
+<span class="co">#| [3] &lt;block_quote sourcepos="507:1-566:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="507:3 ...</span>
+<span class="co">#| [4] &lt;block_quote sourcepos="588:1-608:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="588:3 ...</span>
+<span class="co">#| [5] &lt;block_quote sourcepos="611:1-634:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="611:3 ...</span>
+<span class="co">#| [6] &lt;block_quote sourcepos="637:1-657:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="637:3 ...</span>
+<span class="co">#| [7] &lt;block_quote sourcepos="660:1-688:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="660:3 ...</span>
 <span class="co">#| </span>
 <span class="co">#| $`05-data-structures-part2.Rmd`</span>
 <span class="co">#| {xml_nodeset (5)}</span>
-<span class="co">#| [1] &lt;block_quote sourcepos="100:1-111:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [2] &lt;block_quote sourcepos="183:1-211:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [3] &lt;block_quote sourcepos="315:1-339:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [4] &lt;block_quote sourcepos="345:1-374:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [5] &lt;block_quote sourcepos="376:1-392:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
+<span class="co">#| [1] &lt;block_quote sourcepos="100:1-111:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="100:3 ...</span>
+<span class="co">#| [2] &lt;block_quote sourcepos="183:1-211:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="183:3 ...</span>
+<span class="co">#| [3] &lt;block_quote sourcepos="315:1-339:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="315:3 ...</span>
+<span class="co">#| [4] &lt;block_quote sourcepos="345:1-374:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="345:3 ...</span>
+<span class="co">#| [5] &lt;block_quote sourcepos="376:1-392:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="376:3 ...</span>
 <span class="co">#| </span>
 <span class="co">#| $`06-data-subsetting.Rmd`</span>
 <span class="co">#| {xml_nodeset (8)}</span>
-<span class="co">#| [1] &lt;block_quote sourcepos="143:1-174:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [2] &lt;block_quote sourcepos="245:1-264:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [3] &lt;block_quote sourcepos="345:1-387:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [4] &lt;block_quote sourcepos="497:1-520:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [5] &lt;block_quote sourcepos="581:1-603:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [6] &lt;block_quote sourcepos="606:1-624:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [7] &lt;block_quote sourcepos="667:1-745:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [8] &lt;block_quote sourcepos="747:1-765:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
+<span class="co">#| [1] &lt;block_quote sourcepos="143:1-174:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="143:3 ...</span>
+<span class="co">#| [2] &lt;block_quote sourcepos="245:1-264:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="245:3 ...</span>
+<span class="co">#| [3] &lt;block_quote sourcepos="345:1-387:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="345:3 ...</span>
+<span class="co">#| [4] &lt;block_quote sourcepos="497:1-520:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="497:3 ...</span>
+<span class="co">#| [5] &lt;block_quote sourcepos="581:1-603:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="581:3 ...</span>
+<span class="co">#| [6] &lt;block_quote sourcepos="606:1-624:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="606:3 ...</span>
+<span class="co">#| [7] &lt;block_quote sourcepos="667:1-745:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="667:3 ...</span>
+<span class="co">#| [8] &lt;block_quote sourcepos="747:1-765:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="747:3 ...</span>
 
 <span class="co"># Find all solutions</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rng</span><span class="op">$</span><span class="fu">solutions</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#| $`01-rstudio-intro.Rmd`</span>
 <span class="co">#| {xml_nodeset (5)}</span>
-<span class="co">#| [1] &lt;block_quote sourcepos="364:3-384:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="3 ...</span>
-<span class="co">#| [2] &lt;block_quote sourcepos="516:3-540:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span>
-<span class="co">#| [3] &lt;block_quote sourcepos="548:3-556:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span>
-<span class="co">#| [4] &lt;block_quote sourcepos="564:3-569:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="5 ...</span>
-<span class="co">#| [5] &lt;block_quote sourcepos="577:3-589:6" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="5 ...</span>
+<span class="co">#| [1] &lt;block_quote sourcepos="371:3-391:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="371:5-3 ...</span>
+<span class="co">#| [2] &lt;block_quote sourcepos="523:3-547:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="523:5- ...</span>
+<span class="co">#| [3] &lt;block_quote sourcepos="555:3-563:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="555:5- ...</span>
+<span class="co">#| [4] &lt;block_quote sourcepos="571:3-576:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="571:5-5 ...</span>
+<span class="co">#| [5] &lt;block_quote sourcepos="585:3-597:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="585:5-5 ...</span>
 <span class="co">#| </span>
 <span class="co">#| $`02-project-intro.Rmd`</span>
 <span class="co">#| {xml_nodeset (1)}</span>
-<span class="co">#| [1] &lt;block_quote sourcepos="167:3-180:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="1 ...</span>
+<span class="co">#| [1] &lt;block_quote sourcepos="167:3-180:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="167:5-1 ...</span>
 <span class="co">#| </span>
 <span class="co">#| $`03-seeking-help.Rmd`</span>
 <span class="co">#| {xml_nodeset (3)}</span>
-<span class="co">#| [1] &lt;block_quote sourcepos="128:3-135:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span>
-<span class="co">#| [2] &lt;block_quote sourcepos="142:3-167:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span>
-<span class="co">#| [3] &lt;block_quote sourcepos="177:3-186:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span>
+<span class="co">#| [1] &lt;block_quote sourcepos="128:3-135:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="128:5- ...</span>
+<span class="co">#| [2] &lt;block_quote sourcepos="142:3-167:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="142:5- ...</span>
+<span class="co">#| [3] &lt;block_quote sourcepos="177:3-186:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="177:5- ...</span>
 <span class="co">#| </span>
 <span class="co">#| $`04-data-structures-part1.Rmd`</span>
 <span class="co">#| {xml_nodeset (8)}</span>
-<span class="co">#| [1] &lt;block_quote sourcepos="222:3-231:15" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span>
-<span class="co">#| [2] &lt;block_quote sourcepos="335:3-341:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="3 ...</span>
-<span class="co">#| [3] &lt;block_quote sourcepos="420:3-441:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span>
-<span class="co">#| [4] &lt;block_quote sourcepos="519:3-561:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span>
-<span class="co">#| [5] &lt;block_quote sourcepos="590:3-603:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span>
-<span class="co">#| [6] &lt;block_quote sourcepos="615:3-627:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="6 ...</span>
-<span class="co">#| [7] &lt;block_quote sourcepos="641:3-650:3" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="6 ...</span>
-<span class="co">#| [8] &lt;block_quote sourcepos="670:3-681:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="6 ...</span>
+<span class="co">#| [1] &lt;block_quote sourcepos="226:3-235:15" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="226:5- ...</span>
+<span class="co">#| [2] &lt;block_quote sourcepos="339:3-345:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="339:5-3 ...</span>
+<span class="co">#| [3] &lt;block_quote sourcepos="424:3-445:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="424:5- ...</span>
+<span class="co">#| [4] &lt;block_quote sourcepos="524:3-566:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="524:5- ...</span>
+<span class="co">#| [5] &lt;block_quote sourcepos="595:3-608:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="595:5- ...</span>
+<span class="co">#| [6] &lt;block_quote sourcepos="620:3-632:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="620:5-6 ...</span>
+<span class="co">#| [7] &lt;block_quote sourcepos="646:3-655:3" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="646:5-6 ...</span>
+<span class="co">#| [8] &lt;block_quote sourcepos="675:3-686:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="675:5-6 ...</span>
 <span class="co">#| </span>
 <span class="co">#| $`05-data-structures-part2.Rmd`</span>
 <span class="co">#| {xml_nodeset (5)}</span>
-<span class="co">#| [1] &lt;block_quote sourcepos="106:3-111:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span>
-<span class="co">#| [2] &lt;block_quote sourcepos="201:3-209:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="2 ...</span>
-<span class="co">#| [3] &lt;block_quote sourcepos="321:3-339:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span>
-<span class="co">#| [4] &lt;block_quote sourcepos="354:3-372:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="3 ...</span>
-<span class="co">#| [5] &lt;block_quote sourcepos="384:3-390:3" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="3 ...</span>
+<span class="co">#| [1] &lt;block_quote sourcepos="106:3-111:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="106:5- ...</span>
+<span class="co">#| [2] &lt;block_quote sourcepos="201:3-209:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="201:5-2 ...</span>
+<span class="co">#| [3] &lt;block_quote sourcepos="321:3-339:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="321:5- ...</span>
+<span class="co">#| [4] &lt;block_quote sourcepos="354:3-372:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="354:5-3 ...</span>
+<span class="co">#| [5] &lt;block_quote sourcepos="384:3-390:3" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="384:5-3 ...</span>
 <span class="co">#| </span>
 <span class="co">#| $`06-data-subsetting.Rmd`</span>
 <span class="co">#| {xml_nodeset (8)}</span>
-<span class="co">#| [1] &lt;block_quote sourcepos="161:3-172:3" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="1 ...</span>
-<span class="co">#| [2] &lt;block_quote sourcepos="257:3-262:6" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="2 ...</span>
-<span class="co">#| [3] &lt;block_quote sourcepos="370:3-387:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span>
-<span class="co">#| [4] &lt;block_quote sourcepos="516:3-520:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span>
-<span class="co">#| [5] &lt;block_quote sourcepos="591:3-601:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="5 ...</span>
-<span class="co">#| [6] &lt;block_quote sourcepos="615:3-622:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="6 ...</span>
-<span class="co">#| [7] &lt;block_quote sourcepos="703:3-743:11" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span>
-<span class="co">#| [8] &lt;block_quote sourcepos="755:3-763:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="7 ...</span>
+<span class="co">#| [1] &lt;block_quote sourcepos="161:3-172:3" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="161:5-1 ...</span>
+<span class="co">#| [2] &lt;block_quote sourcepos="257:3-262:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="257:5-2 ...</span>
+<span class="co">#| [3] &lt;block_quote sourcepos="370:3-387:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="370:5- ...</span>
+<span class="co">#| [4] &lt;block_quote sourcepos="516:3-520:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="516:5- ...</span>
+<span class="co">#| [5] &lt;block_quote sourcepos="591:3-601:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="591:5-5 ...</span>
+<span class="co">#| [6] &lt;block_quote sourcepos="615:3-622:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="615:5-6 ...</span>
+<span class="co">#| [7] &lt;block_quote sourcepos="703:3-743:11" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="703:5- ...</span>
+<span class="co">#| [8] &lt;block_quote sourcepos="755:3-763:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="755:5-7 ...</span>
 
 <span class="co"># Find all discussion blocks</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rng</span><span class="op">$</span><span class="fu">blocks</span><span class="op">(</span><span class="st">".discussion"</span><span class="op">)</span><span class="op">)</span>
@@ -258,7 +259,7 @@
 <span class="co">#| </span>
 <span class="co">#| $`04-data-structures-part1.Rmd`</span>
 <span class="co">#| {xml_nodeset (1)}</span>
-<span class="co">#| [1] &lt;block_quote sourcepos="217:1-231:15" ktag="{: .discussion}"&gt;\n  &lt;heading sourcepos ...</span>
+<span class="co">#| [1] &lt;block_quote sourcepos="221:1-235:15" ktag="{: .discussion}"&gt;\n  &lt;heading sourcepos="221: ...</span>
 <span class="co">#| </span>
 <span class="co">#| $`05-data-structures-part2.Rmd`</span>
 <span class="co">#| {xml_nodeset (0)}</span>
@@ -338,18 +339,17 @@
 <span class="co">#| Let's open a new R script file in the `functions/` directory and call it</span>
 <span class="co">#| functions-lesson.R.</span>
 <span class="co">#| </span>
-<span class="co">#| Let's define a function `fahr_to_kelvin()` that converts temperatures from</span>
-<span class="co">#| Fahrenheit to Kelvin:</span>
+<span class="co">#| The general structure of a function is:</span>
 <span class="co">#| </span>
 <span class="co">#| ```{r}</span>
-<span class="co">#| fahr_to_kelvin &lt;- function(temp) {</span>
-<span class="co">#|   kelvin &lt;- ((temp - 32) * (5 / 9)) + 273.15</span>
-<span class="co">#|   return(kelvin)</span>
+<span class="co">#| my_function &lt;- function(parameters) {</span>
+<span class="co">#|   # perform action</span>
+<span class="co">#|   # return value</span>
 <span class="co">#| }</span>
 <span class="co">#| ```</span>
 <span class="co">#| </span>
-<span class="co">#| We define `fahr_to_kelvin()` by assigning it to the output of `function`. The</span>
-<span class="co">#| list of argument names are contained within parentheses.   Next, the</span></code></pre></div>
+<span class="co">#| Let's define a function `fahr_to_kelvin()` that converts temperatures from</span>
+<span class="co">#| Fahrenheit to Kelvin:</span></code></pre></div>
 <p>Now, we can apply the transformation chain in the order we specifed:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fun</span><span class="op">$</span>
@@ -372,8 +372,6 @@
 <span class="co">#| </span>
 <span class="co">#| ::::::::::::::::::::::::::::::::::::::: objectives</span>
 <span class="co">#| </span>
-<span class="co">#| ## Objectives</span>
-<span class="co">#| </span>
 <span class="co">#| - Define a function that takes arguments.</span>
 <span class="co">#| - Return a value from a function.</span>
 <span class="co">#| - Check argument conditions with `stopifnot()` in functions.</span>
@@ -384,8 +382,6 @@
 <span class="co">#| ::::::::::::::::::::::::::::::::::::::::::::::::::</span>
 <span class="co">#| </span>
 <span class="co">#| :::::::::::::::::::::::::::::::::::::::: questions</span>
-<span class="co">#| </span>
-<span class="co">#| ## Questions</span>
 <span class="co">#| </span>
 <span class="co">#| - How can I write a new function in R?</span>
 <span class="co">#| </span>
@@ -424,11 +420,14 @@
 <span class="co">#| Let's open a new R script file in the `functions/` directory and call it</span>
 <span class="co">#| functions-lesson.R.</span>
 <span class="co">#| </span>
-<span class="co">#| Let's define a function `fahr_to_kelvin()` that converts temperatures from</span>
-<span class="co">#| Fahrenheit to Kelvin:</span>
+<span class="co">#| The general structure of a function is:</span>
 <span class="co">#| </span>
 <span class="co">#| ```{r}</span>
-<span class="co">#| fahr_to_kelvin &lt;- function(temp) {</span></code></pre></div>
+<span class="co">#| my_function &lt;- function(parameters) {</span>
+<span class="co">#|   # perform action</span>
+<span class="co">#|   # return value</span>
+<span class="co">#| }</span>
+<span class="co">#| ```</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="reset">Reset<a class="anchor" aria-label="anchor" href="#reset"></a>
@@ -496,24 +495,20 @@
 <span class="co">#| Let's open a new R script file in the `functions/` directory and call it</span>
 <span class="co">#| functions-lesson.R.</span>
 <span class="co">#| </span>
-<span class="co">#| Let's define a function `fahr_to_kelvin()` that converts temperatures from</span>
-<span class="co">#| Fahrenheit to Kelvin:</span>
+<span class="co">#| The general structure of a function is:</span>
 <span class="co">#| </span>
 <span class="co">#| ```{r}</span>
-<span class="co">#| fahr_to_kelvin &lt;- function(temp) {</span>
-<span class="co">#|   kelvin &lt;- ((temp - 32) * (5 / 9)) + 273.15</span>
-<span class="co">#|   return(kelvin)</span>
+<span class="co">#| my_function &lt;- function(parameters) {</span>
+<span class="co">#|   # perform action</span>
+<span class="co">#|   # return value</span>
 <span class="co">#| }</span>
 <span class="co">#| ```</span>
 <span class="co">#| </span>
-<span class="co">#| We define `fahr_to_kelvin()` by assigning it to the output of `function`. The</span>
-<span class="co">#| list of argument names are contained within parentheses.   Next, the</span></code></pre></div>
+<span class="co">#| Let's define a function `fahr_to_kelvin()` that converts temperatures from</span>
+<span class="co">#| Fahrenheit to Kelvin:</span></code></pre></div>
 </div>
 </div>
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <div class="links">
+  </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
 <li><a href="https://github.com/zkamvar/pegboard/" class="external-link">Browse source code</a></li>
@@ -561,25 +556,24 @@
 </ul>
 </div>
 
-  </div>
+  </aside>
 </div>
 
 
-      <footer><div class="copyright">
+    <footer><div class="pkgdown-footer-left">
   <p></p>
 <p>Developed by Zhian N. Kamvar.</p>
 </div>
 
-<div class="pkgdown">
+<div class="pkgdown-footer-right">
   <p></p>
 <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
-      </footer>
+    </footer>
 </div>
 
   
-
 
   
 
