@@ -9,7 +9,7 @@ add_pegboard_nodes(node, df)
 \arguments{
 \item{node}{a single node}
 
-\item{df}{a data frame generated from \code{\link[=make_div_table]{make_div_table()}}}
+\item{df}{a data frame generated from \code{\link[=make_div_pairs]{make_div_pairs()}}}
 }
 \value{
 NULL, invisibly

@@ -84,7 +84,7 @@ Other div:
 \code{\link{find_div_pairs}()},
 \code{\link{get_divs}()},
 \code{\link{label_pairs}()},
-\code{\link{make_div_table}()},
+\code{\link{make_div_pairs}()},
 \code{\link{make_div}()},
 \code{\link{replace_with_div}()}
 }
