@@ -240,6 +240,34 @@ Lesson <- R6::R6Class("Lesson",
       invisible(res)
     },
     #' @description
+    #' Validate that the divs are known. See the internal [validate_divs()] for
+    #' details.
+    #' 
+    #' ## Validation variables
+    #'
+    #' - divs are known (`is_known`)
+    #'
+    #' @param verbose if `TRUE` (default), Any failed tests will be printed to
+    #'   the console as a message giving information of where in the document
+    #'   the failing divs appear.
+    #' @return a wide data frame with five rows and the number of columns equal
+    #'   to the number of episodes in the lesson with an extra column indicating
+    #'   the type of validation. See the same method in the [Episode] class for 
+    #'   details.
+    #' @examples
+    #' frg <- Lesson$new(lesson_fragment())
+    #' frg$validate_divs()
+    validate_divs = function() {
+      res <- purrr::map(self$episodes, ~.x$validate_divs(warn = FALSE))
+      if (requireNamespace("dplyr", quietly = TRUE)) {
+        res <- dplyr::bind_rows(res)
+      } else {
+        res <- do.call(rbind, res)
+      }
+      throw_div_warnings(res)
+      invisible(res)
+    },
+    #' @description
     #' Validate that the links and images are valid and accessible. See the
     #' internal [validate_links()] for details.
     #' 

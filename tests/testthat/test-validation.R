@@ -1,8 +1,18 @@
 vh   <- Episode$new(test_path("examples/validation-headings.md"))
+dv   <- Episode$new(test_path("examples/validation-divs.md"))
 cats <- Episode$new(test_path("examples/image-test.md"))
 link <- Episode$new(test_path("examples/link-test.md"))
 loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
-withr::defer(rm(list = c("vh", "loop", "cats", "link")))
+withr::defer(rm(list = c("vh", "loop", "cats", "link", "dv")))
+
+
+test_that("invalid divs will be caught", {
+  suppressMessages({
+    expect_message(res <- dv$validate_divs(),
+      "There were errors in 1/5 fenced divs")
+  })
+  expect_equal(sum(res$is_known), 4)
+})
 
 test_that("invalid headings can be caught without the reporters", {
   suppressMessages({
@@ -101,5 +111,12 @@ test_that("links reporters will work on CI", {
 
   withr::local_envvar(list(CI = "true"))
   expect_snapshot(link$validate_links())
+
+})
+
+test_that("div reporters will work on CI", {
+
+  withr::local_envvar(list(CI = "true"))
+  expect_snapshot(dv$validate_divs())
 
 })

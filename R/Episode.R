@@ -517,6 +517,29 @@ Episode <- R6::R6Class("Episode",
       }
       invisible(res)
     },
+
+    #' @description perform validation on divs in a document.
+    #'
+    #' This will validate the following aspects of divs. See [validate_divs()]
+    #' for details.
+    #'
+    #'  - divs are of a known type (`is_known`)
+    #'
+    #' @param warn if `TRUE` (default), a warning message will be if there are
+    #'   any divs determined to be invalid. Set to `FALSE` if you want the
+    #'   table for processing later.
+    #' @return a logical `TRUE` for valid divs and `FALSE` for invalid 
+    #'   divs.
+    #' @examples
+    #' loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
+    #' loop$validate_divs()
+    validate_divs = function(warn = TRUE) {
+      res <- validate_divs(self)
+      if (warn) {
+        throw_div_warnings(res)
+      }
+      invisible(res)
+    },
     
     #' @description perform validation on links and images in a document.
     #'

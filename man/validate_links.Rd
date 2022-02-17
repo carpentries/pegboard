@@ -57,7 +57,8 @@ link_info
 \item{root}{the root path to the lesson that contains this file.}
 }
 \value{
-a vector of logical values indicating the tests that passed.
+a data frame with parsed information from \code{\link[xml2:url_parse]{xml2::url_parse()}} and
+columns of logical values indicating the tests that passed.
 }
 \description{
 This function will validate that links do not throw an error in markdown

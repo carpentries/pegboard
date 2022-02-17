@@ -566,3 +566,14 @@
       ::warning file=link-test.md,line=71:: [text too short] 'a'
       ::warning file=link-test.md,line=72:: [text too short] ''
 
+# div reporters will work on CI
+
+    Code
+      dv$validate_divs()
+    Message <cliMessage>
+      ! There were errors in 1/5 fenced divs
+      
+      - The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor
+      
+      ::warning file=validation-divs.md,line=26:: [unknown div] unknown
+
