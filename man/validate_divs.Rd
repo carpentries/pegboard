@@ -28,6 +28,8 @@ div_info
 }
 \arguments{
 \item{yrn}{a \link[tinkr:yarn]{tinkr::yarn} or \link{Episode} object.}
+
+\item{div_table}{a data frame derived from \code{\link[=make_div_table]{make_div_table()}}}
 }
 \value{
 a data frame with the following columns:

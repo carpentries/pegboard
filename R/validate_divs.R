@@ -56,10 +56,12 @@ validate_divs <- function(yrn) {
 }
 
 #' @rdname validate_divs
+#' @param div_table a data frame derived from [make_div_table()]
 div_is_known <- function(div_table) {
   div_table$is_known <- div_table$div %in% KNOWN_DIVS
   div_table
 }
+
 #' @rdname validate_divs
 #' @export
 KNOWN_DIVS <- c(
