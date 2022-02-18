@@ -202,9 +202,9 @@ link_tests <- c(
   internal_file = "[missing file] {orig}",
   internal_well_formed = "[incorrect formatting]: [{text}][{orig}] -> [{text}]({orig})",
   all_reachable = "",
-  img_alt_text  = "[missing alt-text]",
-  descriptive   = "[uninformative text] {sQuote(text)}",
-  link_length   = "[text too short] {sQuote(text)}",
+  img_alt_text  = "[image missing alt-text]",
+  descriptive   = "[uninformative link text] {sQuote(text)}",
+  link_length   = "[link text too short] {sQuote(text)}",
   NULL
 )
 
