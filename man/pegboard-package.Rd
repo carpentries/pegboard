@@ -19,7 +19,12 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Zhian N. Kamvar \email{zkamvar@gmail.com} (\href{https://orcid.org/0000-0003-1458-7108}{ORCID})
+\strong{Maintainer}: Zhian N. Kamvar \email{zkamvar@carpentries.org} (\href{https://orcid.org/0000-0003-1458-7108}{ORCID})
+
+Other contributors:
+\itemize{
+  \item Toby Hodges \email{tobyhodges@carpentries.org} [contributor]
+}
 
 }
 \keyword{internal}
