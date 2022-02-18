@@ -26,6 +26,7 @@ lesson that contains some mal-formed links and headings:
 library(pegboard)
 lsn <- Lesson$new(lesson_fragment())
 # validation
+lsn$validate_divs()
 lsn$validate_links()
 lsn$validate_headings(verbose = FALSE)
 ```
@@ -73,7 +74,52 @@ For context, this is what the document looks like at those positions:
 lsn$episodes[["14-looping-data-sets.md"]]$tail(17)
 ```
 
-### Headings
+## Fenced Div Validation
+
+Validation of fenced divs (aka callout blocks) _at the moment_ checks for
+whether or not the section divs we encouter in the lessons are the ones we
+expect, [to avoid issues where a div class is mis-typed](https://github.com/carpentries/sandpaper/issues/254). 
+
+The divs we expect are in the object `pegboard::KNOWN_DIVS`: 
+`r glue::glue_collapse(pegboard::KNOWN_DIVS, sep = ", ", last = ", and ")`.
+
+Our example lesson is from the old styles repository, so it does not have any
+fenced divs, but we can use a lesson fragment from {sandpaper}:
+
+```{r fenced-divs-clean}
+snd <- Lesson$new(lesson_fragment(name = "sandpaper-fragment"), jekyll = FALSE)
+snd_divs <- snd$validate_divs()
+```
+
+Notice that no message was produced indicating that the divs in our lesson 
+fragment were okay. When we look at the data frame that was produced, we can see
+that there are six divs:
+
+```{r fenced-divs-okay}
+snd_divs
+```
+
+If there are invalid div names in the lesson, they will be reported. For
+example, the lesson we have right now, does not have any improper fenced div
+classes, but if we were to add an invalid fenced div (via the `add_md()` method
+in the `tinkr::yarn()` class), we would be able to find out very quickly:
+
+```{r fenced-divs-add}
+our_div <- c("::: exercise", "\nthis is an invalid div\n", ":::")
+snd$episodes[["intro.Rmd"]]$add_md(our_div)
+snd_divs <- snd$validate_divs()
+```
+
+You can see from the table that the `is_known` column now has a `FALSE` value:
+
+```{r fenced-divs-res}
+snd_divs
+```
+
+
+## Heading Validation
+
+**NOTE: We are rethinking the exact specifications for heading validation at this time**
 
 Validation of headings operate similarly to links as it produces a data frame
 along with the message output that can be further inspected and manipulated. You
