@@ -11,9 +11,6 @@ template:
       site: "@thecarpentries"
       card: summary
 
-# code:
-#   width: 72
-
 reference:
  - title: "Classes"
    desc: >
@@ -29,6 +26,7 @@ reference:
  - contents:
    - validate_headings
    - validate_links
+   - validate_divs
    - issue_warning
    - show_heading_tree
  - title: "Helper functions"
@@ -39,6 +37,7 @@ reference:
    - lesson_fragment
    - make_heading_table
    - make_link_table
+   - make_div_table
  - title: "[Internal] functions for Episode methods"
    desc: >
      Functions in this category serve as internal functions that the
@@ -55,6 +54,7 @@ reference:
    - get_divs
    - find_between_tags
    - label_div_tags
+   - make_div_pairs
    - find_div_pairs
    - clean_div_tags
    - clean_fenced_divs

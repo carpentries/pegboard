@@ -51,66 +51,16 @@
       --## Solution  (duplicated)
       ---### ZNK test links and images 
 
-# headings reporters will work on CI
+# div reporters will work without CLI
 
     Code
-      res <- vh$validate_headings()
-    Message <cliMessage>
-      ! There were errors in 5/7 headings
+      dv$validate_divs()
+    Message <simpleMessage>
+      ! There were errors in 1/5 fenced divs
       
-      - First heading must be level 2
-      - Level 1 headings are not allowed
-      - Headings must be sequential
-      - Headings must be named
-      - Headings must be unique
-      <https://webaim.org/techniques/semanticstructure/#headings>
+      - The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor
       
-      ::warning file=validation-headings.md,line=5:: (must be level 2) (first level heading)
-      ::warning file=validation-headings.md,line=7:: (non-sequential heading jump)
-      ::warning file=validation-headings.md,line=9:: (duplicated)
-      ::warning file=validation-headings.md,line=11:: (duplicated)
-      ::warning file=validation-headings.md,line=18:: (no name)
-      -- Heading structure -----------------------------------------------------------
-    Output
-      # Episode: "Errors in Headings" 
-      +-# First heading throws an error  (must be level 2) (first level heading)
-      | +-### This heading throws another error  (non-sequential heading jump)
-      | +-## This heading is okay  (duplicated)
-      | +-## This heading is okay  (duplicated)
-      | | \-### This heading is okay 
-      | +-##   (no name)
-      | \-## This last heading is okay 
-    Message <cliMessage>
-      --------------------------------------------------------------------------------
-
----
-
-    Code
-      res <- loop$validate_headings()
-    Message <cliMessage>
-      ! There were errors in 3/10 headings
-      
-      - Headings must be unique
-      <https://webaim.org/techniques/semanticstructure/#headings>
-      
-      ::warning file=_episodes/14-looping-data-sets.md,line=119:: (duplicated)
-      ::warning file=_episodes/14-looping-data-sets.md,line=143:: (duplicated)
-      ::warning file=_episodes/14-looping-data-sets.md,line=162:: (duplicated)
-      -- Heading structure -----------------------------------------------------------
-    Output
-      # Episode: "Looping Over Data Sets" 
-      +-## Use a for loop to process files given a list of their names. 
-      +-## Use glob.glob to find sets of files whose names match a pattern. 
-      +-## Use glob and for to process batches of files. 
-      +-## Determining Matches 
-      +-## Solution  (duplicated)
-      +-## Minimum File Size 
-      +-## Solution  (duplicated)
-      +-## Comparing Data 
-      \-## Solution  (duplicated)
-        \-### ZNK test links and images 
-    Message <cliMessage>
-      --------------------------------------------------------------------------------
+      validation-divs.md:26  [unknown div] unknown
 
 # links reporters will work without CLI
 
@@ -523,6 +473,111 @@
       link-test.md:70  [uninformative text] 'read on about'
       link-test.md:71  [text too short] 'a'
       link-test.md:72  [text too short] ''
+
+# div reporters will work [plain]
+
+    Code
+      dv$validate_divs()
+    Message <cliMessage>
+      ! There were errors in 1/5 fenced divs
+      
+      - The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor
+      
+      validation-divs.md:26  [unknown div] unknown
+
+# div reporters will work [ansi]
+
+    Code
+      dv$validate_divs()
+    Message <cliMessage>
+      [33m![39m There were errors in 1/5 fenced divs
+      
+      - The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor
+      
+      validation-divs.md:26  [unknown div] unknown
+
+# div reporters will work [unicode]
+
+    Code
+      dv$validate_divs()
+    Message <cliMessage>
+      ! There were errors in 1/5 fenced divs
+      
+      - The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor
+      
+      validation-divs.md:26  [unknown div] unknown
+
+# div reporters will work [fancy]
+
+    Code
+      dv$validate_divs()
+    Message <cliMessage>
+      [33m![39m There were errors in 1/5 fenced divs
+      
+      - The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor
+      
+      validation-divs.md:26  [unknown div] unknown
+
+# headings reporters will work on CI
+
+    Code
+      res <- vh$validate_headings()
+    Message <cliMessage>
+      ! There were errors in 5/7 headings
+      
+      - First heading must be level 2
+      - Level 1 headings are not allowed
+      - Headings must be sequential
+      - Headings must be named
+      - Headings must be unique
+      <https://webaim.org/techniques/semanticstructure/#headings>
+      
+      ::warning file=validation-headings.md,line=5:: (must be level 2) (first level heading)
+      ::warning file=validation-headings.md,line=7:: (non-sequential heading jump)
+      ::warning file=validation-headings.md,line=9:: (duplicated)
+      ::warning file=validation-headings.md,line=11:: (duplicated)
+      ::warning file=validation-headings.md,line=18:: (no name)
+      -- Heading structure -----------------------------------------------------------
+    Output
+      # Episode: "Errors in Headings" 
+      +-# First heading throws an error  (must be level 2) (first level heading)
+      | +-### This heading throws another error  (non-sequential heading jump)
+      | +-## This heading is okay  (duplicated)
+      | +-## This heading is okay  (duplicated)
+      | | \-### This heading is okay 
+      | +-##   (no name)
+      | \-## This last heading is okay 
+    Message <cliMessage>
+      --------------------------------------------------------------------------------
+
+---
+
+    Code
+      res <- loop$validate_headings()
+    Message <cliMessage>
+      ! There were errors in 3/10 headings
+      
+      - Headings must be unique
+      <https://webaim.org/techniques/semanticstructure/#headings>
+      
+      ::warning file=_episodes/14-looping-data-sets.md,line=119:: (duplicated)
+      ::warning file=_episodes/14-looping-data-sets.md,line=143:: (duplicated)
+      ::warning file=_episodes/14-looping-data-sets.md,line=162:: (duplicated)
+      -- Heading structure -----------------------------------------------------------
+    Output
+      # Episode: "Looping Over Data Sets" 
+      +-## Use a for loop to process files given a list of their names. 
+      +-## Use glob.glob to find sets of files whose names match a pattern. 
+      +-## Use glob and for to process batches of files. 
+      +-## Determining Matches 
+      +-## Solution  (duplicated)
+      +-## Minimum File Size 
+      +-## Solution  (duplicated)
+      +-## Comparing Data 
+      \-## Solution  (duplicated)
+        \-### ZNK test links and images 
+    Message <cliMessage>
+      --------------------------------------------------------------------------------
 
 # links reporters will work on CI
 
