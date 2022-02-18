@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pegboard</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -166,6 +166,7 @@ destructively modified in the conversion.</p>
 <li><p><a href="#method-isolate_blocks"><code>Episode$isolate_blocks()</code></a></p></li>
 <li><p><a href="#method-unblock"><code>Episode$unblock()</code></a></p></li>
 <li><p><a href="#method-validate_headings"><code>Episode$validate_headings()</code></a></p></li>
+<li><p><a href="#method-validate_divs"><code>Episode$validate_divs()</code></a></p></li>
 <li><p><a href="#method-validate_links"><code>Episode$validate_links()</code></a></p></li>
 <li><p><a href="#method-clone"><code>Episode$clone()</code></a></p></li>
 </ul></div><p><details open><summary>Inherited methods</summary><ul><li><p><span class="pkg-link" data-pkg="tinkr" data-topic="yarn" data-id="add_md"><a href="https://docs.ropensci.org/tinkr/reference/yarn.html#method-add_md"><code>tinkr::yarn$add_md()</code></a></span></p></li>
@@ -737,6 +738,38 @@ Lesson. See <code><a href="validate_headings.html">validate_headings()</a></code
 </div>
 
 
+</div><p></p><hr><a id="method-validate_divs"></a><div class="section">
+<h3 id="method-validate-divs-">Method <code><a href="validate_divs.html">validate_divs()</a></code><a class="anchor" aria-label="anchor" href="#method-validate-divs-"></a></h3>
+<p>perform validation on divs in a document.</p>
+<p>This will validate the following aspects of divs. See <code><a href="validate_divs.html">validate_divs()</a></code>
+for details.</p><ul><li><p>divs are of a known type (<code>is_known</code>)</p></li>
+</ul><div class="section">
+<h4 id="usage-24">Usage<a class="anchor" aria-label="anchor" href="#usage-24"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Episode</span><span class="op">$</span><span class="fu">validate_divs</span><span class="op">(</span>warn <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-12">Arguments<a class="anchor" aria-label="anchor" href="#arguments-12"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>warn</code></dt>
+<dd><p>if <code>TRUE</code> (default), a warning message will be if there are
+any divs determined to be invalid. Set to <code>FALSE</code> if you want the
+table for processing later.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+<div class="section">
+<h4 id="returns-13">Returns<a class="anchor" aria-label="anchor" href="#returns-13"></a></h4>
+<p>a logical <code>TRUE</code> for valid divs and <code>FALSE</code> for invalid
+divs.</p>
+</div>
+<div class="section">
+<h4 id="examples-11">Examples<a class="anchor" aria-label="anchor" href="#examples-11"></a></h4>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">loop</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/Episode.html">Episode</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="../reference/lesson_fragment.html">lesson_fragment</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"_episodes"</span>, <span class="st">"14-looping-data-sets.md"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">loop</span><span class="op">$</span><span class="fu">validate_divs</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+</div>
+
+
 </div><p></p><hr><a id="method-validate_links"></a><div class="section">
 <h3 id="method-validate-links-">Method <code><a href="validate_links.html">validate_links()</a></code><a class="anchor" aria-label="anchor" href="#method-validate-links-"></a></h3>
 <p>perform validation on links and images in a document.</p>
@@ -748,12 +781,12 @@ for details.</p><ul><li><p>External links use HTTPS (<code>enforce_https</code>)
 <li><p>Link text is descriptive (<code>descriptive</code>)</p></li>
 <li><p>Link text is more than a single letter (<code>link_length</code>)</p></li>
 </ul><div class="section">
-<h4 id="usage-24">Usage<a class="anchor" aria-label="anchor" href="#usage-24"></a></h4>
+<h4 id="usage-25">Usage<a class="anchor" aria-label="anchor" href="#usage-25"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Episode</span><span class="op">$</span><span class="fu">validate_links</span><span class="op">(</span>warn <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-12">Arguments<a class="anchor" aria-label="anchor" href="#arguments-12"></a></h4>
+<h4 id="arguments-13">Arguments<a class="anchor" aria-label="anchor" href="#arguments-13"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>warn</code></dt>
 <dd><p>if <code>TRUE</code> (default), a warning message will be if there are
 any links determined to be invalid. Set to <code>FALSE</code> if you want the
@@ -763,12 +796,12 @@ table for processing later.</p></dd>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-13">Returns<a class="anchor" aria-label="anchor" href="#returns-13"></a></h4>
+<h4 id="returns-14">Returns<a class="anchor" aria-label="anchor" href="#returns-14"></a></h4>
 <p>a logical <code>TRUE</code> for valid links and <code>FALSE</code> for invalid
 links.</p>
 </div>
 <div class="section">
-<h4 id="examples-11">Examples<a class="anchor" aria-label="anchor" href="#examples-11"></a></h4>
+<h4 id="examples-12">Examples<a class="anchor" aria-label="anchor" href="#examples-12"></a></h4>
 <p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">loop</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/Episode.html">Episode</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="../reference/lesson_fragment.html">lesson_fragment</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"_episodes"</span>, <span class="st">"14-looping-data-sets.md"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">loop</span><span class="op">$</span><span class="fu">validate_links</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
@@ -777,12 +810,12 @@ links.</p>
 </div><p></p><hr><a id="method-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
-<h4 id="usage-25">Usage<a class="anchor" aria-label="anchor" href="#usage-25"></a></h4>
+<h4 id="usage-26">Usage<a class="anchor" aria-label="anchor" href="#usage-26"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Episode</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-13">Arguments<a class="anchor" aria-label="anchor" href="#arguments-13"></a></h4>
+<h4 id="arguments-14">Arguments<a class="anchor" aria-label="anchor" href="#arguments-14"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
 
@@ -1017,7 +1050,7 @@ links.</p>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">scope</span> <span class="op">&lt;-</span> <span class="va">Episode</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="lesson_fragment.html">lesson_fragment</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"_episodes"</span>, <span class="st">"17-scope.md"</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">scope</span><span class="op">$</span><span class="fu">write</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Creating temporary directory '/tmp/RtmpbJ9oFN/dir3dd13b3eaa0e'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Creating temporary directory '/tmp/Rtmpwm1L7J/dir379041d5f08a'</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## ------------------------------------------------</span></span>
 <span class="r-in"><span class="co">## Method `Episode$handout`</span></span>
@@ -1177,6 +1210,13 @@ links.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> └─## Solution  (duplicated)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   └─### ZNK test links and images </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ────────────────────────────────────────────────────────────────────────────────</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
+<span class="r-in"><span class="co">## Method `Episode$validate_divs`</span></span>
+<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="va">loop</span> <span class="op">&lt;-</span> <span class="va">Episode</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="lesson_fragment.html">lesson_fragment</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"_episodes"</span>, <span class="st">"14-looping-data-sets.md"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">loop</span><span class="op">$</span><span class="fu">validate_divs</span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## ------------------------------------------------</span></span>
 <span class="r-in"><span class="co">## Method `Episode$validate_links`</span></span>

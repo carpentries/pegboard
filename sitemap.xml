@@ -136,6 +136,9 @@
     <loc>https://carpentries.github.io/pegboard/reference/make_div.html</loc>
   </url>
   <url>
+    <loc>https://carpentries.github.io/pegboard/reference/make_div_pairs.html</loc>
+  </url>
+  <url>
     <loc>https://carpentries.github.io/pegboard/reference/make_div_table.html</loc>
   </url>
   <url>
@@ -167,6 +170,9 @@
   </url>
   <url>
     <loc>https://carpentries.github.io/pegboard/reference/trim_fence.html</loc>
+  </url>
+  <url>
+    <loc>https://carpentries.github.io/pegboard/reference/validate_divs.html</loc>
   </url>
   <url>
     <loc>https://carpentries.github.io/pegboard/reference/validate_headings.html</loc>

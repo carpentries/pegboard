@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pegboard</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,6 +94,11 @@
         <dd>Validate Links in a markdown document</dd>
       </dl><dl><dt>
           
+          <code><a href="validate_divs.html">validate_divs()</a></code> <code><a href="validate_divs.html">div_is_known()</a></code> <code><a href="validate_divs.html">KNOWN_DIVS</a></code> <code><a href="validate_divs.html">div_tests</a></code> <code><a href="validate_divs.html">div_info</a></code> 
+        </dt>
+        <dd>Validate Callout Blocks for sandpaper episodes</dd>
+      </dl><dl><dt>
+          
           <code><a href="cli_helpers.html">issue_warning()</a></code> <code><a href="cli_helpers.html">line_report()</a></code> <code><a href="cli_helpers.html">append_labels()</a></code> 
         </dt>
         <dd>Issue a warning via CLI if it exists or send a message</dd>
@@ -133,6 +138,11 @@
           <code><a href="make_link_table.html">make_link_table()</a></code> 
         </dt>
         <dd>Create a table of parsed URLs from a single Episode object.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="make_div_table.html">make_div_table()</a></code> 
+        </dt>
+        <dd>Create a table of divs in an episode</dd>
       </dl></div><div class="section level2">
       <h2 id="-internal-functions-for-episode-methods">[Internal] functions for Episode methods<a class="anchor" aria-label="anchor" href="#-internal-functions-for-episode-methods"></a></h2>
       
@@ -186,6 +196,11 @@
         </dt>
         <dd>Add labels to div tags in the form of a "dtag" node with a paired "label"
 attribute.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="make_div_pairs.html">make_div_pairs()</a></code> 
+        </dt>
+        <dd>Create a data frame describing the divs associated with nodes.</dd>
       </dl><dl><dt>
           
           <code><a href="find_div_pairs.html">find_div_pairs()</a></code> 

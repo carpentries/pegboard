@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pegboard</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -119,6 +119,7 @@ files, default is <code>FALSE</code> for markdown files.</p></dd>
 <li><p><a href="#method-isolate_blocks"><code>Lesson$isolate_blocks()</code></a></p></li>
 <li><p><a href="#method-handout"><code>Lesson$handout()</code></a></p></li>
 <li><p><a href="#method-validate_headings"><code>Lesson$validate_headings()</code></a></p></li>
+<li><p><a href="#method-validate_divs"><code>Lesson$validate_divs()</code></a></p></li>
 <li><p><a href="#method-validate_links"><code>Lesson$validate_links()</code></a></p></li>
 <li><p><a href="#method-clone"><code>Lesson$clone()</code></a></p></li>
 </ul></div><p></p><hr><a id="method-new"></a><div class="section">
@@ -391,22 +392,17 @@ Lesson. See <code><a href="validate_headings.html">validate_headings()</a></code
 </div>
 
 
-</div><p></p><hr><a id="method-validate_links"></a><div class="section">
-<h3 id="method-validate-links-">Method <code><a href="validate_links.html">validate_links()</a></code><a class="anchor" aria-label="anchor" href="#method-validate-links-"></a></h3>
-<p>Validate that the links and images are valid and accessible. See the
-internal <code><a href="validate_links.html">validate_links()</a></code> for details.</p><div class="section">
+</div><p></p><hr><a id="method-validate_divs"></a><div class="section">
+<h3 id="method-validate-divs-">Method <code><a href="validate_divs.html">validate_divs()</a></code><a class="anchor" aria-label="anchor" href="#method-validate-divs-"></a></h3>
+<p>Validate that the divs are known. See the internal <code><a href="validate_divs.html">validate_divs()</a></code> for
+details.</p><div class="section">
 <h4 id="validation-variables">Validation variables<a class="anchor" aria-label="anchor" href="#validation-variables"></a></h4>
 
-<ul><li><p>External links use HTTPS (<code>enforce_https</code>)</p></li>
-<li><p>Internal links exist (<code>internal_okay</code>)</p></li>
-<li><p>External links are reachable (<code>all_reachable</code>) (planned)</p></li>
-<li><p>Images have alt text (<code>img_alt_text</code>)</p></li>
-<li><p>Link text is descriptive (<code>descriptive</code>)</p></li>
-<li><p>Link text is more than a single letter (<code>link_length</code>)</p></li>
+<ul><li><p>divs are known (<code>is_known</code>)</p></li>
 </ul></div>
 <div class="section">
 <h4 id="usage-9">Usage<a class="anchor" aria-label="anchor" href="#usage-9"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Lesson</span><span class="op">$</span><span class="fu">validate_links</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Lesson</span><span class="op">$</span><span class="fu">validate_divs</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -414,7 +410,7 @@ internal <code><a href="validate_links.html">validate_links()</a></code> for det
 <p></p><div class="arguments"><dl><dt><code>verbose</code></dt>
 <dd><p>if <code>TRUE</code> (default), Any failed tests will be printed to
 the console as a message giving information of where in the document
-the failing links/images appear.</p></dd>
+the failing divs appear.</p></dd>
 
 
 </dl><p></p></div>
@@ -429,6 +425,48 @@ details.</p>
 <div class="section">
 <h4 id="examples-6">Examples<a class="anchor" aria-label="anchor" href="#examples-6"></a></h4>
 <p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">frg</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/Lesson.html">Lesson</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="../reference/lesson_fragment.html">lesson_fragment</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="va">frg</span><span class="op">$</span><span class="fu">validate_divs</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+</div>
+
+
+</div><p></p><hr><a id="method-validate_links"></a><div class="section">
+<h3 id="method-validate-links-">Method <code><a href="validate_links.html">validate_links()</a></code><a class="anchor" aria-label="anchor" href="#method-validate-links-"></a></h3>
+<p>Validate that the links and images are valid and accessible. See the
+internal <code><a href="validate_links.html">validate_links()</a></code> for details.</p><div class="section">
+<h4 id="validation-variables-1">Validation variables<a class="anchor" aria-label="anchor" href="#validation-variables-1"></a></h4>
+
+<ul><li><p>External links use HTTPS (<code>enforce_https</code>)</p></li>
+<li><p>Internal links exist (<code>internal_okay</code>)</p></li>
+<li><p>External links are reachable (<code>all_reachable</code>) (planned)</p></li>
+<li><p>Images have alt text (<code>img_alt_text</code>)</p></li>
+<li><p>Link text is descriptive (<code>descriptive</code>)</p></li>
+<li><p>Link text is more than a single letter (<code>link_length</code>)</p></li>
+</ul></div>
+<div class="section">
+<h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Lesson</span><span class="op">$</span><span class="fu">validate_links</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-8">Arguments<a class="anchor" aria-label="anchor" href="#arguments-8"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>verbose</code></dt>
+<dd><p>if <code>TRUE</code> (default), Any failed tests will be printed to
+the console as a message giving information of where in the document
+the failing links/images appear.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+<div class="section">
+<h4 id="returns-7">Returns<a class="anchor" aria-label="anchor" href="#returns-7"></a></h4>
+<p>a wide data frame with five rows and the number of columns equal
+to the number of episodes in the lesson with an extra column indicating
+the type of validation. See the same method in the <a href="Episode.html">Episode</a> class for
+details.</p>
+</div>
+<div class="section">
+<h4 id="examples-7">Examples<a class="anchor" aria-label="anchor" href="#examples-7"></a></h4>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">frg</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/Lesson.html">Lesson</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="../reference/lesson_fragment.html">lesson_fragment</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="va">frg</span><span class="op">$</span><span class="fu">validate_links</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
@@ -436,12 +474,12 @@ details.</p>
 </div><p></p><hr><a id="method-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
-<h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
+<h4 id="usage-11">Usage<a class="anchor" aria-label="anchor" href="#usage-11"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Lesson</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-8">Arguments<a class="anchor" aria-label="anchor" href="#arguments-8"></a></h4>
+<h4 id="arguments-9">Arguments<a class="anchor" aria-label="anchor" href="#arguments-9"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
 
@@ -511,6 +549,7 @@ details.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     unblock: function (token = "#'") </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     use_dovetail: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     use_sandpaper: function (rmd = FALSE, yml = list()) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     validate_divs: function (warn = TRUE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_headings: function (verbose = TRUE, warn = TRUE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_links: function (warn = TRUE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     write: function (path = NULL, format = "md", edit = FALSE) </span>
@@ -572,6 +611,7 @@ details.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     unblock: function (token = "#'") </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     use_dovetail: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     use_sandpaper: function (rmd = FALSE, yml = list()) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     validate_divs: function (warn = TRUE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_headings: function (verbose = TRUE, warn = TRUE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_links: function (warn = TRUE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     write: function (path = NULL, format = "md", edit = FALSE) </span>
@@ -633,6 +673,7 @@ details.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     unblock: function (token = "#'") </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     use_dovetail: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     use_sandpaper: function (rmd = FALSE, yml = list()) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     validate_divs: function (warn = TRUE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_headings: function (verbose = TRUE, warn = TRUE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_links: function (warn = TRUE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     write: function (path = NULL, format = "md", edit = FALSE) </span>
@@ -694,6 +735,7 @@ details.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     unblock: function (token = "#'") </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     use_dovetail: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     use_sandpaper: function (rmd = FALSE, yml = list()) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     validate_divs: function (warn = TRUE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_headings: function (verbose = TRUE, warn = TRUE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_links: function (warn = TRUE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     write: function (path = NULL, format = "md", edit = FALSE) </span>
@@ -850,6 +892,13 @@ details.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=119:: (duplicated)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=143:: (duplicated)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=162:: (duplicated)</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
+<span class="r-in"><span class="co">## Method `Lesson$validate_divs`</span></span>
+<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="va">frg</span> <span class="op">&lt;-</span> <span class="va">Lesson</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="lesson_fragment.html">lesson_fragment</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">frg</span><span class="op">$</span><span class="fu">validate_divs</span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## ------------------------------------------------</span></span>
 <span class="r-in"><span class="co">## Method `Lesson$validate_links`</span></span>
