@@ -10,7 +10,7 @@ Authors@R:
     person(given = "Toby",
            family = "Hodges",
            role = c("ctb"),
-           email = "tobyhodges@carpentries.org")
+           email = "tobyhodges@carpentries.org"),
     person())
 Description: The Carpentries (<https://carpentries.org>) curricula is made of of
     lessons that are hosted as websites. Each lesson represents between a half
