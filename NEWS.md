@@ -1,3 +1,10 @@
+# pegboard 0.2.0
+
+## NEW FEATURES
+
+ - `validate_divs()` will validate that the divs in an Episode are ones we
+   expect.
+
 # pegboard 0.1.1
 
 ## MISC

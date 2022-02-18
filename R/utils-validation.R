@@ -5,13 +5,13 @@ throw_heading_warnings <- function(VAL) {
   has_cli <- is.null(getOption("pegboard.no-cli")) &&
     requireNamespace("cli", quietly = TRUE)
   VAL <- collect_labels(VAL, cli = FALSE, heading_tests)
-  err <- VAL[VAL$label != '', ]
+  err <- VAL[VAL$labels != '', ]
   # No errors throw no warnings
   if (nrow(err) == 0) {
     return(invisible(NULL))
   }
   
-  reports <- line_report(msg = err$label, err$path, err$pos, sep = " ")
+  reports <- line_report(msg = err$labels, err$path, err$pos, sep = " ")
   failed <- !apply(err[names(heading_tests)], MARGIN = 2, all)
   infos <- paste("-", heading_info[failed], collapse = "\n")
   issue_warning("There were errors in {n}/{N} headings
@@ -22,6 +22,30 @@ throw_heading_warnings <- function(VAL) {
     {reports}", cli = has_cli, n = nrow(err), N = nrow(VAL), infos = infos, reports = reports)
 }
 
+throw_div_warnings <- function(VAL) {
+  if (length(VAL) == 0 || nrow(VAL) == 0) {
+    return(invisible(NULL))
+  }
+  has_cli <- is.null(getOption("pegboard.no-cli")) &&
+    requireNamespace("cli", quietly = TRUE)
+  VAL <- collect_labels(VAL, cli = FALSE, div_tests)
+  err <- VAL[VAL$labels != '', ]
+  # No errors throw no warnings
+  if (nrow(err) == 0) {
+    return(invisible(NULL))
+  }
+  
+  reports <- line_report(msg = err$labels, err$path, err$pos, sep = " ")
+  failed <- !apply(err[names(div_tests)], MARGIN = 2, all)
+  infos <- paste("-", div_info[failed], collapse = "\n")
+  issue_warning("There were errors in {n}/{N} fenced divs
+
+    {infos}
+
+    {reports}", cli = has_cli, n = nrow(err), N = nrow(VAL), 
+    infos = infos, reports = reports)
+}
+
 throw_link_warnings <- function(VAL) {
   if (length(VAL) == 0 || nrow(VAL) == 0) {
     return(invisible(NULL))
@@ -29,13 +53,13 @@ throw_link_warnings <- function(VAL) {
   has_cli <- is.null(getOption("pegboard.no-cli")) &&
     requireNamespace("cli", quietly = TRUE)
   VAL <- collect_labels(VAL, cli = FALSE, link_tests)
-  err <- VAL[VAL$label != '', ]
+  err <- VAL[VAL$labels != '', ]
   # No errors throw no warnings
   if (nrow(err) == 0) {
     return(invisible(NULL))
   }
   
-  reports <- line_report(msg = err$label, err$filepath, err$sourcepos, sep = " ")
+  reports <- line_report(msg = err$labels, err$filepath, err$sourcepos, sep = " ")
   failed <- !apply(err[names(link_tests)], MARGIN = 2, all)
   infos <- paste("-", link_info[failed], collapse = "\n")
   issue_warning("There were errors in {n}/{N} links

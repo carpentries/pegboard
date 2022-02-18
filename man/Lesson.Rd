@@ -60,6 +60,13 @@ frg <- Lesson$new(lesson_fragment())
 frg$validate_headings()
 
 ## ------------------------------------------------
+## Method `Lesson$validate_divs`
+## ------------------------------------------------
+
+frg <- Lesson$new(lesson_fragment())
+frg$validate_divs()
+
+## ------------------------------------------------
 ## Method `Lesson$validate_links`
 ## ------------------------------------------------
 
@@ -107,6 +114,7 @@ files, default is \code{FALSE} for markdown files.}
 \item \href{#method-isolate_blocks}{\code{Lesson$isolate_blocks()}}
 \item \href{#method-handout}{\code{Lesson$handout()}}
 \item \href{#method-validate_headings}{\code{Lesson$validate_headings()}}
+\item \href{#method-validate_divs}{\code{Lesson$validate_divs()}}
 \item \href{#method-validate_links}{\code{Lesson$validate_links()}}
 \item \href{#method-clone}{\code{Lesson$clone()}}
 }
@@ -387,6 +395,46 @@ Lesson. See \code{\link[=validate_headings]{validate_headings()}} for more detai
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{frg <- Lesson$new(lesson_fragment())
 frg$validate_headings()
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-validate_divs"></a>}}
+\if{latex}{\out{\hypertarget{method-validate_divs}{}}}
+\subsection{Method \code{validate_divs()}}{
+Validate that the divs are known. See the internal \code{\link[=validate_divs]{validate_divs()}} for
+details.
+\subsection{Validation variables}{
+\itemize{
+\item divs are known (\code{is_known})
+}
+}
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Lesson$validate_divs()}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{verbose}}{if \code{TRUE} (default), Any failed tests will be printed to
+the console as a message giving information of where in the document
+the failing divs appear.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+a wide data frame with five rows and the number of columns equal
+to the number of episodes in the lesson with an extra column indicating
+the type of validation. See the same method in the \link{Episode} class for
+details.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{frg <- Lesson$new(lesson_fragment())
+frg$validate_divs()
 }
 \if{html}{\out{</div>}}
 

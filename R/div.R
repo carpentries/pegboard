@@ -207,7 +207,7 @@ label_div_tags <- function(body) {
   if (!any_divs && length(nodes) == 0) {
     return(invisible(body))
   }
-  divtab <- make_div_table(nodes, path = path, yaml = yaml)
+  divtab <- make_div_pairs(nodes, path = path, yaml = yaml)
   purrr::walk2(nodes, divtab, add_pegboard_nodes)
   invisible(body)
 }
@@ -294,9 +294,9 @@ clear_div_labels <- function(body) {
 #' ex <- tinkr::to_xml(tmp)
 #' pegboard:::clean_div_tags(ex$body)
 #' nodes <- pegboard:::find_div_tags(ex$body)
-#' divs  <- pegboard:::make_div_table(nodes)
+#' divs  <- pegboard:::make_div_pairs(nodes)
 #' do.call("rbind", divs)
-make_div_table <- function(nodes, path = NULL, yaml = NULL) {
+make_div_pairs <- function(nodes, path = NULL, yaml = NULL) {
   types <- xml2::xml_name(nodes)
   # list to store parsed nodes in
   lines <- divs <- vector(mode = "list", length = length(types))
@@ -374,7 +374,7 @@ raise_div_error <- function(res, path, yaml, type) {
 #' These nodes have the namespace of "http://carpentries.org/pegboard/"
 #' @keywords internal
 #' @param node a single node
-#' @param df a data frame generated from [make_div_table()]
+#' @param df a data frame generated from [make_div_pairs()]
 #' @return NULL, invisibly
 add_pegboard_nodes <- function(node, df) {
   parents <- xml2::xml_parents(node)

@@ -133,6 +133,13 @@ loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-s
 loop$validate_headings()
 
 ## ------------------------------------------------
+## Method `Episode$validate_divs`
+## ------------------------------------------------
+
+loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
+loop$validate_divs()
+
+## ------------------------------------------------
 ## Method `Episode$validate_links`
 ## ------------------------------------------------
 
@@ -204,6 +211,7 @@ loop$validate_links()
 \item \href{#method-isolate_blocks}{\code{Episode$isolate_blocks()}}
 \item \href{#method-unblock}{\code{Episode$unblock()}}
 \item \href{#method-validate_headings}{\code{Episode$validate_headings()}}
+\item \href{#method-validate_divs}{\code{Episode$validate_divs()}}
 \item \href{#method-validate_links}{\code{Episode$validate_links()}}
 \item \href{#method-clone}{\code{Episode$clone()}}
 }
@@ -834,6 +842,44 @@ Lesson. See \code{\link[=validate_headings]{validate_headings()}} for more detai
 # nested within a higher-level heading and will throw an error
 loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
 loop$validate_headings()
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-validate_divs"></a>}}
+\if{latex}{\out{\hypertarget{method-validate_divs}{}}}
+\subsection{Method \code{validate_divs()}}{
+perform validation on divs in a document.
+
+This will validate the following aspects of divs. See \code{\link[=validate_divs]{validate_divs()}}
+for details.
+\itemize{
+\item divs are of a known type (\code{is_known})
+}
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Episode$validate_divs(warn = TRUE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{warn}}{if \code{TRUE} (default), a warning message will be if there are
+any divs determined to be invalid. Set to \code{FALSE} if you want the
+table for processing later.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+a logical \code{TRUE} for valid divs and \code{FALSE} for invalid
+divs.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
+loop$validate_divs()
 }
 \if{html}{\out{</div>}}
 

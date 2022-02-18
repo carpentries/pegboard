@@ -58,7 +58,8 @@
 #'   [Lesson] classes.
 #'
 #' @param yrn a [tinkr::yarn] or [Episode] object.
-#' @return a vector of logical values indicating the tests that passed.
+#' @return a data frame with parsed information from [xml2::url_parse()] and
+#'   columns of logical values indicating the tests that passed.
 #' @keywords internal
 #' @rdname validate_links
 #' @examples
