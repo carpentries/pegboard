@@ -1,3 +1,9 @@
+# pegboard 0.2.1
+
+## MISC
+
+ - The inline messages for link validation errors are more verbose (@tobyhodges, #79)
+
 # pegboard 0.2.0
 
 ## NEW FEATURES
