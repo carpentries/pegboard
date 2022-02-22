@@ -32,6 +32,20 @@ test_that("Episodes can be created and are valid", {
 })
 
 
+test_that("Episodes from sandpaper will have links included", {
+
+  tnk <- withr::local_tempfile()
+  tep <- withr::local_tempfile()
+  writeLines("What [is this][link]?\n", tep)
+  writeLines("<!--comment-->\n\n[link]: https://example.com/link", tnk)
+  e <- Episode$new(tep, fix_links = FALSE)
+  expect_length(e$links, 0L)
+  withr::local_options(list(sandpaper.links = tnk))
+  e <- Episode$new(tep, fix_links = FALSE)
+  expect_length(e$links, 2L) # anchor and normal
+
+})
+
 
 test_that("Episodes with image tags do not error", {
   suppressWarnings({

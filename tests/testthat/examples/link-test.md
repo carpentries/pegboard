@@ -70,9 +70,11 @@ If we have links like
 [read on about][bad-link-text],
 [a][bad-link-text],
 [][bad-link-text]
-they will fail.
+they will fail, but [link text that is descriptive][1], albiet with a numeric
+anchor will work.
 
 
+[1]: https://example.com/link-text#descriptive
 [rel-label-1]: #label-1
 [rel-image]: image-test.html
 [bad-link-text]: https://example.com/link-text#bad

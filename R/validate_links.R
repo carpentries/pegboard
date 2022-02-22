@@ -123,7 +123,7 @@ link_img_alt_text <- function(VAL) {
 
 #' @rdname validate_links
 link_length <- function(VAL) {
-  is_link <- VAL$type == "link"
+  is_link <- VAL$type == "link" & !VAL$anchor
   VAL$link_length[is_link] <- !grepl("^.?$", trimws(VAL$text[is_link]))
   VAL
 }
@@ -143,7 +143,8 @@ link_descriptive <- function(VAL) {
     ")[[:punct:]]*)$"
   )
   bad <- grepl(uninformative, trimws(VAL$text), ignore.case = TRUE, perl = TRUE)
-  VAL$descriptive <- !bad
+  body_links <- !VAL$anchor
+  VAL$descriptive[body_links] <- !bad[body_links]
   VAL
 }
 

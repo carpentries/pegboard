@@ -1,3 +1,16 @@
+# pegboard 0.2.2
+
+ - If `getOption("sandpaper.links")` is not NULL (in the context of a {sandpaper}
+   lesson) and is a valid file, it will be appended to any file read in via 
+   `Episode$new()`
+ - `$validate_links()` no longer throws warnings about short or uninformative
+   text for link anchors (@zkamvar, #81)
+
+# pegboard 0.2.1
+
+ - External links files are now appended if the `sandpaper.links` option is set
+   to a valid file. 
+
 # pegboard 0.2.1
 
 ## MISC

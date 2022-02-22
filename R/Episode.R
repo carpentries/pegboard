@@ -33,6 +33,15 @@ Episode <- R6::R6Class("Episode",
       if (!file.exists(path)) {
         stop(glue::glue("the file '{path}' does not exist"))
       }
+      links <- getOption("sandpaper.links")
+      if (length(links) && fs::file_exists(links)) {
+        # if we have links, we concatenate our input files 
+        tmpin <- tempfile(fileext = ".md")
+        fs::file_copy(path, tmpin)
+        file.append(tmpin, links)
+        path <- tmpin
+        on.exit(unlink(tmpin), add = TRUE)
+      }
       default <- list(
         yaml = NULL,
         body = xml2::xml_missing()
