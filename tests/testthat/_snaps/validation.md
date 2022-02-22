@@ -93,7 +93,7 @@
     Code
       link$validate_links()
     Message <simpleMessage>
-      ! There were errors in 27/41 links
+      ! There were errors in 27/39 links
       
       - Links must use HTTPS <https://https.cio.gov/everything/>
       - Some link anchors for relative links (e.g. [anchor]: link) are missing
@@ -275,7 +275,7 @@
     Code
       link$validate_links()
     Message <cliMessage>
-      ! There were errors in 27/41 links
+      ! There were errors in 27/39 links
       
       - Links must use HTTPS <https://https.cio.gov/everything/>
       - Some link anchors for relative links (e.g. [anchor]: link) are missing
@@ -329,7 +329,7 @@
     Code
       link$validate_links()
     Message <cliMessage>
-      [33m![39m There were errors in 27/41 links
+      [33m![39m There were errors in 27/39 links
       
       - Links must use HTTPS <https://https.cio.gov/everything/>
       - Some link anchors for relative links (e.g. [anchor]: link) are missing
@@ -383,7 +383,7 @@
     Code
       link$validate_links()
     Message <cliMessage>
-      ! There were errors in 27/41 links
+      ! There were errors in 27/39 links
       
       - Links must use HTTPS <https://https.cio.gov/everything/>
       - Some link anchors for relative links (e.g. [anchor]: link) are missing
@@ -437,7 +437,7 @@
     Code
       link$validate_links()
     Message <cliMessage>
-      [33m![39m There were errors in 27/41 links
+      [33m![39m There were errors in 27/39 links
       
       - Links must use HTTPS <https://https.cio.gov/everything/>
       - Some link anchors for relative links (e.g. [anchor]: link) are missing
@@ -584,7 +584,7 @@
     Code
       link$validate_links()
     Message <cliMessage>
-      ! There were errors in 27/41 links
+      ! There were errors in 27/39 links
       
       - Links must use HTTPS <https://https.cio.gov/everything/>
       - Some link anchors for relative links (e.g. [anchor]: link) are missing
