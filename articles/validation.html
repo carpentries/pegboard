@@ -37,7 +37,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pegboard</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -150,7 +150,7 @@
 <span class="co">#| 'data.frame':    13 obs. of  25 variables:</span>
 <span class="co">#|  $ scheme              : chr  "https" "https" "https" "https" ...</span>
 <span class="co">#|  $ server              : chr  "docs.python.org" "docs.python.org" "docs.python.org" "docs.python."..</span>
-<span class="co">#|  $ port                : int  NA NA NA NA NA NA NA NA 10 92 ...</span>
+<span class="co">#|  $ port                : int  NA NA NA NA NA NA NA NA 6 7 ...</span>
 <span class="co">#|  $ user                : chr  "" "" "" "" ...</span>
 <span class="co">#|  $ path                : chr  "/3/library/stdtypes.html" "/3/library/glob.html" "/3/library/glob."..</span>
 <span class="co">#|  $ query               : chr  "" "" "" "" ...</span>
@@ -494,13 +494,15 @@
 <span class="co">#| [read on about][bad-link-text],</span>
 <span class="co">#| [a][bad-link-text],</span>
 <span class="co">#| [][bad-link-text]</span>
-<span class="co">#| they will fail.</span>
+<span class="co">#| they will fail, but [link text that is descriptive][1], albiet with a numeric</span>
+<span class="co">#| anchor will work.</span>
 <span class="co">#| </span>
 <span class="co">#| [rel-label-1]: #label-1</span>
 <span class="co">#| [rel-image]: image-test.html</span>
 <span class="co">#| [bad-link-text]: https://example.com/link-text#bad</span>
+<span class="co">#| [1]: https://example.com/link-text#descriptive</span>
 <span class="va">lnk</span><span class="op">$</span><span class="fu">validate_links</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#| <span style="color: #BBBB00;">!</span> There were errors in 27/41 links</span>
+<span class="co">#| <span style="color: #BBBB00;">!</span> There were errors in 27/39 links</span>
 <span class="co">#| </span>
 <span class="co">#| - Links must use HTTPS &lt;https://https.cio.gov/everything/&gt;</span>
 <span class="co">#| - Some link anchors for relative links (e.g. [anchor]: link) are missing</span>
