@@ -1,15 +1,22 @@
+# pegboard 0.2.3
+
+## BUG FIX
+
+ - footnotes with no trailing newline are no longer accidentally appended with
+   relative link anchors when `getOption('sandpaper.links')` is not NULL.
+
 # pegboard 0.2.2
+
+## NEW FEATURES
 
  - If `getOption("sandpaper.links")` is not NULL (in the context of a {sandpaper}
    lesson) and is a valid file, it will be appended to any file read in via 
    `Episode$new()`
+
+## BUG FIX
+
  - `$validate_links()` no longer throws warnings about short or uninformative
    text for link anchors (@zkamvar, #81)
-
-# pegboard 0.2.1
-
- - External links files are now appended if the `sandpaper.links` option is set
-   to a valid file. 
 
 # pegboard 0.2.1
 

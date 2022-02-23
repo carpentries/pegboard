@@ -38,6 +38,7 @@ Episode <- R6::R6Class("Episode",
         # if we have links, we concatenate our input files 
         tmpin <- tempfile(fileext = ".md")
         fs::file_copy(path, tmpin)
+        cat("\n", append = TRUE, file = tmpin)
         file.append(tmpin, links)
         path <- tmpin
         on.exit(unlink(tmpin), add = TRUE)

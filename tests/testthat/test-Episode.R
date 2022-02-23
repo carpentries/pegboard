@@ -36,8 +36,8 @@ test_that("Episodes from sandpaper will have links included", {
 
   tnk <- withr::local_tempfile()
   tep <- withr::local_tempfile()
-  writeLines("What [is this][link]?\n", tep)
-  writeLines("<!--comment-->\n\n[link]: https://example.com/link", tnk)
+  writeLines("What[^1] [is this][link]?\n[^1]: foot", tep)
+  writeLines("[link]: https://example.com/link", tnk)
   e <- Episode$new(tep, fix_links = FALSE)
   expect_length(e$links, 0L)
   withr::local_options(list(sandpaper.links = tnk))

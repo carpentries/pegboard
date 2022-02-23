@@ -1,6 +1,6 @@
 Package: pegboard
 Title: Explore and Manipulate Markdown Curricula from the Carpentries
-Version: 0.2.2
+Version: 0.2.3
 Authors@R:c(
     person(given = "Zhian N.",
            family = "Kamvar",
