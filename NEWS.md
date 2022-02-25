@@ -1,3 +1,9 @@
+# pegboard 0.2.4
+
+## DEPENDENCIES
+
+ - The {fs} package needs to be >= 1.5.0 (#83, @sstevens2)
+
 # pegboard 0.2.3
 
 ## BUG FIX

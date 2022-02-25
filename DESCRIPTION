@@ -1,6 +1,6 @@
 Package: pegboard
 Title: Explore and Manipulate Markdown Curricula from the Carpentries
-Version: 0.2.3
+Version: 0.2.4
 Authors@R:c(
     person(given = "Zhian N.",
            family = "Kamvar",
@@ -22,7 +22,7 @@ Description: The Carpentries (<https://carpentries.org>) curricula is made of of
     sections within episodes.
 License: MIT + file LICENSE
 Imports:
-    fs,
+    fs (>= 1.5.0),
     tinkr (>= 0.0.0.9000),
     xml2,
     purrr,
