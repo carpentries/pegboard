@@ -1,3 +1,12 @@
+# pegboard 0.2.5
+
+## MISC
+
+ - `validate_links()` will no longer flag `alt=""` as errors. These indicate
+   decorative images. That being said, these should be rare in our lessons, but
+   this is here just in case it's needed.
+   Source: https://webaim.org/techniques/alttext/#decorative
+
 # pegboard 0.2.4
 
 ## DEPENDENCIES

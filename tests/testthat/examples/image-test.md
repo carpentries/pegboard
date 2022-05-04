@@ -40,3 +40,8 @@ This is an image inline <img src="https://placekitten.com/g/107/107" alt="a smal
 
 <img src="https://placekitten.com/g/108/108" alt="a small kitten"/>
 <img src="https://placekitten.com/g/109/109"/>
+
+## A decorative image with alt text indicating it is decorative
+
+![](https://placekitten.com/g/103/103){alt=""}
+

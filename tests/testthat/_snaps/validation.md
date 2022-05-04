@@ -67,7 +67,7 @@
     Code
       cats$validate_links()
     Message <simpleMessage>
-      ! There were errors in 2/9 links
+      ! There were errors in 2/10 links
       
       - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
@@ -263,7 +263,7 @@
     Code
       cats$validate_links()
     Message <cliMessage>
-      ! There were errors in 2/9 links
+      ! There were errors in 2/10 links
       
       - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
@@ -317,7 +317,7 @@
     Code
       cats$validate_links()
     Message <cliMessage>
-      [33m![39m There were errors in 2/9 links
+      [33m![39m There were errors in 2/10 links
       
       - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
@@ -371,7 +371,7 @@
     Code
       cats$validate_links()
     Message <cliMessage>
-      ! There were errors in 2/9 links
+      ! There were errors in 2/10 links
       
       - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
@@ -425,7 +425,7 @@
     Code
       cats$validate_links()
     Message <cliMessage>
-      [33m![39m There were errors in 2/9 links
+      [33m![39m There were errors in 2/10 links
       
       - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       

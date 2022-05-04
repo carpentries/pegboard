@@ -116,7 +116,7 @@ link_all_reachable <- function(VAL) {
 #' @rdname validate_links
 link_img_alt_text <- function(VAL) {
   img <- VAL$type %in% c("image", "img")
-  okay <- !(is.na(VAL$alt) | VAL$alt == "")
+  okay <- !is.na(VAL$alt) # alt="" is actually an OKAY solution, indicating a decorative image
   VAL$img_alt_text[img] <- okay[img]
   VAL
 }
