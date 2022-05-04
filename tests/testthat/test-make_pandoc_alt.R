@@ -1,6 +1,7 @@
 
 test_that("make_pandoc_alt() converts alt text good", {
 
+  skip_if(R.version$major < 4)
   f <- textConnection(paste(c("![has alt text](img1.png)", 
       "",
    "![](needs-alt.png)", 
