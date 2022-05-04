@@ -33,14 +33,14 @@ test_that("invalid headings can be caught without the reporters", {
 
 test_that("invalid alt text can be caught without reporters", {
   expect_silent(res <- cats$validate_links(warn = FALSE))
-  expect_equal(sum(res$enforce_https), 9)
-  expect_equal(sum(res$internal_anchor), 9)
-  expect_equal(sum(res$internal_file), 9)
-  expect_equal(sum(res$internal_well_formed), 9)
-  expect_equal(sum(res$all_reachable), 9)
-  expect_equal(sum(res$img_alt_text), 7)
-  expect_equal(sum(res$descriptive), 9)
-  expect_equal(sum(res$link_length), 9)
+  expect_equal(sum(res$enforce_https), 10)
+  expect_equal(sum(res$internal_anchor), 10)
+  expect_equal(sum(res$internal_file), 10)
+  expect_equal(sum(res$internal_well_formed), 10)
+  expect_equal(sum(res$all_reachable), 10)
+  expect_equal(sum(res$img_alt_text), 8)
+  expect_equal(sum(res$descriptive), 10)
+  expect_equal(sum(res$link_length), 10)
 })
 
 
