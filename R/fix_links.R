@@ -53,7 +53,7 @@ fix_link_type <- function(type, body) {
 find_lesson_links <- function(body, type = "rel_link") {
   ns <- NS(body)
   xml2::xml_find_all(body,
-    glue::glue(".//{ns}paragraph/{ns}text[{LINKS[[type]]}][not(@klink)]")
+    glue::glue(".//{ns}text[{LINKS[[type]]}][not(@klink)]")
   )
 }
 
@@ -139,6 +139,9 @@ text_to_links <- function(txt, ns = NULL, type, sourcepos = NULL) {
 
   texts <- strsplit(txt, rgx, perl = TRUE)[[1]]
   texts <- texts[texts != ""]
+  # escape ampersands that are not valid code points, though this will still
+  # allow invalid code points, but it's better than nothing
+  texts <- gsub("[&](?![#]?[A-Za-z0-9]+?[;])", "&amp;", texts, perl = TRUE)
   are_links <- grepl(lnk, texts, perl = TRUE)
   texts[are_links]  <- purrr::map_chr(texts[are_links], make_link, pattern = lnk, type = type)
   texts[!are_links] <- glue::glue("<text>{texts[!are_links]}</text>")
