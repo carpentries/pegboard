@@ -1,3 +1,12 @@
+# pegboard 0.2.6
+
+## BUG FIX
+
+ - `fix_links()` now processes links in headers and links with unescaped ampersands
+    - internal function `text_to_links()` now processes unescaped ampersands
+    - internal function `find_lesson_links()` no longer expects links to be 
+      strictly in paragraph elements.
+
 # pegboard 0.2.5
 
 ## MISC

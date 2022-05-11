@@ -13,9 +13,13 @@ test_that("Episodes with commonmark-violating liquid relative links can be read"
   lnsp <- test_path("examples", "link-split.md")
   withr::defer(rm("lnsp", "tmp"))
   # Not fixing liquid will make the parser sad
-  expect_error(Episode$new(lnsp))
+  bad <- Episode$new(lnsp)
+  # One real link and one anchor: no bueno :(
+  expect_length(bad$links, 2)
+
   # fixing liquid will resucue us!
   tmp <- Episode$new(lnsp, fix_liquid = TRUE)
+  expect_length(tmp$links, 4)
 
   expect_equal(basename(tmp$path), "link-split.md")
   expect_snapshot(cat(tmp$show(), sep = "\n"))

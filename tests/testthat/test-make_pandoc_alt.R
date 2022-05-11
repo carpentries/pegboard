@@ -1,14 +1,14 @@
 
 test_that("make_pandoc_alt() converts alt text good", {
 
-  skip_if(R.version$major < 4)
-  f <- textConnection(paste(c("![has alt text](img1.png)", 
+  txt <- paste(c("![has alt text](img1.png)", 
       "",
    "![](needs-alt.png)", 
       "",
    "![ ](decorative.png)",
       "",
-   "![has alt text](img2.png){: .class}", ""), collapse = "\n"))
+   "![has alt text](img2.png){: .class}", ""), collapse = "\n")
+  f <- textConnection(txt)
   body <- tinkr::to_xml(f)$body
   ns <- tinkr::md_ns()
   images <- xml2::xml_find_all(body, ".//md:image", ns = ns)
