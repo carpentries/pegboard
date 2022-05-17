@@ -13,13 +13,15 @@ make_pandoc_alt <- function(images) {
   # ![](img) // NO alt text
   # ![ ](img) // decorative
   has_alt <- alt != ""
+  no_url <- !grepl("https?[:][/][/]", alt)
   has_attrs <- xml2::xml_find_lgl(images, 
     "boolean(self::*[following-sibling::*[1][starts-with(text(), '{')]])")
 
   # Add alt text to images that already has attributes
-  to_append <- alt[has_attrs & has_alt]
+  append_these <- has_attrs & has_alt & no_url
+  to_append <- alt[append_these]
   if (length(to_append)) {
-    imgs  <- images[has_attrs & has_alt]
+    imgs  <- images[append_these]
     nodes <- xml2::xml_find_first(imgs, "self::*/following-sibling::*[1]")
     txt <- xml2::xml_text(nodes)
     subbed <- purrr::map2_chr(to_append, txt, 
@@ -34,9 +36,10 @@ make_pandoc_alt <- function(images) {
   }
 
   # Create a new alt text attribute
-  to_create <- trimws(alt[!has_attrs & has_alt])
+  create_these <- !has_attrs & has_alt & no_url
+  to_create <- trimws(alt[create_these])
   if (length(to_create)) {
-    itc <- images[!has_attrs & has_alt]
+    itc <- images[create_these]
     new_alt <- glue::glue("<text>{alt=^shQuote(to_create)$}</text>",
       .open = "^", .close = "$")
     new_nodes <- make_text_nodes(new_alt)
