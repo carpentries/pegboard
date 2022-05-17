@@ -55,7 +55,7 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
-URL: https://github.com/zkamvar/pegboard
-BugReports: https://github.com/zkamvar/pegboard/issues
+URL: https://carpentries.github.io/pegboard
+BugReports: https://github.com/carpentries/pegboard/issues
 VignetteBuilder: knitr
 
