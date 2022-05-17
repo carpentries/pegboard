@@ -66,7 +66,7 @@
 
       <ul class="navbar-nav">
 <li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/zkamvar/pegboard/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/carpentries/pegboard/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -85,7 +85,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Validation of Lesson Elements</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/zkamvar/pegboard/blob/HEAD/vignettes/articles/validation.Rmd" class="external-link"><code>vignettes/articles/validation.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/carpentries/pegboard/blob/HEAD/vignettes/articles/validation.Rmd" class="external-link"><code>vignettes/articles/validation.Rmd</code></a></small>
       <div class="d-none name"><code>validation.Rmd</code></div>
     </div>
 
@@ -97,7 +97,7 @@
 <p>This package is designed to parse the structure of the Markdown and R Markdown files inside a Carpentries-style lesson. To ensure consistent lesson structure, it has built-in validators that will inspect headings, links, and callout sections. This document will help you become familiar with the output of the validators and how they can be used to update a lesson.</p>
 <p>Lesson authors and contributors will likely only see the output of these validators and not need to interact with them directly. For example, we have a lesson that contains some mal-formed links and headings:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/zkamvar/pegboard" class="external-link">pegboard</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://carpentries.github.io/pegboard">pegboard</a></span><span class="op">)</span>
 <span class="va">lsn</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/Lesson.html">Lesson</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="../reference/lesson_fragment.html">lesson_fragment</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="co"># validation</span>
 <span class="va">lsn</span><span class="op">$</span><span class="fu">validate_divs</span><span class="op">(</span><span class="op">)</span>

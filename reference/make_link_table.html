@@ -35,7 +35,7 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
       <ul class="navbar-nav"><li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/zkamvar/pegboard/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/carpentries/pegboard/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -48,7 +48,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Create a table of parsed URLs from a single Episode object.</h1>
-      <small class="dont-index">Source: <a href="https://github.com/zkamvar/pegboard/blob/HEAD/R/make_link_table.R" class="external-link"><code>R/make_link_table.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/carpentries/pegboard/blob/HEAD/R/make_link_table.R" class="external-link"><code>R/make_link_table.R</code></a></small>
       <div class="d-none name"><code>make_link_table.Rd</code></div>
     </div>
 
@@ -88,19 +88,19 @@
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">loop</span> <span class="op">&lt;-</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/path.html" class="external-link">path</a></span><span class="op">(</span><span class="fu"><a href="lesson_fragment.html">lesson_fragment</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"_episodes"</span>, <span class="st">"14-looping-data-sets.md"</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">make_link_table</span><span class="op">(</span><span class="va"><a href="Episode.html">Episode</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">loop</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    scheme            server       port user</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   https   docs.python.org         NA     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   https   docs.python.org         NA     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   https   docs.python.org         NA     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   https pandas.pydata.org         NA     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   https   docs.python.org         NA     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9   https   carpentries.org         NA     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10                                  NA     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6                                21864     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7                           -697653832     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11  https   carpentries.org         NA     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12                                  NA     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8                                21864     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    scheme            server        port user</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   https   docs.python.org          NA     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   https   docs.python.org          NA     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   https   docs.python.org          NA     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   https pandas.pydata.org          NA     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   https   docs.python.org          NA     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   https   carpentries.org          NA     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10                                   NA     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                                 21982     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7                           -1090016392     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11  https   carpentries.org          NA     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12                                   NA     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8                                 21982     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                             path query</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1                                           /3/library/glob.html      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2                                           /3/library/glob.html      </span>
