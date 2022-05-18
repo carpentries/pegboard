@@ -19,12 +19,14 @@ the node, invisibly.
 Liquid code blocks are generally codified by
 }
 \details{
-\preformatted{print("code goes " + "here")
-}
+\if{html}{\out{<div class="sourceCode">}}\preformatted{print("code goes " + "here")
+}\if{html}{\out{</div>}}
 
 {: .language-python}
 
-However, there is a simpler syntax that we can use:\if{html}{\out{<div class="sourceCode python">}}\preformatted{print("code goes " + "here")
+However, there is a simpler syntax that we can use:
+
+\if{html}{\out{<div class="sourceCode python">}}\preformatted{print("code goes " + "here")
 }\if{html}{\out{</div>}}
 
 This will take in a code block and convert it so that it will no longer use

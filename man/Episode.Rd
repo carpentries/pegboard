@@ -187,46 +187,46 @@ loop$validate_links()
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{Episode$new()}}
-\item \href{#method-confirm_sandpaper}{\code{Episode$confirm_sandpaper()}}
-\item \href{#method-get_blocks}{\code{Episode$get_blocks()}}
-\item \href{#method-get_images}{\code{Episode$get_images()}}
-\item \href{#method-label_divs}{\code{Episode$label_divs()}}
-\item \href{#method-get_divs}{\code{Episode$get_divs()}}
-\item \href{#method-get_yaml}{\code{Episode$get_yaml()}}
-\item \href{#method-use_dovetail}{\code{Episode$use_dovetail()}}
-\item \href{#method-use_sandpaper}{\code{Episode$use_sandpaper()}}
-\item \href{#method-remove_error}{\code{Episode$remove_error()}}
-\item \href{#method-remove_output}{\code{Episode$remove_output()}}
-\item \href{#method-move_objectives}{\code{Episode$move_objectives()}}
-\item \href{#method-move_keypoints}{\code{Episode$move_keypoints()}}
-\item \href{#method-move_questions}{\code{Episode$move_questions()}}
-\item \href{#method-get_challenge_graph}{\code{Episode$get_challenge_graph()}}
-\item \href{#method-show}{\code{Episode$show()}}
-\item \href{#method-head}{\code{Episode$head()}}
-\item \href{#method-tail}{\code{Episode$tail()}}
-\item \href{#method-write}{\code{Episode$write()}}
-\item \href{#method-handout}{\code{Episode$handout()}}
-\item \href{#method-reset}{\code{Episode$reset()}}
-\item \href{#method-isolate_blocks}{\code{Episode$isolate_blocks()}}
-\item \href{#method-unblock}{\code{Episode$unblock()}}
-\item \href{#method-validate_headings}{\code{Episode$validate_headings()}}
-\item \href{#method-validate_divs}{\code{Episode$validate_divs()}}
-\item \href{#method-validate_links}{\code{Episode$validate_links()}}
-\item \href{#method-clone}{\code{Episode$clone()}}
+\item \href{#method-Episode-new}{\code{Episode$new()}}
+\item \href{#method-Episode-confirm_sandpaper}{\code{Episode$confirm_sandpaper()}}
+\item \href{#method-Episode-get_blocks}{\code{Episode$get_blocks()}}
+\item \href{#method-Episode-get_images}{\code{Episode$get_images()}}
+\item \href{#method-Episode-label_divs}{\code{Episode$label_divs()}}
+\item \href{#method-Episode-get_divs}{\code{Episode$get_divs()}}
+\item \href{#method-Episode-get_yaml}{\code{Episode$get_yaml()}}
+\item \href{#method-Episode-use_dovetail}{\code{Episode$use_dovetail()}}
+\item \href{#method-Episode-use_sandpaper}{\code{Episode$use_sandpaper()}}
+\item \href{#method-Episode-remove_error}{\code{Episode$remove_error()}}
+\item \href{#method-Episode-remove_output}{\code{Episode$remove_output()}}
+\item \href{#method-Episode-move_objectives}{\code{Episode$move_objectives()}}
+\item \href{#method-Episode-move_keypoints}{\code{Episode$move_keypoints()}}
+\item \href{#method-Episode-move_questions}{\code{Episode$move_questions()}}
+\item \href{#method-Episode-get_challenge_graph}{\code{Episode$get_challenge_graph()}}
+\item \href{#method-Episode-show}{\code{Episode$show()}}
+\item \href{#method-Episode-head}{\code{Episode$head()}}
+\item \href{#method-Episode-tail}{\code{Episode$tail()}}
+\item \href{#method-Episode-write}{\code{Episode$write()}}
+\item \href{#method-Episode-handout}{\code{Episode$handout()}}
+\item \href{#method-Episode-reset}{\code{Episode$reset()}}
+\item \href{#method-Episode-isolate_blocks}{\code{Episode$isolate_blocks()}}
+\item \href{#method-Episode-unblock}{\code{Episode$unblock()}}
+\item \href{#method-Episode-validate_headings}{\code{Episode$validate_headings()}}
+\item \href{#method-Episode-validate_divs}{\code{Episode$validate_divs()}}
+\item \href{#method-Episode-validate_links}{\code{Episode$validate_links()}}
+\item \href{#method-Episode-clone}{\code{Episode$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="tinkr" data-topic="yarn" data-id="add_md">}\href{../../tinkr/html/yarn.html#method-add_md}{\code{tinkr::yarn$add_md()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="tinkr" data-topic="yarn" data-id="protect_math">}\href{../../tinkr/html/yarn.html#method-protect_math}{\code{tinkr::yarn$protect_math()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="tinkr" data-topic="yarn" data-id="add_md"><a href='../../tinkr/html/yarn.html#method-yarn-add_md'><code>tinkr::yarn$add_md()</code></a></li>
+<li><span class="pkg-link" data-pkg="tinkr" data-topic="yarn" data-id="protect_math"><a href='../../tinkr/html/yarn.html#method-yarn-protect_math'><code>tinkr::yarn$protect_math()</code></a></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-Episode-new"></a>}}
+\if{latex}{\out{\hypertarget{method-Episode-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new Episode
 \subsection{Usage}{
@@ -278,8 +278,8 @@ scope$challenges
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-confirm_sandpaper"></a>}}
-\if{latex}{\out{\hypertarget{method-confirm_sandpaper}{}}}
+\if{html}{\out{<a id="method-Episode-confirm_sandpaper"></a>}}
+\if{latex}{\out{\hypertarget{method-Episode-confirm_sandpaper}{}}}
 \subsection{Method \code{confirm_sandpaper()}}{
 enforce that the episode is a {sandpaper} episode withtout
 going through the conversion steps. The default Episodes from pegboard
@@ -292,8 +292,8 @@ just assume pandoc syntax
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_blocks"></a>}}
-\if{latex}{\out{\hypertarget{method-get_blocks}{}}}
+\if{html}{\out{<a id="method-Episode-get_blocks"></a>}}
+\if{latex}{\out{\hypertarget{method-Episode-get_blocks}{}}}
 \subsection{Method \code{get_blocks()}}{
 return all \code{block_quote} elements within the Episode
 \subsection{Usage}{
@@ -346,8 +346,8 @@ scope$get_blocks(".solution", level = 2)
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_images"></a>}}
-\if{latex}{\out{\hypertarget{method-get_images}{}}}
+\if{html}{\out{<a id="method-Episode-get_images"></a>}}
+\if{latex}{\out{\hypertarget{method-Episode-get_images}{}}}
 \subsection{Method \code{get_images()}}{
 fetch the image sources and optionally process them for easier parsing.
 The default version of this function is equivalent to the active binding
@@ -381,8 +381,8 @@ loop$get_images(process = TRUE)
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-label_divs"></a>}}
-\if{latex}{\out{\hypertarget{method-label_divs}{}}}
+\if{html}{\out{<a id="method-Episode-label_divs"></a>}}
+\if{latex}{\out{\hypertarget{method-Episode-label_divs}{}}}
 \subsection{Method \code{label_divs()}}{
 label all the div elements within the Episode to extract them with
 \verb{$get_divs()}
@@ -392,8 +392,8 @@ label all the div elements within the Episode to extract them with
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_divs"></a>}}
-\if{latex}{\out{\hypertarget{method-get_divs}{}}}
+\if{html}{\out{<a id="method-Episode-get_divs"></a>}}
+\if{latex}{\out{\hypertarget{method-Episode-get_divs}{}}}
 \subsection{Method \code{get_divs()}}{
 return all div elements within the Episode
 \subsection{Usage}{
@@ -413,8 +413,8 @@ the div tags.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_yaml"></a>}}
-\if{latex}{\out{\hypertarget{method-get_yaml}{}}}
+\if{html}{\out{<a id="method-Episode-get_yaml"></a>}}
+\if{latex}{\out{\hypertarget{method-Episode-get_yaml}{}}}
 \subsection{Method \code{get_yaml()}}{
 Extract the yaml metadata from the episode
 \subsection{Usage}{
@@ -423,8 +423,8 @@ Extract the yaml metadata from the episode
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-use_dovetail"></a>}}
-\if{latex}{\out{\hypertarget{method-use_dovetail}{}}}
+\if{html}{\out{<a id="method-Episode-use_dovetail"></a>}}
+\if{latex}{\out{\hypertarget{method-Episode-use_dovetail}{}}}
 \subsection{Method \code{use_dovetail()}}{
 Ammend or add a setup code block to use \code{{dovetail}}
 
@@ -432,9 +432,11 @@ This will convert your lesson to use the {dovetail} R package for
 processing specialized block quotes which will do two things:
 \enumerate{
 \item convert your lesson from md to Rmd
-\item add to your setup chunk the following code\preformatted{library('dovetail')
+\item add to your setup chunk the following code
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{library('dovetail')
 source(dvt_opts())
-}
+}\if{html}{\out{</div>}}
 }
 
 If there is no setup chunk, one will be created. If there is a setup
@@ -445,8 +447,8 @@ chunk, then the \code{source} and \code{knitr_fig_path} calls will be removed.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-use_sandpaper"></a>}}
-\if{latex}{\out{\hypertarget{method-use_sandpaper}{}}}
+\if{html}{\out{<a id="method-Episode-use_sandpaper"></a>}}
+\if{latex}{\out{\hypertarget{method-Episode-use_sandpaper}{}}}
 \subsection{Method \code{use_sandpaper()}}{
 Use the sandpaper package for processing
 
@@ -476,8 +478,8 @@ lesson.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-remove_error"></a>}}
-\if{latex}{\out{\hypertarget{method-remove_error}{}}}
+\if{html}{\out{<a id="method-Episode-remove_error"></a>}}
+\if{latex}{\out{\hypertarget{method-Episode-remove_error}{}}}
 \subsection{Method \code{remove_error()}}{
 Remove error blocks
 \subsection{Usage}{
@@ -486,8 +488,8 @@ Remove error blocks
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-remove_output"></a>}}
-\if{latex}{\out{\hypertarget{method-remove_output}{}}}
+\if{html}{\out{<a id="method-Episode-remove_output"></a>}}
+\if{latex}{\out{\hypertarget{method-Episode-remove_output}{}}}
 \subsection{Method \code{remove_output()}}{
 Remove output blocks
 \subsection{Usage}{
@@ -496,8 +498,8 @@ Remove output blocks
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-move_objectives"></a>}}
-\if{latex}{\out{\hypertarget{method-move_objectives}{}}}
+\if{html}{\out{<a id="method-Episode-move_objectives"></a>}}
+\if{latex}{\out{\hypertarget{method-Episode-move_objectives}{}}}
 \subsection{Method \code{move_objectives()}}{
 move the objectives yaml item to the body
 \subsection{Usage}{
@@ -506,8 +508,8 @@ move the objectives yaml item to the body
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-move_keypoints"></a>}}
-\if{latex}{\out{\hypertarget{method-move_keypoints}{}}}
+\if{html}{\out{<a id="method-Episode-move_keypoints"></a>}}
+\if{latex}{\out{\hypertarget{method-Episode-move_keypoints}{}}}
 \subsection{Method \code{move_keypoints()}}{
 move the keypoints yaml item to the body
 \subsection{Usage}{
@@ -516,8 +518,8 @@ move the keypoints yaml item to the body
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-move_questions"></a>}}
-\if{latex}{\out{\hypertarget{method-move_questions}{}}}
+\if{html}{\out{<a id="method-Episode-move_questions"></a>}}
+\if{latex}{\out{\hypertarget{method-Episode-move_questions}{}}}
 \subsection{Method \code{move_questions()}}{
 move the questions yaml item to the body
 \subsection{Usage}{
@@ -526,8 +528,8 @@ move the questions yaml item to the body
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_challenge_graph"></a>}}
-\if{latex}{\out{\hypertarget{method-get_challenge_graph}{}}}
+\if{html}{\out{<a id="method-Episode-get_challenge_graph"></a>}}
+\if{latex}{\out{\hypertarget{method-Episode-get_challenge_graph}{}}}
 \subsection{Method \code{get_challenge_graph()}}{
 Create a graph of the top-level elements for the challenges.
 \subsection{Usage}{
@@ -571,8 +573,8 @@ scope$get_challenge_graph()
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-show"></a>}}
-\if{latex}{\out{\hypertarget{method-show}{}}}
+\if{html}{\out{<a id="method-Episode-show"></a>}}
+\if{latex}{\out{\hypertarget{method-Episode-show}{}}}
 \subsection{Method \code{show()}}{
 show the markdown contents on the screen
 \subsection{Usage}{
@@ -595,8 +597,8 @@ scope$show()
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-head"></a>}}
-\if{latex}{\out{\hypertarget{method-head}{}}}
+\if{html}{\out{<a id="method-Episode-head"></a>}}
+\if{latex}{\out{\hypertarget{method-Episode-head}{}}}
 \subsection{Method \code{head()}}{
 show the first n lines of markdown contents on the screen
 \subsection{Usage}{
@@ -615,8 +617,8 @@ a character vector with one line for each line of output
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-tail"></a>}}
-\if{latex}{\out{\hypertarget{method-tail}{}}}
+\if{html}{\out{<a id="method-Episode-tail"></a>}}
+\if{latex}{\out{\hypertarget{method-Episode-tail}{}}}
 \subsection{Method \code{tail()}}{
 show the first n lines of markdown contents on the screen
 \subsection{Usage}{
@@ -635,8 +637,8 @@ a character vector with one line for each line of output
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-write"></a>}}
-\if{latex}{\out{\hypertarget{method-write}{}}}
+\if{html}{\out{<a id="method-Episode-write"></a>}}
+\if{latex}{\out{\hypertarget{method-Episode-write}{}}}
 \subsection{Method \code{write()}}{
 write the episode to disk as markdown
 \subsection{Usage}{
@@ -671,8 +673,8 @@ scope$write()
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-handout"></a>}}
-\if{latex}{\out{\hypertarget{method-handout}{}}}
+\if{html}{\out{<a id="method-Episode-handout"></a>}}
+\if{latex}{\out{\hypertarget{method-Episode-handout}{}}}
 \subsection{Method \code{handout()}}{
 Create a trimmed-down RMarkdown document that strips prose and contains
 only important code chunks and challenge blocks without solutions.
@@ -709,8 +711,8 @@ cat(e$handout(solution = TRUE))
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-reset"></a>}}
-\if{latex}{\out{\hypertarget{method-reset}{}}}
+\if{html}{\out{<a id="method-Episode-reset"></a>}}
+\if{latex}{\out{\hypertarget{method-Episode-reset}{}}}
 \subsection{Method \code{reset()}}{
 Re-read episode from disk
 \subsection{Usage}{
@@ -735,8 +737,8 @@ xml2::xml_text(scope$tags[1])
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-isolate_blocks"></a>}}
-\if{latex}{\out{\hypertarget{method-isolate_blocks}{}}}
+\if{html}{\out{<a id="method-Episode-isolate_blocks"></a>}}
+\if{latex}{\out{\hypertarget{method-Episode-isolate_blocks}{}}}
 \subsection{Method \code{isolate_blocks()}}{
 Remove all elements except for those within block quotes that have a
 kramdown tag. Note that this is a destructive process.
@@ -759,8 +761,8 @@ scope$isolate_blocks()$body # only one challenge block_quote
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-unblock"></a>}}
-\if{latex}{\out{\hypertarget{method-unblock}{}}}
+\if{html}{\out{<a id="method-Episode-unblock"></a>}}
+\if{latex}{\out{\hypertarget{method-Episode-unblock}{}}}
 \subsection{Method \code{unblock()}}{
 convert challenge blocks to roxygen-like code blocks
 \subsection{Usage}{
@@ -792,8 +794,8 @@ loop$code # now there are two blocks with challenge tags
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-validate_headings"></a>}}
-\if{latex}{\out{\hypertarget{method-validate_headings}{}}}
+\if{html}{\out{<a id="method-Episode-validate_headings"></a>}}
+\if{latex}{\out{\hypertarget{method-Episode-validate_headings}{}}}
 \subsection{Method \code{validate_headings()}}{
 perform validation on headings in a document.
 
@@ -849,8 +851,8 @@ loop$validate_headings()
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-validate_divs"></a>}}
-\if{latex}{\out{\hypertarget{method-validate_divs}{}}}
+\if{html}{\out{<a id="method-Episode-validate_divs"></a>}}
+\if{latex}{\out{\hypertarget{method-Episode-validate_divs}{}}}
 \subsection{Method \code{validate_divs()}}{
 perform validation on divs in a document.
 
@@ -887,8 +889,8 @@ loop$validate_divs()
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-validate_links"></a>}}
-\if{latex}{\out{\hypertarget{method-validate_links}{}}}
+\if{html}{\out{<a id="method-Episode-validate_links"></a>}}
+\if{latex}{\out{\hypertarget{method-Episode-validate_links}{}}}
 \subsection{Method \code{validate_links()}}{
 perform validation on links and images in a document.
 
@@ -930,8 +932,8 @@ loop$validate_links()
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-Episode-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-Episode-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

@@ -20,20 +20,24 @@ Clean the div tags from an xml document
 Commonmark knows what raw HTML looks like and will read it in as an HTML
 block, escaping the tag. it does this for every HTML tag that is preceded by
 a blank line, so this: \verb{<div class='hello'>\\n\\n</div>} becomes two html_block
-elements\preformatted{<html_block>
+elements
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{<html_block>
   &lt;div class='hello'&gt;\\n
 </html_block>
 <html_block>
   &lt;/div&gt;\\n
 </html_block>
-}
+}\if{html}{\out{</div>}}
 
 However, if an element is not preceded by a non-html element, it becomes
 part of that html element. So this \verb{<div class='hello'>\\n</div>} becomes a
-single html_block element:\preformatted{<html_block>
+single html_block element:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{<html_block>
   &lt;div class='hello'&gt;\\n&lt;/div&gt;\\n
 </html_block>
-}
+}\if{html}{\out{</div>}}
 
 Sometimes, this process can gobble up text that is markdown instead of HTML,
 

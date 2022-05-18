@@ -105,23 +105,23 @@ files, default is \code{FALSE} for markdown files.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{Lesson$new()}}
-\item \href{#method-blocks}{\code{Lesson$blocks()}}
-\item \href{#method-challenges}{\code{Lesson$challenges()}}
-\item \href{#method-solutions}{\code{Lesson$solutions()}}
-\item \href{#method-thin}{\code{Lesson$thin()}}
-\item \href{#method-reset}{\code{Lesson$reset()}}
-\item \href{#method-isolate_blocks}{\code{Lesson$isolate_blocks()}}
-\item \href{#method-handout}{\code{Lesson$handout()}}
-\item \href{#method-validate_headings}{\code{Lesson$validate_headings()}}
-\item \href{#method-validate_divs}{\code{Lesson$validate_divs()}}
-\item \href{#method-validate_links}{\code{Lesson$validate_links()}}
-\item \href{#method-clone}{\code{Lesson$clone()}}
+\item \href{#method-Lesson-new}{\code{Lesson$new()}}
+\item \href{#method-Lesson-blocks}{\code{Lesson$blocks()}}
+\item \href{#method-Lesson-challenges}{\code{Lesson$challenges()}}
+\item \href{#method-Lesson-solutions}{\code{Lesson$solutions()}}
+\item \href{#method-Lesson-thin}{\code{Lesson$thin()}}
+\item \href{#method-Lesson-reset}{\code{Lesson$reset()}}
+\item \href{#method-Lesson-isolate_blocks}{\code{Lesson$isolate_blocks()}}
+\item \href{#method-Lesson-handout}{\code{Lesson$handout()}}
+\item \href{#method-Lesson-validate_headings}{\code{Lesson$validate_headings()}}
+\item \href{#method-Lesson-validate_divs}{\code{Lesson$validate_divs()}}
+\item \href{#method-Lesson-validate_links}{\code{Lesson$validate_links()}}
+\item \href{#method-Lesson-clone}{\code{Lesson$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-Lesson-new"></a>}}
+\if{latex}{\out{\hypertarget{method-Lesson-new}{}}}
 \subsection{Method \code{new()}}{
 create a new Lesson object from a directory
 \subsection{Usage}{
@@ -164,8 +164,8 @@ frg$episodes
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-blocks"></a>}}
-\if{latex}{\out{\hypertarget{method-blocks}{}}}
+\if{html}{\out{<a id="method-Lesson-blocks"></a>}}
+\if{latex}{\out{\hypertarget{method-Lesson-blocks}{}}}
 \subsection{Method \code{blocks()}}{
 Gather all of the blocks from the lesson in a list of xml_nodeset objects
 \subsection{Usage}{
@@ -192,8 +192,8 @@ name of each episode.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-challenges"></a>}}
-\if{latex}{\out{\hypertarget{method-challenges}{}}}
+\if{html}{\out{<a id="method-Lesson-challenges"></a>}}
+\if{latex}{\out{\hypertarget{method-Lesson-challenges}{}}}
 \subsection{Method \code{challenges()}}{
 Gather all of the challenges from the lesson in a list of xml_nodeset objects
 \subsection{Usage}{
@@ -218,8 +218,8 @@ solutions in the output. See \link{Episode} for more details.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-solutions"></a>}}
-\if{latex}{\out{\hypertarget{method-solutions}{}}}
+\if{html}{\out{<a id="method-Lesson-solutions"></a>}}
+\if{latex}{\out{\hypertarget{method-Lesson-solutions}{}}}
 \subsection{Method \code{solutions()}}{
 Gather all of the solutions from the lesson in a list of xml_nodeset objects
 \subsection{Usage}{
@@ -237,8 +237,8 @@ name of each episode.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-thin"></a>}}
-\if{latex}{\out{\hypertarget{method-thin}{}}}
+\if{html}{\out{<a id="method-Lesson-thin"></a>}}
+\if{latex}{\out{\hypertarget{method-Lesson-thin}{}}}
 \subsection{Method \code{thin()}}{
 Remove episodes that have no challenges
 \subsection{Usage}{
@@ -267,8 +267,8 @@ frg$thin()
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-reset"></a>}}
-\if{latex}{\out{\hypertarget{method-reset}{}}}
+\if{html}{\out{<a id="method-Lesson-reset"></a>}}
+\if{latex}{\out{\hypertarget{method-Lesson-reset}{}}}
 \subsection{Method \code{reset()}}{
 Re-read all Episodes from disk
 \subsection{Usage}{
@@ -291,8 +291,8 @@ frg$reset()$episodes[[1]]$body # reset
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-isolate_blocks"></a>}}
-\if{latex}{\out{\hypertarget{method-isolate_blocks}{}}}
+\if{html}{\out{<a id="method-Lesson-isolate_blocks"></a>}}
+\if{latex}{\out{\hypertarget{method-Lesson-isolate_blocks}{}}}
 \subsection{Method \code{isolate_blocks()}}{
 Remove all elements except for those within block quotes that have a
 kramdown tag. Note that this is a destructive process.
@@ -314,8 +314,8 @@ frg$isolate_blocks()$body # only one challenge block_quote
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-handout"></a>}}
-\if{latex}{\out{\hypertarget{method-handout}{}}}
+\if{html}{\out{<a id="method-Lesson-handout"></a>}}
+\if{latex}{\out{\hypertarget{method-Lesson-handout}{}}}
 \subsection{Method \code{handout()}}{
 create a handout for all episodes in the lesson
 \subsection{Usage}{
@@ -349,8 +349,8 @@ cat(lsn$handout(solution = TRUE))
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-validate_headings"></a>}}
-\if{latex}{\out{\hypertarget{method-validate_headings}{}}}
+\if{html}{\out{<a id="method-Lesson-validate_headings"></a>}}
+\if{latex}{\out{\hypertarget{method-Lesson-validate_headings}{}}}
 \subsection{Method \code{validate_headings()}}{
 Validate that the heading elements meet minimum accessibility
 requirements. See the internal \code{\link[=validate_headings]{validate_headings()}} for deails.
@@ -402,8 +402,8 @@ frg$validate_headings()
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-validate_divs"></a>}}
-\if{latex}{\out{\hypertarget{method-validate_divs}{}}}
+\if{html}{\out{<a id="method-Lesson-validate_divs"></a>}}
+\if{latex}{\out{\hypertarget{method-Lesson-validate_divs}{}}}
 \subsection{Method \code{validate_divs()}}{
 Validate that the divs are known. See the internal \code{\link[=validate_divs]{validate_divs()}} for
 details.
@@ -442,8 +442,8 @@ frg$validate_divs()
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-validate_links"></a>}}
-\if{latex}{\out{\hypertarget{method-validate_links}{}}}
+\if{html}{\out{<a id="method-Lesson-validate_links"></a>}}
+\if{latex}{\out{\hypertarget{method-Lesson-validate_links}{}}}
 \subsection{Method \code{validate_links()}}{
 Validate that the links and images are valid and accessible. See the
 internal \code{\link[=validate_links]{validate_links()}} for details.
@@ -487,8 +487,8 @@ frg$validate_links()
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-Lesson-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-Lesson-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

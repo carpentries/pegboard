@@ -17,7 +17,9 @@ Kramdown is a bit weird in that it uses tags that trail elements like code
 blocks or block quotes. If these follow block quotes, commonmark will parse
 them being part of that block quote. This is not problematic per-se until you
 run into a common situation in the Carpentries' curriculum: nested block
-quotes\preformatted{> # Challenge 1
+quotes
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{> # Challenge 1
 >
 > Some text here
 >
@@ -29,15 +31,17 @@ quotes\preformatted{> # Challenge 1
 > > \{: .language-pyton\}
 > \{: .solution\}
 \{: .challenge\}
-}
+}\if{html}{\out{</div>}}
 
 When this is parsed with commonmark, the three tags at the end are parsed as
-being part of the 2nd-level block quote:\preformatted{...
+being part of the 2nd-level block quote:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{...
 > > ~~~
 > > \{: .language-pyton\}
 > > \{: .solution\}
 > > \{: .challenge\}
-}
+}\if{html}{\out{</div>}}
 
 This function will take the block quote elements and add a "ktag" attribute
 that represents the value of the tag. This will then be parsed by the xslt
