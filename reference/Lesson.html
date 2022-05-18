@@ -110,19 +110,19 @@ files, default is <code>FALSE</code> for markdown files.</p></dd>
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
-<ul><li><p><a href="#method-new"><code>Lesson$new()</code></a></p></li>
-<li><p><a href="#method-blocks"><code>Lesson$blocks()</code></a></p></li>
-<li><p><a href="#method-challenges"><code>Lesson$challenges()</code></a></p></li>
-<li><p><a href="#method-solutions"><code>Lesson$solutions()</code></a></p></li>
-<li><p><a href="#method-thin"><code>Lesson$thin()</code></a></p></li>
-<li><p><a href="#method-reset"><code>Lesson$reset()</code></a></p></li>
-<li><p><a href="#method-isolate_blocks"><code>Lesson$isolate_blocks()</code></a></p></li>
-<li><p><a href="#method-handout"><code>Lesson$handout()</code></a></p></li>
-<li><p><a href="#method-validate_headings"><code>Lesson$validate_headings()</code></a></p></li>
-<li><p><a href="#method-validate_divs"><code>Lesson$validate_divs()</code></a></p></li>
-<li><p><a href="#method-validate_links"><code>Lesson$validate_links()</code></a></p></li>
-<li><p><a href="#method-clone"><code>Lesson$clone()</code></a></p></li>
-</ul></div><p></p><hr><a id="method-new"></a><div class="section">
+<ul><li><p><a href="#method-Lesson-new"><code>Lesson$new()</code></a></p></li>
+<li><p><a href="#method-Lesson-blocks"><code>Lesson$blocks()</code></a></p></li>
+<li><p><a href="#method-Lesson-challenges"><code>Lesson$challenges()</code></a></p></li>
+<li><p><a href="#method-Lesson-solutions"><code>Lesson$solutions()</code></a></p></li>
+<li><p><a href="#method-Lesson-thin"><code>Lesson$thin()</code></a></p></li>
+<li><p><a href="#method-Lesson-reset"><code>Lesson$reset()</code></a></p></li>
+<li><p><a href="#method-Lesson-isolate_blocks"><code>Lesson$isolate_blocks()</code></a></p></li>
+<li><p><a href="#method-Lesson-handout"><code>Lesson$handout()</code></a></p></li>
+<li><p><a href="#method-Lesson-validate_headings"><code>Lesson$validate_headings()</code></a></p></li>
+<li><p><a href="#method-Lesson-validate_divs"><code>Lesson$validate_divs()</code></a></p></li>
+<li><p><a href="#method-Lesson-validate_links"><code>Lesson$validate_links()</code></a></p></li>
+<li><p><a href="#method-Lesson-clone"><code>Lesson$clone()</code></a></p></li>
+</ul></div><p></p><hr><a id="method-Lesson-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>create a new Lesson object from a directory</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
@@ -169,7 +169,7 @@ extra content for learners, instructors, and profiles will be populated.</p></dd
 </div>
 
 
-</div><p></p><hr><a id="method-blocks"></a><div class="section">
+</div><p></p><hr><a id="method-Lesson-blocks"></a><div class="section">
 <h3 id="method-blocks-">Method <code>blocks()</code><a class="anchor" aria-label="anchor" href="#method-blocks-"></a></h3>
 <p>Gather all of the blocks from the lesson in a list of xml_nodeset objects</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
@@ -202,7 +202,7 @@ name of each episode.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-challenges"></a><div class="section">
+</div><p></p><hr><a id="method-Lesson-challenges"></a><div class="section">
 <h3 id="method-challenges-">Method <code>challenges()</code><a class="anchor" aria-label="anchor" href="#method-challenges-"></a></h3>
 <p>Gather all of the challenges from the lesson in a list of xml_nodeset objects</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
@@ -231,7 +231,7 @@ solutions in the output. See <a href="Episode.html">Episode</a> for more details
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-solutions"></a><div class="section">
+</div><p></p><hr><a id="method-Lesson-solutions"></a><div class="section">
 <h3 id="method-solutions-">Method <code>solutions()</code><a class="anchor" aria-label="anchor" href="#method-solutions-"></a></h3>
 <p>Gather all of the solutions from the lesson in a list of xml_nodeset objects</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
@@ -249,7 +249,7 @@ name of each episode.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-thin"></a><div class="section">
+</div><p></p><hr><a id="method-Lesson-thin"></a><div class="section">
 <h3 id="method-thin-">Method <code>thin()</code><a class="anchor" aria-label="anchor" href="#method-thin-"></a></h3>
 <p>Remove episodes that have no challenges</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
@@ -276,7 +276,7 @@ episode removed is reported. Set to <code>FALSE</code> to remove this behavior.<
 </div>
 
 
-</div><p></p><hr><a id="method-reset"></a><div class="section">
+</div><p></p><hr><a id="method-Lesson-reset"></a><div class="section">
 <h3 id="method-reset-">Method <code>reset()</code><a class="anchor" aria-label="anchor" href="#method-reset-"></a></h3>
 <p>Re-read all Episodes from disk</p><div class="section">
 <h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
@@ -296,7 +296,7 @@ episode removed is reported. Set to <code>FALSE</code> to remove this behavior.<
 </div>
 
 
-</div><p></p><hr><a id="method-isolate_blocks"></a><div class="section">
+</div><p></p><hr><a id="method-Lesson-isolate_blocks"></a><div class="section">
 <h3 id="method-isolate-blocks-">Method <code>isolate_blocks()</code><a class="anchor" aria-label="anchor" href="#method-isolate-blocks-"></a></h3>
 <p>Remove all elements except for those within block quotes that have a
 kramdown tag. Note that this is a destructive process.</p><div class="section">
@@ -315,7 +315,7 @@ kramdown tag. Note that this is a destructive process.</p><div class="section">
 </div>
 
 
-</div><p></p><hr><a id="method-handout"></a><div class="section">
+</div><p></p><hr><a id="method-Lesson-handout"></a><div class="section">
 <h3 id="method-handout-">Method <code>handout()</code><a class="anchor" aria-label="anchor" href="#method-handout-"></a></h3>
 <p>create a handout for all episodes in the lesson</p><div class="section">
 <h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
@@ -349,7 +349,7 @@ itself is returned.</p>
 </div>
 
 
-</div><p></p><hr><a id="method-validate_headings"></a><div class="section">
+</div><p></p><hr><a id="method-Lesson-validate_headings"></a><div class="section">
 <h3 id="method-validate-headings-">Method <code><a href="validate_headings.html">validate_headings()</a></code><a class="anchor" aria-label="anchor" href="#method-validate-headings-"></a></h3>
 <p>Validate that the heading elements meet minimum accessibility
 requirements. See the internal <code><a href="validate_headings.html">validate_headings()</a></code> for deails.</p>
@@ -392,7 +392,7 @@ Lesson. See <code><a href="validate_headings.html">validate_headings()</a></code
 </div>
 
 
-</div><p></p><hr><a id="method-validate_divs"></a><div class="section">
+</div><p></p><hr><a id="method-Lesson-validate_divs"></a><div class="section">
 <h3 id="method-validate-divs-">Method <code><a href="validate_divs.html">validate_divs()</a></code><a class="anchor" aria-label="anchor" href="#method-validate-divs-"></a></h3>
 <p>Validate that the divs are known. See the internal <code><a href="validate_divs.html">validate_divs()</a></code> for
 details.</p><div class="section">
@@ -429,7 +429,7 @@ details.</p>
 </div>
 
 
-</div><p></p><hr><a id="method-validate_links"></a><div class="section">
+</div><p></p><hr><a id="method-Lesson-validate_links"></a><div class="section">
 <h3 id="method-validate-links-">Method <code><a href="validate_links.html">validate_links()</a></code><a class="anchor" aria-label="anchor" href="#method-validate-links-"></a></h3>
 <p>Validate that the links and images are valid and accessible. See the
 internal <code><a href="validate_links.html">validate_links()</a></code> for details.</p><div class="section">
@@ -471,7 +471,7 @@ details.</p>
 </div>
 
 
-</div><p></p><hr><a id="method-clone"></a><div class="section">
+</div><p></p><hr><a id="method-Lesson-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-11">Usage<a class="anchor" aria-label="anchor" href="#usage-11"></a></h4>

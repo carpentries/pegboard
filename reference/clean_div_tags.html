@@ -76,21 +76,12 @@ divs.</p>
     <p>Commonmark knows what raw HTML looks like and will read it in as an HTML
 block, escaping the tag. it does this for every HTML tag that is preceded by
 a blank line, so this: <code>&lt;div class='hello'&gt;\n\n&lt;/div&gt;</code> becomes two html_block
-elements</p><div class="sourceCode"><pre><code>&lt;html_block&gt;
-  &amp;lt;div class='hello'&amp;gt;\n
-&lt;/html_block&gt;
-&lt;html_block&gt;
-  &amp;lt;/div&amp;gt;\n
-&lt;/html_block&gt;
-</code></pre></div>
-
+elements</p>
+<p></p><div class="sourceCode"><pre><code></code></pre><p></p></div>
 <p>However, if an element is not preceded by a non-html element, it becomes
 part of that html element. So this <code>&lt;div class='hello'&gt;\n&lt;/div&gt;</code> becomes a
-single html_block element:</p><div class="sourceCode"><pre><code>&lt;html_block&gt;
-  &amp;lt;div class='hello'&amp;gt;\n&amp;lt;/div&amp;gt;\n
-&lt;/html_block&gt;
-</code></pre></div>
-
+single html_block element:</p>
+<p></p><div class="sourceCode"><pre><code></code></pre><p></p></div>
 <p>Sometimes, this process can gobble up text that is markdown instead of HTML,</p>
 <p>This function will find multiple tags in HTML blocks and separates them into
 different blocks.</p>

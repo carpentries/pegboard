@@ -72,28 +72,11 @@
 blocks or block quotes. If these follow block quotes, commonmark will parse
 them being part of that block quote. This is not problematic per-se until you
 run into a common situation in the Carpentries' curriculum: nested block
-quotes</p><div class="sourceCode"><pre><code>&gt; # Challenge 1
-&gt;
-&gt; Some text here
-&gt;
-&gt; &gt; # Solution 1
-&gt; &gt;
-&gt; &gt; ~~~
-&gt; &gt; print("hello world!")
-&gt; &gt; ~~~
-&gt; &gt; {: .language-pyton}
-&gt; {: .solution}
-{: .challenge}
-</code></pre></div>
-
+quotes</p>
+<p></p><div class="sourceCode"><pre><code></code></pre><p></p></div>
 <p>When this is parsed with commonmark, the three tags at the end are parsed as
-being part of the 2nd-level block quote:</p><div class="sourceCode"><pre><code>...
-&gt; &gt; ~~~
-&gt; &gt; {: .language-pyton}
-&gt; &gt; {: .solution}
-&gt; &gt; {: .challenge}
-</code></pre></div>
-
+being part of the 2nd-level block quote:</p>
+<p></p><div class="sourceCode"><pre><code></code></pre><p></p></div>
 <p>This function will take the block quote elements and add a "ktag" attribute
 that represents the value of the tag. This will then be parsed by the xslt
 style sheet and the tags will be properly appended.</p>
