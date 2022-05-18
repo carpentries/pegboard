@@ -117,10 +117,14 @@ replace_links <- function(links, yml) {
   # flatten links
   links <- gsub("[.][.][/]", "", links)
   links <- gsub(stache("page.root"), "", links)
+  links <- gsub(stache("site.baseurl"), "", links)
   links <- gsub(stache("relative_root_path"), "", links)
   links <- translate_site_variables(links, yml)
   episode <- function() glasses("_episodes/([^ %]+?)")
   links <- gsub(episode(), "\\2", links, perl = TRUE)
   links <- gsub(glasses("[^ %]+?"), "\\1", links, perl = TRUE)
+  # to fix links that were pointing to the source page
+  links[links == ""] <- "."
+  links
 }
 

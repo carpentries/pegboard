@@ -1,10 +1,11 @@
 # pegboard 0.2.7
 
-## MISC
+## TRANSFORMATION
 
  - `make_pandoc_alt()` (an internal converter function) will no longer create alt
    text from a caption if it contains a URL. This messes with the downstream
    validation of image links.
+ - `fix_sandpaper_links()` now also fixes links that use `{{ site.baseurl }}`.
 
 # pegboard 0.2.6
 
