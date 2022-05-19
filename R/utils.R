@@ -232,7 +232,7 @@ after_thing <- function(body, thing = "code_block") {
   ns <- NS(body)
   tng <- xml2::xml_find_first(
     body,
-    glue::glue(".//preceding-sibling::{ns}{thing}[1]")
+    glue::glue(".//preceding-sibling::{thing}[1]")
   )
 
   # Returns TRUE if the last line of the thing is adjacent to the first line of
@@ -277,7 +277,7 @@ get_sibling_block <- function(tags) {
   ns <- NS(tags)
   block <- xml2::xml_find_all(
     tags,
-    glue::glue("preceding-sibling::{ns}block_quote[1]")
+    glue::glue("preceding-sibling::block_quote[1]")
   )
 
   if (are_adjacent(block[[1]], tags)) {
@@ -292,7 +292,7 @@ challenge_is_sibling <- function(node) {
   predicate <- "text()='{: .challenge}'"
   xml2::xml_find_lgl(
     node,
-    glue::glue("boolean(following-sibling::{ns}paragraph/{ns}text[{predicate}])")
+    glue::glue("boolean(following-sibling::paragraph/text[{predicate}])")
   )
 }
 

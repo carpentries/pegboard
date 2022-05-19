@@ -9,7 +9,7 @@
 #' @keywords internal
 isolate_kram_blocks <- function(body, predicate = "") {
   ns <- NS(body)
-  kblock <- glue::glue("{ns}block_quote[@ktag]{predicate}")
+  kblock <- glue::glue("block_quote[@ktag]{predicate}")
   txt <- xml2::xml_find_all(
     body,
     glue::glue(".//text()[not(ancestor-or-self::{kblock})]")

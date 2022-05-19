@@ -7,7 +7,7 @@
 #' @rdname heading_utils
 get_headings <- function(body) {
   ns <- NS(body)
-  xml2::xml_find_all(body, glue::glue(".//{ns}heading"))
+  xml2::xml_find_all(body, glue::glue(".//heading"))
 }
 
 #' @rdname heading_utils

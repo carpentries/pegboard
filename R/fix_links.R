@@ -53,7 +53,7 @@ fix_link_type <- function(type, body) {
 find_lesson_links <- function(body, type = "rel_link") {
   ns <- NS(body)
   xml2::xml_find_all(body,
-    glue::glue(".//{ns}text[{LINKS[[type]]}][not(@klink)]")
+    glue::glue(".//text[{LINKS[[type]]}][not(@klink)]")
   )
 }
 

@@ -35,7 +35,7 @@ to_dovetail <- function(block, token = "#'") {
   block_type <- gsub("[{}: .]", "", xml2::xml_attr(block, "ktag"))
   copy_xml <- "tinkr" %:% "copy_xml"
   cpy <- copy_xml(xml2::xml_root(block))
-  rcd <- xml2::xml_find_all(cpy, glue::glue(".//{ns}code_block[@language]"))
+  rcd <- xml2::xml_find_all(cpy, glue::glue(".//code_block[@language]"))
   purrr::walk(rcd, "tinkr" %:% "to_info")
 
 
@@ -98,7 +98,7 @@ to_dovetail <- function(block, token = "#'") {
   # #'
   # Because we don't comment code blocks with the token, we have to add a dummy
   # paragraph before the code block
-  oxy_code <- xml2::xml_find_all(cpy, glue::glue(".//{ns}code_block[@xygen]"))
+  oxy_code <- xml2::xml_find_all(cpy, glue::glue(".//code_block[@xygen]"))
   if (length(oxy_code) > 0) {
     oxy_tags <- glue::glue("@{xml2::xml_attr(oxy_code, 'xygen')}")
     oxy_tags <- purrr::map(oxy_tags, xml_new_paragraph, xml2::xml_ns(cpy))
@@ -113,9 +113,9 @@ to_dovetail <- function(block, token = "#'") {
     purrr::walk(oxy_code, xml2::xml_set_attr, "xygen", NULL)
   }
   # parent is the document
-  to_comment <- glue::glue(".//{ns}*[parent::{ns}document]")
+  to_comment <- glue::glue(".//*[parent::document]")
   # but skip code blocks
-  not_code   <- glue::glue("[not(ancestor-or-self::{ns}code_block)]")
+  not_code   <- glue::glue("[not(ancestor-or-self::code_block)]")
   nblks      <- xml2::xml_find_all(cpy, glue::glue("{to_comment}{not_code}"))
   # set the token as the comment attribute
   xml2::xml_set_attr(nblks, "comment", token)

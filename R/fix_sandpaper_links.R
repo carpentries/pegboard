@@ -36,9 +36,9 @@ fix_sandpaper_links <- function(body, yml = list()) {
   lnk_type <- glue::glue("{jek_dest} or {rel_dest}")
 
   # Fix links and markdown images
-  link_search <- glue::glue(".//{ns}link[{lnk_type}]")
-  img_search  <- glue::glue(".//{ns}image[{lnk_type}]")
-  html_search <- glue::glue(".//{ns}html_block[{jek_text} or {rel_text}]")
+  link_search <- glue::glue(".//link[{lnk_type}]")
+  img_search  <- glue::glue(".//image[{lnk_type}]")
+  html_search <- glue::glue(".//html_block[{jek_text} or {rel_text}]")
   links <- xml2::xml_find_all(body, link_search)
   lattr <- xml2::xml_attr(links, "destination")
   # We will run into situations where commonmark doesn't know what to do with
@@ -55,7 +55,7 @@ fix_sandpaper_links <- function(body, yml = list()) {
   if (any(missing_links)) {
     ml <- links[missing_links]
     txt <- xml2::xml_find_first(ml, 
-      glue::glue(".//following-sibling::{ns}text[contains(text(), '%}')]")
+      glue::glue(".//following-sibling::text[contains(text(), '%}')]")
     )
     irl_txt <- xml2::xml_text(txt)
     # pattern to detect fragment and any text that comes after it
@@ -69,7 +69,7 @@ fix_sandpaper_links <- function(body, yml = list()) {
   image <- xml2::xml_find_all(body, img_search)
   iattr <- xml2::xml_attr(image, "destination")
   xml2::xml_set_attr(image, "destination", replace_links(iattr, yml))
-  make_pandoc_alt(xml2::xml_find_all(body, glue::glue(".//{ns}image")))
+  make_pandoc_alt(xml2::xml_find_all(body, glue::glue(".//image")))
 
   # Fix links in html nodes (e.g. raw HTML that was inserted to markdown, like
   # <img src="../fig"/>
