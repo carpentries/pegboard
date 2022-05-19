@@ -478,7 +478,7 @@ add_pegboard_nodes <- function(node, df) {
 clean_div_tags <- function(body) {
   # Find all the multi-div tags and replace newlines with double newlines
   ns  <- get_ns(body)
-  d   <- xml2::xml_find_all(body, ".//md:html_block[contains(text(), 'div')]", ns)
+  d   <- xml2::xml_find_all(body, ".//html_block[contains(text(), 'div')]", ns)
   if (length(d) == 0) {
     return(FALSE)
   }

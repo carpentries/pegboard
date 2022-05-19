@@ -7,9 +7,9 @@
 #' @return an xml_nodelist
 #' @keywords internal
 get_images <- function(yrn, process = TRUE) {
-  img    <- ".//md:image"
-  hblock <- ".//md:html_block[contains(text(), '<img')]"
-  hline  <- ".//md:html_inline[starts-with(text(), '<img')]"
+  img    <- ".//image"
+  hblock <- ".//html_block[contains(text(), '<img')]"
+  hline  <- ".//html_inline[starts-with(text(), '<img')]"
   xpath  <- glue::glue("{img} | {hblock} | {hline}")
   images <- xml2::xml_find_all(yrn$body, xpath, yrn$ns)
   images <- if (process) process_images(images) else images
@@ -32,7 +32,7 @@ get_images <- function(yrn, process = TRUE) {
 #' @return a copy of the nodelist
 #' @keywords internal
 process_images <- function(images, ns = tinkr::md_ns()) {
-  xpath <- "self::*/following-sibling::md:text[starts-with(text(), '{')]"
+  xpath <- "self::*/following-sibling::text[starts-with(text(), '{')]"
   have_alts <- xml2::xml_find_lgl(images, glue::glue("boolean({xpath})"), ns)
   have_no_attr <- is.na(xml2::xml_attr(images[have_alts], "alt"))
   html_nodes <- grepl("html_", xml2::xml_name(images))
@@ -83,7 +83,7 @@ set_alt_attr <- function(images, xpath, ns) {
   attr_texts <- xml2::xml_text(attrs)
   no_closing <- !grepl("[}]", attr_texts)
   if (any(no_closing)) {
-    close_xpath <- "self::*/following-sibling::md:text[contains(text(), '}')]"
+    close_xpath <- "self::*/following-sibling::text[contains(text(), '}')]"
     add_alts <- purrr::map_chr(attrs[no_closing], 
       ~xml2::xml_text(xml2::xml_find_all(.x, glue::glue("./{close_xpath}"), ns))
     )

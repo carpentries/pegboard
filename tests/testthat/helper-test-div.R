@@ -5,7 +5,7 @@ expect_moved_yaml <- function(episode, class, position) {
 
   ns <- get_ns(act$val$body)
   # Length is okay ----------------------------------------------------------
-  act$n_blocks <- length(xml2::xml_find_all(act$val$body, ".//md:html_block", ns))
+  act$n_blocks <- length(xml2::xml_find_all(act$val$body, ".//html_block", ns))
   expect(
     act$n_blocks == 2,
     sprintf("%s had %s html blocks instead of 2.", act$lab, format(act$n_blocks))

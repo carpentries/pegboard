@@ -157,7 +157,7 @@ xml_new_paragraph <- function(text = "", ns, tag = TRUE) {
 #' @keywords internal
 get_setup_chunk <- function(body) {
   ns <- get_ns(body)
-  query <- "./md:code_block[1][@language='r' and (@name='setup' or @include='FALSE')]"
+  query <- "./code_block[1][@language='r' and (@name='setup' or @include='FALSE')]"
   setup <- xml2::xml_find_first(body, query, ns)
 
   # No setup chunk from Jekyll site

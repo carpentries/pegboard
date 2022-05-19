@@ -14,18 +14,18 @@ use_sandpaper <- function(body, rmd = TRUE, yml = list()) {
   fix_sandpaper_links(body, yml)
   # Remove {% include links.md %}
   lnks <- xml2::xml_find_all(body, 
-    ".//md:text[contains(text(),'include links.md') and contains(text(),'{%')]",
+    ".//text[contains(text(),'include links.md') and contains(text(),'{%')]",
     ns = get_ns(body)
   )
   xml2::xml_remove(lnks)
   # Remove {% include base_path.html %}
   bp <- xml2::xml_find_all(body, 
-    ".//md:text[contains(text(),'include base_path') and contains(text(),'{%')]",
+    ".//text[contains(text(),'include base_path') and contains(text(),'{%')]",
     ns = get_ns(body)
   )
   xml2::xml_remove(bp)
   img_attrs <- xml2::xml_find_all(body, 
-    ".//md:image/following-sibling::md:text[1][starts-with(text(), '{:')]",
+    ".//image/following-sibling::text[1][starts-with(text(), '{:')]",
     ns = get_ns(body)
   )
   if (length(img_attrs)) {
@@ -40,7 +40,7 @@ use_sandpaper <- function(body, rmd = TRUE, yml = list()) {
   has_setup_chunk <- xml2::xml_find_lgl(
     body, 
     # setup is the first code block that is not included
-    "boolean(./md:code_block[1][@language='r' and (@name='setup' or @include='FALSE')])",
+    "boolean(./code_block[1][@language='r' and (@name='setup' or @include='FALSE')])",
     get_ns(body)
   )
   if (has_setup_chunk || rmd) {

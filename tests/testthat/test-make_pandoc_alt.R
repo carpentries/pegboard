@@ -11,7 +11,7 @@ test_that("make_pandoc_alt() converts alt text good", {
   f <- textConnection(txt)
   body <- tinkr::to_xml(f)$body
   ns <- tinkr::md_ns()
-  images <- xml2::xml_find_all(body, ".//md:image", ns = ns)
+  images <- xml2::xml_find_all(body, ".//image", ns = ns)
   make_pandoc_alt(images)
   # Alt text is expected only when nodes indicate that it is expected
   expect_equal(xml2::xml_attr(images, "alt"), 
