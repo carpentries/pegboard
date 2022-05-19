@@ -86,6 +86,7 @@ fix_liquid_relative_link <- function(path, encoding = "UTF-8") {
 
 # Get a character vector of the namespace
 NS <- function(x, generic = TRUE) {
+  return(character(0))
   if (generic) {
     res <- attr(xml2::xml_ns(x), "names")[[1]]
   } else {
@@ -145,7 +146,7 @@ xml_new_paragraph <- function(text = "", ns, tag = TRUE) {
     "<document><paragraph>{text}</paragraph></document>"
   )
   pgp <- xml2::read_xml(pgp)
-  xml2::xml_set_attr(pgp, "xmlns", ns)
+  # xml2::xml_set_attr(pgp, "xmlns", ns)
   xml2::xml_child(pgp, 1)
 }
 
@@ -177,7 +178,6 @@ get_setup_chunk <- function(body) {
       language = "r",
       name     = "setup",
       include  = "FALSE",
-      xmlns    = xml2::xml_ns(body)[[1]],
       .where   = 0L
     )
     # Grab it and go

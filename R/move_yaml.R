@@ -1,5 +1,4 @@
 move_yaml <- function(yaml, body, what = "questions", dovetail = TRUE) {
-  NS <- xml2::xml_ns(body)[[1]]
   where <- if (what == "keypoints") length(xml2::xml_children(body)) else 1L
   if (dovetail) {
     to_insert <- prepare_yaml_packet(yaml, what, dovetail)
@@ -7,7 +6,6 @@ move_yaml <- function(yaml, body, what = "questions", dovetail = TRUE) {
       "code_block",
       to_insert,
       language = what,
-      xmlns = NS,
       .where = where
     )
   } else {
@@ -15,7 +13,6 @@ move_yaml <- function(yaml, body, what = "questions", dovetail = TRUE) {
     for (element in rev(to_insert)) {
       xml2::xml_add_child(body,
         element,
-        xmlns = NS,
         .where = where
       )
     }
@@ -63,6 +60,7 @@ prepare_yaml_packet <- function(yaml, what = "questions", dovetail = TRUE) {
     )
     to_insert <- commonmark::markdown_xml(to_insert)
     to_insert <- xml2::read_xml(to_insert)
+    xml2::xml_ns_strip(to_insert)
     to_insert <- xml2::xml_children(to_insert)
   }
   to_insert

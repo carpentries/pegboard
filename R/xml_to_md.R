@@ -18,6 +18,8 @@ xml_to_md <- function(body, stylesheet = "xml2md_roxy.xsl") {
     d <- xml2::read_xml(commonmark::markdown_xml(""))
     purrr::walk(body, ~xml2::xml_add_child(d, .x))
     body <- d
-  } 
+  } else {
+    xml2::xml_set_attr(body, "xmlns", "http://commonmark.org/xml/1.0")
+  }
   xslt::xml_xslt(body, stysh)
 }

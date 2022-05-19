@@ -19,7 +19,7 @@ make_div <- function(what, fenced = TRUE) {
     div <- glue::glue('<div class="{what}">\n\n</div>')
   }
   div <- commonmark::markdown_xml(div)
-  xml2::read_xml(div)
+  xml2::xml_ns_strip(xml2::read_xml(div))
 }
 
 #' Replace a blockquote with a div tag
@@ -485,18 +485,21 @@ clean_div_tags <- function(body) {
 
   # regex checks for closed divs with something after them
   d   <- d[grepl('div(.+?)?[>]\n ?.', xml2::xml_text(d))]
+  # padding the div tags with newlines
   txt <- gsub("[>]\n(?!$)", ">\n\n", xml2::xml_text(d), perl = TRUE)
   txt <- gsub("\n[<]", "\n\n<", txt, perl = TRUE)
 
   # convert text to xml
-  nodelist <- purrr::map(txt, ~xml2::read_xml(commonmark::markdown_xml(.x)))
+  nodelist <- purrr::map(txt, 
+    ~xml2::xml_ns_strip(xml2::read_xml(commonmark::markdown_xml(.x))))
 
   # replace the nodes
   for (i in seq_along(nodelist)) {
     nodes <- xml2::xml_children(nodelist[[i]])
-    walk(nodes, ~xml2::xml_add_sibling(d[[i]], .x, .where = "before"))
+    purrr::walk(nodes, ~xml2::xml_add_sibling(d[[i]], .x, .where = "before"))
     xml2::xml_remove(d[[i]])
   }
+  xml2::xml_ns_strip(nodes)
   return(TRUE)
 }
 

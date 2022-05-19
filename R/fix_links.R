@@ -67,7 +67,6 @@ find_lesson_links <- function(body, type = "rel_link") {
 resolve_links <- function(txt, type) {
   lnks <- text_to_links(
     txt       = xml2::xml_text(txt),
-    ns        = xml2::xml_ns(txt),
     type      = type,
     sourcepos = xml2::xml_attr(txt, "sourcepos")
   )
