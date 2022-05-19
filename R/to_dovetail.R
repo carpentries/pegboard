@@ -46,7 +46,7 @@ to_dovetail <- function(block, token = "#'") {
   )
 
   # 3. Tag the first child as a solution
-  sln <- glue::glue(".//<ns>block_quote[@ktag='{: .solution}']",
+  sln <- glue::glue(".//block_quote[@ktag='{: .solution}']",
     .open  = "<",
     .close = ">"
   )

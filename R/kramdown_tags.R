@@ -8,7 +8,7 @@ kramdown_tags <- function(body) {
   # Namespace for the document is listed in the attributes
   ns <- NS(body)
   tag <- "starts-with(text(), '{:') and contains(text(), '}')"
-  srch <- glue::glue(".//<ns>paragraph[<ns>text[<tag>]]",
+  srch <- glue::glue(".//paragraph[text[<tag>]]",
     .open  = "<",
     .close = ">"
   )
