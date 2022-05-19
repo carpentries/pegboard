@@ -175,7 +175,7 @@ test_that("Lesson methods work as expected", {
   # Links and tags are processed
   kram_tags <- purrr::map_int(
     lex$episodes,
-    ~length(xml2::xml_find_all(.x$body, ".//*[contains(text(), '{: .challenge}')][not(self::d1:code_block)]"))
+    ~length(xml2::xml_find_all(.x$body, ".//*[contains(text(), '{: .challenge}')][not(self::code_block)]"))
   )
   expect_true(sum(kram_tags) == 0)
 
@@ -188,7 +188,7 @@ test_that("Lesson methods work as expected", {
 
   liquid_links <- purrr::map_int(
     lex$episodes,
-    ~length(xml2::xml_find_all(.x$body, ".//d1:link[starts-with(@destination, '{{')]"))
+    ~length(xml2::xml_find_all(.x$body, ".//link[starts-with(@destination, '{{')]"))
   )
   expect_true(sum(liquid_links) > 0)
 
@@ -201,7 +201,7 @@ test_that("Lesson methods work as expected", {
 
   liquid_images <- purrr::map_int(
     lex$episodes,
-    ~length(xml2::xml_find_all(.x$body, ".//d1:image"))
+    ~length(xml2::xml_find_all(.x$body, ".//image"))
   )
   expect_true(sum(liquid_images) > 0)
 

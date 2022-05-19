@@ -48,10 +48,10 @@ test_that("clustered divs can be cleaned", {
 
   ex <- tinkr::to_xml(file.path(test_path(), "examples", "div-cluster.txt"))
 
-  divs <- xml2::xml_find_all(ex$body, ".//d1:html_block[contains(text(), 'div')]")
+  divs <- xml2::xml_find_all(ex$body, ".//html_block[contains(text(), 'div')]")
   expect_length(divs, 5)
   pegboard:::clean_div_tags(ex$body)
-  divs <- xml2::xml_find_all(ex$body, ".//d1:html_block[contains(text(), 'div')]")
+  divs <- xml2::xml_find_all(ex$body, ".//html_block[contains(text(), 'div')]")
   expect_length(divs, 8)
   tinkr::to_md(ex, ff)
   exc <- paste(readLines(ff), collapse = "\n")
@@ -66,7 +66,7 @@ test_that("label_div_tags() will clean clustered divs", {
 
   ex <- tinkr::to_xml(file.path(test_path(), "examples", "div-cluster.txt"), sourcepos = TRUE)
 
-  divs <- xml2::xml_find_all(ex$body, ".//d1:html_block[contains(text(), 'div')]")
+  divs <- xml2::xml_find_all(ex$body, ".//html_block[contains(text(), 'div')]")
   expect_length(divs, 5)
   label_div_tags(ex$body)
   dvs <- get_divs(ex$body)
@@ -80,9 +80,9 @@ test_that("label_div_tags() will clean clustered pandoc divs", {
 
   ex <- tinkr::to_xml(file.path(test_path(), "examples", "pandoc-div.txt"), sourcepos = TRUE)
 
-  divs <- xml2::xml_find_all(ex$body, ".//d1:html_block[contains(text(), 'div')]")
+  divs <- xml2::xml_find_all(ex$body, ".//html_block[contains(text(), 'div')]")
   expect_length(divs, 0)
-  divs <- xml2::xml_find_all(ex$body, ".//d1:text[contains(text(), ':::')]")
+  divs <- xml2::xml_find_all(ex$body, ".//text[contains(text(), ':::')]")
   expect_length(divs, 11)
   label_div_tags(ex$body)
   dvs <- get_divs(ex$body)
@@ -131,9 +131,9 @@ test_that("a mix of div tags can be read", {
 
   ex <- tinkr::to_xml(file.path(test_path(), "examples", "div-mix.txt"), sourcepos = TRUE)
 
-  divs <- xml2::xml_find_all(ex$body, ".//d1:html_block[contains(text(), 'div')]")
+  divs <- xml2::xml_find_all(ex$body, ".//html_block[contains(text(), 'div')]")
   expect_length(divs, 5)
-  divs <- xml2::xml_find_all(ex$body, ".//d1:text[contains(text(), ':::')]")
+  divs <- xml2::xml_find_all(ex$body, ".//text[contains(text(), ':::')]")
   expect_length(divs, 6)
   # TODO: fix me. Parsing div tags and pandoc tags must be equal. 
   label_div_tags(ex$body)

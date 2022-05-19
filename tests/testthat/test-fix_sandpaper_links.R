@@ -15,7 +15,7 @@ test_that("links are replaced in our example", {
 
 test_that("links are replaced in messy example", {
   xml <- xml2::read_xml(test_path("examples", "link-liquid.xml"))
-  dest <- xml2::xml_find_all(xml, ".//d1:link | .//d1:image")
+  dest <- xml2::xml_find_all(xml, ".//link | .//image")
   dest <- xml2::xml_attr(dest, "destination")
   res <- replace_links(dest, yml)
   # No more templating should be present

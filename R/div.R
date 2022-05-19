@@ -33,7 +33,7 @@ make_div <- function(what, fenced = TRUE) {
 #' @examples
 #' frg <- Lesson$new(lesson_fragment())
 #' lop <- frg$episodes$`14-looping-data-sets.md`
-#' xml2::xml_find_all(lop$body, ".//d1:html_block")
+#' xml2::xml_find_all(lop$body, ".//html_block")
 #' lop$get_blocks(level = 1)
 #' lop$get_blocks(level = 2)
 #' purrr::walk(lop$get_blocks(level = 2), pegboard:::replace_with_div)
@@ -470,11 +470,11 @@ add_pegboard_nodes <- function(node, df) {
 #' f <- tempfile()
 #' writeLines(txt, f)
 #' ex <- tinkr::to_xml(f)
-#' xml2::xml_find_all(ex$body, ".//d1:html_block[contains(text(), 'div')]")
+#' xml2::xml_find_all(ex$body, ".//html_block[contains(text(), 'div')]")
 #' pegboard:::clean_div_tags(ex$body)
-#' xml2::xml_find_all(ex$body, ".//d1:html_block[contains(text(), 'div')]")
+#' xml2::xml_find_all(ex$body, ".//html_block[contains(text(), 'div')]")
 #' pegboard:::label_div_tags(ex$body)
-#' xml2::xml_find_all(ex$body, ".//d1:html_block[contains(text(), 'div')]")
+#' xml2::xml_find_all(ex$body, ".//html_block[contains(text(), 'div')]")
 clean_div_tags <- function(body) {
   # Find all the multi-div tags and replace newlines with double newlines
   ns  <- get_ns(body)
@@ -547,7 +547,7 @@ clean_div_tags <- function(body) {
 #' writeLines(txt, f)
 #' ex <- tinkr::to_xml(f, sourcepos = TRUE)
 #' ex$body
-#' predicate <- ".//d1:paragraph/d1:text[starts-with(text(), ':::')]"
+#' predicate <- ".//paragraph/text[starts-with(text(), ':::')]"
 #' xml2::xml_text(xml2::xml_find_all(ex$body, predicate))
 #' pegboard:::clean_fenced_divs(ex$body)
 #' xml2::xml_text(xml2::xml_find_all(ex$body, predicate))

@@ -76,12 +76,12 @@ test_that("Episodes can be converted to use sandpaper", {
   )
   jek_links <- xml2::xml_find_all(
     e$body,
-    ".//d1:link[contains(@destination, '{{')]"
+    ".//link[contains(@destination, '{{')]"
   )
 
   liquid_links <- xml2::xml_find_all(
     e$body,
-    ".//d1:text[contains(text(),'include links.md') and contains(text(),'{%')]"
+    ".//text[contains(text(),'include links.md') and contains(text(),'{%')]"
   )
   expect_length(liquid_links, 1)
   expect_equal(xml2::xml_text(liquid_links), "{% include links.md %}")
@@ -128,7 +128,7 @@ test_that("Episodes can be converted to use sandpaper", {
 
   liquid_links <- xml2::xml_find_all(
     e$body,
-    ".//d1:text[contains(text(),'include links.md') and contains(text(),'{%')]"
+    ".//text[contains(text(),'include links.md') and contains(text(),'{%')]"
   )
   expect_length(liquid_links, 0)
 
