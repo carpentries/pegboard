@@ -15,6 +15,7 @@ test_that("links are replaced in our example", {
 
 test_that("links are replaced in messy example", {
   xml <- xml2::read_xml(test_path("examples", "link-liquid.xml"))
+  xml2::xml_ns_strip(xml)
   dest <- xml2::xml_find_all(xml, ".//link | .//image")
   dest <- xml2::xml_attr(dest, "destination")
   res <- replace_links(dest, yml)

@@ -17,7 +17,7 @@ move_yaml <- function(yaml, body, what = "questions", dovetail = TRUE) {
       )
     }
   }
-  label_div_tags(body)
+  label_div_tags(copy_xml(body))
 }
 
 #' Create a new block node based on a list (derived from yaml)

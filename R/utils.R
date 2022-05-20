@@ -25,6 +25,8 @@ element_df <- function(node) {
 
 # nocov end
 
+copy_xml <- function(xml) xml2::read_xml(as.character(xml))
+
 stop_if_no_path <- function(path) {
   if (!fs::dir_exists(path)) {
     msg <- "the directory '{path}' does not exist or is not a directory"

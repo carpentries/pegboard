@@ -21,5 +21,5 @@ xml_to_md <- function(body, stylesheet = "xml2md_roxy.xsl") {
   } else {
     xml2::xml_set_attr(body, "xmlns", "http://commonmark.org/xml/1.0")
   }
-  xslt::xml_xslt(body, stysh)
+  xslt::xml_xslt(copy_xml(body), stysh)
 }

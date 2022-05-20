@@ -273,7 +273,7 @@ Episode <- R6::R6Class("Episode",
       }
       dovetail <- private$mutations['use_dovetail']
       yml <- self$get_yaml()
-      move_yaml(yml, self$body, "objectives", dovetail)
+      self$body <- move_yaml(yml, self$body, "objectives", dovetail)
       private$clear_yaml_item("objectives")
       private$mutations['move_objectives'] <- TRUE
       invisible(self)
@@ -286,7 +286,7 @@ Episode <- R6::R6Class("Episode",
       }
       dovetail <- private$mutations['use_dovetail']
       yml <- self$get_yaml()
-      move_yaml(yml, self$body, "keypoints", dovetail)
+      self$body <- move_yaml(yml, self$body, "keypoints", dovetail)
       private$clear_yaml_item("keypoints")
       private$mutations['move_keypoints'] <- TRUE
       invisible(self)
@@ -299,7 +299,7 @@ Episode <- R6::R6Class("Episode",
       }
       dovetail <- private$mutations['use_dovetail']
       yml <- self$get_yaml()
-      move_yaml(yml, self$body, "questions", dovetail)
+      self$body <- move_yaml(yml, self$body, "questions", dovetail)
       private$clear_yaml_item("questions")
       private$mutations['move_questions'] <- TRUE
       invisible(self)
