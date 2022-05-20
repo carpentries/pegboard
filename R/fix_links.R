@@ -72,7 +72,6 @@ resolve_links <- function(txt, type) {
   )
   purrr::walk(lnks, ~xml2::xml_add_sibling(txt, .x, .where = "before"))
   xml2::xml_remove(txt)
-  lnks
 }
 
 #' @description
@@ -144,13 +143,9 @@ text_to_links <- function(txt, ns = NULL, type, sourcepos = NULL) {
   are_links <- grepl(lnk, texts, perl = TRUE)
   texts[are_links]  <- purrr::map_chr(texts[are_links], make_link, pattern = lnk, type = type)
   texts[!are_links] <- glue::glue("<text>{texts[!are_links]}</text>")
-  if (!is.null(ns)) {
-    # TODO: fix this process for creating new nodes. Use the process from 
-    # {tinkr} to do this. 
-    texts <- xml_new_paragraph(glue::glue_collapse(texts), ns, tag = FALSE)
-    texts <- xml2::xml_children(texts)
-    xml2::xml_set_attr(texts, "sourcepos", sourcepos)
-  }
+  texts <- xml_new_paragraph(glue::glue_collapse(texts), ns, tag = FALSE)
+  texts <- xml2::xml_children(texts)
+  xml2::xml_set_attr(texts, "sourcepos", sourcepos)
   texts
 }
 
