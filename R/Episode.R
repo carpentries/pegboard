@@ -638,7 +638,11 @@ Episode <- R6::R6Class("Episode",
     #' @field output \[`xml_nodeset`\] all the output blocks from the episode
     output = function() {
       if (any(private$mutations[c('use_sandpaper_md', 'use_sandpaper_rmd')])) {
-        self$code[which(xml2::xml_attr(self$code, "info") == "output")]
+        # unprocessed like ```output
+        unprocessed_output <- grepl("output", xml2::xml_attr(self$code, "info"))
+        # processed like ```{.output}
+        processed_output <- grepl("output", xml2::xml_attr(self$code, "language"))
+        self$code[unprocessed_output | processed_output]
       } else {
         get_code(self$body, ".output")
       }
@@ -646,7 +650,9 @@ Episode <- R6::R6Class("Episode",
     #' @field error \[`xml_nodeset`\] all the error blocks from the episode
     error = function() {
       if (any(private$mutations[c('use_sandpaper_md', 'use_sandpaper_rmd')])) {
-        self$code[which(xml2::xml_attr(self$code, "info") == "error")]
+        unprocessed_error <- grepl("error", xml2::xml_attr(self$code, "info"))
+        processed_error <- grepl("error", xml2::xml_attr(self$code, "language"))
+        self$code[unprocessed_error | processed_error]
       } else {
         get_code(self$body, ".error")
       }
