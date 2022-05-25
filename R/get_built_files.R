@@ -7,7 +7,7 @@ get_built_files <- function(lesson = ".") {
   }
   if (!fs::dir_exists(fs::path(path, "site", "built"))) { 
     txt <- "No files built. Run {.code sandpaper::build_lesson()} to build."
-    message(cli::cli_alert_warning(txt))
+    cli::cli_alert_warning(txt)
     return(NULL)
   } 
   lfiles <- fs::path_file(lesson$files)

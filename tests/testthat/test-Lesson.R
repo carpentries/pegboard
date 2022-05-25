@@ -46,6 +46,26 @@ test_that("Sandpaper lessons can read in built files", {
 })
 
 
+test_that("Sandpaper lessons will throw a warning for $load_built()", {
+  lf <- lesson_fragment("sandpaper-fragment")
+  withr::defer({
+    fs::file_move(
+      fs::path(lf, "site", "tliub"),
+      fs::path(lf, "site", "built")
+    )
+  })
+  fs::file_move(
+    fs::path(lf, "site", "built"),
+    fs::path(lf, "site", "tliub")
+  )
+  snd <- Lesson$new(path = lf, jekyll = FALSE)
+  expect_message(snd$load_built(),
+    "No files built. Run `sandpaper\\:\\:build_lesson\\(\\)` to build.")
+  expect_null(snd$built)
+})
+
+
+
 test_that("Sandpaper lessons can create handouts", {
 
   # handout can have solution and no solution
