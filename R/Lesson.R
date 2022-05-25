@@ -129,8 +129,7 @@ Lesson <- R6::R6Class("Lesson",
     #' frg$summary() # episode summary (default)
     summary = function(collection = "episodes") {
       if (!self$sandpaper) {
-        cli::cli_alert_warning("Summary only for workbench lessons")
-        return(NULL)
+        cli::cli_alert_warning("Summary not guaranteed for styles-based lessons")
       }
       things <- c("episodes", "extra", "built")
       names(things) <- things

@@ -28,7 +28,8 @@ test_that("Episodes for jekyll can be created and are valid", {
   expect_length(e$tags, 8)
   expect_match(xml2::xml_text(e$tags), "^[{][:] [.][-a-z]+?[}]$")
 
-  expect_message(the_summary <- e$summary(), "Summary guaranteed only for sandpaper lessons")
+  expect_message(the_summary <- e$summary(), 
+    "Summary not guaranteed for kramdown formatted files.")
   expect_equal(the_summary, 
     c(
       sections   = 3,
@@ -45,8 +46,6 @@ test_that("Episodes for jekyll can be created and are valid", {
     )
   )
 })
-
-
 
 
 test_that("Episodes from sandpaper will have links included", {

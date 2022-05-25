@@ -495,7 +495,7 @@ Episode <- R6::R6Class("Episode",
     summary = function() {
       sandpaper <- any(private$mutations[c('use_sandpaper_md', 'use_sandpaper_rmd')])
       if (!sandpaper) {
-       cli::cli_alert_warning("Summary guaranteed only for sandpaper lessons")
+       cli::cli_alert_warning("Summary not guaranteed for kramdown formatted files.")
       }
       res <- list(
         sections = list(),
