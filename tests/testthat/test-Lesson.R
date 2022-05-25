@@ -17,6 +17,14 @@ test_that("Sandpaper lessons can be read", {
   # sandpaper lessons will have their divs pre-labeled.
   expect_length(snd$challenges()[[1]], 1L)
   expect_length(snd$solutions()[[1]], 2L)
+  expect_length(snd$get("headings")[[1]], 6L)
+  expect_length(snd$get("code", TRUE)[[1]], 4L)
+  expect_length(snd$get("links")[[1]], 1L)
+  expect_length(snd$get("images")[[1]], 0L)
+  # summary for all files can exist
+  expect_snapshot(snd$summary(TRUE))
+  # summary for episodes can exist
+  expect_snapshot(snd$summary())
 })
 
 test_that("Sandpaper lessons can create handouts", {

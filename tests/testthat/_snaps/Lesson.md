@@ -1,3 +1,29 @@
+# Sandpaper lessons can be read
+
+    Code
+      snd$summary(TRUE)
+    Output
+      # A tibble: 5 x 12
+        page      sections headings callouts challenges solutions  code output warning
+        <chr>        <int>    <int>    <int>      <int>     <int> <int>  <int>   <int>
+      1 intro.Rmd        6        6        6          1         2     4      0       0
+      2 index.md         0        0        0          0         0     0      0       0
+      3 a.md             0        0        0          0         0     0      0       0
+      4 setup.md         2        2        3          0         2     0      0       0
+      5 b.md             0        0        0          0         0     0      0       0
+      # ... with 3 more variables: error <int>, images <int>, links <int>
+
+---
+
+    Code
+      snd$summary()
+    Output
+      # A tibble: 1 x 12
+        page      sections headings callouts challenges solutions  code output warning
+        <chr>        <int>    <int>    <int>      <int>     <int> <int>  <int>   <int>
+      1 intro.Rmd        6        6        6          1         2     4      0       0
+      # ... with 3 more variables: error <int>, images <int>, links <int>
+
 # Sandpaper lessons can create handouts
 
     Code
