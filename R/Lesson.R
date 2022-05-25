@@ -140,7 +140,7 @@ Lesson <- R6::R6Class("Lesson",
       } else {
         to_collect <- purrr::flatten(purrr::map(things, ~self[[.x]]))
       }
-      res <- purrr::map(to_collect, ~.x$summary())
+      res <- purrr::map(to_collect, ~message_muffler(.x$summary()))
       res <- stack_rows(res)
       names(res)[1] <- "page"
       return(res)
