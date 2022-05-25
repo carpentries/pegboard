@@ -8,7 +8,7 @@
 #' 
 #' @return nothing, invisibly; used for side-effect
 #' @rdname cli_helpers
-issue_warning <- function(msg, cli = FALSE, ...) {
+issue_warning <- function(msg, cli = has_cli(), ...) {
   l <- list(...)
   for (i in names(l)) {
     assign(i, l[[i]])

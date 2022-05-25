@@ -25,6 +25,10 @@ element_df <- function(node) {
 
 # nocov end
 
+has_cli <- function() {
+  is.null(getOption("pegboard.no-cli")) && requireNamespace("cli", quietly = TRUE)
+}
+
 stack_rows <- function(res) {
   if (requireNamespace("dplyr", quietly = TRUE)) {
     res <- dplyr::bind_rows(res, .id = "episodes")
