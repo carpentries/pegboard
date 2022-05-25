@@ -2,15 +2,21 @@
 % Please edit documentation in R/utils-cli.R
 \name{issue_warning}
 \alias{issue_warning}
+\alias{pb_message}
 \alias{line_report}
 \alias{append_labels}
+\alias{message_muffler}
 \title{Issue a warning via CLI if it exists or send a message}
 \usage{
-issue_warning(msg, cli = FALSE, ...)
+issue_warning(msg, cli = has_cli(), ...)
+
+pb_message(..., domain = NULL, appendLF = TRUE)
 
 line_report(msg = "", path, pos, sep = "\\t", type = "warning")
 
 append_labels(l, i = TRUE, e = "", cli = FALSE, f = "style_inverse")
+
+message_muffler(expr, keep = FALSE)
 }
 \arguments{
 \item{msg}{the message as a glue or CLI string}
@@ -18,6 +24,12 @@ append_labels(l, i = TRUE, e = "", cli = FALSE, f = "style_inverse")
 \item{cli}{if \code{TRUE}, stylizes \code{e} with \code{f}}
 
 \item{...}{named arguments to be evaluated in the message via glue or CLI}
+
+\item{domain}{see \code{\link[base]{gettext}}.  If \code{NA}, messages will
+    not be translated, see also the note in \code{\link[base]{stop}}.}
+
+\item{appendLF}{logical: should messages given as a character string
+    have a newline appended?}
 
 \item{path}{path to the file to report}
 
@@ -34,20 +46,30 @@ append_labels(l, i = TRUE, e = "", cli = FALSE, f = "style_inverse")
 \item{e}{the new element to append to each element}
 
 \item{f}{a function from \pkg{cli} that will transform \code{e}}
+
+\item{expr}{an R expression.}
+
+\item{keep}{if \code{TRUE}, the messages are kept in a list. Defautls to \code{FALSE}
+where cli message are discarded.}
 }
 \value{
 nothing, invisibly; used for side-effect
 
 , \code{l}, appended
+
+if \code{keep = FALSE}, the output of \code{expr}, if \code{keep = TRUE}, a list
+with the elements \code{val = expr} and \verb{msg = <cliMessage>s}
 }
 \description{
-Issue a warning via CLI if it exists or send a message
-
-Create a single character that reports line errors
-
-Append a stylized label to elements of a vector
+This allows us to control the messages emitted \emph{and} continue to keep CLI as
+a suggested package.
+}
+\details{
+The vast majority of the code in this function is copied directly from the
+\code{\link[=message]{message()}} function.
 }
 \examples{
+pb_message("hello")
 x <- letters[1:5]
 x2 <- pegboard:::append_labels(x, 
   c(1, 3), 
@@ -56,4 +78,16 @@ x2 <- pegboard:::append_labels(x,
   f = "col_cyan"
 )
 cat(glue::glue("[{x}]->[{x2}]"))
+pegboard:::message_muffler({
+  cli::cli_text("hello there! I'm staying in!")
+  pegboard:::pb_message("normal looking message that's not getting through")
+  message("this message makes it out!")
+  runif(1)
+})
+pegboard:::message_muffler({
+  cli::cli_text("hello there! I'm staying in!")
+  pegboard:::pb_message("normal looking message that's not getting through")
+  message("this message makes it out!")
+  runif(1)
+}, keep = TRUE)
 }
