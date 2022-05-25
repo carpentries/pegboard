@@ -84,10 +84,11 @@ Lesson <- R6::R6Class("Lesson",
     #' read in the markdown content generated from RMarkdown sources and load
     #' load them into memory
     load_built = function() {
-      if (!self$sandpaper) {
-        invisible(NULL)
+      if (self$sandpaper) {
+        self$built <- get_built_files(self)
+      } else {
+        cli::cli_alert_warning("Only lessons using {.pkg sandpaper} can load built files")
       }
-      self$built <- get_built_files(self) 
       invisible(self)
     },
 

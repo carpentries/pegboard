@@ -4,14 +4,13 @@
       snd$summary(TRUE)
     Output
       # A tibble: 5 x 12
-        page      sections headings callouts challenges solutions  code output warning
-        <chr>        <int>    <int>    <int>      <int>     <int> <int>  <int>   <int>
-      1 intro.Rmd        6        6        6          1         2     4      0       0
-      2 index.md         0        0        0          0         0     0      0       0
-      3 a.md             0        0        0          0         0     0      0       0
-      4 setup.md         2        2        3          0         2     0      0       0
-      5 b.md             0        0        0          0         0     0      0       0
-      # ... with 3 more variables: error <int>, images <int>, links <int>
+        page      sections headings callouts challenges solutions  code output warning error images links
+        <chr>        <int>    <int>    <int>      <int>     <int> <int>  <int>   <int> <int>  <int> <int>
+      1 intro.Rmd        6        6        6          1         2     3      0       0     0      0     1
+      2 index.md         0        0        0          0         0     0      0       0     0      0     0
+      3 a.md             0        0        0          0         0     0      0       0     0      0     0
+      4 setup.md         2        2        3          0         2     0      0       0     0      0     0
+      5 b.md             0        0        0          0         0     0      0       0     0      0     0
 
 ---
 
@@ -19,10 +18,34 @@
       snd$summary()
     Output
       # A tibble: 1 x 12
-        page      sections headings callouts challenges solutions  code output warning
-        <chr>        <int>    <int>    <int>      <int>     <int> <int>  <int>   <int>
-      1 intro.Rmd        6        6        6          1         2     4      0       0
-      # ... with 3 more variables: error <int>, images <int>, links <int>
+        page      sections headings callouts challenges solutions  code output warning error images links
+        <chr>        <int>    <int>    <int>      <int>     <int> <int>  <int>   <int> <int>  <int> <int>
+      1 intro.Rmd        6        6        6          1         2     3      0       0     0      0     1
+
+# Sandpaper lessons can read in built files
+
+    Code
+      snd$summary(TRUE)
+    Output
+      # A tibble: 6 x 12
+        page                sections headings callouts challenges solutions  code output warning error images links
+        <chr>                  <int>    <int>    <int>      <int>     <int> <int>  <int>   <int> <int>  <int> <int>
+      1 intro.Rmd                  6        6        6          1         2     3      0       0     0      0     1
+      2 index.md                   0        0        0          0         0     0      0       0     0      0     0
+      3 a.md                       0        0        0          0         0     0      0       0     0      0     0
+      4 setup.md                   2        2        3          0         2     0      0       0     0      0     0
+      5 b.md                       0        0        0          0         0     0      0       0     0      0     0
+      6 site/built/intro.md        6        6        6          1         2     3      1       0     0      1     1
+
+---
+
+    Code
+      snd$summary("built")
+    Output
+      # A tibble: 1 x 12
+        page                sections headings callouts challenges solutions  code output warning error images links
+        <chr>                  <int>    <int>    <int>      <int>     <int> <int>  <int>   <int> <int>  <int> <int>
+      1 site/built/intro.md        6        6        6          1         2     3      1       0     0      1     1
 
 # Sandpaper lessons can create handouts
 
