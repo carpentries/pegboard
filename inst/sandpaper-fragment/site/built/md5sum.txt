@@ -1,0 +1,7 @@
+"file" "checksum" "built" "date"
+"config.yaml" "8adfbd825aeac8c789d65db9938590a7" "site/built/config.yaml" "2022-05-25"
+"index.md" "fe56dfea3c4269cceb361470e2ca1437" "site/built/index.md" "2022-05-25"
+"episodes/intro.Rmd" "3deb3673b36c3fd801e23cb85d9cd195" "site/built/intro.md" "2022-05-25"
+"instructors/a.md" "bbaa216f7ef3b17267c460a8bd4fda6b" "site/built/a.md" "2022-05-25"
+"learners/setup.md" "0e4e4d7028efbf7d756a08217126884f" "site/built/setup.md" "2022-05-25"
+"profiles/b.md" "bbaa216f7ef3b17267c460a8bd4fda6b" "site/built/b.md" "2022-05-25"

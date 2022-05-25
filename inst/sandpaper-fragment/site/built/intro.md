@@ -40,7 +40,8 @@ Carpentries lesson template:
 
 What is the output of this command?
 
-```{r, eval = FALSE}
+
+```r
 paste("This", "new", "template", "looks", "good")
 ```
 
@@ -48,8 +49,9 @@ paste("This", "new", "template", "looks", "good")
 
 ## Output
  
-```{r, echo = FALSE}
-paste("This", "new", "template", "looks", "good")
+
+```{.output}
+[1] "This new template looks good"
 ```
 
 ::::::::::::::::::::::::::::::::::
@@ -68,7 +70,8 @@ You can add a line with at least three colons and a `solution` tag.
 
 You can also include figures:
 
-```{r pyramid}
+
+```r
 pie(
   c(Sky = 78, "Sunny side of pyramid" = 17, "Shady side of pyramid" = 5), 
   init.angle = 315, 
@@ -76,6 +79,8 @@ pie(
   border = FALSE
 )
 ```
+
+<img src="fig/intro-rendered-pyramid-1.png" style="display: block; margin: auto;" />
 
 
 ## Math
