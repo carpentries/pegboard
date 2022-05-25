@@ -106,7 +106,7 @@ Episode <- R6::R6Class("Episode",
               {e$message}
               Section (div) tags for {self$name} will not be labelled"
             )
-            message(msg, call. = FALSE)
+            pb_message(msg, call. = FALSE)
             self
           })
       )
@@ -367,7 +367,7 @@ Episode <- R6::R6Class("Episode",
     write = function(path = NULL, format = "md", edit = FALSE) {
       if (is.null(path)) {
         path <- fs::file_temp(pattern = "dir")
-        message(glue::glue("Creating temporary directory '{path}'"))
+        pb_message(glue::glue("Creating temporary directory '{path}'"))
         fs::dir_create(path)
       }
       if (!fs::dir_exists(path)) {
@@ -495,7 +495,7 @@ Episode <- R6::R6Class("Episode",
     summary = function() {
       sandpaper <- any(private$mutations[c('use_sandpaper_md', 'use_sandpaper_rmd')])
       if (!sandpaper) {
-       cli::cli_alert_warning("Summary not guaranteed for kramdown formatted files.")
+       issue_warning("Summary not guaranteed for kramdown formatted files.")
       }
       res <- list(
         sections = list(),

@@ -13,9 +13,7 @@ get_headings <- function(body) {
 #' @rdname heading_utils
 #' @param tree a data frame produced via [validate_headings()]
 show_heading_tree <- function(tree) {
-  has_cli <- is.null(getOption("pegboard.no-cli")) &&
-    requireNamespace("cli", quietly = TRUE)
-  if (has_cli) {
+  if (has_cli()) {
     cli::cli_rule("Heading structure")
     cli::cat_print(cli::tree(tree, trim = TRUE))
     cli::cli_rule()
@@ -24,6 +22,6 @@ show_heading_tree <- function(tree) {
       paste(rep("-", i), collapse = "")
     }, character(1))
     dtree <- paste0(pad, tree$label)
-    message(paste(dtree, collapse = "\n"))
+    pb_message(paste(dtree, collapse = "\n"))
   }
 }

@@ -80,8 +80,6 @@
 #' pegboard:::link_info
 #' pegboard:::throw_link_warnings(v)
 validate_links <- function(yrn) {
-  has_cli <- is.null(getOption("pegboard.no-cli")) &&
-    requireNamespace("cli", quietly = TRUE)
   VAL <- make_link_table(yrn)
   if (length(VAL) == 0L || is.null(VAL)) {
     return(invisible(NULL))

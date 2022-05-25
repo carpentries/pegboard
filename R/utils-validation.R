@@ -2,8 +2,6 @@ throw_heading_warnings <- function(VAL) {
   if (length(VAL) == 0 || nrow(VAL) == 0) {
     return(invisible(NULL))
   }
-  has_cli <- is.null(getOption("pegboard.no-cli")) &&
-    requireNamespace("cli", quietly = TRUE)
   VAL <- collect_labels(VAL, cli = FALSE, heading_tests)
   err <- VAL[VAL$labels != '', ]
   # No errors throw no warnings
@@ -19,15 +17,13 @@ throw_heading_warnings <- function(VAL) {
     {infos}
     <https://webaim.org/techniques/semanticstructure/#headings>
 
-    {reports}", cli = has_cli, n = nrow(err), N = nrow(VAL), infos = infos, reports = reports)
+    {reports}", cli = has_cli(), n = nrow(err), N = nrow(VAL), infos = infos, reports = reports)
 }
 
 throw_div_warnings <- function(VAL) {
   if (length(VAL) == 0 || nrow(VAL) == 0) {
     return(invisible(NULL))
   }
-  has_cli <- is.null(getOption("pegboard.no-cli")) &&
-    requireNamespace("cli", quietly = TRUE)
   VAL <- collect_labels(VAL, cli = FALSE, div_tests)
   err <- VAL[VAL$labels != '', ]
   # No errors throw no warnings
@@ -42,7 +38,7 @@ throw_div_warnings <- function(VAL) {
 
     {infos}
 
-    {reports}", cli = has_cli, n = nrow(err), N = nrow(VAL), 
+    {reports}", cli = has_cli(), n = nrow(err), N = nrow(VAL), 
     infos = infos, reports = reports)
 }
 
@@ -51,8 +47,6 @@ throw_link_warnings <- function(VAL) {
     return(invisible(NULL))
   }
   VAL <- VAL[!VAL$anchor, , drop = FALSE]
-  has_cli <- is.null(getOption("pegboard.no-cli")) &&
-    requireNamespace("cli", quietly = TRUE)
   VAL <- collect_labels(VAL, cli = FALSE, link_tests)
   err <- VAL[VAL$labels != '', ]
   # No errors throw no warnings
@@ -67,7 +61,7 @@ throw_link_warnings <- function(VAL) {
 
     {infos}
 
-    {reports}", cli = has_cli, n = nrow(err), N = nrow(VAL), infos = infos, reports = reports)
+    {reports}", cli = has_cli(), n = nrow(err), N = nrow(VAL), infos = infos, reports = reports)
 }
 
 #' @param VAL a data frame containing the results of tests

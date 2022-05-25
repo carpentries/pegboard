@@ -87,7 +87,7 @@ Lesson <- R6::R6Class("Lesson",
       if (self$sandpaper) {
         self$built <- get_built_files(self)
       } else {
-        cli::cli_alert_warning("Only lessons using {.pkg sandpaper} can load built files")
+        issue_warning("Only lessons using {.pkg sandpaper} can load built files")
       }
       invisible(self)
     },
@@ -130,7 +130,7 @@ Lesson <- R6::R6Class("Lesson",
     #' frg$summary() # episode summary (default)
     summary = function(collection = "episodes") {
       if (!self$sandpaper) {
-        cli::cli_alert_warning("Summary not guaranteed for styles-based lessons")
+        issue_warning("Summary not guaranteed for styles-based lessons")
       }
       things <- c("episodes", "extra", "built")
       names(things) <- things
@@ -212,10 +212,10 @@ Lesson <- R6::R6Class("Lesson",
         if (sum(to_remove) > 0) {
           nms <- glue::glue_collapse(names(to_remove)[to_remove], sep = ", ", last = ", and ")
           epis <- if (sum(to_remove) > 1) "episodes" else "episode"
-          message(glue::glue("Removing {sum(to_remove)} {epis}: {nms}"))
+          pb_message(glue::glue("Removing {sum(to_remove)} {epis}: {nms}"))
           self$episodes[to_remove] <- NULL
         } else {
-          message("Nothing to remove!")
+          pb_message("Nothing to remove!")
         }
       } else {
         self$episodes[lengths(self$challenges()) == 0] <- NULL
