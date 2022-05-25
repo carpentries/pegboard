@@ -22,6 +22,14 @@
  - new `$summary()` method which will call the `$summary()` method for any
    Episode class object.
 
+### Messages
+
+ - `muffle_messages()` is an internal function that will muffle any messages
+   that originate from the {cli} or {pegboard} packages.
+ - If the {cli} package is not available, messages will have the class of
+   `pbMessage`, which will allow end users/package authors to catch and
+   manipulate any messages that originate from {pegboard}
+
 # pegboard 0.2.7 (unreleased, no user-visible changes)
 
 ## TRANSFORMATION
