@@ -17,14 +17,23 @@ Lesson <- R6::R6Class("Lesson",
     #'   the episodes of the lesson.
     episodes = NULL,
 
+    #' @field built \[`list`\] list of [Episode] class objects representing
+    #'   the markdown artefacts rendered from RMarkdown files.
+    built = NULL,
+
     #' @field extra \[`list`\] list of [Episode] class objects representing
     #'   the extra markdown components including index, setup, information
     #'   for learners, information for instructors, and learner profiles. This
     #'   is not processed for the jekyll lessons.
     extra = NULL,
 
+    #' @field sandpaper \[`logical`\] when `TRUE`, the episodes in the lesson
+    #'   are written in pandoc flavoured markdown. `FALSE` would indicate a 
+    #'   jekyll-based lesson written in kramdown.
+    sandpaper = TRUE,
+
     #' @field rmd \[`logical`\] when `TRUE`, the episodes represent RMarkdown
-    #'   files, default is `FALSE` for markdown files.
+    #'   files, default is `FALSE` for markdown files (deprecated and unused).
     rmd = FALSE,
 
     #' @description create a new Lesson object from a directory
@@ -51,6 +60,7 @@ Lesson <- R6::R6Class("Lesson",
         jeky <- read_jekyll_episodes(path, rmd, ...)
         self$episodes <- jeky$episodes
         self$rmd <- jeky$rmd
+        self$sandpaper <- FALSE
       } else {
         episode_path <- fs::path(path, "episodes")
         extra_paths <- fs::path(path, c("instructors", "learners", "profiles"))
@@ -68,6 +78,72 @@ Lesson <- R6::R6Class("Lesson",
 
       }
       self$path <- path
+    },
+
+    #' @description
+    #' read in the markdown content generated from RMarkdown sources and load
+    #' load them into memory
+    load_built = function() {
+      if (!self$sandpaper) {
+        invisible(NULL)
+      }
+      self$built <- get_built_files(self) 
+      invisible(self)
+    },
+
+    #' @description
+    #' A getter for various active bindings in the [Episode] class of objects.
+    #' In practice this is syntactic sugar around 
+    #' `purrr::map(l$episodes, ~.x$element)`
+    #' 
+    #' @param element \[`character`\] a defined element from the active bindings
+    #' in the [Episode] class. Defaults to NULL, which will return nothing. 
+    #' Elements that do not exist in the [Episode] class will return NULL
+    #' @param collection \[`character`\] one or more of "episodes" (default),
+    #' "extra", or "built". Select `TRUE` to collect information from all files.
+    #' @examples
+    #' frg <- Lesson$new(lesson_fragment())
+    #' frg$get("error") # error code blocks
+    #' frg$get("links") # links
+    get = function(element = NULL, collection = "episodes") {
+      if (is.null(element)) {
+        return(NULL)
+      }
+      things <- c("episodes", "extra", "built")
+      names(things) <- things
+      things <- things[collection]
+      if (length(things) == 1L) {
+        to_collect <- self[[things]]
+      } else {
+        to_collect <- purrr::flatten(purrr::map(things, ~self[[.x]]))
+      }
+      purrr::map(to_collect, ~.x[[element]])
+    },
+    #' @description
+    #' summary of element counts in each episode. This can be useful for
+    #' assessing a broad overview of the lesson dynamics
+    #' @param collection \[`character`\] one or more of "episodes" (default),
+    #' "extra", or "built". Select `TRUE` to collect information from all files.
+    #' @examples
+    #' frg <- Lesson$new(lesson_fragment())
+    #' frg$summary() # episode summary (default)
+    summary = function(collection = "episodes") {
+      if (!self$sandpaper) {
+        cli::cli_alert_warning("Summary only for workbench lessons")
+        return(NULL)
+      }
+      things <- c("episodes", "extra", "built")
+      names(things) <- things
+      things <- things[collection]
+      if (length(things) == 1L) {
+        to_collect <- self[[things]]
+      } else {
+        to_collect <- purrr::flatten(purrr::map(things, ~self[[.x]]))
+      }
+      res <- purrr::map(to_collect, ~.x$summary())
+      res <- stack_rows(res)
+      names(res)[1] <- "page"
+      return(res)
     },
 
     #' @description
@@ -231,11 +307,7 @@ Lesson <- R6::R6Class("Lesson",
       res <- purrr::map(self$episodes, 
         ~.x$validate_headings(verbose = verbose, warn = FALSE)
       )
-      if (requireNamespace("dplyr", quietly = TRUE)) {
-        res <- dplyr::bind_rows(res, .id = "episodes")
-      } else {
-        res <- do.call(rbind, res)
-      }
+      res <- stack_rows(res)
       throw_heading_warnings(res)
       invisible(res)
     },
@@ -259,11 +331,7 @@ Lesson <- R6::R6Class("Lesson",
     #' frg$validate_divs()
     validate_divs = function() {
       res <- purrr::map(self$episodes, ~.x$validate_divs(warn = FALSE))
-      if (requireNamespace("dplyr", quietly = TRUE)) {
-        res <- dplyr::bind_rows(res)
-      } else {
-        res <- do.call(rbind, res)
-      }
+      res <- stack_rows(res)
       throw_div_warnings(res)
       invisible(res)
     },
@@ -292,11 +360,7 @@ Lesson <- R6::R6Class("Lesson",
     #' frg$validate_links()
     validate_links = function() {
       res <- purrr::map(self$episodes, ~.x$validate_links(warn = FALSE))
-      if (requireNamespace("dplyr", quietly = TRUE)) {
-        res <- dplyr::bind_rows(res)
-      } else {
-        res <- do.call(rbind, res)
-      }
+      res <- stack_rows(res)
       throw_link_warnings(res)
       invisible(res)
     }

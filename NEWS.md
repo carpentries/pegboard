@@ -1,3 +1,27 @@
+# pegboard 0.3.0
+
+## NEW FEATURES
+
+### Episode class objects
+
+ - `$summary()` method which can summarise counts of elements in the episode.
+ - fixes for `$error` and `$output` active bindings
+ - new `$warning` active binding that will show code blocks with the `warning`
+   class.
+
+### Lesson class objects
+
+ - new public field "built" that will contain XML representations of 
+   markdown files built from RMarkdown files in sandpaper lessons.
+ - new public field "sandpaper" is a boolean that indicates if a lesson can be
+   built with sandpaper.
+ - new `$load_built()` method will load the built files if they exist in a
+   sandpaper lesson.
+ - new `$get()` method which will get any element from any Episode class object
+   contained within.
+ - new `$summary()` method which will call the `$summary()` method for any
+   Episode class object.
+
 # pegboard 0.2.7
 
 ## TRANSFORMATION

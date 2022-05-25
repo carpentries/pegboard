@@ -478,6 +478,41 @@ Episode <- R6::R6Class("Episode",
       private$mutations['unblock'] <- TRUE
       invisible(self)
     },
+
+    #' @description Get a high-level summary of the elements in the episode
+    #' @return a data frame with counts of the following elements per page:
+    #'  - sections: level 2 headings
+    #'  - headings: all headings
+    #'  - callouts: all callouts
+    #'  - challenges: subset of callouts
+    #'  - solutions: subset of callouts
+    #'  - code: all code block elements (excluding inline code)
+    #'  - output: subset of code that is displayed as output
+    #'  - warnining: subset of code that is displayed as a warning
+    #'  - error: subset of code that is displayed as an error
+    #'  - images: all images in markdown or HTML
+    #'  - links: all links in markdown or HTML
+    summary = function() {
+      if (!private$mutations['use_sandpaper_md'] || !private$mutations['use_sandpaper_rmd']) {
+       cli::cli_alert_warning("Summary only for sandpaper episodes")
+      }
+      res <- list(
+        sections = list(),
+        headings = self$headings, 
+        callouts = self$get_divs(),
+        challenges = self$challenges,
+        solutions = self$solutions,
+        code = self$code,
+        output = self$output,
+        warning = self$warning,
+        error = self$error,
+        images = self$get_images(process = TRUE),
+        links = self$links
+      )
+      res$sections <- res$headings[xml2::xml_attr(res$headings, "level") == 2]
+      purrr::map_int(res, length)
+    },
+
     #' @description perform validation on headings in a document.
     #'
     #' This will validate the following aspects of all headings:
@@ -638,11 +673,7 @@ Episode <- R6::R6Class("Episode",
     #' @field output \[`xml_nodeset`\] all the output blocks from the episode
     output = function() {
       if (any(private$mutations[c('use_sandpaper_md', 'use_sandpaper_rmd')])) {
-        # unprocessed like ```output
-        unprocessed_output <- grepl("output", xml2::xml_attr(self$code, "info"))
-        # processed like ```{.output}
-        processed_output <- grepl("output", xml2::xml_attr(self$code, "language"))
-        self$code[unprocessed_output | processed_output]
+        find_code_type(self$code, "output")
       } else {
         get_code(self$body, ".output")
       }
@@ -650,11 +681,17 @@ Episode <- R6::R6Class("Episode",
     #' @field error \[`xml_nodeset`\] all the error blocks from the episode
     error = function() {
       if (any(private$mutations[c('use_sandpaper_md', 'use_sandpaper_rmd')])) {
-        unprocessed_error <- grepl("error", xml2::xml_attr(self$code, "info"))
-        processed_error <- grepl("error", xml2::xml_attr(self$code, "language"))
-        self$code[unprocessed_error | processed_error]
+        find_code_type(self$code, "error")
       } else {
         get_code(self$body, ".error")
+      }
+    },
+    #' @field warning \[`xml_nodeset`\] all the warning blocks from the episode
+    warning = function() {
+      if (any(private$mutations[c('use_sandpaper_md', 'use_sandpaper_rmd')])) {
+        find_code_type(self$code, "warning")
+      } else {
+        get_code(self$body, ".warning")
       }
     },
     #' @field code \[`xml_nodeset`\] all the code blocks from the episode

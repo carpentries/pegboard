@@ -25,6 +25,20 @@ element_df <- function(node) {
 
 # nocov end
 
+stack_rows <- function(res) {
+  if (requireNamespace("dplyr", quietly = TRUE)) {
+    res <- dplyr::bind_rows(res, .id = "episodes")
+  } else {
+    res <- do.call(rbind, res)
+  }
+}
+
+find_code_type <- function(code, type) {
+  unprocessed_type <- grepl(type, xml2::xml_attr(code, "info"))
+  processed_type <- grepl(type, xml2::xml_attr(code, "language"))
+  code[unprocessed_type | processed_type]
+}
+
 stop_if_no_path <- function(path) {
   if (!fs::dir_exists(path)) {
     msg <- "the directory '{path}' does not exist or is not a directory"
