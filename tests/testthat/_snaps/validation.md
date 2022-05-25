@@ -2,7 +2,7 @@
 
     Code
       res <- vh$validate_headings()
-    Message <simpleMessage>
+    Message <pbMessage>
       ! There were errors in 5/7 headings
       
       - First heading must be level 2
@@ -30,7 +30,7 @@
 
     Code
       res <- loop$validate_headings()
-    Message <simpleMessage>
+    Message <pbMessage>
       ! There were errors in 3/10 headings
       
       - Headings must be unique
@@ -55,7 +55,7 @@
 
     Code
       dv$validate_divs()
-    Message <simpleMessage>
+    Message <pbMessage>
       ! There were errors in 1/5 fenced divs
       
       - The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor
@@ -66,7 +66,7 @@
 
     Code
       cats$validate_links()
-    Message <simpleMessage>
+    Message <pbMessage>
       ! There were errors in 2/10 links
       
       - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
@@ -78,7 +78,7 @@
 
     Code
       loop$validate_links()
-    Message <simpleMessage>
+    Message <pbMessage>
       ! There were errors in 3/12 links
       
       - Some linked internal files do not exist
@@ -92,7 +92,7 @@
 
     Code
       link$validate_links()
-    Message <simpleMessage>
+    Message <pbMessage>
       ! There were errors in 27/39 links
       
       - Links must use HTTPS <https://https.cio.gov/everything/>

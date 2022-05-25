@@ -1,4 +1,4 @@
-# Sandpaper lessons can be read
+# Sandpaper lessons have getter and summary methods
 
     Code
       snd$summary(TRUE)

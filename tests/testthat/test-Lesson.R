@@ -10,13 +10,26 @@ test_that("Lesson class will fail if given a bad path", {
 
 })
 
+test_that("styles-based lessons can not read in built files", {
+  expect_message(frg$load_built(), "Only lessons using sandpaper can load built files")
+})
+
+
 test_that("Sandpaper lessons can be read", {
   snd <- Lesson$new(path = lesson_fragment("sandpaper-fragment"), jekyll = FALSE)
   expect_s3_class(snd, "Lesson")
   expect_named(snd$episodes, "intro.Rmd")
+  expect_s3_class(snd$episodes[[1]], "Episode")
+  expect_null(snd$built)
+  expect_s3_class(snd$extra[[1]], "Episode")
+})
+
+test_that("Sandpaper lessons have getter and summary methods", {
+  snd <- Lesson$new(path = lesson_fragment("sandpaper-fragment"), jekyll = FALSE)
   # sandpaper lessons will have their divs pre-labeled.
   expect_length(snd$challenges()[[1]], 1L)
   expect_length(snd$solutions()[[1]], 2L)
+  expect_null(snd$get())
   expect_length(snd$get("headings")[[1]], 6L)
   expect_length(snd$get("code", TRUE)[[1]], 3L)
   expect_length(snd$get("links")[[1]], 1L)
@@ -26,12 +39,6 @@ test_that("Sandpaper lessons can be read", {
   expect_snapshot(snd$summary(TRUE))
   # summary for episodes can exist
   expect_snapshot(snd$summary())
-})
-
-
-
-test_that("styles-based lessons can not read in built files", {
-  expect_message(frg$load_built(), "Only lessons using sandpaper can load built files")
 })
 
 
