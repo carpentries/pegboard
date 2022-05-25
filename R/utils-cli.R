@@ -34,17 +34,9 @@ issue_warning <- function(msg, cli = has_cli(), ...) {
 #' @examples
 #' pegboard:::pb_message("hello")
 pb_message <- function (..., domain = NULL, appendLF = TRUE) {
-  # nocov start
-  cond <- if (...length() == 1L && inherits(..1, "condition")) {
-    if (nargs() > 1L)
-      warning("additional arguments ignored in message()")
-    ..1
-  } else {
-  # nocov end
-    msg <- .makeMessage(..., domain = domain, appendLF = appendLF)
-    structure(list(message = msg), 
-      class = c("pbMessage", "simpleMessage", "message", "condition"))
-  }
+  msg <- .makeMessage(..., domain = domain, appendLF = appendLF)
+  cond <- structure(list(message = msg), 
+    class = c("pbMessage", "simpleMessage", "message", "condition"))
   defaultHandler <- function(c) {
     cat(conditionMessage(c), file = stderr(), sep = "")
   }
