@@ -493,13 +493,14 @@ Episode <- R6::R6Class("Episode",
     #'  - images: all images in markdown or HTML
     #'  - links: all links in markdown or HTML
     summary = function() {
-      if (!private$mutations['use_sandpaper_md'] || !private$mutations['use_sandpaper_rmd']) {
-       cli::cli_alert_warning("Summary only for sandpaper episodes")
+      sandpaper <- any(private$mutations[c('use_sandpaper_md', 'use_sandpaper_rmd')])
+      if (!sandpaper) {
+       cli::cli_alert_warning("Summary guaranteed only for sandpaper lessons")
       }
       res <- list(
         sections = list(),
         headings = self$headings, 
-        callouts = self$get_divs(),
+        callouts = if (sandpaper) self$get_divs() else self$get_blocks(),
         challenges = self$challenges,
         solutions = self$solutions,
         code = self$code,
