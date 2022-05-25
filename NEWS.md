@@ -22,7 +22,7 @@
  - new `$summary()` method which will call the `$summary()` method for any
    Episode class object.
 
-# pegboard 0.2.7
+# pegboard 0.2.7 (unreleased, no user-visible changes)
 
 ## TRANSFORMATION
 
