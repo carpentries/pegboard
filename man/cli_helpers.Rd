@@ -69,7 +69,7 @@ The vast majority of the code in this function is copied directly from the
 \code{\link[=message]{message()}} function.
 }
 \examples{
-pb_message("hello")
+pegboard:::pb_message("hello")
 x <- letters[1:5]
 x2 <- pegboard:::append_labels(x, 
   c(1, 3), 

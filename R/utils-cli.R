@@ -32,7 +32,7 @@ issue_warning <- function(msg, cli = has_cli(), ...) {
 #' @inheritParams base::message
 #' @rdname cli_helpers
 #' @examples
-#' pb_message("hello")
+#' pegboard:::pb_message("hello")
 pb_message <- function (..., domain = NULL, appendLF = TRUE) {
   # nocov start
   cond <- if (...length() == 1L && inherits(..1, "condition")) {
