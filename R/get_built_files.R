@@ -1,6 +1,7 @@
 get_built_files <- function(lesson = ".") {
   if (inherits(lesson, "character") && fs::dir_exists(lesson)) {
     path <- lesson
+    lesson <- Lesson$new(path, jekyll = FALSE)
   } else {
     path <- lesson$path
   }
@@ -9,7 +10,8 @@ get_built_files <- function(lesson = ".") {
     message(cli::cli_alert_warning(txt))
     return(NULL)
   } 
-  built_files <- fs::path(path, "site", "built", fs::path_ext_set(fs::path_file(l$files), "md"))
+  lfiles <- fs::path_file(lesson$files)
+  built_files <- fs::path(path, "site", "built", fs::path_ext_set(lfiles, "md"))
   res <- purrr::map(built_files, 
     ~Episode$new(.x, process_tags = FALSE, fix_liquid = FALSE, fix_links = FALSE)$confirm_sandpaper())
 
