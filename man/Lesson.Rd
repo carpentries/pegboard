@@ -22,6 +22,21 @@ frg$path
 frg$episodes
 
 ## ------------------------------------------------
+## Method `Lesson$get`
+## ------------------------------------------------
+
+frg <- Lesson$new(lesson_fragment())
+frg$get("error") # error code blocks
+frg$get("links") # links
+
+## ------------------------------------------------
+## Method `Lesson$summary`
+## ------------------------------------------------
+
+frg <- Lesson$new(lesson_fragment())
+frg$summary() # episode summary (default)
+
+## ------------------------------------------------
 ## Method `Lesson$thin`
 ## ------------------------------------------------
 
@@ -81,13 +96,20 @@ frg$validate_links()
 \item{\code{episodes}}{[\code{list}] list of \link{Episode} class objects representing
 the episodes of the lesson.}
 
+\item{\code{built}}{[\code{list}] list of \link{Episode} class objects representing
+the markdown artefacts rendered from RMarkdown files.}
+
 \item{\code{extra}}{[\code{list}] list of \link{Episode} class objects representing
 the extra markdown components including index, setup, information
 for learners, information for instructors, and learner profiles. This
 is not processed for the jekyll lessons.}
 
+\item{\code{sandpaper}}{[\code{logical}] when \code{TRUE}, the episodes in the lesson
+are written in pandoc flavoured markdown. \code{FALSE} would indicate a
+jekyll-based lesson written in kramdown.}
+
 \item{\code{rmd}}{[\code{logical}] when \code{TRUE}, the episodes represent RMarkdown
-files, default is \code{FALSE} for markdown files.}
+files, default is \code{FALSE} for markdown files (deprecated and unused).}
 }
 \if{html}{\out{</div>}}
 }
@@ -106,6 +128,9 @@ files, default is \code{FALSE} for markdown files.}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-Lesson-new}{\code{Lesson$new()}}
+\item \href{#method-Lesson-load_built}{\code{Lesson$load_built()}}
+\item \href{#method-Lesson-get}{\code{Lesson$get()}}
+\item \href{#method-Lesson-summary}{\code{Lesson$summary()}}
 \item \href{#method-Lesson-blocks}{\code{Lesson$blocks()}}
 \item \href{#method-Lesson-challenges}{\code{Lesson$challenges()}}
 \item \href{#method-Lesson-solutions}{\code{Lesson$solutions()}}
@@ -157,6 +182,79 @@ a new Lesson object that contains a list of \link{Episode} objects in
 \preformatted{frg <- Lesson$new(lesson_fragment())
 frg$path
 frg$episodes
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Lesson-load_built"></a>}}
+\if{latex}{\out{\hypertarget{method-Lesson-load_built}{}}}
+\subsection{Method \code{load_built()}}{
+read in the markdown content generated from RMarkdown sources and load
+load them into memory
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Lesson$load_built()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Lesson-get"></a>}}
+\if{latex}{\out{\hypertarget{method-Lesson-get}{}}}
+\subsection{Method \code{get()}}{
+A getter for various active bindings in the \link{Episode} class of objects.
+In practice this is syntactic sugar around
+\code{purrr::map(l$episodes, ~.x$element)}
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Lesson$get(element = NULL, collection = "episodes")}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{element}}{[\code{character}] a defined element from the active bindings
+in the \link{Episode} class. Defaults to NULL, which will return nothing.
+Elements that do not exist in the \link{Episode} class will return NULL}
+
+\item{\code{collection}}{[\code{character}] one or more of "episodes" (default),
+"extra", or "built". Select \code{TRUE} to collect information from all files.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{frg <- Lesson$new(lesson_fragment())
+frg$get("error") # error code blocks
+frg$get("links") # links
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Lesson-summary"></a>}}
+\if{latex}{\out{\hypertarget{method-Lesson-summary}{}}}
+\subsection{Method \code{summary()}}{
+summary of element counts in each episode. This can be useful for
+assessing a broad overview of the lesson dynamics
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Lesson$summary(collection = "episodes")}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{collection}}{[\code{character}] one or more of "episodes" (default),
+"extra", or "built". Select \code{TRUE} to collect information from all files.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{frg <- Lesson$new(lesson_fragment())
+frg$summary() # episode summary (default)
 }
 \if{html}{\out{</div>}}
 

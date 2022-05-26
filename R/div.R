@@ -675,8 +675,8 @@ find_div_pairs <- function(divs, close = div_close_regex()) {
       cli::cli_alert_danger(msg1)
       stop(cli::cli_alert_danger(msg, id = names(tags)[bad]), call. = FALSE)
     } else {
-      message(msg1)
-      message(glue::glue(msg))
+      pb_message(msg1)
+      pb_message(glue::glue(msg))
       stop(names(tags)[bad], call. = FALSE)
     }
   }

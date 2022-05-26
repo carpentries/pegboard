@@ -176,6 +176,8 @@ loop$validate_links()
 
 \item{\code{error}}{[\code{xml_nodeset}] all the error blocks from the episode}
 
+\item{\code{warning}}{[\code{xml_nodeset}] all the warning blocks from the episode}
+
 \item{\code{code}}{[\code{xml_nodeset}] all the code blocks from the episode}
 
 \item{\code{name}}{[\code{character}] the name of the source file without the path}
@@ -210,6 +212,7 @@ loop$validate_links()
 \item \href{#method-Episode-reset}{\code{Episode$reset()}}
 \item \href{#method-Episode-isolate_blocks}{\code{Episode$isolate_blocks()}}
 \item \href{#method-Episode-unblock}{\code{Episode$unblock()}}
+\item \href{#method-Episode-summary}{\code{Episode$summary()}}
 \item \href{#method-Episode-validate_headings}{\code{Episode$validate_headings()}}
 \item \href{#method-Episode-validate_divs}{\code{Episode$validate_divs()}}
 \item \href{#method-Episode-validate_links}{\code{Episode$validate_links()}}
@@ -792,6 +795,32 @@ loop$code # now there are two blocks with challenge tags
 
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Episode-summary"></a>}}
+\if{latex}{\out{\hypertarget{method-Episode-summary}{}}}
+\subsection{Method \code{summary()}}{
+Get a high-level summary of the elements in the episode
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Episode$summary()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+a data frame with counts of the following elements per page:
+\itemize{
+\item sections: level 2 headings
+\item headings: all headings
+\item callouts: all callouts
+\item challenges: subset of callouts
+\item solutions: subset of callouts
+\item code: all code block elements (excluding inline code)
+\item output: subset of code that is displayed as output
+\item warnining: subset of code that is displayed as a warning
+\item error: subset of code that is displayed as an error
+\item images: all images in markdown or HTML
+\item links: all links in markdown or HTML
+}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Episode-validate_headings"></a>}}

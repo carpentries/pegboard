@@ -32,7 +32,7 @@ read_jekyll_episodes <- function(path = NULL, rmd = FALSE, ...) {
   if (read_md) {
     eps <- read_markdown_files(md_src, sandpaper = FALSE, ...)
   } else if (all_rmd) {
-    message("could not find _episodes/, using _episodes_rmd/ as the source")
+    pb_message("could not find _episodes/, using _episodes_rmd/ as the source")
   } else if (md_exists && md_n == 0L) {
     stop(glue::glue("The _episodes/ directory must have (R)markdown files"),
       call. = FALSE

@@ -43,8 +43,6 @@
 #' # that will print the heading tree with the associated errors:
 #' pegboard:::show_heading_tree(v$tree)
 validate_headings <- function(headings, title = NULL, offset = 5L) {
-  has_cli <- is.null(getOption("pegboard.no-cli")) &&
-    requireNamespace("cli", quietly = TRUE)
   # no headings means that we don't need to check this
   if (length(headings) == 0) {
     return(NULL)
@@ -64,9 +62,9 @@ validate_headings <- function(headings, title = NULL, offset = 5L) {
   # This is a bit more involved because we have to consider the heading level
   # (e.g. a level 2 heading is not the same as a level 3 heading, even though
   # they may have the same name.
-  VAL   <- collect_labels(VAL, cli = has_cli)
+  VAL   <- collect_labels(VAL, cli = has_cli())
   htree <- heading_tree(htab, title, suffix = c("", VAL$labels))
-  any_duplicates <- label_duplicates(htree, cli = has_cli)
+  any_duplicates <- label_duplicates(htree, cli = has_cli())
   VAL$are_unique <- any_duplicates$test[-1]
   htree <- any_duplicates$tree
   return(list(results = VAL[names(VAL) != "labels"], tree = htree))

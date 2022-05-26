@@ -45,8 +45,6 @@
 #'  - line: the line number of the div label
 #'  - is_known: a logical value if the div is a known type (`TRUE`) or not (`FALSE`)
 validate_divs <- function(yrn) {
-  has_cli <- is.null(getOption("pegboard.no-cli")) &&
-    requireNamespace("cli", quietly = TRUE)
   VAL <- make_div_table(yrn)
   if (length(VAL) == 0L || is.null(VAL)) {
     return(invisible(NULL))

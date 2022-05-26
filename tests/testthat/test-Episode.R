@@ -1,4 +1,4 @@
-test_that("Episodes can be created and are valid", {
+test_that("Episodes for jekyll can be created and are valid", {
 
   scope <- fs::path(lesson_fragment(), "_episodes", "17-scope.md")
   e <- Episode$new(scope)
@@ -28,7 +28,23 @@ test_that("Episodes can be created and are valid", {
   expect_length(e$tags, 8)
   expect_match(xml2::xml_text(e$tags), "^[{][:] [.][-a-z]+?[}]$")
 
-
+  expect_message(the_summary <- e$summary(), 
+    "Summary not guaranteed for kramdown formatted files.")
+  expect_equal(the_summary, 
+    c(
+      sections   = 3,
+      headings   = 3,
+      callouts   = 2,
+      challenges = 2,
+      solutions  = 0,
+      code       = 6,
+      output     = 1,
+      warning    = 0,
+      error      = 2,
+      images     = 0,
+      links      = 0
+    )
+  )
 })
 
 
@@ -77,6 +93,28 @@ test_that("$confirm_sandpaper() does not error on mismatched divs", {
   })
   expect_s3_class(e, "Episode")
 })
+
+test_that("a summary can be created", {
+  e <- Episode$new(test_path("examples", "handout.Rmd"), 
+    process_tags = FALSE, fix_links = FALSE, fix_liquid = FALSE)
+  expect_equal(e$confirm_sandpaper()$summary(), 
+    c(
+      sections   = 1,
+      headings   = 3,
+      callouts   = 4,
+      challenges = 2,
+      solutions  = 2,
+      code       = 5,
+      output     = 0,
+      warning    = 0,
+      error      = 0,
+      images     = 0,
+      links      = 0
+    )
+  )
+
+})
+
 
 test_that("handouts can be created", {
 
