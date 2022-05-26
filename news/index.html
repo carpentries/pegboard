@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pegboard</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,7 +52,34 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.2.7" id="pegboard-027">pegboard 0.2.7<a class="anchor" aria-label="anchor" href="#pegboard-027"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.3.0" id="pegboard-030">pegboard 0.3.0<a class="anchor" aria-label="anchor" href="#pegboard-030"></a></h2>
+<div class="section level3">
+<h3 id="new-features-0-3-0">NEW FEATURES<a class="anchor" aria-label="anchor" href="#new-features-0-3-0"></a></h3>
+<div class="section level4">
+<h4 id="episode-class-objects-0-3-0">Episode class objects<a class="anchor" aria-label="anchor" href="#episode-class-objects-0-3-0"></a></h4>
+<ul><li>
+<code>$summary()</code> method which can summarise counts of elements in the episode.</li>
+<li>fixes for <code>$error</code> and <code>$output</code> active bindings</li>
+<li>new <code>$warning</code> active binding that will show code blocks with the <code>warning</code> class.</li>
+</ul></div>
+<div class="section level4">
+<h4 id="lesson-class-objects-0-3-0">Lesson class objects<a class="anchor" aria-label="anchor" href="#lesson-class-objects-0-3-0"></a></h4>
+<ul><li>new public field “built” that will contain XML representations of markdown files built from RMarkdown files in sandpaper lessons.</li>
+<li>new public field “sandpaper” is a boolean that indicates if a lesson can be built with sandpaper.</li>
+<li>new <code>$load_built()</code> method will load the built files if they exist in a sandpaper lesson.</li>
+<li>new <code>$get()</code> method which will get any element from any Episode class object contained within.</li>
+<li>new <code>$summary()</code> method which will call the <code>$summary()</code> method for any Episode class object.</li>
+</ul></div>
+<div class="section level4">
+<h4 id="messages-0-3-0">Messages<a class="anchor" aria-label="anchor" href="#messages-0-3-0"></a></h4>
+<ul><li>
+<code>muffle_messages()</code> is an internal function that will muffle any messages that originate from the {cli} or {pegboard} packages.</li>
+<li>If the {cli} package is not available, messages will have the class of <code>pbMessage</code>, which will allow end users/package authors to catch and manipulate any messages that originate from {pegboard}</li>
+</ul></div>
+</div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.2.7" id="pegboard-027-unreleased-no-user-visible-changes">pegboard 0.2.7 (unreleased, no user-visible changes)<a class="anchor" aria-label="anchor" href="#pegboard-027-unreleased-no-user-visible-changes"></a></h2>
 <div class="section level3">
 <h3 id="transformation-0-2-7">TRANSFORMATION<a class="anchor" aria-label="anchor" href="#transformation-0-2-7"></a></h3>
 <ul><li>

@@ -37,7 +37,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pegboard</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -147,10 +147,11 @@
 <span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing alt-text]</span>
 <span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [image missing alt-text]</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">links</span>, max.level <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-<span class="co">#| 'data.frame':    13 obs. of  25 variables:</span>
+<span class="co">#| 'data.frame':    13 obs. of  26 variables:</span>
+<span class="co">#|  $ episodes            : chr  "12-for-loops.md" "14-looping-data-sets.md" "14-looping-data-sets.m"..</span>
 <span class="co">#|  $ scheme              : chr  "https" "https" "https" "https" ...</span>
 <span class="co">#|  $ server              : chr  "docs.python.org" "docs.python.org" "docs.python.org" "docs.python."..</span>
-<span class="co">#|  $ port                : int  NA NA NA NA NA NA NA NA 1953391988 1768042298 ...</span>
+<span class="co">#|  $ port                : int  NA NA NA NA NA NA NA NA 21863 -1015204984 ...</span>
 <span class="co">#|  $ user                : chr  "" "" "" "" ...</span>
 <span class="co">#|  $ path                : chr  "/3/library/stdtypes.html" "/3/library/glob.html" "/3/library/glob."..</span>
 <span class="co">#|  $ query               : chr  "" "" "" "" ...</span>
@@ -229,13 +230,13 @@
 <p>Notice that no message was produced indicating that the divs in our lesson fragment were okay. When we look at the data frame that was produced, we can see that there are six divs:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">snd_divs</span>
-<span class="co">#|                                path        div         pb_label pos is_known</span>
-<span class="co">#| div-1-questions  episodes/intro.Rmd  questions  div-1-questions   7     TRUE</span>
-<span class="co">#| div-2-objectives episodes/intro.Rmd objectives div-2-objectives  13     TRUE</span>
-<span class="co">#| div-3-challenge  episodes/intro.Rmd  challenge  div-3-challenge  37     TRUE</span>
-<span class="co">#| div-4-solution   episodes/intro.Rmd   solution   div-4-solution  47     TRUE</span>
-<span class="co">#| div-5-solution   episodes/intro.Rmd   solution   div-5-solution  60     TRUE</span>
-<span class="co">#| div-6-keypoints  episodes/intro.Rmd  keypoints  div-6-keypoints  90     TRUE</span></code></pre></div>
+<span class="co">#|                   episodes               path        div         pb_label pos is_known</span>
+<span class="co">#| div-1-questions  intro.Rmd episodes/intro.Rmd  questions  div-1-questions   7     TRUE</span>
+<span class="co">#| div-2-objectives intro.Rmd episodes/intro.Rmd objectives div-2-objectives  13     TRUE</span>
+<span class="co">#| div-3-challenge  intro.Rmd episodes/intro.Rmd  challenge  div-3-challenge  37     TRUE</span>
+<span class="co">#| div-4-solution   intro.Rmd episodes/intro.Rmd   solution   div-4-solution  47     TRUE</span>
+<span class="co">#| div-5-solution   intro.Rmd episodes/intro.Rmd   solution   div-5-solution  60     TRUE</span>
+<span class="co">#| div-6-keypoints  intro.Rmd episodes/intro.Rmd  keypoints  div-6-keypoints  90     TRUE</span></code></pre></div>
 <p>If there are invalid div names in the lesson, they will be reported. For example, the lesson we have right now, does not have any improper fenced div classes, but if we were to add an invalid fenced div (via the <code>add_md()</code> method in the <code><a href="https://docs.ropensci.org/tinkr/reference/yarn.html" class="external-link">tinkr::yarn()</a></code> class), we would be able to find out very quickly:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">our_div</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"::: exercise"</span>, <span class="st">"\nthis is an invalid div\n"</span>, <span class="st">":::"</span><span class="op">)</span>
@@ -249,14 +250,14 @@
 <p>You can see from the table that the <code>is_known</code> column now has a <code>FALSE</code> value:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">snd_divs</span>
-<span class="co">#|                                path        div         pb_label pos is_known</span>
-<span class="co">#| div-1-exercise   episodes/intro.Rmd   exercise   div-1-exercise  NA    FALSE</span>
-<span class="co">#| div-2-questions  episodes/intro.Rmd  questions  div-2-questions   7     TRUE</span>
-<span class="co">#| div-3-objectives episodes/intro.Rmd objectives div-3-objectives  13     TRUE</span>
-<span class="co">#| div-4-challenge  episodes/intro.Rmd  challenge  div-4-challenge  37     TRUE</span>
-<span class="co">#| div-5-solution   episodes/intro.Rmd   solution   div-5-solution  47     TRUE</span>
-<span class="co">#| div-6-solution   episodes/intro.Rmd   solution   div-6-solution  60     TRUE</span>
-<span class="co">#| div-7-keypoints  episodes/intro.Rmd  keypoints  div-7-keypoints  90     TRUE</span></code></pre></div>
+<span class="co">#|                   episodes               path        div         pb_label pos is_known</span>
+<span class="co">#| div-1-exercise   intro.Rmd episodes/intro.Rmd   exercise   div-1-exercise  NA    FALSE</span>
+<span class="co">#| div-2-questions  intro.Rmd episodes/intro.Rmd  questions  div-2-questions   7     TRUE</span>
+<span class="co">#| div-3-objectives intro.Rmd episodes/intro.Rmd objectives div-3-objectives  13     TRUE</span>
+<span class="co">#| div-4-challenge  intro.Rmd episodes/intro.Rmd  challenge  div-4-challenge  37     TRUE</span>
+<span class="co">#| div-5-solution   intro.Rmd episodes/intro.Rmd   solution   div-5-solution  47     TRUE</span>
+<span class="co">#| div-6-solution   intro.Rmd episodes/intro.Rmd   solution   div-6-solution  60     TRUE</span>
+<span class="co">#| div-7-keypoints  intro.Rmd episodes/intro.Rmd  keypoints  div-7-keypoints  90     TRUE</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="heading-validation">Heading Validation<a class="anchor" aria-label="anchor" href="#heading-validation"></a>

@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pegboard</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,6 +74,11 @@ between RMarkdown and markdown episodes</p>
 the episodes of the lesson.</p></dd>
 
 
+<dt><code>built</code></dt>
+<dd><p>[<code>list</code>] list of <a href="Episode.html">Episode</a> class objects representing
+the markdown artefacts rendered from RMarkdown files.</p></dd>
+
+
 <dt><code>extra</code></dt>
 <dd><p>[<code>list</code>] list of <a href="Episode.html">Episode</a> class objects representing
 the extra markdown components including index, setup, information
@@ -81,9 +86,15 @@ for learners, information for instructors, and learner profiles. This
 is not processed for the jekyll lessons.</p></dd>
 
 
+<dt><code>sandpaper</code></dt>
+<dd><p>[<code>logical</code>] when <code>TRUE</code>, the episodes in the lesson
+are written in pandoc flavoured markdown. <code>FALSE</code> would indicate a
+jekyll-based lesson written in kramdown.</p></dd>
+
+
 <dt><code>rmd</code></dt>
 <dd><p>[<code>logical</code>] when <code>TRUE</code>, the episodes represent RMarkdown
-files, default is <code>FALSE</code> for markdown files.</p></dd>
+files, default is <code>FALSE</code> for markdown files (deprecated and unused).</p></dd>
 
 
 </dl><p></p></div>
@@ -111,6 +122,9 @@ files, default is <code>FALSE</code> for markdown files.</p></dd>
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
 <ul><li><p><a href="#method-Lesson-new"><code>Lesson$new()</code></a></p></li>
+<li><p><a href="#method-Lesson-load_built"><code>Lesson$load_built()</code></a></p></li>
+<li><p><a href="#method-Lesson-get"><code>Lesson$get()</code></a></p></li>
+<li><p><a href="#method-Lesson-summary"><code>Lesson$summary()</code></a></p></li>
 <li><p><a href="#method-Lesson-blocks"><code>Lesson$blocks()</code></a></p></li>
 <li><p><a href="#method-Lesson-challenges"><code>Lesson$challenges()</code></a></p></li>
 <li><p><a href="#method-Lesson-solutions"><code>Lesson$solutions()</code></a></p></li>
@@ -169,15 +183,80 @@ extra content for learners, instructors, and profiles will be populated.</p></dd
 </div>
 
 
-</div><p></p><hr><a id="method-Lesson-blocks"></a><div class="section">
-<h3 id="method-blocks-">Method <code>blocks()</code><a class="anchor" aria-label="anchor" href="#method-blocks-"></a></h3>
-<p>Gather all of the blocks from the lesson in a list of xml_nodeset objects</p><div class="section">
+</div><p></p><hr><a id="method-Lesson-load_built"></a><div class="section">
+<h3 id="method-load-built-">Method <code>load_built()</code><a class="anchor" aria-label="anchor" href="#method-load-built-"></a></h3>
+<p>read in the markdown content generated from RMarkdown sources and load
+load them into memory</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Lesson</span><span class="op">$</span><span class="fu">blocks</span><span class="op">(</span>type <span class="op">=</span> <span class="cn">NULL</span>, level <span class="op">=</span> <span class="fl">0</span>, path <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Lesson</span><span class="op">$</span><span class="fu">load_built</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+</div>
+
+
+</div><p></p><hr><a id="method-Lesson-get"></a><div class="section">
+<h3 id="method-get-">Method <code><a href="https://rdrr.io/r/base/get.html" class="external-link">get()</a></code><a class="anchor" aria-label="anchor" href="#method-get-"></a></h3>
+<p>A getter for various active bindings in the <a href="Episode.html">Episode</a> class of objects.
+In practice this is syntactic sugar around
+<code>purrr::map(l$episodes, ~.x$element)</code></p><div class="section">
+<h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Lesson</span><span class="op">$</span><span class="fu">get</span><span class="op">(</span>element <span class="op">=</span> <span class="cn">NULL</span>, collection <span class="op">=</span> <span class="st">"episodes"</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>element</code></dt>
+<dd><p>[<code>character</code>] a defined element from the active bindings
+in the <a href="Episode.html">Episode</a> class. Defaults to NULL, which will return nothing.
+Elements that do not exist in the <a href="Episode.html">Episode</a> class will return NULL</p></dd>
+
+
+<dt><code>collection</code></dt>
+<dd><p>[<code>character</code>] one or more of "episodes" (default),
+"extra", or "built". Select <code>TRUE</code> to collect information from all files.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+<div class="section">
+<h4 id="examples-1">Examples<a class="anchor" aria-label="anchor" href="#examples-1"></a></h4>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">frg</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/Lesson.html">Lesson</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="../reference/lesson_fragment.html">lesson_fragment</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="va">frg</span><span class="op">$</span><span class="fu">get</span><span class="op">(</span><span class="st">"error"</span><span class="op">)</span> <span class="co"># error code blocks</span>
+<span class="va">frg</span><span class="op">$</span><span class="fu">get</span><span class="op">(</span><span class="st">"links"</span><span class="op">)</span> <span class="co"># links</span></code></pre></div><p></p></div>
+</div>
+
+
+</div><p></p><hr><a id="method-Lesson-summary"></a><div class="section">
+<h3 id="method-summary-">Method <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code><a class="anchor" aria-label="anchor" href="#method-summary-"></a></h3>
+<p>summary of element counts in each episode. This can be useful for
+assessing a broad overview of the lesson dynamics</p><div class="section">
+<h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Lesson</span><span class="op">$</span><span class="fu">summary</span><span class="op">(</span>collection <span class="op">=</span> <span class="st">"episodes"</span><span class="op">)</span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>collection</code></dt>
+<dd><p>[<code>character</code>] one or more of "episodes" (default),
+"extra", or "built". Select <code>TRUE</code> to collect information from all files.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+<div class="section">
+<h4 id="examples-2">Examples<a class="anchor" aria-label="anchor" href="#examples-2"></a></h4>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">frg</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/Lesson.html">Lesson</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="../reference/lesson_fragment.html">lesson_fragment</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="va">frg</span><span class="op">$</span><span class="fu">summary</span><span class="op">(</span><span class="op">)</span> <span class="co"># episode summary (default)</span></code></pre></div><p></p></div>
+</div>
+
+
+</div><p></p><hr><a id="method-Lesson-blocks"></a><div class="section">
+<h3 id="method-blocks-">Method <code>blocks()</code><a class="anchor" aria-label="anchor" href="#method-blocks-"></a></h3>
+<p>Gather all of the blocks from the lesson in a list of xml_nodeset objects</p><div class="section">
+<h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Lesson</span><span class="op">$</span><span class="fu">blocks</span><span class="op">(</span>type <span class="op">=</span> <span class="cn">NULL</span>, level <span class="op">=</span> <span class="fl">0</span>, path <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>type</code></dt>
 <dd><p>the type of block quote in the Jekyll syntax like ".challenge",
 ".discussion", or ".solution"</p></dd>
@@ -205,12 +284,12 @@ name of each episode.</p></dd>
 </div><p></p><hr><a id="method-Lesson-challenges"></a><div class="section">
 <h3 id="method-challenges-">Method <code>challenges()</code><a class="anchor" aria-label="anchor" href="#method-challenges-"></a></h3>
 <p>Gather all of the challenges from the lesson in a list of xml_nodeset objects</p><div class="section">
-<h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
+<h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Lesson</span><span class="op">$</span><span class="fu">challenges</span><span class="op">(</span>path <span class="op">=</span> <span class="cn">FALSE</span>, graph <span class="op">=</span> <span class="cn">FALSE</span>, recurse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
+<h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>path</code></dt>
 <dd><p>[<code>logical</code>] if <code>TRUE</code>, the names of each element
 will be equivalent to the path. The default is <code>FALSE</code>, which gives the
@@ -234,12 +313,12 @@ solutions in the output. See <a href="Episode.html">Episode</a> for more details
 </div><p></p><hr><a id="method-Lesson-solutions"></a><div class="section">
 <h3 id="method-solutions-">Method <code>solutions()</code><a class="anchor" aria-label="anchor" href="#method-solutions-"></a></h3>
 <p>Gather all of the solutions from the lesson in a list of xml_nodeset objects</p><div class="section">
-<h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
+<h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Lesson</span><span class="op">$</span><span class="fu">solutions</span><span class="op">(</span>path <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
+<h4 id="arguments-5">Arguments<a class="anchor" aria-label="anchor" href="#arguments-5"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>path</code></dt>
 <dd><p>[<code>logical</code>] if <code>TRUE</code>, the names of each element
 will be equivalent to the path. The default is <code>FALSE</code>, which gives the
@@ -252,12 +331,12 @@ name of each episode.</p></dd>
 </div><p></p><hr><a id="method-Lesson-thin"></a><div class="section">
 <h3 id="method-thin-">Method <code>thin()</code><a class="anchor" aria-label="anchor" href="#method-thin-"></a></h3>
 <p>Remove episodes that have no challenges</p><div class="section">
-<h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
+<h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Lesson</span><span class="op">$</span><span class="fu">thin</span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
+<h4 id="arguments-6">Arguments<a class="anchor" aria-label="anchor" href="#arguments-6"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>verbose</code></dt>
 <dd><p>[<code>logical</code>] if <code>TRUE</code> (default), the names of each
 episode removed is reported. Set to <code>FALSE</code> to remove this behavior.</p></dd>
@@ -270,7 +349,7 @@ episode removed is reported. Set to <code>FALSE</code> to remove this behavior.<
 <p>the Lesson object, invisibly</p>
 </div>
 <div class="section">
-<h4 id="examples-1">Examples<a class="anchor" aria-label="anchor" href="#examples-1"></a></h4>
+<h4 id="examples-3">Examples<a class="anchor" aria-label="anchor" href="#examples-3"></a></h4>
 <p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">frg</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/Lesson.html">Lesson</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="../reference/lesson_fragment.html">lesson_fragment</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="va">frg</span><span class="op">$</span><span class="fu">thin</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
@@ -279,7 +358,7 @@ episode removed is reported. Set to <code>FALSE</code> to remove this behavior.<
 </div><p></p><hr><a id="method-Lesson-reset"></a><div class="section">
 <h3 id="method-reset-">Method <code>reset()</code><a class="anchor" aria-label="anchor" href="#method-reset-"></a></h3>
 <p>Re-read all Episodes from disk</p><div class="section">
-<h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
+<h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Lesson</span><span class="op">$</span><span class="fu">reset</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
@@ -288,7 +367,7 @@ episode removed is reported. Set to <code>FALSE</code> to remove this behavior.<
 <p>the Lesson object</p>
 </div>
 <div class="section">
-<h4 id="examples-2">Examples<a class="anchor" aria-label="anchor" href="#examples-2"></a></h4>
+<h4 id="examples-4">Examples<a class="anchor" aria-label="anchor" href="#examples-4"></a></h4>
 <p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">frg</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/Lesson.html">Lesson</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="../reference/lesson_fragment.html">lesson_fragment</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="va">frg</span><span class="op">$</span><span class="va">episodes</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">body</span>
 <span class="va">frg</span><span class="op">$</span><span class="fu">isolate_blocks</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">episodes</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">body</span> <span class="co"># empty</span>
@@ -300,7 +379,7 @@ episode removed is reported. Set to <code>FALSE</code> to remove this behavior.<
 <h3 id="method-isolate-blocks-">Method <code>isolate_blocks()</code><a class="anchor" aria-label="anchor" href="#method-isolate-blocks-"></a></h3>
 <p>Remove all elements except for those within block quotes that have a
 kramdown tag. Note that this is a destructive process.</p><div class="section">
-<h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
+<h4 id="usage-9">Usage<a class="anchor" aria-label="anchor" href="#usage-9"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Lesson</span><span class="op">$</span><span class="fu">isolate_blocks</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
@@ -309,7 +388,7 @@ kramdown tag. Note that this is a destructive process.</p><div class="section">
 <p>the Episode object, invisibly</p>
 </div>
 <div class="section">
-<h4 id="examples-3">Examples<a class="anchor" aria-label="anchor" href="#examples-3"></a></h4>
+<h4 id="examples-5">Examples<a class="anchor" aria-label="anchor" href="#examples-5"></a></h4>
 <p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">frg</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/Lesson.html">Lesson</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="../reference/lesson_fragment.html">lesson_fragment</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="va">frg</span><span class="op">$</span><span class="fu">isolate_blocks</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">body</span> <span class="co"># only one challenge block_quote</span></code></pre></div><p></p></div>
 </div>
@@ -318,12 +397,12 @@ kramdown tag. Note that this is a destructive process.</p><div class="section">
 </div><p></p><hr><a id="method-Lesson-handout"></a><div class="section">
 <h3 id="method-handout-">Method <code>handout()</code><a class="anchor" aria-label="anchor" href="#method-handout-"></a></h3>
 <p>create a handout for all episodes in the lesson</p><div class="section">
-<h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
+<h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Lesson</span><span class="op">$</span><span class="fu">handout</span><span class="op">(</span>path <span class="op">=</span> <span class="cn">NULL</span>, solution <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-5">Arguments<a class="anchor" aria-label="anchor" href="#arguments-5"></a></h4>
+<h4 id="arguments-7">Arguments<a class="anchor" aria-label="anchor" href="#arguments-7"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>path</code></dt>
 <dd><p>the path to the R Markdown file to be written. If <code>NULL</code>
 (default), no file will be written and the lines of the output document
@@ -342,7 +421,7 @@ will be returned.</p></dd>
 itself is returned.</p>
 </div>
 <div class="section">
-<h4 id="examples-4">Examples<a class="anchor" aria-label="anchor" href="#examples-4"></a></h4>
+<h4 id="examples-6">Examples<a class="anchor" aria-label="anchor" href="#examples-6"></a></h4>
 <p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">lsn</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/Lesson.html">Lesson</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="../reference/lesson_fragment.html">lesson_fragment</a></span><span class="op">(</span><span class="st">"sandpaper-fragment"</span><span class="op">)</span>, jekyll <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">lsn</span><span class="op">$</span><span class="fu">handout</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">lsn</span><span class="op">$</span><span class="fu">handout</span><span class="op">(</span>solution <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div><p></p></div>
@@ -359,12 +438,12 @@ requirements. See the internal <code><a href="validate_headings.html">validate_h
 <li><p>have names (<code>have_names</code>)</p></li>
 <li><p>unique in their own hierarchy (<code>are_unique</code>)</p></li>
 </ul><div class="section">
-<h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
+<h4 id="usage-11">Usage<a class="anchor" aria-label="anchor" href="#usage-11"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Lesson</span><span class="op">$</span><span class="fu">validate_headings</span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-6">Arguments<a class="anchor" aria-label="anchor" href="#arguments-6"></a></h4>
+<h4 id="arguments-8">Arguments<a class="anchor" aria-label="anchor" href="#arguments-8"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>verbose</code></dt>
 <dd><p>if <code>TRUE</code>, the heading tree will be printed to the console
 with any warnings assocated with the validators</p></dd>
@@ -386,7 +465,7 @@ columns:</p><ul><li><p><strong>episode</strong> the filename of the episode</p><
 Lesson. See <code><a href="validate_headings.html">validate_headings()</a></code> for more details.</p>
 </div>
 <div class="section">
-<h4 id="examples-5">Examples<a class="anchor" aria-label="anchor" href="#examples-5"></a></h4>
+<h4 id="examples-7">Examples<a class="anchor" aria-label="anchor" href="#examples-7"></a></h4>
 <p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">frg</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/Lesson.html">Lesson</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="../reference/lesson_fragment.html">lesson_fragment</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="va">frg</span><span class="op">$</span><span class="fu">validate_headings</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
@@ -401,12 +480,12 @@ details.</p><div class="section">
 <ul><li><p>divs are known (<code>is_known</code>)</p></li>
 </ul></div>
 <div class="section">
-<h4 id="usage-9">Usage<a class="anchor" aria-label="anchor" href="#usage-9"></a></h4>
+<h4 id="usage-12">Usage<a class="anchor" aria-label="anchor" href="#usage-12"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Lesson</span><span class="op">$</span><span class="fu">validate_divs</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-7">Arguments<a class="anchor" aria-label="anchor" href="#arguments-7"></a></h4>
+<h4 id="arguments-9">Arguments<a class="anchor" aria-label="anchor" href="#arguments-9"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>verbose</code></dt>
 <dd><p>if <code>TRUE</code> (default), Any failed tests will be printed to
 the console as a message giving information of where in the document
@@ -423,7 +502,7 @@ the type of validation. See the same method in the <a href="Episode.html">Episod
 details.</p>
 </div>
 <div class="section">
-<h4 id="examples-6">Examples<a class="anchor" aria-label="anchor" href="#examples-6"></a></h4>
+<h4 id="examples-8">Examples<a class="anchor" aria-label="anchor" href="#examples-8"></a></h4>
 <p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">frg</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/Lesson.html">Lesson</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="../reference/lesson_fragment.html">lesson_fragment</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="va">frg</span><span class="op">$</span><span class="fu">validate_divs</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
@@ -443,12 +522,12 @@ internal <code><a href="validate_links.html">validate_links()</a></code> for det
 <li><p>Link text is more than a single letter (<code>link_length</code>)</p></li>
 </ul></div>
 <div class="section">
-<h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
+<h4 id="usage-13">Usage<a class="anchor" aria-label="anchor" href="#usage-13"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Lesson</span><span class="op">$</span><span class="fu">validate_links</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-8">Arguments<a class="anchor" aria-label="anchor" href="#arguments-8"></a></h4>
+<h4 id="arguments-10">Arguments<a class="anchor" aria-label="anchor" href="#arguments-10"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>verbose</code></dt>
 <dd><p>if <code>TRUE</code> (default), Any failed tests will be printed to
 the console as a message giving information of where in the document
@@ -465,7 +544,7 @@ the type of validation. See the same method in the <a href="Episode.html">Episod
 details.</p>
 </div>
 <div class="section">
-<h4 id="examples-7">Examples<a class="anchor" aria-label="anchor" href="#examples-7"></a></h4>
+<h4 id="examples-9">Examples<a class="anchor" aria-label="anchor" href="#examples-9"></a></h4>
 <p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">frg</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/Lesson.html">Lesson</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="../reference/lesson_fragment.html">lesson_fragment</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="va">frg</span><span class="op">$</span><span class="fu">validate_links</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
@@ -474,12 +553,12 @@ details.</p>
 </div><p></p><hr><a id="method-Lesson-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
-<h4 id="usage-11">Usage<a class="anchor" aria-label="anchor" href="#usage-11"></a></h4>
+<h4 id="usage-14">Usage<a class="anchor" aria-label="anchor" href="#usage-14"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Lesson</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-9">Arguments<a class="anchor" aria-label="anchor" href="#arguments-9"></a></h4>
+<h4 id="arguments-11">Arguments<a class="anchor" aria-label="anchor" href="#arguments-11"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
 
@@ -544,6 +623,7 @@ details.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     show: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     show_problems: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     solutions: active binding</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     summary: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     tags: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     tail: function (n = 6L) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     unblock: function (token = "#'") </span>
@@ -552,6 +632,7 @@ details.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_divs: function (warn = TRUE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_headings: function (verbose = TRUE, warn = TRUE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_links: function (warn = TRUE) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     warning: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     write: function (path = NULL, format = "md", edit = FALSE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     yaml: --- layout: break title: "Lunch" teaching: 0 exercises:  ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Private:</span>
@@ -606,6 +687,7 @@ details.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     show: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     show_problems: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     solutions: active binding</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     summary: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     tags: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     tail: function (n = 6L) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     unblock: function (token = "#'") </span>
@@ -614,6 +696,7 @@ details.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_divs: function (warn = TRUE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_headings: function (verbose = TRUE, warn = TRUE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_links: function (warn = TRUE) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     warning: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     write: function (path = NULL, format = "md", edit = FALSE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     yaml: --- title: "For Loops" teaching: 10 exercises: 15 questi ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Private:</span>
@@ -668,6 +751,7 @@ details.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     show: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     show_problems: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     solutions: active binding</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     summary: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     tags: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     tail: function (n = 6L) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     unblock: function (token = "#'") </span>
@@ -676,6 +760,7 @@ details.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_divs: function (warn = TRUE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_headings: function (verbose = TRUE, warn = TRUE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_links: function (warn = TRUE) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     warning: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     write: function (path = NULL, format = "md", edit = FALSE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     yaml: --- title: "Looping Over Data Sets" teaching: 5 exercise ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Private:</span>
@@ -730,6 +815,7 @@ details.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     show: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     show_problems: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     solutions: active binding</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     summary: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     tags: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     tail: function (n = 6L) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     unblock: function (token = "#'") </span>
@@ -738,6 +824,7 @@ details.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_divs: function (warn = TRUE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_headings: function (verbose = TRUE, warn = TRUE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_links: function (warn = TRUE) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     warning: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     write: function (path = NULL, format = "md", edit = FALSE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     yaml: --- title: "Variable Scope" teaching: 10 exercises: 10 q ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Private:</span>
@@ -750,6 +837,67 @@ details.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     record_problem: function (x) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     sourcepos: TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
+<span class="r-in"><span class="co">## Method `Lesson$get`</span></span>
+<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="va">frg</span> <span class="op">&lt;-</span> <span class="va">Lesson</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="lesson_fragment.html">lesson_fragment</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">frg</span><span class="op">$</span><span class="fu">get</span><span class="op">(</span><span class="st">"error"</span><span class="op">)</span> <span class="co"># error code blocks</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`10-lunch.md`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> {xml_nodeset (0)}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`12-for-loops.md`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> {xml_nodeset (2)}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] &lt;code_block sourcepos="58:1-60:3" xml:space="preserve" name="" ktag="{: . ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] &lt;code_block sourcepos="70:1-75:3" xml:space="preserve" name="" ktag="{: . ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`14-looping-data-sets.md`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> {xml_nodeset (0)}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`17-scope.md`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> {xml_nodeset (2)}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] &lt;code_block sourcepos="37:1-42:3" xml:space="preserve" name="" ktag="{: . ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] &lt;code_block sourcepos="73:3-93:5" xml:space="preserve" name="" ktag="{: . ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span class="va">frg</span><span class="op">$</span><span class="fu">get</span><span class="op">(</span><span class="st">"links"</span><span class="op">)</span> <span class="co"># links</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`10-lunch.md`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> {xml_nodeset (0)}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`12-for-loops.md`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> {xml_nodeset (1)}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] &lt;link sourcepos="115:27-115:90" destination="https://docs.python.org/3/li ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`14-looping-data-sets.md`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> {xml_nodeset (8)}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] &lt;link sourcepos="36:8-36:75" destination="https://docs.python.org/3/libra ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] &lt;link sourcepos="42:25-42:77" destination="https://docs.python.org/3/libr ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3] &lt;link sourcepos="43:9-43:61" destination="https://docs.python.org/3/libra ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4] &lt;link sourcepos="125:17-125:118" destination="https://pandas.pydata.org/p ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5] &lt;link sourcepos="148:62-148:129" destination="https://docs.python.org/3/l ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6] &lt;link xmlns="http://commonmark.org/xml/1.0" destination="{{ page.root }}/ ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7] &lt;link xmlns="http://commonmark.org/xml/1.0" destination="{{ site.swc_page ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8] &lt;link xmlns="http://commonmark.org/xml/1.0" destination="{{ page.root }}{ ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`17-scope.md`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> {xml_nodeset (0)}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
+<span class="r-in"><span class="co">## Method `Lesson$summary`</span></span>
+<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="va">frg</span> <span class="op">&lt;-</span> <span class="va">Lesson</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="lesson_fragment.html">lesson_fragment</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">frg</span><span class="op">$</span><span class="fu">summary</span><span class="op">(</span><span class="op">)</span> <span class="co"># episode summary (default)</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Summary not guaranteed for styles-based lessons</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 12</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   page      sections headings callouts challenges solutions  code output warning</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 10-lunch…        0        0        0          0         0     0      0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 12-for-l…       24       24        7          7        10    32      4       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 14-loopi…        9       10        3          3         3    11      4       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 17-scope…        3        3        2          2         0     6      1       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 3 more variables: error &lt;int&gt;, images &lt;int&gt;, links &lt;int&gt;</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## ------------------------------------------------</span></span>
 <span class="r-in"><span class="co">## Method `Lesson$thin`</span></span>

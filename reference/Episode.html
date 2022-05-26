@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pegboard</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -122,6 +122,10 @@ destructively modified in the conversion.</p>
 <dd><p>[<code>xml_nodeset</code>] all the error blocks from the episode</p></dd>
 
 
+<dt><code>warning</code></dt>
+<dd><p>[<code>xml_nodeset</code>] all the warning blocks from the episode</p></dd>
+
+
 <dt><code>code</code></dt>
 <dd><p>[<code>xml_nodeset</code>] all the code blocks from the episode</p></dd>
 
@@ -165,6 +169,7 @@ destructively modified in the conversion.</p>
 <li><p><a href="#method-Episode-reset"><code>Episode$reset()</code></a></p></li>
 <li><p><a href="#method-Episode-isolate_blocks"><code>Episode$isolate_blocks()</code></a></p></li>
 <li><p><a href="#method-Episode-unblock"><code>Episode$unblock()</code></a></p></li>
+<li><p><a href="#method-Episode-summary"><code>Episode$summary()</code></a></p></li>
 <li><p><a href="#method-Episode-validate_headings"><code>Episode$validate_headings()</code></a></p></li>
 <li><p><a href="#method-Episode-validate_divs"><code>Episode$validate_divs()</code></a></p></li>
 <li><p><a href="#method-Episode-validate_links"><code>Episode$validate_links()</code></a></p></li>
@@ -689,6 +694,28 @@ kramdown tag. Note that this is a destructive process.</p><div class="section">
 </div>
 
 
+</div><p></p><hr><a id="method-Episode-summary"></a><div class="section">
+<h3 id="method-summary-">Method <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code><a class="anchor" aria-label="anchor" href="#method-summary-"></a></h3>
+<p>Get a high-level summary of the elements in the episode</p><div class="section">
+<h4 id="usage-23">Usage<a class="anchor" aria-label="anchor" href="#usage-23"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Episode</span><span class="op">$</span><span class="fu">summary</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="returns-12">Returns<a class="anchor" aria-label="anchor" href="#returns-12"></a></h4>
+<p>a data frame with counts of the following elements per page:</p><ul><li><p>sections: level 2 headings</p></li>
+<li><p>headings: all headings</p></li>
+<li><p>callouts: all callouts</p></li>
+<li><p>challenges: subset of callouts</p></li>
+<li><p>solutions: subset of callouts</p></li>
+<li><p>code: all code block elements (excluding inline code)</p></li>
+<li><p>output: subset of code that is displayed as output</p></li>
+<li><p>warnining: subset of code that is displayed as a warning</p></li>
+<li><p>error: subset of code that is displayed as an error</p></li>
+<li><p>images: all images in markdown or HTML</p></li>
+<li><p>links: all links in markdown or HTML</p></li>
+</ul></div>
+
 </div><p></p><hr><a id="method-Episode-validate_headings"></a><div class="section">
 <h3 id="method-validate-headings-">Method <code><a href="validate_headings.html">validate_headings()</a></code><a class="anchor" aria-label="anchor" href="#method-validate-headings-"></a></h3>
 <p>perform validation on headings in a document.</p>
@@ -698,7 +725,7 @@ kramdown tag. Note that this is a destructive process.</p><div class="section">
 <li><p>have names (<code>have_names</code>)</p></li>
 <li><p>unique in their own hierarchy (<code>are_unique</code>)</p></li>
 </ul><div class="section">
-<h4 id="usage-23">Usage<a class="anchor" aria-label="anchor" href="#usage-23"></a></h4>
+<h4 id="usage-24">Usage<a class="anchor" aria-label="anchor" href="#usage-24"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Episode</span><span class="op">$</span><span class="fu">validate_headings</span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">TRUE</span>, warn <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
@@ -717,7 +744,7 @@ any failures in the tests.</p></dd>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-12">Returns<a class="anchor" aria-label="anchor" href="#returns-12"></a></h4>
+<h4 id="returns-13">Returns<a class="anchor" aria-label="anchor" href="#returns-13"></a></h4>
 <p>a data frame with a variable number of rows and the follwoing
 columns:</p><ul><li><p><strong>episode</strong> the filename of the episode</p></li>
 <li><p><strong>heading</strong> the text from a heading</p></li>
@@ -744,7 +771,7 @@ Lesson. See <code><a href="validate_headings.html">validate_headings()</a></code
 <p>This will validate the following aspects of divs. See <code><a href="validate_divs.html">validate_divs()</a></code>
 for details.</p><ul><li><p>divs are of a known type (<code>is_known</code>)</p></li>
 </ul><div class="section">
-<h4 id="usage-24">Usage<a class="anchor" aria-label="anchor" href="#usage-24"></a></h4>
+<h4 id="usage-25">Usage<a class="anchor" aria-label="anchor" href="#usage-25"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Episode</span><span class="op">$</span><span class="fu">validate_divs</span><span class="op">(</span>warn <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
@@ -759,7 +786,7 @@ table for processing later.</p></dd>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-13">Returns<a class="anchor" aria-label="anchor" href="#returns-13"></a></h4>
+<h4 id="returns-14">Returns<a class="anchor" aria-label="anchor" href="#returns-14"></a></h4>
 <p>a logical <code>TRUE</code> for valid divs and <code>FALSE</code> for invalid
 divs.</p>
 </div>
@@ -781,7 +808,7 @@ for details.</p><ul><li><p>External links use HTTPS (<code>enforce_https</code>)
 <li><p>Link text is descriptive (<code>descriptive</code>)</p></li>
 <li><p>Link text is more than a single letter (<code>link_length</code>)</p></li>
 </ul><div class="section">
-<h4 id="usage-25">Usage<a class="anchor" aria-label="anchor" href="#usage-25"></a></h4>
+<h4 id="usage-26">Usage<a class="anchor" aria-label="anchor" href="#usage-26"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Episode</span><span class="op">$</span><span class="fu">validate_links</span><span class="op">(</span>warn <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
@@ -796,7 +823,7 @@ table for processing later.</p></dd>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-14">Returns<a class="anchor" aria-label="anchor" href="#returns-14"></a></h4>
+<h4 id="returns-15">Returns<a class="anchor" aria-label="anchor" href="#returns-15"></a></h4>
 <p>a logical <code>TRUE</code> for valid links and <code>FALSE</code> for invalid
 links.</p>
 </div>
@@ -810,7 +837,7 @@ links.</p>
 </div><p></p><hr><a id="method-Episode-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
-<h4 id="usage-26">Usage<a class="anchor" aria-label="anchor" href="#usage-26"></a></h4>
+<h4 id="usage-27">Usage<a class="anchor" aria-label="anchor" href="#usage-27"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Episode</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
@@ -1050,7 +1077,7 @@ links.</p>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">scope</span> <span class="op">&lt;-</span> <span class="va">Episode</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="lesson_fragment.html">lesson_fragment</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"_episodes"</span>, <span class="st">"17-scope.md"</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">scope</span><span class="op">$</span><span class="fu">write</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Creating temporary directory '/tmp/RtmpYoW7sM/dir41b01fa21520'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Creating temporary directory '/tmp/RtmpxEYsp3/dir4108580db96d'</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## ------------------------------------------------</span></span>
 <span class="r-in"><span class="co">## Method `Episode$handout`</span></span>
