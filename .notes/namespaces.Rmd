@@ -136,14 +136,14 @@ x <- read_xml(lst)
 ```
 
 The document has a namespace that points to "http://commonmark.org/xml/1.0" and
-that's used in the [stylesheet for {tinkr}](https://github.com/ropenscilabs/tinkr/blob/4980e816d876a86bb1ea07fe2b564701bc4bce22/inst/extdata/xml2md_gfm.xsl#L4-L5).
+that's used in the [stylesheet for {tinkr}](https://github.com/ropenscilabs/tinkr/blob/4980e816d876a86bb1ea07fe2b564701bc4bce22/inst/stylesheets/xml2md_gfm.xsl#L4-L5).
 
 If an item is in the commonmark namespace, it will be processed by the
 stylesheet. Tinkr does this via the {xslt} package, which provides an interface to the tempaltes and outputs text:
 
 ```{r xslt}
 library(xslt)
-stylesheet <- read_xml(system.file("extdata", "xml2md_gfm.xsl", package = "tinkr"))
+stylesheet <- read_xml(tinkr::stylesheet())
 cat(xslt::xml_xslt(x, stylesheet))
 xlist <- xml_find_first(x, ".//d1:list")
 xlist
@@ -230,7 +230,7 @@ break away from the {tinkr} package and focus on {commonmark} and {xslt}:
 
 
 ```{r}
-stylesheet <- read_xml(system.file("extdata", "xml2md_gfm.xsl", package = "tinkr"))
+stylesheet <- read_xml(tinkr::stylesheet())
 message(md <- "# hello\n\n`code` text\n\n```{r}\ncat('a code block')\n```")
 message(xmd <- commonmark::markdown_xml(md))
 x <- xml2::read_xml(xmd)
