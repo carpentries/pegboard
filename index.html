@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
 <meta property="og:title" content="The Carpentries Lesson Validator">
@@ -37,7 +37,7 @@
     
     <a class="navbar-brand me-2" href="index.html">pegboard</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -99,172 +99,172 @@
 </h2>
 <p>{pegboard} is not currently on CRAN, but it can be installed from our <a href="https://carpentries.r-universe.dev/ui#builds" class="external-link">Carpentries Universe</a> (updated every hour) with the following commands:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
-  carpentries <span class="op">=</span> <span class="st">"https://carpentries.r-universe.dev/"</span>, 
-  CRAN <span class="op">=</span> <span class="st">"https://cran.rstudio.com/"</span>
-<span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pegboard"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>  carpentries <span class="op">=</span> <span class="st">"https://carpentries.r-universe.dev/"</span>, </span>
+<span>  CRAN <span class="op">=</span> <span class="st">"https://cran.rstudio.com/"</span></span>
+<span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pegboard"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
 <p>The first way to get started is to use the <code><a href="reference/get_lesson.html">get_lesson()</a></code> function, which will use <a href="https://r-lib.github.io/gert/" class="external-link">{gert}</a> to clone a lesson repository to your computer.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://carpentries.github.io/pegboard">pegboard</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org" class="external-link">purrr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://xml2.r-lib.org/" class="external-link">xml2</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://fs.r-lib.org" class="external-link">fs</a></span><span class="op">)</span>
-
-<span class="va">d</span> <span class="op">&lt;-</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/file_temp.html" class="external-link">file_temp</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"PBREADME"</span><span class="op">)</span>
-<span class="va">rng</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_lesson.html">get_lesson</a></span><span class="op">(</span><span class="st">"swcarpentry/r-novice-gapminder"</span>, path <span class="op">=</span> <span class="va">d</span><span class="op">)</span>
-<span class="va">rng</span>
-<span class="co">#| &lt;Lesson&gt;</span>
-<span class="co">#|   Public:</span>
-<span class="co">#|     blocks: function (type = NULL, level = 0, path = FALSE) </span>
-<span class="co">#|     challenges: function (path = FALSE, graph = FALSE, recurse = TRUE) </span>
-<span class="co">#|     clone: function (deep = FALSE) </span>
-<span class="co">#|     episodes: list</span>
-<span class="co">#|     extra: NULL</span>
-<span class="co">#|     files: active binding</span>
-<span class="co">#|     handout: function (path = NULL, solution = FALSE) </span>
-<span class="co">#|     initialize: function (path = ".", rmd = FALSE, jekyll = TRUE, ...) </span>
-<span class="co">#|     isolate_blocks: function () </span>
-<span class="co">#|     n_problems: active binding</span>
-<span class="co">#|     path: /tmp/RtmpiFx66M/PBREADME2e8ce44ac37e8/swcarpentry--r-nov ...</span>
-<span class="co">#|     reset: function () </span>
-<span class="co">#|     rmd: TRUE</span>
-<span class="co">#|     show_problems: active binding</span>
-<span class="co">#|     solutions: function (path = FALSE) </span>
-<span class="co">#|     thin: function (verbose = TRUE) </span>
-<span class="co">#|     validate_divs: function () </span>
-<span class="co">#|     validate_headings: function (verbose = TRUE) </span>
-<span class="co">#|     validate_links: function () </span>
-<span class="co">#|   Private:</span>
-<span class="co">#|     deep_clone: function (name, value)</span>
-
-<span class="co"># Find all challenges</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rng</span><span class="op">$</span><span class="fu">challenges</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#| $`01-rstudio-intro.Rmd`</span>
-<span class="co">#| {xml_nodeset (5)}</span>
-<span class="co">#| [1] &lt;block_quote sourcepos="357:1-393:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [2] &lt;block_quote sourcepos="511:1-547:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [3] &lt;block_quote sourcepos="550:1-563:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [4] &lt;block_quote sourcepos="566:1-578:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [5] &lt;block_quote sourcepos="581:1-599:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| </span>
-<span class="co">#| $`02-project-intro.Rmd`</span>
-<span class="co">#| {xml_nodeset (5)}</span>
-<span class="co">#| [1] &lt;block_quote sourcepos="47:1-57:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="4 ...</span>
-<span class="co">#| [2] &lt;block_quote sourcepos="68:1-74:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="6 ...</span>
-<span class="co">#| [3] &lt;block_quote sourcepos="133:1-141:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [4] &lt;block_quote sourcepos="143:1-167:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [5] &lt;block_quote sourcepos="181:1-192:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| </span>
-<span class="co">#| $`03-seeking-help.Rmd`</span>
-<span class="co">#| {xml_nodeset (3)}</span>
-<span class="co">#| [1] &lt;block_quote sourcepos="119:1-135:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [2] &lt;block_quote sourcepos="137:1-167:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [3] &lt;block_quote sourcepos="169:1-186:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| </span>
-<span class="co">#| $`04-data-structures-part1.Rmd`</span>
-<span class="co">#| {xml_nodeset (7)}</span>
-<span class="co">#| [1] &lt;block_quote sourcepos="333:1-347:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [2] &lt;block_quote sourcepos="417:1-445:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [3] &lt;block_quote sourcepos="507:1-566:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [4] &lt;block_quote sourcepos="588:1-608:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [5] &lt;block_quote sourcepos="611:1-634:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [6] &lt;block_quote sourcepos="637:1-657:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [7] &lt;block_quote sourcepos="660:1-688:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| </span>
-<span class="co">#| $`05-data-structures-part2.Rmd`</span>
-<span class="co">#| {xml_nodeset (5)}</span>
-<span class="co">#| [1] &lt;block_quote sourcepos="100:1-111:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [2] &lt;block_quote sourcepos="183:1-211:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [3] &lt;block_quote sourcepos="315:1-339:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [4] &lt;block_quote sourcepos="345:1-374:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [5] &lt;block_quote sourcepos="376:1-392:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| </span>
-<span class="co">#| $`06-data-subsetting.Rmd`</span>
-<span class="co">#| {xml_nodeset (8)}</span>
-<span class="co">#| [1] &lt;block_quote sourcepos="143:1-174:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [2] &lt;block_quote sourcepos="245:1-264:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [3] &lt;block_quote sourcepos="345:1-387:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [4] &lt;block_quote sourcepos="497:1-520:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [5] &lt;block_quote sourcepos="581:1-603:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [6] &lt;block_quote sourcepos="606:1-624:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [7] &lt;block_quote sourcepos="667:1-745:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-<span class="co">#| [8] &lt;block_quote sourcepos="747:1-765:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span>
-
-<span class="co"># Find all solutions</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rng</span><span class="op">$</span><span class="fu">solutions</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#| $`01-rstudio-intro.Rmd`</span>
-<span class="co">#| {xml_nodeset (5)}</span>
-<span class="co">#| [1] &lt;block_quote sourcepos="371:3-391:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="3 ...</span>
-<span class="co">#| [2] &lt;block_quote sourcepos="523:3-547:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span>
-<span class="co">#| [3] &lt;block_quote sourcepos="555:3-563:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span>
-<span class="co">#| [4] &lt;block_quote sourcepos="571:3-576:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="5 ...</span>
-<span class="co">#| [5] &lt;block_quote sourcepos="585:3-597:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="5 ...</span>
-<span class="co">#| </span>
-<span class="co">#| $`02-project-intro.Rmd`</span>
-<span class="co">#| {xml_nodeset (1)}</span>
-<span class="co">#| [1] &lt;block_quote sourcepos="152:3-165:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="1 ...</span>
-<span class="co">#| </span>
-<span class="co">#| $`03-seeking-help.Rmd`</span>
-<span class="co">#| {xml_nodeset (3)}</span>
-<span class="co">#| [1] &lt;block_quote sourcepos="128:3-135:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span>
-<span class="co">#| [2] &lt;block_quote sourcepos="142:3-167:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span>
-<span class="co">#| [3] &lt;block_quote sourcepos="177:3-186:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span>
-<span class="co">#| </span>
-<span class="co">#| $`04-data-structures-part1.Rmd`</span>
-<span class="co">#| {xml_nodeset (8)}</span>
-<span class="co">#| [1] &lt;block_quote sourcepos="226:3-235:15" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span>
-<span class="co">#| [2] &lt;block_quote sourcepos="339:3-345:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="3 ...</span>
-<span class="co">#| [3] &lt;block_quote sourcepos="424:3-445:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span>
-<span class="co">#| [4] &lt;block_quote sourcepos="524:3-566:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span>
-<span class="co">#| [5] &lt;block_quote sourcepos="595:3-608:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span>
-<span class="co">#| [6] &lt;block_quote sourcepos="620:3-632:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="6 ...</span>
-<span class="co">#| [7] &lt;block_quote sourcepos="646:3-655:3" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="6 ...</span>
-<span class="co">#| [8] &lt;block_quote sourcepos="675:3-686:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="6 ...</span>
-<span class="co">#| </span>
-<span class="co">#| $`05-data-structures-part2.Rmd`</span>
-<span class="co">#| {xml_nodeset (5)}</span>
-<span class="co">#| [1] &lt;block_quote sourcepos="106:3-111:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span>
-<span class="co">#| [2] &lt;block_quote sourcepos="201:3-209:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="2 ...</span>
-<span class="co">#| [3] &lt;block_quote sourcepos="321:3-339:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span>
-<span class="co">#| [4] &lt;block_quote sourcepos="354:3-372:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="3 ...</span>
-<span class="co">#| [5] &lt;block_quote sourcepos="384:3-390:3" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="3 ...</span>
-<span class="co">#| </span>
-<span class="co">#| $`06-data-subsetting.Rmd`</span>
-<span class="co">#| {xml_nodeset (8)}</span>
-<span class="co">#| [1] &lt;block_quote sourcepos="161:3-172:3" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="1 ...</span>
-<span class="co">#| [2] &lt;block_quote sourcepos="257:3-262:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="2 ...</span>
-<span class="co">#| [3] &lt;block_quote sourcepos="370:3-387:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span>
-<span class="co">#| [4] &lt;block_quote sourcepos="516:3-520:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span>
-<span class="co">#| [5] &lt;block_quote sourcepos="591:3-601:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="5 ...</span>
-<span class="co">#| [6] &lt;block_quote sourcepos="615:3-622:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="6 ...</span>
-<span class="co">#| [7] &lt;block_quote sourcepos="703:3-743:11" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span>
-<span class="co">#| [8] &lt;block_quote sourcepos="755:3-763:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="7 ...</span>
-
-<span class="co"># Find all discussion blocks</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rng</span><span class="op">$</span><span class="fu">blocks</span><span class="op">(</span><span class="st">".discussion"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#| $`01-rstudio-intro.Rmd`</span>
-<span class="co">#| {xml_nodeset (0)}</span>
-<span class="co">#| </span>
-<span class="co">#| $`02-project-intro.Rmd`</span>
-<span class="co">#| {xml_nodeset (0)}</span>
-<span class="co">#| </span>
-<span class="co">#| $`03-seeking-help.Rmd`</span>
-<span class="co">#| {xml_nodeset (0)}</span>
-<span class="co">#| </span>
-<span class="co">#| $`04-data-structures-part1.Rmd`</span>
-<span class="co">#| {xml_nodeset (1)}</span>
-<span class="co">#| [1] &lt;block_quote sourcepos="221:1-235:15" ktag="{: .discussion}"&gt;\n  &lt;heading sourcepos ...</span>
-<span class="co">#| </span>
-<span class="co">#| $`05-data-structures-part2.Rmd`</span>
-<span class="co">#| {xml_nodeset (0)}</span>
-<span class="co">#| </span>
-<span class="co">#| $`06-data-subsetting.Rmd`</span>
-<span class="co">#| {xml_nodeset (0)}</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://carpentries.github.io/pegboard">pegboard</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org" class="external-link">purrr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://xml2.r-lib.org/" class="external-link">xml2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://fs.r-lib.org" class="external-link">fs</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/file_temp.html" class="external-link">file_temp</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"PBREADME"</span><span class="op">)</span></span>
+<span><span class="va">rng</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_lesson.html">get_lesson</a></span><span class="op">(</span><span class="st">"swcarpentry/r-novice-gapminder"</span>, path <span class="op">=</span> <span class="va">d</span><span class="op">)</span></span>
+<span><span class="va">rng</span></span>
+<span><span class="co">#| &lt;Lesson&gt;</span></span>
+<span><span class="co">#|   Public:</span></span>
+<span><span class="co">#|     blocks: function (type = NULL, level = 0, path = FALSE) </span></span>
+<span><span class="co">#|     challenges: function (path = FALSE, graph = FALSE, recurse = TRUE) </span></span>
+<span><span class="co">#|     clone: function (deep = FALSE) </span></span>
+<span><span class="co">#|     episodes: list</span></span>
+<span><span class="co">#|     extra: NULL</span></span>
+<span><span class="co">#|     files: active binding</span></span>
+<span><span class="co">#|     handout: function (path = NULL, solution = FALSE) </span></span>
+<span><span class="co">#|     initialize: function (path = ".", rmd = FALSE, jekyll = TRUE, ...) </span></span>
+<span><span class="co">#|     isolate_blocks: function () </span></span>
+<span><span class="co">#|     n_problems: active binding</span></span>
+<span><span class="co">#|     path: /tmp/RtmpiFx66M/PBREADME2e8ce44ac37e8/swcarpentry--r-nov ...</span></span>
+<span><span class="co">#|     reset: function () </span></span>
+<span><span class="co">#|     rmd: TRUE</span></span>
+<span><span class="co">#|     show_problems: active binding</span></span>
+<span><span class="co">#|     solutions: function (path = FALSE) </span></span>
+<span><span class="co">#|     thin: function (verbose = TRUE) </span></span>
+<span><span class="co">#|     validate_divs: function () </span></span>
+<span><span class="co">#|     validate_headings: function (verbose = TRUE) </span></span>
+<span><span class="co">#|     validate_links: function () </span></span>
+<span><span class="co">#|   Private:</span></span>
+<span><span class="co">#|     deep_clone: function (name, value)</span></span>
+<span></span>
+<span><span class="co"># Find all challenges</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rng</span><span class="op">$</span><span class="fu">challenges</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#| $`01-rstudio-intro.Rmd`</span></span>
+<span><span class="co">#| {xml_nodeset (5)}</span></span>
+<span><span class="co">#| [1] &lt;block_quote sourcepos="357:1-393:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [2] &lt;block_quote sourcepos="511:1-547:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [3] &lt;block_quote sourcepos="550:1-563:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [4] &lt;block_quote sourcepos="566:1-578:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [5] &lt;block_quote sourcepos="581:1-599:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| $`02-project-intro.Rmd`</span></span>
+<span><span class="co">#| {xml_nodeset (5)}</span></span>
+<span><span class="co">#| [1] &lt;block_quote sourcepos="47:1-57:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="4 ...</span></span>
+<span><span class="co">#| [2] &lt;block_quote sourcepos="68:1-74:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="6 ...</span></span>
+<span><span class="co">#| [3] &lt;block_quote sourcepos="133:1-141:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [4] &lt;block_quote sourcepos="143:1-167:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [5] &lt;block_quote sourcepos="181:1-192:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| $`03-seeking-help.Rmd`</span></span>
+<span><span class="co">#| {xml_nodeset (3)}</span></span>
+<span><span class="co">#| [1] &lt;block_quote sourcepos="119:1-135:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [2] &lt;block_quote sourcepos="137:1-167:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [3] &lt;block_quote sourcepos="169:1-186:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| $`04-data-structures-part1.Rmd`</span></span>
+<span><span class="co">#| {xml_nodeset (7)}</span></span>
+<span><span class="co">#| [1] &lt;block_quote sourcepos="333:1-347:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [2] &lt;block_quote sourcepos="417:1-445:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [3] &lt;block_quote sourcepos="507:1-566:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [4] &lt;block_quote sourcepos="588:1-608:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [5] &lt;block_quote sourcepos="611:1-634:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [6] &lt;block_quote sourcepos="637:1-657:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [7] &lt;block_quote sourcepos="660:1-688:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| $`05-data-structures-part2.Rmd`</span></span>
+<span><span class="co">#| {xml_nodeset (5)}</span></span>
+<span><span class="co">#| [1] &lt;block_quote sourcepos="100:1-111:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [2] &lt;block_quote sourcepos="183:1-211:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [3] &lt;block_quote sourcepos="315:1-339:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [4] &lt;block_quote sourcepos="345:1-374:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [5] &lt;block_quote sourcepos="376:1-392:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| $`06-data-subsetting.Rmd`</span></span>
+<span><span class="co">#| {xml_nodeset (8)}</span></span>
+<span><span class="co">#| [1] &lt;block_quote sourcepos="143:1-174:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [2] &lt;block_quote sourcepos="245:1-264:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [3] &lt;block_quote sourcepos="345:1-387:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [4] &lt;block_quote sourcepos="497:1-520:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [5] &lt;block_quote sourcepos="581:1-603:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [6] &lt;block_quote sourcepos="606:1-624:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [7] &lt;block_quote sourcepos="667:1-745:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [8] &lt;block_quote sourcepos="747:1-765:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span></span>
+<span><span class="co"># Find all solutions</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rng</span><span class="op">$</span><span class="fu">solutions</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#| $`01-rstudio-intro.Rmd`</span></span>
+<span><span class="co">#| {xml_nodeset (5)}</span></span>
+<span><span class="co">#| [1] &lt;block_quote sourcepos="371:3-391:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="3 ...</span></span>
+<span><span class="co">#| [2] &lt;block_quote sourcepos="523:3-547:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
+<span><span class="co">#| [3] &lt;block_quote sourcepos="555:3-563:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
+<span><span class="co">#| [4] &lt;block_quote sourcepos="571:3-576:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="5 ...</span></span>
+<span><span class="co">#| [5] &lt;block_quote sourcepos="585:3-597:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="5 ...</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| $`02-project-intro.Rmd`</span></span>
+<span><span class="co">#| {xml_nodeset (1)}</span></span>
+<span><span class="co">#| [1] &lt;block_quote sourcepos="152:3-165:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="1 ...</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| $`03-seeking-help.Rmd`</span></span>
+<span><span class="co">#| {xml_nodeset (3)}</span></span>
+<span><span class="co">#| [1] &lt;block_quote sourcepos="128:3-135:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
+<span><span class="co">#| [2] &lt;block_quote sourcepos="142:3-167:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
+<span><span class="co">#| [3] &lt;block_quote sourcepos="177:3-186:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| $`04-data-structures-part1.Rmd`</span></span>
+<span><span class="co">#| {xml_nodeset (8)}</span></span>
+<span><span class="co">#| [1] &lt;block_quote sourcepos="226:3-235:15" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
+<span><span class="co">#| [2] &lt;block_quote sourcepos="339:3-345:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="3 ...</span></span>
+<span><span class="co">#| [3] &lt;block_quote sourcepos="424:3-445:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
+<span><span class="co">#| [4] &lt;block_quote sourcepos="524:3-566:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
+<span><span class="co">#| [5] &lt;block_quote sourcepos="595:3-608:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
+<span><span class="co">#| [6] &lt;block_quote sourcepos="620:3-632:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="6 ...</span></span>
+<span><span class="co">#| [7] &lt;block_quote sourcepos="646:3-655:3" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="6 ...</span></span>
+<span><span class="co">#| [8] &lt;block_quote sourcepos="675:3-686:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="6 ...</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| $`05-data-structures-part2.Rmd`</span></span>
+<span><span class="co">#| {xml_nodeset (5)}</span></span>
+<span><span class="co">#| [1] &lt;block_quote sourcepos="106:3-111:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
+<span><span class="co">#| [2] &lt;block_quote sourcepos="201:3-209:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="2 ...</span></span>
+<span><span class="co">#| [3] &lt;block_quote sourcepos="321:3-339:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
+<span><span class="co">#| [4] &lt;block_quote sourcepos="354:3-372:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="3 ...</span></span>
+<span><span class="co">#| [5] &lt;block_quote sourcepos="384:3-390:3" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="3 ...</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| $`06-data-subsetting.Rmd`</span></span>
+<span><span class="co">#| {xml_nodeset (8)}</span></span>
+<span><span class="co">#| [1] &lt;block_quote sourcepos="161:3-172:3" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="1 ...</span></span>
+<span><span class="co">#| [2] &lt;block_quote sourcepos="257:3-262:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="2 ...</span></span>
+<span><span class="co">#| [3] &lt;block_quote sourcepos="370:3-387:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
+<span><span class="co">#| [4] &lt;block_quote sourcepos="516:3-520:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
+<span><span class="co">#| [5] &lt;block_quote sourcepos="591:3-601:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="5 ...</span></span>
+<span><span class="co">#| [6] &lt;block_quote sourcepos="615:3-622:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="6 ...</span></span>
+<span><span class="co">#| [7] &lt;block_quote sourcepos="703:3-743:11" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
+<span><span class="co">#| [8] &lt;block_quote sourcepos="755:3-763:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="7 ...</span></span>
+<span></span>
+<span><span class="co"># Find all discussion blocks</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rng</span><span class="op">$</span><span class="fu">blocks</span><span class="op">(</span><span class="st">".discussion"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#| $`01-rstudio-intro.Rmd`</span></span>
+<span><span class="co">#| {xml_nodeset (0)}</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| $`02-project-intro.Rmd`</span></span>
+<span><span class="co">#| {xml_nodeset (0)}</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| $`03-seeking-help.Rmd`</span></span>
+<span><span class="co">#| {xml_nodeset (0)}</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| $`04-data-structures-part1.Rmd`</span></span>
+<span><span class="co">#| {xml_nodeset (1)}</span></span>
+<span><span class="co">#| [1] &lt;block_quote sourcepos="221:1-235:15" ktag="{: .discussion}"&gt;\n  &lt;heading sourcepos ...</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| $`05-data-structures-part2.Rmd`</span></span>
+<span><span class="co">#| {xml_nodeset (0)}</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| $`06-data-subsetting.Rmd`</span></span>
+<span><span class="co">#| {xml_nodeset (0)}</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="manipulation">Manipulation<a class="anchor" aria-label="anchor" href="#manipulation"></a>
@@ -278,233 +278,233 @@
 <p>Doing this by hand would be a nightmare, but we’ve written {pegboard} in such a way that will streamline this process</p>
 <p>First, let’s inspect how the file looks at the moment:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fun</span> <span class="op">&lt;-</span> <span class="va">rng</span><span class="op">$</span><span class="va">episodes</span><span class="op">$</span><span class="va">`10-functions.Rmd`</span>
-<span class="va">fun</span><span class="op">$</span><span class="fu">head</span><span class="op">(</span><span class="fl">70</span><span class="op">)</span>
-<span class="co">#| ---</span>
-<span class="co">#| title: Functions Explained</span>
-<span class="co">#| teaching: 45</span>
-<span class="co">#| exercises: 15</span>
-<span class="co">#| questions:</span>
-<span class="co">#| - "How can I write a new function in R?"</span>
-<span class="co">#| objectives:</span>
-<span class="co">#| - "Define a function that takes arguments."</span>
-<span class="co">#| - "Return a value from a function."</span>
-<span class="co">#| - "Check argument conditions with `stopifnot()` in functions."</span>
-<span class="co">#| - "Test a function."</span>
-<span class="co">#| - "Set default values for function arguments."</span>
-<span class="co">#| - "Explain why we should divide programs into small, single-purpose functions."</span>
-<span class="co">#| keypoints:</span>
-<span class="co">#| - "Use `function` to define a new function in R."</span>
-<span class="co">#| - "Use parameters to pass values into functions."</span>
-<span class="co">#| - "Use `stopifnot()` to flexibly check function arguments in R."</span>
-<span class="co">#| - "Load functions into programs using `source()`."</span>
-<span class="co">#| source: Rmd</span>
-<span class="co">#| ---</span>
-<span class="co">#| </span>
-<span class="co">#| ```{r, include=FALSE}</span>
-<span class="co">#| source("../bin/chunk-options.R")</span>
-<span class="co">#| knitr_fig_path("10-")</span>
-<span class="co">#| # Silently load in the data so the rest of the lesson works</span>
-<span class="co">#| gapminder &lt;- read.csv("data/gapminder_data.csv", header=TRUE)</span>
-<span class="co">#| ```</span>
-<span class="co">#| </span>
-<span class="co">#| If we only had one data set to analyze, it would probably be faster to load the</span>
-<span class="co">#| file into a spreadsheet and use that to plot simple statistics. However, the</span>
-<span class="co">#| gapminder data is updated periodically, and we may want to pull in that new</span>
-<span class="co">#| information later and re-run our analysis again. We may also obtain similar data</span>
-<span class="co">#| from a different source in the future.</span>
-<span class="co">#| </span>
-<span class="co">#| In this lesson, we'll learn how to write a function so that we can repeat</span>
-<span class="co">#| several operations with a single command.</span>
-<span class="co">#| </span>
-<span class="co">#| &gt; ## What is a function?</span>
-<span class="co">#| &gt; </span>
-<span class="co">#| &gt; Functions gather a sequence of operations into a whole, preserving it for</span>
-<span class="co">#| &gt; ongoing use. Functions provide:</span>
-<span class="co">#| &gt; </span>
-<span class="co">#| &gt; - a name we can remember and invoke it by</span>
-<span class="co">#| &gt; - relief from the need to remember the individual operations</span>
-<span class="co">#| &gt; - a defined set of inputs and expected outputs</span>
-<span class="co">#| &gt; - rich connections to the larger programming environment</span>
-<span class="co">#| &gt; </span>
-<span class="co">#| &gt; As the basic building block of most programming languages, user-defined</span>
-<span class="co">#| &gt; functions constitute "programming" as much as any single abstraction can. If</span>
-<span class="co">#| &gt; you have written a function, you are a computer programmer.</span>
-<span class="co">#| &gt; </span>
-<span class="co">#| {: .callout}</span>
-<span class="co">#| </span>
-<span class="co">#| ## Defining a function</span>
-<span class="co">#| </span>
-<span class="co">#| Let's open a new R script file in the `functions/` directory and call it</span>
-<span class="co">#| functions-lesson.R.</span>
-<span class="co">#| </span>
-<span class="co">#| The general structure of a function is:</span>
-<span class="co">#| </span>
-<span class="co">#| ```{r}</span>
-<span class="co">#| my_function &lt;- function(parameters) {</span>
-<span class="co">#|   # perform action</span>
-<span class="co">#|   # return value</span>
-<span class="co">#| }</span>
-<span class="co">#| ```</span>
-<span class="co">#| </span>
-<span class="co">#| Let's define a function `fahr_to_kelvin()` that converts temperatures from</span>
-<span class="co">#| Fahrenheit to Kelvin:</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fun</span> <span class="op">&lt;-</span> <span class="va">rng</span><span class="op">$</span><span class="va">episodes</span><span class="op">$</span><span class="va">`10-functions.Rmd`</span></span>
+<span><span class="va">fun</span><span class="op">$</span><span class="fu">head</span><span class="op">(</span><span class="fl">70</span><span class="op">)</span></span>
+<span><span class="co">#| ---</span></span>
+<span><span class="co">#| title: Functions Explained</span></span>
+<span><span class="co">#| teaching: 45</span></span>
+<span><span class="co">#| exercises: 15</span></span>
+<span><span class="co">#| questions:</span></span>
+<span><span class="co">#| - "How can I write a new function in R?"</span></span>
+<span><span class="co">#| objectives:</span></span>
+<span><span class="co">#| - "Define a function that takes arguments."</span></span>
+<span><span class="co">#| - "Return a value from a function."</span></span>
+<span><span class="co">#| - "Check argument conditions with `stopifnot()` in functions."</span></span>
+<span><span class="co">#| - "Test a function."</span></span>
+<span><span class="co">#| - "Set default values for function arguments."</span></span>
+<span><span class="co">#| - "Explain why we should divide programs into small, single-purpose functions."</span></span>
+<span><span class="co">#| keypoints:</span></span>
+<span><span class="co">#| - "Use `function` to define a new function in R."</span></span>
+<span><span class="co">#| - "Use parameters to pass values into functions."</span></span>
+<span><span class="co">#| - "Use `stopifnot()` to flexibly check function arguments in R."</span></span>
+<span><span class="co">#| - "Load functions into programs using `source()`."</span></span>
+<span><span class="co">#| source: Rmd</span></span>
+<span><span class="co">#| ---</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| ```{r, include=FALSE}</span></span>
+<span><span class="co">#| source("../bin/chunk-options.R")</span></span>
+<span><span class="co">#| knitr_fig_path("10-")</span></span>
+<span><span class="co">#| # Silently load in the data so the rest of the lesson works</span></span>
+<span><span class="co">#| gapminder &lt;- read.csv("data/gapminder_data.csv", header=TRUE)</span></span>
+<span><span class="co">#| ```</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| If we only had one data set to analyze, it would probably be faster to load the</span></span>
+<span><span class="co">#| file into a spreadsheet and use that to plot simple statistics. However, the</span></span>
+<span><span class="co">#| gapminder data is updated periodically, and we may want to pull in that new</span></span>
+<span><span class="co">#| information later and re-run our analysis again. We may also obtain similar data</span></span>
+<span><span class="co">#| from a different source in the future.</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| In this lesson, we'll learn how to write a function so that we can repeat</span></span>
+<span><span class="co">#| several operations with a single command.</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| &gt; ## What is a function?</span></span>
+<span><span class="co">#| &gt; </span></span>
+<span><span class="co">#| &gt; Functions gather a sequence of operations into a whole, preserving it for</span></span>
+<span><span class="co">#| &gt; ongoing use. Functions provide:</span></span>
+<span><span class="co">#| &gt; </span></span>
+<span><span class="co">#| &gt; - a name we can remember and invoke it by</span></span>
+<span><span class="co">#| &gt; - relief from the need to remember the individual operations</span></span>
+<span><span class="co">#| &gt; - a defined set of inputs and expected outputs</span></span>
+<span><span class="co">#| &gt; - rich connections to the larger programming environment</span></span>
+<span><span class="co">#| &gt; </span></span>
+<span><span class="co">#| &gt; As the basic building block of most programming languages, user-defined</span></span>
+<span><span class="co">#| &gt; functions constitute "programming" as much as any single abstraction can. If</span></span>
+<span><span class="co">#| &gt; you have written a function, you are a computer programmer.</span></span>
+<span><span class="co">#| &gt; </span></span>
+<span><span class="co">#| {: .callout}</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| ## Defining a function</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| Let's open a new R script file in the `functions/` directory and call it</span></span>
+<span><span class="co">#| functions-lesson.R.</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| The general structure of a function is:</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| ```{r}</span></span>
+<span><span class="co">#| my_function &lt;- function(parameters) {</span></span>
+<span><span class="co">#|   # perform action</span></span>
+<span><span class="co">#|   # return value</span></span>
+<span><span class="co">#| }</span></span>
+<span><span class="co">#| ```</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| Let's define a function `fahr_to_kelvin()` that converts temperatures from</span></span>
+<span><span class="co">#| Fahrenheit to Kelvin:</span></span></code></pre></div>
 <p>Now, we can apply the transformation chain in the order we specifed:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fun</span><span class="op">$</span>
-  <span class="fu">unblock</span><span class="op">(</span><span class="op">)</span><span class="op">$</span>         <span class="co"># transform block quotes</span>
-  <span class="fu">use_sandpaper</span><span class="op">(</span><span class="op">)</span><span class="op">$</span>   <span class="co"># convert code block decorators and modify setup chunk</span>
-  <span class="fu">move_questions</span><span class="op">(</span><span class="op">)</span><span class="op">$</span>  <span class="co"># ...</span>
-  <span class="fu">move_objectives</span><span class="op">(</span><span class="op">)</span><span class="op">$</span>
-  <span class="fu">move_keypoints</span><span class="op">(</span><span class="op">)</span><span class="op">$</span>
-  <span class="fu">head</span><span class="op">(</span><span class="fl">70</span><span class="op">)</span>
-<span class="co">#| ---</span>
-<span class="co">#| title: Functions Explained</span>
-<span class="co">#| teaching: 45</span>
-<span class="co">#| exercises: 15</span>
-<span class="co">#| source: Rmd</span>
-<span class="co">#| ---</span>
-<span class="co">#| </span>
-<span class="co">#| ```{r, include=FALSE}</span>
-<span class="co">#| gapminder &lt;- read.csv("data/gapminder_data.csv", header = TRUE)</span>
-<span class="co">#| ```</span>
-<span class="co">#| </span>
-<span class="co">#| ::::::::::::::::::::::::::::::::::::::: objectives</span>
-<span class="co">#| </span>
-<span class="co">#| - Define a function that takes arguments.</span>
-<span class="co">#| - Return a value from a function.</span>
-<span class="co">#| - Check argument conditions with `stopifnot()` in functions.</span>
-<span class="co">#| - Test a function.</span>
-<span class="co">#| - Set default values for function arguments.</span>
-<span class="co">#| - Explain why we should divide programs into small, single-purpose functions.</span>
-<span class="co">#| </span>
-<span class="co">#| ::::::::::::::::::::::::::::::::::::::::::::::::::</span>
-<span class="co">#| </span>
-<span class="co">#| :::::::::::::::::::::::::::::::::::::::: questions</span>
-<span class="co">#| </span>
-<span class="co">#| - How can I write a new function in R?</span>
-<span class="co">#| </span>
-<span class="co">#| ::::::::::::::::::::::::::::::::::::::::::::::::::</span>
-<span class="co">#| </span>
-<span class="co">#| If we only had one data set to analyze, it would probably be faster to load the</span>
-<span class="co">#| file into a spreadsheet and use that to plot simple statistics. However, the</span>
-<span class="co">#| gapminder data is updated periodically, and we may want to pull in that new</span>
-<span class="co">#| information later and re-run our analysis again. We may also obtain similar data</span>
-<span class="co">#| from a different source in the future.</span>
-<span class="co">#| </span>
-<span class="co">#| In this lesson, we'll learn how to write a function so that we can repeat</span>
-<span class="co">#| several operations with a single command.</span>
-<span class="co">#| </span>
-<span class="co">#| :::::::::::::::::::::::::::::::::::::::::  callout</span>
-<span class="co">#| </span>
-<span class="co">#| ## What is a function?</span>
-<span class="co">#| </span>
-<span class="co">#| Functions gather a sequence of operations into a whole, preserving it for</span>
-<span class="co">#| ongoing use. Functions provide:</span>
-<span class="co">#| </span>
-<span class="co">#| - a name we can remember and invoke it by</span>
-<span class="co">#| - relief from the need to remember the individual operations</span>
-<span class="co">#| - a defined set of inputs and expected outputs</span>
-<span class="co">#| - rich connections to the larger programming environment</span>
-<span class="co">#| </span>
-<span class="co">#| As the basic building block of most programming languages, user-defined</span>
-<span class="co">#| functions constitute "programming" as much as any single abstraction can. If</span>
-<span class="co">#| you have written a function, you are a computer programmer.</span>
-<span class="co">#| </span>
-<span class="co">#| </span>
-<span class="co">#| ::::::::::::::::::::::::::::::::::::::::::::::::::</span>
-<span class="co">#| </span>
-<span class="co">#| ## Defining a function</span>
-<span class="co">#| </span>
-<span class="co">#| Let's open a new R script file in the `functions/` directory and call it</span>
-<span class="co">#| functions-lesson.R.</span>
-<span class="co">#| </span>
-<span class="co">#| The general structure of a function is:</span>
-<span class="co">#| </span>
-<span class="co">#| ```{r}</span>
-<span class="co">#| my_function &lt;- function(parameters) {</span>
-<span class="co">#|   # perform action</span>
-<span class="co">#|   # return value</span>
-<span class="co">#| }</span>
-<span class="co">#| ```</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fun</span><span class="op">$</span></span>
+<span>  <span class="fu">unblock</span><span class="op">(</span><span class="op">)</span><span class="op">$</span>         <span class="co"># transform block quotes</span></span>
+<span>  <span class="fu">use_sandpaper</span><span class="op">(</span><span class="op">)</span><span class="op">$</span>   <span class="co"># convert code block decorators and modify setup chunk</span></span>
+<span>  <span class="fu">move_questions</span><span class="op">(</span><span class="op">)</span><span class="op">$</span>  <span class="co"># ...</span></span>
+<span>  <span class="fu">move_objectives</span><span class="op">(</span><span class="op">)</span><span class="op">$</span></span>
+<span>  <span class="fu">move_keypoints</span><span class="op">(</span><span class="op">)</span><span class="op">$</span></span>
+<span>  <span class="fu">head</span><span class="op">(</span><span class="fl">70</span><span class="op">)</span></span>
+<span><span class="co">#| ---</span></span>
+<span><span class="co">#| title: Functions Explained</span></span>
+<span><span class="co">#| teaching: 45</span></span>
+<span><span class="co">#| exercises: 15</span></span>
+<span><span class="co">#| source: Rmd</span></span>
+<span><span class="co">#| ---</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| ```{r, include=FALSE}</span></span>
+<span><span class="co">#| gapminder &lt;- read.csv("data/gapminder_data.csv", header = TRUE)</span></span>
+<span><span class="co">#| ```</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| ::::::::::::::::::::::::::::::::::::::: objectives</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| - Define a function that takes arguments.</span></span>
+<span><span class="co">#| - Return a value from a function.</span></span>
+<span><span class="co">#| - Check argument conditions with `stopifnot()` in functions.</span></span>
+<span><span class="co">#| - Test a function.</span></span>
+<span><span class="co">#| - Set default values for function arguments.</span></span>
+<span><span class="co">#| - Explain why we should divide programs into small, single-purpose functions.</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| ::::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| :::::::::::::::::::::::::::::::::::::::: questions</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| - How can I write a new function in R?</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| ::::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| If we only had one data set to analyze, it would probably be faster to load the</span></span>
+<span><span class="co">#| file into a spreadsheet and use that to plot simple statistics. However, the</span></span>
+<span><span class="co">#| gapminder data is updated periodically, and we may want to pull in that new</span></span>
+<span><span class="co">#| information later and re-run our analysis again. We may also obtain similar data</span></span>
+<span><span class="co">#| from a different source in the future.</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| In this lesson, we'll learn how to write a function so that we can repeat</span></span>
+<span><span class="co">#| several operations with a single command.</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| :::::::::::::::::::::::::::::::::::::::::  callout</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| ## What is a function?</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| Functions gather a sequence of operations into a whole, preserving it for</span></span>
+<span><span class="co">#| ongoing use. Functions provide:</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| - a name we can remember and invoke it by</span></span>
+<span><span class="co">#| - relief from the need to remember the individual operations</span></span>
+<span><span class="co">#| - a defined set of inputs and expected outputs</span></span>
+<span><span class="co">#| - rich connections to the larger programming environment</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| As the basic building block of most programming languages, user-defined</span></span>
+<span><span class="co">#| functions constitute "programming" as much as any single abstraction can. If</span></span>
+<span><span class="co">#| you have written a function, you are a computer programmer.</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| ::::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| ## Defining a function</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| Let's open a new R script file in the `functions/` directory and call it</span></span>
+<span><span class="co">#| functions-lesson.R.</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| The general structure of a function is:</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| ```{r}</span></span>
+<span><span class="co">#| my_function &lt;- function(parameters) {</span></span>
+<span><span class="co">#|   # perform action</span></span>
+<span><span class="co">#|   # return value</span></span>
+<span><span class="co">#| }</span></span>
+<span><span class="co">#| ```</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="reset">Reset<a class="anchor" aria-label="anchor" href="#reset"></a>
 </h2>
 <p>All changes can be reset to the initial state with the <code>$reset()</code> method:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fun</span><span class="op">$</span>
-  <span class="fu">reset</span><span class="op">(</span><span class="op">)</span><span class="op">$</span>
-  <span class="fu">head</span><span class="op">(</span><span class="fl">70</span><span class="op">)</span>
-<span class="co">#| ---</span>
-<span class="co">#| title: Functions Explained</span>
-<span class="co">#| teaching: 45</span>
-<span class="co">#| exercises: 15</span>
-<span class="co">#| questions:</span>
-<span class="co">#| - "How can I write a new function in R?"</span>
-<span class="co">#| objectives:</span>
-<span class="co">#| - "Define a function that takes arguments."</span>
-<span class="co">#| - "Return a value from a function."</span>
-<span class="co">#| - "Check argument conditions with `stopifnot()` in functions."</span>
-<span class="co">#| - "Test a function."</span>
-<span class="co">#| - "Set default values for function arguments."</span>
-<span class="co">#| - "Explain why we should divide programs into small, single-purpose functions."</span>
-<span class="co">#| keypoints:</span>
-<span class="co">#| - "Use `function` to define a new function in R."</span>
-<span class="co">#| - "Use parameters to pass values into functions."</span>
-<span class="co">#| - "Use `stopifnot()` to flexibly check function arguments in R."</span>
-<span class="co">#| - "Load functions into programs using `source()`."</span>
-<span class="co">#| source: Rmd</span>
-<span class="co">#| ---</span>
-<span class="co">#| </span>
-<span class="co">#| ```{r, include=FALSE}</span>
-<span class="co">#| source("../bin/chunk-options.R")</span>
-<span class="co">#| knitr_fig_path("10-")</span>
-<span class="co">#| # Silently load in the data so the rest of the lesson works</span>
-<span class="co">#| gapminder &lt;- read.csv("data/gapminder_data.csv", header=TRUE)</span>
-<span class="co">#| ```</span>
-<span class="co">#| </span>
-<span class="co">#| If we only had one data set to analyze, it would probably be faster to load the</span>
-<span class="co">#| file into a spreadsheet and use that to plot simple statistics. However, the</span>
-<span class="co">#| gapminder data is updated periodically, and we may want to pull in that new</span>
-<span class="co">#| information later and re-run our analysis again. We may also obtain similar data</span>
-<span class="co">#| from a different source in the future.</span>
-<span class="co">#| </span>
-<span class="co">#| In this lesson, we'll learn how to write a function so that we can repeat</span>
-<span class="co">#| several operations with a single command.</span>
-<span class="co">#| </span>
-<span class="co">#| &gt; ## What is a function?</span>
-<span class="co">#| &gt; </span>
-<span class="co">#| &gt; Functions gather a sequence of operations into a whole, preserving it for</span>
-<span class="co">#| &gt; ongoing use. Functions provide:</span>
-<span class="co">#| &gt; </span>
-<span class="co">#| &gt; - a name we can remember and invoke it by</span>
-<span class="co">#| &gt; - relief from the need to remember the individual operations</span>
-<span class="co">#| &gt; - a defined set of inputs and expected outputs</span>
-<span class="co">#| &gt; - rich connections to the larger programming environment</span>
-<span class="co">#| &gt; </span>
-<span class="co">#| &gt; As the basic building block of most programming languages, user-defined</span>
-<span class="co">#| &gt; functions constitute "programming" as much as any single abstraction can. If</span>
-<span class="co">#| &gt; you have written a function, you are a computer programmer.</span>
-<span class="co">#| &gt; </span>
-<span class="co">#| {: .callout}</span>
-<span class="co">#| </span>
-<span class="co">#| ## Defining a function</span>
-<span class="co">#| </span>
-<span class="co">#| Let's open a new R script file in the `functions/` directory and call it</span>
-<span class="co">#| functions-lesson.R.</span>
-<span class="co">#| </span>
-<span class="co">#| The general structure of a function is:</span>
-<span class="co">#| </span>
-<span class="co">#| ```{r}</span>
-<span class="co">#| my_function &lt;- function(parameters) {</span>
-<span class="co">#|   # perform action</span>
-<span class="co">#|   # return value</span>
-<span class="co">#| }</span>
-<span class="co">#| ```</span>
-<span class="co">#| </span>
-<span class="co">#| Let's define a function `fahr_to_kelvin()` that converts temperatures from</span>
-<span class="co">#| Fahrenheit to Kelvin:</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fun</span><span class="op">$</span></span>
+<span>  <span class="fu">reset</span><span class="op">(</span><span class="op">)</span><span class="op">$</span></span>
+<span>  <span class="fu">head</span><span class="op">(</span><span class="fl">70</span><span class="op">)</span></span>
+<span><span class="co">#| ---</span></span>
+<span><span class="co">#| title: Functions Explained</span></span>
+<span><span class="co">#| teaching: 45</span></span>
+<span><span class="co">#| exercises: 15</span></span>
+<span><span class="co">#| questions:</span></span>
+<span><span class="co">#| - "How can I write a new function in R?"</span></span>
+<span><span class="co">#| objectives:</span></span>
+<span><span class="co">#| - "Define a function that takes arguments."</span></span>
+<span><span class="co">#| - "Return a value from a function."</span></span>
+<span><span class="co">#| - "Check argument conditions with `stopifnot()` in functions."</span></span>
+<span><span class="co">#| - "Test a function."</span></span>
+<span><span class="co">#| - "Set default values for function arguments."</span></span>
+<span><span class="co">#| - "Explain why we should divide programs into small, single-purpose functions."</span></span>
+<span><span class="co">#| keypoints:</span></span>
+<span><span class="co">#| - "Use `function` to define a new function in R."</span></span>
+<span><span class="co">#| - "Use parameters to pass values into functions."</span></span>
+<span><span class="co">#| - "Use `stopifnot()` to flexibly check function arguments in R."</span></span>
+<span><span class="co">#| - "Load functions into programs using `source()`."</span></span>
+<span><span class="co">#| source: Rmd</span></span>
+<span><span class="co">#| ---</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| ```{r, include=FALSE}</span></span>
+<span><span class="co">#| source("../bin/chunk-options.R")</span></span>
+<span><span class="co">#| knitr_fig_path("10-")</span></span>
+<span><span class="co">#| # Silently load in the data so the rest of the lesson works</span></span>
+<span><span class="co">#| gapminder &lt;- read.csv("data/gapminder_data.csv", header=TRUE)</span></span>
+<span><span class="co">#| ```</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| If we only had one data set to analyze, it would probably be faster to load the</span></span>
+<span><span class="co">#| file into a spreadsheet and use that to plot simple statistics. However, the</span></span>
+<span><span class="co">#| gapminder data is updated periodically, and we may want to pull in that new</span></span>
+<span><span class="co">#| information later and re-run our analysis again. We may also obtain similar data</span></span>
+<span><span class="co">#| from a different source in the future.</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| In this lesson, we'll learn how to write a function so that we can repeat</span></span>
+<span><span class="co">#| several operations with a single command.</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| &gt; ## What is a function?</span></span>
+<span><span class="co">#| &gt; </span></span>
+<span><span class="co">#| &gt; Functions gather a sequence of operations into a whole, preserving it for</span></span>
+<span><span class="co">#| &gt; ongoing use. Functions provide:</span></span>
+<span><span class="co">#| &gt; </span></span>
+<span><span class="co">#| &gt; - a name we can remember and invoke it by</span></span>
+<span><span class="co">#| &gt; - relief from the need to remember the individual operations</span></span>
+<span><span class="co">#| &gt; - a defined set of inputs and expected outputs</span></span>
+<span><span class="co">#| &gt; - rich connections to the larger programming environment</span></span>
+<span><span class="co">#| &gt; </span></span>
+<span><span class="co">#| &gt; As the basic building block of most programming languages, user-defined</span></span>
+<span><span class="co">#| &gt; functions constitute "programming" as much as any single abstraction can. If</span></span>
+<span><span class="co">#| &gt; you have written a function, you are a computer programmer.</span></span>
+<span><span class="co">#| &gt; </span></span>
+<span><span class="co">#| {: .callout}</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| ## Defining a function</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| Let's open a new R script file in the `functions/` directory and call it</span></span>
+<span><span class="co">#| functions-lesson.R.</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| The general structure of a function is:</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| ```{r}</span></span>
+<span><span class="co">#| my_function &lt;- function(parameters) {</span></span>
+<span><span class="co">#|   # perform action</span></span>
+<span><span class="co">#|   # return value</span></span>
+<span><span class="co">#| }</span></span>
+<span><span class="co">#| ```</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| Let's define a function `fahr_to_kelvin()` that converts temperatures from</span></span>
+<span><span class="co">#| Fahrenheit to Kelvin:</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
@@ -528,6 +528,7 @@
 <ul class="list-unstyled">
 <li><a href="CONTRIBUTING.html">Contributing guide</a></li>
 <li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
+<li><a href="SUPPORT.html">Getting help</a></li>
 </ul>
 </div>
 
@@ -568,7 +569,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>
