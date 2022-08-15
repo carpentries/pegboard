@@ -1,5 +1,13 @@
 # pegboard 0.3.0
 
+## MISC
+
+In preparation for {tinkr} 0.1.0, which changes the path of the default
+stylesheet, we are using the `tinkr::stylesheet()` convenience function to
+access it. 
+
+# pegboard 0.3.0
+
 ## NEW FEATURES
 
 ### Episode class objects

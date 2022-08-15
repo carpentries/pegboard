@@ -2,7 +2,7 @@ test_that("stylesheet is properly escaped", {
 
   # copy the tinkr stylesheeet to a temporary file with a space
   tmp <- withr::local_tempfile(pattern = "file with space", fileext = ".xsl")
-  tnk <- system.file("extdata", "xml2md_gfm.xsl", package = "tinkr")
+  tnk <- tinkr::stylesheet()
   file.copy(tnk, tmp)
   file.copy(file.path(dirname(tnk), "xml2md.xsl"), file.path(dirname(tmp)))
   expect_identical(readLines(tmp), readLines(tnk))
