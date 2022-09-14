@@ -1,4 +1,13 @@
-# pegboard 0.3.0
+# pegboard 0.3.2
+
+## DEPENDENCIES
+
+ - Soft dependencty {cli} has been recommended at 0.3.4 to prevent reporting
+   issues (see #97)
+ - Soft dependencies ggraph, ggplot2, and tidygraph have been removed. These
+   dependencies were only needed for producing a now-out-of-date survey document
+
+# pegboard 0.3.1
 
 ## MISC
 

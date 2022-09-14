@@ -1,6 +1,6 @@
 Package: pegboard
 Title: Explore and Manipulate Markdown Curricula from the Carpentries
-Version: 0.3.1
+Version: 0.3.2
 Authors@R: c(
     person(given = "Zhian N.",
            family = "Kamvar",
@@ -42,11 +42,7 @@ Suggests:
     magrittr,
     dplyr,
     crayon,
-    tidygraph,
-    ggraph,
-    ggplot2,
-    gt,
-    cli,
+    cli (>= 0.3.4),
     rlang
 Additional_repositories: https://carpentries.r-universe.dev/
 Remotes: ropensci/tinkr

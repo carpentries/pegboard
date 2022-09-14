@@ -86,8 +86,3 @@ articles:
    navbar: ~
    contents:
      - articles/validation
- - title: "Historical Analysis"
-   navbar: ~
-   contents:
-    - articles/swc-survey
-
