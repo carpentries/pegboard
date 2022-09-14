@@ -364,6 +364,7 @@ raise_div_error <- function(res, path, yaml, type) {
     line_msg <- glue::glue("| tag: {div}")
   }
   msg <- line_report(msg = line_msg, path = path, pos = res$line[sub] + yaml)
+  msg <- glue::glue_collapse(msg, sep = "\n")
   msg <- glue::glue("Missing {type} section (div) tag in {path}.
       {pre_msg}{msg}")
   stop(msg, call. = FALSE)
