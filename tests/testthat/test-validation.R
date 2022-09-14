@@ -3,7 +3,12 @@ dv   <- Episode$new(test_path("examples/validation-divs.md"))
 cats <- Episode$new(test_path("examples/image-test.md"))
 link <- Episode$new(test_path("examples/link-test.md"))
 loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
-withr::defer(rm(list = c("vh", "loop", "cats", "link", "dv")))
+wid <- getOption("width")
+options(width = 2000)
+withr::defer({
+  options(width = wid)
+  rm(list = c("vh", "loop", "cats", "link", "dv"))
+})
 
 
 test_that("invalid divs will be caught with reporters", {

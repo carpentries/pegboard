@@ -116,9 +116,12 @@ if (requireNamespace("cli")) {
 }
 
 test_that("Lessons can be _quietly_ validated", {
+  suppressMessages({
   expect_message(vhead <- frg$validate_headings(verbose = FALSE), "There were errors in 13/37 headings")
   expect_message(vlink <- frg$validate_links(), "There were errors in 3/13 links")
+  })
 })
+
 
 test_that("Lesson class can get the challenges", {
 

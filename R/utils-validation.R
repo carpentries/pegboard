@@ -12,12 +12,13 @@ throw_heading_warnings <- function(VAL) {
   reports <- line_report(msg = err$labels, err$path, err$pos, sep = " ")
   failed <- !apply(err[names(heading_tests)], MARGIN = 2, all)
   infos <- paste("-", heading_info[failed], collapse = "\n")
-  issue_warning("There were errors in {n}/{N} headings
-
-    {infos}
-    <https://webaim.org/techniques/semanticstructure/#headings>
-
-    {reports}", cli = has_cli(), n = nrow(err), N = nrow(VAL), infos = infos, reports = reports)
+  issue_warning(what = "headings",
+    url = "https://webaim.org/techniques/semanticstructure/#headings",
+    cli = has_cli(), 
+    n = nrow(err), 
+    N = nrow(VAL), 
+    infos = heading_info[failed], 
+    reports = reports)
 }
 
 throw_div_warnings <- function(VAL) {
@@ -34,12 +35,12 @@ throw_div_warnings <- function(VAL) {
   reports <- line_report(msg = err$labels, err$path, err$pos, sep = " ")
   failed <- !apply(err[names(div_tests)], MARGIN = 2, all)
   infos <- paste("-", div_info[failed], collapse = "\n")
-  issue_warning("There were errors in {n}/{N} fenced divs
-
-    {infos}
-
-    {reports}", cli = has_cli(), n = nrow(err), N = nrow(VAL), 
-    infos = infos, reports = reports)
+  issue_warning(what = "fenced divs",
+    cli = has_cli(), 
+    n = nrow(err), 
+    N = nrow(VAL), 
+    infos = div_info[failed], 
+    reports = reports)
 }
 
 throw_link_warnings <- function(VAL) {
@@ -57,11 +58,12 @@ throw_link_warnings <- function(VAL) {
   reports <- line_report(msg = err$labels, err$filepath, err$sourcepos, sep = " ")
   failed <- !apply(err[names(link_tests)], MARGIN = 2, all)
   infos <- paste("-", link_info[failed], collapse = "\n")
-  issue_warning("There were errors in {n}/{N} links
-
-    {infos}
-
-    {reports}", cli = has_cli(), n = nrow(err), N = nrow(VAL), infos = infos, reports = reports)
+  issue_warning(what = "links",
+    cli = has_cli(), 
+    n = nrow(err), 
+    N = nrow(VAL), 
+    infos = link_info[failed], 
+    reports = reports)
 }
 
 #' @param VAL a data frame containing the results of tests
