@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pegboard</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,7 +25,6 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/validation.html">Validation of Lesson Elements</a>
-    <a class="dropdown-item" href="../articles/swc-survey.html">Software Carpentry Survey</a>
   </div>
 </li>
 <li class="nav-item">
@@ -1079,7 +1078,7 @@ links.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">scope</span> <span class="op">&lt;-</span> <span class="va">Episode</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="lesson_fragment.html">lesson_fragment</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"_episodes"</span>, <span class="st">"17-scope.md"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">scope</span><span class="op">$</span><span class="fu">write</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Creating temporary directory '/tmp/RtmpSfQRnX/dir450e6b7a6e6b'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Creating temporary directory '/tmp/RtmphMeCNy/dir445d64bd22e4'</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
 <span class="r-in"><span><span class="co">## Method `Episode$handout`</span></span></span>
@@ -1219,9 +1218,8 @@ links.</p>
 <span class="r-in"><span><span class="va">loop</span> <span class="op">&lt;-</span> <span class="va">Episode</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="lesson_fragment.html">lesson_fragment</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"_episodes"</span>, <span class="st">"14-looping-data-sets.md"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">loop</span><span class="op">$</span><span class="fu">validate_headings</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> There were errors in 3/10 headings</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> - Headings must be unique</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &lt;https://webaim.org/techniques/semanticstructure/#headings&gt;</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ◌ Headings must be unique</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB; font-style: italic;">&lt;https://webaim.org/techniques/semanticstructure/#headings&gt;</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=119:: (duplicated)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=143:: (duplicated)</span>
@@ -1254,13 +1252,16 @@ links.</p>
 <span class="r-in"><span><span class="va">loop</span> <span class="op">&lt;-</span> <span class="va">Episode</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="lesson_fragment.html">lesson_fragment</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"_episodes"</span>, <span class="st">"14-looping-data-sets.md"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">loop</span><span class="op">$</span><span class="fu">validate_links</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> There were errors in 3/12 links</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ◌ Some linked internal files do not exist</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ◌ Images need alt-text</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &lt;https://webaim.org/techniques/hypertext/link_text#alt_link&gt;</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> - Some linked internal files do not exist</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> - Images need alt-text &lt;https://webaim.org/techniques/hypertext/link_text#alt_link&gt;</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file] ../no-workie.svg</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing alt-text]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [image missing alt-text]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ../no-workie.svg</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> alt-text]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ../no-workie.svg [image missing alt-text]</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

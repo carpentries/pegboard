@@ -37,7 +37,7 @@
     
     <a class="navbar-brand me-2" href="index.html">pegboard</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,7 +53,6 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="articles/validation.html">Validation of Lesson Elements</a>
-    <a class="dropdown-item" href="articles/swc-survey.html">Software Carpentry Survey</a>
   </div>
 </li>
 <li class="nav-item">
@@ -121,20 +120,25 @@
 <span><span class="co">#| &lt;Lesson&gt;</span></span>
 <span><span class="co">#|   Public:</span></span>
 <span><span class="co">#|     blocks: function (type = NULL, level = 0, path = FALSE) </span></span>
+<span><span class="co">#|     built: NULL</span></span>
 <span><span class="co">#|     challenges: function (path = FALSE, graph = FALSE, recurse = TRUE) </span></span>
 <span><span class="co">#|     clone: function (deep = FALSE) </span></span>
 <span><span class="co">#|     episodes: list</span></span>
 <span><span class="co">#|     extra: NULL</span></span>
 <span><span class="co">#|     files: active binding</span></span>
+<span><span class="co">#|     get: function (element = NULL, collection = "episodes") </span></span>
 <span><span class="co">#|     handout: function (path = NULL, solution = FALSE) </span></span>
 <span><span class="co">#|     initialize: function (path = ".", rmd = FALSE, jekyll = TRUE, ...) </span></span>
 <span><span class="co">#|     isolate_blocks: function () </span></span>
+<span><span class="co">#|     load_built: function () </span></span>
 <span><span class="co">#|     n_problems: active binding</span></span>
-<span><span class="co">#|     path: /tmp/RtmpiFx66M/PBREADME2e8ce44ac37e8/swcarpentry--r-nov ...</span></span>
+<span><span class="co">#|     path: /tmp/RtmpUQWpSD/PBREADME1b72117285a2e/swcarpentry--r-nov ...</span></span>
 <span><span class="co">#|     reset: function () </span></span>
 <span><span class="co">#|     rmd: TRUE</span></span>
+<span><span class="co">#|     sandpaper: FALSE</span></span>
 <span><span class="co">#|     show_problems: active binding</span></span>
 <span><span class="co">#|     solutions: function (path = FALSE) </span></span>
+<span><span class="co">#|     summary: function (collection = "episodes") </span></span>
 <span><span class="co">#|     thin: function (verbose = TRUE) </span></span>
 <span><span class="co">#|     validate_divs: function () </span></span>
 <span><span class="co">#|     validate_headings: function (verbose = TRUE) </span></span>
@@ -146,11 +150,11 @@
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rng</span><span class="op">$</span><span class="fu">challenges</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#| $`01-rstudio-intro.Rmd`</span></span>
 <span><span class="co">#| {xml_nodeset (5)}</span></span>
-<span><span class="co">#| [1] &lt;block_quote sourcepos="357:1-393:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [2] &lt;block_quote sourcepos="511:1-547:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [3] &lt;block_quote sourcepos="550:1-563:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [4] &lt;block_quote sourcepos="566:1-578:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [5] &lt;block_quote sourcepos="581:1-599:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [1] &lt;block_quote sourcepos="362:1-398:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [2] &lt;block_quote sourcepos="516:1-552:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [3] &lt;block_quote sourcepos="555:1-568:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [4] &lt;block_quote sourcepos="571:1-583:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [5] &lt;block_quote sourcepos="586:1-604:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
 <span><span class="co">#| </span></span>
 <span><span class="co">#| $`02-project-intro.Rmd`</span></span>
 <span><span class="co">#| {xml_nodeset (5)}</span></span>
@@ -162,19 +166,19 @@
 <span><span class="co">#| </span></span>
 <span><span class="co">#| $`03-seeking-help.Rmd`</span></span>
 <span><span class="co">#| {xml_nodeset (3)}</span></span>
-<span><span class="co">#| [1] &lt;block_quote sourcepos="119:1-135:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [2] &lt;block_quote sourcepos="137:1-167:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [3] &lt;block_quote sourcepos="169:1-186:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [1] &lt;block_quote sourcepos="134:1-150:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [2] &lt;block_quote sourcepos="152:1-187:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [3] &lt;block_quote sourcepos="189:1-207:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
 <span><span class="co">#| </span></span>
 <span><span class="co">#| $`04-data-structures-part1.Rmd`</span></span>
 <span><span class="co">#| {xml_nodeset (7)}</span></span>
-<span><span class="co">#| [1] &lt;block_quote sourcepos="333:1-347:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [2] &lt;block_quote sourcepos="417:1-445:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [3] &lt;block_quote sourcepos="507:1-566:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [4] &lt;block_quote sourcepos="588:1-608:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [5] &lt;block_quote sourcepos="611:1-634:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [6] &lt;block_quote sourcepos="637:1-657:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [7] &lt;block_quote sourcepos="660:1-688:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [1] &lt;block_quote sourcepos="341:1-355:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [2] &lt;block_quote sourcepos="425:1-453:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [3] &lt;block_quote sourcepos="515:1-574:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [4] &lt;block_quote sourcepos="596:1-616:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [5] &lt;block_quote sourcepos="619:1-642:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [6] &lt;block_quote sourcepos="645:1-665:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co">#| [7] &lt;block_quote sourcepos="668:1-696:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
 <span><span class="co">#| </span></span>
 <span><span class="co">#| $`05-data-structures-part2.Rmd`</span></span>
 <span><span class="co">#| {xml_nodeset (5)}</span></span>
@@ -199,11 +203,11 @@
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rng</span><span class="op">$</span><span class="fu">solutions</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#| $`01-rstudio-intro.Rmd`</span></span>
 <span><span class="co">#| {xml_nodeset (5)}</span></span>
-<span><span class="co">#| [1] &lt;block_quote sourcepos="371:3-391:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="3 ...</span></span>
-<span><span class="co">#| [2] &lt;block_quote sourcepos="523:3-547:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
-<span><span class="co">#| [3] &lt;block_quote sourcepos="555:3-563:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
-<span><span class="co">#| [4] &lt;block_quote sourcepos="571:3-576:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="5 ...</span></span>
-<span><span class="co">#| [5] &lt;block_quote sourcepos="585:3-597:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="5 ...</span></span>
+<span><span class="co">#| [1] &lt;block_quote sourcepos="376:3-396:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="3 ...</span></span>
+<span><span class="co">#| [2] &lt;block_quote sourcepos="528:3-552:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
+<span><span class="co">#| [3] &lt;block_quote sourcepos="560:3-568:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
+<span><span class="co">#| [4] &lt;block_quote sourcepos="576:3-581:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="5 ...</span></span>
+<span><span class="co">#| [5] &lt;block_quote sourcepos="590:3-602:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="5 ...</span></span>
 <span><span class="co">#| </span></span>
 <span><span class="co">#| $`02-project-intro.Rmd`</span></span>
 <span><span class="co">#| {xml_nodeset (1)}</span></span>
@@ -211,20 +215,20 @@
 <span><span class="co">#| </span></span>
 <span><span class="co">#| $`03-seeking-help.Rmd`</span></span>
 <span><span class="co">#| {xml_nodeset (3)}</span></span>
-<span><span class="co">#| [1] &lt;block_quote sourcepos="128:3-135:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
-<span><span class="co">#| [2] &lt;block_quote sourcepos="142:3-167:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
-<span><span class="co">#| [3] &lt;block_quote sourcepos="177:3-186:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
+<span><span class="co">#| [1] &lt;block_quote sourcepos="143:3-150:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
+<span><span class="co">#| [2] &lt;block_quote sourcepos="157:3-187:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
+<span><span class="co">#| [3] &lt;block_quote sourcepos="198:3-207:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
 <span><span class="co">#| </span></span>
 <span><span class="co">#| $`04-data-structures-part1.Rmd`</span></span>
 <span><span class="co">#| {xml_nodeset (8)}</span></span>
-<span><span class="co">#| [1] &lt;block_quote sourcepos="226:3-235:15" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
-<span><span class="co">#| [2] &lt;block_quote sourcepos="339:3-345:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="3 ...</span></span>
-<span><span class="co">#| [3] &lt;block_quote sourcepos="424:3-445:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
-<span><span class="co">#| [4] &lt;block_quote sourcepos="524:3-566:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
-<span><span class="co">#| [5] &lt;block_quote sourcepos="595:3-608:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
-<span><span class="co">#| [6] &lt;block_quote sourcepos="620:3-632:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="6 ...</span></span>
-<span><span class="co">#| [7] &lt;block_quote sourcepos="646:3-655:3" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="6 ...</span></span>
-<span><span class="co">#| [8] &lt;block_quote sourcepos="675:3-686:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="6 ...</span></span>
+<span><span class="co">#| [1] &lt;block_quote sourcepos="234:3-243:15" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
+<span><span class="co">#| [2] &lt;block_quote sourcepos="347:3-353:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="3 ...</span></span>
+<span><span class="co">#| [3] &lt;block_quote sourcepos="432:3-453:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
+<span><span class="co">#| [4] &lt;block_quote sourcepos="532:3-574:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
+<span><span class="co">#| [5] &lt;block_quote sourcepos="603:3-616:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
+<span><span class="co">#| [6] &lt;block_quote sourcepos="628:3-640:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="6 ...</span></span>
+<span><span class="co">#| [7] &lt;block_quote sourcepos="654:3-663:3" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="6 ...</span></span>
+<span><span class="co">#| [8] &lt;block_quote sourcepos="683:3-694:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="6 ...</span></span>
 <span><span class="co">#| </span></span>
 <span><span class="co">#| $`05-data-structures-part2.Rmd`</span></span>
 <span><span class="co">#| {xml_nodeset (5)}</span></span>
@@ -258,7 +262,7 @@
 <span><span class="co">#| </span></span>
 <span><span class="co">#| $`04-data-structures-part1.Rmd`</span></span>
 <span><span class="co">#| {xml_nodeset (1)}</span></span>
-<span><span class="co">#| [1] &lt;block_quote sourcepos="221:1-235:15" ktag="{: .discussion}"&gt;\n  &lt;heading sourcepos ...</span></span>
+<span><span class="co">#| [1] &lt;block_quote sourcepos="229:1-243:15" ktag="{: .discussion}"&gt;\n  &lt;heading sourcepos ...</span></span>
 <span><span class="co">#| </span></span>
 <span><span class="co">#| $`05-data-structures-part2.Rmd`</span></span>
 <span><span class="co">#| {xml_nodeset (0)}</span></span>
@@ -555,6 +559,7 @@
 <li><a href="https://CRAN.R-project.org/package=pegboard" class="external-link"><img src="https://www.r-pkg.org/badges/version/pegboard" alt="CRAN status"></a></li>
 <li><a href="https://codecov.io/gh/carpentries/pegboard?branch=main" class="external-link"><img src="https://codecov.io/gh/carpentries/pegboard/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
 <li><a href="https://github.com/carpentries/pegboard/actions" class="external-link"><img src="https://github.com/carpentries/pegboard/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li><a href="https://github.com/carpentries/pegboard/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/carpentries/pegboard/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 </ul>
 </div>
 

@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pegboard</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,7 +25,6 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/validation.html">Validation of Lesson Elements</a>
-    <a class="dropdown-item" href="../articles/swc-survey.html">Software Carpentry Survey</a>
   </div>
 </li>
 <li class="nav-item">
@@ -899,7 +898,6 @@ details.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 17-scope.md       3       3       2       2       0     6      1       0     2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 2 more variables: images &lt;int&gt;, links &lt;int&gt;, and abbreviated variable</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   names ¹​sections, ²​headings, ³​callouts, ⁴​challenges, ⁵​solutions</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ Use `colnames()` to see all variable names</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
 <span class="r-in"><span><span class="co">## Method `Lesson$thin`</span></span></span>
@@ -1025,9 +1023,8 @@ details.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   └─### ZNK test links and images </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ────────────────────────────────────────────────────────────────────────────────</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> There were errors in 13/37 headings</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> - Headings must be unique</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &lt;https://webaim.org/techniques/semanticstructure/#headings&gt;</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ◌ Headings must be unique</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB; font-style: italic;">&lt;https://webaim.org/techniques/semanticstructure/#headings&gt;</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ::warning file=_episodes/12-for-loops.md,line=183:: (duplicated)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ::warning file=_episodes/12-for-loops.md,line=200:: (duplicated)</span>
@@ -1057,13 +1054,16 @@ details.</p>
 <span class="r-in"><span><span class="va">frg</span> <span class="op">&lt;-</span> <span class="va">Lesson</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="lesson_fragment.html">lesson_fragment</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">frg</span><span class="op">$</span><span class="fu">validate_links</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> There were errors in 3/13 links</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ◌ Some linked internal files do not exist</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ◌ Images need alt-text</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &lt;https://webaim.org/techniques/hypertext/link_text#alt_link&gt;</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> - Some linked internal files do not exist</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> - Images need alt-text &lt;https://webaim.org/techniques/hypertext/link_text#alt_link&gt;</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file] ../no-workie.svg</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing alt-text]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [image missing alt-text]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ../no-workie.svg</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> alt-text]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ../no-workie.svg [image missing alt-text]</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

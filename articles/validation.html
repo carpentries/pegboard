@@ -37,7 +37,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pegboard</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,7 +53,6 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/validation.html">Validation of Lesson Elements</a>
-    <a class="dropdown-item" href="../articles/swc-survey.html">Software Carpentry Survey</a>
   </div>
 </li>
 <li class="nav-item">
@@ -103,18 +102,17 @@
 <span><span class="va">lsn</span><span class="op">$</span><span class="fu">validate_divs</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">lsn</span><span class="op">$</span><span class="fu">validate_links</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#| <span style="color: #BBBB00;">!</span> There were errors in 3/13 links</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| - Some linked internal files do not exist</span></span>
-<span><span class="co">#| - Images need alt-text &lt;https://webaim.org/techniques/hypertext/link_text#alt_link&gt;</span></span>
+<span><span class="co">#| ◌ Some linked internal files do not exist</span></span>
+<span><span class="co">#| ◌ Images need alt-text &lt;https://webaim.org/techniques/hypertext/link_text#alt_link&gt;</span></span>
 <span><span class="co">#| </span></span>
 <span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file] ../no-workie.svg</span></span>
 <span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing alt-text]</span></span>
-<span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [image missing alt-text]</span></span>
+<span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [image</span></span>
+<span><span class="co">#| missing alt-text]</span></span>
 <span><span class="va">lsn</span><span class="op">$</span><span class="fu">validate_headings</span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#| <span style="color: #BBBB00;">!</span> There were errors in 13/37 headings</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| - Headings must be unique</span></span>
-<span><span class="co">#| &lt;https://webaim.org/techniques/semanticstructure/#headings&gt;</span></span>
+<span><span class="co">#| ◌ Headings must be unique</span></span>
+<span><span class="co">#| <span style="color: #0000BB; font-style: italic;">&lt;https://webaim.org/techniques/semanticstructure/#headings&gt;</span></span></span>
 <span><span class="co">#| </span></span>
 <span><span class="co">#| ::warning file=_episodes/12-for-loops.md,line=183:: (duplicated)</span></span>
 <span><span class="co">#| ::warning file=_episodes/12-for-loops.md,line=200:: (duplicated)</span></span>
@@ -139,19 +137,19 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">links</span> <span class="op">&lt;-</span> <span class="va">lsn</span><span class="op">$</span><span class="fu">validate_links</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#| <span style="color: #BBBB00;">!</span> There were errors in 3/13 links</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| - Some linked internal files do not exist</span></span>
-<span><span class="co">#| - Images need alt-text &lt;https://webaim.org/techniques/hypertext/link_text#alt_link&gt;</span></span>
+<span><span class="co">#| ◌ Some linked internal files do not exist</span></span>
+<span><span class="co">#| ◌ Images need alt-text &lt;https://webaim.org/techniques/hypertext/link_text#alt_link&gt;</span></span>
 <span><span class="co">#| </span></span>
 <span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file] ../no-workie.svg</span></span>
 <span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing alt-text]</span></span>
-<span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [image missing alt-text]</span></span>
+<span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [image</span></span>
+<span><span class="co">#| missing alt-text]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">links</span>, max.level <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co">#| 'data.frame':    13 obs. of  26 variables:</span></span>
 <span><span class="co">#|  $ episodes            : chr  "12-for-loops.md" "14-looping-data-sets.md" "14-looping-data-sets.m"..</span></span>
 <span><span class="co">#|  $ scheme              : chr  "https" "https" "https" "https" ...</span></span>
 <span><span class="co">#|  $ server              : chr  "docs.python.org" "docs.python.org" "docs.python.org" "docs.python."..</span></span>
-<span><span class="co">#|  $ port                : int  NA NA NA NA NA NA NA NA 0 0 ...</span></span>
+<span><span class="co">#|  $ port                : int  NA NA NA NA NA NA NA NA 22078 542718376 ...</span></span>
 <span><span class="co">#|  $ user                : chr  "" "" "" "" ...</span></span>
 <span><span class="co">#|  $ path                : chr  "/3/library/stdtypes.html" "/3/library/glob.html" "/3/library/glob."..</span></span>
 <span><span class="co">#|  $ query               : chr  "" "" "" "" ...</span></span>
@@ -243,8 +241,8 @@
 <span><span class="va">snd</span><span class="op">$</span><span class="va">episodes</span><span class="op">[[</span><span class="st">"intro.Rmd"</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="fu">add_md</span><span class="op">(</span><span class="va">our_div</span><span class="op">)</span></span>
 <span><span class="va">snd_divs</span> <span class="op">&lt;-</span> <span class="va">snd</span><span class="op">$</span><span class="fu">validate_divs</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#| <span style="color: #BBBB00;">!</span> There were errors in 1/7 fenced divs</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| - The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor</span></span>
+<span><span class="co">#| ◌ The Carpentries Workbench knows the following div types callout, objectives, questions,</span></span>
+<span><span class="co">#| challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor</span></span>
 <span><span class="co">#| </span></span>
 <span><span class="co">#| ::warning file=episodes/intro.Rmd,line=NA:: [unknown div] exercise</span></span></code></pre></div>
 <p>You can see from the table that the <code>is_known</code> column now has a <code>FALSE</code> value:</p>
@@ -307,9 +305,8 @@
 <span><span class="co">#|   └─### ZNK test links and images</span></span>
 <span><span class="co">#| ────────────────────────────────────────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#| <span style="color: #BBBB00;">!</span> There were errors in 13/37 headings</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| - Headings must be unique</span></span>
-<span><span class="co">#| &lt;https://webaim.org/techniques/semanticstructure/#headings&gt;</span></span>
+<span><span class="co">#| ◌ Headings must be unique</span></span>
+<span><span class="co">#| <span style="color: #0000BB; font-style: italic;">&lt;https://webaim.org/techniques/semanticstructure/#headings&gt;</span></span></span>
 <span><span class="co">#| </span></span>
 <span><span class="co">#| ::warning file=_episodes/12-for-loops.md,line=183:: (duplicated)</span></span>
 <span><span class="co">#| ::warning file=_episodes/12-for-loops.md,line=200:: (duplicated)</span></span>
@@ -504,19 +501,21 @@
 <span><span class="co">#| [1]: https://example.com/link-text#descriptive</span></span>
 <span><span class="va">lnk</span><span class="op">$</span><span class="fu">validate_links</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#| <span style="color: #BBBB00;">!</span> There were errors in 27/39 links</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| - Links must use HTTPS &lt;https://https.cio.gov/everything/&gt;</span></span>
-<span><span class="co">#| - Some link anchors for relative links (e.g. [anchor]: link) are missing</span></span>
-<span><span class="co">#| - Some linked internal files do not exist</span></span>
-<span><span class="co">#| - Some links were incorrectly formatted</span></span>
-<span><span class="co">#| - Avoid uninformative link phrases &lt;https://webaim.org/techniques/hypertext/link_text#uninformative&gt;</span></span>
-<span><span class="co">#| - Avoid single-letter or missing link text &lt;https://webaim.org/techniques/hypertext/link_text#link_length&gt;</span></span>
+<span><span class="co">#| ◌ Links must use HTTPS &lt;https://https.cio.gov/everything/&gt;</span></span>
+<span><span class="co">#| ◌ Some link anchors for relative links (e.g. [anchor]: link) are missing</span></span>
+<span><span class="co">#| ◌ Some linked internal files do not exist</span></span>
+<span><span class="co">#| ◌ Some links were incorrectly formatted</span></span>
+<span><span class="co">#| ◌ Avoid uninformative link phrases</span></span>
+<span><span class="co">#| &lt;https://webaim.org/techniques/hypertext/link_text#uninformative&gt;</span></span>
+<span><span class="co">#| ◌ Avoid single-letter or missing link text</span></span>
+<span><span class="co">#| &lt;https://webaim.org/techniques/hypertext/link_text#link_length&gt;</span></span>
 <span><span class="co">#| </span></span>
 <span><span class="co">#| ::warning file=link-test.md,line=18:: [uninformative link text] 'link'</span></span>
 <span><span class="co">#| ::warning file=link-test.md,line=18:: [uninformative link text] 'this link'</span></span>
 <span><span class="co">#| ::warning file=link-test.md,line=22:: [missing anchor] #bad-fragment</span></span>
 <span><span class="co">#| ::warning file=link-test.md,line=29:: [missing file] incorrect-link.html</span></span>
-<span><span class="co">#| ::warning file=link-test.md,line=37:: [incorrect formatting]: [should be a relative link][rel-image] -&gt; [should be a relative link](rel-image)</span></span>
+<span><span class="co">#| ::warning file=link-test.md,line=37:: [incorrect formatting]: [should be a relative</span></span>
+<span><span class="co">#| link][rel-image] -&gt; [should be a relative link](rel-image)</span></span>
 <span><span class="co">#| ::warning file=link-test.md,line=41:: [missing file] files/ohno.txt</span></span>
 <span><span class="co">#| ::warning file=link-test.md,line=45:: [needs HTTPS] http://example.com</span></span>
 <span><span class="co">#| ::warning file=link-test.md,line=53:: [uninformative link text] 'this'</span></span>
@@ -569,13 +568,12 @@
 <span><span class="co">#| ## This last heading is okay</span></span>
 <span><span class="va">hd</span><span class="op">$</span><span class="fu">validate_headings</span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#| <span style="color: #BBBB00;">!</span> There were errors in 5/7 headings</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| - First heading must be level 2</span></span>
-<span><span class="co">#| - Level 1 headings are not allowed</span></span>
-<span><span class="co">#| - Headings must be sequential</span></span>
-<span><span class="co">#| - Headings must be named</span></span>
-<span><span class="co">#| - Headings must be unique</span></span>
-<span><span class="co">#| &lt;https://webaim.org/techniques/semanticstructure/#headings&gt;</span></span>
+<span><span class="co">#| ◌ First heading must be level 2</span></span>
+<span><span class="co">#| ◌ Level 1 headings are not allowed</span></span>
+<span><span class="co">#| ◌ Headings must be sequential</span></span>
+<span><span class="co">#| ◌ Headings must be named</span></span>
+<span><span class="co">#| ◌ Headings must be unique</span></span>
+<span><span class="co">#| <span style="color: #0000BB; font-style: italic;">&lt;https://webaim.org/techniques/semanticstructure/#headings&gt;</span></span></span>
 <span><span class="co">#| </span></span>
 <span><span class="co">#| ::warning file=validation-headings.md,line=5:: (must be level 2) (first level heading)</span></span>
 <span><span class="co">#| ::warning file=validation-headings.md,line=7:: (non-sequential heading jump)</span></span>
