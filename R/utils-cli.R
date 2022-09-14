@@ -62,7 +62,7 @@ line_report <- function(msg = "", path, pos, sep = "\t", type = "warning") {
   } else {
     res <- "{path}:{pos}{sep}{msg}"
   }
-  glue::glue_collapse(glue::glue(res), sep = "\n")
+  glue::glue(res)
 }
 
 #' Append a stylized label to elements of a vector
