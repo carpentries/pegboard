@@ -1,25 +1,65 @@
 #' Issue a warning via CLI if it exists or send a message
 #'
-#' @param msg the message as a glue or CLI string
+#' @param msg the message as a glue or CLI string. Defaults to NULL
 #' @param cli if `TRUE`, the CLI package will be used to issue the message,
 #'   defaults to `FALSE`, which means that the message will be issued via 
 #'   message and glue.
+#' @param what the name of the specific element to report in an error
+#' @param url a url for extra information to help.
+#' @param n the number of elements errored
+#' @param N the number total elements
+#' @param infos the information about the errors to be shown to the user
+#' @param reports the reported errors. 
 #' @param ... named arguments to be evaluated in the message via glue or CLI
 #' 
 #' @return nothing, invisibly; used for side-effect
 #' @rdname cli_helpers
-issue_warning <- function(msg, cli = has_cli(), ...) {
+issue_warning <- function(msg = NULL, cli = has_cli(), what = NULL, url = NULL, n = NULL, N = NULL, infos = list(), reports = list(), ...) {
+  if (!is.null(msg)) {
+    if (cli) {
+      cli::cli_alert_warning(msg)
+    } else {
+      pb_message(glue::glue(msg))
+    }
+    return(NULL)
+  }
   l <- list(...)
   for (i in names(l)) {
     assign(i, l[[i]])
   }
+  what <- if (is.null(what)) "elements" else what
+  n    <- if (is.null(n)) "?" else n
+  N    <- if (is.null(N)) "?" else N
+  msg <- "There were errors in {n}/{N} {what}"
   if (cli) {
     cli::cli_alert_warning(msg)
+
+    first <- cli::cli_div(theme = list(ul = list("list-style-type" = function() cli::symbol$circle_dotted)))
+    cli::cli_li(infos)
+    if (!is.null(url)) {
+      cli::cli_text("{.url {url}}")
+    }
+    cli::cli_par()
+    cli::cli_end(id = first)
+
+    cli::cli_div(theme = list(ul = list("list-style-type" = function() "")))
+    cli::cli_li(reports)
+    cli::cli_end()
   } else {
-    pb_message(glue::glue("! {glue::glue(msg)}"))
+    infos <- paste(c(infos), collapse = "\n - ")
+    reports <- paste(reports, collapse = "\n")
+    url <- if (is.null(url)) "" else paste0("\n<", url, ">")
+    out <- "! {glue::glue(msg)}
+    
+    - {infos}{url}
+
+    {reports}
+    "
+    pb_message(glue::glue(out))
   }
   invisible()
 }
+
 
 #' Utility to make "pegboard" class of messages 
 #'
@@ -62,7 +102,7 @@ line_report <- function(msg = "", path, pos, sep = "\t", type = "warning") {
   } else {
     res <- "{path}:{pos}{sep}{msg}"
   }
-  glue::glue_collapse(glue::glue(res), sep = "\n")
+  glue::glue(res)
 }
 
 #' Append a stylized label to elements of a vector

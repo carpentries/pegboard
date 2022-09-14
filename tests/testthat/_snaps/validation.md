@@ -6,10 +6,10 @@
       ! There were errors in 5/7 headings
       
       - First heading must be level 2
-      - Level 1 headings are not allowed
-      - Headings must be sequential
-      - Headings must be named
-      - Headings must be unique
+       - Level 1 headings are not allowed
+       - Headings must be sequential
+       - Headings must be named
+       - Headings must be unique
       <https://webaim.org/techniques/semanticstructure/#headings>
       
       validation-headings.md:5  (must be level 2) (first level heading)
@@ -82,7 +82,7 @@
       ! There were errors in 3/12 links
       
       - Some linked internal files do not exist
-      - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
+       - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
       _episodes/14-looping-data-sets.md:191  [missing file] ../no-workie.svg
       _episodes/14-looping-data-sets.md:195  [image missing alt-text]
@@ -96,11 +96,11 @@
       ! There were errors in 27/39 links
       
       - Links must use HTTPS <https://https.cio.gov/everything/>
-      - Some link anchors for relative links (e.g. [anchor]: link) are missing
-      - Some linked internal files do not exist
-      - Some links were incorrectly formatted
-      - Avoid uninformative link phrases <https://webaim.org/techniques/hypertext/link_text#uninformative>
-      - Avoid single-letter or missing link text <https://webaim.org/techniques/hypertext/link_text#link_length>
+       - Some link anchors for relative links (e.g. [anchor]: link) are missing
+       - Some linked internal files do not exist
+       - Some links were incorrectly formatted
+       - Avoid uninformative link phrases <https://webaim.org/techniques/hypertext/link_text#uninformative>
+       - Avoid single-letter or missing link text <https://webaim.org/techniques/hypertext/link_text#link_length>
       
       link-test.md:18  [uninformative link text] 'link'
       link-test.md:18  [uninformative link text] 'this link'
@@ -136,19 +136,18 @@
       res <- vh$validate_headings()
     Message <cliMessage>
       ! There were errors in 5/7 headings
-      
-      - First heading must be level 2
-      - Level 1 headings are not allowed
-      - Headings must be sequential
-      - Headings must be named
-      - Headings must be unique
+      ( ) First heading must be level 2
+      ( ) Level 1 headings are not allowed
+      ( ) Headings must be sequential
+      ( ) Headings must be named
+      ( ) Headings must be unique
       <https://webaim.org/techniques/semanticstructure/#headings>
       
-      validation-headings.md:5  (must be level 2) (first level heading)
-      validation-headings.md:7  (non-sequential heading jump)
-      validation-headings.md:9  (duplicated)
-      validation-headings.md:11  (duplicated)
-      validation-headings.md:18  (no name)
+      validation-headings.md:5 (must be level 2) (first level heading)
+      validation-headings.md:7 (non-sequential heading jump)
+      validation-headings.md:9 (duplicated)
+      validation-headings.md:11 (duplicated)
+      validation-headings.md:18 (no name)
       -- Heading structure -----------------------------------------------------------
     Output
       # Episode: "Errors in Headings" 
@@ -168,19 +167,18 @@
       res <- vh$validate_headings()
     Message <cliMessage>
       [33m![39m There were errors in 5/7 headings
+      ( ) First heading must be level 2
+      ( ) Level 1 headings are not allowed
+      ( ) Headings must be sequential
+      ( ) Headings must be named
+      ( ) Headings must be unique
+      [3m[34m<https://webaim.org/techniques/semanticstructure/#headings>[39m[23m
       
-      - First heading must be level 2
-      - Level 1 headings are not allowed
-      - Headings must be sequential
-      - Headings must be named
-      - Headings must be unique
-      <https://webaim.org/techniques/semanticstructure/#headings>
-      
-      validation-headings.md:5  (must be level 2) (first level heading)
-      validation-headings.md:7  (non-sequential heading jump)
-      validation-headings.md:9  (duplicated)
-      validation-headings.md:11  (duplicated)
-      validation-headings.md:18  (no name)
+      validation-headings.md:5 (must be level 2) (first level heading)
+      validation-headings.md:7 (non-sequential heading jump)
+      validation-headings.md:9 (duplicated)
+      validation-headings.md:11 (duplicated)
+      validation-headings.md:18 (no name)
       -- Heading structure -----------------------------------------------------------
     Output
       # Episode: "Errors in Headings" 
@@ -200,19 +198,18 @@
       res <- vh$validate_headings()
     Message <cliMessage>
       ! There were errors in 5/7 headings
-      
-      - First heading must be level 2
-      - Level 1 headings are not allowed
-      - Headings must be sequential
-      - Headings must be named
-      - Headings must be unique
+      ◌ First heading must be level 2
+      ◌ Level 1 headings are not allowed
+      ◌ Headings must be sequential
+      ◌ Headings must be named
+      ◌ Headings must be unique
       <https://webaim.org/techniques/semanticstructure/#headings>
       
-      validation-headings.md:5  (must be level 2) (first level heading)
-      validation-headings.md:7  (non-sequential heading jump)
-      validation-headings.md:9  (duplicated)
-      validation-headings.md:11  (duplicated)
-      validation-headings.md:18  (no name)
+      validation-headings.md:5 (must be level 2) (first level heading)
+      validation-headings.md:7 (non-sequential heading jump)
+      validation-headings.md:9 (duplicated)
+      validation-headings.md:11 (duplicated)
+      validation-headings.md:18 (no name)
       ── Heading structure ───────────────────────────────────────────────────────────
     Output
       # Episode: "Errors in Headings" 
@@ -232,19 +229,18 @@
       res <- vh$validate_headings()
     Message <cliMessage>
       [33m![39m There were errors in 5/7 headings
+      ◌ First heading must be level 2
+      ◌ Level 1 headings are not allowed
+      ◌ Headings must be sequential
+      ◌ Headings must be named
+      ◌ Headings must be unique
+      [3m[34m<https://webaim.org/techniques/semanticstructure/#headings>[39m[23m
       
-      - First heading must be level 2
-      - Level 1 headings are not allowed
-      - Headings must be sequential
-      - Headings must be named
-      - Headings must be unique
-      <https://webaim.org/techniques/semanticstructure/#headings>
-      
-      validation-headings.md:5  (must be level 2) (first level heading)
-      validation-headings.md:7  (non-sequential heading jump)
-      validation-headings.md:9  (duplicated)
-      validation-headings.md:11  (duplicated)
-      validation-headings.md:18  (no name)
+      validation-headings.md:5 (must be level 2) (first level heading)
+      validation-headings.md:7 (non-sequential heading jump)
+      validation-headings.md:9 (duplicated)
+      validation-headings.md:11 (duplicated)
+      validation-headings.md:18 (no name)
       ── Heading structure ───────────────────────────────────────────────────────────
     Output
       # Episode: "Errors in Headings" 
@@ -264,11 +260,11 @@
       cats$validate_links()
     Message <cliMessage>
       ! There were errors in 2/10 links
+      ( ) Images need alt-text
+      <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
-      - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
-      
-      image-test.md:12  [image missing alt-text]
-      image-test.md:41  [image missing alt-text]
+      image-test.md:12 [image missing alt-text]
+      image-test.md:41 [image missing alt-text]
 
 ---
 
@@ -276,41 +272,43 @@
       link$validate_links()
     Message <cliMessage>
       ! There were errors in 27/39 links
+      ( ) Links must use HTTPS <https://https.cio.gov/everything/>
+      ( ) Some link anchors for relative links (e.g. [anchor]: link) are missing
+      ( ) Some linked internal files do not exist
+      ( ) Some links were incorrectly formatted
+      ( ) Avoid uninformative link phrases
+      <https://webaim.org/techniques/hypertext/link_text#uninformative>
+      ( ) Avoid single-letter or missing link text
+      <https://webaim.org/techniques/hypertext/link_text#link_length>
       
-      - Links must use HTTPS <https://https.cio.gov/everything/>
-      - Some link anchors for relative links (e.g. [anchor]: link) are missing
-      - Some linked internal files do not exist
-      - Some links were incorrectly formatted
-      - Avoid uninformative link phrases <https://webaim.org/techniques/hypertext/link_text#uninformative>
-      - Avoid single-letter or missing link text <https://webaim.org/techniques/hypertext/link_text#link_length>
-      
-      link-test.md:18  [uninformative link text] 'link'
-      link-test.md:18  [uninformative link text] 'this link'
-      link-test.md:22  [missing anchor] #bad-fragment
-      link-test.md:29  [missing file] incorrect-link.html
-      link-test.md:37  [incorrect formatting]: [should be a relative link][rel-image] -> [should be a relative link](rel-image)
-      link-test.md:41  [missing file] files/ohno.txt
-      link-test.md:45  [needs HTTPS] http://example.com
-      link-test.md:53  [uninformative link text] 'this'
-      link-test.md:54  [uninformative link text] 'link'
-      link-test.md:55  [uninformative link text] 'this link'
-      link-test.md:56  [uninformative link text] 'a link'
-      link-test.md:57  [uninformative link text] 'link to'
-      link-test.md:58  [uninformative link text] 'here'
-      link-test.md:59  [uninformative link text] 'here for'
-      link-test.md:60  [uninformative link text] 'click here for'
-      link-test.md:61  [uninformative link text] 'over here for'
-      link-test.md:62  [uninformative link text] 'more'
-      link-test.md:63  [uninformative link text] 'more about'
-      link-test.md:64  [uninformative link text] 'for more about'
-      link-test.md:65  [uninformative link text] 'for more info about'
-      link-test.md:66  [uninformative link text] 'for more information about'
-      link-test.md:67  [uninformative link text] 'read more about'
-      link-test.md:68  [uninformative link text] 'read more'
-      link-test.md:69  [uninformative link text] 'read on'
-      link-test.md:70  [uninformative link text] 'read on about'
-      link-test.md:71  [link text too short] 'a'
-      link-test.md:72  [link text too short] ''
+      link-test.md:18 [uninformative link text] 'link'
+      link-test.md:18 [uninformative link text] 'this link'
+      link-test.md:22 [missing anchor] #bad-fragment
+      link-test.md:29 [missing file] incorrect-link.html
+      link-test.md:37 [incorrect formatting]: [should be a relative link][rel-image]
+      -> [should be a relative link](rel-image)
+      link-test.md:41 [missing file] files/ohno.txt
+      link-test.md:45 [needs HTTPS] http://example.com
+      link-test.md:53 [uninformative link text] 'this'
+      link-test.md:54 [uninformative link text] 'link'
+      link-test.md:55 [uninformative link text] 'this link'
+      link-test.md:56 [uninformative link text] 'a link'
+      link-test.md:57 [uninformative link text] 'link to'
+      link-test.md:58 [uninformative link text] 'here'
+      link-test.md:59 [uninformative link text] 'here for'
+      link-test.md:60 [uninformative link text] 'click here for'
+      link-test.md:61 [uninformative link text] 'over here for'
+      link-test.md:62 [uninformative link text] 'more'
+      link-test.md:63 [uninformative link text] 'more about'
+      link-test.md:64 [uninformative link text] 'for more about'
+      link-test.md:65 [uninformative link text] 'for more info about'
+      link-test.md:66 [uninformative link text] 'for more information about'
+      link-test.md:67 [uninformative link text] 'read more about'
+      link-test.md:68 [uninformative link text] 'read more'
+      link-test.md:69 [uninformative link text] 'read on'
+      link-test.md:70 [uninformative link text] 'read on about'
+      link-test.md:71 [link text too short] 'a'
+      link-test.md:72 [link text too short] ''
 
 # links reporters will work [ansi]
 
@@ -318,11 +316,11 @@
       cats$validate_links()
     Message <cliMessage>
       [33m![39m There were errors in 2/10 links
+      ( ) Images need alt-text
+      <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
-      - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
-      
-      image-test.md:12  [image missing alt-text]
-      image-test.md:41  [image missing alt-text]
+      image-test.md:12 [image missing alt-text]
+      image-test.md:41 [image missing alt-text]
 
 ---
 
@@ -330,41 +328,43 @@
       link$validate_links()
     Message <cliMessage>
       [33m![39m There were errors in 27/39 links
+      ( ) Links must use HTTPS <https://https.cio.gov/everything/>
+      ( ) Some link anchors for relative links (e.g. [anchor]: link) are missing
+      ( ) Some linked internal files do not exist
+      ( ) Some links were incorrectly formatted
+      ( ) Avoid uninformative link phrases
+      <https://webaim.org/techniques/hypertext/link_text#uninformative>
+      ( ) Avoid single-letter or missing link text
+      <https://webaim.org/techniques/hypertext/link_text#link_length>
       
-      - Links must use HTTPS <https://https.cio.gov/everything/>
-      - Some link anchors for relative links (e.g. [anchor]: link) are missing
-      - Some linked internal files do not exist
-      - Some links were incorrectly formatted
-      - Avoid uninformative link phrases <https://webaim.org/techniques/hypertext/link_text#uninformative>
-      - Avoid single-letter or missing link text <https://webaim.org/techniques/hypertext/link_text#link_length>
-      
-      link-test.md:18  [uninformative link text] 'link'
-      link-test.md:18  [uninformative link text] 'this link'
-      link-test.md:22  [missing anchor] #bad-fragment
-      link-test.md:29  [missing file] incorrect-link.html
-      link-test.md:37  [incorrect formatting]: [should be a relative link][rel-image] -> [should be a relative link](rel-image)
-      link-test.md:41  [missing file] files/ohno.txt
-      link-test.md:45  [needs HTTPS] http://example.com
-      link-test.md:53  [uninformative link text] 'this'
-      link-test.md:54  [uninformative link text] 'link'
-      link-test.md:55  [uninformative link text] 'this link'
-      link-test.md:56  [uninformative link text] 'a link'
-      link-test.md:57  [uninformative link text] 'link to'
-      link-test.md:58  [uninformative link text] 'here'
-      link-test.md:59  [uninformative link text] 'here for'
-      link-test.md:60  [uninformative link text] 'click here for'
-      link-test.md:61  [uninformative link text] 'over here for'
-      link-test.md:62  [uninformative link text] 'more'
-      link-test.md:63  [uninformative link text] 'more about'
-      link-test.md:64  [uninformative link text] 'for more about'
-      link-test.md:65  [uninformative link text] 'for more info about'
-      link-test.md:66  [uninformative link text] 'for more information about'
-      link-test.md:67  [uninformative link text] 'read more about'
-      link-test.md:68  [uninformative link text] 'read more'
-      link-test.md:69  [uninformative link text] 'read on'
-      link-test.md:70  [uninformative link text] 'read on about'
-      link-test.md:71  [link text too short] 'a'
-      link-test.md:72  [link text too short] ''
+      link-test.md:18 [uninformative link text] 'link'
+      link-test.md:18 [uninformative link text] 'this link'
+      link-test.md:22 [missing anchor] #bad-fragment
+      link-test.md:29 [missing file] incorrect-link.html
+      link-test.md:37 [incorrect formatting]: [should be a relative link][rel-image]
+      -> [should be a relative link](rel-image)
+      link-test.md:41 [missing file] files/ohno.txt
+      link-test.md:45 [needs HTTPS] http://example.com
+      link-test.md:53 [uninformative link text] 'this'
+      link-test.md:54 [uninformative link text] 'link'
+      link-test.md:55 [uninformative link text] 'this link'
+      link-test.md:56 [uninformative link text] 'a link'
+      link-test.md:57 [uninformative link text] 'link to'
+      link-test.md:58 [uninformative link text] 'here'
+      link-test.md:59 [uninformative link text] 'here for'
+      link-test.md:60 [uninformative link text] 'click here for'
+      link-test.md:61 [uninformative link text] 'over here for'
+      link-test.md:62 [uninformative link text] 'more'
+      link-test.md:63 [uninformative link text] 'more about'
+      link-test.md:64 [uninformative link text] 'for more about'
+      link-test.md:65 [uninformative link text] 'for more info about'
+      link-test.md:66 [uninformative link text] 'for more information about'
+      link-test.md:67 [uninformative link text] 'read more about'
+      link-test.md:68 [uninformative link text] 'read more'
+      link-test.md:69 [uninformative link text] 'read on'
+      link-test.md:70 [uninformative link text] 'read on about'
+      link-test.md:71 [link text too short] 'a'
+      link-test.md:72 [link text too short] ''
 
 # links reporters will work [unicode]
 
@@ -372,11 +372,11 @@
       cats$validate_links()
     Message <cliMessage>
       ! There were errors in 2/10 links
+      ◌ Images need alt-text
+      <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
-      - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
-      
-      image-test.md:12  [image missing alt-text]
-      image-test.md:41  [image missing alt-text]
+      image-test.md:12 [image missing alt-text]
+      image-test.md:41 [image missing alt-text]
 
 ---
 
@@ -384,41 +384,43 @@
       link$validate_links()
     Message <cliMessage>
       ! There were errors in 27/39 links
+      ◌ Links must use HTTPS <https://https.cio.gov/everything/>
+      ◌ Some link anchors for relative links (e.g. [anchor]: link) are missing
+      ◌ Some linked internal files do not exist
+      ◌ Some links were incorrectly formatted
+      ◌ Avoid uninformative link phrases
+      <https://webaim.org/techniques/hypertext/link_text#uninformative>
+      ◌ Avoid single-letter or missing link text
+      <https://webaim.org/techniques/hypertext/link_text#link_length>
       
-      - Links must use HTTPS <https://https.cio.gov/everything/>
-      - Some link anchors for relative links (e.g. [anchor]: link) are missing
-      - Some linked internal files do not exist
-      - Some links were incorrectly formatted
-      - Avoid uninformative link phrases <https://webaim.org/techniques/hypertext/link_text#uninformative>
-      - Avoid single-letter or missing link text <https://webaim.org/techniques/hypertext/link_text#link_length>
-      
-      link-test.md:18  [uninformative link text] 'link'
-      link-test.md:18  [uninformative link text] 'this link'
-      link-test.md:22  [missing anchor] #bad-fragment
-      link-test.md:29  [missing file] incorrect-link.html
-      link-test.md:37  [incorrect formatting]: [should be a relative link][rel-image] -> [should be a relative link](rel-image)
-      link-test.md:41  [missing file] files/ohno.txt
-      link-test.md:45  [needs HTTPS] http://example.com
-      link-test.md:53  [uninformative link text] 'this'
-      link-test.md:54  [uninformative link text] 'link'
-      link-test.md:55  [uninformative link text] 'this link'
-      link-test.md:56  [uninformative link text] 'a link'
-      link-test.md:57  [uninformative link text] 'link to'
-      link-test.md:58  [uninformative link text] 'here'
-      link-test.md:59  [uninformative link text] 'here for'
-      link-test.md:60  [uninformative link text] 'click here for'
-      link-test.md:61  [uninformative link text] 'over here for'
-      link-test.md:62  [uninformative link text] 'more'
-      link-test.md:63  [uninformative link text] 'more about'
-      link-test.md:64  [uninformative link text] 'for more about'
-      link-test.md:65  [uninformative link text] 'for more info about'
-      link-test.md:66  [uninformative link text] 'for more information about'
-      link-test.md:67  [uninformative link text] 'read more about'
-      link-test.md:68  [uninformative link text] 'read more'
-      link-test.md:69  [uninformative link text] 'read on'
-      link-test.md:70  [uninformative link text] 'read on about'
-      link-test.md:71  [link text too short] 'a'
-      link-test.md:72  [link text too short] ''
+      link-test.md:18 [uninformative link text] 'link'
+      link-test.md:18 [uninformative link text] 'this link'
+      link-test.md:22 [missing anchor] #bad-fragment
+      link-test.md:29 [missing file] incorrect-link.html
+      link-test.md:37 [incorrect formatting]: [should be a relative link][rel-image]
+      -> [should be a relative link](rel-image)
+      link-test.md:41 [missing file] files/ohno.txt
+      link-test.md:45 [needs HTTPS] http://example.com
+      link-test.md:53 [uninformative link text] 'this'
+      link-test.md:54 [uninformative link text] 'link'
+      link-test.md:55 [uninformative link text] 'this link'
+      link-test.md:56 [uninformative link text] 'a link'
+      link-test.md:57 [uninformative link text] 'link to'
+      link-test.md:58 [uninformative link text] 'here'
+      link-test.md:59 [uninformative link text] 'here for'
+      link-test.md:60 [uninformative link text] 'click here for'
+      link-test.md:61 [uninformative link text] 'over here for'
+      link-test.md:62 [uninformative link text] 'more'
+      link-test.md:63 [uninformative link text] 'more about'
+      link-test.md:64 [uninformative link text] 'for more about'
+      link-test.md:65 [uninformative link text] 'for more info about'
+      link-test.md:66 [uninformative link text] 'for more information about'
+      link-test.md:67 [uninformative link text] 'read more about'
+      link-test.md:68 [uninformative link text] 'read more'
+      link-test.md:69 [uninformative link text] 'read on'
+      link-test.md:70 [uninformative link text] 'read on about'
+      link-test.md:71 [link text too short] 'a'
+      link-test.md:72 [link text too short] ''
 
 # links reporters will work [fancy]
 
@@ -426,11 +428,11 @@
       cats$validate_links()
     Message <cliMessage>
       [33m![39m There were errors in 2/10 links
+      ◌ Images need alt-text
+      <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
-      - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
-      
-      image-test.md:12  [image missing alt-text]
-      image-test.md:41  [image missing alt-text]
+      image-test.md:12 [image missing alt-text]
+      image-test.md:41 [image missing alt-text]
 
 ---
 
@@ -438,41 +440,43 @@
       link$validate_links()
     Message <cliMessage>
       [33m![39m There were errors in 27/39 links
+      ◌ Links must use HTTPS <https://https.cio.gov/everything/>
+      ◌ Some link anchors for relative links (e.g. [anchor]: link) are missing
+      ◌ Some linked internal files do not exist
+      ◌ Some links were incorrectly formatted
+      ◌ Avoid uninformative link phrases
+      <https://webaim.org/techniques/hypertext/link_text#uninformative>
+      ◌ Avoid single-letter or missing link text
+      <https://webaim.org/techniques/hypertext/link_text#link_length>
       
-      - Links must use HTTPS <https://https.cio.gov/everything/>
-      - Some link anchors for relative links (e.g. [anchor]: link) are missing
-      - Some linked internal files do not exist
-      - Some links were incorrectly formatted
-      - Avoid uninformative link phrases <https://webaim.org/techniques/hypertext/link_text#uninformative>
-      - Avoid single-letter or missing link text <https://webaim.org/techniques/hypertext/link_text#link_length>
-      
-      link-test.md:18  [uninformative link text] 'link'
-      link-test.md:18  [uninformative link text] 'this link'
-      link-test.md:22  [missing anchor] #bad-fragment
-      link-test.md:29  [missing file] incorrect-link.html
-      link-test.md:37  [incorrect formatting]: [should be a relative link][rel-image] -> [should be a relative link](rel-image)
-      link-test.md:41  [missing file] files/ohno.txt
-      link-test.md:45  [needs HTTPS] http://example.com
-      link-test.md:53  [uninformative link text] 'this'
-      link-test.md:54  [uninformative link text] 'link'
-      link-test.md:55  [uninformative link text] 'this link'
-      link-test.md:56  [uninformative link text] 'a link'
-      link-test.md:57  [uninformative link text] 'link to'
-      link-test.md:58  [uninformative link text] 'here'
-      link-test.md:59  [uninformative link text] 'here for'
-      link-test.md:60  [uninformative link text] 'click here for'
-      link-test.md:61  [uninformative link text] 'over here for'
-      link-test.md:62  [uninformative link text] 'more'
-      link-test.md:63  [uninformative link text] 'more about'
-      link-test.md:64  [uninformative link text] 'for more about'
-      link-test.md:65  [uninformative link text] 'for more info about'
-      link-test.md:66  [uninformative link text] 'for more information about'
-      link-test.md:67  [uninformative link text] 'read more about'
-      link-test.md:68  [uninformative link text] 'read more'
-      link-test.md:69  [uninformative link text] 'read on'
-      link-test.md:70  [uninformative link text] 'read on about'
-      link-test.md:71  [link text too short] 'a'
-      link-test.md:72  [link text too short] ''
+      link-test.md:18 [uninformative link text] 'link'
+      link-test.md:18 [uninformative link text] 'this link'
+      link-test.md:22 [missing anchor] #bad-fragment
+      link-test.md:29 [missing file] incorrect-link.html
+      link-test.md:37 [incorrect formatting]: [should be a relative link][rel-image]
+      -> [should be a relative link](rel-image)
+      link-test.md:41 [missing file] files/ohno.txt
+      link-test.md:45 [needs HTTPS] http://example.com
+      link-test.md:53 [uninformative link text] 'this'
+      link-test.md:54 [uninformative link text] 'link'
+      link-test.md:55 [uninformative link text] 'this link'
+      link-test.md:56 [uninformative link text] 'a link'
+      link-test.md:57 [uninformative link text] 'link to'
+      link-test.md:58 [uninformative link text] 'here'
+      link-test.md:59 [uninformative link text] 'here for'
+      link-test.md:60 [uninformative link text] 'click here for'
+      link-test.md:61 [uninformative link text] 'over here for'
+      link-test.md:62 [uninformative link text] 'more'
+      link-test.md:63 [uninformative link text] 'more about'
+      link-test.md:64 [uninformative link text] 'for more about'
+      link-test.md:65 [uninformative link text] 'for more info about'
+      link-test.md:66 [uninformative link text] 'for more information about'
+      link-test.md:67 [uninformative link text] 'read more about'
+      link-test.md:68 [uninformative link text] 'read more'
+      link-test.md:69 [uninformative link text] 'read on'
+      link-test.md:70 [uninformative link text] 'read on about'
+      link-test.md:71 [link text too short] 'a'
+      link-test.md:72 [link text too short] ''
 
 # div reporters will work [plain]
 
@@ -480,10 +484,11 @@
       dv$validate_divs()
     Message <cliMessage>
       ! There were errors in 1/5 fenced divs
+      ( ) The Carpentries Workbench knows the following div types callout,
+      objectives, questions, challenge, prereq, checklist, solution, hint,
+      discussion, testimonial, keypoints, instructor
       
-      - The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor
-      
-      validation-divs.md:26  [unknown div] unknown
+      validation-divs.md:26 [unknown div] unknown
 
 # div reporters will work [ansi]
 
@@ -491,10 +496,11 @@
       dv$validate_divs()
     Message <cliMessage>
       [33m![39m There were errors in 1/5 fenced divs
+      ( ) The Carpentries Workbench knows the following div types callout,
+      objectives, questions, challenge, prereq, checklist, solution, hint,
+      discussion, testimonial, keypoints, instructor
       
-      - The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor
-      
-      validation-divs.md:26  [unknown div] unknown
+      validation-divs.md:26 [unknown div] unknown
 
 # div reporters will work [unicode]
 
@@ -502,10 +508,11 @@
       dv$validate_divs()
     Message <cliMessage>
       ! There were errors in 1/5 fenced divs
+      ◌ The Carpentries Workbench knows the following div types callout, objectives,
+      questions, challenge, prereq, checklist, solution, hint, discussion,
+      testimonial, keypoints, instructor
       
-      - The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor
-      
-      validation-divs.md:26  [unknown div] unknown
+      validation-divs.md:26 [unknown div] unknown
 
 # div reporters will work [fancy]
 
@@ -513,10 +520,11 @@
       dv$validate_divs()
     Message <cliMessage>
       [33m![39m There were errors in 1/5 fenced divs
+      ◌ The Carpentries Workbench knows the following div types callout, objectives,
+      questions, challenge, prereq, checklist, solution, hint, discussion,
+      testimonial, keypoints, instructor
       
-      - The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor
-      
-      validation-divs.md:26  [unknown div] unknown
+      validation-divs.md:26 [unknown div] unknown
 
 # headings reporters will work on CI
 
@@ -524,15 +532,15 @@
       res <- vh$validate_headings()
     Message <cliMessage>
       ! There were errors in 5/7 headings
-      
-      - First heading must be level 2
-      - Level 1 headings are not allowed
-      - Headings must be sequential
-      - Headings must be named
-      - Headings must be unique
+      ( ) First heading must be level 2
+      ( ) Level 1 headings are not allowed
+      ( ) Headings must be sequential
+      ( ) Headings must be named
+      ( ) Headings must be unique
       <https://webaim.org/techniques/semanticstructure/#headings>
       
-      ::warning file=validation-headings.md,line=5:: (must be level 2) (first level heading)
+      ::warning file=validation-headings.md,line=5:: (must be level 2) (first level
+      heading)
       ::warning file=validation-headings.md,line=7:: (non-sequential heading jump)
       ::warning file=validation-headings.md,line=9:: (duplicated)
       ::warning file=validation-headings.md,line=11:: (duplicated)
@@ -556,8 +564,7 @@
       res <- loop$validate_headings()
     Message <cliMessage>
       ! There were errors in 3/10 headings
-      
-      - Headings must be unique
+      ( ) Headings must be unique
       <https://webaim.org/techniques/semanticstructure/#headings>
       
       ::warning file=_episodes/14-looping-data-sets.md,line=119:: (duplicated)
@@ -585,19 +592,21 @@
       link$validate_links()
     Message <cliMessage>
       ! There were errors in 27/39 links
-      
-      - Links must use HTTPS <https://https.cio.gov/everything/>
-      - Some link anchors for relative links (e.g. [anchor]: link) are missing
-      - Some linked internal files do not exist
-      - Some links were incorrectly formatted
-      - Avoid uninformative link phrases <https://webaim.org/techniques/hypertext/link_text#uninformative>
-      - Avoid single-letter or missing link text <https://webaim.org/techniques/hypertext/link_text#link_length>
+      ( ) Links must use HTTPS <https://https.cio.gov/everything/>
+      ( ) Some link anchors for relative links (e.g. [anchor]: link) are missing
+      ( ) Some linked internal files do not exist
+      ( ) Some links were incorrectly formatted
+      ( ) Avoid uninformative link phrases
+      <https://webaim.org/techniques/hypertext/link_text#uninformative>
+      ( ) Avoid single-letter or missing link text
+      <https://webaim.org/techniques/hypertext/link_text#link_length>
       
       ::warning file=link-test.md,line=18:: [uninformative link text] 'link'
       ::warning file=link-test.md,line=18:: [uninformative link text] 'this link'
       ::warning file=link-test.md,line=22:: [missing anchor] #bad-fragment
       ::warning file=link-test.md,line=29:: [missing file] incorrect-link.html
-      ::warning file=link-test.md,line=37:: [incorrect formatting]: [should be a relative link][rel-image] -> [should be a relative link](rel-image)
+      ::warning file=link-test.md,line=37:: [incorrect formatting]: [should be a
+      relative link][rel-image] -> [should be a relative link](rel-image)
       ::warning file=link-test.md,line=41:: [missing file] files/ohno.txt
       ::warning file=link-test.md,line=45:: [needs HTTPS] http://example.com
       ::warning file=link-test.md,line=53:: [uninformative link text] 'this'
@@ -607,14 +616,19 @@
       ::warning file=link-test.md,line=57:: [uninformative link text] 'link to'
       ::warning file=link-test.md,line=58:: [uninformative link text] 'here'
       ::warning file=link-test.md,line=59:: [uninformative link text] 'here for'
-      ::warning file=link-test.md,line=60:: [uninformative link text] 'click here for'
+      ::warning file=link-test.md,line=60:: [uninformative link text] 'click here
+      for'
       ::warning file=link-test.md,line=61:: [uninformative link text] 'over here for'
       ::warning file=link-test.md,line=62:: [uninformative link text] 'more'
       ::warning file=link-test.md,line=63:: [uninformative link text] 'more about'
-      ::warning file=link-test.md,line=64:: [uninformative link text] 'for more about'
-      ::warning file=link-test.md,line=65:: [uninformative link text] 'for more info about'
-      ::warning file=link-test.md,line=66:: [uninformative link text] 'for more information about'
-      ::warning file=link-test.md,line=67:: [uninformative link text] 'read more about'
+      ::warning file=link-test.md,line=64:: [uninformative link text] 'for more
+      about'
+      ::warning file=link-test.md,line=65:: [uninformative link text] 'for more info
+      about'
+      ::warning file=link-test.md,line=66:: [uninformative link text] 'for more
+      information about'
+      ::warning file=link-test.md,line=67:: [uninformative link text] 'read more
+      about'
       ::warning file=link-test.md,line=68:: [uninformative link text] 'read more'
       ::warning file=link-test.md,line=69:: [uninformative link text] 'read on'
       ::warning file=link-test.md,line=70:: [uninformative link text] 'read on about'
@@ -627,8 +641,9 @@
       dv$validate_divs()
     Message <cliMessage>
       ! There were errors in 1/5 fenced divs
-      
-      - The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor
+      ( ) The Carpentries Workbench knows the following div types callout,
+      objectives, questions, challenge, prereq, checklist, solution, hint,
+      discussion, testimonial, keypoints, instructor
       
       ::warning file=validation-divs.md,line=26:: [unknown div] unknown
 

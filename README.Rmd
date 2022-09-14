@@ -22,6 +22,7 @@ knitr::opts_chunk$set(
 [![CRAN status](https://www.r-pkg.org/badges/version/pegboard)](https://CRAN.R-project.org/package=pegboard)
 [![Codecov test coverage](https://codecov.io/gh/carpentries/pegboard/branch/main/graph/badge.svg)](https://codecov.io/gh/carpentries/pegboard?branch=main)
 [![R build status](https://github.com/carpentries/pegboard/workflows/R-CMD-check/badge.svg)](https://github.com/carpentries/pegboard/actions)
+[![R-CMD-check](https://github.com/carpentries/pegboard/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/carpentries/pegboard/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 > [pegboard] is tempered hardboard which is pre-drilled with evenly spaced

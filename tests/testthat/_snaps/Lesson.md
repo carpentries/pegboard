@@ -175,8 +175,7 @@
     Message <cliMessage>
       --------------------------------------------------------------------------------
       ! There were errors in 13/37 headings
-      
-      - Headings must be unique
+      ( ) Headings must be unique
       <https://webaim.org/techniques/semanticstructure/#headings>
       
       ::warning file=_episodes/12-for-loops.md,line=183:: (duplicated)
@@ -199,13 +198,16 @@
       vlink <- frg$validate_links()
     Message <cliMessage>
       ! There were errors in 3/13 links
+      ( ) Some linked internal files do not exist
+      ( ) Images need alt-text
+      <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
-      - Some linked internal files do not exist
-      - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
-      
-      ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file] ../no-workie.svg
-      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing alt-text]
-      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [image missing alt-text]
+      ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]
+      ../no-workie.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing
+      alt-text]
+      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]
+      ../no-workie.svg [image missing alt-text]
 
 # Lessons can be validated [ansi]
 
@@ -257,9 +259,8 @@
     Message <cliMessage>
       --------------------------------------------------------------------------------
       [33m![39m There were errors in 13/37 headings
-      
-      - Headings must be unique
-      <https://webaim.org/techniques/semanticstructure/#headings>
+      ( ) Headings must be unique
+      [3m[34m<https://webaim.org/techniques/semanticstructure/#headings>[39m[23m
       
       ::warning file=_episodes/12-for-loops.md,line=183:: (duplicated)
       ::warning file=_episodes/12-for-loops.md,line=200:: (duplicated)
@@ -281,13 +282,16 @@
       vlink <- frg$validate_links()
     Message <cliMessage>
       [33m![39m There were errors in 3/13 links
+      ( ) Some linked internal files do not exist
+      ( ) Images need alt-text
+      <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
-      - Some linked internal files do not exist
-      - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
-      
-      ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file] ../no-workie.svg
-      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing alt-text]
-      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [image missing alt-text]
+      ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]
+      ../no-workie.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing
+      alt-text]
+      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]
+      ../no-workie.svg [image missing alt-text]
 
 # Lessons can be validated [unicode]
 
@@ -339,8 +343,7 @@
     Message <cliMessage>
       ────────────────────────────────────────────────────────────────────────────────
       ! There were errors in 13/37 headings
-      
-      - Headings must be unique
+      ◌ Headings must be unique
       <https://webaim.org/techniques/semanticstructure/#headings>
       
       ::warning file=_episodes/12-for-loops.md,line=183:: (duplicated)
@@ -363,13 +366,16 @@
       vlink <- frg$validate_links()
     Message <cliMessage>
       ! There were errors in 3/13 links
+      ◌ Some linked internal files do not exist
+      ◌ Images need alt-text
+      <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
-      - Some linked internal files do not exist
-      - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
-      
-      ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file] ../no-workie.svg
-      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing alt-text]
-      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [image missing alt-text]
+      ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]
+      ../no-workie.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing
+      alt-text]
+      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]
+      ../no-workie.svg [image missing alt-text]
 
 # Lessons can be validated [fancy]
 
@@ -421,9 +427,8 @@
     Message <cliMessage>
       ────────────────────────────────────────────────────────────────────────────────
       [33m![39m There were errors in 13/37 headings
-      
-      - Headings must be unique
-      <https://webaim.org/techniques/semanticstructure/#headings>
+      ◌ Headings must be unique
+      [3m[34m<https://webaim.org/techniques/semanticstructure/#headings>[39m[23m
       
       ::warning file=_episodes/12-for-loops.md,line=183:: (duplicated)
       ::warning file=_episodes/12-for-loops.md,line=200:: (duplicated)
@@ -445,11 +450,14 @@
       vlink <- frg$validate_links()
     Message <cliMessage>
       [33m![39m There were errors in 3/13 links
+      ◌ Some linked internal files do not exist
+      ◌ Images need alt-text
+      <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
-      - Some linked internal files do not exist
-      - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
-      
-      ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file] ../no-workie.svg
-      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing alt-text]
-      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [image missing alt-text]
+      ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]
+      ../no-workie.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing
+      alt-text]
+      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]
+      ../no-workie.svg [image missing alt-text]
 

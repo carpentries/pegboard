@@ -8,7 +8,17 @@
 \alias{message_muffler}
 \title{Issue a warning via CLI if it exists or send a message}
 \usage{
-issue_warning(msg, cli = has_cli(), ...)
+issue_warning(
+  msg = NULL,
+  cli = has_cli(),
+  what = NULL,
+  url = NULL,
+  n = NULL,
+  N = NULL,
+  infos = list(),
+  reports = list(),
+  ...
+)
 
 pb_message(..., domain = NULL, appendLF = TRUE)
 
@@ -19,9 +29,21 @@ append_labels(l, i = TRUE, e = "", cli = FALSE, f = "style_inverse")
 message_muffler(expr, keep = FALSE)
 }
 \arguments{
-\item{msg}{the message as a glue or CLI string}
+\item{msg}{the message as a glue or CLI string. Defaults to NULL}
 
 \item{cli}{if \code{TRUE}, stylizes \code{e} with \code{f}}
+
+\item{what}{the name of the specific element to report in an error}
+
+\item{url}{a url for extra information to help.}
+
+\item{n}{the number of elements errored}
+
+\item{N}{the number total elements}
+
+\item{infos}{the information about the errors to be shown to the user}
+
+\item{reports}{the reported errors.}
 
 \item{...}{named arguments to be evaluated in the message via glue or CLI}
 
