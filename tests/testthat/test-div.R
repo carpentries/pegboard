@@ -5,6 +5,15 @@ withr::defer({
 })
 
 
+
+test_that("nested lists are allowed within div pairs", {
+  ex <- pegboard::Episode$new(file.path(test_path(), "examples", "div-list.txt"))
+  ex$label_divs()
+  # After labelling, we should be able to find content from the divs
+  expect_gt(sum(lengths(ex$get_divs())), 0)
+})
+
+
 test_that("div pairs are uniquely labelled", {
   nodes <- c(
   "<div class='1'>", 

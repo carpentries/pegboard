@@ -481,6 +481,15 @@ clean_div_tags <- function(body) {
   # Find all the multi-div tags and replace newlines with double newlines
   ns  <- get_ns(body)
   d   <- xml2::xml_find_all(body, ".//md:html_block[contains(text(), 'div')]", ns)
+  
+  # NOTE: to find the div pairs that are swallowed by item lists, we need to do
+  # the following:
+  # 1. search for all div tags
+  # 2. assign the output of `xml_parent()` to parents
+  # 3. if the length of parents is 1, and its name is "document", then we have
+  #    valid divs.
+  # 4. if the length of parents is greater than one, we likely have a nested div
+  #    and we should check to make sure it is not a list item
   if (length(d) == 0) {
     return(FALSE)
   }
@@ -501,6 +510,7 @@ clean_div_tags <- function(body) {
   }
   return(TRUE)
 }
+
 
 #nocov start
 #' Clean pandoc fenced divs and place them in their own paragraph elements
