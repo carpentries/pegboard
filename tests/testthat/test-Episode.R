@@ -129,28 +129,21 @@ test_that("handouts can be created", {
   expect_snapshot(cat(e$handout(solution = TRUE)))
   rmd <- fs::file_temp(ext = "Rmd")
   out <- fs::file_temp(ext = "R")
-  withr::local_file(c(rmd, out))
+  withr::local_file(c(out))
   
   # handout with a file returns the original Episode object
-  expect_false(fs::file_exists(rmd))
+  expect_false(fs::file_exists(out))
   # The object is still not affected by the handout
-  expect_length(e$handout(rmd)$solutions, 2)
-  expect_true(fs::file_exists(rmd))
-  expect_snapshot(cat(tinkr::yarn$new(rmd)$show(), sep = "\n"))
-
-  if (requireNamespace("knitr", quietly = TRUE)) {
-    expect_false(fs::file_exists(out))
-    knitr::purl(rmd, out, documentation = 2, quiet = TRUE)
-    expected <- c("echo(\"this code is retained\")",
-      "v <- rnorm(10)", 
-      "the_sum <- 0", 
-      "for (i in v) {\n    the_sum <- the_sum + i\n}", 
-      "the_mean <- the_sum/length(v)"
-    )
-    expect_true(fs::file_exists(out))
-    expect_equal(as.character(parse(out)), expected)
-  }
-
+  expect_length(e$handout(out)$solutions, 2)
+  # The output file can be parsed into valid R code
+  expected <- c("echo(\"this code is retained\")",
+    "v <- rnorm(10)", 
+    "the_sum <- 0", 
+    "for (i in v) {\n    the_sum <- the_sum + i\n}", 
+    "the_mean <- the_sum/length(v)"
+  )
+  expect_true(fs::file_exists(out))
+  expect_equal(as.character(parse(out)), expected)
 })
 
 

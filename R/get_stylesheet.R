@@ -1,4 +1,4 @@
-get_stylesheet <- function(sheet = "xml2md_gfm_kramdown.xsl", import = tinkr::stylesheet()) {
+get_stylesheet <- function(sheet = "xml2md_gfm_kramdown.xsl", import = tinkr::stylesheet(), params = list()) {
   tink <- xml2::url_escape(fs::path_real(import), reserved = c("/:\\"))
   ours <- system.file("stylesheets", sheet, package = "pegboard")
   styl <- readLines(ours)

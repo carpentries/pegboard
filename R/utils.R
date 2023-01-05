@@ -25,6 +25,8 @@ element_df <- function(node) {
 
 # nocov end
 
+`%||%` <- function(a, b) if (is.null(a)) b else a
+
 has_cli <- function() {
   is.null(getOption("pegboard.no-cli")) && requireNamespace("cli", quietly = TRUE)
 }

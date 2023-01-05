@@ -416,8 +416,13 @@ Episode <- R6::R6Class("Episode",
       code <- cp$code
       code <- code[xml2::xml_attr(code, "purl") %in% "TRUE"]
       isolate_elements(cp$body, challenges, code)
+      # set the comment character, default to hash, but could be set by 
+      # the option pegboard.handout.comment
+      comment_char <- getOption("pegboard.handout.comment") %||% "#"
+      xml2::xml_set_attr(cp$body, "comment", comment_char)
       cp$yaml <- c()
-      res <- tinkr::to_md(cp, path = path, stylesheet_path = get_stylesheet())
+      stysh <- get_stylesheet("xml2md_pegboard.xsl")
+      res <- tinkr::to_md(cp, path = path, stylesheet_path = stysh)
       if (is.null(path)) {
         invisible(res)
       } else {

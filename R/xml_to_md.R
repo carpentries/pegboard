@@ -10,7 +10,7 @@
 #' xml2::xml_add_child(cha, xml2::xml_child(sol, 1), .where =  1)
 #' xml2::xml_add_child(cha, xml2::xml_child(sol, 2), .where = 2)
 #' cat(pegboard:::xml_to_md(cha))
-xml_to_md <- function(body, stylesheet = "xml2md_roxy.xsl") {
+xml_to_md <- function(body, stylesheet = "xml2md_pegboard.xsl") {
   stysh <- xml2::read_xml(get_stylesheet(stylesheet))
   is_fragment <- xml2::xml_name(body) != "document" ||
     xml2::xml_name(xml2::xml_parent(body)) != ""
