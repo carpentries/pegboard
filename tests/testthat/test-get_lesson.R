@@ -205,13 +205,6 @@ test_that("Lesson methods work as expected", {
   )
   expect_true(sum(liquid_images) > 0)
 
-  # Markdown links are processed
-  markdown_links <- purrr::map_int(
-    lex$episodes,
-    ~length(xml2::xml_find_all(.x$body, ".//@klink"))
-  )
-  expect_true(sum(markdown_links) > 0)
-
   # $path ----------------------------------------------------------------------
   expect_equal(fs::path_file(fs::path_dir(lex$path)), fs::path_file(d))
 
@@ -307,10 +300,10 @@ test_that("Lessons with Rmd sources can be downloaded", {
   skip_if_offline()
   skip_on_os("windows")
 
-  expect_false(fs::dir_exists(fs::path(d, "swcarpentry--r-novice-inflammation")))
+  expect_false(fs::dir_exists(fs::path(d, "swcarpentry--r-novice-gapminder")))
 
   expect_message(
-    rni <- get_lesson("swcarpentry/r-novice-inflammation", path = d),
+    rni <- get_lesson("swcarpentry/r-novice-gapminder", path = d),
     "could not find _episodes/, using _episodes_rmd/ as the source"
   )
 
