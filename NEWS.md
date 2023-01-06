@@ -1,3 +1,9 @@
+# pegboard 0.4.1
+
+## MISC
+
+* A test that dependend on an upstream resource was fixed.
+
 # pegboard 0.4.0
 
 ## DEPENDENCIES
