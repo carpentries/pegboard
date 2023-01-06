@@ -4,15 +4,25 @@
 #' @return `fix_links()`: the modified body
 #' @rdname fix_links
 fix_links <- function(body) {
-  # lnks <- system.file("stylesheets", "internal_links.xsl", package = "pegboard")
-  # xslt::xml_xslt(body, xml2::read_xml(lnks))
-  purrr::walk(names(LINKS), fix_link_type, body)
+  # purrr::walk(names(LINKS), fix_link_type, body)
+  fragments <- find_broken_links(body)
+  fix_broken_links(fragments)
   body
 }
 
 ctext <- function(x) glue::glue("contains(text(), '{x}')")
 gsb <- function(x) glue::glue(x, .open = "<", .close = ">")
 
+
+make_link_patterns <- function(ns = "md:") {
+
+  predicate <- gsb("(<ctext('({{')> and <ctext('}}')>)")
+  asis_nodes <- "text[@asis][text()=']']"
+  destination <- glue::glue(
+    ".//{ns}{asis_nodes}/following-sibling::{ns}text[{predicate}]",
+  )
+  return(destination)
+}
 #' @description
 #' `LINKS`: A list of XPath predicates
 #'
@@ -40,13 +50,42 @@ LINKS <- list(
 #'   of the link.
 get_link_fragment_nodes <- function(node) {
   the_parent <- xml2::xml_parent(node)
-  # note: we could replace this by using identical(parent$child, node)
-  txt <- xml2::xml_text(node)
-  xpath <- glue::glue("count(./md:text[text() = '{txt}']/preceding-sibling::*)")
-  num <- xml2::xml_find_num(the_parent, xpath, ns = tinkr::md_ns()) + 1L
-  xml2::xml_children(the_parent)[(num - 3L):num]
+  the_children <- xml2::xml_children(the_parent)
+  # find the node in question by testing for identity since they represent the
+  # same object, they will be identical. 
+  id <- which(purrr::map_lgl(the_children, identical, node))
+  # test for image with endsWith because they may have an inline image.
+  is_image <- id > 4
+  is_image <- is_image && endsWith(xml2::xml_text(the_children[[id - 4]]), "!")
+  offset <- 3L + is_image
+  the_children[(id - offset):id]
 }
 
+#' Find broken links from Jekyll that have spaces
+#'
+#' @param body an XML document
+#' @return a list where each element represents a fragmented link. Inside each
+#'   element are two elements:
+#'   - parent: the parent paragraph node for the link
+#'   - nodes: the series of four or five nodes that make up the link text
+find_broken_links <- function(body) {
+  nodes <- xml2::xml_find_all(body, make_link_patterns(), ns = get_ns())
+  purrr::map(nodes, get_link_fragment_nodes)
+}
+
+fix_broken_links <- function(fragments) {
+  purrr::walk(fragments, fix_broken_link)
+}
+
+fix_broken_link <- function(nodes) {
+  type <- if (length(nodes) == 4) "rel_link" else "rel_image"
+  text <- paste(xml2::xml_text(nodes), collapse = "")
+  to_replace <- text_to_links(text, ns = xml2::xml_ns(nodes[[1]]), type = type)
+  purrr::walk(to_replace, 
+    ~xml2::xml_add_sibling(nodes[[1]], .x, .where = "before")
+  )
+  xml2::xml_remove(nodes)
+}
 
 #' @description
 #' `fix_link_type()`: Fixes all links in the document based on the type of link
@@ -72,6 +111,7 @@ find_lesson_links <- function(body, type = "rel_link") {
     glue::glue(".//{ns}text[{LINKS[[type]]}][not(@klink)]")
   )
 }
+
 
 #' @description
 #' `resolve_links()`: Operates on an individual text node within a paragraph.
