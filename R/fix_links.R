@@ -101,7 +101,7 @@ get_link_fragment_nodes <- function(node) {
 #' <text> and other text</text>
 #' ```
 fix_broken_link <- function(nodes) {
-  type <- if (length(nodes) == 4) "rel_link" else "rel_image"
+  type <- if (length(nodes) == 4) "link" else "image"
   text <- paste(xml2::xml_text(nodes), collapse = "")
   to_replace <- text_to_links(text, ns = xml2::xml_ns(nodes[[1]]), type = type)
   purrr::walk(to_replace, 
@@ -160,11 +160,11 @@ links_within_text_regex <- function() {
 #' @rdname fix_links
 #' @examples
 #' txt <- "Some text [and a link]({{ page.root }}/link.to#thing), 
-#' some other text [and another link][link-to-thing]."
-#' pegboard:::text_to_links(txt, type = "rel_link")
+#' some other text."
+#' pegboard:::text_to_links(txt, type = "link")
 #' md <- c(md = "http://commonmark.org/xml/1.0")
 #' class(md) <- "xml_namespace"
-#' pegboard:::text_to_links(txt, md, "rel_link")
+#' pegboard:::text_to_links(txt, md, "link")
 text_to_links <- function(txt, ns = NULL, type, sourcepos = NULL) {
 
   regex_helpers <- links_within_text_regex()
@@ -198,19 +198,12 @@ text_to_links <- function(txt, ns = NULL, type, sourcepos = NULL) {
 #' from the surrounding text. 
 #' @rdname fix_links
 make_link <- function(txt, pattern, type = "rel_link") {
-  type <- strsplit(type, "_")[[1]]
-  if (type[1] == "rel") {
-    # relative tags are processed
-    txt <- if (type[2] == "image") sub("^\\!\\[", '', txt) else txt
-    # split the link text and text into a two-element vector
-    text_link <- rev(strsplit(txt, pattern, perl = TRUE)[[1]])
-    link <- glue::glue_collapse(text_link, sep = "'><text>")
-    glue::glue("<{type[2]} destination='{link}</text></{type[2]}>")
-  } else {
-    txt <- if (grepl("^[!]", txt)) txt else glue::glue("[{txt}")
-    # if the type is not relative, keep it as text and add the klink tag
-    glue::glue("<text klink='true'>{txt}]</text>")
-  }
+  # relative tags are processed
+  txt <- if (type == "image") sub("^\\!\\[", '', txt) else txt
+  # split the link text and text into a two-element vector
+  text_link <- rev(strsplit(txt, pattern, perl = TRUE)[[1]])
+  link <- glue::glue_collapse(text_link, sep = "'><text>")
+  glue::glue("<{type} destination='{link}</text></{type}>")
 }
 
 
