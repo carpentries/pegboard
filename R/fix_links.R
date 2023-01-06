@@ -32,22 +32,6 @@ LINKS <- list(
   md_link   = gsb("(<ctext('[')>  and <ctext('][')>   and <ctext(']')>)")
 )
 
-#' Get the source for the link node fragments
-#'
-#' @param node a node determined to be a text representation of a link
-#'   destination
-#' @return the preceding three nodes, which will be by definition, the text
-#'   of the link.
-get_link_fragment_nodes <- function(node) {
-  the_parent <- xml2::xml_parent(node)
-  # note: we could replace this by using identical(parent$child, node)
-  txt <- xml2::xml_text(node)
-  xpath <- glue::glue("count(./md:text[text() = '{txt}']/preceding-sibling::*)")
-  num <- xml2::xml_find_num(the_parent, xpath, ns = tinkr::md_ns()) + 1L
-  xml2::xml_children(the_parent)[(num - 3L):num]
-}
-
-
 #' @description
 #' `fix_link_type()`: Fixes all links in the document based on the type of link
 #'
