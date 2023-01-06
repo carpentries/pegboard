@@ -3,77 +3,119 @@
 #' @param body an XML document.
 #' @return `fix_links()`: the modified body
 #' @rdname fix_links
+#' @keywords internal
+#' @examples
+#' loop <- fs::path(lesson_fragment(), "_episodes", "14-looping-data-sets.md")
+#' e <- Episode$new(loop, fix_links = FALSE)
+#' e$links  # five links
+#' e$images # four images
+#' asNamespace("pegboard")$fix_links(e$body)
+#' e$links  # eight links
+#' e$images # five images
 fix_links <- function(body) {
-  # lnks <- system.file("stylesheets", "internal_links.xsl", package = "pegboard")
-  # xslt::xml_xslt(body, xml2::read_xml(lnks))
-  purrr::walk(names(LINKS), fix_link_type, body)
-  body
+  fragments <- find_broken_links(body)
+  fix_broken_links(fragments)
+  invisible(body)
+}
+
+#' @rdname fix_links
+#'
+#' @description
+#' `find_broken_links()` Find broken links from Jekyll that have spaces
+#'
+#' @return 
+#'  - `find_broken_link()`: a list where each element represents a fragmented
+#'  link. Inside each element are two elements:
+#'   - parent: the parent paragraph node for the link
+#'   - nodes: the series of four or five nodes that make up the link text
+find_broken_links <- function(body) {
+  nodes <- xml2::xml_find_all(body, make_link_patterns(), ns = get_ns())
+  purrr::map(nodes, get_link_fragment_nodes)
+}
+
+#' @rdname fix_links
+#'
+#' @description
+#' `fix_broken_links()` uses the output of `find_broken_links()` to replace the
+#' node fragments with links. 
+fix_broken_links <- function(fragments) {
+  purrr::walk(fragments, fix_broken_link)
+}
+
+#' @description
+#' `make_link_patterns()` a generator to create an XPath query that will search
+#' for liquid markup following a closing bracket.
+#'
+#' @param ns the namespace prefix to use for the pattern
+#' @rdname fix_links
+#' @examples
+#' asNamespace("pegboard")$make_link_patterns()
+make_link_patterns <- function(ns = "md:") {
+
+  predicate <- gsb("(<ctext('({{')> and <ctext('}}')>)")
+  asis_nodes <- "text[@asis][text()=']']"
+  destination <- glue::glue(
+    ".//{ns}{asis_nodes}/following-sibling::{ns}text[{predicate}]",
+  )
+  return(destination)
 }
 
 ctext <- function(x) glue::glue("contains(text(), '{x}')")
 gsb <- function(x) glue::glue(x, .open = "<", .close = ">")
 
 #' @description
-#' `LINKS`: A list of XPath predicates
+#' `get_link_fragment_nodes()`: Get the source for the link node fragments
 #'
-#' There are two reasons why commonmark would not recognise a link:
-#'
-#' 1. The link is a relative link and the anchor is in another ~~castle~~ file.
-#' 2. The link source uses a liquid variable that contains spaces.
-#'
-#' Because of this, we need to find these unparsed links in the document and 
-#' re-parse them as valid links.
-#'
+#' @param node a node determined to be a text representation of a link
+#'   destination
+#' @return 
+#'  - `get_link_fragments()`: the preceding three or four nodes, which will be
+#'  the text of the link or the alt text of the image.
 #' @rdname fix_links
-LINKS <- list(
-  rel_image = gsb("(<ctext('![')> and <ctext(']({{')> and <ctext('}}')>)"),
-  md_image  = gsb("(<ctext('![')> and <ctext('][')>   and <ctext(']')>)"),
-  rel_link  = gsb("(<ctext('[')>  and <ctext(']({{')> and <ctext('}}')>)"),
-  md_link   = gsb("(<ctext('[')>  and <ctext('][')>   and <ctext(']')>)")
-)
-
-#' @description
-#' `fix_link_type()`: Fixes all links in the document based on the type of link
-#'
-#' @param type the name of the [LINKS] predicate vector.
-#' @return `fix_link_type()`: the xml document with new nodes added
-#' @rdname fix_links
-fix_link_type <- function(type, body) {
-  lnks <- find_lesson_links(body, type)
-  purrr::walk(lnks, resolve_links, type = type)
-  body
+get_link_fragment_nodes <- function(node) {
+  the_parent <- xml2::xml_parent(node)
+  the_children <- xml2::xml_children(the_parent)
+  # find the node in question by testing for identity since they represent the
+  # same object, they will be identical. 
+  id <- which(purrr::map_lgl(the_children, identical, node))
+  # test for image with endsWith because they may have an inline image.
+  is_image <- id > 4
+  is_image <- is_image && endsWith(xml2::xml_text(the_children[[id - 4]]), "!")
+  offset <- 3L + is_image
+  the_children[(id - offset):id]
 }
 
+#' @rdname fix_links
+#'
 #' @description
-#' `find_lesson_link()`: Finds all text nodes that contain the link type
+#' `fix_broken_link()` takes a set of nodes that comprises a single link such as
+#'
+#' ```xml
+#' <text asis="true">[</text>
+#' <text>Home</text>
+#' <text asis="true">]</text>
+#' <text>({{ page.root }}/index.html) and other text</text>
+#' ```
 #' 
-#' @return `find_lesson_links()`: an xml nodeset of text nodes containing the 
-#'   links that match the link type
-#' @rdname fix_links
-find_lesson_links <- function(body, type = "rel_link") {
-  ns <- NS(body)
-  xml2::xml_find_all(body,
-    glue::glue(".//{ns}text[{LINKS[[type]]}][not(@klink)]")
+#' and recomposes them into an actual link node or image node.
+#'
+#' ```xml
+#' <link destination="{{ page.root }}/index.html">Home</link>
+#' <text> and other text</text>
+#' ```
+fix_broken_link <- function(nodes) {
+  # get_link_fragment_nodes() returns 4 nodes for a link and 5 nodes for an
+  # image to account for the extra "!" in markdown.
+  type <- if (length(nodes) == 4) "link" else "image"
+  text <- paste(xml2::xml_text(nodes), collapse = "")
+  # create the nodes that we use to replace the link fragment nodes
+  to_replace <- text_to_links(text, ns = xml2::xml_ns(nodes[[1]]), type = type)
+  # insert the replacements before the link fragment nodes
+  purrr::walk(to_replace, 
+    ~xml2::xml_add_sibling(nodes[[1]], .x, .where = "before")
   )
-}
-
-#' @description
-#' `resolve_links()`: Operates on an individual text node within a paragraph.
-#'  1. modify underlying text to new nodes, splitting off links
-#'  2. inserts all the modified nodes before the text node
-#'  3. remove the old text node
-#' @return `resolve_links()`: modified text nodes
-#' @rdname fix_links
-resolve_links <- function(txt, type) {
-  lnks <- text_to_links(
-    txt       = xml2::xml_text(txt),
-    ns        = xml2::xml_ns(txt),
-    type      = type,
-    sourcepos = xml2::xml_attr(txt, "sourcepos")
-  )
-  purrr::walk(lnks, ~xml2::xml_add_sibling(txt, .x, .where = "before"))
-  xml2::xml_remove(txt)
-  lnks
+  # remove the link fragment nodes
+  xml2::xml_remove(nodes)
 }
 
 #' @description
@@ -118,7 +160,7 @@ links_within_text_regex <- function() {
 #' 
 #' @param txt text derived from `xml2::xml_text()`
 #' @param ns a namespace object
-#' @param type the type of link as defined in [LINKS].
+#' @param type either "image" or "link".
 #' @param sourcepos defaults to NULL. If this is not NULL, it's the sourcepos
 #'   attribute of the text node(s) and will be applied to the new nodes.
 #' @return `text_to_links()`: if ns is NULL: a character vector of XML text
@@ -126,11 +168,11 @@ links_within_text_regex <- function() {
 #' @rdname fix_links
 #' @examples
 #' txt <- "Some text [and a link]({{ page.root }}/link.to#thing), 
-#' some other text [and another link][link-to-thing]."
-#' pegboard:::text_to_links(txt, type = "rel_link")
+#' some other text."
+#' pegboard:::text_to_links(txt, type = "link")
 #' md <- c(md = "http://commonmark.org/xml/1.0")
 #' class(md) <- "xml_namespace"
-#' pegboard:::text_to_links(txt, md, "rel_link")
+#' pegboard:::text_to_links(txt, md, "link")
 text_to_links <- function(txt, ns = NULL, type, sourcepos = NULL) {
 
   regex_helpers <- links_within_text_regex()
@@ -164,19 +206,12 @@ text_to_links <- function(txt, ns = NULL, type, sourcepos = NULL) {
 #' from the surrounding text. 
 #' @rdname fix_links
 make_link <- function(txt, pattern, type = "rel_link") {
-  type <- strsplit(type, "_")[[1]]
-  if (type[1] == "rel") {
-    # relative tags are processed
-    txt <- if (type[2] == "image") sub("^\\!\\[", '', txt) else txt
-    # split the link text and text into a two-element vector
-    text_link <- rev(strsplit(txt, pattern, perl = TRUE)[[1]])
-    link <- glue::glue_collapse(text_link, sep = "'><text>")
-    glue::glue("<{type[2]} destination='{link}</text></{type[2]}>")
-  } else {
-    txt <- if (grepl("^[!]", txt)) txt else glue::glue("[{txt}")
-    # if the type is not relative, keep it as text and add the klink tag
-    glue::glue("<text klink='true'>{txt}]</text>")
-  }
+  # relative tags are processed
+  txt <- if (type == "image") sub("^\\!\\[", '', txt) else txt
+  # split the link text and text into a two-element vector
+  text_link <- rev(strsplit(txt, pattern, perl = TRUE)[[1]])
+  link <- glue::glue_collapse(text_link, sep = "'><text>")
+  glue::glue("<{type} destination='{link}</text></{type}>")
 }
 
 

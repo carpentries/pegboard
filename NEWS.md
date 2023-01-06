@@ -1,3 +1,20 @@
+# pegboard 0.4.0
+
+## DEPENDENCIES
+
+* The {tinkr} minimum version has been upgraded to 0.1.0.9000 to address the
+  square bracket protection implemented in that version.
+
+## BUG FIX
+
+* Jekyll links with spaces are once again processed correctly. They were broken
+  in the update to {tinkr} (reported: @zkamvar, #100; fixed: @zkamvar, #102)
+
+## MISC
+
+* GitHub workflows have been updated to run weekly.
+
+
 # pegboard 0.3.2
 
 ## DEPENDENCIES
