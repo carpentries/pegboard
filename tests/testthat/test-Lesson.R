@@ -85,7 +85,8 @@ test_that("Sandpaper lessons can create handouts", {
   expect_length(snd$handout(tmp, solution = TRUE)$solutions, 1L)
   expect_true(fs::file_exists(tmp))
   # the handout can be read by tinkr
-  expect_snapshot(cat(tinkr::yarn$new(tmp)$show(), sep = "\n"))
+  expect_snapshot(writeLines(readLines(tmp)))
+  expect_snapshot(parse(tmp))
 
 })
 
