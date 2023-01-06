@@ -3,17 +3,53 @@
 #' @param body an XML document.
 #' @return `fix_links()`: the modified body
 #' @rdname fix_links
+#' @keywords internal
+#' @examples
+#' loop <- fs::path(lesson_fragment(), "_episodes", "14-looping-data-sets.md")
+#' e <- Episode$new(loop, fix_links = FALSE)
+#' e$links  # five links
+#' e$images # four images
+#' fix_links(e$body)
+#' e$links  # eight links
+#' e$images # five images
 fix_links <- function(body) {
-  # purrr::walk(names(LINKS), fix_link_type, body)
   fragments <- find_broken_links(body)
   fix_broken_links(fragments)
-  body
+  invisible(body)
 }
 
-ctext <- function(x) glue::glue("contains(text(), '{x}')")
-gsb <- function(x) glue::glue(x, .open = "<", .close = ">")
+#' @rdname fix_links
+#'
+#' @description
+#' `find_broken_links()` Find broken links from Jekyll that have spaces
+#'
+#' @return 
+#'  - `find_broken_link()`: a list where each element represents a fragmented
+#'  link. Inside each element are two elements:
+#'   - parent: the parent paragraph node for the link
+#'   - nodes: the series of four or five nodes that make up the link text
+find_broken_links <- function(body) {
+  nodes <- xml2::xml_find_all(body, make_link_patterns(), ns = get_ns())
+  purrr::map(nodes, get_link_fragment_nodes)
+}
 
+#' @rdname fix_links
+#'
+#' @description
+#' `fix_broken_links()` uses the output of `find_broken_links()` to replace the
+#' node fragments with links. 
+fix_broken_links <- function(fragments) {
+  purrr::walk(fragments, fix_broken_link)
+}
 
+#' @description
+#' `make_link_patterns()` a generator to create an XPath query that will search
+#' for liquid markup following a closing bracket.
+#'
+#' @param ns the namespace prefix to use for the pattern
+#' @rdname fix_links
+#' @examples
+#' make_link_patterns()
 make_link_patterns <- function(ns = "md:") {
 
   predicate <- gsb("(<ctext('({{')> and <ctext('}}')>)")
@@ -23,24 +59,9 @@ make_link_patterns <- function(ns = "md:") {
   )
   return(destination)
 }
-#' @description
-#' `LINKS`: A list of XPath predicates
-#'
-#' There are two reasons why commonmark would not recognise a link:
-#'
-#' 1. The link is a relative link and the anchor is in another ~~castle~~ file.
-#' 2. The link source uses a liquid variable that contains spaces.
-#'
-#' Because of this, we need to find these unparsed links in the document and 
-#' re-parse them as valid links.
-#'
-#' @rdname fix_links
-LINKS <- list(
-  rel_image = gsb("(<ctext('![')> and <ctext(']({{')> and <ctext('}}')>)"),
-  md_image  = gsb("(<ctext('![')> and <ctext('][')>   and <ctext(']')>)"),
-  rel_link  = gsb("(<ctext('[')>  and <ctext(']({{')> and <ctext('}}')>)"),
-  md_link   = gsb("(<ctext('[')>  and <ctext('][')>   and <ctext(']')>)")
-)
+
+ctext <- function(x) glue::glue("contains(text(), '{x}')")
+gsb <- function(x) glue::glue(x, .open = "<", .close = ">")
 
 #' Get the source for the link node fragments
 #'
@@ -61,22 +82,24 @@ get_link_fragment_nodes <- function(node) {
   the_children[(id - offset):id]
 }
 
-#' Find broken links from Jekyll that have spaces
+#' @rdname fix_links
 #'
-#' @param body an XML document
-#' @return a list where each element represents a fragmented link. Inside each
-#'   element are two elements:
-#'   - parent: the parent paragraph node for the link
-#'   - nodes: the series of four or five nodes that make up the link text
-find_broken_links <- function(body) {
-  nodes <- xml2::xml_find_all(body, make_link_patterns(), ns = get_ns())
-  purrr::map(nodes, get_link_fragment_nodes)
-}
-
-fix_broken_links <- function(fragments) {
-  purrr::walk(fragments, fix_broken_link)
-}
-
+#' @description
+#' `fix_broken_link()` takes a set of nodes that comprises a single link such as
+#'
+#' ```xml
+#' <text asis="true">[</text>
+#' <text>Home</text>
+#' <text asis="true">]</text>
+#' <text>({{ page.root }}/index.html) and other text</text>
+#' ```
+#' 
+#' and recomposes them into an actual link node or image node.
+#'
+#' ```xml
+#' <link destination="{{ page.root }}/index.html">Home</link>
+#' <text> and other text</text>
+#' ```
 fix_broken_link <- function(nodes) {
   type <- if (length(nodes) == 4) "rel_link" else "rel_image"
   text <- paste(xml2::xml_text(nodes), collapse = "")
@@ -85,51 +108,6 @@ fix_broken_link <- function(nodes) {
     ~xml2::xml_add_sibling(nodes[[1]], .x, .where = "before")
   )
   xml2::xml_remove(nodes)
-}
-
-#' @description
-#' `fix_link_type()`: Fixes all links in the document based on the type of link
-#'
-#' @param type the name of the [LINKS] predicate vector.
-#' @return `fix_link_type()`: the xml document with new nodes added
-#' @rdname fix_links
-fix_link_type <- function(type, body) {
-  lnks <- find_lesson_links(body, type)
-  purrr::walk(lnks, resolve_links, type = type)
-  body
-}
-
-#' @description
-#' `find_lesson_link()`: Finds all text nodes that contain the link type
-#' 
-#' @return `find_lesson_links()`: an xml nodeset of text nodes containing the 
-#'   links that match the link type
-#' @rdname fix_links
-find_lesson_links <- function(body, type = "rel_link") {
-  ns <- NS(body)
-  xml2::xml_find_all(body,
-    glue::glue(".//{ns}text[{LINKS[[type]]}][not(@klink)]")
-  )
-}
-
-
-#' @description
-#' `resolve_links()`: Operates on an individual text node within a paragraph.
-#'  1. modify underlying text to new nodes, splitting off links
-#'  2. inserts all the modified nodes before the text node
-#'  3. remove the old text node
-#' @return `resolve_links()`: modified text nodes
-#' @rdname fix_links
-resolve_links <- function(txt, type) {
-  lnks <- text_to_links(
-    txt       = xml2::xml_text(txt),
-    ns        = xml2::xml_ns(txt),
-    type      = type,
-    sourcepos = xml2::xml_attr(txt, "sourcepos")
-  )
-  purrr::walk(lnks, ~xml2::xml_add_sibling(txt, .x, .where = "before"))
-  xml2::xml_remove(txt)
-  lnks
 }
 
 #' @description
