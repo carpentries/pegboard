@@ -10,10 +10,10 @@
        [5] "https://docs.python.org/3/library/stdtypes.html#str.split"                             
        [6] "https://carpentries.org/assets/img/TheCarpentries.svg"                                 
        [7] "no-workie.svg"                                                                         
-       [8] "index.html"                                                                            
-       [9] "https://swcarpentry.github.io/shell-novice"                                            
-      [10] "https://carpentries.org/assets/img/TheCarpentries.svg"                                 
-      [11] "no-workie.svg"                                                                         
+       [8] "https://carpentries.org/assets/img/TheCarpentries.svg"                                 
+       [9] "no-workie.svg"                                                                         
+      [10] "index.html"                                                                            
+      [11] "https://swcarpentry.github.io/shell-novice"                                            
       [12] "index.md"                                                                              
 
 # links are replaced in messy example

@@ -223,7 +223,9 @@ loop$validate_links()
 <details open><summary>Inherited methods</summary>
 <ul>
 <li><span class="pkg-link" data-pkg="tinkr" data-topic="yarn" data-id="add_md"><a href='../../tinkr/html/yarn.html#method-yarn-add_md'><code>tinkr::yarn$add_md()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tinkr" data-topic="yarn" data-id="protect_curly"><a href='../../tinkr/html/yarn.html#method-yarn-protect_curly'><code>tinkr::yarn$protect_curly()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tinkr" data-topic="yarn" data-id="protect_math"><a href='../../tinkr/html/yarn.html#method-yarn-protect_math'><code>tinkr::yarn$protect_math()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tinkr" data-topic="yarn" data-id="protect_unescaped"><a href='../../tinkr/html/yarn.html#method-yarn-protect_unescaped'><code>tinkr::yarn$protect_unescaped()</code></a></span></li>
 </ul>
 </details>
 }}
