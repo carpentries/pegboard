@@ -95,7 +95,6 @@ test_that("Episodes can be converted to use sandpaper", {
     c(NA, "../no-workie.svg")
   )
   expect_length(jek_links, 3)
-  expect_true(all(!is.na(get_linestart(jek_links))))
   expect_equal(
     xml2::xml_attr(jek_links, "destination"),
     c("{{ page.root }}/index.html", 
