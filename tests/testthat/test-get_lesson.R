@@ -288,7 +288,7 @@ test_that("code with embedded div tags are parsed correctly", {
   skip_on_os("windows")
 
   suppressMessages(lex <- get_lesson("carpentries/lesson-example"))
-  expect_length(lex$episodes[[4]]$get_blocks(), 12)
+  expect_length(lex$episodes[[4]]$get_blocks(), 13)
   expect_length(lex$episodes[[4]]$unblock()$get_divs(), 15)
   expect_length(lex$episodes[[4]]$challenges, 1)
   expect_length(lex$episodes[[4]]$solutions, 2)
