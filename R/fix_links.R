@@ -9,7 +9,7 @@
 #' e <- Episode$new(loop, fix_links = FALSE)
 #' e$links  # five links
 #' e$images # four images
-#' fix_links(e$body)
+#' asNamespace("pegboard")$fix_links(e$body)
 #' e$links  # eight links
 #' e$images # five images
 fix_links <- function(body) {
@@ -49,7 +49,7 @@ fix_broken_links <- function(fragments) {
 #' @param ns the namespace prefix to use for the pattern
 #' @rdname fix_links
 #' @examples
-#' make_link_patterns()
+#' asNamespace("pegboard")$make_link_patterns()
 make_link_patterns <- function(ns = "md:") {
 
   predicate <- gsb("(<ctext('({{')> and <ctext('}}')>)")
@@ -63,12 +63,15 @@ make_link_patterns <- function(ns = "md:") {
 ctext <- function(x) glue::glue("contains(text(), '{x}')")
 gsb <- function(x) glue::glue(x, .open = "<", .close = ">")
 
-#' Get the source for the link node fragments
+#' @description
+#' `get_link_fragment_nodes()`: Get the source for the link node fragments
 #'
 #' @param node a node determined to be a text representation of a link
 #'   destination
-#' @return the preceding three nodes, which will be by definition, the text
-#'   of the link.
+#' @return 
+#'  - `get_link_fragments()`: the preceding three or four nodes, which will be
+#'  the text of the link or the alt text of the image.
+#' @rdname fix_links
 get_link_fragment_nodes <- function(node) {
   the_parent <- xml2::xml_parent(node)
   the_children <- xml2::xml_children(the_parent)
@@ -101,12 +104,17 @@ get_link_fragment_nodes <- function(node) {
 #' <text> and other text</text>
 #' ```
 fix_broken_link <- function(nodes) {
+  # get_link_fragment_nodes() returns 4 nodes for a link and 5 nodes for an
+  # image to account for the extra "!" in markdown.
   type <- if (length(nodes) == 4) "link" else "image"
   text <- paste(xml2::xml_text(nodes), collapse = "")
+  # create the nodes that we use to replace the link fragment nodes
   to_replace <- text_to_links(text, ns = xml2::xml_ns(nodes[[1]]), type = type)
+  # insert the replacements before the link fragment nodes
   purrr::walk(to_replace, 
     ~xml2::xml_add_sibling(nodes[[1]], .x, .where = "before")
   )
+  # remove the link fragment nodes
   xml2::xml_remove(nodes)
 }
 
@@ -152,7 +160,7 @@ links_within_text_regex <- function() {
 #' 
 #' @param txt text derived from `xml2::xml_text()`
 #' @param ns a namespace object
-#' @param type the type of link as defined in [LINKS].
+#' @param type either "image" or "link".
 #' @param sourcepos defaults to NULL. If this is not NULL, it's the sourcepos
 #'   attribute of the text node(s) and will be applied to the new nodes.
 #' @return `text_to_links()`: if ns is NULL: a character vector of XML text
