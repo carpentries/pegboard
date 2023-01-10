@@ -16,7 +16,7 @@
 # Episodes can be converted to use sandpaper
 
     Code
-      cat(e$tail(15), sep = "\n")
+      cat(e$tail(17), sep = "\n")
     Output
       <img src="https://carpentries.org/assets/img/TheCarpentries.svg" alt="books as clubs">
       
@@ -28,6 +28,8 @@
       
       ![Non-working image](../no-workie.svg)
       
+      ![Non-working image with jekyll syntax]({{ page.root }}/no-workie.svg)
+      
       This text includes a [link that isn't parsed correctly by commonmark]({{ page.root }}{% link)
       index.md %}). The rest of the text should be properly parsed.
       
@@ -37,7 +39,7 @@
 ---
 
     Code
-      cat(e$use_sandpaper(rmd = TRUE)$tail(15), sep = "\n")
+      cat(e$use_sandpaper(rmd = TRUE)$tail(17), sep = "\n")
     Output
       <img src="https://carpentries.org/assets/img/TheCarpentries.svg" alt="books as clubs">
       
@@ -48,6 +50,8 @@
       ![](https://carpentries.org/assets/img/TheCarpentries.svg){alt='Carpentries logo'}
       
       ![](no-workie.svg){alt='Non-working image'}
+      
+      ![](no-workie.svg){alt='Non-working image with jekyll syntax'}
       
       This text includes a [link that isn't parsed correctly by commonmark](index.md)
       . The rest of the text should be properly parsed.
@@ -58,7 +62,7 @@
 ---
 
     Code
-      cat(e$use_sandpaper(rmd = FALSE)$tail(15), sep = "\n")
+      cat(e$use_sandpaper(rmd = FALSE)$tail(17), sep = "\n")
     Output
       <img src="https://carpentries.org/assets/img/TheCarpentries.svg" alt="books as clubs">
       
@@ -69,6 +73,8 @@
       ![](https://carpentries.org/assets/img/TheCarpentries.svg){alt='Carpentries logo'}
       
       ![](no-workie.svg){alt='Non-working image'}
+      
+      ![](no-workie.svg){alt='Non-working image with jekyll syntax'}
       
       This text includes a [link that isn't parsed correctly by commonmark](index.md)
       . The rest of the text should be properly parsed.

@@ -1,6 +1,17 @@
+# pegboard 0.4.2
+
+## TESTS
+
+* A test that depended on an upstream resource was once again fixed.
+* Tests were modified to account for a new case for image fixing.
+
+## DOCUMENTATION
+
+* Internal `fix_links()` function has improved documentation.
+
 # pegboard 0.4.1
 
-## MISC
+## TESTS
 
 * A test that dependend on an upstream resource was fixed.
 

@@ -249,7 +249,7 @@ test_that("Lesson methods work as expected", {
   expect_identical(lex$blocks(".solution", level = 2), lex$blocks(level = 2))
 
   # All the blocktypes are in episode 04
-  expect_equal(length(lex$blocks(".callout")$`04-formatting.md`), 3)
+  expect_equal(length(lex$blocks(".callout")$`04-formatting.md`), 4)
   expect_equal(length(lex$blocks(".objectives")$`04-formatting.md`), 1)
   expect_equal(length(lex$blocks(".challenge")$`04-formatting.md`), 1)
   expect_equal(length(lex$blocks(".prereq")$`04-formatting.md`), 1)
@@ -288,8 +288,8 @@ test_that("code with embedded div tags are parsed correctly", {
   skip_on_os("windows")
 
   suppressMessages(lex <- get_lesson("carpentries/lesson-example"))
-  expect_length(lex$episodes[[4]]$get_blocks(), 13)
-  expect_length(lex$episodes[[4]]$unblock()$get_divs(), 15)
+  expect_length(lex$episodes[[4]]$get_blocks(), 14)
+  expect_length(lex$episodes[[4]]$unblock()$get_divs(), 16)
   expect_length(lex$episodes[[4]]$challenges, 1)
   expect_length(lex$episodes[[4]]$solutions, 2)
 

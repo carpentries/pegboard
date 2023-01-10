@@ -15,6 +15,7 @@
       [10] "index.html"                                                                            
       [11] "https://swcarpentry.github.io/shell-novice"                                            
       [12] "index.md"                                                                              
+      [13] "no-workie.svg"                                                                         
 
 # links are replaced in messy example
 
