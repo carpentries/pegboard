@@ -37,7 +37,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pegboard</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -110,7 +110,7 @@ headings:</p>
 <span><span class="co"># validation</span></span>
 <span><span class="va">lsn</span><span class="op">$</span><span class="fu">validate_divs</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">lsn</span><span class="op">$</span><span class="fu">validate_links</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#| <span style="color: #BBBB00;">!</span> There were errors in 3/13 links</span></span>
+<span><span class="co">#| <span style="color: #BBBB00;">!</span> There were errors in 4/14 links</span></span>
 <span><span class="co">#| ◌ Some linked internal files do not exist</span></span>
 <span><span class="co">#| ◌ Images need alt-text &lt;https://webaim.org/techniques/hypertext/link_text#alt_link&gt;</span></span>
 <span><span class="co">#| </span></span>
@@ -118,6 +118,7 @@ headings:</p>
 <span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing alt-text]</span></span>
 <span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [image</span></span>
 <span><span class="co">#| missing alt-text]</span></span>
+<span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=NA:: [image missing alt-text]</span></span>
 <span><span class="va">lsn</span><span class="op">$</span><span class="fu">validate_headings</span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#| <span style="color: #BBBB00;">!</span> There were errors in 13/37 headings</span></span>
 <span><span class="co">#| ◌ Headings must be unique</span></span>
@@ -154,7 +155,7 @@ page for <code>validate_links</code> by typing
 variable:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">links</span> <span class="op">&lt;-</span> <span class="va">lsn</span><span class="op">$</span><span class="fu">validate_links</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#| <span style="color: #BBBB00;">!</span> There were errors in 3/13 links</span></span>
+<span><span class="co">#| <span style="color: #BBBB00;">!</span> There were errors in 4/14 links</span></span>
 <span><span class="co">#| ◌ Some linked internal files do not exist</span></span>
 <span><span class="co">#| ◌ Images need alt-text &lt;https://webaim.org/techniques/hypertext/link_text#alt_link&gt;</span></span>
 <span><span class="co">#| </span></span>
@@ -162,8 +163,9 @@ variable:</p>
 <span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing alt-text]</span></span>
 <span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [image</span></span>
 <span><span class="co">#| missing alt-text]</span></span>
+<span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=NA:: [image missing alt-text]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">links</span>, max.level <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="co">#| 'data.frame':    13 obs. of  26 variables:</span></span>
+<span><span class="co">#| 'data.frame':    14 obs. of  26 variables:</span></span>
 <span><span class="co">#|  $ episodes            : chr  "12-for-loops.md" "14-looping-data-sets.md" "14-looping-data-sets.m"..</span></span>
 <span><span class="co">#|  $ scheme              : chr  "https" "https" "https" "https" ...</span></span>
 <span><span class="co">#|  $ server              : chr  "docs.python.org" "docs.python.org" "docs.python.org" "docs.python."..</span></span>
@@ -181,7 +183,7 @@ variable:</p>
 <span><span class="co">#|  $ anchor              : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...</span></span>
 <span><span class="co">#|  $ sourcepos           : int  135 51 57 58 140 163 189 191 195 197 ...</span></span>
 <span><span class="co">#|  $ filepath            : 'fs_path' chr  "_episodes/12-for-loops.md" "_episodes/14-looping-data-se"..</span></span>
-<span><span class="co">#|  $ node                :List of 13</span></span>
+<span><span class="co">#|  $ node                :List of 14</span></span>
 <span><span class="co">#|   ..- attr(*, "class")= chr "AsIs"</span></span>
 <span><span class="co">#|  $ enforce_https       : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span>
 <span><span class="co">#|  $ internal_anchor     : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span>
@@ -219,12 +221,15 @@ inline messages printed for each failed test, to filter the output:</p>
 <span><span class="co">#| [[3]]</span></span>
 <span><span class="co">#| {xml_node}</span></span>
 <span><span class="co">#| &lt;image sourcepos="182:1-182:38" destination="../no-workie.svg" title=""&gt;</span></span>
-<span><span class="co">#| [1] &lt;text sourcepos="182:3-182:19" xml:space="preserve"&gt;Non-working image&lt;/text&gt;</span></span></code></pre></div>
+<span><span class="co">#| [1] &lt;text sourcepos="182:3-182:19" xml:space="preserve"&gt;Non-working image&lt;/text&gt;</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| [[4]]</span></span>
+<span><span class="co">#| {xml_node}</span></span>
+<span><span class="co">#| &lt;image destination="{{ page.root }}/no-workie.svg" xmlns="http://commonmark.org/xml/1.0"&gt;</span></span>
+<span><span class="co">#| [1] &lt;text&gt;Non-working image with jekyll syntax&lt;/text&gt;</span></span></code></pre></div>
 <p>For context, this is what the document looks like at those
 positions:</p>
-<pre><code><span><span class="co">#| ### ZNK test links and images</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| &lt;img src="https://carpentries.org/assets/img/TheCarpentries.svg" alt="books as clubs"&gt;</span></span>
+<pre><code><span><span class="co">#| &lt;img src="https://carpentries.org/assets/img/TheCarpentries.svg" alt="books as clubs"&gt;</span></span>
 <span><span class="co">#| </span></span>
 <span><span class="co">#| &lt;img src="../no-workie.svg" alt="books as clubs"&gt;</span></span>
 <span><span class="co">#| </span></span>
@@ -233,6 +238,8 @@ positions:</p>
 <span><span class="co">#| ![Carpentries logo](https://carpentries.org/assets/img/TheCarpentries.svg)</span></span>
 <span><span class="co">#| </span></span>
 <span><span class="co">#| ![Non-working image](../no-workie.svg)</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| ![Non-working image with jekyll syntax]({{ page.root }}/no-workie.svg)</span></span>
 <span><span class="co">#| </span></span>
 <span><span class="co">#| This text includes a [link that isn't parsed correctly by commonmark]({{ page.root }}{% link)</span></span>
 <span><span class="co">#| index.md %}). The rest of the text should be properly parsed.</span></span>
