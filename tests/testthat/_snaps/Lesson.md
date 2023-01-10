@@ -197,7 +197,7 @@
     Code
       vlink <- frg$validate_links()
     Message <cliMessage>
-      ! There were errors in 3/13 links
+      ! There were errors in 4/14 links
       ( ) Some linked internal files do not exist
       ( ) Images need alt-text
       <https://webaim.org/techniques/hypertext/link_text#alt_link>
@@ -208,6 +208,8 @@
       alt-text]
       ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]
       ../no-workie.svg [image missing alt-text]
+      ::warning file=_episodes/14-looping-data-sets.md,line=NA:: [image missing
+      alt-text]
 
 # Lessons can be validated [ansi]
 
@@ -281,7 +283,7 @@
     Code
       vlink <- frg$validate_links()
     Message <cliMessage>
-      [33m![39m There were errors in 3/13 links
+      [33m![39m There were errors in 4/14 links
       ( ) Some linked internal files do not exist
       ( ) Images need alt-text
       <https://webaim.org/techniques/hypertext/link_text#alt_link>
@@ -292,6 +294,8 @@
       alt-text]
       ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]
       ../no-workie.svg [image missing alt-text]
+      ::warning file=_episodes/14-looping-data-sets.md,line=NA:: [image missing
+      alt-text]
 
 # Lessons can be validated [unicode]
 
@@ -365,7 +369,7 @@
     Code
       vlink <- frg$validate_links()
     Message <cliMessage>
-      ! There were errors in 3/13 links
+      ! There were errors in 4/14 links
       ◌ Some linked internal files do not exist
       ◌ Images need alt-text
       <https://webaim.org/techniques/hypertext/link_text#alt_link>
@@ -376,6 +380,8 @@
       alt-text]
       ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]
       ../no-workie.svg [image missing alt-text]
+      ::warning file=_episodes/14-looping-data-sets.md,line=NA:: [image missing
+      alt-text]
 
 # Lessons can be validated [fancy]
 
@@ -449,7 +455,7 @@
     Code
       vlink <- frg$validate_links()
     Message <cliMessage>
-      [33m![39m There were errors in 3/13 links
+      [33m![39m There were errors in 4/14 links
       ◌ Some linked internal files do not exist
       ◌ Images need alt-text
       <https://webaim.org/techniques/hypertext/link_text#alt_link>
@@ -460,4 +466,6 @@
       alt-text]
       ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]
       ../no-workie.svg [image missing alt-text]
+      ::warning file=_episodes/14-looping-data-sets.md,line=NA:: [image missing
+      alt-text]
 

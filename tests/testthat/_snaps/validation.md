@@ -79,7 +79,7 @@
     Code
       loop$validate_links()
     Message <pbMessage>
-      ! There were errors in 3/12 links
+      ! There were errors in 4/13 links
       
       - Some linked internal files do not exist
        - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
@@ -87,6 +87,7 @@
       _episodes/14-looping-data-sets.md:191  [missing file] ../no-workie.svg
       _episodes/14-looping-data-sets.md:195  [image missing alt-text]
       _episodes/14-looping-data-sets.md:197  [missing file] ../no-workie.svg [image missing alt-text]
+      _episodes/14-looping-data-sets.md:NA  [image missing alt-text]
 
 ---
 

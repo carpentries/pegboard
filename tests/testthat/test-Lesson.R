@@ -111,14 +111,14 @@ if (requireNamespace("cli")) {
     expect_snapshot(vhead <- frg$validate_headings())
     expect_equal(nrow(vhead), 37L)
     expect_snapshot(vlink <- frg$validate_links())
-    expect_equal(nrow(vlink), 13L)
+    expect_equal(nrow(vlink), 14L)
   })
 }
 
 test_that("Lessons can be _quietly_ validated", {
   suppressMessages({
   expect_message(vhead <- frg$validate_headings(verbose = FALSE), "There were errors in 13/37 headings")
-  expect_message(vlink <- frg$validate_links(), "There were errors in 3/13 links")
+  expect_message(vlink <- frg$validate_links(), "There were errors in 4/14 links")
   })
 })
 
