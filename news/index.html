@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pegboard</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,6 +50,17 @@
       <small>Source: <a href="https://github.com/carpentries/pegboard/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.4.3" id="pegboard-043">pegboard 0.4.3<a class="anchor" aria-label="anchor" href="#pegboard-043"></a></h2>
+<div class="section level3">
+<h3 id="bug-fix-0-4-3">BUG FIX<a class="anchor" aria-label="anchor" href="#bug-fix-0-4-3"></a></h3>
+<ul><li>A bug where attributes following an image would cause missing alt text to not be reported was fixed. (discovered: <a href="https://github.com/dpshelio" class="external-link">@dpshelio</a> and <a href="https://github.com/karenword" class="external-link">@karenword</a>; reported: <a href="https://github.com/zkamvar" class="external-link">@zkamvar</a> <a href="https://github.com/carpentries/pegboard/issues/106" class="external-link">#106</a>; fixed: <a href="https://github.com/zkamvar" class="external-link">@zkamvar</a> <a href="https://github.com/carpentries/pegboard/issues/108" class="external-link">#108</a>). This fix also makes the alt text parsing and validation more robust</li>
+</ul></div>
+<div class="section level3">
+<h3 id="internals-0-4-3">INTERNALS<a class="anchor" aria-label="anchor" href="#internals-0-4-3"></a></h3>
+<ul><li>New internal function <code>find_between_nodes()</code> will get all nodes between two sibling nodes.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.4.2" id="pegboard-042">pegboard 0.4.2<a class="anchor" aria-label="anchor" href="#pegboard-042"></a></h2>
 <div class="section level3">
