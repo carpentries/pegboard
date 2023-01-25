@@ -23,6 +23,27 @@ element_df <- function(node) {
   )
 }
 
+#' @param node a node determined to be a text representation of a link
+#'   destination
+#' @return 
+#'  - `get_link_fragments()`: the preceding three or four nodes, which will be
+#'  the text of the link or the alt text of the image.
+#' @rdname fix_links
+find_between_nodes <- function(a, b, include = TRUE) {
+  the_parent <- xml2::xml_parent(a)
+  if (!identical(the_parent, xml2::xml_parent(b))) {
+    # we cannot return a space between nodes on different levels
+    return(xml2::xml_missing())
+  }
+  the_children <- xml2::xml_children(the_parent)
+  # find the node in question by testing for identity since they represent the
+  # same object, they will be identical. 
+  ida <- which(purrr::map_lgl(the_children, identical, a))
+  idb <- which(purrr::map_lgl(the_children, identical, b))
+  # test for image with endsWith because they may have an inline image.
+  the_children[seq(ida, idb)]
+}
+
 # nocov end
 
 has_cli <- function() {
