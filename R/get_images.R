@@ -84,11 +84,8 @@ set_alt_attr <- function(images, xpath, ns) {
   attr_texts <- xml2::xml_text(attrs)
   no_closing <- !grepl("[}]", attr_texts)
   if (any(no_closing)) {
-    close_xpath <- "./following-sibling::md:text[contains(text(), '}')][1]"
-    add_alts <- purrr::map_chr(attrs[no_closing], function(x) {
-      xml2::xml_text(xml2::xml_find_all(x, close_xpath, ns))
-    })
-    attr_texts[no_closing] <- paste(attr_texts[no_closing], add_alts)
+    fixed_text <- purrr::map_chr(attrs[no_closing], get_broken_attr_text, ns)
+    attr_texts[no_closing] <- fixed_text
   }
   htmls <- paste(gsub("[{](.+?)[}]", "<img \\1/>", attr_texts), collapse = "\n")
   htmls <- xml2::read_html(htmls)
@@ -98,6 +95,22 @@ set_alt_attr <- function(images, xpath, ns) {
     if (!is.na(alt)) xml2::xml_set_attr(img, "alt", alt)
   })
   invisible(images)
+}
+
+#' @noRd
+#'
+#' @param attr_node an attribute node following an image. This should be a
+#'   text node that will start with `{`.
+#' @param ns the xml namespace
+get_broken_attr_text <- function(attr_node, ns) {
+  # find a closing text node
+  close_xpath <- "./following-sibling::md:text[contains(text(), '}')][1]"
+  closer <- xml2::xml_find_first(attr_node, close_xpath, ns)
+  # find all the sibling nodes between the attr_node and the closer
+  # and extract the text
+  txt    <- xml2::xml_text(find_between_nodes(attr_node, closer))
+  # collapse the text without the newlines
+  paste(txt[txt != ''], collapse = " ")
 }
 
 
