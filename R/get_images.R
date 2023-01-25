@@ -87,7 +87,7 @@ set_alt_attr <- function(images, xpath, ns) {
     fixed_text <- purrr::map_chr(attrs[no_closing], get_broken_attr_text, ns)
     attr_texts[no_closing] <- fixed_text
   }
-  htmls <- paste(gsub("[{](.+?)[}]", "<img \\1/>", attr_texts), collapse = "\n")
+  htmls <- paste(gsub("[{](.+)[}]", "<img \\1/>", attr_texts), collapse = "\n")
   htmls <- xml2::read_html(htmls)
   alts <- xml2::xml_find_all(htmls, ".//img")
   alts <- xml2::xml_attr(alts, "alt")
