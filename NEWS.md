@@ -1,3 +1,19 @@
+# pegboard 0.4.3
+
+BUG FIX
+-------
+
+* A bug where attributes following an image would cause missing alt text to not
+  be reported was fixed. (discovered: @dpshelio and @karenword; 
+  reported: @zkamvar #106; fixed: @zkamvar #108). This fix also makes the alt
+  text parsing and validation more robust
+
+INTERNALS
+---------
+
+* New internal function `find_between_nodes()` will get all nodes between two
+  sibling nodes.
+
 # pegboard 0.4.2
 
 ## TESTS
