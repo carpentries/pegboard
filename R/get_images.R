@@ -92,7 +92,10 @@ set_alt_attr <- function(images, xpath, ns) {
   htmls <- paste(gsub("[{](.+?)[}]", "<img \\1/>", attr_texts), collapse = "\n")
   htmls <- xml2::read_html(htmls)
   alts <- xml2::xml_find_all(htmls, ".//img")
-  xml2::xml_set_attr(images, "alt", xml2::xml_attr(alts, "alt"))
+  alts <- xml2::xml_attr(alts, "alt")
+  purrr::walk2(images, alts, function(img, alt) {
+    if (!is.na(alt)) xml2::xml_set_attr(img, "alt", alt)
+  })
   invisible(images)
 }
 
