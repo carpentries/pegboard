@@ -32,7 +32,7 @@ get_images <- function(yrn, process = TRUE) {
 #' @return a copy of the nodelist
 #' @keywords internal
 process_images <- function(images, ns = tinkr::md_ns()) {
-  xpath <- "self::*/following-sibling::md:text[starts-with(text(), '{')]"
+  xpath <- "self::*/following-sibling::*[1]/self::*[starts-with(text(), '{')]"
   have_alts <- xml2::xml_find_lgl(images, glue::glue("boolean({xpath})"), ns)
   have_no_attr <- is.na(xml2::xml_attr(images[have_alts], "alt"))
   html_nodes <- grepl("html_", xml2::xml_name(images))
