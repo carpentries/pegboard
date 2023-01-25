@@ -69,7 +69,8 @@ process_images <- function(images, ns = tinkr::md_ns()) {
 #' the alt text, and adds it as an attribute to the image, which is useful in
 #' parsing the XML, and will not affect rendering.
 #'
-#' Note: this function works by side-effect
+#' @note this function assumes that the images entering have a curly brace
+#'   following.
 #'
 #' @param images a nodeset of images
 #' @param xpath an XPath expression that finds the first curly brace immediately
@@ -83,10 +84,10 @@ set_alt_attr <- function(images, xpath, ns) {
   attr_texts <- xml2::xml_text(attrs)
   no_closing <- !grepl("[}]", attr_texts)
   if (any(no_closing)) {
-    close_xpath <- "self::*/following-sibling::md:text[contains(text(), '}')]"
-    add_alts <- purrr::map_chr(attrs[no_closing], 
-      ~xml2::xml_text(xml2::xml_find_all(.x, glue::glue("./{close_xpath}"), ns))
-    )
+    close_xpath <- "./following-sibling::md:text[contains(text(), '}')][1]"
+    add_alts <- purrr::map_chr(attrs[no_closing], function(x) {
+      xml2::xml_text(xml2::xml_find_all(x, close_xpath, ns))
+    })
     attr_texts[no_closing] <- paste(attr_texts[no_closing], add_alts)
   }
   htmls <- paste(gsub("[{](.+?)[}]", "<img \\1/>", attr_texts), collapse = "\n")
