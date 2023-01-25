@@ -103,14 +103,32 @@ set_alt_attr <- function(images, xpath, ns) {
 #'   text node that will start with `{`.
 #' @param ns the xml namespace
 get_broken_attr_text <- function(attr_node, ns) {
-  # find a closing text node
-  close_xpath <- "./following-sibling::md:text[contains(text(), '}')][1]"
-  closer <- xml2::xml_find_first(attr_node, close_xpath, ns)
+  closer <- xml2::xml_find_first(attr_node, closing_attr_xpath(), ns)
   # find all the sibling nodes between the attr_node and the closer
   # and extract the text
-  txt    <- xml2::xml_text(find_between_nodes(attr_node, closer))
+  txt <- xml2::xml_text(find_between_nodes(attr_node, closer))
   # collapse the text without the newlines
   paste(txt[txt != ''], collapse = " ")
+}
+
+closing_attr_xpath <- function() {
+  # This XPath satement is _really_ hairy. Effectively, we are looking for
+  # _closing_ bracket with the possibility that there could be brackets that
+  # look like our closer. We will know a bracket is a closer if it is the last
+  # one on the line or if it is preceded by a quote or space.
+  #
+  # 1. a bracket at the end of the line is a closing bracket 
+  #   (this could be violated but I think it's a safe edge case)
+  ender <- "substring(text(), string-length(text)) = '}'"
+  # 2. a bracket that is preceded by a single quote
+  single_quote <- "contains(text(), concat(\"'\", \"}\"))"
+  # 3. a bracket that is preceded by a space
+  # 4. a bracket that is preceded by a double quote
+  possible_closers <- paste0(c(" ", '"'), "}")
+  closer_pred <- paste0("contains(text(), '", possible_closers, "')")
+  # collapsing everything together
+  final_pred <- paste(c(closer_pred, single_quote, ender), collapse = " or ")
+  paste0("./following-sibling::md:text[", final_pred, "][1]")
 }
 
 
