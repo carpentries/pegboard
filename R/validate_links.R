@@ -115,7 +115,7 @@ link_known_protocol <- function(VAL) {
 #' @rdname validate_links
 link_enforce_https <- function(VAL) {
   # valid if we have a known scheme and it does not use http
-  known_protocol <- VAL$known_protocol %||% VAL$scheme %in% allowed_uri_protocols
+  known_protocol <- VAL$known_protocol %||% (VAL$scheme %in% allowed_uri_protocols)
   VAL$enforce_https <- known_protocol & VAL$scheme != "http"
   VAL
 }
