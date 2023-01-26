@@ -9,13 +9,22 @@
 #' ## Link Validity
 #'
 #' All links must resolve to a specific location. If it does not exist, then the
-#' link is invalid.
+#' link is invalid. At the moment, we can only do local links. 
 #'
 #' ### External links
 #'
-#' These links must start with a valid and secure protocol. This means that we
-#' will enforce HTTPS over HTTP. Any link with HTTP will be flagged. Most
-#' importantly, these links must not return an error code > 399.
+#' These links must start with a valid and secure protocol. Allowed protocols
+#' are taken from the [allowed protocols in Wordpress](https://developer.wordpress.org/reference/functions/wp_allowed_protocols/#return):
+#'
+#' ```{r, echo = FALSE, comment = NA, results = 'asis'}
+#' prots <- toString(asNamespace('pegboard')$allowed_uri_protocols[-1])
+#' writeLines(strwrap(prots, width = 60))
+#' ```
+#'
+#' Misspellings and unsupported protocols (e.g. `javascript:` and `bitcoin:`
+#' will be flagged).
+#'
+#' In addition, we will enforce the use of HTTPS over HTTP.
 #'
 #' ### Cross-lesson links
 #'
@@ -62,23 +71,32 @@
 #'   columns of logical values indicating the tests that passed.
 #' @keywords internal
 #' @rdname validate_links
+#' @seealso [Episode] and [Lesson] for the methods that will throw warnings
 #' @examples
 #' l <- Lesson$new(lesson_fragment())
 #' e <- l$episodes[[3]]
 #' # Our link validators run a series of tests on links and images and return a 
 #' # data frame with information about the links (via xml2::url_parse), along 
 #' # with the results of the tests
-#' v <- pegboard:::validate_links(e)
+#' v <- asNamespace('pegboard')$validate_links(e)
 #' names(v)
 #' v
+#' # URL protocols -----------------------------------------------------------
+#' # To avoid potentially malicious situations, we have an explicit list of
+#' # allwed URI protocols, which can be found in the `allowed_uri_protocols`
+#' # character vector:
+#' asNamespace('pegboard')$allowed_uri_protocols
+#' # note that we make an additional check for the http protocol.
+#' 
+#' # Creating Warnings from the table ----------------------------------------
 #' # The validator does not produce any warnings or messages, but this data
 #' # frame can be passed on to other functions that will throw them for us. We
 #' # have a function that will throw a warning/message for each link that
 #' # fails the tests. These messages are controlled by `link_tests` and 
 #' # `link_info`.
-#' pegboard:::link_tests
-#' pegboard:::link_info
-#' pegboard:::throw_link_warnings(v)
+#' asNamespace('pegboard')$link_tests
+#' asNamespace('pegboard')$link_info
+#' asNamespace('pegboard')$throw_link_warnings(v)
 validate_links <- function(yrn) {
   VAL <- make_link_table(yrn)
   if (length(VAL) == 0L || is.null(VAL)) {
@@ -99,7 +117,10 @@ validate_links <- function(yrn) {
 }
 
 #' @rdname validate_links
+#' @format - `allowed_uri_protocols` a character string of length `r length(allowed_uri_protocols)`
 allowed_uri_protocols <- c(
+  # We are defining an allow list here because a forbidden list is ever shifting
+  # see: <https://security.stackexchange.com/a/148464/170657>
   # NOTE: we include HTTP here, but we invalidate it later
   '', 'http', 'https', 'ftp', 'ftps', 'mailto', 'news', 'irc', 'irc6', 'ircs',
   'gopher', 'nntp', 'feed', 'telnet', 'mms', 'rtsp', 'sms', 'svn', 'tel', 'fax',
@@ -213,6 +234,9 @@ link_internal_well_formed <- function(VAL, source_list) {
 
 #' @rdname validate_links
 #' @export
+#' @format - `link_tests` a character string of length `r length(link_tests)`
+#'   containing templates that use the output of `validate_links()` for 
+#'   formatting.
 link_tests <- c(
   known_protocol  = "[invalid protocol] ({scheme})",
   enforce_https = "[needs HTTPS] {orig}",
@@ -227,6 +251,9 @@ link_tests <- c(
 )
 
 #' @rdname validate_links
+#' @format - `link_info` a character string of length `r length(link_info)`
+#'   that gives information and informative links for additional context for
+#'   failures.
 link_info <- c(
   known_protocol  = "Links must have a known URL protocol (e.g. https, ftp, mailto). See <https://developer.wordpress.org/reference/functions/wp_allowed_protocols/#return> for a list of acceptable protocols.",
   enforce_https = "Links must use HTTPS <https://https.cio.gov/everything/>",
