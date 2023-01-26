@@ -86,6 +86,7 @@ validate_links <- function(yrn) {
   }
   VAL[names(link_tests)] <- TRUE
   source_list <- link_source_list(VAL)
+  VAL <- link_known_protocol(VAL)
   VAL <- link_enforce_https(VAL)
   VAL <- link_internal_anchor(VAL, source_list, yrn$headings)
   VAL <- link_internal_file(VAL, source_list, fs::path_dir(yrn$path))
@@ -98,10 +99,27 @@ validate_links <- function(yrn) {
 }
 
 #' @rdname validate_links
-link_enforce_https <- function(VAL) {
-  VAL$enforce_https <- !VAL$scheme == "http"
+allowed_uri_protocols <- c(
+  # NOTE: we include HTTP here, but we invalidate it later
+  '', 'http', 'https', 'ftp', 'ftps', 'mailto', 'news', 'irc', 'irc6', 'ircs',
+  'gopher', 'nntp', 'feed', 'telnet', 'mms', 'rtsp', 'sms', 'svn', 'tel', 'fax',
+  'xmpp', 'webcal', 'urn'
+)
+
+#' @rdname validate_links
+link_known_protocol <- function(VAL) {
+  VAL$known_protocol <- VAL$scheme %in% allowed_uri_protocols
   VAL
 }
+
+#' @rdname validate_links
+link_enforce_https <- function(VAL) {
+  # valid if we have a known scheme and it does not use http
+  known_protocol <- VAL$known_protocol %||% VAL$scheme %in% allowed_uri_protocols
+  VAL$enforce_https <- known_protocol & VAL$scheme != "http"
+  VAL
+}
+
 
 #' @rdname validate_links
 link_all_reachable <- function(VAL) {
@@ -196,6 +214,7 @@ link_internal_well_formed <- function(VAL, source_list) {
 #' @rdname validate_links
 #' @export
 link_tests <- c(
+  known_protocol  = "[unknown URL protocol] {orig}",
   enforce_https = "[needs HTTPS] {orig}",
   internal_anchor = "[missing anchor] {orig}",
   internal_file = "[missing file] {orig}",
@@ -209,6 +228,7 @@ link_tests <- c(
 
 #' @rdname validate_links
 link_info <- c(
+  known_protocol  = "Links must have a known URL protocol (e.g. https, ftp, mailto). See <https://developer.wordpress.org/reference/functions/wp_allowed_protocols/#return> for a list of acceptable protocols.",
   enforce_https = "Links must use HTTPS <https://https.cio.gov/everything/>",
   internal_anchor = "Some link anchors for relative links (e.g. [anchor]: link) are missing",
   internal_file = "Some linked internal files do not exist",
