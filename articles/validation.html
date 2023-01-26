@@ -116,9 +116,11 @@ headings:</p>
 <span><span class="co">#| </span></span>
 <span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file] ../no-workie.svg</span></span>
 <span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing alt-text]</span></span>
+<span><span class="co">#| https://carpentries.org/assets/img/TheCarpentries.svg</span></span>
 <span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [image</span></span>
-<span><span class="co">#| missing alt-text]</span></span>
-<span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=NA:: [image missing alt-text]</span></span>
+<span><span class="co">#| missing alt-text] ../no-workie.svg</span></span>
+<span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=NA:: [image missing alt-text] { page.root</span></span>
+<span><span class="co">#| }/no-workie.svg</span></span>
 <span><span class="va">lsn</span><span class="op">$</span><span class="fu">validate_headings</span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#| <span style="color: #BBBB00;">!</span> There were errors in 13/37 headings</span></span>
 <span><span class="co">#| ◌ Headings must be unique</span></span>
@@ -161,11 +163,13 @@ variable:</p>
 <span><span class="co">#| </span></span>
 <span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file] ../no-workie.svg</span></span>
 <span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing alt-text]</span></span>
+<span><span class="co">#| https://carpentries.org/assets/img/TheCarpentries.svg</span></span>
 <span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file] ../no-workie.svg [image</span></span>
-<span><span class="co">#| missing alt-text]</span></span>
-<span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=NA:: [image missing alt-text]</span></span>
+<span><span class="co">#| missing alt-text] ../no-workie.svg</span></span>
+<span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=NA:: [image missing alt-text] { page.root</span></span>
+<span><span class="co">#| }/no-workie.svg</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">links</span>, max.level <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="co">#| 'data.frame':    14 obs. of  26 variables:</span></span>
+<span><span class="co">#| 'data.frame':    14 obs. of  27 variables:</span></span>
 <span><span class="co">#|  $ episodes            : chr  "12-for-loops.md" "14-looping-data-sets.md" "14-looping-data-sets.m"..</span></span>
 <span><span class="co">#|  $ scheme              : chr  "https" "https" "https" "https" ...</span></span>
 <span><span class="co">#|  $ server              : chr  "docs.python.org" "docs.python.org" "docs.python.org" "docs.python."..</span></span>
@@ -185,6 +189,7 @@ variable:</p>
 <span><span class="co">#|  $ filepath            : 'fs_path' chr  "_episodes/12-for-loops.md" "_episodes/14-looping-data-se"..</span></span>
 <span><span class="co">#|  $ node                :List of 14</span></span>
 <span><span class="co">#|   ..- attr(*, "class")= chr "AsIs"</span></span>
+<span><span class="co">#|  $ known_protocol      : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span>
 <span><span class="co">#|  $ enforce_https       : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span>
 <span><span class="co">#|  $ internal_anchor     : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span>
 <span><span class="co">#|  $ internal_file       : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span>
@@ -519,6 +524,14 @@ possibilities:</p>
 <span><span class="co">#| This link [goes to an internal nested file](files/thing.txt), but this internal</span></span>
 <span><span class="co">#| link [does not exist](files/ohno.txt)</span></span>
 <span><span class="co">#| </span></span>
+<span><span class="co">#| ## Invalid protocols</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| This is a [link with a typo](gttps://example.com)</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| This is a [bitcoin link](bitcoin:FAKE-EXAMPLE)</span></span>
+<span><span class="co">#| and this is a [javascript example](javascript:alert%28%27JavaScript%20Link!%27%29),</span></span>
+<span><span class="co">#| both of which should never appear in lessons.</span></span>
+<span><span class="co">#| </span></span>
 <span><span class="co">#| ## HTTP links</span></span>
 <span><span class="co">#| </span></span>
 <span><span class="co">#| This [link uses http, which is no bueno](http://example.com)</span></span>
@@ -557,7 +570,10 @@ possibilities:</p>
 <span><span class="co">#| [bad-link-text]: https://example.com/link-text#bad</span></span>
 <span><span class="co">#| [1]: https://example.com/link-text#descriptive</span></span>
 <span><span class="va">lnk</span><span class="op">$</span><span class="fu">validate_links</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#| <span style="color: #BBBB00;">!</span> There were errors in 27/39 links</span></span>
+<span><span class="co">#| <span style="color: #BBBB00;">!</span> There were errors in 30/42 links</span></span>
+<span><span class="co">#| ◌ Links must have a known URL protocol (e.g. https, ftp, mailto). See</span></span>
+<span><span class="co">#| &lt;https://developer.wordpress.org/reference/functions/wp_allowed_protocols/#return&gt; for a list of</span></span>
+<span><span class="co">#| acceptable protocols.</span></span>
 <span><span class="co">#| ◌ Links must use HTTPS &lt;https://https.cio.gov/everything/&gt;</span></span>
 <span><span class="co">#| ◌ Some link anchors for relative links (e.g. [anchor]: link) are missing</span></span>
 <span><span class="co">#| ◌ Some linked internal files do not exist</span></span>
@@ -574,27 +590,32 @@ possibilities:</p>
 <span><span class="co">#| ::warning file=link-test.md,line=37:: [incorrect formatting]: [should be a relative</span></span>
 <span><span class="co">#| link][rel-image] -&gt; [should be a relative link](rel-image)</span></span>
 <span><span class="co">#| ::warning file=link-test.md,line=41:: [missing file] files/ohno.txt</span></span>
-<span><span class="co">#| ::warning file=link-test.md,line=45:: [needs HTTPS] http://example.com</span></span>
-<span><span class="co">#| ::warning file=link-test.md,line=53:: [uninformative link text] 'this'</span></span>
-<span><span class="co">#| ::warning file=link-test.md,line=54:: [uninformative link text] 'link'</span></span>
-<span><span class="co">#| ::warning file=link-test.md,line=55:: [uninformative link text] 'this link'</span></span>
-<span><span class="co">#| ::warning file=link-test.md,line=56:: [uninformative link text] 'a link'</span></span>
-<span><span class="co">#| ::warning file=link-test.md,line=57:: [uninformative link text] 'link to'</span></span>
-<span><span class="co">#| ::warning file=link-test.md,line=58:: [uninformative link text] 'here'</span></span>
-<span><span class="co">#| ::warning file=link-test.md,line=59:: [uninformative link text] 'here for'</span></span>
-<span><span class="co">#| ::warning file=link-test.md,line=60:: [uninformative link text] 'click here for'</span></span>
-<span><span class="co">#| ::warning file=link-test.md,line=61:: [uninformative link text] 'over here for'</span></span>
-<span><span class="co">#| ::warning file=link-test.md,line=62:: [uninformative link text] 'more'</span></span>
-<span><span class="co">#| ::warning file=link-test.md,line=63:: [uninformative link text] 'more about'</span></span>
-<span><span class="co">#| ::warning file=link-test.md,line=64:: [uninformative link text] 'for more about'</span></span>
-<span><span class="co">#| ::warning file=link-test.md,line=65:: [uninformative link text] 'for more info about'</span></span>
-<span><span class="co">#| ::warning file=link-test.md,line=66:: [uninformative link text] 'for more information about'</span></span>
-<span><span class="co">#| ::warning file=link-test.md,line=67:: [uninformative link text] 'read more about'</span></span>
-<span><span class="co">#| ::warning file=link-test.md,line=68:: [uninformative link text] 'read more'</span></span>
-<span><span class="co">#| ::warning file=link-test.md,line=69:: [uninformative link text] 'read on'</span></span>
-<span><span class="co">#| ::warning file=link-test.md,line=70:: [uninformative link text] 'read on about'</span></span>
-<span><span class="co">#| ::warning file=link-test.md,line=71:: [link text too short] 'a'</span></span>
-<span><span class="co">#| ::warning file=link-test.md,line=72:: [link text too short] ''</span></span></code></pre></div>
+<span><span class="co">#| ::warning file=link-test.md,line=45:: [invalid protocol] (gttps) [needs HTTPS] gttps://example.com</span></span>
+<span><span class="co">#| ::warning file=link-test.md,line=47:: [invalid protocol] (bitcoin) [needs HTTPS]</span></span>
+<span><span class="co">#| bitcoin:FAKE-EXAMPLE</span></span>
+<span><span class="co">#| ::warning file=link-test.md,line=48:: [invalid protocol] (javascript) [needs HTTPS]</span></span>
+<span><span class="co">#| javascript:alert%28%27JavaScript%20Link!%27%29</span></span>
+<span><span class="co">#| ::warning file=link-test.md,line=53:: [needs HTTPS] http://example.com</span></span>
+<span><span class="co">#| ::warning file=link-test.md,line=61:: [uninformative link text] 'this'</span></span>
+<span><span class="co">#| ::warning file=link-test.md,line=62:: [uninformative link text] 'link'</span></span>
+<span><span class="co">#| ::warning file=link-test.md,line=63:: [uninformative link text] 'this link'</span></span>
+<span><span class="co">#| ::warning file=link-test.md,line=64:: [uninformative link text] 'a link'</span></span>
+<span><span class="co">#| ::warning file=link-test.md,line=65:: [uninformative link text] 'link to'</span></span>
+<span><span class="co">#| ::warning file=link-test.md,line=66:: [uninformative link text] 'here'</span></span>
+<span><span class="co">#| ::warning file=link-test.md,line=67:: [uninformative link text] 'here for'</span></span>
+<span><span class="co">#| ::warning file=link-test.md,line=68:: [uninformative link text] 'click here for'</span></span>
+<span><span class="co">#| ::warning file=link-test.md,line=69:: [uninformative link text] 'over here for'</span></span>
+<span><span class="co">#| ::warning file=link-test.md,line=70:: [uninformative link text] 'more'</span></span>
+<span><span class="co">#| ::warning file=link-test.md,line=71:: [uninformative link text] 'more about'</span></span>
+<span><span class="co">#| ::warning file=link-test.md,line=72:: [uninformative link text] 'for more about'</span></span>
+<span><span class="co">#| ::warning file=link-test.md,line=73:: [uninformative link text] 'for more info about'</span></span>
+<span><span class="co">#| ::warning file=link-test.md,line=74:: [uninformative link text] 'for more information about'</span></span>
+<span><span class="co">#| ::warning file=link-test.md,line=75:: [uninformative link text] 'read more about'</span></span>
+<span><span class="co">#| ::warning file=link-test.md,line=76:: [uninformative link text] 'read more'</span></span>
+<span><span class="co">#| ::warning file=link-test.md,line=77:: [uninformative link text] 'read on'</span></span>
+<span><span class="co">#| ::warning file=link-test.md,line=78:: [uninformative link text] 'read on about'</span></span>
+<span><span class="co">#| ::warning file=link-test.md,line=79:: [link text too short] 'a'</span></span>
+<span><span class="co">#| ::warning file=link-test.md,line=80:: [link text too short] ''</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="headings">Headings<a class="anchor" aria-label="anchor" href="#headings"></a>

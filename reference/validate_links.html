@@ -65,6 +65,10 @@ websites.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">validate_links</span><span class="op">(</span><span class="va">yrn</span><span class="op">)</span></span>
 <span></span>
+<span><span class="va">allowed_uri_protocols</span></span>
+<span></span>
+<span><span class="fu">link_known_protocol</span><span class="op">(</span><span class="va">VAL</span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu">link_enforce_https</span><span class="op">(</span><span class="va">VAL</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">link_all_reachable</span><span class="op">(</span><span class="va">VAL</span><span class="op">)</span></span>
@@ -90,9 +94,15 @@ websites.</p>
 
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
-    <p>An object of class <code>character</code> of length 8.</p>
-<p>An object of class <code>character</code> of length 8.</p>
-    </div>
+    
+<ul><li><p><code>allowed_uri_protocols</code> a character string of length 23</p></li>
+</ul><ul><li><p><code>link_tests</code> a character string of length 9
+containing templates that use the output of <code>validate_links()</code> for
+formatting.</p></li>
+</ul><ul><li><p><code>link_info</code> a character string of length 9
+that gives information and informative links for additional context for
+failures.</p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>yrn</dt>
@@ -130,13 +140,18 @@ columns of logical values indicating the tests that passed.</p>
 
 
 <p>All links must resolve to a specific location. If it does not exist, then the
-link is invalid.</p><div class="section">
+link is invalid. At the moment, we can only do local links.</p><div class="section">
 <h4 id="external-links">External links<a class="anchor" aria-label="anchor" href="#external-links"></a></h4>
 
 
-<p>These links must start with a valid and secure protocol. This means that we
-will enforce HTTPS over HTTP. Any link with HTTP will be flagged. Most
-importantly, these links must not return an error code &gt; 399.</p>
+<p>These links must start with a valid and secure protocol. Allowed protocols
+are taken from the <a href="https://developer.wordpress.org/reference/functions/wp_allowed_protocols/#return" class="external-link">allowed protocols in Wordpress</a>:
+http, https, ftp, ftps, mailto, news, irc, irc6, ircs,
+gopher, nntp, feed, telnet, mms, rtsp, sms, svn, tel, fax,
+xmpp, webcal, urn</p>
+<p>Misspellings and unsupported protocols (e.g. <code>javascript:</code> and <code>bitcoin:</code>
+will be flagged).</p>
+<p>In addition, we will enforce the use of HTTPS over HTTP.</p>
 </div>
 
 <div class="section">
@@ -202,6 +217,10 @@ This is a feature planned for the future.</p>
 <p>This function is internal. Please use the methods for the <a href="Episode.html">Episode</a> and
 <a href="Lesson.html">Lesson</a> classes.</p>
     </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p><a href="Episode.html">Episode</a> and <a href="Lesson.html">Lesson</a> for the methods that will throw warnings</p></div>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
@@ -210,17 +229,17 @@ This is a feature planned for the future.</p>
 <span class="r-in"><span><span class="co"># Our link validators run a series of tests on links and images and return a </span></span></span>
 <span class="r-in"><span><span class="co"># data frame with information about the links (via xml2::url_parse), along </span></span></span>
 <span class="r-in"><span><span class="co"># with the results of the tests</span></span></span>
-<span class="r-in"><span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu">pegboard</span><span class="fu">:::</span><span class="fu">validate_links</span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ns-internal.html" class="external-link">asNamespace</a></span><span class="op">(</span><span class="st">'pegboard'</span><span class="op">)</span><span class="op">$</span><span class="fu">validate_links</span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "scheme"               "server"               "port"                </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [4] "user"                 "path"                 "query"               </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "fragment"             "orig"                 "text"                </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [10] "alt"                  "title"                "type"                </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [13] "rel"                  "anchor"               "sourcepos"           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [16] "filepath"             "node"                 "enforce_https"       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [19] "internal_anchor"      "internal_file"        "internal_well_formed"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [22] "all_reachable"        "img_alt_text"         "descriptive"         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "link_length"         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [16] "filepath"             "node"                 "known_protocol"      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [19] "enforce_https"        "internal_anchor"      "internal_file"       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [22] "internal_well_formed" "all_reachable"        "img_alt_text"        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "descriptive"          "link_length"         </span>
 <span class="r-in"><span><span class="va">v</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    scheme            server      port user</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1   https   docs.python.org        NA     </span>
@@ -232,10 +251,10 @@ This is a feature planned for the future.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10                                 NA     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 11  https   carpentries.org        NA     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 12                                 NA     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6                               21854     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7                           410813944     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8                               21854     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13                                  0     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                               21849     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7                           267792488     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8                               21849     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13                                 -1     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                             path query</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1                                           /3/library/glob.html      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2                                           /3/library/glob.html      </span>
@@ -306,40 +325,53 @@ This is a feature planned for the future.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7  &lt;NA&gt;  FALSE        NA _episodes/14-looping-data-sets.md &lt;link xm....</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 8  &lt;NA&gt;  FALSE        NA _episodes/14-looping-data-sets.md &lt;link xm....</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 13 &lt;NA&gt;  FALSE        NA _episodes/14-looping-data-sets.md &lt;image x....</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    enforce_https internal_anchor internal_file internal_well_formed</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1           TRUE            TRUE          TRUE                 TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2           TRUE            TRUE          TRUE                 TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3           TRUE            TRUE          TRUE                 TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4           TRUE            TRUE          TRUE                 TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5           TRUE            TRUE          TRUE                 TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9           TRUE            TRUE          TRUE                 TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10          TRUE            TRUE         FALSE                 TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11          TRUE            TRUE          TRUE                 TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12          TRUE            TRUE         FALSE                 TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6           TRUE            TRUE          TRUE                 TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7           TRUE            TRUE          TRUE                 TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8           TRUE            TRUE          TRUE                 TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13          TRUE            TRUE          TRUE                 TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    all_reachable img_alt_text descriptive link_length</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1           TRUE         TRUE        TRUE        TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2           TRUE         TRUE        TRUE        TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3           TRUE         TRUE        TRUE        TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4           TRUE         TRUE        TRUE        TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5           TRUE         TRUE        TRUE        TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9           TRUE         TRUE        TRUE        TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10          TRUE         TRUE        TRUE        TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11          TRUE        FALSE        TRUE        TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12          TRUE        FALSE        TRUE        TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6           TRUE         TRUE        TRUE        TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7           TRUE         TRUE        TRUE        TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8           TRUE         TRUE        TRUE        TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13          TRUE        FALSE        TRUE        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    known_protocol enforce_https internal_anchor internal_file</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1            TRUE          TRUE            TRUE          TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2            TRUE          TRUE            TRUE          TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3            TRUE          TRUE            TRUE          TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4            TRUE          TRUE            TRUE          TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5            TRUE          TRUE            TRUE          TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9            TRUE          TRUE            TRUE          TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10           TRUE          TRUE            TRUE         FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11           TRUE          TRUE            TRUE          TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12           TRUE          TRUE            TRUE         FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6            TRUE          TRUE            TRUE          TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7            TRUE          TRUE            TRUE          TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8            TRUE          TRUE            TRUE          TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13           TRUE          TRUE            TRUE          TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    internal_well_formed all_reachable img_alt_text descriptive link_length</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                  TRUE          TRUE         TRUE        TRUE        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                  TRUE          TRUE         TRUE        TRUE        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                  TRUE          TRUE         TRUE        TRUE        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                  TRUE          TRUE         TRUE        TRUE        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                  TRUE          TRUE         TRUE        TRUE        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9                  TRUE          TRUE         TRUE        TRUE        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10                 TRUE          TRUE         TRUE        TRUE        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11                 TRUE          TRUE        FALSE        TRUE        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12                 TRUE          TRUE        FALSE        TRUE        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                  TRUE          TRUE         TRUE        TRUE        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7                  TRUE          TRUE         TRUE        TRUE        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8                  TRUE          TRUE         TRUE        TRUE        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13                 TRUE          TRUE        FALSE        TRUE        TRUE</span>
+<span class="r-in"><span><span class="co"># URL protocols -----------------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co"># To avoid potentially malicious situations, we have an explicit list of</span></span></span>
+<span class="r-in"><span><span class="co"># allwed URI protocols, which can be found in the `allowed_uri_protocols`</span></span></span>
+<span class="r-in"><span><span class="co"># character vector:</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/ns-internal.html" class="external-link">asNamespace</a></span><span class="op">(</span><span class="st">'pegboard'</span><span class="op">)</span><span class="op">$</span><span class="va">allowed_uri_protocols</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] ""       "http"   "https"  "ftp"    "ftps"   "mailto" "news"   "irc"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "irc6"   "ircs"   "gopher" "nntp"   "feed"   "telnet" "mms"    "rtsp"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [17] "sms"    "svn"    "tel"    "fax"    "xmpp"   "webcal" "urn"   </span>
+<span class="r-in"><span><span class="co"># note that we make an additional check for the http protocol.</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Creating Warnings from the table ----------------------------------------</span></span></span>
 <span class="r-in"><span><span class="co"># The validator does not produce any warnings or messages, but this data</span></span></span>
 <span class="r-in"><span><span class="co"># frame can be passed on to other functions that will throw them for us. We</span></span></span>
 <span class="r-in"><span><span class="co"># have a function that will throw a warning/message for each link that</span></span></span>
 <span class="r-in"><span><span class="co"># fails the tests. These messages are controlled by `link_tests` and </span></span></span>
 <span class="r-in"><span><span class="co"># `link_info`.</span></span></span>
-<span class="r-in"><span><span class="fu">pegboard</span><span class="fu">:::</span><span class="va">link_tests</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/ns-internal.html" class="external-link">asNamespace</a></span><span class="op">(</span><span class="st">'pegboard'</span><span class="op">)</span><span class="op">$</span><span class="va">link_tests</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 known_protocol </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                "[invalid protocol] ({scheme})" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                  enforce_https </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                         "[needs HTTPS] {orig}" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                internal_anchor </span>
@@ -351,29 +383,31 @@ This is a feature planned for the future.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                  all_reachable </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                             "" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                   img_alt_text </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     "[image missing alt-text]" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                              "[image missing alt-text] {orig}" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                    descriptive </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     "[uninformative link text] {sQuote(text)}" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                    link_length </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                         "[link text too short] {sQuote(text)}" </span>
-<span class="r-in"><span><span class="fu">pegboard</span><span class="fu">:::</span><span class="va">link_info</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                              enforce_https </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 "Links must use HTTPS &lt;https://https.cio.gov/everything/&gt;" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                            internal_anchor </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   "Some link anchors for relative links (e.g. [anchor]: link) are missing" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                              internal_file </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                  "Some linked internal files do not exist" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                       internal_well_formed </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                    "Some links were incorrectly formatted" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                              all_reachable </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                         "" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                               img_alt_text </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                        "Images need alt-text &lt;https://webaim.org/techniques/hypertext/link_text#alt_link&gt;" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                descriptive </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       "Avoid uninformative link phrases &lt;https://webaim.org/techniques/hypertext/link_text#uninformative&gt;" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                link_length </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> "Avoid single-letter or missing link text &lt;https://webaim.org/techniques/hypertext/link_text#link_length&gt;" </span>
-<span class="r-in"><span><span class="fu">pegboard</span><span class="fu">:::</span><span class="fu">throw_link_warnings</span><span class="op">(</span><span class="va">v</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/ns-internal.html" class="external-link">asNamespace</a></span><span class="op">(</span><span class="st">'pegboard'</span><span class="op">)</span><span class="op">$</span><span class="va">link_info</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                                                                                               known_protocol </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "Links must have a known URL protocol (e.g. https, ftp, mailto). See &lt;https://developer.wordpress.org/reference/functions/wp_allowed_protocols/#return&gt; for a list of acceptable protocols." </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                                                                                                enforce_https </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                                                   "Links must use HTTPS &lt;https://https.cio.gov/everything/&gt;" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                                                                                              internal_anchor </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                                     "Some link anchors for relative links (e.g. [anchor]: link) are missing" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                                                                                                internal_file </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                                                                    "Some linked internal files do not exist" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                                                                                         internal_well_formed </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                                                                      "Some links were incorrectly formatted" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                                                                                                all_reachable </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                                                                                                           "" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                                                                                                 img_alt_text </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                          "Images need alt-text &lt;https://webaim.org/techniques/hypertext/link_text#alt_link&gt;" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                                                                                                  descriptive </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                         "Avoid uninformative link phrases &lt;https://webaim.org/techniques/hypertext/link_text#uninformative&gt;" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                                                                                                  link_length </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                   "Avoid single-letter or missing link text &lt;https://webaim.org/techniques/hypertext/link_text#link_length&gt;" </span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/ns-internal.html" class="external-link">asNamespace</a></span><span class="op">(</span><span class="st">'pegboard'</span><span class="op">)</span><span class="op">$</span><span class="fu">throw_link_warnings</span><span class="op">(</span><span class="va">v</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> There were errors in 4/13 links</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ◌ Some linked internal files do not exist</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ◌ Images need alt-text</span>
@@ -382,11 +416,11 @@ This is a feature planned for the future.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ../no-workie.svg</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> alt-text]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> alt-text] https://carpentries.org/assets/img/TheCarpentries.svg</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ../no-workie.svg [image missing alt-text]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ../no-workie.svg [image missing alt-text] ../no-workie.svg</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=NA:: [image missing</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> alt-text]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> alt-text] { page.root }/no-workie.svg</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

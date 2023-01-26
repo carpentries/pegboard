@@ -51,7 +51,7 @@ these missing links and transform them into link or image elements."><meta prope
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Find and fix unresolved template links within an Episode XML body</h1>
-      <small class="dont-index">Source: <a href="https://github.com/carpentries/pegboard/blob/HEAD/R/fix_links.R" class="external-link"><code>R/fix_links.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/carpentries/pegboard/blob/HEAD/R/fix_links.R" class="external-link"><code>R/fix_links.R</code></a>, <a href="https://github.com/carpentries/pegboard/blob/HEAD/R/utils.R" class="external-link"><code>R/utils.R</code></a></small>
       <div class="d-none name"><code>fix_links.Rd</code></div>
     </div>
 
@@ -79,7 +79,9 @@ these missing links and transform them into link or image elements.</p>
 <span></span>
 <span><span class="fu">text_to_links</span><span class="op">(</span><span class="va">txt</span>, ns <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">type</span>, sourcepos <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">make_link</span><span class="op">(</span><span class="va">txt</span>, <span class="va">pattern</span>, type <span class="op">=</span> <span class="st">"rel_link"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">make_link</span><span class="op">(</span><span class="va">txt</span>, <span class="va">pattern</span>, type <span class="op">=</span> <span class="st">"rel_link"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">find_between_nodes</span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, include <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -130,7 +132,11 @@ link. Inside each element are two elements:</p></li>
 the text of the link or the alt text of the image.</p></li>
 </ul><p><code>text_to_links()</code>: if ns is NULL: a character vector of XML text
 nodes, otherwise, new XML text nodes.</p>
-    </div>
+
+
+<ul><li><p><code>get_link_fragments()</code>: the preceding three or four nodes, which will be
+the text of the link or the alt text of the image.</p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     
