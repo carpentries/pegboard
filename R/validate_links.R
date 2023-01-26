@@ -214,13 +214,13 @@ link_internal_well_formed <- function(VAL, source_list) {
 #' @rdname validate_links
 #' @export
 link_tests <- c(
-  known_protocol  = "[unknown URL protocol] {orig}",
+  known_protocol  = "[invalid protocol] ({scheme})",
   enforce_https = "[needs HTTPS] {orig}",
   internal_anchor = "[missing anchor] {orig}",
   internal_file = "[missing file] {orig}",
   internal_well_formed = "[incorrect formatting]: [{text}][{orig}] -> [{text}]({orig})",
   all_reachable = "",
-  img_alt_text  = "[image missing alt-text]",
+  img_alt_text  = "[image missing alt-text] {orig}",
   descriptive   = "[uninformative link text] {sQuote(text)}",
   link_length   = "[link text too short] {sQuote(text)}",
   NULL

@@ -40,6 +40,14 @@ This link [is a relative link that works][rel-image]
 This link [goes to an internal nested file](files/thing.txt), but this internal
 link [does not exist](files/ohno.txt)
 
+## Invalid protocols
+
+This is a [link with a typo](gttps://example.com)
+
+This is a [bitcoin link](bitcoin:FAKE-EXAMPLE) 
+and this is a [javascript example](javascript:alert%28%27JavaScript%20Link!%27%29),
+both of which should never appear in lessons.
+
 ## HTTP links
 
 This [link uses http, which is no bueno](http://example.com)

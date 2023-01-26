@@ -205,11 +205,11 @@
       ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]
       ../no-workie.svg
       ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing
-      alt-text]
+      alt-text] https://carpentries.org/assets/img/TheCarpentries.svg
       ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]
-      ../no-workie.svg [image missing alt-text]
+      ../no-workie.svg [image missing alt-text] ../no-workie.svg
       ::warning file=_episodes/14-looping-data-sets.md,line=NA:: [image missing
-      alt-text]
+      alt-text] { page.root }/no-workie.svg
 
 # Lessons can be validated [ansi]
 
@@ -291,11 +291,11 @@
       ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]
       ../no-workie.svg
       ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing
-      alt-text]
+      alt-text] https://carpentries.org/assets/img/TheCarpentries.svg
       ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]
-      ../no-workie.svg [image missing alt-text]
+      ../no-workie.svg [image missing alt-text] ../no-workie.svg
       ::warning file=_episodes/14-looping-data-sets.md,line=NA:: [image missing
-      alt-text]
+      alt-text] { page.root }/no-workie.svg
 
 # Lessons can be validated [unicode]
 
@@ -377,11 +377,11 @@
       ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]
       ../no-workie.svg
       ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing
-      alt-text]
+      alt-text] https://carpentries.org/assets/img/TheCarpentries.svg
       ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]
-      ../no-workie.svg [image missing alt-text]
+      ../no-workie.svg [image missing alt-text] ../no-workie.svg
       ::warning file=_episodes/14-looping-data-sets.md,line=NA:: [image missing
-      alt-text]
+      alt-text] { page.root }/no-workie.svg
 
 # Lessons can be validated [fancy]
 
@@ -463,9 +463,9 @@
       ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]
       ../no-workie.svg
       ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing
-      alt-text]
+      alt-text] https://carpentries.org/assets/img/TheCarpentries.svg
       ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]
-      ../no-workie.svg [image missing alt-text]
+      ../no-workie.svg [image missing alt-text] ../no-workie.svg
       ::warning file=_episodes/14-looping-data-sets.md,line=NA:: [image missing
-      alt-text]
+      alt-text] { page.root }/no-workie.svg
 
