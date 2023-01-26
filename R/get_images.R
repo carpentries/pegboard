@@ -100,7 +100,7 @@ set_alt_attr <- function(images, xpath, ns) {
 #' @noRd
 #'
 #' @param attr_node an attribute node following an image. This should be a
-#'   text node that will start with `{`.
+#'   text node that will start with `\{`.
 #' @param ns the xml namespace
 get_broken_attr_text <- function(attr_node, ns) {
   closer <- xml2::xml_find_first(attr_node, closing_attr_xpath(), ns)

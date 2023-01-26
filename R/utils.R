@@ -22,6 +22,9 @@ element_df <- function(node) {
     end   = get_lineend(children) - start
   )
 }
+# nocov end
+
+`%||%` <- function(a, b) if (is.null(a)) b else a
 
 #' @param node a node determined to be a text representation of a link
 #'   destination
@@ -44,7 +47,6 @@ find_between_nodes <- function(a, b, include = TRUE) {
   the_children[seq(ida, idb)]
 }
 
-# nocov end
 
 has_cli <- function() {
   is.null(getOption("pegboard.no-cli")) && requireNamespace("cli", quietly = TRUE)

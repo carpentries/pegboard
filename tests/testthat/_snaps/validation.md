@@ -71,8 +71,8 @@
       
       - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
-      image-test.md:12  [image missing alt-text]
-      image-test.md:41  [image missing alt-text]
+      image-test.md:12  [image missing alt-text] https://placekitten.com/g/102/102
+      image-test.md:41  [image missing alt-text] https://placekitten.com/g/109/109
 
 ---
 
@@ -85,18 +85,19 @@
        - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
       _episodes/14-looping-data-sets.md:191  [missing file] ../no-workie.svg
-      _episodes/14-looping-data-sets.md:195  [image missing alt-text]
-      _episodes/14-looping-data-sets.md:197  [missing file] ../no-workie.svg [image missing alt-text]
-      _episodes/14-looping-data-sets.md:NA  [image missing alt-text]
+      _episodes/14-looping-data-sets.md:195  [image missing alt-text] https://carpentries.org/assets/img/TheCarpentries.svg
+      _episodes/14-looping-data-sets.md:197  [missing file] ../no-workie.svg [image missing alt-text] ../no-workie.svg
+      _episodes/14-looping-data-sets.md:NA  [image missing alt-text] {{ page.root }}/no-workie.svg
 
 ---
 
     Code
       link$validate_links()
     Message <pbMessage>
-      ! There were errors in 27/39 links
+      ! There were errors in 30/42 links
       
-      - Links must use HTTPS <https://https.cio.gov/everything/>
+      - Links must have a known URL protocol (e.g. https, ftp, mailto). See <https://developer.wordpress.org/reference/functions/wp_allowed_protocols/#return> for a list of acceptable protocols.
+       - Links must use HTTPS <https://https.cio.gov/everything/>
        - Some link anchors for relative links (e.g. [anchor]: link) are missing
        - Some linked internal files do not exist
        - Some links were incorrectly formatted
@@ -109,27 +110,30 @@
       link-test.md:29  [missing file] incorrect-link.html
       link-test.md:37  [incorrect formatting]: [should be a relative link][rel-image] -> [should be a relative link](rel-image)
       link-test.md:41  [missing file] files/ohno.txt
-      link-test.md:45  [needs HTTPS] http://example.com
-      link-test.md:53  [uninformative link text] 'this'
-      link-test.md:54  [uninformative link text] 'link'
-      link-test.md:55  [uninformative link text] 'this link'
-      link-test.md:56  [uninformative link text] 'a link'
-      link-test.md:57  [uninformative link text] 'link to'
-      link-test.md:58  [uninformative link text] 'here'
-      link-test.md:59  [uninformative link text] 'here for'
-      link-test.md:60  [uninformative link text] 'click here for'
-      link-test.md:61  [uninformative link text] 'over here for'
-      link-test.md:62  [uninformative link text] 'more'
-      link-test.md:63  [uninformative link text] 'more about'
-      link-test.md:64  [uninformative link text] 'for more about'
-      link-test.md:65  [uninformative link text] 'for more info about'
-      link-test.md:66  [uninformative link text] 'for more information about'
-      link-test.md:67  [uninformative link text] 'read more about'
-      link-test.md:68  [uninformative link text] 'read more'
-      link-test.md:69  [uninformative link text] 'read on'
-      link-test.md:70  [uninformative link text] 'read on about'
-      link-test.md:71  [link text too short] 'a'
-      link-test.md:72  [link text too short] ''
+      link-test.md:45  [invalid protocol] (gttps) [needs HTTPS] gttps://example.com
+      link-test.md:47  [invalid protocol] (bitcoin) [needs HTTPS] bitcoin:FAKE-EXAMPLE
+      link-test.md:48  [invalid protocol] (javascript) [needs HTTPS] javascript:alert%28%27JavaScript%20Link!%27%29
+      link-test.md:53  [needs HTTPS] http://example.com
+      link-test.md:61  [uninformative link text] 'this'
+      link-test.md:62  [uninformative link text] 'link'
+      link-test.md:63  [uninformative link text] 'this link'
+      link-test.md:64  [uninformative link text] 'a link'
+      link-test.md:65  [uninformative link text] 'link to'
+      link-test.md:66  [uninformative link text] 'here'
+      link-test.md:67  [uninformative link text] 'here for'
+      link-test.md:68  [uninformative link text] 'click here for'
+      link-test.md:69  [uninformative link text] 'over here for'
+      link-test.md:70  [uninformative link text] 'more'
+      link-test.md:71  [uninformative link text] 'more about'
+      link-test.md:72  [uninformative link text] 'for more about'
+      link-test.md:73  [uninformative link text] 'for more info about'
+      link-test.md:74  [uninformative link text] 'for more information about'
+      link-test.md:75  [uninformative link text] 'read more about'
+      link-test.md:76  [uninformative link text] 'read more'
+      link-test.md:77  [uninformative link text] 'read on'
+      link-test.md:78  [uninformative link text] 'read on about'
+      link-test.md:79  [link text too short] 'a'
+      link-test.md:80  [link text too short] ''
 
 # headings reporters will work [plain]
 
@@ -264,15 +268,18 @@
       ( ) Images need alt-text
       <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
-      image-test.md:12 [image missing alt-text]
-      image-test.md:41 [image missing alt-text]
+      image-test.md:12 [image missing alt-text] https://placekitten.com/g/102/102
+      image-test.md:41 [image missing alt-text] https://placekitten.com/g/109/109
 
 ---
 
     Code
       link$validate_links()
     Message <cliMessage>
-      ! There were errors in 27/39 links
+      ! There were errors in 30/42 links
+      ( ) Links must have a known URL protocol (e.g. https, ftp, mailto). See
+      <https://developer.wordpress.org/reference/functions/wp_allowed_protocols/#return>
+      for a list of acceptable protocols.
       ( ) Links must use HTTPS <https://https.cio.gov/everything/>
       ( ) Some link anchors for relative links (e.g. [anchor]: link) are missing
       ( ) Some linked internal files do not exist
@@ -289,27 +296,31 @@
       link-test.md:37 [incorrect formatting]: [should be a relative link][rel-image]
       -> [should be a relative link](rel-image)
       link-test.md:41 [missing file] files/ohno.txt
-      link-test.md:45 [needs HTTPS] http://example.com
-      link-test.md:53 [uninformative link text] 'this'
-      link-test.md:54 [uninformative link text] 'link'
-      link-test.md:55 [uninformative link text] 'this link'
-      link-test.md:56 [uninformative link text] 'a link'
-      link-test.md:57 [uninformative link text] 'link to'
-      link-test.md:58 [uninformative link text] 'here'
-      link-test.md:59 [uninformative link text] 'here for'
-      link-test.md:60 [uninformative link text] 'click here for'
-      link-test.md:61 [uninformative link text] 'over here for'
-      link-test.md:62 [uninformative link text] 'more'
-      link-test.md:63 [uninformative link text] 'more about'
-      link-test.md:64 [uninformative link text] 'for more about'
-      link-test.md:65 [uninformative link text] 'for more info about'
-      link-test.md:66 [uninformative link text] 'for more information about'
-      link-test.md:67 [uninformative link text] 'read more about'
-      link-test.md:68 [uninformative link text] 'read more'
-      link-test.md:69 [uninformative link text] 'read on'
-      link-test.md:70 [uninformative link text] 'read on about'
-      link-test.md:71 [link text too short] 'a'
-      link-test.md:72 [link text too short] ''
+      link-test.md:45 [invalid protocol] (gttps) [needs HTTPS] gttps://example.com
+      link-test.md:47 [invalid protocol] (bitcoin) [needs HTTPS] bitcoin:FAKE-EXAMPLE
+      link-test.md:48 [invalid protocol] (javascript) [needs HTTPS]
+      javascript:alert%28%27JavaScript%20Link!%27%29
+      link-test.md:53 [needs HTTPS] http://example.com
+      link-test.md:61 [uninformative link text] 'this'
+      link-test.md:62 [uninformative link text] 'link'
+      link-test.md:63 [uninformative link text] 'this link'
+      link-test.md:64 [uninformative link text] 'a link'
+      link-test.md:65 [uninformative link text] 'link to'
+      link-test.md:66 [uninformative link text] 'here'
+      link-test.md:67 [uninformative link text] 'here for'
+      link-test.md:68 [uninformative link text] 'click here for'
+      link-test.md:69 [uninformative link text] 'over here for'
+      link-test.md:70 [uninformative link text] 'more'
+      link-test.md:71 [uninformative link text] 'more about'
+      link-test.md:72 [uninformative link text] 'for more about'
+      link-test.md:73 [uninformative link text] 'for more info about'
+      link-test.md:74 [uninformative link text] 'for more information about'
+      link-test.md:75 [uninformative link text] 'read more about'
+      link-test.md:76 [uninformative link text] 'read more'
+      link-test.md:77 [uninformative link text] 'read on'
+      link-test.md:78 [uninformative link text] 'read on about'
+      link-test.md:79 [link text too short] 'a'
+      link-test.md:80 [link text too short] ''
 
 # links reporters will work [ansi]
 
@@ -320,15 +331,18 @@
       ( ) Images need alt-text
       <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
-      image-test.md:12 [image missing alt-text]
-      image-test.md:41 [image missing alt-text]
+      image-test.md:12 [image missing alt-text] https://placekitten.com/g/102/102
+      image-test.md:41 [image missing alt-text] https://placekitten.com/g/109/109
 
 ---
 
     Code
       link$validate_links()
     Message <cliMessage>
-      [33m![39m There were errors in 27/39 links
+      [33m![39m There were errors in 30/42 links
+      ( ) Links must have a known URL protocol (e.g. https, ftp, mailto). See
+      <https://developer.wordpress.org/reference/functions/wp_allowed_protocols/#return>
+      for a list of acceptable protocols.
       ( ) Links must use HTTPS <https://https.cio.gov/everything/>
       ( ) Some link anchors for relative links (e.g. [anchor]: link) are missing
       ( ) Some linked internal files do not exist
@@ -345,27 +359,31 @@
       link-test.md:37 [incorrect formatting]: [should be a relative link][rel-image]
       -> [should be a relative link](rel-image)
       link-test.md:41 [missing file] files/ohno.txt
-      link-test.md:45 [needs HTTPS] http://example.com
-      link-test.md:53 [uninformative link text] 'this'
-      link-test.md:54 [uninformative link text] 'link'
-      link-test.md:55 [uninformative link text] 'this link'
-      link-test.md:56 [uninformative link text] 'a link'
-      link-test.md:57 [uninformative link text] 'link to'
-      link-test.md:58 [uninformative link text] 'here'
-      link-test.md:59 [uninformative link text] 'here for'
-      link-test.md:60 [uninformative link text] 'click here for'
-      link-test.md:61 [uninformative link text] 'over here for'
-      link-test.md:62 [uninformative link text] 'more'
-      link-test.md:63 [uninformative link text] 'more about'
-      link-test.md:64 [uninformative link text] 'for more about'
-      link-test.md:65 [uninformative link text] 'for more info about'
-      link-test.md:66 [uninformative link text] 'for more information about'
-      link-test.md:67 [uninformative link text] 'read more about'
-      link-test.md:68 [uninformative link text] 'read more'
-      link-test.md:69 [uninformative link text] 'read on'
-      link-test.md:70 [uninformative link text] 'read on about'
-      link-test.md:71 [link text too short] 'a'
-      link-test.md:72 [link text too short] ''
+      link-test.md:45 [invalid protocol] (gttps) [needs HTTPS] gttps://example.com
+      link-test.md:47 [invalid protocol] (bitcoin) [needs HTTPS] bitcoin:FAKE-EXAMPLE
+      link-test.md:48 [invalid protocol] (javascript) [needs HTTPS]
+      javascript:alert%28%27JavaScript%20Link!%27%29
+      link-test.md:53 [needs HTTPS] http://example.com
+      link-test.md:61 [uninformative link text] 'this'
+      link-test.md:62 [uninformative link text] 'link'
+      link-test.md:63 [uninformative link text] 'this link'
+      link-test.md:64 [uninformative link text] 'a link'
+      link-test.md:65 [uninformative link text] 'link to'
+      link-test.md:66 [uninformative link text] 'here'
+      link-test.md:67 [uninformative link text] 'here for'
+      link-test.md:68 [uninformative link text] 'click here for'
+      link-test.md:69 [uninformative link text] 'over here for'
+      link-test.md:70 [uninformative link text] 'more'
+      link-test.md:71 [uninformative link text] 'more about'
+      link-test.md:72 [uninformative link text] 'for more about'
+      link-test.md:73 [uninformative link text] 'for more info about'
+      link-test.md:74 [uninformative link text] 'for more information about'
+      link-test.md:75 [uninformative link text] 'read more about'
+      link-test.md:76 [uninformative link text] 'read more'
+      link-test.md:77 [uninformative link text] 'read on'
+      link-test.md:78 [uninformative link text] 'read on about'
+      link-test.md:79 [link text too short] 'a'
+      link-test.md:80 [link text too short] ''
 
 # links reporters will work [unicode]
 
@@ -376,15 +394,18 @@
       ◌ Images need alt-text
       <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
-      image-test.md:12 [image missing alt-text]
-      image-test.md:41 [image missing alt-text]
+      image-test.md:12 [image missing alt-text] https://placekitten.com/g/102/102
+      image-test.md:41 [image missing alt-text] https://placekitten.com/g/109/109
 
 ---
 
     Code
       link$validate_links()
     Message <cliMessage>
-      ! There were errors in 27/39 links
+      ! There were errors in 30/42 links
+      ◌ Links must have a known URL protocol (e.g. https, ftp, mailto). See
+      <https://developer.wordpress.org/reference/functions/wp_allowed_protocols/#return>
+      for a list of acceptable protocols.
       ◌ Links must use HTTPS <https://https.cio.gov/everything/>
       ◌ Some link anchors for relative links (e.g. [anchor]: link) are missing
       ◌ Some linked internal files do not exist
@@ -401,27 +422,31 @@
       link-test.md:37 [incorrect formatting]: [should be a relative link][rel-image]
       -> [should be a relative link](rel-image)
       link-test.md:41 [missing file] files/ohno.txt
-      link-test.md:45 [needs HTTPS] http://example.com
-      link-test.md:53 [uninformative link text] 'this'
-      link-test.md:54 [uninformative link text] 'link'
-      link-test.md:55 [uninformative link text] 'this link'
-      link-test.md:56 [uninformative link text] 'a link'
-      link-test.md:57 [uninformative link text] 'link to'
-      link-test.md:58 [uninformative link text] 'here'
-      link-test.md:59 [uninformative link text] 'here for'
-      link-test.md:60 [uninformative link text] 'click here for'
-      link-test.md:61 [uninformative link text] 'over here for'
-      link-test.md:62 [uninformative link text] 'more'
-      link-test.md:63 [uninformative link text] 'more about'
-      link-test.md:64 [uninformative link text] 'for more about'
-      link-test.md:65 [uninformative link text] 'for more info about'
-      link-test.md:66 [uninformative link text] 'for more information about'
-      link-test.md:67 [uninformative link text] 'read more about'
-      link-test.md:68 [uninformative link text] 'read more'
-      link-test.md:69 [uninformative link text] 'read on'
-      link-test.md:70 [uninformative link text] 'read on about'
-      link-test.md:71 [link text too short] 'a'
-      link-test.md:72 [link text too short] ''
+      link-test.md:45 [invalid protocol] (gttps) [needs HTTPS] gttps://example.com
+      link-test.md:47 [invalid protocol] (bitcoin) [needs HTTPS] bitcoin:FAKE-EXAMPLE
+      link-test.md:48 [invalid protocol] (javascript) [needs HTTPS]
+      javascript:alert%28%27JavaScript%20Link!%27%29
+      link-test.md:53 [needs HTTPS] http://example.com
+      link-test.md:61 [uninformative link text] 'this'
+      link-test.md:62 [uninformative link text] 'link'
+      link-test.md:63 [uninformative link text] 'this link'
+      link-test.md:64 [uninformative link text] 'a link'
+      link-test.md:65 [uninformative link text] 'link to'
+      link-test.md:66 [uninformative link text] 'here'
+      link-test.md:67 [uninformative link text] 'here for'
+      link-test.md:68 [uninformative link text] 'click here for'
+      link-test.md:69 [uninformative link text] 'over here for'
+      link-test.md:70 [uninformative link text] 'more'
+      link-test.md:71 [uninformative link text] 'more about'
+      link-test.md:72 [uninformative link text] 'for more about'
+      link-test.md:73 [uninformative link text] 'for more info about'
+      link-test.md:74 [uninformative link text] 'for more information about'
+      link-test.md:75 [uninformative link text] 'read more about'
+      link-test.md:76 [uninformative link text] 'read more'
+      link-test.md:77 [uninformative link text] 'read on'
+      link-test.md:78 [uninformative link text] 'read on about'
+      link-test.md:79 [link text too short] 'a'
+      link-test.md:80 [link text too short] ''
 
 # links reporters will work [fancy]
 
@@ -432,15 +457,18 @@
       ◌ Images need alt-text
       <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
-      image-test.md:12 [image missing alt-text]
-      image-test.md:41 [image missing alt-text]
+      image-test.md:12 [image missing alt-text] https://placekitten.com/g/102/102
+      image-test.md:41 [image missing alt-text] https://placekitten.com/g/109/109
 
 ---
 
     Code
       link$validate_links()
     Message <cliMessage>
-      [33m![39m There were errors in 27/39 links
+      [33m![39m There were errors in 30/42 links
+      ◌ Links must have a known URL protocol (e.g. https, ftp, mailto). See
+      <https://developer.wordpress.org/reference/functions/wp_allowed_protocols/#return>
+      for a list of acceptable protocols.
       ◌ Links must use HTTPS <https://https.cio.gov/everything/>
       ◌ Some link anchors for relative links (e.g. [anchor]: link) are missing
       ◌ Some linked internal files do not exist
@@ -457,27 +485,31 @@
       link-test.md:37 [incorrect formatting]: [should be a relative link][rel-image]
       -> [should be a relative link](rel-image)
       link-test.md:41 [missing file] files/ohno.txt
-      link-test.md:45 [needs HTTPS] http://example.com
-      link-test.md:53 [uninformative link text] 'this'
-      link-test.md:54 [uninformative link text] 'link'
-      link-test.md:55 [uninformative link text] 'this link'
-      link-test.md:56 [uninformative link text] 'a link'
-      link-test.md:57 [uninformative link text] 'link to'
-      link-test.md:58 [uninformative link text] 'here'
-      link-test.md:59 [uninformative link text] 'here for'
-      link-test.md:60 [uninformative link text] 'click here for'
-      link-test.md:61 [uninformative link text] 'over here for'
-      link-test.md:62 [uninformative link text] 'more'
-      link-test.md:63 [uninformative link text] 'more about'
-      link-test.md:64 [uninformative link text] 'for more about'
-      link-test.md:65 [uninformative link text] 'for more info about'
-      link-test.md:66 [uninformative link text] 'for more information about'
-      link-test.md:67 [uninformative link text] 'read more about'
-      link-test.md:68 [uninformative link text] 'read more'
-      link-test.md:69 [uninformative link text] 'read on'
-      link-test.md:70 [uninformative link text] 'read on about'
-      link-test.md:71 [link text too short] 'a'
-      link-test.md:72 [link text too short] ''
+      link-test.md:45 [invalid protocol] (gttps) [needs HTTPS] gttps://example.com
+      link-test.md:47 [invalid protocol] (bitcoin) [needs HTTPS] bitcoin:FAKE-EXAMPLE
+      link-test.md:48 [invalid protocol] (javascript) [needs HTTPS]
+      javascript:alert%28%27JavaScript%20Link!%27%29
+      link-test.md:53 [needs HTTPS] http://example.com
+      link-test.md:61 [uninformative link text] 'this'
+      link-test.md:62 [uninformative link text] 'link'
+      link-test.md:63 [uninformative link text] 'this link'
+      link-test.md:64 [uninformative link text] 'a link'
+      link-test.md:65 [uninformative link text] 'link to'
+      link-test.md:66 [uninformative link text] 'here'
+      link-test.md:67 [uninformative link text] 'here for'
+      link-test.md:68 [uninformative link text] 'click here for'
+      link-test.md:69 [uninformative link text] 'over here for'
+      link-test.md:70 [uninformative link text] 'more'
+      link-test.md:71 [uninformative link text] 'more about'
+      link-test.md:72 [uninformative link text] 'for more about'
+      link-test.md:73 [uninformative link text] 'for more info about'
+      link-test.md:74 [uninformative link text] 'for more information about'
+      link-test.md:75 [uninformative link text] 'read more about'
+      link-test.md:76 [uninformative link text] 'read more'
+      link-test.md:77 [uninformative link text] 'read on'
+      link-test.md:78 [uninformative link text] 'read on about'
+      link-test.md:79 [link text too short] 'a'
+      link-test.md:80 [link text too short] ''
 
 # div reporters will work [plain]
 
@@ -592,7 +624,10 @@
     Code
       link$validate_links()
     Message <cliMessage>
-      ! There were errors in 27/39 links
+      ! There were errors in 30/42 links
+      ( ) Links must have a known URL protocol (e.g. https, ftp, mailto). See
+      <https://developer.wordpress.org/reference/functions/wp_allowed_protocols/#return>
+      for a list of acceptable protocols.
       ( ) Links must use HTTPS <https://https.cio.gov/everything/>
       ( ) Some link anchors for relative links (e.g. [anchor]: link) are missing
       ( ) Some linked internal files do not exist
@@ -609,32 +644,38 @@
       ::warning file=link-test.md,line=37:: [incorrect formatting]: [should be a
       relative link][rel-image] -> [should be a relative link](rel-image)
       ::warning file=link-test.md,line=41:: [missing file] files/ohno.txt
-      ::warning file=link-test.md,line=45:: [needs HTTPS] http://example.com
-      ::warning file=link-test.md,line=53:: [uninformative link text] 'this'
-      ::warning file=link-test.md,line=54:: [uninformative link text] 'link'
-      ::warning file=link-test.md,line=55:: [uninformative link text] 'this link'
-      ::warning file=link-test.md,line=56:: [uninformative link text] 'a link'
-      ::warning file=link-test.md,line=57:: [uninformative link text] 'link to'
-      ::warning file=link-test.md,line=58:: [uninformative link text] 'here'
-      ::warning file=link-test.md,line=59:: [uninformative link text] 'here for'
-      ::warning file=link-test.md,line=60:: [uninformative link text] 'click here
+      ::warning file=link-test.md,line=45:: [invalid protocol] (gttps) [needs HTTPS]
+      gttps://example.com
+      ::warning file=link-test.md,line=47:: [invalid protocol] (bitcoin) [needs
+      HTTPS] bitcoin:FAKE-EXAMPLE
+      ::warning file=link-test.md,line=48:: [invalid protocol] (javascript) [needs
+      HTTPS] javascript:alert%28%27JavaScript%20Link!%27%29
+      ::warning file=link-test.md,line=53:: [needs HTTPS] http://example.com
+      ::warning file=link-test.md,line=61:: [uninformative link text] 'this'
+      ::warning file=link-test.md,line=62:: [uninformative link text] 'link'
+      ::warning file=link-test.md,line=63:: [uninformative link text] 'this link'
+      ::warning file=link-test.md,line=64:: [uninformative link text] 'a link'
+      ::warning file=link-test.md,line=65:: [uninformative link text] 'link to'
+      ::warning file=link-test.md,line=66:: [uninformative link text] 'here'
+      ::warning file=link-test.md,line=67:: [uninformative link text] 'here for'
+      ::warning file=link-test.md,line=68:: [uninformative link text] 'click here
       for'
-      ::warning file=link-test.md,line=61:: [uninformative link text] 'over here for'
-      ::warning file=link-test.md,line=62:: [uninformative link text] 'more'
-      ::warning file=link-test.md,line=63:: [uninformative link text] 'more about'
-      ::warning file=link-test.md,line=64:: [uninformative link text] 'for more
+      ::warning file=link-test.md,line=69:: [uninformative link text] 'over here for'
+      ::warning file=link-test.md,line=70:: [uninformative link text] 'more'
+      ::warning file=link-test.md,line=71:: [uninformative link text] 'more about'
+      ::warning file=link-test.md,line=72:: [uninformative link text] 'for more
       about'
-      ::warning file=link-test.md,line=65:: [uninformative link text] 'for more info
+      ::warning file=link-test.md,line=73:: [uninformative link text] 'for more info
       about'
-      ::warning file=link-test.md,line=66:: [uninformative link text] 'for more
+      ::warning file=link-test.md,line=74:: [uninformative link text] 'for more
       information about'
-      ::warning file=link-test.md,line=67:: [uninformative link text] 'read more
+      ::warning file=link-test.md,line=75:: [uninformative link text] 'read more
       about'
-      ::warning file=link-test.md,line=68:: [uninformative link text] 'read more'
-      ::warning file=link-test.md,line=69:: [uninformative link text] 'read on'
-      ::warning file=link-test.md,line=70:: [uninformative link text] 'read on about'
-      ::warning file=link-test.md,line=71:: [link text too short] 'a'
-      ::warning file=link-test.md,line=72:: [link text too short] ''
+      ::warning file=link-test.md,line=76:: [uninformative link text] 'read more'
+      ::warning file=link-test.md,line=77:: [uninformative link text] 'read on'
+      ::warning file=link-test.md,line=78:: [uninformative link text] 'read on about'
+      ::warning file=link-test.md,line=79:: [link text too short] 'a'
+      ::warning file=link-test.md,line=80:: [link text too short] ''
 
 # div reporters will work on CI
 

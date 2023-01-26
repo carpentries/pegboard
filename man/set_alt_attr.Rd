@@ -22,6 +22,7 @@ This finds the attribute curly braces after an image declaration, extracts
 the alt text, and adds it as an attribute to the image, which is useful in
 parsing the XML, and will not affect rendering.
 }
-\details{
-Note: this function works by side-effect
+\note{
+this function assumes that the images entering have a curly brace
+following.
 }
