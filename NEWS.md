@@ -1,5 +1,12 @@
 # pegboard 0.4.3
 
+NEW FEATURES
+------------
+
+* `$validate_links()` now checks if the URL protocol in an external link matches
+  a known list of protocols. Those that do not match (e.g. `javascript:` and
+  `bitcoin:`) will be flagged. (@zkavmar #109)
+
 BUG FIX
 -------
 
@@ -7,6 +14,8 @@ BUG FIX
   be reported was fixed. (discovered: @dpshelio and @karenword; 
   reported: @zkamvar #106; fixed: @zkamvar #108). This fix also makes the alt
   text parsing and validation more robust
+- A bug where an unknown protocol was not recognised as invalid was fixed.
+  (discovered: @ndporter; reported: @zkamvar, #107; fixed: @zkamvar, #109)
 
 INTERNALS
 ---------
