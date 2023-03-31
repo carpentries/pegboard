@@ -53,7 +53,7 @@ link_descriptive(VAL)
 
 link_source_list(lt)
 
-link_internal_anchor(VAL, source_list, headings)
+link_internal_anchor(VAL, source_list, headings, body)
 
 link_internal_file(VAL, source_list, root)
 
@@ -71,6 +71,8 @@ link_info
 \item{source_list}{output of \code{link_source_list}}
 
 \item{headings}{an \code{xml_nodeset} of headings}
+
+\item{body}{an \code{xml_document}}
 
 \item{root}{the root path to the lesson that contains this file.}
 }
@@ -111,7 +113,7 @@ a page and have the correct capitalisation.
 \subsection{Anchors (aka fragments)}{
 
 Anchors are located at the end of URLs that start with a \verb{#} sign. These are
-used to indicate a section of the documenation.
+used to indicate a section of the documenation or a span id.
 }
 
 }

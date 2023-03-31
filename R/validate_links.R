@@ -34,7 +34,7 @@
 #' ### Anchors (aka fragments)
 #'
 #' Anchors are located at the end of URLs that start with a `#` sign. These are
-#' used to indicate a section of the documenation.
+#' used to indicate a section of the documenation or a span id.
 #'
 #' ## Accessibility (a11y)
 #' 
@@ -106,7 +106,7 @@ validate_links <- function(yrn) {
   source_list <- link_source_list(VAL)
   VAL <- link_known_protocol(VAL)
   VAL <- link_enforce_https(VAL)
-  VAL <- link_internal_anchor(VAL, source_list, yrn$headings)
+  VAL <- link_internal_anchor(VAL, source_list, yrn$headings, yrn$body)
   VAL <- link_internal_file(VAL, source_list, fs::path_dir(yrn$path))
   VAL <- link_internal_well_formed(VAL, source_list)
   VAL <- link_all_reachable(VAL)
@@ -204,12 +204,15 @@ link_source_list <- function(lt) {
 #' @rdname validate_links
 #' @param source_list output of `link_source_list`
 #' @param headings an `xml_nodeset` of headings
-link_internal_anchor <- function(VAL, source_list, headings) {
+#' @param body an `xml_document`
+link_internal_anchor <- function(VAL, source_list, headings, body) {
   in_page <- source_list$in_page
   if (any(in_page)) {
     headings <- xml2::xml_text(headings)
     headings <- clean_headings(headings)
-    VAL$internal_anchor[in_page] <- VAL$fragment[in_page] %in% headings
+    spans    <- fetch_anchor_span_ids(body)
+    anchors  <- c(headings, spans)
+    VAL$internal_anchor[in_page] <- VAL$fragment[in_page] %in% anchors
   }
   VAL
 }
@@ -238,15 +241,15 @@ link_internal_well_formed <- function(VAL, source_list) {
 #'   containing templates that use the output of `validate_links()` for 
 #'   formatting.
 link_tests <- c(
-  known_protocol  = "[invalid protocol] ({scheme})",
-  enforce_https = "[needs HTTPS] {orig}",
-  internal_anchor = "[missing anchor] {orig}",
-  internal_file = "[missing file] {orig}",
+  known_protocol  = "[invalid protocol]: {scheme}",
+  enforce_https = "[needs HTTPS]: [{text}]({orig})",
+  internal_anchor = "[missing anchor]: [{text}]({orig})",
+  internal_file = "[missing file]: [{text}]({orig})",
   internal_well_formed = "[incorrect formatting]: [{text}][{orig}] -> [{text}]({orig})",
   all_reachable = "",
-  img_alt_text  = "[image missing alt-text] {orig}",
-  descriptive   = "[uninformative link text] {sQuote(text)}",
-  link_length   = "[link text too short] {sQuote(text)}",
+  img_alt_text  = "[image missing alt-text]: {orig}",
+  descriptive   = "[uninformative link text]: [{text}]({orig})",
+  link_length   = "[link text too short]: [{text}]({orig})",
   NULL
 )
 
@@ -348,3 +351,13 @@ clean_headings <- function(headings) {
   gsub("\\.", "-", make.unique(trim_dash))
 }
 
+fetch_anchor_span_ids <- function(body, ns = tinkr::md_ns()) {
+  spans <- find_anchor_spans(body, ns)
+  clean_headings(paste("h1", sub("[}].*$", "}", xml2::xml_text(spans))))
+}
+
+find_anchor_spans <- function(body, ns = tinkr::md_ns()) {
+  asis_node <- "md:text[@asis][text()=']']"
+  curly     <- "following-sibling::md:text[1][starts-with(text(), '{#')]"
+  xml2::xml_find_all(body, sprintf(".//%s/%s", asis_node, curly), ns = ns)
+}
