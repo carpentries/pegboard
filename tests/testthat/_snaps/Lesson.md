@@ -11,10 +11,8 @@
       ! There were errors in 2/3 links
       ( ) Links must use HTTPS <https://https.cio.gov/everything/>
       
-      ::warning file=learners/setup.md,line=18:: [needs HTTPS]
-      http://example.com/putty
-      ::warning file=learners/setup.md,line=26:: [needs HTTPS]
-      http://example.com/terminal
+      ::warning file=learners/setup.md,line=18:: [needs HTTPS]: [the PuTTY terminal](http://example.com/putty)
+      ::warning file=learners/setup.md,line=26:: [needs HTTPS]: [Terminal.app](http://example.com/terminal)
 
 # Sandpaper Lessons can be validated [ansi]
 
@@ -29,10 +27,8 @@
       [33m![39m There were errors in 2/3 links
       ( ) Links must use HTTPS <https://https.cio.gov/everything/>
       
-      ::warning file=learners/setup.md,line=18:: [needs HTTPS]
-      http://example.com/putty
-      ::warning file=learners/setup.md,line=26:: [needs HTTPS]
-      http://example.com/terminal
+      ::warning file=learners/setup.md,line=18:: [needs HTTPS]: [the PuTTY terminal](http://example.com/putty)
+      ::warning file=learners/setup.md,line=26:: [needs HTTPS]: [Terminal.app](http://example.com/terminal)
 
 # Sandpaper Lessons can be validated [unicode]
 
@@ -47,10 +43,8 @@
       ! There were errors in 2/3 links
       ◌ Links must use HTTPS <https://https.cio.gov/everything/>
       
-      ::warning file=learners/setup.md,line=18:: [needs HTTPS]
-      http://example.com/putty
-      ::warning file=learners/setup.md,line=26:: [needs HTTPS]
-      http://example.com/terminal
+      ::warning file=learners/setup.md,line=18:: [needs HTTPS]: [the PuTTY terminal](http://example.com/putty)
+      ::warning file=learners/setup.md,line=26:: [needs HTTPS]: [Terminal.app](http://example.com/terminal)
 
 # Sandpaper Lessons can be validated [fancy]
 
@@ -65,10 +59,8 @@
       [33m![39m There were errors in 2/3 links
       ◌ Links must use HTTPS <https://https.cio.gov/everything/>
       
-      ::warning file=learners/setup.md,line=18:: [needs HTTPS]
-      http://example.com/putty
-      ::warning file=learners/setup.md,line=26:: [needs HTTPS]
-      http://example.com/terminal
+      ::warning file=learners/setup.md,line=18:: [needs HTTPS]: [the PuTTY terminal](http://example.com/putty)
+      ::warning file=learners/setup.md,line=26:: [needs HTTPS]: [Terminal.app](http://example.com/terminal)
 
 # Sandpaper lessons have getter and summary methods
 
@@ -271,17 +263,12 @@
     Message <cliMessage>
       ! There were errors in 4/14 links
       ( ) Some linked internal files do not exist
-      ( ) Images need alt-text
-      <https://webaim.org/techniques/hypertext/link_text#alt_link>
+      ( ) Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
-      ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]
-      ../no-workie.svg
-      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing
-      alt-text] https://carpentries.org/assets/img/TheCarpentries.svg
-      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]
-      ../no-workie.svg [image missing alt-text] ../no-workie.svg
-      ::warning file=_episodes/14-looping-data-sets.md,line=NA:: [image missing
-      alt-text] { page.root }/no-workie.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]: [](../no-workie.svg)
+      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing alt-text]: https://carpentries.org/assets/img/TheCarpentries.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]: [Non-working image](../no-workie.svg) [image missing alt-text]: ../no-workie.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=NA:: [image missing alt-text]: { page.root }/no-workie.svg
 
 # Lessons can be validated [ansi]
 
@@ -357,17 +344,12 @@
     Message <cliMessage>
       [33m![39m There were errors in 4/14 links
       ( ) Some linked internal files do not exist
-      ( ) Images need alt-text
-      <https://webaim.org/techniques/hypertext/link_text#alt_link>
+      ( ) Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
-      ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]
-      ../no-workie.svg
-      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing
-      alt-text] https://carpentries.org/assets/img/TheCarpentries.svg
-      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]
-      ../no-workie.svg [image missing alt-text] ../no-workie.svg
-      ::warning file=_episodes/14-looping-data-sets.md,line=NA:: [image missing
-      alt-text] { page.root }/no-workie.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]: [](../no-workie.svg)
+      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing alt-text]: https://carpentries.org/assets/img/TheCarpentries.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]: [Non-working image](../no-workie.svg) [image missing alt-text]: ../no-workie.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=NA:: [image missing alt-text]: { page.root }/no-workie.svg
 
 # Lessons can be validated [unicode]
 
@@ -443,17 +425,12 @@
     Message <cliMessage>
       ! There were errors in 4/14 links
       ◌ Some linked internal files do not exist
-      ◌ Images need alt-text
-      <https://webaim.org/techniques/hypertext/link_text#alt_link>
+      ◌ Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
-      ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]
-      ../no-workie.svg
-      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing
-      alt-text] https://carpentries.org/assets/img/TheCarpentries.svg
-      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]
-      ../no-workie.svg [image missing alt-text] ../no-workie.svg
-      ::warning file=_episodes/14-looping-data-sets.md,line=NA:: [image missing
-      alt-text] { page.root }/no-workie.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]: [](../no-workie.svg)
+      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing alt-text]: https://carpentries.org/assets/img/TheCarpentries.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]: [Non-working image](../no-workie.svg) [image missing alt-text]: ../no-workie.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=NA:: [image missing alt-text]: { page.root }/no-workie.svg
 
 # Lessons can be validated [fancy]
 
@@ -529,15 +506,10 @@
     Message <cliMessage>
       [33m![39m There were errors in 4/14 links
       ◌ Some linked internal files do not exist
-      ◌ Images need alt-text
-      <https://webaim.org/techniques/hypertext/link_text#alt_link>
+      ◌ Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
-      ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]
-      ../no-workie.svg
-      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing
-      alt-text] https://carpentries.org/assets/img/TheCarpentries.svg
-      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]
-      ../no-workie.svg [image missing alt-text] ../no-workie.svg
-      ::warning file=_episodes/14-looping-data-sets.md,line=NA:: [image missing
-      alt-text] { page.root }/no-workie.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]: [](../no-workie.svg)
+      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing alt-text]: https://carpentries.org/assets/img/TheCarpentries.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]: [Non-working image](../no-workie.svg) [image missing alt-text]: ../no-workie.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=NA:: [image missing alt-text]: { page.root }/no-workie.svg
 

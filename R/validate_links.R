@@ -242,7 +242,7 @@ link_internal_well_formed <- function(VAL, source_list) {
 #'   formatting.
 link_tests <- c(
   known_protocol  = "[invalid protocol]: {scheme}",
-  enforce_https = "[needs HTTPS] [{text}]:({orig})",
+  enforce_https = "[needs HTTPS]: [{text}]({orig})",
   internal_anchor = "[missing anchor]: [{text}]({orig})",
   internal_file = "[missing file]: [{text}]({orig})",
   internal_well_formed = "[incorrect formatting]: [{text}][{orig}] -> [{text}]({orig})",
