@@ -241,15 +241,15 @@ link_internal_well_formed <- function(VAL, source_list) {
 #'   containing templates that use the output of `validate_links()` for 
 #'   formatting.
 link_tests <- c(
-  known_protocol  = "[invalid protocol] ({scheme})",
-  enforce_https = "[needs HTTPS] {orig}",
-  internal_anchor = "[missing anchor] {orig}",
-  internal_file = "[missing file] {orig}",
+  known_protocol  = "[invalid protocol]: {scheme}",
+  enforce_https = "[needs HTTPS] [{text}]:({orig})",
+  internal_anchor = "[missing anchor]: [{text}]({orig})",
+  internal_file = "[missing file]: [{text}]({orig})",
   internal_well_formed = "[incorrect formatting]: [{text}][{orig}] -> [{text}]({orig})",
   all_reachable = "",
-  img_alt_text  = "[image missing alt-text] {orig}",
-  descriptive   = "[uninformative link text] {sQuote(text)}",
-  link_length   = "[link text too short] {sQuote(text)}",
+  img_alt_text  = "[image missing alt-text]: {orig}",
+  descriptive   = "[uninformative link text]: [{text}]({orig})",
+  link_length   = "[link text too short]: [{text}]({orig})",
   NULL
 )
 
