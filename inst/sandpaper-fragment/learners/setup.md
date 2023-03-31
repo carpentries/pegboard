@@ -15,7 +15,7 @@ setup instructions, you can use a `solution` tag.
 
 ## For Windows
 
-Use PuTTY
+Use [the PuTTY terminal](http://example.com/putty)
 
 :::::::::::::::::::::::::
 
@@ -23,7 +23,7 @@ Use PuTTY
 
 ## For MacOS
 
-Use Terminal.app
+Use [Terminal.app](http://example.com/terminal)
 
 :::::::::::::::::::::::::
 
