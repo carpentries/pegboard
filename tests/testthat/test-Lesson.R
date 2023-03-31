@@ -24,6 +24,25 @@ test_that("Sandpaper lessons can be read", {
   expect_s3_class(snd$extra[[1]], "Episode")
 })
 
+if (requireNamespace("cli")) {
+  cli::test_that_cli("Sandpaper Lessons can be validated", {
+    snd <- Lesson$new(path = lesson_fragment("sandpaper-fragment"), jekyll = FALSE)
+    withr::local_envvar(list(CI = 'true'))
+    expect_snapshot(vhead <- snd$validate_headings())
+    expect_equal(nrow(vhead), 8L)
+    expect_snapshot(vlink <- snd$validate_links())
+    expect_equal(nrow(vlink), 3L)
+  })
+}
+
+test_that("Sandpaper Lessons can be _quietly_ validated", {
+  snd <- Lesson$new(path = lesson_fragment("sandpaper-fragment"), jekyll = FALSE)
+  suppressMessages({
+  expect_message(vhead <- snd$validate_headings(verbose = FALSE), NA)
+  expect_message(vlink <- snd$validate_links(), "There were errors in 2/3 links")
+  })
+})
+
 test_that("Sandpaper lessons have getter and summary methods", {
   snd <- Lesson$new(path = lesson_fragment("sandpaper-fragment"), jekyll = FALSE)
   # sandpaper lessons will have their divs pre-labeled.
