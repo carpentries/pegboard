@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pegboard</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,11 +51,18 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.4.4" id="pegboard-044-unreleased">pegboard 0.4.4 (unreleased)<a class="anchor" aria-label="anchor" href="#pegboard-044-unreleased"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.5.0" id="pegboard-050-unreleased">pegboard 0.5.0 (unreleased)<a class="anchor" aria-label="anchor" href="#pegboard-050-unreleased"></a></h2>
+<div class="section level3">
+<h3 id="new-features-0-5-0">NEW FEATURES<a class="anchor" aria-label="anchor" href="#new-features-0-5-0"></a></h3>
 <ul><li>
 <code>Lesson</code> object validators now validate non-episode files (reported: <a href="https://github.com/zkamvar" class="external-link">@zkamvar</a> <a href="https://github.com/carpentries/pegboard/issues/110" class="external-link">#110</a>; fixed: <a href="https://github.com/zkamvar" class="external-link">@zkamvar</a> <a href="https://github.com/carpentries/pegboard/issues/113" class="external-link">#113</a>).</li>
-</ul><div class="section level3">
-<h3 id="dependencies-0-4-4">DEPENDENCIES<a class="anchor" aria-label="anchor" href="#dependencies-0-4-4"></a></h3>
+<li>
+<code>$validate_links()</code> will now respect links to anchors in spans.</li>
+<li>validators will no longer truncate on GitHub actions (reported: <a href="https://github.com/zkamvar" class="external-link">@zkamvar</a> <a href="https://github.com/carpentries/pegboard/issues/111" class="external-link">#111</a>, fixed: <a href="https://github.com/zkamvar" class="external-link">@zkamvar</a>: <a href="https://github.com/carpentries/pegboard/issues/114" class="external-link">#114</a>).</li>
+<li>validators will provide full context for invalid links (not just link or text, but link with text).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="dependencies-0-5-0">DEPENDENCIES<a class="anchor" aria-label="anchor" href="#dependencies-0-5-0"></a></h3>
 <ul><li>
 <a href="https://docs.ropensci.org/tinkr/" class="external-link">tinkr</a>’s minimum version has been set to 0.2.0 to recognise the release to CRAN and bring in new bugfixes.</li>
 </ul></div>
