@@ -1,7 +1,15 @@
-# pegboard 0.4.4 (unreleased)
+# pegboard 0.5.0 (unreleased)
+
+NEW FEATURES
+------------
 
 * `Lesson` object validators now validate non-episode files
   (reported: @zkamvar #110; fixed: @zkamvar #113).
+- `$validate_links()` will now respect links to anchors in spans.
+* validators will no longer truncate on GitHub actions (reported: @zkamvar #111,
+  fixed: @zkamvar: #114).
+* validators will provide full context for invalid links (not just link or
+  text, but link with text).
 
 DEPENDENCIES
 ------------
