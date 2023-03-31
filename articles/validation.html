@@ -37,7 +37,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pegboard</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -279,7 +279,10 @@ produced, we can see that there are six divs:</p>
 <span><span class="co">#| div-3-challenge  intro.Rmd episodes/intro.Rmd  challenge  div-3-challenge  37     TRUE</span></span>
 <span><span class="co">#| div-4-solution   intro.Rmd episodes/intro.Rmd   solution   div-4-solution  47     TRUE</span></span>
 <span><span class="co">#| div-5-solution   intro.Rmd episodes/intro.Rmd   solution   div-5-solution  60     TRUE</span></span>
-<span><span class="co">#| div-6-keypoints  intro.Rmd episodes/intro.Rmd  keypoints  div-6-keypoints  90     TRUE</span></span></code></pre></div>
+<span><span class="co">#| div-6-keypoints  intro.Rmd episodes/intro.Rmd  keypoints  div-6-keypoints  90     TRUE</span></span>
+<span><span class="co">#| div-1-instructor  setup.md  learners/setup.md instructor div-1-instructor   6     TRUE</span></span>
+<span><span class="co">#| div-2-solution    setup.md  learners/setup.md   solution   div-2-solution  14     TRUE</span></span>
+<span><span class="co">#| div-3-solution    setup.md  learners/setup.md   solution   div-3-solution  22     TRUE</span></span></code></pre></div>
 <p>If there are invalid div names in the lesson, they will be reported.
 For example, the lesson we have right now, does not have any improper
 fenced div classes, but if we were to add an invalid fenced div (via the
@@ -289,7 +292,7 @@ we would be able to find out very quickly:</p>
 <code class="sourceCode R"><span><span class="va">our_div</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"::: exercise"</span>, <span class="st">"\nthis is an invalid div\n"</span>, <span class="st">":::"</span><span class="op">)</span></span>
 <span><span class="va">snd</span><span class="op">$</span><span class="va">episodes</span><span class="op">[[</span><span class="st">"intro.Rmd"</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="fu">add_md</span><span class="op">(</span><span class="va">our_div</span><span class="op">)</span></span>
 <span><span class="va">snd_divs</span> <span class="op">&lt;-</span> <span class="va">snd</span><span class="op">$</span><span class="fu">validate_divs</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#| <span style="color: #BBBB00;">!</span> There were errors in 1/7 fenced divs</span></span>
+<span><span class="co">#| <span style="color: #BBBB00;">!</span> There were errors in 1/10 fenced divs</span></span>
 <span><span class="co">#| ◌ The Carpentries Workbench knows the following div types callout, objectives, questions,</span></span>
 <span><span class="co">#| challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor</span></span>
 <span><span class="co">#| </span></span>
@@ -305,7 +308,10 @@ has a <code>FALSE</code> value:</p>
 <span><span class="co">#| div-4-challenge  intro.Rmd episodes/intro.Rmd  challenge  div-4-challenge  37     TRUE</span></span>
 <span><span class="co">#| div-5-solution   intro.Rmd episodes/intro.Rmd   solution   div-5-solution  47     TRUE</span></span>
 <span><span class="co">#| div-6-solution   intro.Rmd episodes/intro.Rmd   solution   div-6-solution  60     TRUE</span></span>
-<span><span class="co">#| div-7-keypoints  intro.Rmd episodes/intro.Rmd  keypoints  div-7-keypoints  90     TRUE</span></span></code></pre></div>
+<span><span class="co">#| div-7-keypoints  intro.Rmd episodes/intro.Rmd  keypoints  div-7-keypoints  90     TRUE</span></span>
+<span><span class="co">#| div-1-instructor  setup.md  learners/setup.md instructor div-1-instructor   6     TRUE</span></span>
+<span><span class="co">#| div-2-solution    setup.md  learners/setup.md   solution   div-2-solution  14     TRUE</span></span>
+<span><span class="co">#| div-3-solution    setup.md  learners/setup.md   solution   div-3-solution  22     TRUE</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="heading-validation">Heading Validation<a class="anchor" aria-label="anchor" href="#heading-validation"></a>
