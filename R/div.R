@@ -652,7 +652,7 @@ get_div_class <- function(div) {
      # the closing quote and then literally anything after
   # FENCED DIV 2nd Alternative .*?[}]?[:]*?
      # 
-  trimws(sub('^(.+?class[=]["\']|[:]{3,}?\\s?[{]?\\s?[.]?)([-a-zA-Z0-9]+).*(["\'].+?|.*?[}]?[:]*?)$', '\\2', div)) 
+  trimws(sub('^(.+?class[=]["\']|[:]{3,}?\\s*?[{]?\\s*?[.]?)([-a-zA-Z0-9]+).*(["\'].+?|.*?[}]?[:]*?)$', '\\2', div)) 
 } 
 
 div_close_regex <- function() {
