@@ -5,6 +5,23 @@ withr::defer({
 })
 
 
+
+
+
+test_that("different divs are found", {
+  nodes <- c(
+    ":::::: solution",
+    "::: {.solution}",
+    ":::solution",
+    "::: {.solution style=\"margin-top: 0px\"}",
+    ":::::::::: {.solution} :::::::",
+    ":::: {.solution}"
+  )
+  expected <- c(rep("solution", 6))
+  expect_equal(get_div_class(nodes), expected)
+
+})
+
 test_that("div pairs are uniquely labelled", {
   nodes <- c(
   "<div class='1'>", 
