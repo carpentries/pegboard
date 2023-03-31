@@ -304,7 +304,7 @@ Lesson <- R6::R6Class("Lesson",
     #' frg <- Lesson$new(lesson_fragment())
     #' frg$validate_headings()
     validate_headings = function(verbose = TRUE) {
-      res <- purrr::map(self$episodes, 
+      res <- purrr::map(c(self$episodes, self$extra), 
         ~.x$validate_headings(verbose = verbose, warn = FALSE)
       )
       res <- stack_rows(res)
@@ -330,7 +330,7 @@ Lesson <- R6::R6Class("Lesson",
     #' frg <- Lesson$new(lesson_fragment())
     #' frg$validate_divs()
     validate_divs = function() {
-      res <- purrr::map(self$episodes, ~.x$validate_divs(warn = FALSE))
+      res <- purrr::map(c(self$episodes, self$extra), ~.x$validate_divs(warn = FALSE))
       res <- stack_rows(res)
       throw_div_warnings(res)
       invisible(res)
@@ -359,7 +359,7 @@ Lesson <- R6::R6Class("Lesson",
     #' frg <- Lesson$new(lesson_fragment())
     #' frg$validate_links()
     validate_links = function() {
-      res <- purrr::map(self$episodes, ~.x$validate_links(warn = FALSE))
+      res <- purrr::map(c(self$episodes, self$extra), ~.x$validate_links(warn = FALSE))
       res <- stack_rows(res)
       throw_link_warnings(res)
       invisible(res)
