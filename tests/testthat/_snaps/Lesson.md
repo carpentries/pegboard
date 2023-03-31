@@ -1,3 +1,75 @@
+# Sandpaper Lessons can be validated [plain]
+
+    Code
+      vhead <- snd$validate_headings()
+
+---
+
+    Code
+      vlink <- snd$validate_links()
+    Message <cliMessage>
+      ! There were errors in 2/3 links
+      ( ) Links must use HTTPS <https://https.cio.gov/everything/>
+      
+      ::warning file=learners/setup.md,line=18:: [needs HTTPS]
+      http://example.com/putty
+      ::warning file=learners/setup.md,line=26:: [needs HTTPS]
+      http://example.com/terminal
+
+# Sandpaper Lessons can be validated [ansi]
+
+    Code
+      vhead <- snd$validate_headings()
+
+---
+
+    Code
+      vlink <- snd$validate_links()
+    Message <cliMessage>
+      [33m![39m There were errors in 2/3 links
+      ( ) Links must use HTTPS <https://https.cio.gov/everything/>
+      
+      ::warning file=learners/setup.md,line=18:: [needs HTTPS]
+      http://example.com/putty
+      ::warning file=learners/setup.md,line=26:: [needs HTTPS]
+      http://example.com/terminal
+
+# Sandpaper Lessons can be validated [unicode]
+
+    Code
+      vhead <- snd$validate_headings()
+
+---
+
+    Code
+      vlink <- snd$validate_links()
+    Message <cliMessage>
+      ! There were errors in 2/3 links
+      ◌ Links must use HTTPS <https://https.cio.gov/everything/>
+      
+      ::warning file=learners/setup.md,line=18:: [needs HTTPS]
+      http://example.com/putty
+      ::warning file=learners/setup.md,line=26:: [needs HTTPS]
+      http://example.com/terminal
+
+# Sandpaper Lessons can be validated [fancy]
+
+    Code
+      vhead <- snd$validate_headings()
+
+---
+
+    Code
+      vlink <- snd$validate_links()
+    Message <cliMessage>
+      [33m![39m There were errors in 2/3 links
+      ◌ Links must use HTTPS <https://https.cio.gov/everything/>
+      
+      ::warning file=learners/setup.md,line=18:: [needs HTTPS]
+      http://example.com/putty
+      ::warning file=learners/setup.md,line=26:: [needs HTTPS]
+      http://example.com/terminal
+
 # Sandpaper lessons have getter and summary methods
 
     Code
@@ -9,7 +81,7 @@
       1 intro.Rmd        6        6        6          1         2     3      0       0     0      0     1
       2 index.md         0        0        0          0         0     0      0       0     0      0     0
       3 a.md             0        0        0          0         0     0      0       0     0      0     0
-      4 setup.md         2        2        3          0         2     0      0       0     0      0     0
+      4 setup.md         2        2        3          0         2     0      0       0     0      0     2
       5 b.md             0        0        0          0         0     0      0       0     0      0     0
 
 ---
@@ -33,7 +105,7 @@
       1 intro.Rmd                  6        6        6          1         2     3      0       0     0      0     1
       2 index.md                   0        0        0          0         0     0      0       0     0      0     0
       3 a.md                       0        0        0          0         0     0      0       0     0      0     0
-      4 setup.md                   2        2        3          0         2     0      0       0     0      0     0
+      4 setup.md                   2        2        3          0         2     0      0       0     0      0     2
       5 b.md                       0        0        0          0         0     0      0       0     0      0     0
       6 site/built/intro.md        6        6        6          1         2     3      1       0     0      1     1
 
