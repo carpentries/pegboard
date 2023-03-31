@@ -632,9 +632,28 @@ clean_fenced_divs <- function(body) {
 }
 #nocov end
 
-get_div_class <- function(div) {
-  trimws(sub('^(.+?class[=]["\']|[:]{3,}?)([- a-zA-Z0-9]+?)(["\'].+?|[:]*?)$', '\\2', div))
-}
+get_div_class <- function(div) { 
+  # this regex is kind of weird so here is the explanation:
+  # ^ asserts position at start of a line
+  # 1st Capturing Group (.+?class[=]["\']|[:]{3,}?\s?[{]?\s?[.]?)
+  # --- matches the preamble. One of the following:
+    # HTML case: 1st Alternative .+?class[=]["\']
+    #  - <div class="  
+    # FENCED DIV 2nd Alternative [:]{3,}?\s?[{]?\s?[.]?
+    #  - ::: {.
+    #  - :::
+    #  - ::: .
+  # 2nd Capturing Group ([-a-zA-Z0-9]+)
+  # --- Matches the class itself assumed to be made of up of letters, numbers 
+  #     and dashes
+  # 3rd Capturing Group (["\'].+?|.*?[}]?[:]*?)
+  # --- matches anything after the class
+  # HTML case:1st Alternative ["\'].+?
+     # the closing quote and then literally anything after
+  # FENCED DIV 2nd Alternative .*?[}]?[:]*?
+     # 
+  trimws(sub('^(.+?class[=]["\']|[:]{3,}?\\s?[{]?\\s?[.]?)([-a-zA-Z0-9]+).*(["\'].+?|.*?[}]?[:]*?)$', '\\2', div)) 
+} 
 
 div_close_regex <- function() {
   "(^ *?[<][/]div[>] *?\n?$|^[:]{3,80}$)"
