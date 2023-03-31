@@ -1,4 +1,11 @@
-# pegboard 0.5.0 (unreleased)
+# pegboard 0.5.1 (2023-03-31)
+
+BUG FIX
+-------
+
+* Fenced divs with attributes are now properly parsed (@zkamvar, #115).
+
+# pegboard 0.5.0 (2023-03-31)
 
 NEW FEATURES
 ------------
