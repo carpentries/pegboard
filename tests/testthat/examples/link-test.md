@@ -81,6 +81,16 @@ If we have links like
 they will fail, but [link text that is descriptive][1], albiet with a numeric
 anchor will work.
 
+## Spans
+
+This is an [internal span]{#spanny style='color: red'} that we might want to
+link to.
+
+[definition list]{#deffy .anchored}
+: This is a definition list item that has an anchor
+
+We have examples of [spans](#spanny) and [definition lists](#deffy). 
+We also have an example of a [missing anchor pointing to float](#floaty)
 
 [1]: https://example.com/link-text#descriptive
 [rel-label-1]: #label-1
