@@ -1,3 +1,11 @@
+# pegboard 0.5.2 (2023-04-05)
+
+BUG FIX
+-------
+
+* The README file is no longer run through validation as it is not generally a
+  part of the website and more often than not, creates distractions.
+
 # pegboard 0.5.1 (2023-03-31)
 
 BUG FIX
