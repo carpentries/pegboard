@@ -141,10 +141,23 @@ get_link_fragment_nodes <- function(node) {
   # same object, they will be identical. 
   id <- which(purrr::map_lgl(the_children, identical, node))
   # test for image with endsWith because they may have an inline image.
+  openid <- get_start_asis(the_children, id)
   is_image <- id > 4
-  is_image <- is_image && endsWith(xml2::xml_text(the_children[[id - 4]]), "!")
-  offset <- 3L + is_image
-  the_children[(id - offset):id]
+  is_image <- is_image && endsWith(xml2::xml_text(the_children[[openid - 1L]]), "!")
+  offset <- openid - is_image
+  the_children[seq(offset, id)]
+}
+
+# find the asis node that is opener of our fragment 
+get_start_asis <- function(chillns, id) {
+  XPath <- "boolean(./self::*[@asis][text()='['])"
+  openers <- which(xml2::xml_find_lgl(chillns, XPath))
+  # get the differences between the id (our link pattern) and the opener
+  idx <- id - openers
+  # the smallest non-negative integer of differences is the one we want
+  non_neg <- idx > 0L
+  idx <- which.min(idx[non_neg])
+  openers[idx]
 }
 
 #' @rdname fix_links
@@ -155,7 +168,7 @@ get_link_fragment_nodes <- function(node) {
 fix_broken_link <- function(nodes) {
   # get_link_fragment_nodes() returns 4 nodes for a link and 5 nodes for an
   # image to account for the extra "!" in markdown.
-  type <- if (length(nodes) == 4) "link" else "image"
+  type <- if (is.na(xml2::xml_attr(nodes[[1]], "asis"))) "image" else "link"
   text <- paste(xml2::xml_text(nodes), collapse = "")
   # create the nodes that we use to replace the link fragment nodes
   to_replace <- text_to_links(text, ns = xml2::xml_ns(nodes[[1]]), type = type)
@@ -220,7 +233,7 @@ links_within_text_regex <- function() {
 #' @examples
 #'
 #' # text_to_links() -----------------------------------------------------------
-#' txt <- "Some text [and a link]({{ page.root }}/link.to#thing), 
+#' txt <- "Some text [and _a link_]({{ page.root }}/link.to#thing), 
 #' some other text."
 #' pegboard:::text_to_links(txt, type = "link")
 #' md <- c(md = "http://commonmark.org/xml/1.0")

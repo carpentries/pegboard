@@ -3,10 +3,13 @@ title: "Test for markdown content inside liquid links"
 ---
 
 
-[normal liquid link]({{ page.root}}{% link _episodes/test.md %})
 [_markdown formatted_ liquid link]({{ page.root}}{% link _episodes/test.md %})
 [second _markdown formatted_ liquid link]({{ page.root}}{% link _episodes/test.md %})
 [third _markdown formatted_ liquid link]({{ page.root }}/test/)
+
+![third _markdown formatted_ liquid image]({{ page.root }}/test/)
+
+[normal liquid link]({{ page.root}}{% link _episodes/test.md %})
 
 [first _markdown formatted_ relative link](../test/)
 [second _markdown formatted_ relative link](../test/index.html)
