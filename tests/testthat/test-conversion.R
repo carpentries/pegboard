@@ -30,7 +30,8 @@ test_that("Episodes with markdown formatted liquid links can be processed", {
   llm <- test_path("examples", "link-liquid-markdown.md")
   
   txt <- readLines(llm)
-  res <- pegboard::Episode$new(llm)$use_sandpaper()$show()
+  ep  <- pegboard::Episode$new(llm, fix_liquid = TRUE)
+  res <- ep$use_sandpaper()$show()
   # There should only be one opening bracket per link, resulting in a vector
   # of length two when split on the opening square bracket
   values <- res[startsWith(res, "[")]
@@ -121,7 +122,7 @@ test_that("Episodes can be converted to use sandpaper", {
     xml2::xml_attr(jek_links, "destination"),
     c("{{ page.root }}/index.html", 
       "{{ site.swc_pages }}/shell-novice", 
-      "{{ page.root }}{% link")
+      "{{ page.root }}{% link index.md %}")
   )
   expect_snapshot(cat(e$tail(17), sep = "\n"))
 
