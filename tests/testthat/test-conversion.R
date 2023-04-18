@@ -25,6 +25,28 @@ test_that("Episodes with commonmark-violating liquid relative links can be read"
   expect_snapshot(cat(tmp$show(), sep = "\n"))
 })
 
+test_that("Episodes with markdown formatted liquid links can be processed", {
+
+  llm <- test_path("examples", "link-liquid-markdown.md")
+  
+  txt <- readLines(llm)
+  res <- pegboard::Episode$new(llm)$use_sandpaper()$show()
+  # There should only be one opening bracket per link, resulting in a vector
+  # of length two when split on the opening square bracket
+  values <- res[startsWith(res, "[")]
+  bracket_count <- lengths(strsplit(values, "\\["))
+  expect_equal(bracket_count, rep(2L, length(values)))
+
+  # we should see the right translation of text to markdown
+  expected_text <- strsplit(txt[startsWith(txt, "[")], "\\]\\(")
+  expected_text <- sub("[", "", purrr::map_chr(expected_text, 1), fixed = TRUE)
+  expected_text <- gsub("_", "*", expected_text)
+
+  actual_text <- strsplit(values, "\\]\\(")
+  actual_text <- sub("[", "", purrr::map_chr(actual_text, 1), fixed = TRUE)
+  expect_equal(actual_text, expected_text)
+})
+
 test_that("Episodes without include=FALSE in setup chunk are still valid", {
 
   rast <- fs::path(lesson_fragment("rmd-lesson"), "_episodes_rmd", "01-test.Rmd")
