@@ -209,7 +209,24 @@ fix_broken_link_too <- function(nodes) {
   }
 
   xml2::xml_remove(nodes)
+  add_sibling_sourcepos(new_node)
   new_node
+}
+
+# When we create a new node for a link,
+add_sibling_sourcepos <- function(node) {
+  if (!is.na(xml2::xml_attr(node, "sourcepos"))) {
+    # bail early if we have a source position
+    return(invisible(node))
+  }
+  # find the sibling node right before this node
+  preceding <- xml2::xml_find_first(node, ".//preceding-sibling::*[1]")
+  sourcepos <- xml2::xml_attr(preceding, "sourcepos")
+  if (is.na(sourcepos)) {
+    # add the parent source position if we can't find a sibling
+    sourcepos <- xml2::xml_attr(xml2::xml_parent(node), "sourcepos")
+  }
+  xml2::xml_set_attr(node, "sourcepos", sourcepos)
 }
 
 resolve_end_node <- function(node) {
