@@ -235,7 +235,10 @@ Episode <- R6::R6Class("Episode",
           suppressWarnings(yml <- yaml::read_yaml(pth))
         }
       }
-      self$body <- use_sandpaper(self$body, rmd, yml)
+      known <- fs::dir_ls(self$lesson, glob = "*md", recurse = 1L)
+      known <- fs::path_rel(known, start = self$lesson)
+      path <- fs::path_rel(self$path, start = self$lesson)
+      self$body <- use_sandpaper(self$body, rmd, yml, path, known)
 
       # Remove the common yaml offenders
       suppressWarnings(this_yaml <- self$get_yaml())

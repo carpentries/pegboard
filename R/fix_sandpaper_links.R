@@ -16,6 +16,9 @@
 #'
 #' @param body an XML document
 #' @param yml the list of key/value pairs derived from the `_config.yml` file
+#' @param path the path to the current episode
+#' @param known a character vector of known episodes in the lesson, relative to
+#'   the lesson root.
 #' @return the body, invisibly
 #' @export
 #' @examples
@@ -27,7 +30,7 @@
 #' suppressWarnings(yml <- yaml::read_yaml(file.path(e$lesson, "_config.yml")))
 #' fix_sandpaper_links(b, yml)
 #' pegboard:::make_link_table(e)$orig
-fix_sandpaper_links <- function(body, yml = list()) {
+fix_sandpaper_links <- function(body, yml = list(), path = NULL, known = NULL) {
   ns       <- NS(body)
   jek_dest <- "contains(@destination, '{{')"
   rel_dest <- "contains(@destination, '../')"
@@ -64,7 +67,13 @@ fix_sandpaper_links <- function(body, yml = list()) {
     lattr[missing_links] <- sub(pattern, "\\1", irl_txt, perl = TRUE)
     xml2::xml_set_text(txt, sub(pattern, "\\2", irl_txt, perl = TRUE))
   }
-  xml2::xml_set_attr(links, "destination", replace_links(lattr, yml))
+  link_dests <- replace_links(lattr, yml)
+  xml2::xml_set_attr(links, "destination", link_dests) 
+
+  # fixing all other links
+  links <- xml2::xml_find_all(body, glue::glue(".//{ns}link"))
+  link_dests <- fix_local_paths(xml2::xml_attr(links, "destination"), path, known)
+  xml2::xml_set_attr(links, "destination", link_dests)
 
   image <- xml2::xml_find_all(body, img_search)
   iattr <- xml2::xml_attr(image, "destination")
@@ -127,4 +136,53 @@ replace_links <- function(links, yml) {
   links[links == ""] <- "."
   links
 }
+
+fix_local_paths <- function(links, path, files) {
+  parsed <- xml2::url_parse(links)
+  to_fix <- parsed$server == "" & parsed$scheme == ""
+  olinks <- links
+  links[to_fix] <- sub("/(index.html)?", "", links[to_fix])
+  links[to_fix] <- sub("/(.+?)\\.html", "/\\1", links[to_fix])
+
+  files_sans_ext <- fs::path_ext_remove(fs::path_file(files))
+  names(files) <- files_sans_ext
+  files["setup"] <- "learners/setup.md"
+  files["guide"] <- "instructors/instructor-notes.md"
+  files["discuss"] <- "learners/discuss.md"
+  files["reference"] <- "learners/reference.md"
+  files <- sub("_episodes(_rmd)?/", "episodes/", files)
+  files <- sub("_extras", "instructors", files)
+
+  links_sans_ext <- sub("[#].+$", "", fs::path_ext_remove(fs::path_file(links)))
+  type <- fs::path_dir(path)
+  ext  <- fs::path_ext(path)
+  
+  for (this_link in which(to_fix)) {
+    link_name <- links_sans_ext[this_link]
+    new_path <- files[link_name]
+    if (is.na(new_path)) {
+      next
+    }
+    if (parsed$fragment[this_link] != "") {
+      new_path <- paste0(new_path, "#", parsed$fragment[this_link])
+    }
+    links[this_link] <- switch(type, 
+      "." = new_path,
+      "_episodes" = make_episode_path(new_path, ext),
+      "_episodes_rmd" = make_episode_path(new_path, ext),
+      "_extras" = fs::path("..", new_path)
+    )
+  }
+  links
+}
+
+make_episode_path <- function(path, ext) {
+  dir <- fs::path_dir(path)
+  switch(dir, 
+    episodes = sub("episodes/", "", fs::path_ext_set(path, ext)),
+    fs::path("..", path)
+  )
+}
+
+
 
