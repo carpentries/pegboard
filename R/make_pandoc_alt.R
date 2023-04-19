@@ -14,15 +14,16 @@ make_pandoc_alt <- function(images) {
   # ![ ](img) // decorative
   has_alt <- alt != ""
   no_url <- !grepl("https?[:][/][/]", alt)
-  has_attrs <- xml2::xml_find_lgl(images, 
-    "boolean(self::*[following-sibling::*[1][starts-with(text(), '{')]])")
+  attr_XPath <- "self::*[following-sibling::*[starts-with(text(), '{')]][1]" 
+  has_attrs <- xml2::xml_find_lgl(images, glue::glue("boolean({attr_XPath})"))
 
   # Add alt text to images that already has attributes
   append_these <- has_attrs & has_alt & no_url
   to_append <- alt[append_these]
   if (length(to_append)) {
     imgs  <- images[append_these]
-    nodes <- xml2::xml_find_first(imgs, "self::*/following-sibling::*[1]")
+    XPath <- ".//self::*/following-sibling::*[starts-with(text(), '{')][1]"
+    nodes <- xml2::xml_find_first(imgs, XPath)
     txt <- xml2::xml_text(nodes)
     subbed <- purrr::map2_chr(to_append, txt, 
       ~sub("[{][:]? ?", glue::glue("{alt=^shQuote(trimws(.x))$ ",

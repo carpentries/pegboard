@@ -69,14 +69,14 @@
 #' e$images # four images
 #' 
 #' # fix_links() ---------------------------------------------------------------
-#' asNamespace("pegboard")$fix_links(e$body)
+#' e$body <- asNamespace("pegboard")$fix_links(e$body)
 #' e$links  # eight links
 #' e$images # five images
 #'
 fix_links <- function(body) {
   fragments <- find_broken_links(body)
   fix_broken_links(fragments)
-  invisible(body)
+  invisible(xml2::read_xml(as.character(body)))
 }
 
 #' @rdname fix_links
@@ -101,7 +101,7 @@ find_broken_links <- function(body) {
 #' `fix_broken_links()` uses the output of `find_broken_links()` to replace the
 #' node fragments with links. 
 fix_broken_links <- function(fragments) {
-  purrr::walk(fragments, fix_broken_link)
+  purrr::walk(fragments, fix_broken_link_too)
 }
 
 #' @details
@@ -141,10 +141,23 @@ get_link_fragment_nodes <- function(node) {
   # same object, they will be identical. 
   id <- which(purrr::map_lgl(the_children, identical, node))
   # test for image with endsWith because they may have an inline image.
+  openid <- get_start_asis(the_children, id)
   is_image <- id > 4
-  is_image <- is_image && endsWith(xml2::xml_text(the_children[[id - 4]]), "!")
-  offset <- 3L + is_image
-  the_children[(id - offset):id]
+  is_image <- is_image && endsWith(xml2::xml_text(the_children[[openid - 1L]]), "!")
+  offset <- openid - is_image
+  the_children[seq(offset, id)]
+}
+
+# find the asis node that is opener of our fragment 
+get_start_asis <- function(chillns, id) {
+  XPath <- "boolean(./self::*[@asis][text()='['])"
+  openers <- which(xml2::xml_find_lgl(chillns, XPath))
+  # get the differences between the id (our link pattern) and the opener
+  idx <- id - openers
+  # the smallest non-negative integer of differences is the one we want
+  non_neg <- idx > 0L
+  idx <- which.min(idx[non_neg])
+  openers[idx]
 }
 
 #' @rdname fix_links
@@ -155,7 +168,7 @@ get_link_fragment_nodes <- function(node) {
 fix_broken_link <- function(nodes) {
   # get_link_fragment_nodes() returns 4 nodes for a link and 5 nodes for an
   # image to account for the extra "!" in markdown.
-  type <- if (length(nodes) == 4) "link" else "image"
+  type <- if (is.na(xml2::xml_attr(nodes[[1]], "asis"))) "image" else "link"
   text <- paste(xml2::xml_text(nodes), collapse = "")
   # create the nodes that we use to replace the link fragment nodes
   to_replace <- text_to_links(text, ns = xml2::xml_ns(nodes[[1]]), type = type)
@@ -165,6 +178,82 @@ fix_broken_link <- function(nodes) {
   )
   # remove the link fragment nodes
   xml2::xml_remove(nodes)
+}
+
+fix_broken_link_too <- function(nodes) {
+  # find the boundaries and node type
+  is_image <- is.na(xml2::xml_attr(nodes[[1]], "asis"))
+  start <- if (is_image) 3L else 2L
+  new_node_type <- if (is_image) "image" else "link"
+
+  # extract destination node
+  final_node <- nodes[[length(nodes)]]
+  end <- resolve_end_node(final_node)
+
+  # extract link children nodes
+  txt <- nodes[seq(start, length(nodes) - 2L)]
+  new_txt <- make_text_nodes(as.character(txt))
+
+  # create new link node before the nodes
+  new_node <- xml2::xml_add_sibling(nodes[[1]], new_node_type, 
+    destination = end$destination, .where = "before")
+  # re-add text into the node
+  purrr::walk(new_txt, function(node) {
+    xml2::xml_add_child(new_node, node)
+  })
+
+  # if we have an extra bit, do not remove the end
+  if (length(end$extra)) {
+    xml2::xml_set_text(final_node, end$extra)
+    nodes <- nodes[-length(nodes)]
+  }
+
+  xml2::xml_remove(nodes)
+  add_sibling_sourcepos(new_node)
+  new_node
+}
+
+# When we create a new node for a link,
+add_sibling_sourcepos <- function(node) {
+  if (!is.na(xml2::xml_attr(node, "sourcepos"))) {
+    # bail early if we have a source position
+    return(invisible(node))
+  }
+  # find the sibling node right before this node
+  preceding <- xml2::xml_find_first(node, ".//preceding-sibling::*[1]")
+  sourcepos <- xml2::xml_attr(preceding, "sourcepos")
+  if (is.na(sourcepos)) {
+    # add the parent source position if we can't find a sibling
+    sourcepos <- xml2::xml_attr(xml2::xml_parent(node), "sourcepos")
+  }
+  xml2::xml_set_attr(node, "sourcepos", sourcepos)
+}
+
+resolve_end_node <- function(node) {
+  txt <- xml2::xml_text(node)
+  if (startsWith(txt, "(") && endsWith(txt, ")")) {
+    destination <- substring(txt, 2L , nchar(txt) - 1L)
+    extra <- character(0)
+  } else {
+    rgx <- "^[(]([^)]+?)[)](.*$)"
+    destination <- sub(rgx, "\\1", txt)
+    extra <- sub(rgx, "\\2", txt)
+  }
+  if (length(extra) && destination == extra) {
+    XPath <- "./following-sibling::*[@sourcepos][1]"
+    next_node <- xml2::xml_find_first(node, XPath)
+    next_text <- xml2::xml_text(next_node)
+    rgx <- "^([^)].+?)[)](.*$)"
+    donor <- sub(rgx, "\\1", next_text)
+    trimmed <- sub(rgx, "\\2", next_text)
+    if (donor != trimmed) {
+      xml2::xml_set_text(next_node, trimmed)
+      new <- paste(destination, donor)
+      destination <- substring(new, 2L , nchar(new))
+      extra <- character(0)
+    }
+  }
+  list(destination = destination, extra = extra)
 }
 
 #' @details
@@ -220,7 +309,7 @@ links_within_text_regex <- function() {
 #' @examples
 #'
 #' # text_to_links() -----------------------------------------------------------
-#' txt <- "Some text [and a link]({{ page.root }}/link.to#thing), 
+#' txt <- "Some text [and _a link_]({{ page.root }}/link.to#thing), 
 #' some other text."
 #' pegboard:::text_to_links(txt, type = "link")
 #' md <- c(md = "http://commonmark.org/xml/1.0")

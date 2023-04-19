@@ -87,7 +87,7 @@
       _episodes/14-looping-data-sets.md:191  [missing file]: [](../no-workie.svg)
       _episodes/14-looping-data-sets.md:195  [image missing alt-text]: https://carpentries.org/assets/img/TheCarpentries.svg
       _episodes/14-looping-data-sets.md:197  [missing file]: [Non-working image](../no-workie.svg) [image missing alt-text]: ../no-workie.svg
-      _episodes/14-looping-data-sets.md:NA  [image missing alt-text]: {{ page.root }}/no-workie.svg
+      _episodes/14-looping-data-sets.md:199  [image missing alt-text]: {{ page.root }}/no-workie.svg
 
 ---
 

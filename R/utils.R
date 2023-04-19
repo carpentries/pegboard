@@ -190,6 +190,18 @@ xml_new_paragraph <- function(text = "", ns, tag = TRUE) {
   xml2::xml_child(pgp, 1)
 }
 
+# stolen from {tinkr}
+make_text_nodes <- function(txt) {
+  # We are hijacking commonmark here to produce an XML markdown document with
+  # a single element: {paste(txt, collapse = ''). This gets passed to glue where
+  # it is expanded into nodes that we can read in via {xml2}, strip the
+  # namespace, and extract all nodes below
+  doc <- glue::glue(commonmark::markdown_xml("{paste(txt, collapse = '')}"))
+  nodes <- xml2::xml_ns_strip(xml2::read_xml(doc))
+  xml2::xml_find_all(nodes, ".//paragraph/text/*")
+}
+
+
 #' Retrieve the setup chunk if it exists, create one and insert it at the head 
 #' of the document if it does not
 #' @param body an xml node

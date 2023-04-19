@@ -163,7 +163,7 @@ e$links  # five links
 e$images # four images
 
 # fix_links() ---------------------------------------------------------------
-asNamespace("pegboard")$fix_links(e$body)
+e$body <- asNamespace("pegboard")$fix_links(e$body)
 e$links  # eight links
 e$images # five images
 
@@ -178,7 +178,7 @@ data.frame(res)
 grepl(helpers["find_links"], res, perl = TRUE)
 
 # text_to_links() -----------------------------------------------------------
-txt <- "Some text [and a link]({{ page.root }}/link.to#thing), 
+txt <- "Some text [and _a link_]({{ page.root }}/link.to#thing), 
 some other text."
 pegboard:::text_to_links(txt, type = "link")
 md <- c(md = "http://commonmark.org/xml/1.0")

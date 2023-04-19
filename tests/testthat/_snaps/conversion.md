@@ -30,8 +30,8 @@
       
       ![Non-working image with jekyll syntax]({{ page.root }}/no-workie.svg)
       
-      This text includes a [link that isn't parsed correctly by commonmark]({{ page.root }}{% link)
-      index.md %}). The rest of the text should be properly parsed.
+      This text includes a [link that isn't parsed correctly by commonmark]({{ page.root }}{% link index.md %})
+      . The rest of the text should be properly parsed.
       
       {% include links.md %}
       
