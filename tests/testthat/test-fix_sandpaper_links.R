@@ -38,7 +38,10 @@ test_that("links to other parts of the lesson are properly accounted for", {
     "../learners/discuss.md",
     "../learners/discuss.md", 
     "../learners/reference.md", 
-    "../learners/reference.md#item")
+    "../learners/reference.md#item",
+    "code/02-episode/Makefile",
+    "data/something.zip"
+  )
   expect_equal(res$orig, expected)
 })
 
