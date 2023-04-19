@@ -25,10 +25,8 @@
 #'
 #' loop <- fs::path(lesson_fragment(), "_episodes", "14-looping-data-sets.md")
 #' e <- Episode$new(loop)
-#' b <- e$body
 #' pegboard:::make_link_table(e)$orig
-#' suppressWarnings(yml <- yaml::read_yaml(file.path(e$lesson, "_config.yml")))
-#' fix_sandpaper_links(b, yml)
+#' e$use_sandpaper()
 #' pegboard:::make_link_table(e)$orig
 fix_sandpaper_links <- function(body, yml = list(), path = NULL, known = NULL) {
   ns       <- NS(body)
