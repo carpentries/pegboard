@@ -37,7 +37,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pegboard</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -117,7 +117,7 @@ headings:</p>
 <span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]: [](../no-workie.svg)</span></span>
 <span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing alt-text]: https://carpentries.org/assets/img/TheCarpentries.svg</span></span>
 <span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]: [Non-working image](../no-workie.svg) [image missing alt-text]: ../no-workie.svg</span></span>
-<span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=NA:: [image missing alt-text]: { page.root }/no-workie.svg</span></span>
+<span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=199:: [image missing alt-text]: { page.root }/no-workie.svg</span></span>
 <span><span class="va">lsn</span><span class="op">$</span><span class="fu">validate_headings</span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#| <span style="color: #BBBB00;">!</span> There were errors in 13/37 headings</span></span>
 <span><span class="co">#| ◌ Headings must be unique</span></span>
@@ -161,13 +161,13 @@ variable:</p>
 <span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]: [](../no-workie.svg)</span></span>
 <span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing alt-text]: https://carpentries.org/assets/img/TheCarpentries.svg</span></span>
 <span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]: [Non-working image](../no-workie.svg) [image missing alt-text]: ../no-workie.svg</span></span>
-<span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=NA:: [image missing alt-text]: { page.root }/no-workie.svg</span></span>
+<span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=199:: [image missing alt-text]: { page.root }/no-workie.svg</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">links</span>, max.level <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co">#| 'data.frame':    14 obs. of  27 variables:</span></span>
 <span><span class="co">#|  $ episodes            : chr  "12-for-loops.md" "14-looping-data-sets.md" "14-looping-data-sets.m"..</span></span>
 <span><span class="co">#|  $ scheme              : chr  "https" "https" "https" "https" ...</span></span>
 <span><span class="co">#|  $ server              : chr  "docs.python.org" "docs.python.org" "docs.python.org" "docs.python."..</span></span>
-<span><span class="co">#|  $ port                : int  NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#|  $ port                : int  NA NA NA NA NA NA NA NA 1 1 ...</span></span>
 <span><span class="co">#|  $ user                : chr  "" "" "" "" ...</span></span>
 <span><span class="co">#|  $ path                : chr  "/3/library/stdtypes.html" "/3/library/glob.html" "/3/library/glob."..</span></span>
 <span><span class="co">#|  $ query               : chr  "" "" "" "" ...</span></span>
@@ -179,7 +179,7 @@ variable:</p>
 <span><span class="co">#|  $ type                : chr  "link" "link" "link" "link" ...</span></span>
 <span><span class="co">#|  $ rel                 : chr  NA NA NA NA ...</span></span>
 <span><span class="co">#|  $ anchor              : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...</span></span>
-<span><span class="co">#|  $ sourcepos           : int  135 51 57 58 140 163 189 191 195 197 ...</span></span>
+<span><span class="co">#|  $ sourcepos           : int  135 51 57 58 140 163 189 191 193 193 ...</span></span>
 <span><span class="co">#|  $ filepath            : 'fs_path' chr  "_episodes/12-for-loops.md" "_episodes/14-looping-data-se"..</span></span>
 <span><span class="co">#|  $ node                :List of 14</span></span>
 <span><span class="co">#|   ..- attr(*, "class")= chr "AsIs"</span></span>
@@ -224,7 +224,7 @@ inline messages printed for each failed test, to filter the output:</p>
 <span><span class="co">#| </span></span>
 <span><span class="co">#| [[4]]</span></span>
 <span><span class="co">#| {xml_node}</span></span>
-<span><span class="co">#| &lt;image destination="{{ page.root }}/no-workie.svg" xmlns="http://commonmark.org/xml/1.0"&gt;</span></span>
+<span><span class="co">#| &lt;image destination="{{ page.root }}/no-workie.svg" sourcepos="184:1-184:70"&gt;</span></span>
 <span><span class="co">#| [1] &lt;text&gt;Non-working image with jekyll syntax&lt;/text&gt;</span></span></code></pre></div>
 <p>For context, this is what the document looks like at those
 positions:</p>
@@ -240,8 +240,8 @@ positions:</p>
 <span><span class="co">#| </span></span>
 <span><span class="co">#| ![Non-working image with jekyll syntax]({{ page.root }}/no-workie.svg)</span></span>
 <span><span class="co">#| </span></span>
-<span><span class="co">#| This text includes a [link that isn't parsed correctly by commonmark]({{ page.root }}{% link)</span></span>
-<span><span class="co">#| index.md %}). The rest of the text should be properly parsed.</span></span>
+<span><span class="co">#| This text includes a [link that isn't parsed correctly by commonmark]({{ page.root }}{% link index.md %})</span></span>
+<span><span class="co">#| . The rest of the text should be properly parsed.</span></span>
 <span><span class="co">#| </span></span>
 <span><span class="co">#| {% include links.md %}</span></span></code></pre>
 </div>
