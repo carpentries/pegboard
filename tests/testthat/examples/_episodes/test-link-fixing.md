@@ -15,5 +15,7 @@ title: "Test for links that need fixing"
 [test link](discuss/)
 [test link](reference.html)
 [test link](reference.html#item)
+[test link](code/02-episode/Makefile)
+[test link](data/something.zip)
 
 

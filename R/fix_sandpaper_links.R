@@ -137,10 +137,13 @@ replace_links <- function(links, yml) {
 
 fix_local_paths <- function(links, path, files) {
   parsed <- xml2::url_parse(links)
-  to_fix <- parsed$server == "" & parsed$scheme == ""
+  to_fix <- parsed$server == "" & parsed$scheme == "" 
   olinks <- links
-  links[to_fix] <- sub("/(index.html)?", "", links[to_fix])
-  links[to_fix] <- sub("/(.+?)\\.html", "/\\1", links[to_fix])
+  links[to_fix] <- sub("/(index.html)?(#.+?)?$", "\\2", links[to_fix])
+  links[to_fix] <- sub("/(.+?)\\.html(#.+?)?$", "/\\1\\2", links[to_fix])
+  # make sure to ignore subfolders and the like
+  to_fix <- to_fix & (lengths(fs::path_split(parsed$path)) == 1 |
+    fs::path_ext(parsed$path) %in% c("md", "Rmd", "html")) 
 
   files_sans_ext <- fs::path_ext_remove(fs::path_file(files))
   names(files) <- files_sans_ext
