@@ -27,7 +27,7 @@ test_that("Episodes with commonmark-violating liquid relative links can be read"
 
 test_that("Episodes with markdown formatted liquid links can be processed", {
 
-  llm <- test_path("examples", "link-liquid-markdown.md")
+  llm <- test_path("examples", "_episodes", "link-liquid-markdown.md")
   
   txt <- readLines(llm)
   ep  <- pegboard::Episode$new(llm, fix_liquid = TRUE)
@@ -46,7 +46,17 @@ test_that("Episodes with markdown formatted liquid links can be processed", {
   actual_text <- strsplit(values, "\\]\\(")
   actual_text <- sub("[", "", purrr::map_chr(actual_text, 1), fixed = TRUE)
   expect_equal(actual_text, expected_text)
+
+  # relative links should all be processed to the correct paths
+  lnks <- ep$validate_links(warn = FALSE)
+  local_links <- lnks$server == "" & 
+    lnks$type == "link" & 
+    !startsWith(lnks$path, "lesson") # saving for later
+  expect_equal(lnks$path[local_links], rep("test.md", sum(local_links)))
+  expect_equal(lnks$path[lnks$type == "image"], "fig/test.png")
+
 })
+
 
 test_that("Episodes without include=FALSE in setup chunk are still valid", {
 

@@ -5,8 +5,7 @@ suppressWarnings(yml <- yaml::read_yaml(file.path(e$lesson, "_config.yml")))
 f <- e$clone(deep = TRUE)
 
 test_that("links are replaced in our example", {
-  b <- e$body
-  fix_sandpaper_links(b, yml)
+  e$use_sandpaper()
   orig <- pegboard:::make_link_table(e)$orig
   # No more templating should be present
   expect_false(any(grepl("[{%}]", orig)))
@@ -22,3 +21,24 @@ test_that("links are replaced in messy example", {
   expect_false(any(grepl("[{%}]", res)))
   expect_snapshot(res)
 })
+
+
+test_that("links to other parts of the lesson are properly accounted for", {
+  ep <- Episode$new(test_path("examples", "_episodes", "test-link-fixing.md"))
+  res <- ep$use_sandpaper()$validate_links(warn = FALSE)
+  expected <- 
+  c("link-liquid-markdown.md",
+    "../handout.Rmd", 
+    "../handout.Rmd", 
+    "../handout.Rmd",
+    "../learners/setup.md", 
+    "../learners/setup.md", 
+    "../instructors/instructor-notes.md",
+    "../instructors/instructor-notes.md", 
+    "../learners/discuss.md",
+    "../learners/discuss.md", 
+    "../learners/reference.md", 
+    "../learners/reference.md#item")
+  expect_equal(res$orig, expected)
+})
+
