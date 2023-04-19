@@ -1,3 +1,14 @@
+# pegboard 0.5.3 (unreleased)
+
+BUG FIX
+-------
+
+* liquid-formatted links with markdown inside them are now more accurately
+  transitioned to use {sandpaper} (reported: @uschille, https://github.com/carpentries/lesson-transition/issues/46; fixed: @zkamvar, #121)
+- images with kramdown attributes that are on a new line are now more accurately
+  transitioned to use {sandpaper} (reported: @uschille, https://github.com/carpentries/lesson-transition/issues/46; fixed: @zkamvar, #121)
+
+
 # pegboard 0.5.2 (2023-04-05)
 
 BUG FIX
@@ -39,7 +50,7 @@ NEW FEATURES
 
 * `$validate_links()` now checks if the URL protocol in an external link matches
   a known list of protocols. Those that do not match (e.g. `javascript:` and
-  `bitcoin:`) will be flagged. (@zkavmar #109)
+  `bitcoin:`) will be flagged. (@zkamvar #109)
 
 BUG FIX
 -------
