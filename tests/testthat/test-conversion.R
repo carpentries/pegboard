@@ -376,11 +376,13 @@ test_that("Integration: for markdown sandpaper sites without dovetail", {
     move_objectives()
 
   # The first child is not an RMD chunk
-  expect_equal(xml2::xml_text(xml2::xml_child(e$body)), 
+  expect_equal(xml2::xml_attr(xml2::xml_child(e$body), "label"), 
+    "div-1-objectives"
+  )
+  # first heading is what we expect
+  expect_equal(xml2::xml_text(e$headings[[1]]), 
     "Use a for loop to process files given a list of their names."
   )
-  # NOTE: at the moment, we don't have a non-dovetail solution, but we're getting
-  # there!
   expect_length(e$code, 11)
   # python code chunks exist
   expect_true(any(grepl("python", xml2::xml_attr(e$code, "info"))))
