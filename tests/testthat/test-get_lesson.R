@@ -295,8 +295,9 @@ test_that("code with embedded div tags are parsed correctly", {
 
 })
 
-test_that("Lessons with Rmd sources can be downloaded", {
+test_that("Styles lessons with Rmd sources can be downloaded", {
 
+  skip("This test was from a pre-workbench lesson infrastructure")
   skip_if_offline()
   skip_on_os("windows")
 
