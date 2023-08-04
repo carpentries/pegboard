@@ -35,11 +35,11 @@ test_that("HTML images in comments do not error", {
 
   tmp <- withr::local_tempfile()
 
-  all_comment <- r"{
+  all_comment <- "
   some text and 
 
   <!-- <img src='whoops.png'> -->
-  }"
+  "
   writeLines(all_comment, tmp)
   ep <- pegboard::Episode$new(tmp)
   res <- ep$validate_links(warn = FALSE)
@@ -51,7 +51,7 @@ test_that("HTML images surrounded by comments are processed. ", {
 
   tmp <- withr::local_tempfile()
 
-  some_comment<- r"{
+  some_comment<- "
 There is only one HTML image here and it will be processed.
 NOTE: each comment block is parsed as an individual HTML block,
 and the numbers in this example help us understand that fact.
@@ -65,7 +65,7 @@ and the numbers in this example help us understand that fact.
   <img src='okay.png'> <!-- <img src='whoops.png'> -->
 
   <!-- <img src='whoops.png'> FOUR -->
-  }"
+  "
   writeLines(some_comment, tmp)
   ep <- pegboard::Episode$new(tmp)
   res <- ep$validate_links(warn = FALSE)
