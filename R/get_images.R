@@ -5,7 +5,33 @@
 #'   [process_images()] to add the alt attribute and extract images from HTML
 #'   blocks. `FALSE` will present the nodes as found by XPath search.
 #' @return an xml_nodelist
+#' @details Markdown users can write images as either markdown or HTML. If they
+#' write images as HTML, then the commonmark XML parser recognises these as
+#' generic "HTML blocks" and they can't be found by just searching for
+#' `.//md:image`. This function searches both `md:html_block` and
+#' `md:html_inline` for image content that it can extract for downstream
+#' analysis.
+#'
 #' @keywords internal
+#' @examples
+#' tmp <- tempfile()
+#' on.exit(unlink(tmp))
+#' txt <- '
+#' ![a kitten](https://placekitten.com/200/200){alt="a pretty kitten"}
+#'
+#' <!-- an html image of a kitten -->
+#' <img src="https://placekitten.com/200/200">
+#'
+#' an inline html image of a kitten <img src="https://placekitten.com/50/50">
+#' '
+#' writeLines(txt, tmp)
+#' ep <- Episode$new(tmp)
+#' ep$show()
+#' # without process = TRUE, images in HTML elements are not converted
+#' ep$get_images() 
+#' # setting process = TRUE will extract the HTML elements for analysis 
+#' # (e.g to detect alt text)
+#' ep$get_images(process = TRUE)
 get_images <- function(yrn, process = TRUE) {
   img    <- ".//md:image"
   hblock <- ".//md:html_block[contains(text(), '<img')]"
