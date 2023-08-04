@@ -17,6 +17,12 @@ BUG FIX
   https://github.com/carpentries/lesson-transition/issues/46; fixed: @zkamvar,
   #121)
 
+TESTS
+-----
+
+* A failing test due to the workbench transition was fixed (reported:
+  @zkamvar, #125; fixed: @zkamvar, #127)
+
 
 # pegboard 0.5.2 (2023-04-05)
 

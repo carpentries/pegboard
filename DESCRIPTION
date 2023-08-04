@@ -11,46 +11,52 @@ Authors@R: c(
            family = "Hodges",
            role = c("ctb"),
            email = "tobyhodges@carpentries.org"),
+    person(given = "Erin", 
+           family = "Becker", 
+           role = c("ctb"),
+           email = "ebecker@carpentries.org"), 
     person())
-Description: The Carpentries (<https://carpentries.org>) curricula is made of of
-    lessons that are hosted as websites. Each lesson represents between a half
-    day to two days of instruction and contains several episodes, which are
-    written as 'kramdown'-flavored 'markdown' documents and converted to HTML
-    using the 'Jekyll' static website generator. This package builds on top of
-    the 'tinkr' package; reads in these markdown documents to 'XML' and
-    stores them in R6 classes for convenient exploration and manipulation of
-    sections within episodes.
+Description: The Carpentries (<https://carpentries.org>) curricula is made
+    of of lessons that are hosted as websites. Each lesson represents
+    between a half day to two days of instruction and contains several
+    episodes, which are written as 'kramdown'-flavored 'markdown'
+    documents and converted to HTML using the 'Jekyll' static website
+    generator. This package builds on top of the 'tinkr' package; reads in
+    these markdown documents to 'XML' and stores them in R6 classes for
+    convenient exploration and manipulation of sections within episodes.
 License: MIT + file LICENSE
+URL: https://carpentries.github.io/pegboard
+BugReports: https://github.com/carpentries/pegboard/issues
 Imports:
+    commonmark,
     fs (>= 1.5.0),
+    glue,
+    purrr,
+    R6,
     tinkr (>= 0.2.0),
     xml2,
-    purrr,
-    glue,
-    R6,
     xslt,
-    yaml,
-    commonmark
+    yaml
 Suggests:
+    cli (>= 0.3.4),
+    covr,
+    crayon,
+    dplyr,
     gert (>= 1.0.0),
     here,
-    testthat,
-    withr,
-    covr,
     knitr,
-    rmarkdown,
     magrittr,
-    dplyr,
-    crayon,
-    cli (>= 0.3.4),
-    rlang
+    rlang,
+    rmarkdown,
+    testthat,
+    withr
+VignetteBuilder: 
+    knitr
+Remotes: 
+    ropensci/tinkr
 Additional_repositories: https://carpentries.r-universe.dev/
-Remotes: ropensci/tinkr
 Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
-URL: https://carpentries.github.io/pegboard
-BugReports: https://github.com/carpentries/pegboard/issues
-VignetteBuilder: knitr
