@@ -9,8 +9,10 @@
 get_images <- function(yrn, process = TRUE) {
   img    <- ".//md:image"
   hblock <- ".//md:html_block[contains(text(), '<img')]"
+  # comment blocks should not be included in the image processing. 
+  nocomment <- "[not(starts-with(normalize-space(text()), '<!--'))]"
   hline  <- ".//md:html_inline[starts-with(text(), '<img')]"
-  xpath  <- glue::glue("{img} | {hblock} | {hline}")
+  xpath  <- glue::glue("{img} | {hblock}{nocomment} | {hline}")
   images <- xml2::xml_find_all(yrn$body, xpath, yrn$ns)
   images <- if (process) process_images(images) else images
   images
