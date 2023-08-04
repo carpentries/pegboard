@@ -1,19 +1,22 @@
-# pegboard 0.5.3 (unreleased)
+# pegboard 0.5.3 (2023-07-08)
 
 BUG FIX
 -------
 
-* `$move_objectives()` and `$move_questions()` methods no longer place these
-  blocks as the _second_ element in the markdown. This was originally
-  implemented when we thought {dovetail} would be our solution to the lesson 
-  infrastructure (and thus needed a setup chunk before any blocks).
-* liquid-formatted links with markdown inside them are now parsed correctly.
-  This leads lessons to be more accurately transitioned to use {sandpaper}
-  (reported: @uschille,
+* `$validate_links()` no longer throws an error when there are HTML images
+  embedded in comments (reported: @beastyblacksmith, #130; fixed: @zkamvar,
+  #131)
+* (transition) `$move_objectives()` and `$move_questions()` methods no longer
+  place these blocks as the _second_ element in the markdown. This was
+  originally implemented when we thought {dovetail} would be our solution to
+  the lesson infrastructure (and thus needed a setup chunk before any blocks).
+* (transition) liquid-formatted links with markdown inside them are now parsed
+  correctly. This leads lessons to be more accurately transitioned to use
+  {sandpaper} (reported: @uschille,
   https://github.com/carpentries/lesson-transition/issues/46; fixed: @zkamvar,
   #121)
-- images with kramdown attributes that are on a new line are now more accurately
-  transitioned to use {sandpaper} (reported: @uschille,
+- (transition) images with kramdown attributes that are on a new line are now
+  more accurately transitioned to use {sandpaper} (reported: @uschille,
   https://github.com/carpentries/lesson-transition/issues/46; fixed: @zkamvar,
   #121)
 
