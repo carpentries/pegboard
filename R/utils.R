@@ -73,34 +73,50 @@ stop_if_no_path <- function(path) {
   }
 }
 
+sort_files_by_cfg <- function(the_files, cfg, the_dir = "episodes") {
+  the_names <- fs::path_file(the_files)
+  names(the_files) <- the_names
+  cfg_order <- cfg[[the_dir]]
+  if (!is.null(cfg_order)) {
+    # sort the files by the order in the config file. 
+    # This will discard any draft episodes, but also avoid errors with 
+    # Episodes in the CFG that do not exist.
+    the_order <- intersect(cfg_order, the_names)
+    the_files <- the_files[the_order]
+  }
+  return(the_files)
+}
+
 read_markdown_files <- function(src, cfg = character(0), sandpaper = TRUE, ...) {
+
   # Grabbing ONLY the markdown files (there are other sources of detritus)
-  the_episodes <- fs::dir_ls(src, glob = "*md")
-  the_names    <- fs::path_file(the_episodes)
+  the_files <- fs::dir_ls(src, glob = "*md")
   if (length(cfg) && fs::file_exists(cfg)) {
     the_dir <- fs::path_file(src)
-    the_cfg <- yaml::read_yaml(cfg)[[the_dir]]
-    if (!is.null(the_cfg)) {
-      the_order    <- match(the_cfg, the_names, nomatch = 0)
-      the_episodes <- the_episodes[the_order]
-      the_names    <- the_names[the_order]
-    }
+    the_cfg <- yaml::read_yaml(cfg, eval.expr = FALSE)
+    # determine if it is an overview page (and thus there are no episodes)
+    not_overview <- !identical(the_cfg[["overview"]], TRUE)
+    # sort by the order in the config file, if it exists
+    the_files <- sort_files_by_cfg(the_files, the_cfg, the_dir)
+  } else {
+    # no config; it's not an overview lesson
+    not_overview <- TRUE
   }
 
-  if (!any(grepl("\\.R?md$", the_episodes))) {
+  no_markdown <- !any(c("rmd", "md") %in% tolower(fs::path_ext(the_files)))
+  if (not_overview && no_markdown) {
     stop(glue::glue("The {src} directory must have (R)markdown files"),
       call. = FALSE
     )
   }
 
-  episodes <- purrr::map(the_episodes, Episode$new, ...)
+  files <- purrr::map(the_files, Episode$new, ...)
   if (sandpaper) {
-    purrr::walk(episodes, ~.x$confirm_sandpaper())
+    purrr::walk(files, ~.x$confirm_sandpaper())
   }
-
-  # Names of the episodes will be the filename, not the basename
-  names(episodes) <- the_names
-  return(episodes)
+  # Names of the files will be the filename, not the basename
+  names(files) <- fs::path_file(the_files)
+  return(files)
 }
 
 #' Remove spaces in relative links with liquid variables
