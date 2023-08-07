@@ -99,15 +99,18 @@ read_markdown_files <- function(src, cfg = character(0), sandpaper = TRUE, ...) 
     # sort by the order in the config file, if it exists
     the_files <- sort_files_by_cfg(the_files, the_cfg, the_dir)
   } else {
-    # no config; it's not an overview lesson
+    # If we enter here, there is no config; it's not an overview lesson
     not_overview <- TRUE
   }
+  no_markdown <- length(the_files) == 0L
 
-  no_markdown <- !any(c("rmd", "md") %in% tolower(fs::path_ext(the_files)))
   if (not_overview && no_markdown) {
-    stop(glue::glue("The {src} directory must have (R)markdown files"),
-      call. = FALSE
-    )
+    msg <- glue::glue("The {src} directory must have (R)markdown files")
+    stop(msg, call. = FALSE)
+  }
+
+  if (!not_overview && no_markdown) {
+    return(NULL)
   }
 
   files <- purrr::map(the_files, Episode$new, ...)
