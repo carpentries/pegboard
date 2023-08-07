@@ -30,7 +30,7 @@ Episode <- R6::R6Class("Episode",
     #' scope$lesson
     #' scope$challenges
     initialize = function(path = NULL, process_tags = TRUE, fix_links = TRUE, fix_liquid = FALSE, ...) {
-      if (!file.exists(path)) {
+      if (!fs::file_exists(path)) {
         stop(glue::glue("the file '{path}' does not exist"))
       }
       links <- getOption("sandpaper.links")
