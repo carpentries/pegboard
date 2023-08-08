@@ -62,25 +62,9 @@ Lesson <- R6::R6Class("Lesson",
         self$rmd <- jeky$rmd
         self$sandpaper <- FALSE
       } else {
-        cfg <- fs::dir_ls(path, regexp = "config[.]ya?ml")
-        if (length(cfg) && fs::file_exists(cfg)) {
-          the_cfg <- yaml::read_yaml(cfg, eval.expr = FALSE)
-        } else {
-          the_cfg <- list()
-        }
-        episode_path <- fs::path(path, "episodes")
-
-        self$episodes <- read_markdown_files(
-          episode_path, the_cfg, process_tags = FALSE, ...)
-
-        extra_paths <- fs::path(path, c("instructors", "learners", "profiles"))
-        standard_files <- read_markdown_files(path, process_tags = FALSE, ...)
-
-        extra_files <- purrr::flatten(purrr::map(extra_paths,
-          read_markdown_files, the_cfg, process_tags = FALSE, ...))
-
-        self$extra <- c(standard_files, extra_files)
-
+        sandy <- read_sandpaper_lesson(path, ...)
+        self$episodes <- sandy$episodes
+        self$extra <- sandy$extra
       }
       self$path <- path
     },

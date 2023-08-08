@@ -87,6 +87,17 @@ sort_files_by_cfg <- function(the_files, cfg, the_dir = "episodes") {
   return(the_files)
 }
 
+#' Process Markdown files in a directory into Episode objects
+#'
+#' @param src \[character\] the path to a folder containing markdown episodes
+#' @param cfg \[list\] a parsed config file that can be used to specify the
+#'   order of the files with a key that matches the folder name.
+#' @param sandpaper \[logical\] if `TRUE`, the episodes are expected to be
+#'   processed with {sandpaper} and will have the `$confirm_sandpaper()` method
+#'   triggered. 
+#' @param ... methods passed to the [Episode] initializer
+#' @return a list of [Episode] objects
+#' @keywords internal
 read_markdown_files <- function(src, cfg = list(), sandpaper = TRUE, ...) {
 
   # Grabbing ONLY the markdown files (there are other sources of detritus)
@@ -122,9 +133,11 @@ read_markdown_files <- function(src, cfg = list(), sandpaper = TRUE, ...) {
   }
 
   files <- purrr::map(the_files, Episode$new, ...)
+
   if (sandpaper) {
     purrr::walk(files, ~.x$confirm_sandpaper())
   }
+
   # Names of the files will be the filename, not the basename
   names(files) <- fs::path_file(the_files)
   return(files)
