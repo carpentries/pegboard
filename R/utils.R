@@ -87,7 +87,7 @@ sort_files_by_cfg <- function(the_files, cfg, the_dir = "episodes") {
   return(the_files)
 }
 
-read_markdown_files <- function(src, cfg = character(0), sandpaper = TRUE, ...) {
+read_markdown_files <- function(src, cfg = list(), sandpaper = TRUE, ...) {
 
   # Grabbing ONLY the markdown files (there are other sources of detritus)
   src_exists <- fs::dir_exists(src)
@@ -98,13 +98,12 @@ read_markdown_files <- function(src, cfg = character(0), sandpaper = TRUE, ...) 
   }
   # we still need to determine if this is an overview lesson. If it is, then
   # it is okay that a particular directory does not exist
-  if (length(cfg) && fs::file_exists(cfg)) {
+  if (length(cfg)) {
     the_dir <- fs::path_file(src)
-    the_cfg <- yaml::read_yaml(cfg, eval.expr = FALSE)
     # determine if it is an overview page (and thus there are no episodes)
-    not_overview <- !identical(the_cfg[["overview"]], TRUE)
-    # sort by the order in the config file, if it exists
-    the_files <- sort_files_by_cfg(the_files, the_cfg, the_dir)
+    not_overview <- !identical(cfg[["overview"]], TRUE)
+    # sort by the order in the config file
+    the_files <- sort_files_by_cfg(the_files, cfg, the_dir)
   } else {
     # If we enter here, there is no config; it's not an overview lesson
     not_overview <- TRUE
