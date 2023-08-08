@@ -25,7 +25,7 @@ test_that("Sandpaper lessons can be read", {
 })
 
 
-test_that("Jekyll workshop overview lessons can be read", {
+test_that("Jekyll workshop overview lessons with no episodes can be read", {
   tmp <- withr::local_tempdir()
 
   # the key is that they end with -overview
@@ -43,6 +43,55 @@ test_that("Jekyll workshop overview lessons can be read", {
   expect_s3_class(lnks, "data.frame")
   expect_equal(nrow(lnks), 0L)
 })
+
+test_that("Jekyll workshop overview lessons with episodes can be read", {
+  tmp <- withr::local_tempdir()
+
+  # the key is that they end with -overview
+  test_dir <- fs::path(tmp, "jekyll-test-overview")
+  fs::dir_copy(frg_path, test_dir)
+  # We are expecting this to _not fail_
+  expect_failure(expect_error({
+    lsn <- Lesson$new(path = test_dir, jekyll = TRUE)
+  }))
+
+  # the episodes should still exist for an overview lesson
+  expect_type(lsn$episodes, "list")
+  expect_length(lsn$episodes, 4L)
+  expect_s3_class(lsn$episodes[[1]], "Episode")
+
+  # the lesson should throw warnings about the missing files in the lesson
+  # fragment demo because the episodes will still exist.
+  suppressMessages(expect_message(lnks <- lsn$validate_links(), "missing file"))
+
+  expect_s3_class(lnks, "data.frame")
+  expect_equal(nrow(lnks), 14L)
+})
+
+test_that("Sandpaper workshop overview lessons with no episodes can be read", {
+  tmp <- withr::local_tempdir()
+
+  # the key is that they end with -overview
+  test_dir <- fs::path(tmp, "sandpaper-test-overview")
+  fs::dir_copy(lesson_fragment("sandpaper-fragment"), test_dir)
+  fs::dir_delete(fs::path(test_dir, "episodes"))
+  cat("\noverview: true\n", 
+    file = fs::path(test_dir, "config.yaml"), append = TRUE)
+  # We are expecting this to _not fail_
+  expect_failure(expect_error({
+    lsn <- Lesson$new(path = test_dir, jekyll = FALSE)
+  }))
+  # the lesson should have an empty episode slot
+  expect_null(lsn$episodes)
+
+  # the setup page should throw warnings about two HTTP links
+  suppressMessages(expect_message(lnks <- lsn$validate_links(), "HTTPS"))
+
+  expect_s3_class(lnks, "data.frame")
+  expect_equal(nrow(lnks), 2L)
+})
+
+
 if (requireNamespace("cli")) {
   cli::test_that_cli("Sandpaper Lessons can be validated", {
     snd <- Lesson$new(path = lesson_fragment("sandpaper-fragment"), jekyll = FALSE)

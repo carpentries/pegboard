@@ -90,7 +90,14 @@ sort_files_by_cfg <- function(the_files, cfg, the_dir = "episodes") {
 read_markdown_files <- function(src, cfg = character(0), sandpaper = TRUE, ...) {
 
   # Grabbing ONLY the markdown files (there are other sources of detritus)
-  the_files <- fs::dir_ls(src, glob = "*md")
+  src_exists <- fs::dir_exists(src)
+  if (src_exists) {
+    the_files <- fs::dir_ls(src, glob = "*md")
+  } else {
+    the_files <- character(0)
+  }
+  # we still need to determine if this is an overview lesson. If it is, then
+  # it is okay that a particular directory does not exist
   if (length(cfg) && fs::file_exists(cfg)) {
     the_dir <- fs::path_file(src)
     the_cfg <- yaml::read_yaml(cfg, eval.expr = FALSE)
