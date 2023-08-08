@@ -102,15 +102,17 @@ read_markdown_files <- function(src, cfg = character(0), sandpaper = TRUE, ...) 
     # If we enter here, there is no config; it's not an overview lesson
     not_overview <- TRUE
   }
+
   no_markdown <- length(the_files) == 0L
+  no_files_but_that_is_okay <- !not_overview && no_markdown
+
+  if (no_files_but_that_is_okay) {
+    return(NULL)
+  }
 
   if (not_overview && no_markdown) {
     msg <- glue::glue("The {src} directory must have (R)markdown files")
     stop(msg, call. = FALSE)
-  }
-
-  if (!not_overview && no_markdown) {
-    return(NULL)
   }
 
   files <- purrr::map(the_files, Episode$new, ...)

@@ -5,8 +5,15 @@ read_jekyll_episodes <- function(path = NULL, rmd = FALSE, ...) {
   # Enforce that we are using RMD files
   rmd_exists <- fs::dir_exists(rmd_src)
   md_exists <- fs::dir_exists(md_src)
+  no_episodes <- !rmd_exists && !md_exists
+  not_overview <- !endsWith(fs::path_file(path), "-overview")
+  is_overview <- no_episodes && !not_overview
 
-  if (!rmd_exists && !md_exists) {
+  if (is_overview) {
+    return(list(episodes = NULL, rmd = FALSE))
+  }
+
+  if (not_overview && no_episodes) {
     stop(glue::glue("could not find either _episodes/ or _episodes_rmd/ in {path}"))
   }
 

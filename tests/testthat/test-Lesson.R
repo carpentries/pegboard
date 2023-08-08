@@ -24,6 +24,25 @@ test_that("Sandpaper lessons can be read", {
   expect_s3_class(snd$extra[[1]], "Episode")
 })
 
+
+test_that("Jekyll workshop overview lessons can be read", {
+  tmp <- withr::local_tempdir()
+
+  # the key is that they end with -overview
+  test_dir <- fs::path(tmp, "jekyll-test-overview")
+  fs::dir_copy(frg_path, test_dir)
+  fs::dir_delete(fs::path(test_dir, "_episodes"))
+  # We are expecting this to _not fail_
+  expect_failure(expect_error({
+    lsn <- Lesson$new(path = test_dir, jekyll = TRUE)
+  }))
+  # the lesson should have an empty episode slot
+  expect_null(lsn$episodes)
+  lnks <- lsn$validate_links()
+
+  expect_s3_class(lnks, "data.frame")
+  expect_equal(nrow(lnks), 0L)
+})
 if (requireNamespace("cli")) {
   cli::test_that_cli("Sandpaper Lessons can be validated", {
     snd <- Lesson$new(path = lesson_fragment("sandpaper-fragment"), jekyll = FALSE)
