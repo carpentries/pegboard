@@ -24,6 +24,18 @@ test_that("Sandpaper lessons can be read", {
   expect_s3_class(snd$extra[[1]], "Episode")
 })
 
+test_that("Sandpaper lessons with incomplete conversions will throw an error", {
+  tmp <- withr::local_tempdir()
+
+  test_dir <- fs::path(tmp, "ohno")
+  fs::dir_copy(lesson_fragment("sandpaper-fragment"), test_dir)
+  fs::dir_copy(fs::path(frg_path, "_episodes"), test_dir)
+  fs::file_copy(fs::path(frg_path, "_config.yml"), test_dir)
+    
+  expect_error(Lesson$new(path = test_dir, jekyll = FALSE), 
+    "_config.yml, config.yaml")
+})
+
 
 test_that("Jekyll workshop overview lessons with no episodes can be read", {
   tmp <- withr::local_tempdir()

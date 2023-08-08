@@ -10,7 +10,16 @@
 #' @keywords internal
 read_sandpaper_lesson <- function(path, ...) {
   cfg <- fs::dir_ls(path, regexp = "config[.]ya?ml")
-  if (length(cfg) && fs::file_exists(cfg)) {
+  n_cfg <- length(cfg)
+  if (n_cfg > 1L) {
+    # stop if there are two config files
+    cfg <- paste(fs::path_file(cfg), collapse = ", ")
+    msg <- "Found > 1 config files in the lesson: {cfg}.\nThis could be due to an incomplete conversion. Please check the contents of {path}."
+    msg <- glue(msg)
+    stop(msg, call. = FALSE)
+
+  }
+  if (n_cfg == 1L && fs::file_exists(cfg)) {
     the_cfg <- yaml::read_yaml(cfg, eval.expr = FALSE)
   } else {
     the_cfg <- list()
