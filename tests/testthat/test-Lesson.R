@@ -34,7 +34,7 @@ test_that("Sandpaper lessons with incomplete conversions will throw an error", {
   fs::file_copy(fs::path(frg_path, "_config.yml"), test_dir)
     
   expect_error(Lesson$new(path = test_dir, jekyll = FALSE), 
-    "_config.yml, config.yaml")
+    "config files in the lesson.+?_config.yml")
 })
 
 
