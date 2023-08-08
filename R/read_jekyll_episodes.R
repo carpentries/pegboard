@@ -10,7 +10,7 @@ read_jekyll_episodes <- function(path = NULL, rmd = FALSE, ...) {
   is_overview <- no_episodes && !not_overview
 
   if (is_overview) {
-    return(list(episodes = NULL, rmd = FALSE))
+    return(list(episodes = NULL, rmd = FALSE, overview = TRUE))
   }
 
   if (not_overview && no_episodes) {
@@ -60,5 +60,5 @@ read_jekyll_episodes <- function(path = NULL, rmd = FALSE, ...) {
     }
   }
 
-  return(list(episodes = eps, rmd = rmd))
+  return(list(episodes = eps, rmd = rmd, overview = !not_overview))
 }

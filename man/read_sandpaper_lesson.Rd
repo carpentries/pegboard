@@ -18,6 +18,7 @@ a list of two elements:
 in the \code{episodes} folder
 \item extra contains all the \link{Episode} objects representing markdown files in
 all other folders (including top-level)
+\item overview a boolean that indicates if the lesson is an overview
 }
 }
 \description{

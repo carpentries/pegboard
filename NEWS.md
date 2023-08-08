@@ -6,7 +6,8 @@ NEW FEATURES
 - Overview pages are now able to be processed into `Lesson` objects. For Jekyll-
   based lessons, the directory name must end with `-overview`, for sandpaper-
   based lessons, the `config.yaml` file must contain the `overview: true` tag
-  (reported: @zkamvar, #118; fixed: @zkamvar, #132)
+  (reported: @zkamvar, #118; fixed: @zkamvar, #132). These pages are indicated
+  by the `$overview` field in the `Lesson` object.
 
 BUG FIX
 -------

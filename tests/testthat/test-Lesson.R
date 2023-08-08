@@ -22,6 +22,7 @@ test_that("Sandpaper lessons can be read", {
   expect_s3_class(snd$episodes[[1]], "Episode")
   expect_null(snd$built)
   expect_s3_class(snd$extra[[1]], "Episode")
+  expect_false(snd$overview)
 })
 
 test_that("Sandpaper lessons with incomplete conversions will throw an error", {
@@ -48,6 +49,7 @@ test_that("Jekyll workshop overview lessons with no episodes can be read", {
   expect_failure(expect_error({
     lsn <- Lesson$new(path = test_dir, jekyll = TRUE)
   }))
+  expect_true(lsn$overview)
   # the lesson should have an empty episode slot
   expect_null(lsn$episodes)
   lnks <- lsn$validate_links()
@@ -67,6 +69,7 @@ test_that("Jekyll workshop overview lessons with episodes can be read", {
     lsn <- Lesson$new(path = test_dir, jekyll = TRUE)
   }))
 
+  expect_true(lsn$overview)
   # the episodes should still exist for an overview lesson
   expect_type(lsn$episodes, "list")
   expect_length(lsn$episodes, 4L)
@@ -95,6 +98,7 @@ test_that("Sandpaper workshop overview lessons with no episodes can be read", {
   }))
   # the lesson should have an empty episode slot
   expect_null(lsn$episodes)
+  expect_true(lsn$overview)
 
   # the setup page should throw warnings about two HTTP links
   suppressMessages(expect_message(lnks <- lsn$validate_links(), "HTTPS"))
@@ -201,6 +205,7 @@ test_that("Lesson class contains the right stuff", {
   expect_equal(frg$path, unique(purrr::map_chr(frg$episodes, "lesson")))
   expect_equal(frg$n_problems, c("10-lunch.md" = 0, "12-for-loops.md" = 0, "14-looping-data-sets.md" = 0, "17-scope.md" = 0))
   expect_length(frg$show_problems, 0)
+  expect_false(frg$overview)
 
 })
 

@@ -7,6 +7,7 @@
 #'     in the `episodes` folder
 #'   - extra contains all the [Episode] objects representing markdown files in
 #'     all other folders (including top-level)
+#'   - overview a boolean that indicates if the lesson is an overview
 #' @keywords internal
 read_sandpaper_lesson <- function(path, ...) {
   cfg <- fs::dir_ls(path, regexp = "config[.]ya?ml")
@@ -39,6 +40,8 @@ read_sandpaper_lesson <- function(path, ...) {
   extra_files <- purrr::flatten(purrr::map(extra_paths,
       read_markdown_files, the_cfg, process_tags = FALSE, ...))
 
-  return(list(episodes = episodes, 
-      extra = c(standard_files, extra_files)))
+  return(list(
+      episodes = episodes, 
+      extra = c(standard_files, extra_files),
+      overview = the_cfg$overview %||% FALSE))
 }
