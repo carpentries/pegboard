@@ -6,7 +6,7 @@ read_jekyll_episodes <- function(path = NULL, rmd = FALSE, ...) {
   rmd_exists <- fs::dir_exists(rmd_src)
   md_exists <- fs::dir_exists(md_src)
   no_episodes <- !rmd_exists && !md_exists
-  not_overview <- !endsWith(fs::path_file(path), "-overview")
+  not_overview <- !endsWith(fs::path_file(path), "-workshop")
   is_overview <- no_episodes && !not_overview
 
   if (is_overview) {

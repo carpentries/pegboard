@@ -40,8 +40,8 @@ test_that("Sandpaper lessons with incomplete conversions will throw an error", {
 test_that("Jekyll workshop overview lessons with no episodes can be read", {
   tmp <- withr::local_tempdir()
 
-  # the key is that they end with -overview
-  test_dir <- fs::path(tmp, "jekyll-test-overview")
+  # the key is that they end with -workshop
+  test_dir <- fs::path(tmp, "jekyll-test-workshop")
   fs::dir_copy(frg_path, test_dir)
   fs::dir_delete(fs::path(test_dir, "_episodes"))
   # We are expecting this to _not fail_
@@ -59,8 +59,8 @@ test_that("Jekyll workshop overview lessons with no episodes can be read", {
 test_that("Jekyll workshop overview lessons with episodes can be read", {
   tmp <- withr::local_tempdir()
 
-  # the key is that they end with -overview
-  test_dir <- fs::path(tmp, "jekyll-test-overview")
+  # the key is that they end with -workshop
+  test_dir <- fs::path(tmp, "jekyll-test-workshop")
   fs::dir_copy(frg_path, test_dir)
   # We are expecting this to _not fail_
   expect_failure(expect_error({
@@ -83,8 +83,8 @@ test_that("Jekyll workshop overview lessons with episodes can be read", {
 test_that("Sandpaper workshop overview lessons with no episodes can be read", {
   tmp <- withr::local_tempdir()
 
-  # the key is that they end with -overview
-  test_dir <- fs::path(tmp, "sandpaper-test-overview")
+  # the key is that they end with -workshop
+  test_dir <- fs::path(tmp, "sandpaper-test-workshop")
   fs::dir_copy(lesson_fragment("sandpaper-fragment"), test_dir)
   fs::dir_delete(fs::path(test_dir, "episodes"))
   cat("\noverview: true\n", 
