@@ -51,7 +51,7 @@ test_that("HTML images surrounded by comments are processed. ", {
 
   tmp <- withr::local_tempfile()
 
-  some_comment<- "
+  some_comment <- "
 There is only one HTML image here and it will be processed.
 NOTE: each comment block is parsed as an individual HTML block,
 and the numbers in this example help us understand that fact.
