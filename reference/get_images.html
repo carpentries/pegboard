@@ -78,7 +78,54 @@ blocks. <code>FALSE</code> will present the nodes as found by XPath search.</p><
 
 <p>an xml_nodelist</p>
     </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>Markdown users can write images as either markdown or HTML. If they
+write images as HTML, then the commonmark XML parser recognises these as
+generic "HTML blocks" and they can't be found by just searching for
+<code>.//md:image</code>. This function searches both <code>md:html_block</code> and
+<code>md:html_inline</code> for image content that it can extract for downstream
+analysis.</p>
+    </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/on.exit.html" class="external-link">on.exit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">txt</span> <span class="op">&lt;-</span> <span class="st">'</span></span></span>
+<span class="r-in"><span><span class="st">![a kitten](https://placekitten.com/200/200){alt="a pretty kitten"}</span></span></span>
+<span class="r-in"><span><span class="st"></span></span></span>
+<span class="r-in"><span><span class="st">&lt;!-- an html image of a kitten --&gt;</span></span></span>
+<span class="r-in"><span><span class="st">&lt;img src="https://placekitten.com/200/200"&gt;</span></span></span>
+<span class="r-in"><span><span class="st"></span></span></span>
+<span class="r-in"><span><span class="st">an inline html image of a kitten &lt;img src="https://placekitten.com/50/50"&gt;</span></span></span>
+<span class="r-in"><span><span class="st">'</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="va">txt</span>, <span class="va">tmp</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ep</span> <span class="op">&lt;-</span> <span class="va"><a href="Episode.html">Episode</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ep</span><span class="op">$</span><span class="fu">show</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ![a kitten](https://placekitten.com/200/200){alt="a pretty kitten"}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;!-- an html image of a kitten --&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;img src="https://placekitten.com/200/200"&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> an inline html image of a kitten &lt;img src="https://placekitten.com/50/50"&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="co"># without process = TRUE, images in HTML elements are not converted</span></span></span>
+<span class="r-in"><span><span class="va">ep</span><span class="op">$</span><span class="fu">get_images</span><span class="op">(</span><span class="op">)</span> </span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> {xml_nodeset (3)}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] &lt;image sourcepos="2:1-2:44" destination="https://placekitten.com/200/200" ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] &lt;html_block sourcepos="5:1-5:43" xml:space="preserve"&gt;&amp;lt;img src="https: ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3] &lt;html_inline sourcepos="7:34-7:74" xml:space="preserve"&gt;&amp;lt;img src="http ...</span>
+<span class="r-in"><span><span class="co"># setting process = TRUE will extract the HTML elements for analysis </span></span></span>
+<span class="r-in"><span><span class="co"># (e.g to detect alt text)</span></span></span>
+<span class="r-in"><span><span class="va">ep</span><span class="op">$</span><span class="fu">get_images</span><span class="op">(</span>process <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> {xml_nodeset (3)}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] &lt;image sourcepos="2:1-2:44" destination="https://placekitten.com/200/200" ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] &lt;img src="https://placekitten.com/200/200" destination="https://placekitt ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3] &lt;img src="https://placekitten.com/50/50" destination="https://placekitten ...</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
