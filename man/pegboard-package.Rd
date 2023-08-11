@@ -24,6 +24,7 @@ Useful links:
 Other contributors:
 \itemize{
   \item Toby Hodges \email{tobyhodges@carpentries.org} [contributor]
+  \item Erin Becker \email{ebecker@carpentries.org} [contributor]
 }
 
 }
