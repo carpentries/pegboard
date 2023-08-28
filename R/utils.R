@@ -109,7 +109,8 @@ read_markdown_files <- function(src, cfg = list(), sandpaper = TRUE, ...) {
   }
   # we still need to determine if this is an overview lesson. If it is, then
   # it is okay that a particular directory does not exist
-  if (length(cfg)) {
+  config_exists <- length(cfg) > 0
+  if (config_exists) {
     the_dir <- fs::path_file(src)
     # determine if it is an overview page (and thus there are no episodes)
     not_overview <- !identical(cfg[["overview"]], TRUE)

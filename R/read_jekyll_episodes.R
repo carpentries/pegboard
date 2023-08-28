@@ -73,5 +73,5 @@ read_jekyll_episodes <- function(path = NULL, rmd = FALSE, ...) {
     }
   }
 
-  return(list(episodes = eps, rmd = rmd, overview = !not_overview))
+  return(list(episodes = eps, rmd = rmd, overview = FALSE))
 }
