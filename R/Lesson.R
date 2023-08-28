@@ -36,6 +36,10 @@ Lesson <- R6::R6Class("Lesson",
     #'   files, default is `FALSE` for markdown files (deprecated and unused).
     rmd = FALSE,
 
+    #' @field overview \[`logical`\] when `TRUE`, the lesson is an overview
+    #'   lesson and does not necessarly contain any episodes. Defaults to `FALSE`
+    overview = FALSE,
+
     #' @description create a new Lesson object from a directory
     #' @param path \[`character`\] path to a lesson directory. This must have a
     #'   folder called `_episodes` within that contains markdown episodes. 
@@ -60,22 +64,13 @@ Lesson <- R6::R6Class("Lesson",
         jeky <- read_jekyll_episodes(path, rmd, ...)
         self$episodes <- jeky$episodes
         self$rmd <- jeky$rmd
+        self$overview <- jeky$overview
         self$sandpaper <- FALSE
       } else {
-        episode_path <- fs::path(path, "episodes")
-        extra_paths <- fs::path(path, c("instructors", "learners", "profiles"))
-        cfg <- fs::dir_ls(path, regexp = "config[.]ya?ml")
-
-        self$episodes <- read_markdown_files(
-          episode_path, cfg, process_tags = FALSE, ...)
-
-        standard_files <- read_markdown_files(path, process_tags = FALSE, ...)
-
-        extra_files <- purrr::flatten(purrr::map(extra_paths,
-          read_markdown_files, cfg, process_tags = FALSE, ...))
-
-        self$extra <- c(standard_files, extra_files)
-
+        sandy <- read_sandpaper_lesson(path, ...)
+        self$episodes <- sandy$episodes
+        self$extra <- sandy$extra
+        self$overview <- sandy$overview
       }
       self$path <- path
     },

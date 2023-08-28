@@ -5,15 +5,35 @@ read_jekyll_episodes <- function(path = NULL, rmd = FALSE, ...) {
   # Enforce that we are using RMD files
   rmd_exists <- fs::dir_exists(rmd_src)
   md_exists <- fs::dir_exists(md_src)
+  no_episodes <- !rmd_exists && !md_exists
+  not_overview <- !endsWith(fs::path_file(path), "-workshop")
 
-  if (!rmd_exists && !md_exists) {
+  # Fail if it's not an overview and there are no episode folders
+  if (not_overview && no_episodes) {
     stop(glue::glue("could not find either _episodes/ or _episodes_rmd/ in {path}"))
   }
 
+  # Checking for the number of files in the source ----------------------------
+  #
+  # In the Jekyll-based lessons, R Markdown files were placed in the
+  # _episodes_rmd folder and then rendered to the _episodes folder. However,
+  # both folders were present in the lessons thanks to .gitkeep sentinel files,
+  # which means that we need to check the files in both folders and proceed
+  # from there.
+  #
+  # That's why this section is kinda weird and I will not attempt to optimize
   rmd_files <- if (rmd_exists) fs::dir_ls(rmd_src, glob = "*Rmd") else character(0)
   md_files  <- if (md_exists) fs::dir_ls(md_src, glob = "*md") else character(0)
   md_n <- length(md_files)
   rmd_n <- length(rmd_files)
+  no_files <- md_n + rmd_n == 0L
+
+  # If there are no markdown files in the episode folders, we need to exit if
+  # it is also an overview.
+  is_overview <- (no_files || no_episodes) && !not_overview 
+  if (is_overview) {
+    return(list(episodes = NULL, rmd = FALSE, overview = TRUE))
+  }
   read_rmd <- rmd_n > 0L
 
   if (read_rmd) {
@@ -53,5 +73,5 @@ read_jekyll_episodes <- function(path = NULL, rmd = FALSE, ...) {
     }
   }
 
-  return(list(episodes = eps, rmd = rmd))
+  return(list(episodes = eps, rmd = rmd, overview = FALSE))
 }

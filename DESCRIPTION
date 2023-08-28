@@ -1,6 +1,6 @@
 Package: pegboard
 Title: Explore and Manipulate Markdown Curricula from the Carpentries
-Version: 0.5.3
+Version: 0.6.0
 Authors@R: c(
     person(given = "Zhian N.",
            family = "Kamvar",
@@ -15,6 +15,10 @@ Authors@R: c(
            family = "Becker", 
            role = c("ctb"),
            email = "ebecker@carpentries.org"), 
+    person(given = "Kelly", 
+           family = "Barnes", 
+           role = c("ctb"),
+           email = "kbarnes@carpentries.org"), 
     person())
 Description: The Carpentries (<https://carpentries.org>) curricula is made
     of of lessons that are hosted as websites. Each lesson represents
