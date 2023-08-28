@@ -133,10 +133,10 @@ read_markdown_files <- function(src, cfg = list(), sandpaper = TRUE, ...) {
     stop(msg, call. = FALSE)
   }
 
-  objects <- purrr::map(the_files, Episode$new, ...)
+  objects <- purrr::map(.x = the_files, .f = Episode$new, ...)
 
   if (sandpaper) {
-    purrr::walk(objects, ~.x$confirm_sandpaper())
+    purrr::walk(.x = objects, .f = function(obj) obj$confirm_sandpaper())
   }
 
   # Names of the objects will be the filename, not the basename
