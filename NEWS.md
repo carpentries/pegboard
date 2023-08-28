@@ -6,8 +6,8 @@ NEW FEATURES
 - Overview pages are now able to be processed into `Lesson` objects. For Jekyll-
   based lessons, the directory name must end with `-overview`, for sandpaper-
   based lessons, the `config.yaml` file must contain the `overview: true` tag
-  (reported: @zkamvar, #118; fixed: @zkamvar, #132). These pages are indicated
-  by the `$overview` field in the `Lesson` object.
+  (reported: @zkamvar, #118; fixed: @zkamvar, #132, reviewed by @klbarnes20).
+  These pages are indicated by the `$overview` field in the `Lesson` object.
 
 BUG FIX
 -------
@@ -22,7 +22,7 @@ BUG FIX
 
 * `$validate_links()` no longer throws an error when there are HTML images
   embedded in comments (reported: @beastyblacksmith, #130; fixed: @zkamvar,
-  #131)
+  #131, reviewed by @ErinBecker)
 * (transition) `$move_objectives()` and `$move_questions()` methods no longer
   place these blocks as the _second_ element in the markdown. This was
   originally implemented when we thought {dovetail} would be our solution to
