@@ -132,15 +132,15 @@ read_markdown_files <- function(src, cfg = list(), sandpaper = TRUE, ...) {
     stop(msg, call. = FALSE)
   }
 
-  files <- purrr::map(the_files, Episode$new, ...)
+  objects <- purrr::map(the_files, Episode$new, ...)
 
   if (sandpaper) {
-    purrr::walk(files, ~.x$confirm_sandpaper())
+    purrr::walk(objects, ~.x$confirm_sandpaper())
   }
 
-  # Names of the files will be the filename, not the basename
-  names(files) <- fs::path_file(the_files)
-  return(files)
+  # Names of the objects will be the filename, not the basename
+  names(objects) <- fs::path_file(the_files)
+  return(objects)
 }
 
 #' Remove spaces in relative links with liquid variables
