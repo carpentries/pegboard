@@ -58,7 +58,7 @@ test_that("Jekyll workshop overview lessons with no episodes can be read", {
   expect_equal(nrow(lnks), 0L)
 })
 
-test_that("Jekyll workshop overview lessons with episodes can be read", {
+test_that("Jekyll workshop overview lessons with episodes can be read (but won't be overview)", {
   tmp <- withr::local_tempdir()
 
   # the key is that they end with -workshop
@@ -69,7 +69,7 @@ test_that("Jekyll workshop overview lessons with episodes can be read", {
     lsn <- Lesson$new(path = test_dir, jekyll = TRUE)
   }))
 
-  expect_true(lsn$overview)
+  expect_false(lsn$overview)
   # the episodes should still exist for an overview lesson
   expect_type(lsn$episodes, "list")
   expect_length(lsn$episodes, 4L)
