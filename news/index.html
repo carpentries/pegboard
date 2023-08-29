@@ -51,10 +51,10 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.6.0" id="pegboard-060-unreleased">pegboard 0.6.0 (unreleased)<a class="anchor" aria-label="anchor" href="#pegboard-060-unreleased"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.6.0" id="pegboard-060-2023-08-29">pegboard 0.6.0 (2023-08-29)<a class="anchor" aria-label="anchor" href="#pegboard-060-2023-08-29"></a></h2>
 <div class="section level3">
 <h3 id="new-features-0-6-0">NEW FEATURES<a class="anchor" aria-label="anchor" href="#new-features-0-6-0"></a></h3>
-<ul><li>Overview pages are now able to be processed into <code>Lesson</code> objects. For Jekyll- based lessons, the directory name must end with <code>-overview</code>, for sandpaper- based lessons, the <code>config.yaml</code> file must contain the <code>overview: true</code> tag (reported: <a href="https://github.com/zkamvar" class="external-link">@zkamvar</a>, <a href="https://github.com/carpentries/pegboard/issues/118" class="external-link">#118</a>; fixed: <a href="https://github.com/zkamvar" class="external-link">@zkamvar</a>, <a href="https://github.com/carpentries/pegboard/issues/132" class="external-link">#132</a>, reviewed by <a href="https://github.com/klbarnes20" class="external-link">@klbarnes20</a>). These pages are indicated by the <code>$overview</code> field in the <code>Lesson</code> object.</li>
+<ul><li>Workshop overview pages are now able to be processed into <code>Lesson</code> objects. For Jekyll- based lessons, the directory name must end with <code>-workshop</code> (as is the standard for workshop overview lessons without episodes), for sandpaper- based lessons, the <code>config.yaml</code> file must contain the <code>overview:   true</code> tag (reported: <a href="https://github.com/zkamvar" class="external-link">@zkamvar</a>, <a href="https://github.com/carpentries/pegboard/issues/118" class="external-link">#118</a>; fixed: <a href="https://github.com/zkamvar" class="external-link">@zkamvar</a>, <a href="https://github.com/carpentries/pegboard/issues/132" class="external-link">#132</a>, reviewed by <a href="https://github.com/klbarnes20" class="external-link">@klbarnes20</a>). These pages are indicated by the <code>$overview</code> field in the <code>Lesson</code> object. For lessons that are not workshop overview lessons, nothing will change.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fix-0-6-0">BUG FIX<a class="anchor" aria-label="anchor" href="#bug-fix-0-6-0"></a></h3>
