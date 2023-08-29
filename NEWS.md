@@ -1,13 +1,16 @@
-# pegboard 0.6.0 (unreleased)
+# pegboard 0.6.0 (2023-08-29)
 
 NEW FEATURES
 ------------
 
-- Overview pages are now able to be processed into `Lesson` objects. For Jekyll-
-  based lessons, the directory name must end with `-overview`, for sandpaper-
-  based lessons, the `config.yaml` file must contain the `overview: true` tag
-  (reported: @zkamvar, #118; fixed: @zkamvar, #132, reviewed by @klbarnes20).
-  These pages are indicated by the `$overview` field in the `Lesson` object.
+- Workshop overview pages are now able to be processed into `Lesson` objects.
+  For Jekyll- based lessons, the directory name must end with `-workshop` (as
+  is the standard for workshop overview lessons without episodes), for
+  sandpaper- based lessons, the `config.yaml` file must contain the `overview:
+  true` tag (reported: @zkamvar, #118; fixed: @zkamvar, #132, reviewed by
+  @klbarnes20). These pages are indicated by the `$overview` field in the
+  `Lesson` object. For lessons that are not workshop overview lessons, nothing
+  will change.
 
 BUG FIX
 -------
