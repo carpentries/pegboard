@@ -1,5 +1,5 @@
 #' Validate Callout Blocks for sandpaper episodes
-#' 
+#'
 #'
 #' The Carpentries Workbench uses [pandoc fenced
 #' divs](https://pandoc.org/MANUAL.html#extension-fenced_divs) to create special
@@ -9,9 +9,9 @@
 #'
 #' ```markdown
 #' ::: callout
-#' 
+#'
 #' ### Hello!
-#' 
+#'
 #' This is a callout block
 #'
 #' :::
@@ -35,7 +35,7 @@
 #'  - checklist
 #'  - testimonial
 #'
-#' Any other div names will produce structure in the resulting DOM, but they 
+#' Any other div names will produce structure in the resulting DOM, but they
 #' will not have any special visual styling.
 #'
 #' @inheritParams validate_links
@@ -74,7 +74,8 @@ KNOWN_DIVS <- c(
   "discussion",
   "testimonial",
   "keypoints",
-  "instructor"
+  "instructor",
+  "spoiler"
 )
 
 #' @rdname validate_divs
