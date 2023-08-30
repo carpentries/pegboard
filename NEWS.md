@@ -1,3 +1,12 @@
+# pegboard 0.6.1 (2023-08-31)
+
+NEW FEATURES
+------------
+
+* `$validate_divs()` method now recognises the `spoiler` class of fenced divs
+  which allow optional/expandable items that are not automatically shown to the
+  learner (implemented: @tobyhodges, #134)
+
 # pegboard 0.6.0 (2023-08-29)
 
 NEW FEATURES
