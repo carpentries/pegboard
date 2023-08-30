@@ -37,7 +37,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pegboard</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -167,7 +167,7 @@ variable:</p>
 <span><span class="co">#|  $ episodes            : chr  "12-for-loops.md" "14-looping-data-sets.md" "14-looping-data-sets.m"..</span></span>
 <span><span class="co">#|  $ scheme              : chr  "https" "https" "https" "https" ...</span></span>
 <span><span class="co">#|  $ server              : chr  "docs.python.org" "docs.python.org" "docs.python.org" "docs.python."..</span></span>
-<span><span class="co">#|  $ port                : int  NA NA NA NA NA NA NA NA 22053 2067098968 ...</span></span>
+<span><span class="co">#|  $ port                : int  NA NA NA NA NA NA NA NA 21891 -742262632 ...</span></span>
 <span><span class="co">#|  $ user                : chr  "" "" "" "" ...</span></span>
 <span><span class="co">#|  $ path                : chr  "/3/library/stdtypes.html" "/3/library/glob.html" "/3/library/glob."..</span></span>
 <span><span class="co">#|  $ query               : chr  "" "" "" "" ...</span></span>
@@ -255,7 +255,7 @@ issues where a div class is mis-typed</a>.</p>
 <p>The divs we expect are in the object
 <code><a href="../reference/validate_divs.html">pegboard::KNOWN_DIVS</a></code>: callout, objectives, questions,
 challenge, prereq, checklist, solution, hint, discussion, testimonial,
-keypoints, and instructor.</p>
+keypoints, instructor, and spoiler.</p>
 <p>Our example lesson is from the old styles repository, so it does not
 have any fenced divs, but we can use a lesson fragment from
 {sandpaper}:</p>
@@ -287,7 +287,7 @@ we would be able to find out very quickly:</p>
 <span><span class="va">snd</span><span class="op">$</span><span class="va">episodes</span><span class="op">[[</span><span class="st">"intro.Rmd"</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="fu">add_md</span><span class="op">(</span><span class="va">our_div</span><span class="op">)</span></span>
 <span><span class="va">snd_divs</span> <span class="op">&lt;-</span> <span class="va">snd</span><span class="op">$</span><span class="fu">validate_divs</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#| <span style="color: #BBBB00;">!</span> There were errors in 1/10 fenced divs</span></span>
-<span><span class="co">#| ◌ The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor</span></span>
+<span><span class="co">#| ◌ The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor, spoiler</span></span>
 <span><span class="co">#| </span></span>
 <span><span class="co">#| ::warning file=episodes/intro.Rmd,line=NA:: [unknown div] exercise</span></span></code></pre></div>
 <p>You can see from the table that the <code>is_known</code> column now
