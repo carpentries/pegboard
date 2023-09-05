@@ -27,6 +27,11 @@ Lesson <- R6::R6Class("Lesson",
     #'   is not processed for the jekyll lessons.
     extra = NULL,
 
+    #' @field children \[`list`\] list of [Episode] class objects representing
+    #'   child files that are needed by any of the components to be built
+    #'   This is not processed for the jekyll lessons.
+    children = NULL,
+
     #' @field sandpaper \[`logical`\] when `TRUE`, the episodes in the lesson
     #'   are written in pandoc flavoured markdown. `FALSE` would indicate a 
     #'   jekyll-based lesson written in kramdown.
@@ -71,6 +76,7 @@ Lesson <- R6::R6Class("Lesson",
         self$episodes <- sandy$episodes
         self$extra <- sandy$extra
         self$overview <- sandy$overview
+        self$children <- sandy$children
       }
       self$path <- path
     },
@@ -105,7 +111,7 @@ Lesson <- R6::R6Class("Lesson",
       if (is.null(element)) {
         return(NULL)
       }
-      things <- c("episodes", "extra", "built")
+      things <- c("episodes", "extra", "built", "children")
       names(things) <- things
       things <- things[collection]
       if (length(things) == 1L) {
@@ -127,7 +133,7 @@ Lesson <- R6::R6Class("Lesson",
       if (!self$sandpaper) {
         issue_warning("Summary not guaranteed for styles-based lessons")
       }
-      things <- c("episodes", "extra", "built")
+      things <- c("episodes", "extra", "built", "children")
       names(things) <- things
       things <- things[collection]
       if (length(things) == 1L) {
@@ -389,6 +395,11 @@ Lesson <- R6::R6Class("Lesson",
     #' @field files the source files for each episode
     files = function() {
       purrr::map_chr(self$episodes, "path")
+    },
+    #' @field has_children a logical indicating the presence (`TRUE`) or
+    #'   absence (`FALSE`) of child files within the main files of the lesson
+    has_children = function() {
+      length(self$children) > 0L
     }
   ),
   private = list(
