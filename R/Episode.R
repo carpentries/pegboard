@@ -10,8 +10,11 @@ Episode <- R6::R6Class("Episode",
   inherit = tinkr::yarn,
   public = list(
     #' @field children \[`character`\] a vector of absolute paths to child
-    #'   files. 
+    #'   files if they exist.
     children = character(0),
+    #' @field parents \[`character`\] a vector of absolute paths to immediate
+    #'   parent files if they exist
+    parents = character(0),
 
     #' @description Create a new Episode
     #' @param path \[`character`\] path to a markdown episode file on disk
@@ -26,6 +29,8 @@ Episode <- R6::R6Class("Episode",
     #'   immediately passed to [tinkr::yarn]. If `TRUE`, all liquid variables
     #'   in relative links have spaces removed to allow the commonmark parser to
     #'   interpret them as links.
+    #' @param parents \[`character`\] absolute paths to the immediate parent
+    #'   files
     #' @param ... arguments passed on to [tinkr::yarn] and [tinkr::to_xml()]
     #' @return A new Episode object with extracted XML data
     #' @examples
@@ -33,7 +38,7 @@ Episode <- R6::R6Class("Episode",
     #' scope$name
     #' scope$lesson
     #' scope$challenges
-    initialize = function(path = NULL, process_tags = TRUE, fix_links = TRUE, fix_liquid = FALSE, ...) {
+    initialize = function(path = NULL, process_tags = TRUE, fix_links = TRUE, fix_liquid = FALSE, parents = character(0), ...) {
       if (!fs::file_exists(path)) {
         stop(glue::glue("the file '{path}' does not exist"))
       }
@@ -92,6 +97,7 @@ Episode <- R6::R6Class("Episode",
       self$body <- lsn$body
       self$ns   <- lsn$ns
       self$children <- find_children(lsn)
+      self$parents <- if (length(parents) > 0L) fs::path_abs(parents) else parents
     },
 
 
@@ -727,6 +733,11 @@ Episode <- R6::R6Class("Episode",
     #'   files (`TRUE`) or their absence (`FALSE`)
     has_children = function() {
       length(self$children) > 0L
+    },
+    #' @field has_parents \[`logical`\] an indicator of the presence of parent 
+    #'   files (`TRUE`) or their absence (`FALSE`)
+    has_parents = function() {
+      length(self$parents) > 0L
     }
   ),
   private = list(
