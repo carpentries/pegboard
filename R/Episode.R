@@ -9,6 +9,10 @@
 Episode <- R6::R6Class("Episode",
   inherit = tinkr::yarn,
   public = list(
+    #' @field children \[`character`\] a vector of absolute paths to child
+    #'   files. 
+    children = character(0),
+
     #' @description Create a new Episode
     #' @param path \[`character`\] path to a markdown episode file on disk
     #' @param process_tags \[`logical`\] if `TRUE` (default), kramdown tags will
@@ -87,6 +91,7 @@ Episode <- R6::R6Class("Episode",
       self$yaml <- lsn$yaml
       self$body <- lsn$body
       self$ns   <- lsn$ns
+      self$children <- find_children(lsn)
     },
 
 
@@ -717,6 +722,11 @@ Episode <- R6::R6Class("Episode",
         lsn <- fs::path_dir(lsn)
       }
       lsn
+    },
+    #' @field has_children \[`logical`\] an indicator of the presence of child
+    #'   files (`TRUE`) or their absence (`FALSE`)
+    has_children = function() {
+      length(self$children) > 0L
     }
   ),
   private = list(
