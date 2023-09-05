@@ -1,0 +1,20 @@
+---
+title: parent test
+---
+
+This is a parent file. It can contain regular code blocks
+
+```{r test1}
+1 + 1
+```
+
+and it can contain code blocks from child files:
+
+```{r test-child, child="files/child.md"}
+```
+
+It can also contain code blocks from child files above the current directory
+
+```{r test-child-out, child="../setup.md"}
+```
+
