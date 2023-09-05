@@ -77,6 +77,9 @@ test_that("Child files will be accounted for", {
   expect_length(ep$code, 3L)
   # the episode has children
   expect_true(ep$has_children)
+  # the episode is not a child
+  expect_false(ep$has_parents)
+  expect_equal(ep$parents, character(0))
   # the children are paths to files
   expect_equal(ep$children, expected)
   # the children actually exist

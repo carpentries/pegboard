@@ -23,7 +23,47 @@ test_that("Sandpaper lessons can be read", {
   expect_null(snd$built)
   expect_s3_class(snd$extra[[1]], "Episode")
   expect_false(snd$overview)
+  expect_null(snd$children)
+  expect_false(snd$has_children)
 })
+
+
+test_that("Sandpaper lessons will have children listed", {
+  # setup -----------------------------------------------------
+  tmp <- withr::local_tempdir()
+  test_dir <- fs::path(tmp, "sandpaper-fragment")
+  fs::dir_copy(lesson_fragment("sandpaper-fragment"), test_dir)
+  fs::dir_copy(
+    test_path("examples", "child-example", "files"),
+    fs::path(test_dir, "episodes")
+  )
+  parent_file <- fs::path(test_dir, "episodes", "intro.Rmd")
+  fs::file_copy(
+    test_path("examples", "child-example", "parent.Rmd"),
+    parent_file,
+    overwrite = TRUE
+  )
+  children_names <- fs::path(test_dir, "episodes", "files", 
+    c("child.md", "child-2.Rmd", "child-3.md")
+  )
+  
+  lsn <- Lesson$new(test_dir, jekyll = FALSE)
+
+  expect_true(lsn$has_children)
+
+  expect_length(lsn$children, 3L)
+  expect_length(lsn$episodes, 1L)
+  expect_equal(fs::path_rel(names(lsn$children), lsn$path), 
+    fs::path_rel(children_names, lsn$path)
+  )
+
+  expect_equal(lsn$children[[1]]$parents, parent_file)
+  expect_equal(lsn$children[[2]]$parents, parent_file)
+  expect_equal(lsn$children[[3]]$parents, children_names[[2]])
+  
+
+})
+
 
 test_that("Sandpaper lessons with incomplete conversions will throw an error", {
   tmp <- withr::local_tempdir()
