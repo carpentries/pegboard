@@ -153,7 +153,10 @@ loop$validate_links()
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
 \item{\code{children}}{[\code{character}] a vector of absolute paths to child
-files.}
+files if they exist.}
+
+\item{\code{parents}}{[\code{character}] a vector of absolute paths to immediate
+parent files if they exist}
 }
 \if{html}{\out{</div>}}
 }
@@ -193,6 +196,9 @@ files.}
 \item{\code{lesson}}{[\code{character}] the path to the lesson where the episode is from}
 
 \item{\code{has_children}}{[\code{logical}] an indicator of the presence of child
+files (\code{TRUE}) or their absence (\code{FALSE})}
+
+\item{\code{has_parents}}{[\code{logical}] an indicator of the presence of parent
 files (\code{TRUE}) or their absence (\code{FALSE})}
 }
 \if{html}{\out{</div>}}
@@ -251,6 +257,7 @@ Create a new Episode
   process_tags = TRUE,
   fix_links = TRUE,
   fix_liquid = FALSE,
+  parents = character(0),
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -273,6 +280,9 @@ as valid links.}
 immediately passed to \link[tinkr:yarn]{tinkr::yarn}. If \code{TRUE}, all liquid variables
 in relative links have spaces removed to allow the commonmark parser to
 interpret them as links.}
+
+\item{\code{parents}}{[\code{character}] absolute paths to the immediate parent
+files}
 
 \item{\code{...}}{arguments passed on to \link[tinkr:yarn]{tinkr::yarn} and \code{\link[tinkr:to_xml]{tinkr::to_xml()}}}
 }

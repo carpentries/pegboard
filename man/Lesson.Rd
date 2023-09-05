@@ -104,6 +104,10 @@ the extra markdown components including index, setup, information
 for learners, information for instructors, and learner profiles. This
 is not processed for the jekyll lessons.}
 
+\item{\code{children}}{[\code{list}] list of \link{Episode} class objects representing
+child files that are needed by any of the components to be built
+This is not processed for the jekyll lessons.}
+
 \item{\code{sandpaper}}{[\code{logical}] when \code{TRUE}, the episodes in the lesson
 are written in pandoc flavoured markdown. \code{FALSE} would indicate a
 jekyll-based lesson written in kramdown.}
@@ -124,6 +128,9 @@ lesson and does not necessarly contain any episodes. Defaults to \code{FALSE}}
 \item{\code{show_problems}}{contents of the problems per episode}
 
 \item{\code{files}}{the source files for each episode}
+
+\item{\code{has_children}}{a logical indicating the presence (\code{TRUE}) or
+absence (\code{FALSE}) of child files within the main files of the lesson}
 }
 \if{html}{\out{</div>}}
 }
