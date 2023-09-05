@@ -149,6 +149,14 @@ loop$validate_links()
 \section{Super class}{
 \code{\link[tinkr:yarn]{tinkr::yarn}} -> \code{Episode}
 }
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{children}}{[\code{character}] a vector of absolute paths to child
+files.}
+}
+\if{html}{\out{</div>}}
+}
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
@@ -183,6 +191,9 @@ loop$validate_links()
 \item{\code{name}}{[\code{character}] the name of the source file without the path}
 
 \item{\code{lesson}}{[\code{character}] the path to the lesson where the episode is from}
+
+\item{\code{has_children}}{[\code{logical}] an indicator of the presence of child
+files (\code{TRUE}) or their absence (\code{FALSE})}
 }
 \if{html}{\out{</div>}}
 }
