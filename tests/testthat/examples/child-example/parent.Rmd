@@ -13,8 +13,8 @@ and it can contain code blocks from child files:
 ```{r test-child, child="files/child.md"}
 ```
 
-It can also contain code blocks from child files above the current directory
+It can contain child files with child files
 
-```{r test-child-out, child="../setup.md"}
+```{r test-child-2, child="files/child-2.Rmd"}
 ```
 

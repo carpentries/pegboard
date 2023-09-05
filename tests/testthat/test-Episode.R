@@ -71,8 +71,8 @@ test_that("Child files will be accounted for", {
   suppressWarnings({
     ep <- Episode$new(test_path("examples", "child-example/parent.Rmd"))
   })
-  expected <- fs::path_abs(test_path("examples", 
-    c("child-example/files/child.md", "setup.md")))
+  expected <- fs::path_abs(test_path("examples", "child-example", "files",
+    c("child.md", "child-2.Rmd")))
   # we have 3 code blocks
   expect_length(ep$code, 3L)
   # the episode has children

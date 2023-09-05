@@ -1,0 +1,4 @@
+Hello from child 2 I am a markdown document that has another child:
+
+```{r child-three, child = "child-3.md"}
+```
