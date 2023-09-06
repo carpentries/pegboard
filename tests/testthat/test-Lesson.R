@@ -29,7 +29,7 @@ test_that("Sandpaper lessons can be read", {
 
 
 test_that("Sandpaper lessons will have children listed", {
-  # setup -----------------------------------------------------
+  # setup -------------------------------------------------------------------
   tmp <- withr::local_tempdir()
   test_dir <- fs::path(tmp, "sandpaper-fragment")
   fs::dir_copy(lesson_fragment("sandpaper-fragment"), test_dir)
@@ -37,12 +37,23 @@ test_that("Sandpaper lessons will have children listed", {
     test_path("examples", "child-example", "files"),
     fs::path(test_dir, "episodes")
   )
+  # create two files in the lesson with the same children -------------------
   parent_file <- fs::path(test_dir, "episodes", "intro.Rmd")
+  second_parent_file <- fs::path(test_dir, "episodes", "next.Rmd")
   fs::file_copy(
     test_path("examples", "child-example", "parent.Rmd"),
     parent_file,
     overwrite = TRUE
   )
+  fs::file_copy(
+    test_path("examples", "child-example", "parent.Rmd"),
+    second_parent_file,
+    overwrite = TRUE
+  )
+  # set the order in the config --------------------------------------------
+  cfg <- readLines(test_dir, "config.yaml")
+  eplist <- which(cfg == " - intro.Rmd")
+  cfg[eplist] <- paste0(cfg[eplist], "\n - next.Rmd")
   children_names <- fs::path(test_dir, "episodes", "files", 
     c("child.md", "child-2.Rmd", "child-3.md")
   )
@@ -52,7 +63,7 @@ test_that("Sandpaper lessons will have children listed", {
   expect_true(lsn$has_children)
 
   expect_length(lsn$children, 3L)
-  expect_length(lsn$episodes, 1L)
+  expect_length(lsn$episodes, 2L)
   expect_equal(fs::path_rel(names(lsn$children), lsn$path), 
     fs::path_rel(children_names, lsn$path)
   )

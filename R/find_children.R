@@ -19,14 +19,13 @@ child_file_from_code_blocks <- function(nodes) {
   }
 }
 
-read_children <- function(parent, ...) {
+read_children <- function(parent, all_children = list(), ...) {
   # if the parent has no children, return NULL. This is the exit condition
   no_children <- !parent$has_children
   if (no_children) {
     return(NULL)
   }
   # If there are children, recursively load them and place them in a list 
-  res <- list()
   for (child in parent$children) {
     # place the child in a list and name it
     this_child <- list(Episode$new(child, parent = parent$path, ...))
@@ -35,9 +34,12 @@ read_children <- function(parent, ...) {
     # if there are any children, we need to append them to the list
     if (length(children) > 0L) {
       this_child <- c(this_child, children)
+      # find the existing children
+      # append the parents
+      # discard the new children
     }
-    res <- c(res, this_child)
+    all_children <- c(all_children, this_child)
   }
   # only return the unique files
-  return(res[unique(names(res))])
+  return(all_children)
 }
