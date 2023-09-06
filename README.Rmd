@@ -75,7 +75,8 @@ ep <- Episode$new(tmp)
 ep$confirm_sandpaper()$summary()
 
 # Validation ----------------------------------------------------------
-# NOTE: a lot of invalid links because files do not exist
+# NOTE: a lot of invalid links because files do not exist outside of
+#       the lesson context
 lnk <- ep$validate_links()
 str(lnk, max.level = 1)
 hdg <- ep$validate_headings()

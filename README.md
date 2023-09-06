@@ -69,23 +69,24 @@ ep$confirm_sandpaper()$summary()
 #|         16         33         29          7          7         35          1          0          0          4         21
 
 # Validation ----------------------------------------------------------
-# NOTE: a lot of invalid links because files do not exist
+# NOTE: a lot of invalid links because files do not exist outside of
+#       the lesson context
 lnk <- ep$validate_links()
 #| ! There were errors in 12/23 links
 #| ◌ Some linked internal files do not exist
 #| 
-#| file93af63b1e0f.Rmd:38 [missing file]: [next episode](editing.md)
-#| file93af63b1e0f.Rmd:51 [missing file]: [the Introduction](introduction.md)
-#| file93af63b1e0f.Rmd:203 [missing file]: [The Workbench Component Guide](component-guide.md)
-#| file93af63b1e0f.Rmd:780 [missing file]: [the setup page](../learners/setup.md)
-#| file93af63b1e0f.Rmd:796 [missing file]: [another episode (e.g. introduction)](introduction.md)
-#| file93af63b1e0f.Rmd:797 [missing file]: [the home page](../index.md)
-#| file93af63b1e0f.Rmd:798 [missing file]: [the setup page](../learners/setup.md)
-#| file93af63b1e0f.Rmd:799 [missing file]: [the "line length" section in the style guide](../learners/style.md#line-length)
-#| file93af63b1e0f.Rmd:805 [missing file]: [the style guide](../learners/style.md)
-#| file93af63b1e0f.Rmd:825 [missing file]: [internal links](../episodes/episodes.Rmd#internal-links)
-#| file93af63b1e0f.Rmd:860 [missing file]: [Hex sticker for The Carpentries](fig/carpentries-hex-blue.svg)
-#| file93af63b1e0f.Rmd:902 [missing file]: [Example of Wrapped Alt Text (with apologies to William Carlos Williams)](fig/freezer.png)
+#| file9c2d53b7cd66.Rmd:38 [missing file]: [next episode](editing.md)
+#| file9c2d53b7cd66.Rmd:51 [missing file]: [the Introduction](introduction.md)
+#| file9c2d53b7cd66.Rmd:203 [missing file]: [The Workbench Component Guide](component-guide.md)
+#| file9c2d53b7cd66.Rmd:780 [missing file]: [the setup page](../learners/setup.md)
+#| file9c2d53b7cd66.Rmd:796 [missing file]: [another episode (e.g. introduction)](introduction.md)
+#| file9c2d53b7cd66.Rmd:797 [missing file]: [the home page](../index.md)
+#| file9c2d53b7cd66.Rmd:798 [missing file]: [the setup page](../learners/setup.md)
+#| file9c2d53b7cd66.Rmd:799 [missing file]: [the "line length" section in the style guide](../learners/style.md#line-length)
+#| file9c2d53b7cd66.Rmd:805 [missing file]: [the style guide](../learners/style.md)
+#| file9c2d53b7cd66.Rmd:825 [missing file]: [internal links](../episodes/episodes.Rmd#internal-links)
+#| file9c2d53b7cd66.Rmd:860 [missing file]: [Hex sticker for The Carpentries](fig/carpentries-hex-blue.svg)
+#| file9c2d53b7cd66.Rmd:902 [missing file]: [Example of Wrapped Alt Text (with apologies to William Carlos Williams)](fig/freezer.png)
 str(lnk, max.level = 1)
 #| 'data.frame':    25 obs. of  26 variables:
 #|  $ scheme              : chr  "" "" "" "" ...
@@ -103,7 +104,7 @@ str(lnk, max.level = 1)
 #|  $ rel                 : chr  NA NA NA NA ...
 #|  $ anchor              : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
 #|  $ sourcepos           : int  38 51 168 203 318 327 468 545 550 630 ...
-#|  $ filepath            : chr  "file93af63b1e0f.Rmd" "file93af63b1e0f.Rmd" "file93af63b1e0f.Rmd" "file93af63b1e0f.Rmd" ...
+#|  $ filepath            : chr  "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" ...
 #|  $ node                :List of 25
 #|   ..- attr(*, "class")= chr "AsIs"
 #|  $ known_protocol      : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...
@@ -128,15 +129,15 @@ str(hdg, max.level = 1)
 #|  $ are_sequential               : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...
 #|  $ have_names                   : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...
 #|  $ are_unique                   : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...
-#|  $ path                         : chr  "file93af63b1e0f.Rmd" "file93af63b1e0f.Rmd" "file93af63b1e0f.Rmd" "file93af63b1e0f.Rmd" ...
+#|  $ path                         : chr  "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" ...
 div <- ep$validate_divs()
 #| ! There were errors in 1/29 fenced divs
 #| ◌ The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor, spoiler
 #| 
-#| file93af63b1e0f.Rmd:457 [unknown div] empty-div
+#| file9c2d53b7cd66.Rmd:457 [unknown div] empty-div
 str(div, max.level = 1)
 #| 'data.frame':    29 obs. of  5 variables:
-#|  $ path    : chr  "file93af63b1e0f.Rmd" "file93af63b1e0f.Rmd" "file93af63b1e0f.Rmd" "file93af63b1e0f.Rmd" ...
+#|  $ path    : chr  "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" ...
 #|  $ div     : chr  "questions" "objectives" "prereq" "callout" ...
 #|  $ pb_label: chr  "div-1-questions" "div-2-objectives" "div-3-prereq" "div-4-callout" ...
 #|  $ pos     : int  9 20 46 78 141 198 226 243 253 272 ...
@@ -164,7 +165,7 @@ a lesson handy. If you don’t have one, you can use the `get_lesson()`
 function, which will use [{gert}](https://r-lib.github.io/gert/) to
 clone a lesson repository to your computer.
 
-(NOTE: this file was last run on 2023-09-06 08:38:10.634798)
+(NOTE: this file was last run on 2023-09-06 08:45:54.227933)
 
 ``` r
 library("pegboard")
@@ -191,7 +192,7 @@ rng
 #|     load_built: function () 
 #|     n_problems: active binding
 #|     overview: FALSE
-#|     path: /tmp/RtmpHHYAf1/PBREADME93af728330a1/swcarpentry--r-novi ...
+#|     path: /tmp/RtmpBNM7Jl/PBREADME9c2d5fd860a1/swcarpentry--r-novi ...
 #|     reset: function () 
 #|     rmd: FALSE
 #|     sandpaper: TRUE
