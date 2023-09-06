@@ -51,9 +51,10 @@ test_that("Sandpaper lessons will have children listed", {
     overwrite = TRUE
   )
   # set the order in the config --------------------------------------------
-  cfg <- readLines(test_dir, "config.yaml")
-  eplist <- which(cfg == " - intro.Rmd")
-  cfg[eplist] <- paste0(cfg[eplist], "\n - next.Rmd")
+  cfg <- readLines(fs::path(test_dir, "config.yaml"))
+  eplist <- which(endsWith(cfg, "intro.Rmd"))
+  cfg[eplist] <- paste0(cfg[eplist], "\n  - next.Rmd")
+  writeLines(cfg, fs::path(test_dir, "config.yaml"))
   children_names <- fs::path(test_dir, "episodes", "files", 
     c("child.md", "child-2.Rmd", "child-3.md")
   )
@@ -68,8 +69,8 @@ test_that("Sandpaper lessons will have children listed", {
     fs::path_rel(children_names, lsn$path)
   )
 
-  expect_equal(lsn$children[[1]]$parents, parent_file)
-  expect_equal(lsn$children[[2]]$parents, parent_file)
+  expect_equal(lsn$children[[1]]$parents, c(parent_file, second_parent_file))
+  expect_equal(lsn$children[[2]]$parents, c(parent_file, second_parent_file))
   expect_equal(lsn$children[[3]]$parents, children_names[[2]])
   
 

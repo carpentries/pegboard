@@ -25,21 +25,39 @@ read_children <- function(parent, all_children = list(), ...) {
   if (no_children) {
     return(NULL)
   }
+  # register existing parents
+  existing <- intersect(parent$children, names(all_children))
+  purrr::walk(all_children[existing], add_parent, parent$path)
+
+  # get new children
+  new_children <- setdiff(parent$children, names(all_children))
+
   # If there are children, recursively load them and place them in a list 
-  for (child in parent$children) {
+  for (child in new_children) {
     # place the child in a list and name it
     this_child <- list(Episode$new(child, parent = parent$path, ...))
     names(this_child) <- child
+    # recurse to check for children of this child
     children <- read_children(this_child[[child]], ...)
     # if there are any children, we need to append them to the list
     if (length(children) > 0L) {
-      this_child <- c(this_child, children)
       # find the existing children
+      existing <- intersect(names(children), names(all_children))
       # append the parents
+      purrr::walk(all_children[existing], add_parent, 
+        parent = this_child[[child]]$path)
       # discard the new children
+      children[existing] <- NULL
+      this_child <- c(this_child, children)
     }
     all_children <- c(all_children, this_child)
   }
   # only return the unique files
   return(all_children)
 }
+
+add_parent <- function(child, parent_path) {
+  child$parents <- c(child$parents, parent_path)
+} 
+
+

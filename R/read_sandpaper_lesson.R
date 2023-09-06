@@ -41,6 +41,7 @@ read_sandpaper_lesson <- function(path, ...) {
       read_markdown_files, the_cfg, process_tags = FALSE, ...))
   all_files <- c(episodes, standard_files, extra_files)
   have_children <- purrr::map_lgl(all_files, "has_children")
+  # if there are any children, we need to account for those.
   if (any(have_children)) {
     the_children <- list()
     for (parent in all_files[have_children]) {
