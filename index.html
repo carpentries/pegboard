@@ -89,17 +89,112 @@
 <p>[pegboard] is tempered hardboard which is pre-drilled with evenly spaced holes. The holes are used to accept pegs or hooks to support various items, such as tools in a workshop.</p>
 <p><a href="https://en.wikipedia.org/wiki/Pegboard" class="external-link uri">https://en.wikipedia.org/wiki/Pegboard</a></p>
 </blockquote>
-<p>The {pegboard} package is a way to explore the Carpentries’ lessons via their XML representation. This package makes heavy use of rOpenSci’s <a href="https://docs.ropensci.org/tinkr/" class="external-link">{tinkr}</a> and <a href="https://cran.r-project.org/package=xml2" class="external-link">{xml2}</a>.</p>
+<p>The {pegboard} package is part of <a href="https://carpentries.github.io/workbench/" class="external-link">The Carpentries Workbench</a> and it’s main functionality is to parse Markdown and R Markdown documents into XML representations (via <a href="https://docs.ropensci.org/tinkr/" class="external-link">{tinkr}</a>). By using XML, we are able to easily arrange and parse the elements of the lessons which makes two things possible:</p>
+<ul>
+<li>parse and validate the lessons for structural markdown elements</li>
+<li>translate markdown syntax of Carpentries-style materials from the <a href="https://github.com/carpentries/styles" class="external-link">styles lesson infrastructure (Jekyll-based)</a> to The Workbench (Pandoc-based) (see the <a href="https://github.com/carpentries/lesson-transition#readme" class="external-link">lesson transition tool</a> for details)</li>
+</ul>
 <p>There are two <a href="https://cran.r-project.org/package=R6" class="external-link">{R6}</a> objects in the package:</p>
 <ul>
-<li>Episode: stores the xml content of a single episode</li>
-<li>Lesson: stores all Episodes within a lesson</li>
+<li>Episode: stores the xml content of a single Markdown or R Markdown file. This extends the the <a href="https://docs.ropensci.org/tinkr/reference/yarn.html" class="external-link"><code>tinkr::yarn</code> class</a>.</li>
+<li>Lesson: stores all publishable markdown content as <code>Episodes</code> within a lesson</li>
 </ul>
+<p>One simple usage is getting a summary of the content of an episode. Let’s investigate the contents of <a href="https://carpentries.github.io/sandpaper-docs/episodes.html" class="external-link">the “Episode Structure” episode</a> of the Workbench documentation:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://carpentries.github.io/pegboard">"pegboard"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://withr.r-lib.org" class="external-link">"withr"</a></span><span class="op">)</span></span>
+<span><span class="co"># Download the file we need ------------------------------------</span></span>
+<span><span class="va">src</span> <span class="op">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/carpentries/sandpaper-docs/main/episodes/episodes.Rmd"</span></span>
+<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://withr.r-lib.org/reference/with_tempfile.html" class="external-link">local_tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".Rmd"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file</a></span><span class="op">(</span><span class="va">src</span>, <span class="va">tmp</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Load episode</span></span>
+<span><span class="va">ep</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/Episode.html">Episode</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span>
+<span><span class="co"># Summary -------------------------------------------------------------</span></span>
+<span><span class="co"># confirm that we are using sandpaper and get a summary of the contents</span></span>
+<span><span class="va">ep</span><span class="op">$</span><span class="fu">confirm_sandpaper</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">summary</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#|   sections   headings   callouts challenges  solutions       code     output    warning      error     images      links </span></span>
+<span><span class="co">#|         16         33         29          7          7         35          1          0          0          4         21</span></span>
+<span></span>
+<span><span class="co"># Validation ----------------------------------------------------------</span></span>
+<span><span class="co"># NOTE: a lot of invalid links because files do not exist outside of</span></span>
+<span><span class="co">#       the lesson context</span></span>
+<span><span class="va">lnk</span> <span class="op">&lt;-</span> <span class="va">ep</span><span class="op">$</span><span class="fu">validate_links</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#| ! There were errors in 12/23 links</span></span>
+<span><span class="co">#| ◌ Some linked internal files do not exist</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| file9c2d53b7cd66.Rmd:38 [missing file]: [next episode](editing.md)</span></span>
+<span><span class="co">#| file9c2d53b7cd66.Rmd:51 [missing file]: [the Introduction](introduction.md)</span></span>
+<span><span class="co">#| file9c2d53b7cd66.Rmd:203 [missing file]: [The Workbench Component Guide](component-guide.md)</span></span>
+<span><span class="co">#| file9c2d53b7cd66.Rmd:780 [missing file]: [the setup page](../learners/setup.md)</span></span>
+<span><span class="co">#| file9c2d53b7cd66.Rmd:796 [missing file]: [another episode (e.g. introduction)](introduction.md)</span></span>
+<span><span class="co">#| file9c2d53b7cd66.Rmd:797 [missing file]: [the home page](../index.md)</span></span>
+<span><span class="co">#| file9c2d53b7cd66.Rmd:798 [missing file]: [the setup page](../learners/setup.md)</span></span>
+<span><span class="co">#| file9c2d53b7cd66.Rmd:799 [missing file]: [the "line length" section in the style guide](../learners/style.md#line-length)</span></span>
+<span><span class="co">#| file9c2d53b7cd66.Rmd:805 [missing file]: [the style guide](../learners/style.md)</span></span>
+<span><span class="co">#| file9c2d53b7cd66.Rmd:825 [missing file]: [internal links](../episodes/episodes.Rmd#internal-links)</span></span>
+<span><span class="co">#| file9c2d53b7cd66.Rmd:860 [missing file]: [Hex sticker for The Carpentries](fig/carpentries-hex-blue.svg)</span></span>
+<span><span class="co">#| file9c2d53b7cd66.Rmd:902 [missing file]: [Example of Wrapped Alt Text (with apologies to William Carlos Williams)](fig/freezer.png)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">lnk</span>, max.level <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#| 'data.frame':    25 obs. of  26 variables:</span></span>
+<span><span class="co">#|  $ scheme              : chr  "" "" "" "" ...</span></span>
+<span><span class="co">#|  $ server              : chr  "" "" "" "" ...</span></span>
+<span><span class="co">#|  $ port                : int  NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#|  $ user                : chr  "" "" "" "" ...</span></span>
+<span><span class="co">#|  $ path                : chr  "editing.md" "introduction.md" "" "component-guide.md" ...</span></span>
+<span><span class="co">#|  $ query               : chr  "" "" "" "" ...</span></span>
+<span><span class="co">#|  $ fragment            : chr  "" "" "callout-blocks" "" ...</span></span>
+<span><span class="co">#|  $ orig                : chr  "editing.md" "introduction.md" "#callout-blocks" "component-guide.md" ...</span></span>
+<span><span class="co">#|  $ text                : chr  "next episode" "the Introduction" "the next section" "The Workbench Component Guide" ...</span></span>
+<span><span class="co">#|  $ alt                 : chr  NA NA NA NA ...</span></span>
+<span><span class="co">#|  $ title               : chr  "" "" "" "" ...</span></span>
+<span><span class="co">#|  $ type                : chr  "link" "link" "link" "link" ...</span></span>
+<span><span class="co">#|  $ rel                 : chr  NA NA NA NA ...</span></span>
+<span><span class="co">#|  $ anchor              : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...</span></span>
+<span><span class="co">#|  $ sourcepos           : int  38 51 168 203 318 327 468 545 550 630 ...</span></span>
+<span><span class="co">#|  $ filepath            : chr  "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" ...</span></span>
+<span><span class="co">#|  $ node                :List of 25</span></span>
+<span><span class="co">#|   ..- attr(*, "class")= chr "AsIs"</span></span>
+<span><span class="co">#|  $ known_protocol      : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span>
+<span><span class="co">#|  $ enforce_https       : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span>
+<span><span class="co">#|  $ internal_anchor     : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span>
+<span><span class="co">#|  $ internal_file       : logi  FALSE FALSE TRUE FALSE TRUE TRUE ...</span></span>
+<span><span class="co">#|  $ internal_well_formed: logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span>
+<span><span class="co">#|  $ all_reachable       : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span>
+<span><span class="co">#|  $ img_alt_text        : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span>
+<span><span class="co">#|  $ descriptive         : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span>
+<span><span class="co">#|  $ link_length         : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span>
+<span><span class="va">hdg</span> <span class="op">&lt;-</span> <span class="va">ep</span><span class="op">$</span><span class="fu">validate_headings</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">hdg</span>, max.level <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#| 'data.frame':    33 obs. of  10 variables:</span></span>
+<span><span class="co">#|  $ heading                      : chr  "Introduction" "Buoyant Barnacle" "Creating A New Episode" "What is the .Rmd extension?" ...</span></span>
+<span><span class="co">#|  $ level                        : int  2 3 2 3 2 3 3 3 2 3 ...</span></span>
+<span><span class="co">#|  $ pos                          : int  29 48 63 80 117 126 143 156 196 200 ...</span></span>
+<span><span class="co">#|  $ node                         :List of 33</span></span>
+<span><span class="co">#|   ..- attr(*, "class")= chr "AsIs"</span></span>
+<span><span class="co">#|  $ first_heading_is_second_level: logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span>
+<span><span class="co">#|  $ greater_than_first_level     : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span>
+<span><span class="co">#|  $ are_sequential               : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span>
+<span><span class="co">#|  $ have_names                   : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span>
+<span><span class="co">#|  $ are_unique                   : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span>
+<span><span class="co">#|  $ path                         : chr  "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" ...</span></span>
+<span><span class="va">div</span> <span class="op">&lt;-</span> <span class="va">ep</span><span class="op">$</span><span class="fu">validate_divs</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#| ! There were errors in 1/29 fenced divs</span></span>
+<span><span class="co">#| ◌ The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor, spoiler</span></span>
+<span><span class="co">#| </span></span>
+<span><span class="co">#| file9c2d53b7cd66.Rmd:457 [unknown div] empty-div</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">div</span>, max.level <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#| 'data.frame':    29 obs. of  5 variables:</span></span>
+<span><span class="co">#|  $ path    : chr  "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" ...</span></span>
+<span><span class="co">#|  $ div     : chr  "questions" "objectives" "prereq" "callout" ...</span></span>
+<span><span class="co">#|  $ pb_label: chr  "div-1-questions" "div-2-objectives" "div-3-prereq" "div-4-callout" ...</span></span>
+<span><span class="co">#|  $ pos     : int  9 20 46 78 141 198 226 243 253 272 ...</span></span>
+<span><span class="co">#|  $ is_known: logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>{pegboard} is not currently on CRAN, but it can be installed from our <a href="https://carpentries.r-universe.dev/ui#builds" class="external-link">Carpentries Universe</a> (updated every hour) with the following commands:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>  carpentries <span class="op">=</span> <span class="st">"https://carpentries.r-universe.dev/"</span>, </span>
 <span>  CRAN <span class="op">=</span> <span class="st">"https://cran.rstudio.com/"</span></span>
@@ -109,15 +204,16 @@
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>The first way to get started is to use the <code><a href="reference/get_lesson.html">get_lesson()</a></code> function, which will use <a href="https://r-lib.github.io/gert/" class="external-link">{gert}</a> to clone a lesson repository to your computer.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://carpentries.github.io/pegboard">pegboard</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/" class="external-link">purrr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://xml2.r-lib.org/" class="external-link">xml2</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://fs.r-lib.org" class="external-link">fs</a></span><span class="op">)</span></span>
+<p>To use {pegboard} in the context of The Workbench, you will need to have a lesson handy. If you don’t have one, you can use the <code><a href="reference/get_lesson.html">get_lesson()</a></code> function, which will use <a href="https://r-lib.github.io/gert/" class="external-link">{gert}</a> to clone a lesson repository to your computer.</p>
+<p>(NOTE: this file was last run on 2023-09-06 08:45:54.227933)</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://carpentries.github.io/pegboard">"pegboard"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://purrr.tidyverse.org/" class="external-link">"purrr"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://xml2.r-lib.org/" class="external-link">"xml2"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://fs.r-lib.org" class="external-link">"fs"</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/file_temp.html" class="external-link">file_temp</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"PBREADME"</span><span class="op">)</span></span>
-<span><span class="va">rng</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_lesson.html">get_lesson</a></span><span class="op">(</span><span class="st">"swcarpentry/r-novice-gapminder"</span>, path <span class="op">=</span> <span class="va">d</span><span class="op">)</span></span>
+<span><span class="va">rng</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_lesson.html">get_lesson</a></span><span class="op">(</span><span class="st">"swcarpentry/r-novice-gapminder"</span>, path <span class="op">=</span> <span class="va">d</span>, jekyll <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">rng</span></span>
 <span><span class="co">#| &lt;Lesson&gt;</span></span>
 <span><span class="co">#|   Public:</span></span>
@@ -126,7 +222,7 @@
 <span><span class="co">#|     challenges: function (path = FALSE, graph = FALSE, recurse = TRUE) </span></span>
 <span><span class="co">#|     clone: function (deep = FALSE) </span></span>
 <span><span class="co">#|     episodes: list</span></span>
-<span><span class="co">#|     extra: NULL</span></span>
+<span><span class="co">#|     extra: list</span></span>
 <span><span class="co">#|     files: active binding</span></span>
 <span><span class="co">#|     get: function (element = NULL, collection = "episodes") </span></span>
 <span><span class="co">#|     handout: function (path = NULL, solution = FALSE) </span></span>
@@ -134,10 +230,11 @@
 <span><span class="co">#|     isolate_blocks: function () </span></span>
 <span><span class="co">#|     load_built: function () </span></span>
 <span><span class="co">#|     n_problems: active binding</span></span>
-<span><span class="co">#|     path: /tmp/RtmpUQWpSD/PBREADME1b72117285a2e/swcarpentry--r-nov ...</span></span>
+<span><span class="co">#|     overview: FALSE</span></span>
+<span><span class="co">#|     path: /tmp/RtmpBNM7Jl/PBREADME9c2d5fd860a1/swcarpentry--r-novi ...</span></span>
 <span><span class="co">#|     reset: function () </span></span>
-<span><span class="co">#|     rmd: TRUE</span></span>
-<span><span class="co">#|     sandpaper: FALSE</span></span>
+<span><span class="co">#|     rmd: FALSE</span></span>
+<span><span class="co">#|     sandpaper: TRUE</span></span>
 <span><span class="co">#|     show_problems: active binding</span></span>
 <span><span class="co">#|     solutions: function (path = FALSE) </span></span>
 <span><span class="co">#|     summary: function (collection = "episodes") </span></span>
@@ -148,369 +245,235 @@
 <span><span class="co">#|   Private:</span></span>
 <span><span class="co">#|     deep_clone: function (name, value)</span></span>
 <span></span>
-<span><span class="co"># Find all challenges</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rng</span><span class="op">$</span><span class="fu">challenges</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#| $`01-rstudio-intro.Rmd`</span></span>
-<span><span class="co">#| {xml_nodeset (5)}</span></span>
-<span><span class="co">#| [1] &lt;block_quote sourcepos="362:1-398:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [2] &lt;block_quote sourcepos="516:1-552:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [3] &lt;block_quote sourcepos="555:1-568:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [4] &lt;block_quote sourcepos="571:1-583:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [5] &lt;block_quote sourcepos="586:1-604:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| $`02-project-intro.Rmd`</span></span>
-<span><span class="co">#| {xml_nodeset (5)}</span></span>
-<span><span class="co">#| [1] &lt;block_quote sourcepos="47:1-57:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="4 ...</span></span>
-<span><span class="co">#| [2] &lt;block_quote sourcepos="68:1-74:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos="6 ...</span></span>
-<span><span class="co">#| [3] &lt;block_quote sourcepos="133:1-141:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [4] &lt;block_quote sourcepos="143:1-167:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [5] &lt;block_quote sourcepos="181:1-192:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| $`03-seeking-help.Rmd`</span></span>
-<span><span class="co">#| {xml_nodeset (3)}</span></span>
-<span><span class="co">#| [1] &lt;block_quote sourcepos="134:1-150:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [2] &lt;block_quote sourcepos="152:1-187:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [3] &lt;block_quote sourcepos="189:1-207:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| $`04-data-structures-part1.Rmd`</span></span>
-<span><span class="co">#| {xml_nodeset (7)}</span></span>
-<span><span class="co">#| [1] &lt;block_quote sourcepos="341:1-355:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [2] &lt;block_quote sourcepos="425:1-453:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [3] &lt;block_quote sourcepos="515:1-574:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [4] &lt;block_quote sourcepos="596:1-616:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [5] &lt;block_quote sourcepos="619:1-642:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [6] &lt;block_quote sourcepos="645:1-665:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [7] &lt;block_quote sourcepos="668:1-696:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| $`05-data-structures-part2.Rmd`</span></span>
-<span><span class="co">#| {xml_nodeset (5)}</span></span>
-<span><span class="co">#| [1] &lt;block_quote sourcepos="100:1-111:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [2] &lt;block_quote sourcepos="183:1-211:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [3] &lt;block_quote sourcepos="315:1-339:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [4] &lt;block_quote sourcepos="345:1-374:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [5] &lt;block_quote sourcepos="376:1-392:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| $`06-data-subsetting.Rmd`</span></span>
-<span><span class="co">#| {xml_nodeset (8)}</span></span>
-<span><span class="co">#| [1] &lt;block_quote sourcepos="143:1-174:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [2] &lt;block_quote sourcepos="245:1-264:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [3] &lt;block_quote sourcepos="345:1-387:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [4] &lt;block_quote sourcepos="497:1-520:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [5] &lt;block_quote sourcepos="581:1-603:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [6] &lt;block_quote sourcepos="606:1-624:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [7] &lt;block_quote sourcepos="667:1-745:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
-<span><span class="co">#| [8] &lt;block_quote sourcepos="747:1-765:14" ktag="{: .challenge}"&gt;\n  &lt;heading sourcepos= ...</span></span>
+<span><span class="co"># Get a summary of all the elements in each episode</span></span>
+<span><span class="va">rng</span><span class="op">$</span><span class="fu">summary</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#| # A tibble: 16 × 12</span></span>
+<span><span class="co">#|    page                         sections headings callouts challenges solutions  code output warning error images links</span></span>
+<span><span class="co">#|    &lt;chr&gt;                           &lt;int&gt;    &lt;int&gt;    &lt;int&gt;      &lt;int&gt;     &lt;int&gt; &lt;int&gt;  &lt;int&gt;   &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;int&gt;</span></span>
+<span><span class="co">#|  1 01-rstudio-intro.Rmd               28       28       19          5         5    47      1       0     0      2     6</span></span>
+<span><span class="co">#|  2 02-project-intro.Rmd               12       19       12          5         1     4      0       0     0      1     3</span></span>
+<span><span class="co">#|  3 03-seeking-help.Rmd                15       15       11          3         3    12      0       0     0      0     7</span></span>
+<span><span class="co">#|  4 04-data-structures-part1.Rmd        2       50       31          9        15    77      0       0     0      0     1</span></span>
+<span><span class="co">#|  5 05-data-structures-part2.Rmd       15       15       12          4         4    33      0       0     0      0     3</span></span>
+<span><span class="co">#|  6 06-data-subsetting.Rmd             33       34       26          8         8    76      0       0     0      2     0</span></span>
+<span><span class="co">#|  7 07-control-flow.Rmd                15       15       17          5         5    36      0       0     0      0     0</span></span>
+<span><span class="co">#|  8 08-plot-ggplot2.Rmd                20       20       18          6         6    23      0       0     0      0    12</span></span>
+<span><span class="co">#|  9 09-vectorization.Rmd               11       11       14          4         4    24      0       0     0      0     1</span></span>
+<span><span class="co">#| 10 10-functions.Rmd                   20       21       19          5         5    28      0       0     0      0    12</span></span>
+<span><span class="co">#| 11 11-writing-data.Rmd                 6        6        7          2         2    11      0       0     0      0     0</span></span>
+<span><span class="co">#| 12 12-plyr.Rmd                         8        8       10          3         3    17      0       0     0      2     1</span></span>
+<span><span class="co">#| 13 13-dplyr.Rmd                       18       18       11          3         3    30      0       0     0      3     6</span></span>
+<span><span class="co">#| 14 14-tidyr.Rmd                       10       10        9          3         3    16      0       0     0      4     5</span></span>
+<span><span class="co">#| 15 15-knitr-markdown.Rmd              22       22       13          4         4     9      0       0     0      2    18</span></span>
+<span><span class="co">#| 16 16-wrap-up.Rmd                      9        9        4          0         0     1      0       0     0      0     1</span></span>
 <span></span>
-<span><span class="co"># Find all solutions</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rng</span><span class="op">$</span><span class="fu">solutions</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#| $`01-rstudio-intro.Rmd`</span></span>
-<span><span class="co">#| {xml_nodeset (5)}</span></span>
-<span><span class="co">#| [1] &lt;block_quote sourcepos="376:3-396:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="3 ...</span></span>
-<span><span class="co">#| [2] &lt;block_quote sourcepos="528:3-552:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
-<span><span class="co">#| [3] &lt;block_quote sourcepos="560:3-568:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
-<span><span class="co">#| [4] &lt;block_quote sourcepos="576:3-581:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="5 ...</span></span>
-<span><span class="co">#| [5] &lt;block_quote sourcepos="590:3-602:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="5 ...</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| $`02-project-intro.Rmd`</span></span>
-<span><span class="co">#| {xml_nodeset (1)}</span></span>
-<span><span class="co">#| [1] &lt;block_quote sourcepos="152:3-165:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="1 ...</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| $`03-seeking-help.Rmd`</span></span>
-<span><span class="co">#| {xml_nodeset (3)}</span></span>
-<span><span class="co">#| [1] &lt;block_quote sourcepos="143:3-150:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
-<span><span class="co">#| [2] &lt;block_quote sourcepos="157:3-187:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
-<span><span class="co">#| [3] &lt;block_quote sourcepos="198:3-207:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| $`04-data-structures-part1.Rmd`</span></span>
-<span><span class="co">#| {xml_nodeset (8)}</span></span>
-<span><span class="co">#| [1] &lt;block_quote sourcepos="234:3-243:15" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
-<span><span class="co">#| [2] &lt;block_quote sourcepos="347:3-353:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="3 ...</span></span>
-<span><span class="co">#| [3] &lt;block_quote sourcepos="432:3-453:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
-<span><span class="co">#| [4] &lt;block_quote sourcepos="532:3-574:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
-<span><span class="co">#| [5] &lt;block_quote sourcepos="603:3-616:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
-<span><span class="co">#| [6] &lt;block_quote sourcepos="628:3-640:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="6 ...</span></span>
-<span><span class="co">#| [7] &lt;block_quote sourcepos="654:3-663:3" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="6 ...</span></span>
-<span><span class="co">#| [8] &lt;block_quote sourcepos="683:3-694:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="6 ...</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| $`05-data-structures-part2.Rmd`</span></span>
-<span><span class="co">#| {xml_nodeset (5)}</span></span>
-<span><span class="co">#| [1] &lt;block_quote sourcepos="106:3-111:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
-<span><span class="co">#| [2] &lt;block_quote sourcepos="201:3-209:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="2 ...</span></span>
-<span><span class="co">#| [3] &lt;block_quote sourcepos="321:3-339:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
-<span><span class="co">#| [4] &lt;block_quote sourcepos="354:3-372:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="3 ...</span></span>
-<span><span class="co">#| [5] &lt;block_quote sourcepos="384:3-390:3" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="3 ...</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| $`06-data-subsetting.Rmd`</span></span>
-<span><span class="co">#| {xml_nodeset (8)}</span></span>
-<span><span class="co">#| [1] &lt;block_quote sourcepos="161:3-172:3" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="1 ...</span></span>
-<span><span class="co">#| [2] &lt;block_quote sourcepos="257:3-262:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="2 ...</span></span>
-<span><span class="co">#| [3] &lt;block_quote sourcepos="370:3-387:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
-<span><span class="co">#| [4] &lt;block_quote sourcepos="516:3-520:14" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
-<span><span class="co">#| [5] &lt;block_quote sourcepos="591:3-601:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="5 ...</span></span>
-<span><span class="co">#| [6] &lt;block_quote sourcepos="615:3-622:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="6 ...</span></span>
-<span><span class="co">#| [7] &lt;block_quote sourcepos="703:3-743:11" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos=" ...</span></span>
-<span><span class="co">#| [8] &lt;block_quote sourcepos="755:3-763:7" ktag="{: .solution}"&gt;\n  &lt;heading sourcepos="7 ...</span></span>
-<span></span>
-<span><span class="co"># Find all discussion blocks</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rng</span><span class="op">$</span><span class="fu">blocks</span><span class="op">(</span><span class="st">".discussion"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#| $`01-rstudio-intro.Rmd`</span></span>
-<span><span class="co">#| {xml_nodeset (0)}</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| $`02-project-intro.Rmd`</span></span>
-<span><span class="co">#| {xml_nodeset (0)}</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| $`03-seeking-help.Rmd`</span></span>
-<span><span class="co">#| {xml_nodeset (0)}</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| $`04-data-structures-part1.Rmd`</span></span>
-<span><span class="co">#| {xml_nodeset (1)}</span></span>
-<span><span class="co">#| [1] &lt;block_quote sourcepos="229:1-243:15" ktag="{: .discussion}"&gt;\n  &lt;heading sourcepos ...</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| $`05-data-structures-part2.Rmd`</span></span>
-<span><span class="co">#| {xml_nodeset (0)}</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| $`06-data-subsetting.Rmd`</span></span>
-<span><span class="co">#| {xml_nodeset (0)}</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="manipulation">Manipulation<a class="anchor" aria-label="anchor" href="#manipulation"></a>
-</h2>
-<p>At the moment, you can manipulate each episode in various ways. One of the ways that will become useful in the future is translating the episode from using the old and busted Jekyll syntax (e.g. using nested block quotes to create specialized sections and writing questions/keypoints/objectives in the YAML) to using a more intuitive system (currently being evaluated). For example, let’s say we wanted to transform an episode from Jekyll to using <a href="https://github.com/zkamvar/sandpaper#readme" class="external-link">{sandpaper}</a>. This would involve the following steps:</p>
-<ol style="list-style-type: decimal">
-<li>transforming the block quotes to native or fenced div tags (or dovetail blocks)</li>
-<li>converting code block decorators (<code>{: .language-r}</code>) and modify setup chunk</li>
-<li>moving questions, objectives, and keypoints to the body of the document</li>
-</ol>
-<p>Doing this by hand would be a nightmare, but we’ve written {pegboard} in such a way that will streamline this process</p>
-<p>First, let’s inspect how the file looks at the moment:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">fun</span> <span class="op">&lt;-</span> <span class="va">rng</span><span class="op">$</span><span class="va">episodes</span><span class="op">$</span><span class="va">`10-functions.Rmd`</span></span>
-<span><span class="va">fun</span><span class="op">$</span><span class="fu">head</span><span class="op">(</span><span class="fl">70</span><span class="op">)</span></span>
-<span><span class="co">#| ---</span></span>
-<span><span class="co">#| title: Functions Explained</span></span>
-<span><span class="co">#| teaching: 45</span></span>
-<span><span class="co">#| exercises: 15</span></span>
-<span><span class="co">#| questions:</span></span>
-<span><span class="co">#| - "How can I write a new function in R?"</span></span>
-<span><span class="co">#| objectives:</span></span>
-<span><span class="co">#| - "Define a function that takes arguments."</span></span>
-<span><span class="co">#| - "Return a value from a function."</span></span>
-<span><span class="co">#| - "Check argument conditions with `stopifnot()` in functions."</span></span>
-<span><span class="co">#| - "Test a function."</span></span>
-<span><span class="co">#| - "Set default values for function arguments."</span></span>
-<span><span class="co">#| - "Explain why we should divide programs into small, single-purpose functions."</span></span>
-<span><span class="co">#| keypoints:</span></span>
-<span><span class="co">#| - "Use `function` to define a new function in R."</span></span>
-<span><span class="co">#| - "Use parameters to pass values into functions."</span></span>
-<span><span class="co">#| - "Use `stopifnot()` to flexibly check function arguments in R."</span></span>
-<span><span class="co">#| - "Load functions into programs using `source()`."</span></span>
-<span><span class="co">#| source: Rmd</span></span>
-<span><span class="co">#| ---</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| ```{r, include=FALSE}</span></span>
-<span><span class="co">#| source("../bin/chunk-options.R")</span></span>
-<span><span class="co">#| knitr_fig_path("10-")</span></span>
-<span><span class="co">#| # Silently load in the data so the rest of the lesson works</span></span>
-<span><span class="co">#| gapminder &lt;- read.csv("data/gapminder_data.csv", header=TRUE)</span></span>
-<span><span class="co">#| ```</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| If we only had one data set to analyze, it would probably be faster to load the</span></span>
-<span><span class="co">#| file into a spreadsheet and use that to plot simple statistics. However, the</span></span>
-<span><span class="co">#| gapminder data is updated periodically, and we may want to pull in that new</span></span>
-<span><span class="co">#| information later and re-run our analysis again. We may also obtain similar data</span></span>
-<span><span class="co">#| from a different source in the future.</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| In this lesson, we'll learn how to write a function so that we can repeat</span></span>
-<span><span class="co">#| several operations with a single command.</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| &gt; ## What is a function?</span></span>
-<span><span class="co">#| &gt; </span></span>
-<span><span class="co">#| &gt; Functions gather a sequence of operations into a whole, preserving it for</span></span>
-<span><span class="co">#| &gt; ongoing use. Functions provide:</span></span>
-<span><span class="co">#| &gt; </span></span>
-<span><span class="co">#| &gt; - a name we can remember and invoke it by</span></span>
-<span><span class="co">#| &gt; - relief from the need to remember the individual operations</span></span>
-<span><span class="co">#| &gt; - a defined set of inputs and expected outputs</span></span>
-<span><span class="co">#| &gt; - rich connections to the larger programming environment</span></span>
-<span><span class="co">#| &gt; </span></span>
-<span><span class="co">#| &gt; As the basic building block of most programming languages, user-defined</span></span>
-<span><span class="co">#| &gt; functions constitute "programming" as much as any single abstraction can. If</span></span>
-<span><span class="co">#| &gt; you have written a function, you are a computer programmer.</span></span>
-<span><span class="co">#| &gt; </span></span>
-<span><span class="co">#| {: .callout}</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| ## Defining a function</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| Let's open a new R script file in the `functions/` directory and call it</span></span>
-<span><span class="co">#| functions-lesson.R.</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| The general structure of a function is:</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| ```{r}</span></span>
-<span><span class="co">#| my_function &lt;- function(parameters) {</span></span>
-<span><span class="co">#|   # perform action</span></span>
-<span><span class="co">#|   # return value</span></span>
-<span><span class="co">#| }</span></span>
-<span><span class="co">#| ```</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| Let's define a function `fahr_to_kelvin()` that converts temperatures from</span></span>
-<span><span class="co">#| Fahrenheit to Kelvin:</span></span></code></pre></div>
-<p>Now, we can apply the transformation chain in the order we specifed:</p>
+<span><span class="co"># Validate lesson elements</span></span>
+<span><span class="va">rng</span><span class="op">$</span><span class="fu">validate_links</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">rng</span><span class="op">$</span><span class="fu">validate_divs</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">rng</span><span class="op">$</span><span class="fu">validate_headings</span><span class="op">(</span><span class="op">)</span> <span class="co"># this is not run by default in sandpaper lessons</span></span>
+<span><span class="co">#| # Episode: "Data Structures" </span></span>
+<span><span class="co">#| ├─### Tip: Editing Text files in R  (must be level 2)</span></span>
+<span><span class="co">#| ├─### Check your data for factors </span></span>
+<span><span class="co">#| ├─### Data Types </span></span>
+<span><span class="co">#| ├─### Vectors and Type Coercion </span></span>
+<span><span class="co">#| ├─### Discussion 1 </span></span>
+<span><span class="co">#| ├─### Discussion 1 </span></span>
+<span><span class="co">#| ├─### Challenge 1 </span></span>
+<span><span class="co">#| │ └─#### Copy the code template </span></span>
+<span><span class="co">#| ├─### Instructions for the tasks </span></span>
+<span><span class="co">#| │ └─#### 1. Print the data </span></span>
+<span><span class="co">#| ├─### Tip 1.1 </span></span>
+<span><span class="co">#| ├─### Solution to Challenge 1.1 </span></span>
+<span><span class="co">#| │ └─#### 2. Overview of the data types </span></span>
+<span><span class="co">#| ├─### Tip 1.2 </span></span>
+<span><span class="co">#| ├─### Solution to Challenge 1.2 </span></span>
+<span><span class="co">#| │ └─#### 3. Which data type do we need? </span></span>
+<span><span class="co">#| ├─### Tip 1.3 </span></span>
+<span><span class="co">#| ├─### Solution to Challenge 1.3 </span></span>
+<span><span class="co">#| │ └─#### 4. Correct the problematic value </span></span>
+<span><span class="co">#| ├─### Tip 1.4 </span></span>
+<span><span class="co">#| ├─### Solution to challenge 1.4 </span></span>
+<span><span class="co">#| │ └─#### 5. Convert the column "weight" to the correct data type </span></span>
+<span><span class="co">#| ├─### Tip 1.5 </span></span>
+<span><span class="co">#| ├─### Solution to Challenge 1.5 </span></span>
+<span><span class="co">#| ├─### Some basic vector functions </span></span>
+<span><span class="co">#| ├─### Challenge 2 </span></span>
+<span><span class="co">#| ├─### Solution to Challenge 2 </span></span>
+<span><span class="co">#| ├─### Lists </span></span>
+<span><span class="co">#| ├─## Names </span></span>
+<span><span class="co">#| │ ├─### Accessing vectors and lists by name </span></span>
+<span><span class="co">#| │ ├─### Accessing and changing names </span></span>
+<span><span class="co">#| │ ├─### Challenge 3 </span></span>
+<span><span class="co">#| │ ├─### Solution to Challenge 3 </span></span>
+<span><span class="co">#| │ ├─### Challenge 4 </span></span>
+<span><span class="co">#| │ └─### Solution to Challenge 4 </span></span>
+<span><span class="co">#| └─## Data frames </span></span>
+<span><span class="co">#|   ├─### Challenge 5 </span></span>
+<span><span class="co">#|   ├─### Solution to Challenge 5 </span></span>
+<span><span class="co">#|   ├─### Tip: Renaming data frame columns </span></span>
+<span><span class="co">#|   ├─### Matrices </span></span>
+<span><span class="co">#|   ├─### Challenge 6 </span></span>
+<span><span class="co">#|   ├─### Solution to Challenge 6 </span></span>
+<span><span class="co">#|   ├─### Challenge 7 </span></span>
+<span><span class="co">#|   ├─### Solution to Challenge 7 </span></span>
+<span><span class="co">#|   ├─### Challenge 8 </span></span>
+<span><span class="co">#|   ├─### Solution to Challenge 8 </span></span>
+<span><span class="co">#|   ├─### Challenge 9 </span></span>
+<span><span class="co">#|   └─### Solution to Challenge 9 </span></span>
+<span><span class="co">#| # Episode: "Vectorization" </span></span>
+<span><span class="co">#| ├─## Challenge 1 </span></span>
+<span><span class="co">#| ├─## Solution to challenge 1 </span></span>
+<span><span class="co">#| ├─## Challenge 2 </span></span>
+<span><span class="co">#| ├─## Solution to challenge 2 </span></span>
+<span><span class="co">#| ├─## Tip: some useful functions for logical vectors </span></span>
+<span><span class="co">#| ├─## Tip: element-wise vs. matrix multiplication </span></span>
+<span><span class="co">#| ├─## Challenge 3 </span></span>
+<span><span class="co">#| ├─## Solution to challenge 3 </span></span>
+<span><span class="co">#| ├─## Challenge 4  (duplicated)</span></span>
+<span><span class="co">#| ├─## Challenge 4  (duplicated)</span></span>
+<span><span class="co">#| └─## Tip: Operations on vectors of unequal length </span></span>
+<span><span class="co">#| # Episode: "Functions Explained" </span></span>
+<span><span class="co">#| ├─## What is a function? </span></span>
+<span><span class="co">#| ├─## Defining a function </span></span>
+<span><span class="co">#| ├─## Tip  (duplicated)</span></span>
+<span><span class="co">#| ├─## Challenge 1 </span></span>
+<span><span class="co">#| ├─## Solution to challenge 1 </span></span>
+<span><span class="co">#| ├─## Combining functions </span></span>
+<span><span class="co">#| ├─## Challenge 2 </span></span>
+<span><span class="co">#| ├─## Solution to challenge 2 </span></span>
+<span><span class="co">#| ├─## Interlude: Defensive Programming </span></span>
+<span><span class="co">#| │ └─### Checking conditions with stopifnot() </span></span>
+<span><span class="co">#| ├─## Challenge 3 </span></span>
+<span><span class="co">#| ├─## Solution to challenge 3 </span></span>
+<span><span class="co">#| ├─## More on combining functions </span></span>
+<span><span class="co">#| ├─## Tip: Pass by value </span></span>
+<span><span class="co">#| ├─## Tip: Function scope </span></span>
+<span><span class="co">#| ├─## Challenge 4 </span></span>
+<span><span class="co">#| ├─## Solution to challenge 4 </span></span>
+<span><span class="co">#| ├─## Challenge 5 </span></span>
+<span><span class="co">#| ├─## Solution to challenge 5 </span></span>
+<span><span class="co">#| ├─## Tip  (duplicated)</span></span>
+<span><span class="co">#| └─## Tip: Testing and documenting</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="manipulation">Manipulation<a class="anchor" aria-label="anchor" href="#manipulation"></a>
+</h3>
+<p>The XML contents of the lesson are contained within the <code>$body</code> element of the Episode object and anything you do to that XML document is retained within the object itself (see the <a href="https://docs.ropensci.org/tinkr" class="external-link">{tinkr} documentation</a> for more details):</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">fun</span><span class="op">$</span></span>
-<span>  <span class="fu">unblock</span><span class="op">(</span><span class="op">)</span><span class="op">$</span>         <span class="co"># transform block quotes</span></span>
-<span>  <span class="fu">use_sandpaper</span><span class="op">(</span><span class="op">)</span><span class="op">$</span>   <span class="co"># convert code block decorators and modify setup chunk</span></span>
-<span>  <span class="fu">move_questions</span><span class="op">(</span><span class="op">)</span><span class="op">$</span>  <span class="co"># ...</span></span>
-<span>  <span class="fu">move_objectives</span><span class="op">(</span><span class="op">)</span><span class="op">$</span></span>
-<span>  <span class="fu">move_keypoints</span><span class="op">(</span><span class="op">)</span><span class="op">$</span></span>
-<span>  <span class="fu">head</span><span class="op">(</span><span class="fl">70</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">ep1</span> <span class="op">&lt;-</span> <span class="va">rng</span><span class="op">$</span><span class="va">episodes</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">ep1</span><span class="op">$</span><span class="va">body</span></span>
+<span><span class="co">#| {xml_document}</span></span>
+<span><span class="co">#| &lt;document sourcepos="1:1-712:0" xmlns="http://commonmark.org/xml/1.0"&gt;</span></span>
+<span><span class="co">#|  [1] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-1-objectives"/&gt;</span></span>
+<span><span class="co">#|  [2] &lt;paragraph sourcepos="2:1-2:50"&gt;\n  &lt;text sourcepos="2:1-2:50" xml:space="preserve"&gt;::::::::::::::::::::::::::::::::::::::: objectives&lt;/text&gt;\n&lt;/paragraph&gt;</span></span>
+<span><span class="co">#|  [3] &lt;list sourcepos="4:1-12:0" type="bullet" tight="true"&gt;\n  &lt;item sourcepos="4:1-4:62"&gt;\n    &lt;paragraph sourcepos="4:3-4:62"&gt;\n      &lt;text sourcepos="4:3-4:62" xml:space="preserve"&gt;Describe the purpose and use of each pane in the RStudio IDE&lt;/text&gt;\n    &lt;/paragraph&gt;\n  &lt;/item&gt;\n  &lt;item sourcep ...</span></span>
+<span><span class="co">#|  [4] &lt;paragraph sourcepos="13:1-13:50"&gt;\n  &lt;text sourcepos="13:1-13:50" xml:space="preserve"&gt;::::::::::::::::::::::::::::::::::::::::::::::::::&lt;/text&gt;\n&lt;/paragraph&gt;</span></span>
+<span><span class="co">#|  [5] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-1-objectives"/&gt;</span></span>
+<span><span class="co">#|  [6] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-2-questions"/&gt;</span></span>
+<span><span class="co">#|  [7] &lt;paragraph sourcepos="15:1-15:50"&gt;\n  &lt;text sourcepos="15:1-15:50" xml:space="preserve"&gt;:::::::::::::::::::::::::::::::::::::::: questions&lt;/text&gt;\n&lt;/paragraph&gt;</span></span>
+<span><span class="co">#|  [8] &lt;list sourcepos="17:1-21:0" type="bullet" tight="true"&gt;\n  &lt;item sourcepos="17:1-17:38"&gt;\n    &lt;paragraph sourcepos="17:3-17:38"&gt;\n      &lt;text sourcepos="17:3-17:38" xml:space="preserve"&gt;How to find your way around RStudio?&lt;/text&gt;\n    &lt;/paragraph&gt;\n  &lt;/item&gt;\n  &lt;item sourcepos="18:1-18:25"&gt;\ ...</span></span>
+<span><span class="co">#|  [9] &lt;paragraph sourcepos="22:1-22:50"&gt;\n  &lt;text sourcepos="22:1-22:50" xml:space="preserve"&gt;::::::::::::::::::::::::::::::::::::::::::::::::::&lt;/text&gt;\n&lt;/paragraph&gt;</span></span>
+<span><span class="co">#| [10] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-2-questions"/&gt;</span></span>
+<span><span class="co">#| [11] &lt;code_block sourcepos="24:1-25:3" xml:space="preserve" language="r" name="" include="FALSE"/&gt;</span></span>
+<span><span class="co">#| [12] &lt;heading sourcepos="27:1-27:13" level="2"&gt;\n  &lt;text sourcepos="27:4-27:13" xml:space="preserve"&gt;Motivation&lt;/text&gt;\n&lt;/heading&gt;</span></span>
+<span><span class="co">#| [13] &lt;paragraph sourcepos="29:1-37:45"&gt;\n  &lt;text sourcepos="29:1-29:81" xml:space="preserve"&gt;Science is a multi-step process: once you've designed an experiment and collected&lt;/text&gt;\n  &lt;softbreak/&gt;\n  &lt;text sourcepos="30:1-30:85" xml:space="preserve"&gt;data, the real fun begins! This lesson will te ...</span></span>
+<span><span class="co">#| [14] &lt;heading sourcepos="39:1-39:31" level="2"&gt;\n  &lt;text sourcepos="39:4-39:31" xml:space="preserve"&gt;Before Starting The Workshop&lt;/text&gt;\n&lt;/heading&gt;</span></span>
+<span><span class="co">#| [15] &lt;paragraph sourcepos="41:1-41:204"&gt;\n  &lt;text sourcepos="41:1-41:204" xml:space="preserve"&gt;Please ensure you have the latest version of R and RStudio installed on your machine. This is important, as some packages used in the workshop may not install correctly (or at all) if R is not up to dat ...</span></span>
+<span><span class="co">#| [16] &lt;list sourcepos="43:1-45:0" type="bullet" tight="true"&gt;\n  &lt;item sourcepos="43:1-43:81"&gt;\n    &lt;paragraph sourcepos="43:3-43:81"&gt;\n      &lt;link sourcepos="43:3-43:81" destination="https://www.r-project.org/" title=""&gt;\n        &lt;text sourcepos="43:4-43:52" xml:space="preserve"&gt;Download and inst ...</span></span>
+<span><span class="co">#| [17] &lt;heading sourcepos="46:1-46:26" level="2"&gt;\n  &lt;text sourcepos="46:4-46:26" xml:space="preserve"&gt;Introduction to RStudio&lt;/text&gt;\n&lt;/heading&gt;</span></span>
+<span><span class="co">#| [18] &lt;paragraph sourcepos="48:1-48:60"&gt;\n  &lt;text sourcepos="48:1-48:60" xml:space="preserve"&gt;Welcome to the R portion of the Software Carpentry workshop.&lt;/text&gt;\n&lt;/paragraph&gt;</span></span>
+<span><span class="co">#| [19] &lt;paragraph sourcepos="50:1-52:52"&gt;\n  &lt;text sourcepos="50:1-50:76" xml:space="preserve"&gt;Throughout this lesson, we're going to teach you some of the fundamentals of&lt;/text&gt;\n  &lt;softbreak/&gt;\n  &lt;text sourcepos="51:1-51:69" xml:space="preserve"&gt;the R language as well as some best practices for o ...</span></span>
+<span><span class="co">#| [20] &lt;paragraph sourcepos="54:1-57:31"&gt;\n  &lt;text sourcepos="54:1-54:68" xml:space="preserve"&gt;We'll be using RStudio: a free, open-source R Integrated Development&lt;/text&gt;\n  &lt;softbreak/&gt;\n  &lt;text sourcepos="55:1-55:83" xml:space="preserve"&gt;Environment (IDE). It provides a built-in editor, works on  ...</span></span>
+<span><span class="co">#| ...</span></span>
+<span><span class="va">ep1</span><span class="op">$</span><span class="fu">head</span><span class="op">(</span><span class="fl">20</span><span class="op">)</span> <span class="co"># show the first 20 lines of the file</span></span>
 <span><span class="co">#| ---</span></span>
-<span><span class="co">#| title: Functions Explained</span></span>
+<span><span class="co">#| title: Introduction to R and RStudio</span></span>
 <span><span class="co">#| teaching: 45</span></span>
-<span><span class="co">#| exercises: 15</span></span>
+<span><span class="co">#| exercises: 10</span></span>
 <span><span class="co">#| source: Rmd</span></span>
 <span><span class="co">#| ---</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| ```{r, include=FALSE}</span></span>
-<span><span class="co">#| gapminder &lt;- read.csv("data/gapminder_data.csv", header = TRUE)</span></span>
-<span><span class="co">#| ```</span></span>
 <span><span class="co">#| </span></span>
 <span><span class="co">#| ::::::::::::::::::::::::::::::::::::::: objectives</span></span>
 <span><span class="co">#| </span></span>
-<span><span class="co">#| - Define a function that takes arguments.</span></span>
-<span><span class="co">#| - Return a value from a function.</span></span>
-<span><span class="co">#| - Check argument conditions with `stopifnot()` in functions.</span></span>
-<span><span class="co">#| - Test a function.</span></span>
-<span><span class="co">#| - Set default values for function arguments.</span></span>
-<span><span class="co">#| - Explain why we should divide programs into small, single-purpose functions.</span></span>
+<span><span class="co">#| - Describe the purpose and use of each pane in the RStudio IDE</span></span>
+<span><span class="co">#| - Locate buttons and options in the RStudio IDE</span></span>
+<span><span class="co">#| - Define a variable</span></span>
+<span><span class="co">#| - Assign data to a variable</span></span>
+<span><span class="co">#| - Manage a workspace in an interactive R session</span></span>
+<span><span class="co">#| - Use mathematical and comparison operators</span></span>
+<span><span class="co">#| - Call functions</span></span>
+<span><span class="co">#| - Manage packages</span></span>
 <span><span class="co">#| </span></span>
 <span><span class="co">#| ::::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| :::::::::::::::::::::::::::::::::::::::: questions</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| - How can I write a new function in R?</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| ::::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| If we only had one data set to analyze, it would probably be faster to load the</span></span>
-<span><span class="co">#| file into a spreadsheet and use that to plot simple statistics. However, the</span></span>
-<span><span class="co">#| gapminder data is updated periodically, and we may want to pull in that new</span></span>
-<span><span class="co">#| information later and re-run our analysis again. We may also obtain similar data</span></span>
-<span><span class="co">#| from a different source in the future.</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| In this lesson, we'll learn how to write a function so that we can repeat</span></span>
-<span><span class="co">#| several operations with a single command.</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| :::::::::::::::::::::::::::::::::::::::::  callout</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| ## What is a function?</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| Functions gather a sequence of operations into a whole, preserving it for</span></span>
-<span><span class="co">#| ongoing use. Functions provide:</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| - a name we can remember and invoke it by</span></span>
-<span><span class="co">#| - relief from the need to remember the individual operations</span></span>
-<span><span class="co">#| - a defined set of inputs and expected outputs</span></span>
-<span><span class="co">#| - rich connections to the larger programming environment</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| As the basic building block of most programming languages, user-defined</span></span>
-<span><span class="co">#| functions constitute "programming" as much as any single abstraction can. If</span></span>
-<span><span class="co">#| you have written a function, you are a computer programmer.</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| ::::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| ## Defining a function</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| Let's open a new R script file in the `functions/` directory and call it</span></span>
-<span><span class="co">#| functions-lesson.R.</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| The general structure of a function is:</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| ```{r}</span></span>
-<span><span class="co">#| my_function &lt;- function(parameters) {</span></span>
-<span><span class="co">#|   # perform action</span></span>
-<span><span class="co">#|   # return value</span></span>
-<span><span class="co">#| }</span></span>
-<span><span class="co">#| ```</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="reset">Reset<a class="anchor" aria-label="anchor" href="#reset"></a>
-</h2>
-<p>All changes can be reset to the initial state with the <code>$reset()</code> method:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">fun</span><span class="op">$</span></span>
-<span>  <span class="fu">reset</span><span class="op">(</span><span class="op">)</span><span class="op">$</span></span>
-<span>  <span class="fu">head</span><span class="op">(</span><span class="fl">70</span><span class="op">)</span></span>
+<span><span class="va">new_content</span> <span class="op">&lt;-</span> <span class="st">r"{</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">#### NEW CONTENT</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">Hello! This is **new markdown content** generated via the </span></span>
+<span><span class="st">[{pegboard}](https://carpentries.github.io/pegboard) package that will </span></span>
+<span><span class="st">appear above the objectives block!</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">}"</span></span>
+<span><span class="va">ep1</span><span class="op">$</span><span class="fu">add_md</span><span class="op">(</span><span class="va">new_content</span>, where <span class="op">=</span> <span class="fl">0L</span><span class="op">)</span> </span>
+<span><span class="va">ep1</span><span class="op">$</span><span class="fu">head</span><span class="op">(</span><span class="fl">20</span><span class="op">)</span> <span class="co"># the new content has been added to the top</span></span>
 <span><span class="co">#| ---</span></span>
-<span><span class="co">#| title: Functions Explained</span></span>
+<span><span class="co">#| title: Introduction to R and RStudio</span></span>
 <span><span class="co">#| teaching: 45</span></span>
-<span><span class="co">#| exercises: 15</span></span>
-<span><span class="co">#| questions:</span></span>
-<span><span class="co">#| - "How can I write a new function in R?"</span></span>
-<span><span class="co">#| objectives:</span></span>
-<span><span class="co">#| - "Define a function that takes arguments."</span></span>
-<span><span class="co">#| - "Return a value from a function."</span></span>
-<span><span class="co">#| - "Check argument conditions with `stopifnot()` in functions."</span></span>
-<span><span class="co">#| - "Test a function."</span></span>
-<span><span class="co">#| - "Set default values for function arguments."</span></span>
-<span><span class="co">#| - "Explain why we should divide programs into small, single-purpose functions."</span></span>
-<span><span class="co">#| keypoints:</span></span>
-<span><span class="co">#| - "Use `function` to define a new function in R."</span></span>
-<span><span class="co">#| - "Use parameters to pass values into functions."</span></span>
-<span><span class="co">#| - "Use `stopifnot()` to flexibly check function arguments in R."</span></span>
-<span><span class="co">#| - "Load functions into programs using `source()`."</span></span>
+<span><span class="co">#| exercises: 10</span></span>
 <span><span class="co">#| source: Rmd</span></span>
 <span><span class="co">#| ---</span></span>
 <span><span class="co">#| </span></span>
-<span><span class="co">#| ```{r, include=FALSE}</span></span>
-<span><span class="co">#| source("../bin/chunk-options.R")</span></span>
-<span><span class="co">#| knitr_fig_path("10-")</span></span>
-<span><span class="co">#| # Silently load in the data so the rest of the lesson works</span></span>
-<span><span class="co">#| gapminder &lt;- read.csv("data/gapminder_data.csv", header=TRUE)</span></span>
-<span><span class="co">#| ```</span></span>
+<span><span class="co">#| #### NEW CONTENT</span></span>
 <span><span class="co">#| </span></span>
-<span><span class="co">#| If we only had one data set to analyze, it would probably be faster to load the</span></span>
-<span><span class="co">#| file into a spreadsheet and use that to plot simple statistics. However, the</span></span>
-<span><span class="co">#| gapminder data is updated periodically, and we may want to pull in that new</span></span>
-<span><span class="co">#| information later and re-run our analysis again. We may also obtain similar data</span></span>
-<span><span class="co">#| from a different source in the future.</span></span>
+<span><span class="co">#| Hello! This is **new markdown content** generated via the</span></span>
+<span><span class="co">#| [{pegboard}](https://carpentries.github.io/pegboard) package that will</span></span>
+<span><span class="co">#| appear above the objectives block!</span></span>
 <span><span class="co">#| </span></span>
-<span><span class="co">#| In this lesson, we'll learn how to write a function so that we can repeat</span></span>
-<span><span class="co">#| several operations with a single command.</span></span>
+<span><span class="co">#| ::::::::::::::::::::::::::::::::::::::: objectives</span></span>
 <span><span class="co">#| </span></span>
-<span><span class="co">#| &gt; ## What is a function?</span></span>
-<span><span class="co">#| &gt; </span></span>
-<span><span class="co">#| &gt; Functions gather a sequence of operations into a whole, preserving it for</span></span>
-<span><span class="co">#| &gt; ongoing use. Functions provide:</span></span>
-<span><span class="co">#| &gt; </span></span>
-<span><span class="co">#| &gt; - a name we can remember and invoke it by</span></span>
-<span><span class="co">#| &gt; - relief from the need to remember the individual operations</span></span>
-<span><span class="co">#| &gt; - a defined set of inputs and expected outputs</span></span>
-<span><span class="co">#| &gt; - rich connections to the larger programming environment</span></span>
-<span><span class="co">#| &gt; </span></span>
-<span><span class="co">#| &gt; As the basic building block of most programming languages, user-defined</span></span>
-<span><span class="co">#| &gt; functions constitute "programming" as much as any single abstraction can. If</span></span>
-<span><span class="co">#| &gt; you have written a function, you are a computer programmer.</span></span>
-<span><span class="co">#| &gt; </span></span>
-<span><span class="co">#| {: .callout}</span></span>
+<span><span class="co">#| - Describe the purpose and use of each pane in the RStudio IDE</span></span>
+<span><span class="co">#| - Locate buttons and options in the RStudio IDE</span></span>
+<span><span class="co">#| - Define a variable</span></span>
+<span><span class="co">#| - Assign data to a variable</span></span>
+<span><span class="co">#| - Manage a workspace in an interactive R session</span></span>
+<span><span class="va">ep1</span><span class="op">$</span><span class="va">headings</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="co"># the first heading is level 4. Let's change that using {xml2}</span></span>
+<span><span class="co">#| {xml_node}</span></span>
+<span><span class="co">#| &lt;heading level="4"&gt;</span></span>
+<span><span class="co">#| [1] &lt;text xml:space="preserve"&gt;NEW CONTENT&lt;/text&gt;</span></span>
+<span><span class="fu">xml2</span><span class="fu">::</span><span class="fu"><a href="http://xml2.r-lib.org/reference/xml_attr.html" class="external-link">xml_set_attr</a></span><span class="op">(</span><span class="va">ep1</span><span class="op">$</span><span class="va">headings</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="st">"level"</span>, <span class="st">"2"</span><span class="op">)</span></span>
+<span><span class="va">ep1</span><span class="op">$</span><span class="fu">head</span><span class="op">(</span><span class="fl">20</span><span class="op">)</span></span>
+<span><span class="co">#| ---</span></span>
+<span><span class="co">#| title: Introduction to R and RStudio</span></span>
+<span><span class="co">#| teaching: 45</span></span>
+<span><span class="co">#| exercises: 10</span></span>
+<span><span class="co">#| source: Rmd</span></span>
+<span><span class="co">#| ---</span></span>
 <span><span class="co">#| </span></span>
-<span><span class="co">#| ## Defining a function</span></span>
+<span><span class="co">#| ## NEW CONTENT</span></span>
 <span><span class="co">#| </span></span>
-<span><span class="co">#| Let's open a new R script file in the `functions/` directory and call it</span></span>
-<span><span class="co">#| functions-lesson.R.</span></span>
+<span><span class="co">#| Hello! This is **new markdown content** generated via the</span></span>
+<span><span class="co">#| [{pegboard}](https://carpentries.github.io/pegboard) package that will</span></span>
+<span><span class="co">#| appear above the objectives block!</span></span>
 <span><span class="co">#| </span></span>
-<span><span class="co">#| The general structure of a function is:</span></span>
+<span><span class="co">#| ::::::::::::::::::::::::::::::::::::::: objectives</span></span>
 <span><span class="co">#| </span></span>
-<span><span class="co">#| ```{r}</span></span>
-<span><span class="co">#| my_function &lt;- function(parameters) {</span></span>
-<span><span class="co">#|   # perform action</span></span>
-<span><span class="co">#|   # return value</span></span>
-<span><span class="co">#| }</span></span>
-<span><span class="co">#| ```</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| Let's define a function `fahr_to_kelvin()` that converts temperatures from</span></span>
-<span><span class="co">#| Fahrenheit to Kelvin:</span></span></code></pre></div>
+<span><span class="co">#| - Describe the purpose and use of each pane in the RStudio IDE</span></span>
+<span><span class="co">#| - Locate buttons and options in the RStudio IDE</span></span>
+<span><span class="co">#| - Define a variable</span></span>
+<span><span class="co">#| - Assign data to a variable</span></span>
+<span><span class="co">#| - Manage a workspace in an interactive R session</span></span>
+<span><span class="va">ep1</span><span class="op">$</span><span class="va">headings</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="co"># the first heading is now level 2</span></span>
+<span><span class="co">#| {xml_node}</span></span>
+<span><span class="co">#| &lt;heading level="2"&gt;</span></span>
+<span><span class="co">#| [1] &lt;text xml:space="preserve"&gt;NEW CONTENT&lt;/text&gt;</span></span>
+<span><span class="co"># write the file</span></span>
+<span><span class="va">ep1</span><span class="op">$</span><span class="fu">write</span><span class="op">(</span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/path_file.html" class="external-link">path_dir</a></span><span class="op">(</span><span class="va">ep1</span><span class="op">$</span><span class="va">path</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"Rmd"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">ep1</span><span class="op">$</span><span class="va">path</span>, <span class="fl">20</span><span class="op">)</span></span>
+<span><span class="co">#|  [1] "---"                                                                    "title: Introduction to R and RStudio"                                   "teaching: 45"                                                           "exercises: 10"                                                         </span></span>
+<span><span class="co">#|  [5] "source: Rmd"                                                            "---"                                                                    ""                                                                       "## NEW CONTENT"                                                        </span></span>
+<span><span class="co">#|  [9] ""                                                                       "Hello! This is **new markdown content** generated via the"              "[{pegboard}](https://carpentries.github.io/pegboard) package that will" "appear above the objectives block!"                                    </span></span>
+<span><span class="co">#| [13] ""                                                                       "::::::::::::::::::::::::::::::::::::::: objectives"                     ""                                                                       "- Describe the purpose and use of each pane in the RStudio IDE"        </span></span>
+<span><span class="co">#| [17] "- Locate buttons and options in the RStudio IDE"                        "- Define a variable"                                                    "- Assign data to a variable"                                            "- Manage a workspace in an interactive R session"</span></span></code></pre></div>
+</div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
