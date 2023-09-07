@@ -69,10 +69,17 @@ test_that("Sandpaper lessons will have children listed", {
     fs::path_rel(children_names, lsn$path)
   )
 
-  expect_equal(lsn$children[[1]]$parents, c(parent_file, second_parent_file))
-  expect_equal(lsn$children[[2]]$parents, c(parent_file, second_parent_file))
-  expect_equal(lsn$children[[3]]$parents, children_names[[2]])
+  build_parents <- c(parent_file, second_parent_file)
   
+  # `$parents` should reflect the immediate ancestors
+  expect_equal(lsn$children[[1]]$parents, build_parents)
+  expect_equal(lsn$children[[2]]$parents, build_parents)
+  expect_equal(fs::path(lsn$children[[3]]$parents), children_names[[2]])
+
+  # `$build_parents` should reflect distant ancestors
+  expect_equal(lsn$children[[1]]$build_parents, build_parents)
+  expect_equal(lsn$children[[2]]$build_parents, build_parents)
+  expect_equal(lsn$children[[3]]$build_parents, build_parents)
 
 })
 
