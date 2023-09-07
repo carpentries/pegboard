@@ -29,7 +29,6 @@ trace_children <- function(child, lsn) {
     children <- child$path
   }
   return(children)
-  
 }
 
 # Loop through a list of parent Episode objects and return a list of Episode
