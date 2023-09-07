@@ -21,7 +21,7 @@ NEW FEATURES
 - `Lesson` objects gain the `$trace_lineage()` method to find _all child
   files_ from the source path of a given episode. 
 
-# pegboard 0.6.1 (2023-08-31)
+# pegboard 0.6.1 (2023-09-06)
 
 NEW FEATURES
 ------------

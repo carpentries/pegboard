@@ -8,6 +8,7 @@ output: github_document
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, include = FALSE}
+options(width = 300)
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#|",
@@ -31,16 +32,60 @@ knitr::opts_chunk$set(
 >
 > https://en.wikipedia.org/wiki/Pegboard
 
-The {pegboard} package is a way to explore the Carpentries' lessons via their
-XML representation. This package makes heavy use of rOpenSci's
-[{tinkr}](https://docs.ropensci.org/tinkr/) and
-[{xml2}](https://cran.r-project.org/package=xml2). 
+The {pegboard} package is part of [The Carpentries
+Workbench](https://carpentries.github.io/workbench/) and it's main
+functionality is to parse Markdown and R Markdown documents into XML
+representations (via [{tinkr}](https://docs.ropensci.org/tinkr/)). By using XML,
+we are able to easily arrange and parse the elements of the lessons which makes
+two things possible:
+
+ - parse and validate the lessons for structural markdown elements
+ - translate markdown syntax of Carpentries-style materials from the 
+   [styles lesson infrastructure
+   (Jekyll-based)](https://github.com/carpentries/styles) to The Workbench
+   (Pandoc-based) (see the [lesson transition
+   tool](https://github.com/carpentries/lesson-transition#readme) for details)
 
 There are two [{R6}](https://cran.r-project.org/package=R6) objects in the
 package:
 
- - Episode: stores the xml content of a single episode
- - Lesson: stores all Episodes within a lesson
+ - Episode: stores the xml content of a single Markdown or R Markdown file.
+   This extends the the [`tinkr::yarn`
+   class](https://docs.ropensci.org/tinkr/reference/yarn.html).
+ - Lesson: stores all publishable markdown content as `Episodes` within a
+   lesson
+
+One simple usage is getting a summary of the content of an episode. Let's
+investigate the contents of [the "Episode Structure"
+episode](https://carpentries.github.io/sandpaper-docs/episodes.html) of the
+Workbench documentation:
+
+```{r}
+library("pegboard")
+library("withr")
+# Download the file we need ------------------------------------
+src <- "https://raw.githubusercontent.com/carpentries/sandpaper-docs/main/episodes/episodes.Rmd"
+tmp <- local_tempfile(fileext = ".Rmd")
+download.file(src, tmp)
+
+# Load episode
+ep <- Episode$new(tmp)
+# Summary -------------------------------------------------------------
+# confirm that we are using sandpaper and get a summary of the contents
+ep$confirm_sandpaper()$summary()
+
+# Validation ----------------------------------------------------------
+# NOTE: a lot of invalid links because files do not exist outside of
+#       the lesson context
+lnk <- ep$validate_links()
+str(lnk, max.level = 1)
+hdg <- ep$validate_headings()
+str(hdg, max.level = 1)
+div <- ep$validate_divs()
+str(div, max.level = 1)
+```
+
+
 
 ## Installation
 
@@ -58,74 +103,62 @@ install.packages("pegboard")
 
 ## Example
  
-The first way to get started is to use the `get_lesson()` function, which will
-use [{gert}](https://r-lib.github.io/gert/) to clone a lesson 
+To use {pegboard} in the context of The Workbench, you will need to have a
+lesson handy. If you don't have one, you can use the `get_lesson()` function,
+which will use [{gert}](https://r-lib.github.io/gert/) to clone a lesson
 repository to your computer. 
 
+(NOTE: this file was last run on `r Sys.time()`)
+
 ```{r example, message = FALSE}
-library(pegboard)
-library(purrr)
-library(xml2)
-library(fs)
+library("pegboard")
+library("purrr")
+library("xml2")
+library("fs")
 
 d <- fs::file_temp(pattern = "PBREADME")
-rng <- get_lesson("swcarpentry/r-novice-gapminder", path = d)
+rng <- get_lesson("swcarpentry/r-novice-gapminder", path = d, jekyll = FALSE)
 rng
 
-# Find all challenges
-head(rng$challenges())
+# Get a summary of all the elements in each episode
+rng$summary()
 
-# Find all solutions
-head(rng$solutions())
-
-# Find all discussion blocks
-head(rng$blocks(".discussion"))
+# Validate lesson elements
+rng$validate_links()
+rng$validate_divs()
+rng$validate_headings() # this is not run by default in sandpaper lessons
 ```
 
-## Manipulation
+### Manipulation 
 
-At the moment, you can manipulate each episode in various ways. One of the ways
-that will become useful in the future is translating the episode from using the
-old and busted Jekyll syntax (e.g. using nested block quotes to create
-specialized sections and writing questions/keypoints/objectives in the YAML) to 
-using a more intuitive system (currently being evaluated). For example, let's
-say we wanted to transform an episode from Jekyll to using
-[{sandpaper}](https://github.com/zkamvar/sandpaper#readme). This would involve
-the following steps:
+The XML contents of the lesson are contained within the `$body` element of the
+Episode object and anything you do to that XML document is retained within the
+object itself (see the [{tinkr} documentation](https://docs.ropensci.org/tinkr)
+for more details):
 
-1. transforming the block quotes to native or fenced div tags (or dovetail blocks)
-1. converting code block decorators (`{: .language-r}`) and modify setup chunk
-1. moving questions, objectives, and keypoints to the body of the document
+```{r}
+ep1 <- rng$episodes[[1]]
+ep1$body
+ep1$head(20) # show the first 20 lines of the file
+new_content <- r"{
 
-Doing this by hand would be a nightmare, but we've written {pegboard} in such a
-way that will streamline this process
+#### NEW CONTENT
 
-First, let's inspect how the file looks at the moment:
+Hello! This is **new markdown content** generated via the 
+[{pegboard}](https://carpentries.github.io/pegboard) package that will 
+appear above the objectives block!
 
-```{r inspect the file}
-fun <- rng$episodes$`10-functions.Rmd`
-fun$head(70)
+}"
+ep1$add_md(new_content, where = 0L) 
+ep1$head(20) # the new content has been added to the top
+ep1$headings[[1]] # the first heading is level 4. Let's change that using {xml2}
+xml2::xml_set_attr(ep1$headings[[1]], "level", "2")
+ep1$head(20)
+ep1$headings[[1]] # the first heading is now level 2
+# write the file
+ep1$write(fs::path_dir(ep1$path), format = "Rmd")
+readLines(ep1$path, 20)
 ```
 
-Now, we can apply the transformation chain in the order we specifed:
 
-```{r chain}
-fun$
-  unblock()$         # transform block quotes
-  use_sandpaper()$   # convert code block decorators and modify setup chunk
-  move_questions()$  # ...
-  move_objectives()$
-  move_keypoints()$
-  head(70)
-```
-
-## Reset
-
-All changes can be reset to the initial state with the `$reset()` method:
-
-```{r reset}
-fun$
-  reset()$
-  head(70)
-```
 
