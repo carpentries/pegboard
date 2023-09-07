@@ -377,6 +377,30 @@ Lesson <- R6::R6Class("Lesson",
       res <- stack_rows(res)
       throw_link_warnings(res)
       invisible(res)
+    },
+    #' @description find all the children of a single source file
+    #' @param episode_path the path to an episode or extra file
+    #' @return a character vector of the full lineage of files starting with
+    #'   a single source file. Note: this assumes a sandpaper lesson that has
+    #'   child files. If there are no child files, it will return the path
+    #' @examples
+    #' frag <- lesson_fragment("sandpaper-fragment-with-child")
+    #' lsn <- Lesson$new(frag, jekyll = FALSE)
+    #' lsn$has_children # TRUE
+    #' lsn$episodes[[1]]$children # first episode shows 1 immediate child
+    #' lsn$trace_lineage(lsn$files[[1]]) # find recursive children of 1st episode
+    trace_lineage = function(episode_path) {
+      path <- episode_path
+      if (!self$has_children) {
+        return(path)
+      }
+      is_episode <- path %in% self$files
+      if (is_episode) {
+        res <- trace_children(self$episodes[[fs::path_file(path)]], self)
+      } else {
+        res <- trace_children(self$extra[[fs::path_file(path)]], self)
+      }
+      return(res)
     }
   ),
   active = list(

@@ -19,6 +19,21 @@ child_file_from_code_blocks <- function(nodes) {
   }
 }
 
+# trace the lineage of a source file and return a recursive list of children
+# files. This assumes that the lesson has been set up to process children
+trace_children <- function(child, lsn) {
+  if (child$has_children) {
+    children <- purrr::map(lsn$children[child$children], trace_children, lsn)
+    children <- c(child$path, purrr::list_c(children))
+  } else {
+    children <- child$path
+  }
+  return(children)
+  
+}
+
+# Loop through a list of parent Episode objects and return a list of Episode
+# objects that represent their children. If there are no children, this is NULL
 load_children <- function(all_parents) {
   have_children <- purrr::map_lgl(all_parents, "has_children")
   # if there are any children, we need to account for those.
@@ -33,6 +48,7 @@ load_children <- function(all_parents) {
   return(the_children)
 }
 
+# Read in and/or update all recursive child files for a given parent
 read_children <- function(parent, all_children = list(), ...) {
   # if the parent has no children, return NULL. This is the exit condition
   no_children <- !parent$has_children
@@ -66,13 +82,15 @@ read_children <- function(parent, all_children = list(), ...) {
     }
     purrr::walk(all_children[this_child$children], add_parent, this_child)
     all_children <- c(all_children, 
-      setNames(list(this_child), child), 
+      stats::setNames(list(this_child), child), 
       additional_children)
   }
   # only return the unique files
   return(all_children[unique(names(all_children))])
 }
 
+# update the `$parents` and `$build_parents` fields of a child object with the
+# information from a parent object.
 add_parent <- function(child, parent) {
   if (length(parent) == 0L) {
     return(invisible(NULL))
