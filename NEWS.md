@@ -1,3 +1,26 @@
+# pegboard 0.7.0 (unreleased)
+
+This release introduces automated processing of {knitr} child files, which
+enables them to be automatically available for validation and processing.
+
+NEW FEATURES
+------------
+
+* `Episode` class objects gain the `children`, `parents`, and `build_parents`
+  fields which will contain the known relationships between files. Both
+  `children` and `parents` represent _immediate_ relationships while 
+  `build_parents` represent the most distant ancestor of the object that would
+  trigger it to build. Note that the `parents` fields are only populated for
+  an `Episode` in the context of a `Lesson` object. 
+- `Lesson` class objects gain the `children` field which is a list that stores
+  `Episode` objects derived from child files. 
+- `Episode` objects gain the `$has_parents` active binding reporting if the
+  object has a parent object. This is only used in the context of a `Lesson`.
+- Both `Episode` and `Lesson` objects gain the `$has_children` active binding,
+  reporting if there are any child episodes in the lesson or episode. 
+- `Lesson` objects gain the `$trace_lineage()` method to find _all child
+  files_ from the source path of a given episode. 
+
 # pegboard 0.6.1 (2023-08-31)
 
 NEW FEATURES
