@@ -15,6 +15,9 @@ Episode <- R6::R6Class("Episode",
     #' @field parents \[`character`\] a vector of absolute paths to immediate
     #'   parent files if they exist
     parents = character(0),
+    #' @field build_parents \[`character`\] a vector of absolute paths to the
+    #'   final parent files that will trigger this child file to build
+    build_parents = character(0),
 
     #' @description Create a new Episode
     #' @param path \[`character`\] path to a markdown episode file on disk
@@ -29,8 +32,8 @@ Episode <- R6::R6Class("Episode",
     #'   immediately passed to [tinkr::yarn]. If `TRUE`, all liquid variables
     #'   in relative links have spaces removed to allow the commonmark parser to
     #'   interpret them as links.
-    #' @param parents \[`character`\] absolute paths to the immediate parent
-    #'   files
+    #' @param parents \[`list`\] a list of `Episode` objects that represent the
+    #'   immediate parents of this child
     #' @param ... arguments passed on to [tinkr::yarn] and [tinkr::to_xml()]
     #' @return A new Episode object with extracted XML data
     #' @examples
@@ -97,7 +100,7 @@ Episode <- R6::R6Class("Episode",
       self$body <- lsn$body
       self$ns   <- lsn$ns
       self$children <- find_children(lsn)
-      self$parents <- if (length(parents) > 0L) fs::path_abs(parents) else parents
+      purrr::walk(parents, function(parent) add_parent(self, parent))
     },
 
 
