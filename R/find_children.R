@@ -4,7 +4,14 @@ find_children <- function(ep) {
   any_children <- length(children) > 0L
   if (any_children) {
     # create the absolute path to the children nodes
-    children <- fs::path_abs(children, fs::path_dir(ep$path))
+    abs_children <- fs::path_abs(children, fs::path_dir(ep$path))
+    # if children do not exist, then put them in the path of the lesson, which
+    # will contain a global folder maybe
+    exists <- fs::file_exists(abs_children)
+    if (any(!exists)) {
+      abs_children[!exists] <- fs::path_abs(children[!exists], ep$lesson)
+    }
+    children <- abs_children
   }
   return(children)
 }
