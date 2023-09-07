@@ -19,6 +19,20 @@ child_file_from_code_blocks <- function(nodes) {
   }
 }
 
+load_children <- function(all_parents) {
+  have_children <- purrr::map_lgl(all_parents, "has_children")
+  # if there are any children, we need to account for those.
+  if (any(have_children)) {
+    the_children <- list()
+    for (parent in all_parents[have_children]) {
+      the_children <- read_children(parent, the_children)
+    }
+  } else {
+    the_children <- NULL
+  }
+  return(the_children)
+}
+
 read_children <- function(parent, all_children = list(), ...) {
   # if the parent has no children, return NULL. This is the exit condition
   no_children <- !parent$has_children

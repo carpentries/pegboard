@@ -39,17 +39,9 @@ read_sandpaper_lesson <- function(path, ...) {
   # everything in other folders
   extra_files <- purrr::flatten(purrr::map(extra_paths,
       read_markdown_files, the_cfg, process_tags = FALSE, ...))
-  all_files <- c(episodes, standard_files, extra_files)
-  have_children <- purrr::map_lgl(all_files, "has_children")
-  # if there are any children, we need to account for those.
-  if (any(have_children)) {
-    the_children <- list()
-    for (parent in all_files[have_children]) {
-      the_children <- read_children(parent, the_children)
-    }
-  } else {
-    the_children <- NULL
-  }
+  
+  # Will somebody _please_ think about the _children_?!
+  the_children <- load_children(c(episodes, standard_files, extra_files))
 
   return(list(
       episodes = episodes, 
