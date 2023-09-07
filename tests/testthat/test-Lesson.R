@@ -76,10 +76,24 @@ test_that("Sandpaper lessons will have children listed", {
   expect_equal(lsn$children[[2]]$parents, build_parents)
   expect_equal(fs::path(lsn$children[[3]]$parents), children_names[[2]])
 
+  # `$children` will return the immediate child files
+  expect_true(lsn$episodes[[1]]$has_children)
+  expect_equal(lsn$episodes[[1]]$children, children_names[1:2])
+  expect_true(lsn$episodes[[2]]$has_children)
+  expect_equal(lsn$episodes[[2]]$children, children_names[1:2])
+
+  # `$lineage` will return the lineage of all the children
+  lineage1 <- unclass(c(build_parents[[1]], children_names))
+  lineage2 <- unclass(c(build_parents[[2]], children_names))
+  expect_equal(lsn$trace_lineage(build_parents[[1]]), lineage1)
+  expect_equal(lsn$trace_lineage(build_parents[[2]]), lineage2)
+
+
   # `$build_parents` should reflect distant ancestors
   expect_equal(lsn$children[[1]]$build_parents, build_parents)
   expect_equal(lsn$children[[2]]$build_parents, build_parents)
   expect_equal(lsn$children[[3]]$build_parents, build_parents)
+
 
 })
 
