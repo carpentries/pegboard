@@ -724,13 +724,23 @@ Episode <- R6::R6Class("Episode",
     },
     #' @field lesson \[`character`\] the path to the lesson where the episode is from
     lesson = function() {
-      lsn <- fs::path_dir(self$path)
+      components <- fs::path_split(self$path)[[1]]
       sub_folders <- c("episodes", "learners", "instructors", "profiles",
       "_episodes", "_episodes_rmd", "_extras")
-      if (basename(lsn) %in% sub_folders) {
-        lsn <- fs::path_dir(lsn)
+      the_folder <- sub_folders[purrr::map_lgl(sub_folders, is.element, components)]
+      if (length(the_folder) > 0L) {
+        # reverse the components so that we take only the sub folders relevant
+        # to our purposes
+        components <- rev(components)
+        # discard everything up to the folder
+        discard <- seq(which(components == the_folder)[1])
+        lsn  <- fs::path_join(rev(components[-discard]))
+      } else {
+        # if we do not encounter one of the known subfolders, we must be at
+        # the top of a lesson
+        lsn <- fs::path_dir(self$path)
       }
-      lsn
+      as.character(lsn)
     },
     #' @field has_children \[`logical`\] an indicator of the presence of child
     #'   files (`TRUE`) or their absence (`FALSE`)
