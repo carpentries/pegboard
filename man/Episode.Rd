@@ -157,6 +157,9 @@ files if they exist.}
 
 \item{\code{parents}}{[\code{character}] a vector of absolute paths to immediate
 parent files if they exist}
+
+\item{\code{build_parents}}{[\code{character}] a vector of absolute paths to the
+final parent files that will trigger this child file to build}
 }
 \if{html}{\out{</div>}}
 }
@@ -281,8 +284,8 @@ immediately passed to \link[tinkr:yarn]{tinkr::yarn}. If \code{TRUE}, all liquid
 in relative links have spaces removed to allow the commonmark parser to
 interpret them as links.}
 
-\item{\code{parents}}{[\code{character}] absolute paths to the immediate parent
-files}
+\item{\code{parents}}{[\code{list}] a list of \code{Episode} objects that represent the
+immediate parents of this child}
 
 \item{\code{...}}{arguments passed on to \link[tinkr:yarn]{tinkr::yarn} and \code{\link[tinkr:to_xml]{tinkr::to_xml()}}}
 }

@@ -1,0 +1,102 @@
+---
+title: "Using RMarkdown"
+teaching: 10
+exercises: 2
+---
+
+:::::::::::::::::::::::::::::::::::::: questions 
+
+- How do you write a lesson using RMarkdown and `{sandpaper}`?
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::: objectives
+
+- Explain how to use markdown with the new lesson template
+- Demonstrate how to include pieces of code, figures, and nested challenge blocks
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+## Introduction
+
+This is the new Carpentries template. It is written in [RMarkdown][r-markdown],
+which is a variant of Markdown that allows you to render code inside the
+lesson. Please refer to the [lesson
+example](https://carpentries.github.io/lesson-example) for full documentation.
+
+What you need to know is that there are three block quotes required for a valid
+Carpentries lesson template:
+
+ 1. `questions` are displayed at the beginning of the episode to prime the
+    learner for the content.
+ 2. `objectives` are the learning objectives for an episode displayed with
+    the questions.
+ 3. `keypoints` are displayed at the end of the episode to reinforce the
+    objectives.
+
+::::::::::::::::::::::::::::::::::::: challenge 
+
+## Challenge 1: Can you do it?
+
+What is the output of this command?
+
+
+```r
+paste("This", "new", "template", "looks", "good")
+```
+
+:::::::::::::::::::::::: solution 
+
+## Output
+ 
+
+```{.output}
+[1] "This new template looks good"
+```
+
+::::::::::::::::::::::::::::::::::
+
+
+## Challenge 2: how do you nest solutions within challenge blocks?
+
+:::::::::::::::::::::::: solution 
+
+You can add a line with at least three colons and a `solution` tag.
+
+:::::::::::::::::::::::::::::::::
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+## Figures
+
+You can also include figures:
+
+
+```r
+pie(
+  c(Sky = 78, "Sunny side of pyramid" = 17, "Shady side of pyramid" = 5), 
+  init.angle = 315, 
+  col = c("deepskyblue", "yellow", "yellow3"), 
+  border = FALSE
+)
+```
+
+<img src="fig/intro-rendered-pyramid-1.png" style="display: block; margin: auto;" />
+
+
+## Math
+
+One of our episodes contains $\LaTeX$ equations when describing how to create
+dynamic reports with {knitr}, so we now use mathjax to describe this:
+
+`$\alpha = \dfrac{1}{(1 - \beta)^2}$` becomes: $\alpha = \dfrac{1}{(1 - \beta)^2}$
+
+Cool, right?
+
+::::::::::::::::::::::::::::::::::::: keypoints 
+
+- Use `.Rmd` files for lessons even if you don't need to generate any code
+- Run `sandpaper::check_lesson()` to identify any issues with your lesson
+- Run `sandpaper::build_lesson()` to preview your lesson locally
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+

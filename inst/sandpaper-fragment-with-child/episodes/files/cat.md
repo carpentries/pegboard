@@ -1,0 +1,6 @@
+Here is a picture of a kitten:
+
+![I hope you have a good day](https://placekitten.com/300/300){alt='a random cute kitten'}
+
+```{r sessionInfo(), child='session.Rmd'}
+```

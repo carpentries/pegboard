@@ -1,0 +1,9 @@
+<details>
+<summary>Here is the sesion information for this build</summary>
+
+```{r session-info}
+sessioninfo::session_info()
+```
+
+</details>
+
