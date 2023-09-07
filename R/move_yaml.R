@@ -1,6 +1,7 @@
 move_yaml <- function(yaml, body, what = "questions", dovetail = TRUE) {
   NS <- xml2::xml_ns(body)[[1]]
-  where <- if (what == "keypoints") length(xml2::xml_children(body)) else 1L
+  where <- as.integer(dovetail)
+  where <- if (what == "keypoints") length(xml2::xml_children(body)) else where
   if (dovetail) {
     to_insert <- prepare_yaml_packet(yaml, what, dovetail)
     xml2::xml_add_child(body,

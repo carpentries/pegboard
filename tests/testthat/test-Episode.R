@@ -75,9 +75,10 @@ test_that("Episodes with image tags do not error", {
   expect_equal(tab$alt, expected)
   img <- ep$images
   expect_length(img, 3L)
-  post_image <- xml2::xml_find_first(img, ".//self::*/following-sibling::*")
+  attrs <- ".//self::*/following-sibling::md:text"
+  post_image <- xml2::xml_find_first(img, attrs, ep$ns)
   expect_match(xml2::xml_text(post_image), " \\.image-with-shadow ")
-  expect_match(xml2::xml_text(post_image), " width=\"900px\" ")
+  expect_match(xml2::xml_text(post_image), " width=\"900px\"")
 
 })
 

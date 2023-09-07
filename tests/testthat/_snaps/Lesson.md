@@ -1,3 +1,67 @@
+# Sandpaper Lessons can be validated [plain]
+
+    Code
+      vhead <- snd$validate_headings()
+
+---
+
+    Code
+      vlink <- snd$validate_links()
+    Message <cliMessage>
+      ! There were errors in 2/3 links
+      ( ) Links must use HTTPS <https://https.cio.gov/everything/>
+      
+      ::warning file=learners/setup.md,line=18:: [needs HTTPS]: [the PuTTY terminal](http://example.com/putty)
+      ::warning file=learners/setup.md,line=26:: [needs HTTPS]: [Terminal.app](http://example.com/terminal)
+
+# Sandpaper Lessons can be validated [ansi]
+
+    Code
+      vhead <- snd$validate_headings()
+
+---
+
+    Code
+      vlink <- snd$validate_links()
+    Message <cliMessage>
+      [33m![39m There were errors in 2/3 links
+      ( ) Links must use HTTPS <https://https.cio.gov/everything/>
+      
+      ::warning file=learners/setup.md,line=18:: [needs HTTPS]: [the PuTTY terminal](http://example.com/putty)
+      ::warning file=learners/setup.md,line=26:: [needs HTTPS]: [Terminal.app](http://example.com/terminal)
+
+# Sandpaper Lessons can be validated [unicode]
+
+    Code
+      vhead <- snd$validate_headings()
+
+---
+
+    Code
+      vlink <- snd$validate_links()
+    Message <cliMessage>
+      ! There were errors in 2/3 links
+      ◌ Links must use HTTPS <https://https.cio.gov/everything/>
+      
+      ::warning file=learners/setup.md,line=18:: [needs HTTPS]: [the PuTTY terminal](http://example.com/putty)
+      ::warning file=learners/setup.md,line=26:: [needs HTTPS]: [Terminal.app](http://example.com/terminal)
+
+# Sandpaper Lessons can be validated [fancy]
+
+    Code
+      vhead <- snd$validate_headings()
+
+---
+
+    Code
+      vlink <- snd$validate_links()
+    Message <cliMessage>
+      [33m![39m There were errors in 2/3 links
+      ◌ Links must use HTTPS <https://https.cio.gov/everything/>
+      
+      ::warning file=learners/setup.md,line=18:: [needs HTTPS]: [the PuTTY terminal](http://example.com/putty)
+      ::warning file=learners/setup.md,line=26:: [needs HTTPS]: [Terminal.app](http://example.com/terminal)
+
 # Sandpaper lessons have getter and summary methods
 
     Code
@@ -9,7 +73,7 @@
       1 intro.Rmd        6        6        6          1         2     3      0       0     0      0     1
       2 index.md         0        0        0          0         0     0      0       0     0      0     0
       3 a.md             0        0        0          0         0     0      0       0     0      0     0
-      4 setup.md         2        2        3          0         2     0      0       0     0      0     0
+      4 setup.md         2        2        3          0         2     0      0       0     0      0     2
       5 b.md             0        0        0          0         0     0      0       0     0      0     0
 
 ---
@@ -33,7 +97,7 @@
       1 intro.Rmd                  6        6        6          1         2     3      0       0     0      0     1
       2 index.md                   0        0        0          0         0     0      0       0     0      0     0
       3 a.md                       0        0        0          0         0     0      0       0     0      0     0
-      4 setup.md                   2        2        3          0         2     0      0       0     0      0     0
+      4 setup.md                   2        2        3          0         2     0      0       0     0      0     2
       5 b.md                       0        0        0          0         0     0      0       0     0      0     0
       6 site/built/intro.md        6        6        6          1         2     3      1       0     0      1     1
 
@@ -208,17 +272,14 @@
     Code
       vlink <- frg$validate_links()
     Message <cliMessage>
-      ! There were errors in 3/13 links
+      ! There were errors in 4/14 links
       ( ) Some linked internal files do not exist
-      ( ) Images need alt-text
-      <https://webaim.org/techniques/hypertext/link_text#alt_link>
+      ( ) Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
-      ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]
-      ../no-workie.svg
-      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing
-      alt-text]
-      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]
-      ../no-workie.svg [image missing alt-text]
+      ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]: [](../no-workie.svg)
+      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing alt-text]: https://carpentries.org/assets/img/TheCarpentries.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]: [Non-working image](../no-workie.svg) [image missing alt-text]: ../no-workie.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=199:: [image missing alt-text]: { page.root }/no-workie.svg
 
 # Lessons can be validated [ansi]
 
@@ -292,17 +353,14 @@
     Code
       vlink <- frg$validate_links()
     Message <cliMessage>
-      [33m![39m There were errors in 3/13 links
+      [33m![39m There were errors in 4/14 links
       ( ) Some linked internal files do not exist
-      ( ) Images need alt-text
-      <https://webaim.org/techniques/hypertext/link_text#alt_link>
+      ( ) Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
-      ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]
-      ../no-workie.svg
-      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing
-      alt-text]
-      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]
-      ../no-workie.svg [image missing alt-text]
+      ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]: [](../no-workie.svg)
+      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing alt-text]: https://carpentries.org/assets/img/TheCarpentries.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]: [Non-working image](../no-workie.svg) [image missing alt-text]: ../no-workie.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=199:: [image missing alt-text]: { page.root }/no-workie.svg
 
 # Lessons can be validated [unicode]
 
@@ -376,17 +434,14 @@
     Code
       vlink <- frg$validate_links()
     Message <cliMessage>
-      ! There were errors in 3/13 links
+      ! There were errors in 4/14 links
       ◌ Some linked internal files do not exist
-      ◌ Images need alt-text
-      <https://webaim.org/techniques/hypertext/link_text#alt_link>
+      ◌ Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
-      ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]
-      ../no-workie.svg
-      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing
-      alt-text]
-      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]
-      ../no-workie.svg [image missing alt-text]
+      ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]: [](../no-workie.svg)
+      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing alt-text]: https://carpentries.org/assets/img/TheCarpentries.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]: [Non-working image](../no-workie.svg) [image missing alt-text]: ../no-workie.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=199:: [image missing alt-text]: { page.root }/no-workie.svg
 
 # Lessons can be validated [fancy]
 
@@ -460,15 +515,12 @@
     Code
       vlink <- frg$validate_links()
     Message <cliMessage>
-      [33m![39m There were errors in 3/13 links
+      [33m![39m There were errors in 4/14 links
       ◌ Some linked internal files do not exist
-      ◌ Images need alt-text
-      <https://webaim.org/techniques/hypertext/link_text#alt_link>
+      ◌ Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
-      ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]
-      ../no-workie.svg
-      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing
-      alt-text]
-      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]
-      ../no-workie.svg [image missing alt-text]
+      ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]: [](../no-workie.svg)
+      ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing alt-text]: https://carpentries.org/assets/img/TheCarpentries.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]: [Non-working image](../no-workie.svg) [image missing alt-text]: ../no-workie.svg
+      ::warning file=_episodes/14-looping-data-sets.md,line=199:: [image missing alt-text]: { page.root }/no-workie.svg
 

@@ -110,6 +110,9 @@ jekyll-based lesson written in kramdown.}
 
 \item{\code{rmd}}{[\code{logical}] when \code{TRUE}, the episodes represent RMarkdown
 files, default is \code{FALSE} for markdown files (deprecated and unused).}
+
+\item{\code{overview}}{[\code{logical}] when \code{TRUE}, the lesson is an overview
+lesson and does not necessarly contain any episodes. Defaults to \code{FALSE}}
 }
 \if{html}{\out{</div>}}
 }

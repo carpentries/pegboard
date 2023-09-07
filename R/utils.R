@@ -22,10 +22,31 @@ element_df <- function(node) {
     end   = get_lineend(children) - start
   )
 }
-
 # nocov end
 
 `%||%` <- function(a, b) if (is.null(a)) b else a
+
+#' @param node a node determined to be a text representation of a link
+#'   destination
+#' @return 
+#'  - `get_link_fragments()`: the preceding three or four nodes, which will be
+#'  the text of the link or the alt text of the image.
+#' @rdname fix_links
+find_between_nodes <- function(a, b, include = TRUE) {
+  the_parent <- xml2::xml_parent(a)
+  if (!identical(the_parent, xml2::xml_parent(b))) {
+    # we cannot return a space between nodes on different levels
+    return(xml2::xml_missing())
+  }
+  the_children <- xml2::xml_children(the_parent)
+  # find the node in question by testing for identity since they represent the
+  # same object, they will be identical. 
+  ida <- which(purrr::map_lgl(the_children, identical, a))
+  idb <- which(purrr::map_lgl(the_children, identical, b))
+  # test for image with endsWith because they may have an inline image.
+  the_children[seq(ida, idb)]
+}
+
 
 has_cli <- function() {
   is.null(getOption("pegboard.no-cli")) && requireNamespace("cli", quietly = TRUE)
@@ -52,34 +73,75 @@ stop_if_no_path <- function(path) {
   }
 }
 
-read_markdown_files <- function(src, cfg = character(0), sandpaper = TRUE, ...) {
+sort_files_by_cfg <- function(the_files, cfg, the_dir = "episodes") {
+  the_names <- fs::path_file(the_files)
+  names(the_files) <- the_names
+  cfg_order <- cfg[[the_dir]]
+  if (!is.null(cfg_order)) {
+    # sort the files by the order in the config file. 
+    # This will discard any draft episodes, but also avoid errors with 
+    # Episodes in the CFG that do not exist.
+    the_order <- intersect(cfg_order, the_names)
+    the_files <- the_files[the_order]
+  }
+  return(the_files)
+}
+
+#' Process Markdown files in a directory into Episode objects
+#'
+#' @param src \[character\] the path to a folder containing markdown episodes
+#' @param cfg \[list\] a parsed config file that can be used to specify the
+#'   order of the files with a key that matches the folder name.
+#' @param sandpaper \[logical\] if `TRUE`, the episodes are expected to be
+#'   processed with {sandpaper} and will have the `$confirm_sandpaper()` method
+#'   triggered. 
+#' @param ... methods passed to the [Episode] initializer
+#' @return a list of [Episode] objects
+#' @keywords internal
+read_markdown_files <- function(src, cfg = list(), sandpaper = TRUE, ...) {
+
   # Grabbing ONLY the markdown files (there are other sources of detritus)
-  the_episodes <- fs::dir_ls(src, glob = "*md")
-  the_names    <- fs::path_file(the_episodes)
-  if (length(cfg) && fs::file_exists(cfg)) {
+  src_exists <- fs::dir_exists(src)
+  if (src_exists) {
+    the_files <- fs::dir_ls(src, glob = "*md")
+  } else {
+    the_files <- character(0)
+  }
+  # we still need to determine if this is an overview lesson. If it is, then
+  # it is okay that a particular directory does not exist
+  config_exists <- length(cfg) > 0
+  if (config_exists) {
     the_dir <- fs::path_file(src)
-    the_cfg <- yaml::read_yaml(cfg)[[the_dir]]
-    if (!is.null(the_cfg)) {
-      the_order    <- match(the_cfg, the_names, nomatch = 0)
-      the_episodes <- the_episodes[the_order]
-      the_names    <- the_names[the_order]
-    }
+    # determine if it is an overview page (and thus there are no episodes)
+    not_overview <- !identical(cfg[["overview"]], TRUE)
+    # sort by the order in the config file
+    the_files <- sort_files_by_cfg(the_files, cfg, the_dir)
+  } else {
+    # If we enter here, there is no config; it's not an overview lesson
+    not_overview <- TRUE
   }
 
-  if (!any(grepl("\\.R?md$", the_episodes))) {
-    stop(glue::glue("The {src} directory must have (R)markdown files"),
-      call. = FALSE
-    )
+  no_markdown <- length(the_files) == 0L
+  no_files_but_that_is_okay <- !not_overview && no_markdown
+
+  if (no_files_but_that_is_okay) {
+    return(NULL)
   }
 
-  episodes <- purrr::map(the_episodes, Episode$new, ...)
+  if (not_overview && no_markdown) {
+    msg <- glue::glue("The {src} directory must have (R)markdown files")
+    stop(msg, call. = FALSE)
+  }
+
+  objects <- purrr::map(.x = the_files, .f = Episode$new, ...)
+
   if (sandpaper) {
-    purrr::walk(episodes, ~.x$confirm_sandpaper())
+    purrr::walk(.x = objects, .f = function(obj) obj$confirm_sandpaper())
   }
 
-  # Names of the episodes will be the filename, not the basename
-  names(episodes) <- the_names
-  return(episodes)
+  # Names of the objects will be the filename, not the basename
+  names(objects) <- fs::path_file(the_files)
+  return(objects)
 }
 
 #' Remove spaces in relative links with liquid variables
@@ -168,6 +230,18 @@ xml_new_paragraph <- function(text = "", ns, tag = TRUE) {
   xml2::xml_set_attr(pgp, "xmlns", ns)
   xml2::xml_child(pgp, 1)
 }
+
+# stolen from {tinkr}
+make_text_nodes <- function(txt) {
+  # We are hijacking commonmark here to produce an XML markdown document with
+  # a single element: {paste(txt, collapse = ''). This gets passed to glue where
+  # it is expanded into nodes that we can read in via {xml2}, strip the
+  # namespace, and extract all nodes below
+  doc <- glue::glue(commonmark::markdown_xml("{paste(txt, collapse = '')}"))
+  nodes <- xml2::xml_ns_strip(xml2::read_xml(doc))
+  xml2::xml_find_all(nodes, ".//paragraph/text/*")
+}
+
 
 #' Retrieve the setup chunk if it exists, create one and insert it at the head 
 #' of the document if it does not

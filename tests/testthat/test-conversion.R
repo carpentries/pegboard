@@ -25,6 +25,39 @@ test_that("Episodes with commonmark-violating liquid relative links can be read"
   expect_snapshot(cat(tmp$show(), sep = "\n"))
 })
 
+test_that("Episodes with markdown formatted liquid links can be processed", {
+
+  llm <- test_path("examples", "_episodes", "link-liquid-markdown.md")
+  
+  txt <- readLines(llm)
+  ep  <- pegboard::Episode$new(llm, fix_liquid = TRUE)
+  res <- ep$use_sandpaper()$show()
+  # There should only be one opening bracket per link, resulting in a vector
+  # of length two when split on the opening square bracket
+  values <- res[startsWith(res, "[")]
+  bracket_count <- lengths(strsplit(values, "\\["))
+  expect_equal(bracket_count, rep(2L, length(values)))
+
+  # we should see the right translation of text to markdown
+  expected_text <- strsplit(txt[startsWith(txt, "[")], "\\]\\(")
+  expected_text <- sub("[", "", purrr::map_chr(expected_text, 1), fixed = TRUE)
+  expected_text <- gsub("_", "*", expected_text)
+
+  actual_text <- strsplit(values, "\\]\\(")
+  actual_text <- sub("[", "", purrr::map_chr(actual_text, 1), fixed = TRUE)
+  expect_equal(actual_text, expected_text)
+
+  # relative links should all be processed to the correct paths
+  lnks <- ep$validate_links(warn = FALSE)
+  local_links <- lnks$server == "" & 
+    lnks$type == "link" & 
+    !startsWith(lnks$path, "lesson") # saving for later
+  expect_equal(lnks$path[local_links], rep("test.md", sum(local_links)))
+  expect_equal(lnks$path[lnks$type == "image"], "fig/test.png")
+
+})
+
+
 test_that("Episodes without include=FALSE in setup chunk are still valid", {
 
   rast <- fs::path(lesson_fragment("rmd-lesson"), "_episodes_rmd", "01-test.Rmd")
@@ -99,9 +132,9 @@ test_that("Episodes can be converted to use sandpaper", {
     xml2::xml_attr(jek_links, "destination"),
     c("{{ page.root }}/index.html", 
       "{{ site.swc_pages }}/shell-novice", 
-      "{{ page.root }}{% link")
+      "{{ page.root }}{% link index.md %}")
   )
-  expect_snapshot(cat(e$tail(15), sep = "\n"))
+  expect_snapshot(cat(e$tail(17), sep = "\n"))
 
   # With RMD -------------------------------------------------------------------
   expect_length(e$use_sandpaper(rmd = TRUE)$code, 12)
@@ -135,7 +168,7 @@ test_that("Episodes can be converted to use sandpaper", {
   expect_length(e$output, 4) 
   expect_match(xml2::xml_attr(e$output, "info"), "output")
   skip_on_os("windows") # shQuote behaves _slightly_ differently and puts double quotes instead of single quotes
-  expect_snapshot(cat(e$use_sandpaper(rmd = TRUE)$tail(15), sep = "\n"))
+  expect_snapshot(cat(e$use_sandpaper(rmd = TRUE)$tail(17), sep = "\n"))
 
   # Without RMD ----------------------------------------------------------------
   expect_length(e$reset()$use_sandpaper(rmd = FALSE)$code, 11)
@@ -155,7 +188,7 @@ test_that("Episodes can be converted to use sandpaper", {
   expect_length(e$output, 4) 
   expect_match(xml2::xml_attr(e$output, "info"), "output")
   skip_on_os("windows") # shQuote behaves _slightly_ differently and puts double quotes instead of single quotes
-  expect_snapshot(cat(e$use_sandpaper(rmd = FALSE)$tail(15), sep = "\n"))
+  expect_snapshot(cat(e$use_sandpaper(rmd = FALSE)$tail(17), sep = "\n"))
 
 })
 
@@ -343,11 +376,13 @@ test_that("Integration: for markdown sandpaper sites without dovetail", {
     move_objectives()
 
   # The first child is not an RMD chunk
-  expect_equal(xml2::xml_text(xml2::xml_child(e$body)), 
+  expect_equal(xml2::xml_attr(xml2::xml_child(e$body), "label"), 
+    "div-1-objectives"
+  )
+  # first heading is what we expect
+  expect_equal(xml2::xml_text(e$headings[[1]]), 
     "Use a for loop to process files given a list of their names."
   )
-  # NOTE: at the moment, we don't have a non-dovetail solution, but we're getting
-  # there!
   expect_length(e$code, 11)
   # python code chunks exist
   expect_true(any(grepl("python", xml2::xml_attr(e$code, "info"))))

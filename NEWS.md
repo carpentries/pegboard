@@ -1,10 +1,138 @@
-# pegboard 0.4.1
+# pegboard 0.6.1 (2023-09-06)
 
-## MISC
+NEW FEATURES
+------------
+
+* `$validate_divs()` method now recognises the `spoiler` class of fenced divs
+  which allow optional/expandable items that are not automatically shown to the
+  learner (implemented: @tobyhodges, #134)
+
+# pegboard 0.6.0 (2023-08-29)
+
+NEW FEATURES
+------------
+
+- Workshop overview pages are now able to be processed into `Lesson` objects.
+  For Jekyll- based lessons, the directory name must end with `-workshop` (as
+  is the standard for workshop overview lessons without episodes), for
+  sandpaper- based lessons, the `config.yaml` file must contain the `overview:
+  true` tag (reported: @zkamvar, #118; fixed: @zkamvar, #132, reviewed by
+  @klbarnes20). These pages are indicated by the `$overview` field in the
+  `Lesson` object. For lessons that are not workshop overview lessons, nothing
+  will change.
+
+BUG FIX
+-------
+
+- Lessons that underwent an incomplete conversion from Jekyll to sandpaper will
+  now have a more appropriate error message provided.
+
+# pegboard 0.5.3 (2023-07-08)
+
+BUG FIX
+-------
+
+* `$validate_links()` no longer throws an error when there are HTML images
+  embedded in comments (reported: @beastyblacksmith, #130; fixed: @zkamvar,
+  #131, reviewed by @ErinBecker)
+* (transition) `$move_objectives()` and `$move_questions()` methods no longer
+  place these blocks as the _second_ element in the markdown. This was
+  originally implemented when we thought {dovetail} would be our solution to
+  the lesson infrastructure (and thus needed a setup chunk before any blocks).
+* (transition) liquid-formatted links with markdown inside them are now parsed
+  correctly. This leads lessons to be more accurately transitioned to use
+  {sandpaper} (reported: @uschille,
+  https://github.com/carpentries/lesson-transition/issues/46; fixed: @zkamvar,
+  #121)
+- (transition) images with kramdown attributes that are on a new line are now
+  more accurately transitioned to use {sandpaper} (reported: @uschille,
+  https://github.com/carpentries/lesson-transition/issues/46; fixed: @zkamvar,
+  #121)
+
+TESTS
+-----
+
+* A failing test due to the workbench transition was fixed (reported:
+  @zkamvar, #125; fixed: @zkamvar, #127)
+
+
+# pegboard 0.5.2 (2023-04-05)
+
+BUG FIX
+-------
+
+* The README file is no longer run through validation as it is not generally a
+  part of the website and more often than not, creates distractions.
+
+# pegboard 0.5.1 (2023-03-31)
+
+BUG FIX
+-------
+
+* Fenced divs with attributes are now properly parsed (@zkamvar, #115).
+
+# pegboard 0.5.0 (2023-03-31)
+
+NEW FEATURES
+------------
+
+* `Lesson` object validators now validate non-episode files
+  (reported: @zkamvar #110; fixed: @zkamvar #113).
+- `$validate_links()` will now respect links to anchors in spans.
+* validators will no longer truncate on GitHub actions (reported: @zkamvar #111,
+  fixed: @zkamvar: #114).
+* validators will provide full context for invalid links (not just link or
+  text, but link with text).
+
+DEPENDENCIES
+------------
+
+* `{tinkr}`'s minimum version has been set to 0.2.0 to recognise the release to
+  CRAN and bring in new bugfixes.
+
+# pegboard 0.4.3 (2023-01-26)
+
+NEW FEATURES
+------------
+
+* `$validate_links()` now checks if the URL protocol in an external link matches
+  a known list of protocols. Those that do not match (e.g. `javascript:` and
+  `bitcoin:`) will be flagged. (@zkamvar #109)
+
+BUG FIX
+-------
+
+* A bug where attributes following an image would cause missing alt text to not
+  be reported was fixed. (discovered: @dpshelio and @karenword; 
+  reported: @zkamvar #106; fixed: @zkamvar #108). This fix also makes the alt
+  text parsing and validation more robust
+- A bug where an unknown protocol was not recognised as invalid was fixed.
+  (discovered: @ndporter; reported: @zkamvar, #107; fixed: @zkamvar, #109)
+
+INTERNALS
+---------
+
+* New internal function `find_between_nodes()` will get all nodes between two
+  sibling nodes.
+
+# pegboard 0.4.2 (2023-01-10)
+
+## TESTS
+
+* A test that depended on an upstream resource was once again fixed.
+* Tests were modified to account for a new case for image fixing.
+
+## DOCUMENTATION
+
+* Internal `fix_links()` function has improved documentation.
+
+# pegboard 0.4.1 (2023-01-06)
+
+## TESTS
 
 * A test that dependend on an upstream resource was fixed.
 
-# pegboard 0.4.0
+# pegboard 0.4.0 (2023-01-06)
 
 ## DEPENDENCIES
 
@@ -21,7 +149,7 @@
 * GitHub workflows have been updated to run weekly.
 
 
-# pegboard 0.3.2
+# pegboard 0.3.2 (2022-09-14)
 
 ## DEPENDENCIES
 
@@ -30,7 +158,7 @@
  - Soft dependencies ggraph, ggplot2, and tidygraph have been removed. These
    dependencies were only needed for producing a now-out-of-date survey document
 
-# pegboard 0.3.1
+# pegboard 0.3.1 (2022-08-16)
 
 ## MISC
 
@@ -38,7 +166,7 @@ In preparation for {tinkr} 0.1.0, which changes the path of the default
 stylesheet, we are using the `tinkr::stylesheet()` convenience function to
 access it. 
 
-# pegboard 0.3.0
+# pegboard 0.3.0 (2022-05-25)
 
 ## NEW FEATURES
 
@@ -79,7 +207,7 @@ access it.
    validation of image links.
  - `fix_sandpaper_links()` now also fixes links that use `{{ site.baseurl }}`.
 
-# pegboard 0.2.6
+# pegboard 0.2.6 (2022-05-11)
 
 ## BUG FIX
 
@@ -88,7 +216,7 @@ access it.
     - internal function `find_lesson_links()` no longer expects links to be 
       strictly in paragraph elements.
 
-# pegboard 0.2.5
+# pegboard 0.2.5 (2022-05-10)
 
 ## MISC
 
@@ -97,20 +225,20 @@ access it.
    this is here just in case it's needed.
    Source: https://webaim.org/techniques/alttext/#decorative
 
-# pegboard 0.2.4
+# pegboard 0.2.4 (2022-02-25)
 
 ## DEPENDENCIES
 
  - The {fs} package needs to be >= 1.5.0 (#83, @sstevens2)
 
-# pegboard 0.2.3
+# pegboard 0.2.3 (2022-02-23)
 
 ## BUG FIX
 
  - footnotes with no trailing newline are no longer accidentally appended with
    relative link anchors when `getOption('sandpaper.links')` is not NULL.
 
-# pegboard 0.2.2
+# pegboard 0.2.2 (2022-02-23)
 
 ## NEW FEATURES
 
@@ -123,26 +251,26 @@ access it.
  - `$validate_links()` no longer throws warnings about short or uninformative
    text for link anchors (@zkamvar, #81)
 
-# pegboard 0.2.1
+# pegboard 0.2.1 (2022-02-18)
 
 ## MISC
 
  - The inline messages for link validation errors are more verbose (@tobyhodges, #79)
 
-# pegboard 0.2.0
+# pegboard 0.2.0 (2022-02-17)
 
 ## NEW FEATURES
 
  - `validate_divs()` will validate that the divs in an Episode are ones we
    expect.
 
-# pegboard 0.1.1
+# pegboard 0.1.1 (2022-02-02)
 
 ## MISC
 
  - Correct mis-attribution for LICENSE
 
-# pegboard 0.1.0
+# pegboard 0.1.0 (2022-02-01)
 
 This is a soft release of {pegboard} to coincide with the first announcement of
 The Carpentries Workbench.

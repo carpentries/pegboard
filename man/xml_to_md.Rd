@@ -4,12 +4,16 @@
 \alias{xml_to_md}
 \title{Convert xml to markdown}
 \usage{
-xml_to_md(body, stylesheet = "xml2md_pegboard.xsl")
+xml_to_md(body, stylesheet = "xml2md_pegboard.xsl", newlines = FALSE)
 }
 \arguments{
 \item{body}{an xml document}
 
 \item{stylesheet}{the name of a stylesheet passed to \code{get_stylesheet}}
+
+\item{newlines}{a logical indicating that newlines (aka softbreaks) should
+be inserted between elements (defaults to \code{FALSE}, meaning that no
+separator will be added between elements).}
 }
 \value{
 a character vector of length 1

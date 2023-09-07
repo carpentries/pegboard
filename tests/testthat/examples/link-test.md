@@ -40,6 +40,14 @@ This link [is a relative link that works][rel-image]
 This link [goes to an internal nested file](files/thing.txt), but this internal
 link [does not exist](files/ohno.txt)
 
+## Invalid protocols
+
+This is a [link with a typo](gttps://example.com)
+
+This is a [bitcoin link](bitcoin:FAKE-EXAMPLE) 
+and this is a [javascript example](javascript:alert%28%27JavaScript%20Link!%27%29),
+both of which should never appear in lessons.
+
 ## HTTP links
 
 This [link uses http, which is no bueno](http://example.com)
@@ -73,6 +81,16 @@ If we have links like
 they will fail, but [link text that is descriptive][1], albiet with a numeric
 anchor will work.
 
+## Spans
+
+This is an [internal span]{#spanny style='color: red'} that we might want to
+link to.
+
+[definition list]{#deffy .anchored}
+: This is a definition list item that has an anchor
+
+We have examples of [spans](#spanny) and [definition lists](#deffy). 
+We also have an example of a [missing anchor pointing to float](#floaty)
 
 [1]: https://example.com/link-text#descriptive
 [rel-label-1]: #label-1

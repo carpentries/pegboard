@@ -5,12 +5,40 @@
 #'   [process_images()] to add the alt attribute and extract images from HTML
 #'   blocks. `FALSE` will present the nodes as found by XPath search.
 #' @return an xml_nodelist
+#' @details Markdown users can write images as either markdown or HTML. If they
+#' write images as HTML, then the commonmark XML parser recognises these as
+#' generic "HTML blocks" and they can't be found by just searching for
+#' `.//md:image`. This function searches both `md:html_block` and
+#' `md:html_inline` for image content that it can extract for downstream
+#' analysis.
+#'
 #' @keywords internal
+#' @examples
+#' tmp <- tempfile()
+#' on.exit(unlink(tmp))
+#' txt <- '
+#' ![a kitten](https://placekitten.com/200/200){alt="a pretty kitten"}
+#'
+#' <!-- an html image of a kitten -->
+#' <img src="https://placekitten.com/200/200">
+#'
+#' an inline html image of a kitten <img src="https://placekitten.com/50/50">
+#' '
+#' writeLines(txt, tmp)
+#' ep <- Episode$new(tmp)
+#' ep$show()
+#' # without process = TRUE, images in HTML elements are not converted
+#' ep$get_images() 
+#' # setting process = TRUE will extract the HTML elements for analysis 
+#' # (e.g to detect alt text)
+#' ep$get_images(process = TRUE)
 get_images <- function(yrn, process = TRUE) {
   img    <- ".//md:image"
   hblock <- ".//md:html_block[contains(text(), '<img')]"
+  # comment blocks should not be included in the image processing. 
+  nocomment <- "[not(starts-with(normalize-space(text()), '<!--'))]"
   hline  <- ".//md:html_inline[starts-with(text(), '<img')]"
-  xpath  <- glue::glue("{img} | {hblock} | {hline}")
+  xpath  <- glue::glue("{img} | {hblock}{nocomment} | {hline}")
   images <- xml2::xml_find_all(yrn$body, xpath, yrn$ns)
   images <- if (process) process_images(images) else images
   images
@@ -32,7 +60,7 @@ get_images <- function(yrn, process = TRUE) {
 #' @return a copy of the nodelist
 #' @keywords internal
 process_images <- function(images, ns = tinkr::md_ns()) {
-  xpath <- "self::*/following-sibling::md:text[starts-with(text(), '{')]"
+  xpath <- "self::*/following-sibling::*[1]/self::*[starts-with(text(), '{')]"
   have_alts <- xml2::xml_find_lgl(images, glue::glue("boolean({xpath})"), ns)
   have_no_attr <- is.na(xml2::xml_attr(images[have_alts], "alt"))
   html_nodes <- grepl("html_", xml2::xml_name(images))
@@ -69,7 +97,8 @@ process_images <- function(images, ns = tinkr::md_ns()) {
 #' the alt text, and adds it as an attribute to the image, which is useful in
 #' parsing the XML, and will not affect rendering.
 #'
-#' Note: this function works by side-effect
+#' @note this function assumes that the images entering have a curly brace
+#'   following.
 #'
 #' @param images a nodeset of images
 #' @param xpath an XPath expression that finds the first curly brace immediately
@@ -83,17 +112,51 @@ set_alt_attr <- function(images, xpath, ns) {
   attr_texts <- xml2::xml_text(attrs)
   no_closing <- !grepl("[}]", attr_texts)
   if (any(no_closing)) {
-    close_xpath <- "self::*/following-sibling::md:text[contains(text(), '}')]"
-    add_alts <- purrr::map_chr(attrs[no_closing], 
-      ~xml2::xml_text(xml2::xml_find_all(.x, glue::glue("./{close_xpath}"), ns))
-    )
-    attr_texts[no_closing] <- paste(attr_texts[no_closing], add_alts)
+    fixed_text <- purrr::map_chr(attrs[no_closing], get_broken_attr_text, ns)
+    attr_texts[no_closing] <- fixed_text
   }
-  htmls <- paste(gsub("[{](.+?)[}]", "<img \\1/>", attr_texts), collapse = "\n")
+  htmls <- paste(gsub("[{](.+)[}]", "<img \\1/>", attr_texts), collapse = "\n")
   htmls <- xml2::read_html(htmls)
   alts <- xml2::xml_find_all(htmls, ".//img")
-  xml2::xml_set_attr(images, "alt", xml2::xml_attr(alts, "alt"))
+  alts <- xml2::xml_attr(alts, "alt")
+  purrr::walk2(images, alts, function(img, alt) {
+    if (!is.na(alt)) xml2::xml_set_attr(img, "alt", alt)
+  })
   invisible(images)
+}
+
+#' @noRd
+#'
+#' @param attr_node an attribute node following an image. This should be a
+#'   text node that will start with `\{`.
+#' @param ns the xml namespace
+get_broken_attr_text <- function(attr_node, ns) {
+  closer <- xml2::xml_find_first(attr_node, closing_attr_xpath(), ns)
+  # find all the sibling nodes between the attr_node and the closer
+  # and extract the text
+  txt <- xml2::xml_text(find_between_nodes(attr_node, closer))
+  # collapse the text without the newlines
+  paste(txt[txt != ''], collapse = " ")
+}
+
+closing_attr_xpath <- function() {
+  # This XPath satement is _really_ hairy. Effectively, we are looking for
+  # _closing_ bracket with the possibility that there could be brackets that
+  # look like our closer. We will know a bracket is a closer if it is the last
+  # one on the line or if it is preceded by a quote or space.
+  #
+  # 1. a bracket at the end of the line is a closing bracket 
+  #   (this could be violated but I think it's a safe edge case)
+  ender <- "substring(text(), string-length(text)) = '}'"
+  # 2. a bracket that is preceded by a single quote
+  single_quote <- "contains(text(), concat(\"'\", \"}\"))"
+  # 3. a bracket that is preceded by a space
+  # 4. a bracket that is preceded by a double quote
+  possible_closers <- paste0(c(" ", '"'), "}")
+  closer_pred <- paste0("contains(text(), '", possible_closers, "')")
+  # collapsing everything together
+  final_pred <- paste(c(closer_pred, single_quote, ender), collapse = " or ")
+  paste0("./following-sibling::md:text[", final_pred, "][1]")
 }
 
 

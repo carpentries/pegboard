@@ -30,7 +30,7 @@ Episode <- R6::R6Class("Episode",
     #' scope$lesson
     #' scope$challenges
     initialize = function(path = NULL, process_tags = TRUE, fix_links = TRUE, fix_liquid = FALSE, ...) {
-      if (!file.exists(path)) {
+      if (!fs::file_exists(path)) {
         stop(glue::glue("the file '{path}' does not exist"))
       }
       links <- getOption("sandpaper.links")
@@ -78,7 +78,9 @@ Episode <- R6::R6Class("Episode",
         }
       }
 
-      if (fix_links) fix_links(lsn$body)
+      if (fix_links) {
+        lsn$body <- fix_links(lsn$body)
+      }
 
       # Initialize the object
       self$path <- path
@@ -233,7 +235,10 @@ Episode <- R6::R6Class("Episode",
           suppressWarnings(yml <- yaml::read_yaml(pth))
         }
       }
-      self$body <- use_sandpaper(self$body, rmd, yml)
+      known <- fs::dir_ls(self$lesson, glob = "*md", recurse = 1L)
+      known <- fs::path_rel(known, start = self$lesson)
+      path <- fs::path_rel(self$path, start = self$lesson)
+      self$body <- use_sandpaper(self$body, rmd, yml, path, known)
 
       # Remove the common yaml offenders
       suppressWarnings(this_yaml <- self$get_yaml())

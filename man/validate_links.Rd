@@ -3,6 +3,8 @@
 \docType{data}
 \name{validate_links}
 \alias{validate_links}
+\alias{allowed_uri_protocols}
+\alias{link_known_protocol}
 \alias{link_enforce_https}
 \alias{link_all_reachable}
 \alias{link_img_alt_text}
@@ -16,12 +18,28 @@
 \alias{link_info}
 \title{Validate Links in a markdown document}
 \format{
-An object of class \code{character} of length 8.
+\itemize{
+\item \code{allowed_uri_protocols} a character string of length 23
+}
 
-An object of class \code{character} of length 8.
+\itemize{
+\item \code{link_tests} a character string of length 9
+containing templates that use the output of \code{validate_links()} for
+formatting.
+}
+
+\itemize{
+\item \code{link_info} a character string of length 9
+that gives information and informative links for additional context for
+failures.
+}
 }
 \usage{
 validate_links(yrn)
+
+allowed_uri_protocols
+
+link_known_protocol(VAL)
 
 link_enforce_https(VAL)
 
@@ -35,7 +53,7 @@ link_descriptive(VAL)
 
 link_source_list(lt)
 
-link_internal_anchor(VAL, source_list, headings)
+link_internal_anchor(VAL, source_list, headings, body)
 
 link_internal_file(VAL, source_list, root)
 
@@ -54,6 +72,8 @@ link_info
 
 \item{headings}{an \code{xml_nodeset} of headings}
 
+\item{body}{an \code{xml_document}}
+
 \item{root}{the root path to the lesson that contains this file.}
 }
 \value{
@@ -69,12 +89,19 @@ websites.
 \subsection{Link Validity}{
 
 All links must resolve to a specific location. If it does not exist, then the
-link is invalid.
+link is invalid. At the moment, we can only do local links.
 \subsection{External links}{
 
-These links must start with a valid and secure protocol. This means that we
-will enforce HTTPS over HTTP. Any link with HTTP will be flagged. Most
-importantly, these links must not return an error code > 399.
+These links must start with a valid and secure protocol. Allowed protocols
+are taken from the \href{https://developer.wordpress.org/reference/functions/wp_allowed_protocols/#return}{allowed protocols in Wordpress}:
+http, https, ftp, ftps, mailto, news, irc, irc6, ircs,
+gopher, nntp, feed, telnet, mms, rtsp, sms, svn, tel, fax,
+xmpp, webcal, urn
+
+Misspellings and unsupported protocols (e.g. \verb{javascript:} and \verb{bitcoin:}
+will be flagged).
+
+In addition, we will enforce the use of HTTPS over HTTP.
 }
 
 \subsection{Cross-lesson links}{
@@ -86,7 +113,7 @@ a page and have the correct capitalisation.
 \subsection{Anchors (aka fragments)}{
 
 Anchors are located at the end of URLs that start with a \verb{#} sign. These are
-used to indicate a section of the documenation.
+used to indicate a section of the documenation or a span id.
 }
 
 }
@@ -132,17 +159,28 @@ e <- l$episodes[[3]]
 # Our link validators run a series of tests on links and images and return a 
 # data frame with information about the links (via xml2::url_parse), along 
 # with the results of the tests
-v <- pegboard:::validate_links(e)
+v <- asNamespace('pegboard')$validate_links(e)
 names(v)
 v
+# URL protocols -----------------------------------------------------------
+# To avoid potentially malicious situations, we have an explicit list of
+# allwed URI protocols, which can be found in the `allowed_uri_protocols`
+# character vector:
+asNamespace('pegboard')$allowed_uri_protocols
+# note that we make an additional check for the http protocol.
+
+# Creating Warnings from the table ----------------------------------------
 # The validator does not produce any warnings or messages, but this data
 # frame can be passed on to other functions that will throw them for us. We
 # have a function that will throw a warning/message for each link that
 # fails the tests. These messages are controlled by `link_tests` and 
 # `link_info`.
-pegboard:::link_tests
-pegboard:::link_info
-pegboard:::throw_link_warnings(v)
+asNamespace('pegboard')$link_tests
+asNamespace('pegboard')$link_info
+asNamespace('pegboard')$throw_link_warnings(v)
+}
+\seealso{
+\link{Episode} and \link{Lesson} for the methods that will throw warnings
 }
 \keyword{datasets}
 \keyword{internal}

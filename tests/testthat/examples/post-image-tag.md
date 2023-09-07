@@ -11,7 +11,8 @@ click the `Add file` button and select `Create new file` from the dropdown.
 
 Next, type some text into `index.md`.
 
-![Create index.md file](../fig/github_add_index.png){: .image-with-shadow width="900px" }
+![Create index.md file](../fig/github_add_index.png)
+{: .image-with-shadow width="900px"}
 
 We are now ready to start adding more content to our website. Let's do some exercises.
 

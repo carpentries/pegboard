@@ -15,6 +15,12 @@
 #' @return nothing, invisibly; used for side-effect
 #' @rdname cli_helpers
 issue_warning <- function(msg = NULL, cli = has_cli(), what = NULL, url = NULL, n = NULL, N = NULL, infos = list(), reports = list(), ...) {
+  wd <- getOption("width")
+  cliwd <- getOption("cli.width")
+  on.exit(options(width = wd, cli.width = cliwd), add = TRUE)
+  options(width = 1000)
+  options(cli.width = 1000)
+
   if (!is.null(msg)) {
     if (cli) {
       cli::cli_alert_warning(msg)

@@ -4,12 +4,17 @@
 \alias{fix_sandpaper_links}
 \title{Fix relative and jekyll links to be compatible with {sandpaper}}
 \usage{
-fix_sandpaper_links(body, yml = list())
+fix_sandpaper_links(body, yml = list(), path = NULL, known = NULL)
 }
 \arguments{
 \item{body}{an XML document}
 
 \item{yml}{the list of key/value pairs derived from the \verb{_config.yml} file}
+
+\item{path}{the path to the current episode}
+
+\item{known}{a character vector of known episodes in the lesson, relative to
+the lesson root.}
 }
 \value{
 the body, invisibly
@@ -37,9 +42,7 @@ converted. If this happens, please report an issue:
 
 loop <- fs::path(lesson_fragment(), "_episodes", "14-looping-data-sets.md")
 e <- Episode$new(loop)
-b <- e$body
 pegboard:::make_link_table(e)$orig
-suppressWarnings(yml <- yaml::read_yaml(file.path(e$lesson, "_config.yml")))
-fix_sandpaper_links(b, yml)
+e$use_sandpaper()
 pegboard:::make_link_table(e)$orig
 }

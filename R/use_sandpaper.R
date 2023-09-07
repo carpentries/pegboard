@@ -4,14 +4,18 @@
 #' @param rmd if `TRUE`, the chunks will be converted to RMarkdown chunks
 #' @param yml a list derived from the `_config.yml` file that defines the site
 #'   variables.
+#' @param path the path to the source of the body. Defaults to NULL. This is
+#'   used in conjunction with `known_paths`
+#' @param known_paths a character vector with the known paths in the lesson.
+#'   This is used to determine the correct path to other files in the lesson.
 #' @return the body
 #' @noRd
-use_sandpaper <- function(body, rmd = TRUE, yml = list()) {
+use_sandpaper <- function(body, rmd = TRUE, yml = list(), path = NULL, known_paths = NULL) {
   if (inherits(body, "xml_missing")) {
     warning("episode body missing", call. = FALSE)
     return(invisible(body))
   }
-  fix_sandpaper_links(body, yml)
+  fix_sandpaper_links(body, yml, path, known_paths)
   # Remove {% include links.md %}
   lnks <- xml2::xml_find_all(body, 
     ".//md:text[contains(text(),'include links.md') and contains(text(),'{%')]",
