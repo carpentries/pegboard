@@ -57,9 +57,11 @@ intitialize new \link{Episode} objects from the unread child files, and then
 search those for children until there are no children left to read.
 }
 \examples{
+# needed for using internal functions: loading the namespace
+pb <- asNamespace("pegboard")
 ex <- lesson_fragment("sandpaper-fragment-with-child")
 lsn <- Lesson$new(ex, jekyll = FALSE)
-children <- load_children(lsn$episodes)
+children <- pb$load_children(lsn$episodes)
 
 # load_children will start from scratch, so it will produce new Episode files
 identical(names(children), names(lsn$children))
@@ -69,11 +71,11 @@ purrr::map2(children, lsn$children, identical)
 # with the descendants
 
 # given a full list of children, it will return the same list
-these_children <- read_children(lsn$episodes[[1]], children)
+these_children <- pb$read_children(lsn$episodes[[1]], children)
 purrr::map2(these_children, children, identical)
 
 # given a partial list, it will append to it
-new_children <- read_children(lsn$episodes[[1]], children[1])
+new_children <- pb$read_children(lsn$episodes[[1]], children[1])
 purrr::map2(new_children, children, identical)
 }
 \seealso{

@@ -72,6 +72,8 @@
 #' @keywords internal
 #' @rdname find_children
 #' @examples
+#' # needed for using internal functions: loading the namespace
+#' pb <- asNamespace("pegboard")
 #' # This example demonstrates a child document with another child document
 #' # nested inside. First, we demonstrate how `find_children()` only returns
 #' # the immediate children and then we demonstrate how the full lineage is
@@ -83,7 +85,7 @@
 #' # The introduction has a single child file
 #' intro <- tinkr::yarn$new(fs::path(ex, "episodes", "intro.Rmd"))
 #' intro$head(21) # show the child file
-#' find_children(intro)
+#' pb$find_children(intro)
 #' # this is identical to the `$children` element of an Episode object
 #' ep <- Episode$new(fs::path(ex, "episodes", "intro.Rmd"))
 #' ep$children
@@ -96,7 +98,7 @@
 #' # `trace_children()` -------------------------------------------------------
 #' # In the context of the lesson, we can find all the descendants
 #' lsn <- Lesson$new(ex, jekyll = FALSE)
-#' trace_children(ep, lsn)
+#' pb$trace_children(ep, lsn)
 #' # This is the same as using the method of the same name in the Lesson object
 #' # using the path to the episode
 #' lsn$trace_lineage(ep$path)
@@ -193,9 +195,11 @@ trace_children <- function(parent, lsn) {
 #' @seealso [find_children()] for details on how child documents are discovered
 #' @rdname load_children
 #' @examples
+#' # needed for using internal functions: loading the namespace
+#' pb <- asNamespace("pegboard")
 #' ex <- lesson_fragment("sandpaper-fragment-with-child")
 #' lsn <- Lesson$new(ex, jekyll = FALSE)
-#' children <- load_children(lsn$episodes)
+#' children <- pb$load_children(lsn$episodes)
 #'
 #' # load_children will start from scratch, so it will produce new Episode files
 #' identical(names(children), names(lsn$children))
@@ -205,11 +209,11 @@ trace_children <- function(parent, lsn) {
 #' # with the descendants
 #'
 #' # given a full list of children, it will return the same list
-#' these_children <- read_children(lsn$episodes[[1]], children)
+#' these_children <- pb$read_children(lsn$episodes[[1]], children)
 #' purrr::map2(these_children, children, identical)
 #' 
 #' # given a partial list, it will append to it
-#' new_children <- read_children(lsn$episodes[[1]], children[1])
+#' new_children <- pb$read_children(lsn$episodes[[1]], children[1])
 #' purrr::map2(new_children, children, identical)
 load_children <- function(all_parents) {
   have_children <- purrr::map_lgl(all_parents, "has_children")

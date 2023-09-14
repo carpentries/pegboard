@@ -82,6 +82,8 @@ defaulting to the top of the lesson.
 }
 }
 \examples{
+# needed for using internal functions: loading the namespace
+pb <- asNamespace("pegboard")
 # This example demonstrates a child document with another child document
 # nested inside. First, we demonstrate how `find_children()` only returns
 # the immediate children and then we demonstrate how the full lineage is
@@ -93,7 +95,7 @@ ex <- lesson_fragment("sandpaper-fragment-with-child")
 # The introduction has a single child file
 intro <- tinkr::yarn$new(fs::path(ex, "episodes", "intro.Rmd"))
 intro$head(21) # show the child file
-find_children(intro)
+pb$find_children(intro)
 # this is identical to the `$children` element of an Episode object
 ep <- Episode$new(fs::path(ex, "episodes", "intro.Rmd"))
 ep$children
@@ -106,7 +108,7 @@ child$show()
 # `trace_children()` -------------------------------------------------------
 # In the context of the lesson, we can find all the descendants
 lsn <- Lesson$new(ex, jekyll = FALSE)
-trace_children(ep, lsn)
+pb$trace_children(ep, lsn)
 # This is the same as using the method of the same name in the Lesson object
 # using the path to the episode
 lsn$trace_lineage(ep$path)
