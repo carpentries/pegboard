@@ -150,8 +150,67 @@ trace_children <- function(parent, lsn) {
   return(children)
 }
 
-# Loop through a list of parent Episode objects and return a list of Episode
-# objects that represent their children. If there are no children, this is NULL
+#' Recursively Load Child Documents
+#'
+#' @description
+#'
+#' Process a list of [Episode] objects to do two things:
+#'   1. recursively read in the child documents declared in the parent
+#'      documents
+#'   2. for each child, update the `$parent` and `$build_parent` elements 
+#' 
+#' @param parent an [Episode] object
+#' @param child an [Episode] object
+#' @param all_parents a list of [Episode] objects
+#' @param all_children a list of [Episode] objects
+#' @return a list of [Episode] objects from the children. If no children exist,
+#'   then this is `NULL`. In the case of `add_parent()`, this is called for its
+#'   side-effect to update the child object and it always returns `NULL`. 
+#'
+#' @details
+#' 
+#' When we want to build lessons, it's important to be able to find all of the
+#' files that are necessary to build a particular file. If there is a modification in a child file, \pkg{sandpaper} needs to know that it should flag the parent
+#' for rebuilding. To do this, we need two pieces of information:
+#'
+#' 1. The earliest ancestors of a given child file
+#' 2. The full list of descendants of a given parent file
+#'
+#' Each Episode object only knows about itself, so it can only report its
+#' immediate children, but not the children of children, or even its parent
+#' (unless we explicitly tell it what its parent is). The [Lesson] object
+#' contains the context of all of the Episodes and can provide this information.
+#'
+#' During Lesson object initialisation, the `load_children()` function is
+#' called to process all source files for their children. This creates an 
+#' empty list of children that is continuously appended to during the function
+#' call. It then calls `read_children()` on each parent file, which will append
+#' itself as a parent to any existing children in the `all_children` list, 
+#' intitialize new [Episode] objects from the unread child files, and then
+#' search those for children until there are no children left to read. 
+#'
+#' @keywords internal
+#' @seealso [find_children()] for details on how child documents are discovered
+#' @rdname load_children
+#' @examples
+#' ex <- lesson_fragment("sandpaper-fragment-with-child")
+#' lsn <- Lesson$new(ex, jekyll = FALSE)
+#' children <- load_children(lsn$episodes)
+#'
+#' # load_children will start from scratch, so it will produce new Episode files
+#' identical(names(children), names(lsn$children))
+#' purrr::map2(children, lsn$children, identical)
+#' 
+#' # read children takes in a list of children episodes and appends that list
+#' # with the descendants
+#'
+#' # given a full list of children, it will return the same list
+#' these_children <- read_children(lsn$episodes[[1]], children)
+#' purrr::map2(these_children, children, identical)
+#' 
+#' # given a partial list, it will append to it
+#' new_children <- read_children(lsn$episodes[[1]], children[1])
+#' purrr::map2(new_children, children, identical)
 load_children <- function(all_parents) {
   have_children <- purrr::map_lgl(all_parents, "has_children")
   # if there are any children, we need to account for those.
@@ -167,42 +226,49 @@ load_children <- function(all_parents) {
 }
 
 # Read in and/or update all recursive child files for a given parent
+#' @rdname load_children
 read_children <- function(parent, all_children = list(), ...) {
   # if the parent has no children, return NULL. This is the exit condition
   no_children <- !parent$has_children
   if (no_children) {
     return(NULL)
   }
-  # register existing parents
+  # register existing parents with existing children
   existing <- intersect(parent$children, names(all_children))
   purrr::walk(all_children[existing], add_parent, parent)
   # If there are children, recursively load them and place them in a list
   for (child in parent$children) {
-    # place the child in a list and name it
+    # check if the child already exists in our list ---------------------
     known_children <- names(all_children)
     new_child <- !child %in% known_children
     if (new_child) {
+      # read in the new child with a parent listed
       this_child <- Episode$new(child, parent = list(parent), ...)
     } else {
+      # add the parent to the existing child
       this_child <- all_children[[child]]
-      # Add the parent and build_parent for the child
-      add_parent(this_child, parent)
     }
+
+    # check if the child has any children that we know about ------------
     new_children <- setdiff(this_child$children, known_children)
     any_new_children <- length(new_children) > 0L
     if (any_new_children) {
-      # generate a new list, but this will contain the objects from the original
-      # list that we can filter out and use to append
+      # generate a new list, but this will contain the objects from the 
+      # original list that we can filter out and use to append
       additional_children <- read_children(this_child, all_children, ...)
       additional_children <- additional_children[new_children]
     } else {
       additional_children <- NULL
     }
+
+    # make sure all children of this child have it as a parent -----------
     purrr::walk(all_children[this_child$children], add_parent, this_child)
+
+    # append the all children list ---------------------------------------
     all_children <- c(
-      all_children,
-      stats::setNames(list(this_child), child),
-      additional_children
+      all_children, # our existing list of children
+      stats::setNames(list(this_child), child), # the current child 
+      additional_children # children of the current child (which can be NULL)
     )
   }
   # only return the unique files
@@ -211,6 +277,7 @@ read_children <- function(parent, all_children = list(), ...) {
 
 # update the `$parents` and `$build_parents` fields of a child object with the
 # information from a parent object.
+#' @rdname load_children
 add_parent <- function(child, parent) {
   if (length(parent) == 0L) {
     return(invisible(NULL))
