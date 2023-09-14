@@ -1,15 +1,17 @@
+#' 
 find_children <- function(ep) {
   code_blocks <- get_code(ep$body, type = NULL, attr = NULL)
   children <- child_file_from_code_blocks(code_blocks)
   any_children <- length(children) > 0L
   if (any_children) {
     # create the absolute path to the children nodes
-    abs_children <- fs::path_abs(children, fs::path_dir(ep$path))
+    abs_children <- fs::path_abs(children, start = fs::path_dir(ep$path))
+    # NOTE: this is a kludge that we have to use for overview lessons.
     # if children do not exist, then put them in the path of the lesson, which
     # will contain a global folder maybe
     exists <- fs::file_exists(abs_children)
     if (any(!exists)) {
-      abs_children[!exists] <- fs::path_abs(children[!exists], ep$lesson)
+      abs_children[!exists] <- fs::path_abs(children[!exists], start = ep$lesson)
     }
     children <- abs_children
   }
@@ -64,7 +66,7 @@ read_children <- function(parent, all_children = list(), ...) {
   # register existing parents
   existing <- intersect(parent$children, names(all_children))
   purrr::walk(all_children[existing], add_parent, parent)
-  # If there are children, recursively load them and place them in a list 
+  # If there are children, recursively load them and place them in a list
   for (child in parent$children) {
     # place the child in a list and name it
     known_children <- names(all_children)
@@ -87,9 +89,11 @@ read_children <- function(parent, all_children = list(), ...) {
       additional_children <- NULL
     }
     purrr::walk(all_children[this_child$children], add_parent, this_child)
-    all_children <- c(all_children, 
-      stats::setNames(list(this_child), child), 
-      additional_children)
+    all_children <- c(
+      all_children,
+      stats::setNames(list(this_child), child),
+      additional_children
+    )
   }
   # only return the unique files
   return(all_children[unique(names(all_children))])
@@ -114,6 +118,5 @@ add_parent <- function(child, parent) {
   # it is possible for a child to have multiple build parents, so we append here
   child$build_parents <- union(child$build_parents, new_parents)
   return(invisible(NULL))
-} 
-
+}
 

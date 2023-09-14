@@ -91,25 +91,33 @@
     Code
       snd$summary(TRUE)
     Output
-      # A tibble: 6 x 12
-        page                sections headings callouts challenges solutions  code output warning error images links
-        <chr>                  <int>    <int>    <int>      <int>     <int> <int>  <int>   <int> <int>  <int> <int>
-      1 intro.Rmd                  6        6        6          1         2     3      0       0     0      0     1
-      2 index.md                   0        0        0          0         0     0      0       0     0      0     0
-      3 a.md                       0        0        0          0         0     0      0       0     0      0     0
-      4 setup.md                   2        2        3          0         2     0      0       0     0      0     2
-      5 b.md                       0        0        0          0         0     0      0       0     0      0     0
-      6 site/built/intro.md        6        6        6          1         2     3      1       0     0      1     1
+      # A tibble: 10 x 12
+         page                sections headings callouts challenges solutions  code output warning error images links
+         <chr>                  <int>    <int>    <int>      <int>     <int> <int>  <int>   <int> <int>  <int> <int>
+       1 intro.Rmd                  6        6        6          1         2     3      0       0     0      0     1
+       2 index.md                   0        0        0          0         0     0      0       0     0      0     0
+       3 a.md                       0        0        0          0         0     0      0       0     0      0     0
+       4 setup.md                   2        2        3          0         2     0      0       0     0      0     2
+       5 b.md                       0        0        0          0         0     0      0       0     0      0     0
+       6 site/built/a.md            0        0        0          0         0     0      0       0     0      0     0
+       7 site/built/b.md            0        0        0          0         0     0      0       0     0      0     0
+       8 site/built/index.md        0        0        0          0         0     0      0       0     0      0     0
+       9 site/built/intro.md        6        6        6          1         2     3      1       0     0      1     1
+      10 site/built/setup.md        2        2        3          0         2     0      0       0     0      0     0
 
 ---
 
     Code
       snd$summary("built")
     Output
-      # A tibble: 1 x 12
+      # A tibble: 5 x 12
         page                sections headings callouts challenges solutions  code output warning error images links
         <chr>                  <int>    <int>    <int>      <int>     <int> <int>  <int>   <int> <int>  <int> <int>
-      1 site/built/intro.md        6        6        6          1         2     3      1       0     0      1     1
+      1 site/built/a.md            0        0        0          0         0     0      0       0     0      0     0
+      2 site/built/b.md            0        0        0          0         0     0      0       0     0      0     0
+      3 site/built/index.md        0        0        0          0         0     0      0       0     0      0     0
+      4 site/built/intro.md        6        6        6          1         2     3      1       0     0      1     1
+      5 site/built/setup.md        2        2        3          0         2     0      0       0     0      0     0
 
 # Sandpaper lessons can create handouts
 

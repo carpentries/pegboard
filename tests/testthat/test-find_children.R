@@ -25,22 +25,24 @@ test_that("Sandpaper lessons will have children listed", {
   eplist <- which(endsWith(cfg, "intro.Rmd"))
   cfg[eplist] <- paste0(cfg[eplist], "\n  - next.Rmd")
   writeLines(cfg, fs::path(test_dir, "config.yaml"))
-  children_names <- fs::path(test_dir, "episodes", "files", 
+  children_names <- fs::path(
+    test_dir, "episodes", "files",
     c("child.md", "child-2.Rmd", "child-3.md")
   )
-  
+
   lsn <- Lesson$new(test_dir, jekyll = FALSE)
 
   expect_true(lsn$has_children)
 
   expect_length(lsn$children, 3L)
   expect_length(lsn$episodes, 2L)
-  expect_equal(fs::path_rel(names(lsn$children), lsn$path), 
+  expect_equal(
+    fs::path_rel(names(lsn$children), lsn$path),
     fs::path_rel(children_names, lsn$path)
   )
 
   build_parents <- c(parent_file, second_parent_file)
-  
+
   # `$parents` should reflect the immediate ancestors
   expect_equal(lsn$children[[1]]$parents, build_parents)
   expect_equal(lsn$children[[2]]$parents, build_parents)
@@ -63,12 +65,10 @@ test_that("Sandpaper lessons will have children listed", {
   expect_equal(lsn$children[[1]]$build_parents, build_parents)
   expect_equal(lsn$children[[2]]$build_parents, build_parents)
   expect_equal(lsn$children[[3]]$build_parents, build_parents)
-
 })
 
 
 cli::test_that_cli("children are validated along with parents", {
-
   # setup -------------------------------------------------------------------
   tmp <- withr::local_tempdir()
   test_dir <- fs::path(tmp, "sandpaper-fragment")
@@ -95,18 +95,18 @@ cli::test_that_cli("children are validated along with parents", {
   eplist <- which(endsWith(cfg, "intro.Rmd"))
   cfg[eplist] <- paste0(cfg[eplist], "\n  - next.Rmd")
   writeLines(cfg, fs::path(test_dir, "config.yaml"))
-  children_names <- fs::path(test_dir, "episodes", "files", 
+  children_names <- fs::path(
+    test_dir, "episodes", "files",
     c("child.md", "child-2.Rmd", "child-3.md")
   )
-  
+
   lsn <- Lesson$new(test_dir, jekyll = FALSE)
-  
+
   expect_snapshot(lnk <- lsn$validate_links())
   expect_s3_class(lnk, "data.frame")
   expect_paths <- c("learners/setup.md", "learners/setup.md", "episodes/files/child.md")
   expect_equal(lnk$filepath, fs::path(expect_paths))
   expect_equal(lnk$internal_file, c(TRUE, TRUE, FALSE))
   expect_equal(lnk$enforce_https, c(FALSE, FALSE, TRUE))
-
 })
 
