@@ -62,19 +62,19 @@ Episode <- R6::R6Class("Episode",
       TOX <- purrr::safely(super$initialize, otherwise = default, quiet = FALSE)
       if (fix_liquid) {
         tmp <- fix_liquid_relative_link(path)
-        lsn <- TOX(tmp, sourcepos = TRUE, ...)
+        ep <- TOX(tmp, sourcepos = TRUE, ...)
         close(tmp)
       } else {
-        lsn <- TOX(path, sourcepos = TRUE, ...)
+        ep <- TOX(path, sourcepos = TRUE, ...)
       }
-      if (!is.null(lsn$error)) {
-        private$record_problem(lsn$error)
+      if (!is.null(ep$error)) {
+        private$record_problem(ep$error)
       }
-      lsn <- lsn$result
+      ep <- ep$result
 
       # Process the kramdown tags
       if (process_tags) {
-        tags <- kramdown_tags(lsn$body)
+        tags <- kramdown_tags(ep$body)
         blocks <- tags[are_blocks(tags)]
         tags   <- tags[!are_blocks(tags)]
         # recording problems to inspect later
@@ -91,15 +91,15 @@ Episode <- R6::R6Class("Episode",
       }
 
       if (fix_links) {
-        lsn$body <- fix_links(lsn$body)
+        ep$body <- fix_links(ep$body)
       }
 
       # Initialize the object
       self$path <- path
-      self$yaml <- lsn$yaml
-      self$body <- lsn$body
-      self$ns   <- lsn$ns
-      self$children <- find_children(lsn)
+      self$yaml <- ep$yaml
+      self$body <- ep$body
+      self$ns   <- ep$ns
+      self$children <- find_children(ep)
       purrr::walk(parents, function(parent) add_parent(self, parent))
     },
 
