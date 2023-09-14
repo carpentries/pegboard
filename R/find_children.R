@@ -1,17 +1,48 @@
+#' Detect the child files of an Episode object
+#'
+#' @description 
+#'  - `find_children()` returns the _immediate_ children for any given Episode
+#'    object. 
+#'  - `child_file_from_code_blocks()` extracts the `child` attribute from XML
+#'    `code_block` nodes
+#'  - `trace_children()` is used _after processing_ to trace the entire lineage
+#'     from a source parent episode.
+#'
+#' @param parent an [Episode] object
+#' @param nodes an `xml_nodeset` object containing `code_block` nodes that
+#'   may have `child` attributes pointing to the relative path of a file in the
+#'   lesson (see NOTE).
+#' @param lsn a [Lesson] object that contains the `parent` and all its children.
+#'
+#' @details 
+#'
 #' 
-find_children <- function(ep) {
-  code_blocks <- get_code(ep$body, type = NULL, attr = NULL)
+#' ## NOTE
+#'
+#' For standard lessons, child files will appear relative to the parent file. 
+#' Usually, these child files will be in the `episodes/files` folder. Overview
+#' lessons are a little different. For overview lessons (in The Workbench,
+#' these are lessons which contain `overview: true` in config.yaml), the child
+#' files may point to `files/child.md`, but in reality, the child file is at
+#' the root of the lesson `../files/child.md`. 
+#'
+#' @keywords internal
+#' @rdname find_children
+find_children <- function(parent) {
+  code_blocks <- get_code(parent$body, type = NULL, attr = NULL)
   children <- child_file_from_code_blocks(code_blocks)
   any_children <- length(children) > 0L
   if (any_children) {
     # create the absolute path to the children nodes
-    abs_children <- fs::path_abs(children, start = fs::path_dir(ep$path))
+    abs_children <- fs::path_abs(children, start = fs::path_dir(parent$path))
     # NOTE: this is a kludge that we have to use for overview lessons.
     # if children do not exist, then put them in the path of the lesson, which
     # will contain a global folder maybe
     exists <- fs::file_exists(abs_children)
     if (any(!exists)) {
-      abs_children[!exists] <- fs::path_abs(children[!exists], start = ep$lesson)
+      abs_children[!exists] <- fs::path_abs(children[!exists],
+        start = parent$lesson
+      )
     }
     children <- abs_children
   }
@@ -30,12 +61,12 @@ child_file_from_code_blocks <- function(nodes) {
 
 # trace the lineage of a source file and return a recursive list of children
 # files. This assumes that the lesson has been set up to process children
-trace_children <- function(child, lsn) {
-  if (child$has_children) {
-    children <- purrr::map(lsn$children[child$children], trace_children, lsn)
-    children <- c(child$path, purrr::list_c(children))
+trace_children <- function(parent, lsn) {
+  if (parent$has_children) {
+    children <- purrr::map(lsn$children[parent$children], trace_children, lsn)
+    children <- c(parent$path, purrr::list_c(children))
   } else {
-    children <- child$path
+    children <- parent$path
   }
   return(children)
 }

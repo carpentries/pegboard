@@ -18,8 +18,15 @@ NEW FEATURES
   object has a parent object. This is only used in the context of a `Lesson`.
 - Both `Episode` and `Lesson` objects gain the `$has_children` active binding,
   reporting if there are any child episodes in the lesson or episode. 
-- `Lesson` objects gain the `$trace_lineage()` method to find _all child
-  files_ from the source path of a given episode. 
+- `Lesson` objects gain the `$trace_lineage()` method to return the absolute
+  paths to _all child files_ from the source path of a given episode if they
+  exist.
+
+BUG FIX
+-------
+
+* The `$load_built()` method will now load all built markdown content, not just
+  the episodes.
 
 # pegboard 0.6.1 (2023-09-06)
 
