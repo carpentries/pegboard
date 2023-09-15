@@ -17,7 +17,7 @@ exercises: 2
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-```{r cat-child, child='files/cat.md'}
+```{r cat-child, child='files/cat.Rmd'}
 ```
 
 ## Introduction
