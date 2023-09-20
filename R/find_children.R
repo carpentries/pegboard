@@ -8,7 +8,8 @@
 #'
 #' @param parent an [Episode] or [tinkr::yarn] object (`trace_children()`
 #'   requires an `Episode` object).
-#' @param ancestor an [Episode] object that is used to determine the parent path#'   this also can be `NULL`.
+#' @param ancestor an [Episode] object that is used to determine the parent path
+#'   this also can be `NULL`.
 #' @param lsn a [Lesson] object that contains the `parent` and all its children.
 #' @return a character vector of the absolute paths to child files.
 #'

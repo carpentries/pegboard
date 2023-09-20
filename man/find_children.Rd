@@ -13,6 +13,9 @@ trace_children(parent, lsn)
 \item{parent}{an \link{Episode} or \link[tinkr:yarn]{tinkr::yarn} object (\code{trace_children()}
 requires an \code{Episode} object).}
 
+\item{ancestor}{an \link{Episode} object that is used to determine the parent path
+this also can be \code{NULL}.}
+
 \item{lsn}{a \link{Lesson} object that contains the \code{parent} and all its children.}
 }
 \value{
