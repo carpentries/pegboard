@@ -41,7 +41,7 @@ Episode <- R6::R6Class("Episode",
     #' scope$name
     #' scope$lesson
     #' scope$challenges
-    initialize = function(path = NULL, process_tags = TRUE, fix_links = TRUE, fix_liquid = FALSE, parents = character(0), ...) {
+    initialize = function(path = NULL, process_tags = TRUE, fix_links = TRUE, fix_liquid = FALSE, parents = NULL, ...) {
       if (!fs::file_exists(path)) {
         stop(glue::glue("the file '{path}' does not exist"))
       }
@@ -99,8 +99,8 @@ Episode <- R6::R6Class("Episode",
       self$yaml <- ep$yaml
       self$body <- ep$body
       self$ns   <- ep$ns
-      self$children <- find_children(ep)
       purrr::walk(parents, function(parent) add_parent(self, parent))
+      self$children <- find_children(ep, ancestor = parents[[1]])
     },
 
 

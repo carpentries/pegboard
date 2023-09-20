@@ -5,7 +5,7 @@
 \alias{trace_children}
 \title{Detect the child files of an Episode object}
 \usage{
-find_children(parent)
+find_children(parent, ancestor = NULL)
 
 trace_children(parent, lsn)
 }
@@ -37,7 +37,8 @@ example, let's say we have a file called \code{episodes/parent.Rmd}:
 ```
 }\if{html}{\out{</div>}}
 
-where \code{files/the-child.Rmd} is relative to \code{episodes/parent.Rmd}
+where \code{files/the-child.Rmd} is relative to \strong{the build parent}, in this case
+it is \code{episodes/parent.Rmd}. This is important
 
 The \code{find_children()} function will extract the immediate children from
 a single \link{Episode} object (in this case, it will return
@@ -50,11 +51,14 @@ This function is used during Episode initialisation to populate the
 known children for further processing.
 \subsection{Tracing full lineages}{
 
-It is possible for a child document to have further children defined:
+It is possible for a child document to have further children defined, but
+there is a caveat: The child file is going to be read from the context of
+the \code{root.dir} knitr option, which in {sandpaper} is set to be \code{site/built}
+after the markdown contents and assets are copied over.
 
 \if{html}{\out{<div class="sourceCode markdown">}}\preformatted{This is the first child. The following content is from the grandchild:
 
-```\{r child = "the-grandchild.md"\}
+```\{r child = "files/the-grandchild.md"\}
 ```
 }\if{html}{\out{</div>}}
 
@@ -66,19 +70,19 @@ element in the \link{Lesson} object to exhaust the search for the children files
 The \code{trace_children()} will return the entire lineage for a given \emph{parent}
 file. Which, in the case of the examples defined above would be:
 \verb{/path/to/episodes/parent.Rmd}, \verb{/path/to/episodes/files/the-child.Rmd},
-and \verb{/path/to/episodes/the-grandchild.md}.
+and \verb{/path/to/episodes/files/the-grandchild.md}.
 }
 
 \subsection{NOTE}{
 
-For standard lessons, child files are written relative to the parent file.
-Usually, these child files will be in the \code{files} folder under their parent
-folder. Overview lessons are a little different. For overview lessons (in
-The Workbench, these are lessons which contain \code{overview: true} in
-config.yaml), the child files may point to \code{files/child.md}, but in reality,
-the child file is at the root of the lesson \code{../files/child.md}. We correct
-for this by first checking that the child files exist and if they don't
-defaulting to the top of the lesson.
+For standard lessons, child files are written relative to the directory of
+the build  parent file. Usually, these child files will be in the \code{files}
+folder under their parent folder. Overview lessons are a little different.
+For overview lessons (in The Workbench, these are lessons which contain
+\code{overview: true} in config.yaml), the child files may point to
+\code{files/child.md}, but in reality, the child file is at the root of the
+lesson \code{../files/child.md}. We correct for this by first checking that the
+child files exist and if they don't defaulting to the top of the lesson.
 }
 }
 \examples{

@@ -260,7 +260,7 @@ Create a new Episode
   process_tags = TRUE,
   fix_links = TRUE,
   fix_liquid = FALSE,
-  parents = character(0),
+  parents = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }

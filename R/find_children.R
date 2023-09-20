@@ -25,13 +25,14 @@
 #' ```
 #' `````
 #'
-#' where `files/the-child.Rmd` is relative to `episodes/parent.Rmd`
+#' where `files/the-child.Rmd` is relative to **the build parent**, in this case
+#' it is `episodes/parent.Rmd`. This is important 
 #'
 #' The `find_children()` function will extract the immediate children from
 #' a single [Episode] object (in this case, it will return
 #' `/path/to/episodes/files/the-child.Rmd`), but it will not detect any further
 #' descendants. To detect the entire lineage, the Episode must be read in the
-#' context of a Lesson (or processed with [load_children()]). 
+#' context of a Lesson (or processed with [load_children()]).
 #'
 #' This function is used during Episode initialisation to populate the 
 #' `$children` element of the `Episode` object, which lists paths to the
@@ -39,12 +40,15 @@
 #'
 #' ## Tracing full lineages
 #'
-#' It is possible for a child document to have further children defined:
+#' It is possible for a child document to have further children defined, but
+#' there is a caveat: The child file is going to be read from the context of
+#' the `root.dir` knitr option, which in {sandpaper} is set to be `site/built`
+#' after the markdown contents and assets are copied over. 
 #'
 #' ````markdown
 #' This is the first child. The following content is from the grandchild:
 #'
-#' ```{r child = "the-grandchild.md"}
+#' ```{r child = "files/the-grandchild.md"}
 #' ```
 #' ````
 #' 
@@ -56,18 +60,18 @@
 #' The `trace_children()` will return the entire lineage for a given _parent_
 #' file. Which, in the case of the examples defined above would be:
 #' `/path/to/episodes/parent.Rmd`, `/path/to/episodes/files/the-child.Rmd`,
-#' and `/path/to/episodes/the-grandchild.md`. 
+#' and `/path/to/episodes/files/the-grandchild.md`. 
 #'
 #' ## NOTE
 #'
-#' For standard lessons, child files are written relative to the parent file. 
-#' Usually, these child files will be in the `files` folder under their parent
-#' folder. Overview lessons are a little different. For overview lessons (in
-#' The Workbench, these are lessons which contain `overview: true` in
-#' config.yaml), the child files may point to `files/child.md`, but in reality,
-#' the child file is at the root of the lesson `../files/child.md`. We correct
-#' for this by first checking that the child files exist and if they don't
-#' defaulting to the top of the lesson. 
+#' For standard lessons, child files are written relative to the directory of
+#' the build  parent file. Usually, these child files will be in the `files`
+#' folder under their parent folder. Overview lessons are a little different.
+#' For overview lessons (in The Workbench, these are lessons which contain
+#' `overview: true` in config.yaml), the child files may point to
+#' `files/child.md`, but in reality, the child file is at the root of the
+#' lesson `../files/child.md`. We correct for this by first checking that the
+#' child files exist and if they don't defaulting to the top of the lesson. 
 #'
 #' @keywords internal
 #' @rdname find_children
@@ -108,20 +112,43 @@
 #'     ep$show()
 #'   }
 #' )
-find_children <- function(parent) {
+find_children <- function(parent, ancestor = NULL) {
   code_blocks <- get_code(parent$body, type = NULL, attr = NULL)
   children <- child_file_from_code_blocks(code_blocks)
   any_children <- length(children) > 0L
+  parent_path <- parent$path
+  lesson_path <- parent$lesson
+  # {knitr} has two build modes: 
+  # 1. build relative to the file path
+  # 2. build relative to a root path. 
+  # With {sandpaper}, we are using the second option, builting in relative to
+  # a root path, which is a path where we conglomerate all of the files together
+  # for preparation to move them to the website. This means that children are
+  # going to need to be written relative to the build parent.
+  # 
+  # Because we define the parents in a Lesson context, it's not necessarily true
+  # that the build parent will be known when this function is called, so we do
+  # three things: check the ancestor's build parent, check the current build 
+  # parent and then grab the current parent path
+  if (length(ancestor$build_parents) > 0) {
+    build_path <- ancestor$build_parents
+  } else if (length(parent$build_parents) > 0) {
+    build_path <- parent$build_parents
+  } else {
+    build_path <- parent_path
+  }
+  build_path <- fs::path_dir(build_path[length(build_path)])
   if (any_children) {
-    # create the absolute path to the children nodes
-    abs_children <- fs::path_abs(children, start = fs::path_dir(parent$path))
+    # create the absolute path to the children nodes, which should be relative
+    # to the build parent
+    abs_children <- fs::path_abs(children, start = build_path)
     # NOTE: this is a kludge that we have to use for overview lessons.
     # if children do not exist, then put them in the path of the lesson, which
     # will contain a global folder maybe
     exists <- fs::file_exists(abs_children)
     if (any(!exists)) {
       abs_children[!exists] <- fs::path_abs(children[!exists],
-        start = parent$lesson
+        start = lesson_path
       )
     }
     children <- abs_children
