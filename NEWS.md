@@ -21,6 +21,11 @@ NEW FEATURES
 - `Lesson` objects gain the `$trace_lineage()` method to return the absolute
   paths to _all child files_ from the source path of a given episode if they
   exist.
+- `make_link_table()` now has a new column called `parents` which contains a
+  list column of the parents (if any) of the files checked
+- `$validate_links()`, `$validate_divs()`, and `$validate_headings()` will now
+  all process child files by default. Note that `$validate_links()` will
+  report missing files _relative to the build parents_.
 
 BUG FIX
 -------
