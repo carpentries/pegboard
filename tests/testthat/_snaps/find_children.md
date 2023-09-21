@@ -3,7 +3,7 @@
     Code
       lnk <- lsn$validate_links()
     Message <cliMessage>
-      ! There were errors in 3/3 links
+      ! There were errors in 3/4 links
       ( ) Links must use HTTPS <https://https.cio.gov/everything/>
       ( ) Some linked internal files do not exist
       
@@ -16,7 +16,7 @@
     Code
       lnk <- lsn$validate_links()
     Message <cliMessage>
-      [33m![39m There were errors in 3/3 links
+      [33m![39m There were errors in 3/4 links
       ( ) Links must use HTTPS <https://https.cio.gov/everything/>
       ( ) Some linked internal files do not exist
       
@@ -29,7 +29,7 @@
     Code
       lnk <- lsn$validate_links()
     Message <cliMessage>
-      ! There were errors in 3/3 links
+      ! There were errors in 3/4 links
       ◌ Links must use HTTPS <https://https.cio.gov/everything/>
       ◌ Some linked internal files do not exist
       
@@ -42,7 +42,7 @@
     Code
       lnk <- lsn$validate_links()
     Message <cliMessage>
-      [33m![39m There were errors in 3/3 links
+      [33m![39m There were errors in 3/4 links
       ◌ Links must use HTTPS <https://https.cio.gov/everything/>
       ◌ Some linked internal files do not exist
       

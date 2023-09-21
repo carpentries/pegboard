@@ -74,7 +74,8 @@ link_info
 
 \item{body}{an \code{xml_document}}
 
-\item{root}{the root path to the lesson that contains this file.}
+\item{root}{the root path to the folder containing the file OR containing the
+paths to the ultimate parent files.}
 }
 \value{
 a data frame with parsed information from \code{\link[xml2:url_parse]{xml2::url_parse()}} and

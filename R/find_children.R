@@ -118,6 +118,8 @@ find_children <- function(parent, ancestor = NULL) {
   code_blocks <- get_code(parent$body, type = NULL, attr = NULL)
   children <- child_file_from_code_blocks(code_blocks)
   any_children <- length(children) > 0L
+  ancestor_has_parents <- identical(ancestor$has_parents, TRUE)
+  parent_has_parents <- identical(parent$has_parents, TRUE)
   parent_path <- parent$path
   lesson_path <- parent$lesson
   # {knitr} has two build modes: 
@@ -132,9 +134,9 @@ find_children <- function(parent, ancestor = NULL) {
   # that the build parent will be known when this function is called, so we do
   # three things: check the ancestor's build parent, check the current build 
   # parent and then grab the current parent path
-  if (length(ancestor$build_parents) > 0) {
+  if (ancestor_has_parents) {
     build_path <- ancestor$build_parents
-  } else if (length(parent$build_parents) > 0) {
+  } else if (parent_has_parents) {
     build_path <- parent$build_parents
   } else {
     build_path <- parent_path

@@ -107,7 +107,9 @@ validate_links <- function(yrn) {
   VAL <- link_known_protocol(VAL)
   VAL <- link_enforce_https(VAL)
   VAL <- link_internal_anchor(VAL, source_list, yrn$headings, yrn$body)
-  VAL <- link_internal_file(VAL, source_list, fs::path_dir(yrn$path))
+  is_child <- identical(yrn$has_parents, TRUE)
+  build_path <- if (is_child) yrn$build_parents else yrn$path
+  VAL <- link_internal_file(VAL, source_list, fs::path_dir(build_path))
   VAL <- link_internal_well_formed(VAL, source_list)
   VAL <- link_all_reachable(VAL)
   VAL <- link_img_alt_text(VAL)
@@ -218,11 +220,25 @@ link_internal_anchor <- function(VAL, source_list, headings, body) {
 }
 
 #' @rdname validate_links
-#' @param root the root path to the lesson that contains this file.
+#' @param root the root path to the folder containing the file OR containing the
+#'   paths to the ultimate parent files.
 link_internal_file <- function(VAL, source_list, root) {
   to_check <- source_list$cross_page & !source_list$is_anchor
   if (any(to_check)) {
-    VAL$internal_file[to_check] <- test_file_existence(VAL$path[to_check], root)
+    paths <- VAL$path[to_check]
+    if (length(root) > 1) {
+      # if there is more than one root, this means that more than one parent
+      # file owns this child and we should search all of them just to be sure
+      # that the file exists. 
+      # step 1: create a list of all the results
+      result <- purrr::map(root, function(r) test_file_existence(paths, r))
+      # step 2: merge them, taking the winners
+      result <- purrr::reduce(result, `|`)
+    } else {
+      result <- test_file_existence(paths, root)
+
+    }
+    VAL$internal_file[to_check] <- result
   }
   VAL
 }
@@ -299,6 +315,83 @@ validate_known_rot <- function(lt, path, verbose = TRUE, cli = TRUE) {
 #
 # TODO: add Episode$sandpaper to be `TRUE` if the _initial_ state was a
 #   sandpaper lesson and `FALSE` otherwise, so we know what to expect.
+
+#' Test for the existence of a file
+#'
+#' @param paths the relative paths to be tested
+#' @param home the root directory of these paths
+#' @return a logical vector of the same length as `paths` indicating if a 
+#'   file exists _anywhere in the lesson infrastructure
+#' 
+#' @details This function detects the existence of files relative to the current
+#'   folder while taking into account references to the built site. 
+#'
+#'   To understand _why_ this is needed consider that both The Workbench and
+#'   Jekyll takes contents from the source folders and pools them in a flat file
+#'   structure for the website. Because of this, it's possible to write links
+#'   like `[link](resource.html)` or `[link](../learners/resource.md)` and they
+#'   will continue to be valid. 
+#'
+#' @keywords internal
+#' @seealso [link_internal_file()] which calls this function
+#' @examples
+#' pb <- asNamespace("pegboard")
+#' # Example: validation of links in a sandpaper context -----------------------
+#' fs::dir_tree(lesson_fragment("sandpaper-fragment"))
+#' links <- c(
+#'   "../episodes/fig/missing.png", # does not exist
+#'   "../index.md", # exists
+#'   "../instructors/a.md", # exists
+#'   "../episodes/intro.Rmd", # exists
+#'   "setup.md", # exists
+#'   "intro.html" # exists
+#' )
+#' home <- fs::path(lesson_fragment("sandpaper-fragment"), "learners")
+#' # show the resulting vector with our paths relative to the "learners" folder
+#' setNames(pb$test_file_existence(links, home), links)
+#'
+#' # Example: validation of links in a sandpaper context with children ---------
+#' # in this context, the references must be relative to the _parent_ file
+#' # for this example, the home folder is the parent of the child, which is
+#' # obtained from the `$build_parent` element in the child file. To demonstrate
+#' # this, I will first load the lesson
+#' context <- lesson_fragment("sandpaper-fragment-with-child")
+#' lsn <- Lesson$new(context, jekyll = FALSE)
+#' fs::dir_tree(context)
+#' links <- c(
+#'   "../episodes/fig/missing.png", # does not exist
+#'   "../index.md", # exists
+#'   "../instructors/a.md", # exists
+#'   "intro.Rmd", # exists
+#'   "../learners/setup.md", # does not exist
+#'   "intro.html" # exists
+#' )
+#' # in practice, we check that the episode has parents:
+#' lsn$episodes[[1]]$has_parents # episodes do not have parents
+#' lsn$children[[2]]$has_parents # but children do!
+#' # The "home" path in the context of a child document is the _build parent_,
+#' # which is the parent that will eventually contain the output of the child.
+#' # in the case of this lesson, both child files are used in the intro.Rmd,
+#' # even though `cat.Rmd` is the parent of `session.Rmd`
+#' setNames(lsn$get("parents", "children"), fs::path_file(names(lsn$children)))
+#' # They both show that `intro.Rmd` is the build parent
+#' setNames(lsn$get("build_parents", "children"), fs::path_file(names(lsn$children)))
+#' # show the links as if they existed in the `session.Rmd` file
+#' home <- lsn$children[[2]]$build_parents
+#' setNames(pb$test_file_existence(links, home), links)
+#'
+#' # Example: validation of links in a Jekyll context --------------------------
+#' fs::dir_tree(lesson_fragment())
+#' links <- c(
+#'   "../non-existent.md",       # does not exist
+#'   "../_config.yml",           # exists
+#'   "../_episodes/10-lunch.md", # exists 
+#'   "10-lunch.html"             # exists in built site
+#' )
+#' # set the home folder to be the "_extras" folder
+#' home <- fs::path(lesson_fragment(), "_extras")
+#' # show the resulting vector with our paths
+#' setNames(pb$test_file_existence(links, home), links)
 test_file_existence <- function(paths, home) {
   # Add home path, assuming that we can link out from the episode and it will
   # link back to something real
@@ -309,14 +402,28 @@ test_file_existence <- function(paths, home) {
     # styles folders
     "_episodes", "_episodes_rmd", "_extras", "_includes"
   )
-  # Eliminate folders that don't actually exist
-  probably <- maybe[fs::file_exists(fs::path(home, "..", maybe))]
-  # Check in those folders for these files
-  exists_folders <- purrr::transpose(purrr::map(probably, exists_in_folder, paths, home))
-  exists_folders <- purrr::map(exists_folders, purrr::flatten_lgl)
+  # Trim the list of folders in the "maybe" pile to filter for
+  # sandpaper or jekyll lessons
+  folder_exists <- fs::file_exists(fs::path_norm(fs::path(home, "..", maybe)))
+  probably <- maybe[folder_exists]
+  # Check in those folders for these files; 
+  # return a list of folders with the files that exist in those folders
+  folders_have_paths <- purrr::map(probably, function(f) {
+    folder_contains(folder = f, paths, home)
+  })
+  # collapse these lists down to a single logical vector for file existence
+  # anywhere
+  exists_anywhere <- purrr::reduce(folders_have_paths, `|`)
   # Return if any of them exist
-  exists_here | purrr::map_lgl(exists_folders, any, na.rm = TRUE)
+  exists_here | exists_anywhere
+}
 
+folder_contains <- function(folder = "_extras", paths, home) {
+  # Adding a backtrack to a higher folder
+  the_paths <- fs::path_norm(fs::path(home, "..", folder, paths))
+  res <- exists_at_all(the_paths)
+  names(res) <- seq(paths)
+  res
 }
 
 exists_at_all <- function(call_me_maybe) {
@@ -331,13 +438,6 @@ exists_at_all <- function(call_me_maybe) {
 
 }
 
-exists_in_folder <- function(folder = "_extras", paths, home) {
-  # Adding a backtrack to a higher folder
-  the_paths <- fs::path_norm(fs::path(home, "..", folder, paths))
-  res <- exists_at_all(the_paths)
-  names(res) <- seq(paths)
-  res
-}
 
 # transform the headings to their expected anchors
 clean_headings <- function(headings) {

@@ -104,9 +104,9 @@ cli::test_that_cli("children are validated along with parents", {
 
   expect_snapshot(lnk <- lsn$validate_links())
   expect_s3_class(lnk, "data.frame")
-  expect_paths <- c("learners/setup.md", "learners/setup.md", "episodes/files/child.md")
+  expect_paths <- c("learners/setup.md", "learners/setup.md", "episodes/files/child.md", "episodes/files/child-3.md")
   expect_equal(lnk$filepath, fs::path(expect_paths))
-  expect_equal(lnk$internal_file, c(TRUE, TRUE, FALSE))
-  expect_equal(lnk$enforce_https, c(FALSE, FALSE, TRUE))
+  expect_equal(lnk$internal_file, c(TRUE, TRUE, FALSE, TRUE))
+  expect_equal(lnk$enforce_https, c(FALSE, FALSE, TRUE, TRUE))
 })
 
