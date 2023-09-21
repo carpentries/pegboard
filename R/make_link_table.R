@@ -6,7 +6,7 @@
 #' - server The first part of the URL (e.g. doi.org or github.com)
 #' - port the port number if it exists (note: liquid tags produce weird ports)
 #' - user associated with port, usually blank
-#' - path path to the page in question
+#' - path the path element of the link
 #' - query anything after a "?" in a URL
 #' - fragment navigation within a page; anything after "#" in a URL
 #' - orig the original, unparsed URL
@@ -16,6 +16,9 @@
 #' - rel if it's a relative URL, the name of the anchor, otherwise NA.
 #' - anchor logical if the URL is an anchor
 #' - sourcepos the source position in the file
+#' - filepath relative path to the source file
+#' - parents list column of paths to the build parents
+#' - node a list column of the nodes with the links
 #' @keywords internal
 #' @export
 #' @examples
@@ -43,6 +46,12 @@ make_link_table <- function(yrn) {
   url_table$anchor    <- !is.na(purrr::map_chr(limg, xml2::xml_attr, "anchor"))
   url_table$sourcepos <- purrr::map_int(limg, get_linestart) + yml_lines
   url_table$filepath  <- fs::path_rel(yrn$path, yrn$lesson)
+  if (yrn$has_parents) {
+    parents <- list(fs::path_rel(yrn$build_parents, yrn$lesson))
+  } else {
+    parents <- list(character(0))
+  }
+  url_table$parents   <- parents
   url_table$node      <- I(c(limg))
 
   url_table[order(url_table$sourcepos), , drop = FALSE]
