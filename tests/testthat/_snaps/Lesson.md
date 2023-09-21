@@ -270,7 +270,7 @@
       vlink <- frg$validate_links()
     Message <cliMessage>
       ! There were errors in 4/14 links
-      ( ) Some linked internal files do not exist
+      ( ) Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
       ( ) Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
       ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]: [](../no-workie.svg)
@@ -351,7 +351,7 @@
       vlink <- frg$validate_links()
     Message <cliMessage>
       [33m![39m There were errors in 4/14 links
-      ( ) Some linked internal files do not exist
+      ( ) Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
       ( ) Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
       ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]: [](../no-workie.svg)
@@ -432,7 +432,7 @@
       vlink <- frg$validate_links()
     Message <cliMessage>
       ! There were errors in 4/14 links
-      ◌ Some linked internal files do not exist
+      ◌ Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
       ◌ Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
       ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]: [](../no-workie.svg)
@@ -513,7 +513,7 @@
       vlink <- frg$validate_links()
     Message <cliMessage>
       [33m![39m There were errors in 4/14 links
-      ◌ Some linked internal files do not exist
+      ◌ Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
       ◌ Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
       ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]: [](../no-workie.svg)

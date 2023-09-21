@@ -5,7 +5,7 @@
     Message <cliMessage>
       ! There were errors in 3/4 links
       ( ) Links must use HTTPS <https://https.cio.gov/everything/>
-      ( ) Some linked internal files do not exist
+      ( ) Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
       
       learners/setup.md:18 [needs HTTPS]: [the PuTTY terminal](http://example.com/putty)
       learners/setup.md:26 [needs HTTPS]: [Terminal.app](http://example.com/terminal)
@@ -18,7 +18,7 @@
     Message <cliMessage>
       [33m![39m There were errors in 3/4 links
       ( ) Links must use HTTPS <https://https.cio.gov/everything/>
-      ( ) Some linked internal files do not exist
+      ( ) Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
       
       learners/setup.md:18 [needs HTTPS]: [the PuTTY terminal](http://example.com/putty)
       learners/setup.md:26 [needs HTTPS]: [Terminal.app](http://example.com/terminal)
@@ -31,7 +31,7 @@
     Message <cliMessage>
       ! There were errors in 3/4 links
       ◌ Links must use HTTPS <https://https.cio.gov/everything/>
-      ◌ Some linked internal files do not exist
+      ◌ Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
       
       learners/setup.md:18 [needs HTTPS]: [the PuTTY terminal](http://example.com/putty)
       learners/setup.md:26 [needs HTTPS]: [Terminal.app](http://example.com/terminal)
@@ -44,7 +44,7 @@
     Message <cliMessage>
       [33m![39m There were errors in 3/4 links
       ◌ Links must use HTTPS <https://https.cio.gov/everything/>
-      ◌ Some linked internal files do not exist
+      ◌ Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
       
       learners/setup.md:18 [needs HTTPS]: [the PuTTY terminal](http://example.com/putty)
       learners/setup.md:26 [needs HTTPS]: [Terminal.app](http://example.com/terminal)

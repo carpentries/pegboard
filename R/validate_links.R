@@ -269,6 +269,12 @@ link_tests <- c(
   NULL
 )
 
+# format the parents to display information about the folder context
+#
+# If there are no parents, then return an empty string
+#
+# If there _are_ parents, return the message " (relative to dir1/, dir2/)"
+# where dir1 and dir2 are the files that use the child document
 format_parents <- function(parents) {
   n <- length(parents)
   if (n == 0) {
@@ -294,7 +300,7 @@ link_info <- c(
   known_protocol  = "Links must have a known URL protocol (e.g. https, ftp, mailto). See <https://developer.wordpress.org/reference/functions/wp_allowed_protocols/#return> for a list of acceptable protocols.",
   enforce_https = "Links must use HTTPS <https://https.cio.gov/everything/>",
   internal_anchor = "Some link anchors for relative links (e.g. [anchor]: link) are missing",
-  internal_file = "Some linked internal files do not exist",
+  internal_file = "Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>",
   internal_well_formed = "Some links were incorrectly formatted",
   all_reachable = "",
   img_alt_text  = "Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>",
