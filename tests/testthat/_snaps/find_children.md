@@ -9,7 +9,7 @@
       
       learners/setup.md:18 [needs HTTPS]: [the PuTTY terminal](http://example.com/putty)
       learners/setup.md:26 [needs HTTPS]: [Terminal.app](http://example.com/terminal)
-      episodes/files/child.md:2 [missing file]: [broken link](this-file-does-not-exist.md)
+      episodes/files/child.md:2 [missing file (relative to episodes/)]: [broken link](this-file-does-not-exist.md)
 
 # children are validated along with parents [ansi]
 
@@ -22,7 +22,7 @@
       
       learners/setup.md:18 [needs HTTPS]: [the PuTTY terminal](http://example.com/putty)
       learners/setup.md:26 [needs HTTPS]: [Terminal.app](http://example.com/terminal)
-      episodes/files/child.md:2 [missing file]: [broken link](this-file-does-not-exist.md)
+      episodes/files/child.md:2 [missing file (relative to episodes/)]: [broken link](this-file-does-not-exist.md)
 
 # children are validated along with parents [unicode]
 
@@ -35,7 +35,7 @@
       
       learners/setup.md:18 [needs HTTPS]: [the PuTTY terminal](http://example.com/putty)
       learners/setup.md:26 [needs HTTPS]: [Terminal.app](http://example.com/terminal)
-      episodes/files/child.md:2 [missing file]: [broken link](this-file-does-not-exist.md)
+      episodes/files/child.md:2 [missing file (relative to episodes/)]: [broken link](this-file-does-not-exist.md)
 
 # children are validated along with parents [fancy]
 
@@ -48,5 +48,5 @@
       
       learners/setup.md:18 [needs HTTPS]: [the PuTTY terminal](http://example.com/putty)
       learners/setup.md:26 [needs HTTPS]: [Terminal.app](http://example.com/terminal)
-      episodes/files/child.md:2 [missing file]: [broken link](this-file-does-not-exist.md)
+      episodes/files/child.md:2 [missing file (relative to episodes/)]: [broken link](this-file-does-not-exist.md)
 

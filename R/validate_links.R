@@ -115,7 +115,7 @@ validate_links <- function(yrn) {
   VAL <- link_img_alt_text(VAL)
   VAL <- link_descriptive(VAL)
   VAL <- link_length(VAL)
-  VAL
+  return(VAL)
 }
 
 #' @rdname validate_links
@@ -260,7 +260,7 @@ link_tests <- c(
   known_protocol  = "[invalid protocol]: {scheme}",
   enforce_https = "[needs HTTPS]: [{text}]({orig})",
   internal_anchor = "[missing anchor]: [{text}]({orig})",
-  internal_file = "[missing file]: [{text}]({orig})",
+  internal_file = "[missing file{format_parents(parents)}]: [{text}]({orig})",
   internal_well_formed = "[incorrect formatting]: [{text}][{orig}] -> [{text}]({orig})",
   all_reachable = "",
   img_alt_text  = "[image missing alt-text]: {orig}",
@@ -268,6 +268,23 @@ link_tests <- c(
   link_length   = "[link text too short]: [{text}]({orig})",
   NULL
 )
+
+format_parents <- function(parents) {
+  n <- length(parents)
+  if (n == 0) {
+    return("")
+  }
+  n <- length(parents[[1]])
+  if (n == 0) {
+    return("")
+  }
+  dirs <- paste0(unique(fs::path_dir(parents[[1]])), "/")
+  parents <- paste(dirs, collapse = ", ")
+  if (parents != "") {
+    parents <- paste0(" (relative to ", parents, ")")
+  }
+  return(parents)
+}
 
 #' @rdname validate_links
 #' @format - `link_info` a character string of length `r length(link_info)`
