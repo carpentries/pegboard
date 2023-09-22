@@ -1,4 +1,4 @@
-# pegboard 0.7.0.9000 (unreleased)
+# pegboard 0.6.1.9000 (unreleased)
 
 This release introduces automated processing of {knitr} child files, which
 enables them to be automatically available for validation and processing.
