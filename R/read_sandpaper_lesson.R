@@ -39,9 +39,13 @@ read_sandpaper_lesson <- function(path, ...) {
   # everything in other folders
   extra_files <- purrr::flatten(purrr::map(extra_paths,
       read_markdown_files, the_cfg, process_tags = FALSE, ...))
+  
+  # Will somebody _please_ think about the _children_?!
+  the_children <- load_children(c(episodes, standard_files, extra_files))
 
   return(list(
       episodes = episodes, 
       extra = c(standard_files, extra_files),
+      children = the_children,
       overview = the_cfg$overview %||% FALSE))
 }

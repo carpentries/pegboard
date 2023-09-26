@@ -9,7 +9,7 @@
 \alias{div_info}
 \title{Validate Callout Blocks for sandpaper episodes}
 \format{
-An object of class \code{character} of length 12.
+An object of class \code{character} of length 13.
 
 An object of class \code{character} of length 1.
 

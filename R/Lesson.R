@@ -27,6 +27,11 @@ Lesson <- R6::R6Class("Lesson",
     #'   is not processed for the jekyll lessons.
     extra = NULL,
 
+    #' @field children \[`list`\] list of [Episode] class objects representing
+    #'   child files that are needed by any of the components to be built
+    #'   This is not processed for the jekyll lessons.
+    children = NULL,
+
     #' @field sandpaper \[`logical`\] when `TRUE`, the episodes in the lesson
     #'   are written in pandoc flavoured markdown. `FALSE` would indicate a 
     #'   jekyll-based lesson written in kramdown.
@@ -71,6 +76,7 @@ Lesson <- R6::R6Class("Lesson",
         self$episodes <- sandy$episodes
         self$extra <- sandy$extra
         self$overview <- sandy$overview
+        self$children <- sandy$children
       }
       self$path <- path
     },
@@ -105,7 +111,7 @@ Lesson <- R6::R6Class("Lesson",
       if (is.null(element)) {
         return(NULL)
       }
-      things <- c("episodes", "extra", "built")
+      things <- c("episodes", "extra", "built", "children")
       names(things) <- things
       things <- things[collection]
       if (length(things) == 1L) {
@@ -127,7 +133,7 @@ Lesson <- R6::R6Class("Lesson",
       if (!self$sandpaper) {
         issue_warning("Summary not guaranteed for styles-based lessons")
       }
-      things <- c("episodes", "extra", "built")
+      things <- c("episodes", "extra", "built", "children")
       names(things) <- things
       things <- things[collection]
       if (length(things) == 1L) {
@@ -299,7 +305,7 @@ Lesson <- R6::R6Class("Lesson",
     #' frg <- Lesson$new(lesson_fragment())
     #' frg$validate_headings()
     validate_headings = function(verbose = TRUE) {
-      res <- purrr::map(c(self$episodes, self$extra), 
+      res <- purrr::map(c(self$episodes, self$extra, self$children), 
         function(x) {
           if (startsWith(x$name, "README")) return(NULL)
           x$validate_headings(verbose = verbose, warn = FALSE)
@@ -328,7 +334,7 @@ Lesson <- R6::R6Class("Lesson",
     #' frg <- Lesson$new(lesson_fragment())
     #' frg$validate_divs()
     validate_divs = function() {
-      res <- purrr::map(c(self$episodes, self$extra), 
+      res <- purrr::map(c(self$episodes, self$extra, self$children), 
         function(x) {
           if (startsWith(x$name, "README")) return(NULL)
           x$validate_divs(warn = FALSE)
@@ -362,7 +368,7 @@ Lesson <- R6::R6Class("Lesson",
     #' frg <- Lesson$new(lesson_fragment())
     #' frg$validate_links()
     validate_links = function() {
-      res <- purrr::map(c(self$episodes, self$extra),
+      res <- purrr::map(c(self$episodes, self$extra, self$children),
         function(x) {
           if (startsWith(x$name, "README")) return(NULL)
           x$validate_links(warn = FALSE)
@@ -371,6 +377,30 @@ Lesson <- R6::R6Class("Lesson",
       res <- stack_rows(res)
       throw_link_warnings(res)
       invisible(res)
+    },
+    #' @description find all the children of a single source file
+    #' @param episode_path the path to an episode or extra file
+    #' @return a character vector of the full lineage of files starting with
+    #'   a single source file. Note: this assumes a sandpaper lesson that has
+    #'   child files. If there are no child files, it will return the path
+    #' @examples
+    #' frag <- lesson_fragment("sandpaper-fragment-with-child")
+    #' lsn <- Lesson$new(frag, jekyll = FALSE)
+    #' lsn$has_children # TRUE
+    #' lsn$episodes[[1]]$children # first episode shows 1 immediate child
+    #' lsn$trace_lineage(lsn$files[[1]]) # find recursive children of 1st episode
+    trace_lineage = function(episode_path) {
+      path <- episode_path
+      if (!self$has_children) {
+        return(path)
+      }
+      is_episode <- path %in% self$files
+      if (is_episode) {
+        res <- trace_children(self$episodes[[fs::path_file(path)]], self)
+      } else {
+        res <- trace_children(self$extra[[fs::path_file(path)]], self)
+      }
+      return(res)
     }
   ),
   active = list(
@@ -389,6 +419,11 @@ Lesson <- R6::R6Class("Lesson",
     #' @field files the source files for each episode
     files = function() {
       purrr::map_chr(self$episodes, "path")
+    },
+    #' @field has_children a logical indicating the presence (`TRUE`) or
+    #'   absence (`FALSE`) of child files within the main files of the lesson
+    has_children = function() {
+      length(self$children) > 0L
     }
   ),
   private = list(

@@ -81,7 +81,7 @@
     Message <pbMessage>
       ! There were errors in 4/13 links
       
-      - Some linked internal files do not exist
+      - Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
        - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
       _episodes/14-looping-data-sets.md:191  [missing file]: [](../no-workie.svg)
@@ -99,7 +99,7 @@
       - Links must have a known URL protocol (e.g. https, ftp, mailto). See <https://developer.wordpress.org/reference/functions/wp_allowed_protocols/#return> for a list of acceptable protocols.
        - Links must use HTTPS <https://https.cio.gov/everything/>
        - Some link anchors for relative links (e.g. [anchor]: link) are missing
-       - Some linked internal files do not exist
+       - Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
        - Some links were incorrectly formatted
        - Avoid uninformative link phrases <https://webaim.org/techniques/hypertext/link_text#uninformative>
        - Avoid single-letter or missing link text <https://webaim.org/techniques/hypertext/link_text#link_length>
@@ -280,7 +280,7 @@
       ( ) Links must have a known URL protocol (e.g. https, ftp, mailto). See <https://developer.wordpress.org/reference/functions/wp_allowed_protocols/#return> for a list of acceptable protocols.
       ( ) Links must use HTTPS <https://https.cio.gov/everything/>
       ( ) Some link anchors for relative links (e.g. [anchor]: link) are missing
-      ( ) Some linked internal files do not exist
+      ( ) Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
       ( ) Some links were incorrectly formatted
       ( ) Avoid uninformative link phrases <https://webaim.org/techniques/hypertext/link_text#uninformative>
       ( ) Avoid single-letter or missing link text <https://webaim.org/techniques/hypertext/link_text#link_length>
@@ -337,7 +337,7 @@
       ( ) Links must have a known URL protocol (e.g. https, ftp, mailto). See <https://developer.wordpress.org/reference/functions/wp_allowed_protocols/#return> for a list of acceptable protocols.
       ( ) Links must use HTTPS <https://https.cio.gov/everything/>
       ( ) Some link anchors for relative links (e.g. [anchor]: link) are missing
-      ( ) Some linked internal files do not exist
+      ( ) Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
       ( ) Some links were incorrectly formatted
       ( ) Avoid uninformative link phrases <https://webaim.org/techniques/hypertext/link_text#uninformative>
       ( ) Avoid single-letter or missing link text <https://webaim.org/techniques/hypertext/link_text#link_length>
@@ -394,7 +394,7 @@
       ◌ Links must have a known URL protocol (e.g. https, ftp, mailto). See <https://developer.wordpress.org/reference/functions/wp_allowed_protocols/#return> for a list of acceptable protocols.
       ◌ Links must use HTTPS <https://https.cio.gov/everything/>
       ◌ Some link anchors for relative links (e.g. [anchor]: link) are missing
-      ◌ Some linked internal files do not exist
+      ◌ Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
       ◌ Some links were incorrectly formatted
       ◌ Avoid uninformative link phrases <https://webaim.org/techniques/hypertext/link_text#uninformative>
       ◌ Avoid single-letter or missing link text <https://webaim.org/techniques/hypertext/link_text#link_length>
@@ -451,7 +451,7 @@
       ◌ Links must have a known URL protocol (e.g. https, ftp, mailto). See <https://developer.wordpress.org/reference/functions/wp_allowed_protocols/#return> for a list of acceptable protocols.
       ◌ Links must use HTTPS <https://https.cio.gov/everything/>
       ◌ Some link anchors for relative links (e.g. [anchor]: link) are missing
-      ◌ Some linked internal files do not exist
+      ◌ Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
       ◌ Some links were incorrectly formatted
       ◌ Avoid uninformative link phrases <https://webaim.org/techniques/hypertext/link_text#uninformative>
       ◌ Avoid single-letter or missing link text <https://webaim.org/techniques/hypertext/link_text#link_length>
@@ -596,7 +596,7 @@
       ( ) Links must have a known URL protocol (e.g. https, ftp, mailto). See <https://developer.wordpress.org/reference/functions/wp_allowed_protocols/#return> for a list of acceptable protocols.
       ( ) Links must use HTTPS <https://https.cio.gov/everything/>
       ( ) Some link anchors for relative links (e.g. [anchor]: link) are missing
-      ( ) Some linked internal files do not exist
+      ( ) Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
       ( ) Some links were incorrectly formatted
       ( ) Avoid uninformative link phrases <https://webaim.org/techniques/hypertext/link_text#uninformative>
       ( ) Avoid single-letter or missing link text <https://webaim.org/techniques/hypertext/link_text#link_length>

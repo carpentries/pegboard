@@ -8,6 +8,8 @@ test_that("Episodes for jekyll can be created and are valid", {
   expect_equal(e$path, scope)
   expect_equal(e$name, fs::path_file(scope))
   expect_equal(e$lesson, lesson_fragment())
+  expect_equal(e$children, character(0))
+  expect_false(e$has_children)
 
   expect_s3_class(e$challenges, "xml_nodeset")
   expect_length(e$challenges, 2)
@@ -61,6 +63,30 @@ test_that("Episodes from sandpaper will have links included", {
   expect_length(e$links, 2L) # anchor and normal
 
 })
+
+
+
+test_that("Child files will be accounted for", {
+
+  suppressWarnings({
+    ep <- Episode$new(test_path("examples", "child-example/parent.Rmd"))
+  })
+  expected <- fs::path_abs(test_path("examples", "child-example", "files",
+    c("child.md", "child-2.Rmd")))
+  # we have 3 code blocks
+  expect_length(ep$code, 3L)
+  # the episode has children
+  expect_true(ep$has_children)
+  # the episode is not a child
+  expect_false(ep$has_parents)
+  expect_equal(ep$parents, character(0))
+  # the children are paths to files
+  expect_equal(ep$children, expected)
+  # the children actually exist
+  expect_equal(unname(fs::file_exists(ep$children)), c(TRUE, TRUE))
+
+})
+
 
 
 test_that("Episodes with image tags do not error", {

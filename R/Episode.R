@@ -9,6 +9,16 @@
 Episode <- R6::R6Class("Episode",
   inherit = tinkr::yarn,
   public = list(
+    #' @field children \[`character`\] a vector of absolute paths to child
+    #'   files if they exist.
+    children = character(0),
+    #' @field parents \[`character`\] a vector of absolute paths to immediate
+    #'   parent files if they exist
+    parents = character(0),
+    #' @field build_parents \[`character`\] a vector of absolute paths to the
+    #'   final parent files that will trigger this child file to build
+    build_parents = character(0),
+
     #' @description Create a new Episode
     #' @param path \[`character`\] path to a markdown episode file on disk
     #' @param process_tags \[`logical`\] if `TRUE` (default), kramdown tags will
@@ -22,6 +32,8 @@ Episode <- R6::R6Class("Episode",
     #'   immediately passed to [tinkr::yarn]. If `TRUE`, all liquid variables
     #'   in relative links have spaces removed to allow the commonmark parser to
     #'   interpret them as links.
+    #' @param parents \[`list`\] a list of `Episode` objects that represent the
+    #'   immediate parents of this child
     #' @param ... arguments passed on to [tinkr::yarn] and [tinkr::to_xml()]
     #' @return A new Episode object with extracted XML data
     #' @examples
@@ -29,7 +41,7 @@ Episode <- R6::R6Class("Episode",
     #' scope$name
     #' scope$lesson
     #' scope$challenges
-    initialize = function(path = NULL, process_tags = TRUE, fix_links = TRUE, fix_liquid = FALSE, ...) {
+    initialize = function(path = NULL, process_tags = TRUE, fix_links = TRUE, fix_liquid = FALSE, parents = NULL, ...) {
       if (!fs::file_exists(path)) {
         stop(glue::glue("the file '{path}' does not exist"))
       }
@@ -50,19 +62,19 @@ Episode <- R6::R6Class("Episode",
       TOX <- purrr::safely(super$initialize, otherwise = default, quiet = FALSE)
       if (fix_liquid) {
         tmp <- fix_liquid_relative_link(path)
-        lsn <- TOX(tmp, sourcepos = TRUE, ...)
+        ep <- TOX(tmp, sourcepos = TRUE, ...)
         close(tmp)
       } else {
-        lsn <- TOX(path, sourcepos = TRUE, ...)
+        ep <- TOX(path, sourcepos = TRUE, ...)
       }
-      if (!is.null(lsn$error)) {
-        private$record_problem(lsn$error)
+      if (!is.null(ep$error)) {
+        private$record_problem(ep$error)
       }
-      lsn <- lsn$result
+      ep <- ep$result
 
       # Process the kramdown tags
       if (process_tags) {
-        tags <- kramdown_tags(lsn$body)
+        tags <- kramdown_tags(ep$body)
         blocks <- tags[are_blocks(tags)]
         tags   <- tags[!are_blocks(tags)]
         # recording problems to inspect later
@@ -79,14 +91,16 @@ Episode <- R6::R6Class("Episode",
       }
 
       if (fix_links) {
-        lsn$body <- fix_links(lsn$body)
+        ep$body <- fix_links(ep$body)
       }
 
       # Initialize the object
       self$path <- path
-      self$yaml <- lsn$yaml
-      self$body <- lsn$body
-      self$ns   <- lsn$ns
+      self$yaml <- ep$yaml
+      self$body <- ep$body
+      self$ns   <- ep$ns
+      purrr::walk(parents, function(parent) add_parent(self, parent))
+      self$children <- find_children(ep, ancestor = parents[[1]])
     },
 
 
@@ -710,13 +724,33 @@ Episode <- R6::R6Class("Episode",
     },
     #' @field lesson \[`character`\] the path to the lesson where the episode is from
     lesson = function() {
-      lsn <- fs::path_dir(self$path)
+      components <- fs::path_split(self$path)[[1]]
       sub_folders <- c("episodes", "learners", "instructors", "profiles",
       "_episodes", "_episodes_rmd", "_extras")
-      if (basename(lsn) %in% sub_folders) {
-        lsn <- fs::path_dir(lsn)
+      the_folder <- sub_folders[purrr::map_lgl(sub_folders, is.element, components)]
+      if (length(the_folder) > 0L) {
+        # reverse the components so that we take only the sub folders relevant
+        # to our purposes
+        components <- rev(components)
+        # discard everything up to the folder
+        discard <- seq(which(components == the_folder)[1])
+        lsn  <- fs::path_join(rev(components[-discard]))
+      } else {
+        # if we do not encounter one of the known subfolders, we must be at
+        # the top of a lesson
+        lsn <- fs::path_dir(self$path)
       }
-      lsn
+      as.character(lsn)
+    },
+    #' @field has_children \[`logical`\] an indicator of the presence of child
+    #'   files (`TRUE`) or their absence (`FALSE`)
+    has_children = function() {
+      length(self$children) > 0L
+    },
+    #' @field has_parents \[`logical`\] an indicator of the presence of parent 
+    #'   files (`TRUE`) or their absence (`FALSE`)
+    has_parents = function() {
+      length(self$parents) > 0L
     }
   ),
   private = list(

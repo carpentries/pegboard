@@ -87,6 +87,16 @@ frg$validate_divs()
 
 frg <- Lesson$new(lesson_fragment())
 frg$validate_links()
+
+## ------------------------------------------------
+## Method `Lesson$trace_lineage`
+## ------------------------------------------------
+
+frag <- lesson_fragment("sandpaper-fragment-with-child")
+lsn <- Lesson$new(frag, jekyll = FALSE)
+lsn$has_children # TRUE
+lsn$episodes[[1]]$children # first episode shows 1 immediate child
+lsn$trace_lineage(lsn$files[[1]]) # find recursive children of 1st episode
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -103,6 +113,10 @@ the markdown artefacts rendered from RMarkdown files.}
 the extra markdown components including index, setup, information
 for learners, information for instructors, and learner profiles. This
 is not processed for the jekyll lessons.}
+
+\item{\code{children}}{[\code{list}] list of \link{Episode} class objects representing
+child files that are needed by any of the components to be built
+This is not processed for the jekyll lessons.}
 
 \item{\code{sandpaper}}{[\code{logical}] when \code{TRUE}, the episodes in the lesson
 are written in pandoc flavoured markdown. \code{FALSE} would indicate a
@@ -124,6 +138,9 @@ lesson and does not necessarly contain any episodes. Defaults to \code{FALSE}}
 \item{\code{show_problems}}{contents of the problems per episode}
 
 \item{\code{files}}{the source files for each episode}
+
+\item{\code{has_children}}{a logical indicating the presence (\code{TRUE}) or
+absence (\code{FALSE}) of child files within the main files of the lesson}
 }
 \if{html}{\out{</div>}}
 }
@@ -144,6 +161,7 @@ lesson and does not necessarly contain any episodes. Defaults to \code{FALSE}}
 \item \href{#method-Lesson-validate_headings}{\code{Lesson$validate_headings()}}
 \item \href{#method-Lesson-validate_divs}{\code{Lesson$validate_divs()}}
 \item \href{#method-Lesson-validate_links}{\code{Lesson$validate_links()}}
+\item \href{#method-Lesson-trace_lineage}{\code{Lesson$trace_lineage()}}
 \item \href{#method-Lesson-clone}{\code{Lesson$clone()}}
 }
 }
@@ -581,6 +599,40 @@ details.
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{frg <- Lesson$new(lesson_fragment())
 frg$validate_links()
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Lesson-trace_lineage"></a>}}
+\if{latex}{\out{\hypertarget{method-Lesson-trace_lineage}{}}}
+\subsection{Method \code{trace_lineage()}}{
+find all the children of a single source file
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Lesson$trace_lineage(episode_path)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{episode_path}}{the path to an episode or extra file}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+a character vector of the full lineage of files starting with
+a single source file. Note: this assumes a sandpaper lesson that has
+child files. If there are no child files, it will return the path
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{frag <- lesson_fragment("sandpaper-fragment-with-child")
+lsn <- Lesson$new(frag, jekyll = FALSE)
+lsn$has_children # TRUE
+lsn$episodes[[1]]$children # first episode shows 1 immediate child
+lsn$trace_lineage(lsn$files[[1]]) # find recursive children of 1st episode
 }
 \if{html}{\out{</div>}}
 

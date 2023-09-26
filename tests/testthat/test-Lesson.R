@@ -23,7 +23,14 @@ test_that("Sandpaper lessons can be read", {
   expect_null(snd$built)
   expect_s3_class(snd$extra[[1]], "Episode")
   expect_false(snd$overview)
+  expect_null(snd$children)
+  expect_false(snd$has_children)
+  # lineages will return the source file
+  expect_equal(snd$trace_lineage(snd$episodes[[1]]$path), snd$episodes[[1]]$path)
+  expect_equal(snd$trace_lineage(snd$extra[[1]]$path), snd$extra[[1]]$path)
 })
+
+
 
 test_that("Sandpaper lessons with incomplete conversions will throw an error", {
   tmp <- withr::local_tempdir()

@@ -11,6 +11,9 @@ template:
       site: "@thecarpentries"
       card: summary
 
+development:
+  mode: auto
+
 reference:
  - title: "Classes"
    desc: >
