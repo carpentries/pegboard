@@ -37,7 +37,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pegboard</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -111,7 +111,7 @@ headings:</p>
 <span><span class="va">lsn</span><span class="op">$</span><span class="fu">validate_divs</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">lsn</span><span class="op">$</span><span class="fu">validate_links</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#| <span style="color: #BBBB00;">!</span> There were errors in 4/14 links</span></span>
-<span><span class="co">#| ◌ Some linked internal files do not exist</span></span>
+<span><span class="co">#| ◌ Some linked internal files do not exist &lt;https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration&gt;</span></span>
 <span><span class="co">#| ◌ Images need alt-text &lt;https://webaim.org/techniques/hypertext/link_text#alt_link&gt;</span></span>
 <span><span class="co">#| </span></span>
 <span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]: [](../no-workie.svg)</span></span>
@@ -155,7 +155,7 @@ variable:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">links</span> <span class="op">&lt;-</span> <span class="va">lsn</span><span class="op">$</span><span class="fu">validate_links</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#| <span style="color: #BBBB00;">!</span> There were errors in 4/14 links</span></span>
-<span><span class="co">#| ◌ Some linked internal files do not exist</span></span>
+<span><span class="co">#| ◌ Some linked internal files do not exist &lt;https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration&gt;</span></span>
 <span><span class="co">#| ◌ Images need alt-text &lt;https://webaim.org/techniques/hypertext/link_text#alt_link&gt;</span></span>
 <span><span class="co">#| </span></span>
 <span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]: [](../no-workie.svg)</span></span>
@@ -163,11 +163,11 @@ variable:</p>
 <span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]: [Non-working image](../no-workie.svg) [image missing alt-text]: ../no-workie.svg</span></span>
 <span><span class="co">#| ::warning file=_episodes/14-looping-data-sets.md,line=199:: [image missing alt-text]: { page.root }/no-workie.svg</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">links</span>, max.level <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="co">#| 'data.frame':    14 obs. of  27 variables:</span></span>
+<span><span class="co">#| 'data.frame':    14 obs. of  28 variables:</span></span>
 <span><span class="co">#|  $ episodes            : chr  "12-for-loops.md" "14-looping-data-sets.md" "14-looping-data-sets.m"..</span></span>
 <span><span class="co">#|  $ scheme              : chr  "https" "https" "https" "https" ...</span></span>
 <span><span class="co">#|  $ server              : chr  "docs.python.org" "docs.python.org" "docs.python.org" "docs.python."..</span></span>
-<span><span class="co">#|  $ port                : int  NA NA NA NA NA NA NA NA 21893 -1739372560 ...</span></span>
+<span><span class="co">#|  $ port                : int  NA NA NA NA NA NA NA NA 21950 -135974488 ...</span></span>
 <span><span class="co">#|  $ user                : chr  "" "" "" "" ...</span></span>
 <span><span class="co">#|  $ path                : chr  "/3/library/stdtypes.html" "/3/library/glob.html" "/3/library/glob."..</span></span>
 <span><span class="co">#|  $ query               : chr  "" "" "" "" ...</span></span>
@@ -181,6 +181,7 @@ variable:</p>
 <span><span class="co">#|  $ anchor              : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...</span></span>
 <span><span class="co">#|  $ sourcepos           : int  135 51 57 58 140 163 189 191 193 193 ...</span></span>
 <span><span class="co">#|  $ filepath            : 'fs_path' chr  "_episodes/12-for-loops.md" "_episodes/14-looping-data-se"..</span></span>
+<span><span class="co">#|  $ parents             :List of 14</span></span>
 <span><span class="co">#|  $ node                :List of 14</span></span>
 <span><span class="co">#|   ..- attr(*, "class")= chr "AsIs"</span></span>
 <span><span class="co">#|  $ known_protocol      : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span>
@@ -584,7 +585,7 @@ possibilities:</p>
 <span><span class="co">#| ◌ Links must have a known URL protocol (e.g. https, ftp, mailto). See &lt;https://developer.wordpress.org/reference/functions/wp_allowed_protocols/#return&gt; for a list of acceptable protocols.</span></span>
 <span><span class="co">#| ◌ Links must use HTTPS &lt;https://https.cio.gov/everything/&gt;</span></span>
 <span><span class="co">#| ◌ Some link anchors for relative links (e.g. [anchor]: link) are missing</span></span>
-<span><span class="co">#| ◌ Some linked internal files do not exist</span></span>
+<span><span class="co">#| ◌ Some linked internal files do not exist &lt;https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration&gt;</span></span>
 <span><span class="co">#| ◌ Some links were incorrectly formatted</span></span>
 <span><span class="co">#| ◌ Avoid uninformative link phrases &lt;https://webaim.org/techniques/hypertext/link_text#uninformative&gt;</span></span>
 <span><span class="co">#| ◌ Avoid single-letter or missing link text &lt;https://webaim.org/techniques/hypertext/link_text#link_length&gt;</span></span>

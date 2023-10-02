@@ -67,6 +67,9 @@
     <loc>https://carpentries.github.io/pegboard/reference/find_between_tags.html</loc>
   </url>
   <url>
+    <loc>https://carpentries.github.io/pegboard/reference/find_children.html</loc>
+  </url>
+  <url>
     <loc>https://carpentries.github.io/pegboard/reference/find_div_pairs.html</loc>
   </url>
   <url>
@@ -130,6 +133,9 @@
     <loc>https://carpentries.github.io/pegboard/reference/liquid_to_commonmark.html</loc>
   </url>
   <url>
+    <loc>https://carpentries.github.io/pegboard/reference/load_children.html</loc>
+  </url>
+  <url>
     <loc>https://carpentries.github.io/pegboard/reference/make_div.html</loc>
   </url>
   <url>
@@ -167,6 +173,9 @@
   </url>
   <url>
     <loc>https://carpentries.github.io/pegboard/reference/set_ktag_block.html</loc>
+  </url>
+  <url>
+    <loc>https://carpentries.github.io/pegboard/reference/test_file_existence.html</loc>
   </url>
   <url>
     <loc>https://carpentries.github.io/pegboard/reference/to_dovetail.html</loc>

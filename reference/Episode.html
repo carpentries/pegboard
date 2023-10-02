@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pegboard</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,6 +70,25 @@ destructively modified in the conversion.</p>
     <div class="section level2">
     <h2 id="super-class">Super class<a class="anchor" aria-label="anchor" href="#super-class"></a></h2>
     <p><code><a href="https://docs.ropensci.org/tinkr/reference/yarn.html" class="external-link">tinkr::yarn</a></code> -&gt; <code>Episode</code></p>
+    </div>
+    <div class="section level2">
+    <h2 id="public-fields">Public fields<a class="anchor" aria-label="anchor" href="#public-fields"></a></h2>
+    <p></p><div class="r6-fields"><dl><dt><code>children</code></dt>
+<dd><p>[<code>character</code>] a vector of absolute paths to child
+files if they exist.</p></dd>
+
+
+<dt><code>parents</code></dt>
+<dd><p>[<code>character</code>] a vector of absolute paths to immediate
+parent files if they exist</p></dd>
+
+
+<dt><code>build_parents</code></dt>
+<dd><p>[<code>character</code>] a vector of absolute paths to the
+final parent files that will trigger this child file to build</p></dd>
+
+
+</dl><p></p></div>
     </div>
     <div class="section level2">
     <h2 id="active-bindings">Active bindings<a class="anchor" aria-label="anchor" href="#active-bindings"></a></h2>
@@ -137,6 +156,16 @@ destructively modified in the conversion.</p>
 <dd><p>[<code>character</code>] the path to the lesson where the episode is from</p></dd>
 
 
+<dt><code>has_children</code></dt>
+<dd><p>[<code>logical</code>] an indicator of the presence of child
+files (<code>TRUE</code>) or their absence (<code>FALSE</code>)</p></dd>
+
+
+<dt><code>has_parents</code></dt>
+<dd><p>[<code>logical</code>] an indicator of the presence of parent
+files (<code>TRUE</code>) or their absence (<code>FALSE</code>)</p></dd>
+
+
 </dl><p></p></div>
     </div>
     <div class="section level2">
@@ -186,6 +215,7 @@ destructively modified in the conversion.</p>
 <span>  process_tags <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  fix_links <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  fix_liquid <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  parents <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
@@ -214,6 +244,11 @@ as valid links.</p></dd>
 immediately passed to <a href="https://docs.ropensci.org/tinkr/reference/yarn.html" class="external-link">tinkr::yarn</a>. If <code>TRUE</code>, all liquid variables
 in relative links have spaces removed to allow the commonmark parser to
 interpret them as links.</p></dd>
+
+
+<dt><code>parents</code></dt>
+<dd><p>[<code>list</code>] a list of <code>Episode</code> objects that represent the
+immediate parents of this child</p></dd>
 
 
 <dt><code>...</code></dt>
@@ -1082,7 +1117,7 @@ links.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">scope</span> <span class="op">&lt;-</span> <span class="va">Episode</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="lesson_fragment.html">lesson_fragment</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"_episodes"</span>, <span class="st">"17-scope.md"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">scope</span><span class="op">$</span><span class="fu">write</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Creating temporary directory '/tmp/Rtmp7c7hry/dir188044ead71f'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Creating temporary directory '/tmp/RtmpSNJwWj/dir184c6667341d'</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
 <span class="r-in"><span><span class="co">## Method `Episode$handout`</span></span></span>
@@ -1256,7 +1291,7 @@ links.</p>
 <span class="r-in"><span><span class="va">loop</span> <span class="op">&lt;-</span> <span class="va">Episode</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="lesson_fragment.html">lesson_fragment</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"_episodes"</span>, <span class="st">"14-looping-data-sets.md"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">loop</span><span class="op">$</span><span class="fu">validate_links</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> There were errors in 4/13 links</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ◌ Some linked internal files do not exist</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ◌ Some linked internal files do not exist &lt;https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration&gt;</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ◌ Images need alt-text &lt;https://webaim.org/techniques/hypertext/link_text#alt_link&gt;</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]: [](../no-workie.svg)</span>

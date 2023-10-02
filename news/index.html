@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pegboard</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,6 +50,30 @@
       <small>Source: <a href="https://github.com/carpentries/pegboard/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.7.0" id="pegboard-070-2023-10-02">pegboard 0.7.0 (2023-10-02)<a class="anchor" aria-label="anchor" href="#pegboard-070-2023-10-02"></a></h2>
+<p>This release introduces automated processing of {knitr} child files, which enables them to be automatically available for validation and processing.</p>
+<div class="section level3">
+<h3 id="new-features-0-7-0">NEW FEATURES<a class="anchor" aria-label="anchor" href="#new-features-0-7-0"></a></h3>
+<ul><li>
+<code>Episode</code> class objects gain the <code>children</code>, <code>parents</code>, and <code>build_parents</code> fields which will contain the known relationships between files. Both <code>children</code> and <code>parents</code> represent <em>immediate</em> relationships while <code>build_parents</code> represent the most distant ancestor of the object that would trigger it to build. Note that the <code>parents</code> fields are only populated for an <code>Episode</code> in the context of a <code>Lesson</code> object.</li>
+<li>
+<code>Lesson</code> class objects gain the <code>children</code> field which is a list that stores <code>Episode</code> objects derived from child files.</li>
+<li>
+<code>Episode</code> objects gain the <code>$has_parents</code> active binding reporting if the object has a parent object. This is only used in the context of a <code>Lesson</code>.</li>
+<li>Both <code>Episode</code> and <code>Lesson</code> objects gain the <code>$has_children</code> active binding, reporting if there are any child episodes in the lesson or episode.</li>
+<li>
+<code>Lesson</code> objects gain the <code>$trace_lineage()</code> method to return the absolute paths to <em>all child files</em> from the source path of a given episode if they exist.</li>
+<li>
+<code><a href="../reference/make_link_table.html">make_link_table()</a></code> now has a new column called <code>parents</code> which contains a list column of the parents (if any) of the files checked</li>
+<li>
+<code>$validate_links()</code>, <code>$validate_divs()</code>, and <code>$validate_headings()</code> will now all process child files by default. Note that <code>$validate_links()</code> will report missing files <em>relative to the build parents</em>.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fix-0-7-0">BUG FIX<a class="anchor" aria-label="anchor" href="#bug-fix-0-7-0"></a></h3>
+<ul><li>The <code>$load_built()</code> method will now load all built markdown content, not just the episodes.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.6.1" id="pegboard-061-2023-09-06">pegboard 0.6.1 (2023-09-06)<a class="anchor" aria-label="anchor" href="#pegboard-061-2023-09-06"></a></h2>
 <div class="section level3">

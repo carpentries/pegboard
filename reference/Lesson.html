@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pegboard</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,6 +85,12 @@ for learners, information for instructors, and learner profiles. This
 is not processed for the jekyll lessons.</p></dd>
 
 
+<dt><code>children</code></dt>
+<dd><p>[<code>list</code>] list of <a href="Episode.html">Episode</a> class objects representing
+child files that are needed by any of the components to be built
+This is not processed for the jekyll lessons.</p></dd>
+
+
 <dt><code>sandpaper</code></dt>
 <dd><p>[<code>logical</code>] when <code>TRUE</code>, the episodes in the lesson
 are written in pandoc flavoured markdown. <code>FALSE</code> would indicate a
@@ -117,6 +123,11 @@ lesson and does not necessarly contain any episodes. Defaults to <code>FALSE</co
 <dd><p>the source files for each episode</p></dd>
 
 
+<dt><code>has_children</code></dt>
+<dd><p>a logical indicating the presence (<code>TRUE</code>) or
+absence (<code>FALSE</code>) of child files within the main files of the lesson</p></dd>
+
+
 </dl><p></p></div>
     </div>
     <div class="section level2">
@@ -139,6 +150,7 @@ lesson and does not necessarly contain any episodes. Defaults to <code>FALSE</co
 <li><p><a href="#method-Lesson-validate_headings"><code>Lesson$validate_headings()</code></a></p></li>
 <li><p><a href="#method-Lesson-validate_divs"><code>Lesson$validate_divs()</code></a></p></li>
 <li><p><a href="#method-Lesson-validate_links"><code>Lesson$validate_links()</code></a></p></li>
+<li><p><a href="#method-Lesson-trace_lineage"><code>Lesson$trace_lineage()</code></a></p></li>
 <li><p><a href="#method-Lesson-clone"><code>Lesson$clone()</code></a></p></li>
 </ul></div><p></p><hr><a id="method-Lesson-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
@@ -554,15 +566,46 @@ details.</p>
 </div>
 
 
-</div><p></p><hr><a id="method-Lesson-clone"></a><div class="section">
-<h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
-<p>The objects of this class are cloneable with this method.</p><div class="section">
+</div><p></p><hr><a id="method-Lesson-trace_lineage"></a><div class="section">
+<h3 id="method-trace-lineage-">Method <code>trace_lineage()</code><a class="anchor" aria-label="anchor" href="#method-trace-lineage-"></a></h3>
+<p>find all the children of a single source file</p><div class="section">
 <h4 id="usage-14">Usage<a class="anchor" aria-label="anchor" href="#usage-14"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Lesson</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Lesson</span><span class="op">$</span><span class="fu">trace_lineage</span><span class="op">(</span><span class="va">episode_path</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
 <h4 id="arguments-11">Arguments<a class="anchor" aria-label="anchor" href="#arguments-11"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>episode_path</code></dt>
+<dd><p>the path to an episode or extra file</p></dd>
+
+
+</dl><p></p></div>
+</div>
+<div class="section">
+<h4 id="returns-8">Returns<a class="anchor" aria-label="anchor" href="#returns-8"></a></h4>
+<p>a character vector of the full lineage of files starting with
+a single source file. Note: this assumes a sandpaper lesson that has
+child files. If there are no child files, it will return the path</p>
+</div>
+<div class="section">
+<h4 id="examples-10">Examples<a class="anchor" aria-label="anchor" href="#examples-10"></a></h4>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="va">frag</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lesson_fragment.html">lesson_fragment</a></span><span class="op">(</span><span class="st">"sandpaper-fragment-with-child"</span><span class="op">)</span></span>
+<span><span class="va">lsn</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/Lesson.html">Lesson</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">frag</span>, jekyll <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">lsn</span><span class="op">$</span><span class="va">has_children</span> <span class="co"># TRUE</span></span>
+<span><span class="va">lsn</span><span class="op">$</span><span class="va">episodes</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">children</span> <span class="co"># first episode shows 1 immediate child</span></span>
+<span><span class="va">lsn</span><span class="op">$</span><span class="fu">trace_lineage</span><span class="op">(</span><span class="va">lsn</span><span class="op">$</span><span class="va">files</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="co"># find recursive children of 1st episode</span></span></code></pre></div><p></p></div>
+</div>
+
+
+</div><p></p><hr><a id="method-Lesson-clone"></a><div class="section">
+<h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
+<p>The objects of this class are cloneable with this method.</p><div class="section">
+<h4 id="usage-15">Usage<a class="anchor" aria-label="anchor" href="#usage-15"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Lesson</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-12">Arguments<a class="anchor" aria-label="anchor" href="#arguments-12"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
 
@@ -591,7 +634,9 @@ details.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Public:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     add_md: function (md, where = 0L) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     body: xml_document, xml_node</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     build_parents: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     challenges: active binding</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     children: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     clone: function (deep = FALSE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     code: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     confirm_sandpaper: function () </span>
@@ -602,6 +647,8 @@ details.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     get_images: function (process = FALSE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     get_yaml: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     handout: function (path = NULL, solutions = FALSE) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     has_children: active binding</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     has_parents: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     head: function (n = 6L) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     headings: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     images: active binding</span>
@@ -618,6 +665,7 @@ details.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     ns: http://commonmark.org/xml/1.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     objectives: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     output: active binding</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     parents: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     path: /home/runner/work/_temp/Library/pegboard/lesson-fragment ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     protect_curly: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     protect_math: function () </span>
@@ -657,7 +705,9 @@ details.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Public:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     add_md: function (md, where = 0L) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     body: xml_document, xml_node</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     build_parents: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     challenges: active binding</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     children: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     clone: function (deep = FALSE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     code: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     confirm_sandpaper: function () </span>
@@ -668,6 +718,8 @@ details.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     get_images: function (process = FALSE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     get_yaml: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     handout: function (path = NULL, solutions = FALSE) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     has_children: active binding</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     has_parents: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     head: function (n = 6L) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     headings: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     images: active binding</span>
@@ -684,6 +736,7 @@ details.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     ns: http://commonmark.org/xml/1.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     objectives: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     output: active binding</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     parents: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     path: /home/runner/work/_temp/Library/pegboard/lesson-fragment ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     protect_curly: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     protect_math: function () </span>
@@ -723,7 +776,9 @@ details.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Public:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     add_md: function (md, where = 0L) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     body: xml_document, xml_node</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     build_parents: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     challenges: active binding</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     children: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     clone: function (deep = FALSE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     code: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     confirm_sandpaper: function () </span>
@@ -734,6 +789,8 @@ details.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     get_images: function (process = FALSE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     get_yaml: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     handout: function (path = NULL, solutions = FALSE) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     has_children: active binding</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     has_parents: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     head: function (n = 6L) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     headings: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     images: active binding</span>
@@ -750,6 +807,7 @@ details.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     ns: http://commonmark.org/xml/1.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     objectives: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     output: active binding</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     parents: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     path: /home/runner/work/_temp/Library/pegboard/lesson-fragment ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     protect_curly: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     protect_math: function () </span>
@@ -789,7 +847,9 @@ details.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Public:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     add_md: function (md, where = 0L) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     body: xml_document, xml_node</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     build_parents: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     challenges: active binding</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     children: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     clone: function (deep = FALSE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     code: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     confirm_sandpaper: function () </span>
@@ -800,6 +860,8 @@ details.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     get_images: function (process = FALSE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     get_yaml: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     handout: function (path = NULL, solutions = FALSE) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     has_children: active binding</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     has_parents: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     head: function (n = 6L) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     headings: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     images: active binding</span>
@@ -816,6 +878,7 @@ details.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     ns: http://commonmark.org/xml/1.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     objectives: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     output: active binding</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     parents: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     path: /home/runner/work/_temp/Library/pegboard/lesson-fragment ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     protect_curly: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     protect_math: function () </span>
@@ -1066,13 +1129,28 @@ details.</p>
 <span class="r-in"><span><span class="va">frg</span> <span class="op">&lt;-</span> <span class="va">Lesson</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="lesson_fragment.html">lesson_fragment</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">frg</span><span class="op">$</span><span class="fu">validate_links</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> There were errors in 4/14 links</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ◌ Some linked internal files do not exist</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ◌ Some linked internal files do not exist &lt;https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration&gt;</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ◌ Images need alt-text &lt;https://webaim.org/techniques/hypertext/link_text#alt_link&gt;</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=191:: [missing file]: [](../no-workie.svg)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=195:: [image missing alt-text]: https://carpentries.org/assets/img/TheCarpentries.svg</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=197:: [missing file]: [Non-working image](../no-workie.svg) [image missing alt-text]: ../no-workie.svg</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ::warning file=_episodes/14-looping-data-sets.md,line=199:: [image missing alt-text]: { page.root }/no-workie.svg</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `Lesson$trace_lineage`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">frag</span> <span class="op">&lt;-</span> <span class="fu"><a href="lesson_fragment.html">lesson_fragment</a></span><span class="op">(</span><span class="st">"sandpaper-fragment-with-child"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">lsn</span> <span class="op">&lt;-</span> <span class="va">Lesson</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">frag</span>, jekyll <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">lsn</span><span class="op">$</span><span class="va">has_children</span> <span class="co"># TRUE</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
+<span class="r-in"><span><span class="va">lsn</span><span class="op">$</span><span class="va">episodes</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">children</span> <span class="co"># first episode shows 1 immediate child</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">/home/runner/work/_temp/Library/pegboard/sandpaper-fragment-with-child/episodes/files/cat.Rmd</span></span>
+<span class="r-in"><span><span class="va">lsn</span><span class="op">$</span><span class="fu">trace_lineage</span><span class="op">(</span><span class="va">lsn</span><span class="op">$</span><span class="va">files</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="co"># find recursive children of 1st episode</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/home/runner/work/_temp/Library/pegboard/sandpaper-fragment-with-child/episodes/intro.Rmd"        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/home/runner/work/_temp/Library/pegboard/sandpaper-fragment-with-child/episodes/files/cat.Rmd"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3] "/home/runner/work/_temp/Library/pegboard/sandpaper-fragment-with-child/episodes/files/session.Rmd"</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
