@@ -277,6 +277,9 @@ read_children <- function(parent, all_children = list(), ...) {
     known_children <- names(all_children)
     new_child <- !child %in% known_children
     if (new_child) {
+      # TODO: check that the child exists
+        # TODO: throw message if child does not exist
+        # TODO: remove nonexistent children from parent
       # read in the new child with a parent listed
       this_child <- Episode$new(child, parent = list(parent), ...)
     } else {
