@@ -1,3 +1,9 @@
+# pegboard 0.7.1 (2023-10-03)
+
+* child chunk options that would fail out of context no longer cause a failure.
+  (reported: @trhallam, https://github.com/carpentries/workbench/issues/74, 
+  #139; fixed: @zkamvar, #140)
+
 # pegboard 0.7.0 (2023-10-02)
 
 This release introduces automated processing of {knitr} child files, which

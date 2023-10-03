@@ -110,3 +110,52 @@ cli::test_that_cli("children are validated along with parents", {
   expect_equal(lnk$enforce_https, c(FALSE, FALSE, TRUE, TRUE))
 })
 
+cli::test_that_cli("missing children will not be read", {
+  # setup -------------------------------------------------------------------
+  tmp <- withr::local_tempdir()
+  test_dir <- fs::path(tmp, "sandpaper-fragment")
+  fs::dir_copy(lesson_fragment("sandpaper-fragment"), test_dir)
+  fs::dir_copy(
+    test_path("examples", "child-example", "files"),
+    fs::path(test_dir, "episodes")
+  )
+  # create two files in the lesson with the same children -------------------
+  parent_file <- fs::path(test_dir, "episodes", "intro.Rmd")
+  second_parent_file <- fs::path(test_dir, "episodes", "next.Rmd")
+  fs::file_copy(
+    test_path("examples", "child-example", "parent.Rmd"),
+    parent_file,
+    overwrite = TRUE
+  )
+  fs::file_copy(
+    test_path("examples", "child-example", "parent.Rmd"),
+    second_parent_file,
+    overwrite = TRUE
+  )
+  cat("```{r child=file.path(snippets, \"test.Rmd\")}\n```\n", 
+    file = parent_file,
+    append = TRUE
+  )
+  # set the order in the config --------------------------------------------
+  cfg <- readLines(fs::path(test_dir, "config.yaml"))
+  eplist <- which(endsWith(cfg, "intro.Rmd"))
+  cfg[eplist] <- paste0(cfg[eplist], "\n  - next.Rmd")
+  writeLines(cfg, fs::path(test_dir, "config.yaml"))
+  children_names <- fs::path(
+    test_dir, "episodes", "files",
+    c("child.md", "child-2.Rmd", "child-3.md")
+  )
+
+  expect_message(lsn <- Lesson$new(test_dir, jekyll = FALSE),
+    "could not process child document file.path(snippets, \"test.Rmd\")",
+    fixed = TRUE
+  )
+
+  expect_snapshot(lnk <- lsn$validate_links())
+  expect_s3_class(lnk, "data.frame")
+  expect_paths <- c("learners/setup.md", "learners/setup.md", "episodes/files/child.md", "episodes/files/child-3.md")
+  expect_equal(lnk$filepath, fs::path(expect_paths))
+  expect_equal(lnk$internal_file, c(TRUE, TRUE, FALSE, TRUE))
+  expect_equal(lnk$enforce_https, c(FALSE, FALSE, TRUE, TRUE))
+})
+
