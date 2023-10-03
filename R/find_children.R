@@ -164,7 +164,20 @@ child_file_from_code_blocks <- function(nodes) {
   use_children <- xml2::xml_has_attr(nodes, "child")
   if (any(use_children)) {
     nodes <- nodes[use_children]
-    res <- gsub("[\"']", "", xml2::xml_attr(nodes, "child"))
+    children <- xml2::xml_attr(nodes, "child")
+    res <- vector(length = length(children), mode = "list")
+    for (child in seq_along(children)) {
+      res[[child]] <- eval(tryCatch({
+          eval(parse(text = children[child]))
+        }, 
+        error = function(e) {
+          msg <- "could not process child document {children[child]}"
+          pb_message(glue::glue(msg))
+          return(NULL)
+        }
+      ))
+    }
+    res <- unlist(res[lengths(res) > 0L], use.names = FALSE)
   } else {
     character(0)
   }
@@ -277,9 +290,10 @@ read_children <- function(parent, all_children = list(), ...) {
     known_children <- names(all_children)
     new_child <- !child %in% known_children
     if (new_child) {
-      # TODO: check that the child exists
-        # TODO: throw message if child does not exist
-        # TODO: remove nonexistent children from parent
+      is_valid <- validate_child(child, parent)
+      if (!is_valid) {
+        next
+      }
       # read in the new child with a parent listed
       this_child <- Episode$new(child, parent = list(parent), ...)
     } else {
@@ -335,3 +349,14 @@ add_parent <- function(child, parent) {
   return(invisible(NULL))
 }
 
+validate_child <- function(child, parent) {
+  if (fs::file_exists(child)) {
+    return(TRUE)
+  }
+  parent$children <- parent$children[parent$children != child]
+  child_name <- sQuote(fs::path_rel(child, parent$lesson), q = 2)
+  parent_name <- fs::path_rel(parent$path, parent$lesson)
+  msg <- "could not process child document {child_name} (in {parent_name})"
+  pb_message(glue::glue(msg))
+  return(FALSE)
+}
