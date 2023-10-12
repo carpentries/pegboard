@@ -1,0 +1,128 @@
+---
+title: "Introduction to the Episode Object"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to the Episode Object}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+
+The {pegboard} package facilitates the analysis and manipulation of Markdown and
+R Markdown files by translating them to XML and back again. This extends the
+{tinkr} package by providing additional methods that are specific for 
+Carpentries-style lessons. There are two `R6` classes defined in {pegboard}:
+
+ - `Episode` objects that contain the XML data, YAML metadata and extra fields
+   that define the child and parent files for a particular episode
+ - `Lesson` objects that contain lists of `Episode` objects categorised as 
+   "episodes", "extra", or "children"
+
+This vignette will be discussing the structure of Episode objects, how to 
+query the contents with the {xml2} package, and how to use the methods and 
+active bindings to get information about, extract, and manipulate anything
+inside of a Markdown or R Markdown document.
+
+### Working with XML data
+
+Each `Episode` object contains a field (you can think of each field as a list 
+element) called `$body`, which contains an {xml2} document. This is the core of
+the `Episode` object and every function works in some way with this field. For
+the casual R user (and even for the more experienced), the way you use this
+package may seem a little strange. This is because in R, functions will not
+have side effects, but the vast majority of methods in the `Episode` object will
+modify the object itself and this all has to do with the way XML data is handled
+in R by the {xml2} package. 
+
+Normally in R, when you pass data to a function, it will make a copy of the
+data and then apply the function to the copy of the data:
+
+```{r}
+x <- 1:10
+f <- function(x) {
+  # insert 99 after the fourth position in a vector
+  return(append(x, 99, after = 4))
+}
+print(f(x))
+# note that x is not modified
+print(x)
+```
+
+When working with XML in R, the {xml2} package is unparalleled, but it leads to
+surprising outcomes because when you modify content within an XML object, you
+are modifying the object in place:
+
+```{r xml-example}
+x <- xml2::read_xml("<a><b></b></a>")
+print(x)
+f <- function(x, new = "c") {
+  xml2::xml_add_child(x, new, .where = xml_length(x))
+  return(x)
+}
+y <- f(x)
+# note that x and y are identical
+print(x)
+print(y)
+```
+
+It gets a bit stranger when you consider that in the above code, `y` and `x` are
+_exactly the same object_ as shown with the fact that if I manipulate `y`, then 
+`x` will also be modified:
+
+```{r xml-example-dup}
+f(y, "d")
+print(y)
+print(x)
+```
+
+I can even extract child elements from the XML document and manipulate _those_
+and have them be reflected in the parent. For example, if I extract the second
+child of the document, and then apply the `cool="verified"` attribute to the 
+child, it will be reflected in the parent document. 
+
+```{r xml-example-child}
+child <- xml2::xml_child(x, 2)
+xml2::xml_set_attr(child, "cool", "verified")
+print(child)
+print(x)
+print(y)
+```
+
+Because of this persistance, we are able to query relationships between XML
+nodes and better analyze and manipulation the Markdown document. 
+
+## Reading and Writing Markdown Content
+
+Each `Episode` object starts from a Markdown file. It can be any markdown file,
+but for us to explore what the `Episode` object has to offer us, let's take an
+example R Markdown file that is present in a fragment of a Carpentries Workbench
+lesson that we have in this package. We will be using the {xml2} package to 
+explore the object and the {fs} package to help with constructing file paths.
+
+```{r setup}
+library("pegboard")
+library("xml2")
+library("fs")
+```
+
+
+```{r}
+lsn <- lesson_fragment("sandpaper-fragment")
+dir_tree(lsn, recurse = 1, regex = "site/[^R].*", invert = TRUE)
+
+# Read in the intro.Rmd document as an `Episode` object
+intro_path <- path(lsn, "episodes", "intro.Rmd")
+intro <- Episode$new(intro_path)
+```
+
+If I print out the Episode object, I'm going to get a long list of methods
+
+
