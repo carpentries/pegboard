@@ -31,7 +31,60 @@ query the contents with the {xml2} package, and how to use the methods and
 active bindings to get information about, extract, and manipulate anything
 inside of a Markdown or R Markdown document.
 
-### Working with XML data
+
+## Reading Markdown Content
+
+Each `Episode` object starts from a Markdown file. It can be any markdown file,
+but for us to explore what the `Episode` object has to offer us, let's take an
+example R Markdown file that is present in a fragment of a Carpentries Workbench
+lesson that we have in this package. We will be using the {xml2} package to 
+explore the object and the {fs} package to help with constructing file paths.
+
+```{r setup}
+library("pegboard")
+library("xml2")
+library("fs")
+```
+
+
+```{r intro-read}
+lsn <- lesson_fragment("sandpaper-fragment")
+dir_tree(lsn, recurse = 1, regex = "site/[^R].*", invert = TRUE)
+
+# Read in the intro.Rmd document as an `Episode` object
+intro_path <- path(lsn, "episodes", "intro.Rmd")
+intro <- Episode$new(intro_path)
+```
+
+If I print out the Episode object, I'm going to get a long list of methods,
+fields and active bindings (functions that act like fields) printed:
+
+```{r intro-print}
+intro
+```
+
+The actual XML content is in the `$body` field. This contains all the data from
+the markdown document, but in XML form. 
+
+```{r intro-body}
+intro$body
+```
+
+If you want to see what the contents look like, you can use the `$show()`,
+`$head()`, or `$tail()` methods (note: the `$show()` method will print out the
+entire markdown document).
+
+```{r intro-show}
+intro$head(10)
+intro$tail(10)
+```
+
+## Analysis
+
+You can use {pegboard} to account for elements within the document. Many of
+these are embedded as 
+
+## Working with XML data
 
 Each `Episode` object contains a field (you can think of each field as a list 
 element) called `$body`, which contains an {xml2} document. This is the core of
@@ -96,33 +149,11 @@ print(x)
 print(y)
 ```
 
-Because of this persistance, we are able to query relationships between XML
-nodes and better analyze and manipulation the Markdown document. 
-
-## Reading and Writing Markdown Content
-
-Each `Episode` object starts from a Markdown file. It can be any markdown file,
-but for us to explore what the `Episode` object has to offer us, let's take an
-example R Markdown file that is present in a fragment of a Carpentries Workbench
-lesson that we have in this package. We will be using the {xml2} package to 
-explore the object and the {fs} package to help with constructing file paths.
-
-```{r setup}
-library("pegboard")
-library("xml2")
-library("fs")
-```
-
-
-```{r}
-lsn <- lesson_fragment("sandpaper-fragment")
-dir_tree(lsn, recurse = 1, regex = "site/[^R].*", invert = TRUE)
-
-# Read in the intro.Rmd document as an `Episode` object
-intro_path <- path(lsn, "episodes", "intro.Rmd")
-intro <- Episode$new(intro_path)
-```
-
-If I print out the Episode object, I'm going to get a long list of methods
-
+This persistance lends itself very well to using the {R6} package for creating
+objects that work in a more object-oriented way (where methods belong to classes
+instead of the other way around). If you are familiar with how Python methods
+work, then you will be mostly familiar with how the {R6} objects behave. It is 
+worthwhile to read the [{R6} introduction
+vignette](https://r6.r-lib.org/articles/Introduction.html) if you want to
+understand how to program and modify this package. 
 
