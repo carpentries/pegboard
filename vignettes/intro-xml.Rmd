@@ -62,7 +62,7 @@ are modifying the object in place:
 x <- xml2::read_xml("<a><b></b></a>")
 print(x)
 f <- function(x, new = "c") {
-  xml2::xml_add_child(x, new, .where = xml_length(x))
+  xml2::xml_add_child(x, new, .where = xml2::xml_length(x))
   return(x)
 }
 y <- f(x)

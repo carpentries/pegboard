@@ -31,14 +31,16 @@ query the contents with the {xml2} package, and how to use the methods and
 active bindings to get information about, extract, and manipulate anything
 inside of a Markdown or R Markdown document.
 
-
 ## Reading Markdown Content
 
-Each `Episode` object starts from a Markdown file. It can be any markdown file,
-but for us to explore what the `Episode` object has to offer us, let's take an
-example R Markdown file that is present in a fragment of a Carpentries Workbench
-lesson that we have in this package. We will be using the {xml2} package to 
-explore the object and the {fs} package to help with constructing file paths.
+Each `Episode` object starts from a Markdown file. In particular for {pegboard},
+we assume that this Markdown file is written using
+[Pandoc](https://pandoc.org/MANUAL.html) syntax (a superset of
+[CommonMark](https://commonmark.org/)). It can be any markdown file, but for us
+to explore what the `Episode` object has to offer us, let's take an example R
+Markdown file that is present in a fragment of a Carpentries Workbench lesson
+that we have in this package. We will be using the {xml2} package to explore
+the object and the {fs} package to help with constructing file paths.
 
 ```{r setup}
 library("pegboard")
@@ -46,17 +48,32 @@ library("xml2")
 library("fs")
 ```
 
+This is what our lesson fragment looks like. It is a fragment because it's main
+purpose is to be used for examples and tests, but it contains the basic structure
+of a lesson that we want. 
+
+```{r intro-read-noshow, echo = FALSE}
+dir_tree(lesson_fragment("sandpaper-fragment"), recurse = 1, regex = "site/[^R].*", invert = TRUE)
+```
+
+We can retrieve it with the `lesson_fragment()` function, which loads example
+data from pegboard. Here we will take that lesson fragment and read in the first
+episode with the initialization method, `Episode$new()`, followed by
+`$confirm_sandpaper()`, a confirmation that the episode was created to work
+with [{sandpaper}], the user interface and build engine of The Carpentries
+Workbench (for information on non-workbench content, see the section on [Jekyll
+Lesson Markdown Content](#jekyll-lesson-markdown-content)
+
+[{sandpaper}]: https://carpentries.github.io/sandpaper/
 
 ```{r intro-read}
 lsn <- lesson_fragment("sandpaper-fragment")
-dir_tree(lsn, recurse = 1, regex = "site/[^R].*", invert = TRUE)
-
 # Read in the intro.Rmd document as an `Episode` object
 intro_path <- path(lsn, "episodes", "intro.Rmd")
-intro <- Episode$new(intro_path)
+intro <- Episode$new(intro_path)$confirm_sandpaper()
 ```
 
-If I print out the Episode object, I'm going to get a long list of methods,
+If we print out the Episode object, I'm going to get a long list of methods,
 fields and active bindings (functions that act like fields) printed:
 
 ```{r intro-print}
@@ -70,7 +87,7 @@ the markdown document, but in XML form.
 intro$body
 ```
 
-If you want to see what the contents look like, you can use the `$show()`,
+If we want to see what the contents look like, you can use the `$show()`,
 `$head()`, or `$tail()` methods (note: the `$show()` method will print out the
 entire markdown document).
 
@@ -84,3 +101,11 @@ intro$tail(10)
 You can use {pegboard} to account for elements within the document. Many of
 these are embedded as 
 
+## Jekyll Lesson Markdown Content
+
+This section describes the features that you would expect to find in a lesson
+that was built with the former infrastructure,
+<https://github.com/carpentries/styles>, which was built using the Jekyll
+static site generator. These style lessons are no longer supported by The
+Carpentries. {pegboard} does support these lessons so that they can be 
+transitioned to use The Workbench syntax. 

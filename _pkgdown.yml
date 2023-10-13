@@ -89,3 +89,5 @@ articles:
    navbar: ~
    contents:
      - articles/validation
+     - intro-xml
+     - intro-episode
