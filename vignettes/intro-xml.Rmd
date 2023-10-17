@@ -16,14 +16,22 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
+You will want to read this vignette if you are interested in contributing to
+{pegboard}, or if you would like to understand how to fine-tune the transition of
+a lesson from the styles infrastructure to The Workbench (see 
+<https://github.com/carpentries/lesson-transition#readme>), or if you want to
+know how to better inspect the output of some of {pegboard}'s accessors. In
+this vignette, I assume that you are familiar with writing R functions and that
+R will default to passing an object's _value_ to a function and not a
+_reference_ (though if you do not understand that last part, do not worry, I
+will try to dispell this). 
+
 The {pegboard} package is an enhancement of the {tinkr} package, which
 transforms Markdown to XML and back again. This transformation is facilitated
 by the [{commonmark}] for transforming Markdown to XML and [{xslt}] for
 transforming XML to Markdown. The reason why we want to transform markdown to
 XML is because this allows us to concisely extract and manipulate markdown
-elements in a way that would not be possible with simple regular expressions. 
-
-
+elements in a way that would not be possible with simple regular expressions.
 
 [{commonmark}]: https://docs.ropensci.org/commonmark/
 [{xslt}]: https://docs.ropensci.org/xslt/
@@ -101,4 +109,64 @@ work, then you will be mostly familiar with how the {R6} objects behave. It is
 worthwhile to read the [{R6} introduction
 vignette](https://r6.r-lib.org/articles/Introduction.html) if you want to
 understand how to program and modify this package. 
+
+In the example above, you notice that I use `xml2::xml_child()` to extract child
+nodes, but the real power of XML comes with searching for items using XPath
+syntax for traversing the XML nodes where I would be able to do one of the
+following to get the child called "c"
+
+```{r xml-example-xpath}
+xml2::xml_find_first(x, ".//c")
+xml2::xml_find_first(x, "/a/c")
+```
+
+The next section will cover a bit of XPath and provide some resources on how to
+practice and learn because this comes in very handy to quickly traverse the XML
+nodes without relying on loops.
+
+## XPath
+
+In the section, we will talk about XPath syntax. 
+
+BLAH BLAH BLAH STUFF FOR NERDS
+
+In the next section, I will discuss how to extract and manipulate XML that comes
+from Markdown with namespaces.
+
+## XML data from Markdown using namespaces
+
+The XML from markdown transformation is fully handled by the {commonmark}
+package, which has the convenient `commonmark::markdown_xml()` function. For
+example, this is how how the following markdown is processed:
+
+```markdown
+This is a bunch of [example markdown](https://example.com 'for example') text
+
+- this
+- is
+- a **list**
+```
+
+> This is a bunch of [example markdown](https://example.com 'for example') text
+> 
+> - this
+> - is
+> - a **list**
+
+
+```{r commonmark-ex}
+md <- c("This is a bunch of [example markdown](https://example.com 'for example') text",
+  "",
+  "- this",
+  "- is",
+  "- a **list**"
+)
+xml_txt <- commonmark::markdown_xml(paste(md, collapse = "\n"))
+class(xml_txt)
+writeLines(xml_txt)
+```
+
+You can see that it has successfully parsed the markdown into a paragraph and
+a list and then the various elements within. 
+
 
