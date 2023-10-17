@@ -2,7 +2,7 @@
 
     Code
       lnk <- lsn$validate_links()
-    Message <cliMessage>
+    Message
       ! There were errors in 3/4 links
       ( ) Links must use HTTPS <https://https.cio.gov/everything/>
       ( ) Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
@@ -15,7 +15,7 @@
 
     Code
       lnk <- lsn$validate_links()
-    Message <cliMessage>
+    Message
       [33m![39m There were errors in 3/4 links
       ( ) Links must use HTTPS <https://https.cio.gov/everything/>
       ( ) Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
@@ -28,7 +28,7 @@
 
     Code
       lnk <- lsn$validate_links()
-    Message <cliMessage>
+    Message
       ! There were errors in 3/4 links
       ◌ Links must use HTTPS <https://https.cio.gov/everything/>
       ◌ Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
@@ -41,7 +41,7 @@
 
     Code
       lnk <- lsn$validate_links()
-    Message <cliMessage>
+    Message
       [33m![39m There were errors in 3/4 links
       ◌ Links must use HTTPS <https://https.cio.gov/everything/>
       ◌ Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
@@ -54,7 +54,7 @@
 
     Code
       lnk <- lsn$validate_links()
-    Message <cliMessage>
+    Message
       ! There were errors in 3/4 links
       ( ) Links must use HTTPS <https://https.cio.gov/everything/>
       ( ) Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
@@ -67,7 +67,7 @@
 
     Code
       lnk <- lsn$validate_links()
-    Message <cliMessage>
+    Message
       [33m![39m There were errors in 3/4 links
       ( ) Links must use HTTPS <https://https.cio.gov/everything/>
       ( ) Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
@@ -80,7 +80,7 @@
 
     Code
       lnk <- lsn$validate_links()
-    Message <cliMessage>
+    Message
       ! There were errors in 3/4 links
       ◌ Links must use HTTPS <https://https.cio.gov/everything/>
       ◌ Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
@@ -93,7 +93,7 @@
 
     Code
       lnk <- lsn$validate_links()
-    Message <cliMessage>
+    Message
       [33m![39m There were errors in 3/4 links
       ◌ Links must use HTTPS <https://https.cio.gov/everything/>
       ◌ Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
