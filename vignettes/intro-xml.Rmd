@@ -152,6 +152,8 @@ but here are some that can help:
  - An [XPath tester](https://extendsclass.com/xpath-tester.html) like a regex
    tester to allow you to try out complex queries in a visual manner.
 
+[XPath-1.0]: https://en.wikipedia.org/wiki/XPath#Syntax_and_semantics_(XPath_1.0)
+
 It's important to remember that an XML document is a tree-like structure that
 is similar to directories or folders on your computer. For example, if you look
 at the source directory structure of this package, you would see a folder
@@ -185,7 +187,7 @@ xml <- xml2::read_xml(gsub("\\n", "", x))
 
 The XPath syntax to find all files in the the R and testthat folders would be
 the same if you started from the root: `R/file` and 
-`tests/testthat/file`
+`tests/testthat/file`.
 
 ```{r}
 xml2::xml_find_all(xml, "R/file")
@@ -194,41 +196,50 @@ xml2::xml_find_all(xml, "tests/testthat/file")
 
 However, XPath has one advantage that normal command line syntax doesn't have:
 you can short-cut paths, so if we wanted to find all files in any given folder,
-you can use the double slash (`//`) to recursively search through nesting:
+you can use the double slash (`//`) to recursively search through nesting. By 
+habit, I will normally use the precede these slashes with a dot (`.`) so that
+I can be sure to start with the node that I have in my variable:
 
 ```{r}
-xml2::xml_find_all(xml, "//file")
+xml2::xml_find_all(xml, ".//file")
 ```
 
 Of course, this method finds _all_ files, so if you wanted to filter them, you
 can use the bracket notation to create filters for our selection:
 
 ```{r}
-xml2::xml_find_all(xml, "//file[@ext='R']")
+xml2::xml_find_all(xml, ".//file[@ext='R']")
 ```
 
 In this scheme, I've put the file names as the text of the nodes, so we can
 use the bracket notation again with [XPath functions](https://developer.mozilla.org/en-US/docs/Web/XPath/Functions) to filter for only files that contain "one"
 
 ```{r}
-xml2::xml_find_all(xml, "//file[@ext='R'][contains(text(), 'one')]")
+xml2::xml_find_all(xml, ".//file[@ext='R'][contains(text(), 'one')]")
 ```
 
 If I only wanted to extract source files that contain "one", I could also use
 the `parent::` [XPath axis](https://developer.mozilla.org/en-US/docs/Web/XPath/Axes):
 
 ```{r}
-xml2::xml_find_all(xml, "//file[@ext='R'][contains(text(), 'one')][parent::R]")
+xml2::xml_find_all(xml, ".//file[@ext='R'][contains(text(), 'one')][parent::R]")
 ```
 
 Note that if I used a slash (`/`) instead of square brackets for the parent, I
 would get the parent back:
 
 ```{r}
-xml2::xml_find_all(xml, "//file[@ext='R'][contains(text(), 'one')]/parent::R")
+xml2::xml_find_all(xml, ".//file[@ext='R'][contains(text(), 'one')]/parent::R")
 ```
 
-[XPath-1.0]: https://en.wikipedia.org/wiki/XPath#Syntax_and_semantics_(XPath_1.0)
+As you an see, many times, an XPath query can get kind of hairy, which is why
+I often like to compose it into different parts during programming with {glue}:
+
+```{r}
+predicate <- "[@ext='R'][contains(text(), 'one')]"
+XPath <- glue::glue(".//file{predicate}/parent::R")
+xml2::xml_find_all(xml, XPath)
+```
 
 In the next section, I will discuss how to extract and manipulate XML that comes
 from Markdown with namespaces.
