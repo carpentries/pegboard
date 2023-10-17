@@ -27,15 +27,20 @@ _reference_ (though if you do not understand that last part, do not worry, I
 will try to dispell this). 
 
 The {pegboard} package is an enhancement of the {tinkr} package, which
-transforms Markdown to XML and back again. This transformation is facilitated
-by the [{commonmark}] for transforming Markdown to XML and [{xslt}] for
-transforming XML to Markdown. The reason why we want to transform markdown to
-XML is because this allows us to concisely extract and manipulate markdown
-elements in a way that would not be possible with simple regular expressions.
+transforms Markdown to XML and back again. [XML is a markup language that
+is derived from HTML](https://www.geeksforgeeks.org/html-vs-xml/) designed to 
+handle structured data. A more modern format for storing and transporting data
+on the web is JSON, but the advantage of using XML is that we are able to use the
+[XPath] language to parse it (more on that later). Moreover, because XML has
+the same structure as HTML, it can be parsed using the same tools, which is
+advantageous for a suite of packages that transforms Markdown to HTML. This
+transformation is facilitated by the [{commonmark}] for transforming Markdown
+to XML and [{xslt}] for transforming XML to Markdown. 
 
 [{commonmark}]: https://docs.ropensci.org/commonmark/
 [{xslt}]: https://docs.ropensci.org/xslt/
 [{xml2}]: https://xml2.r-lib.org/
+[XPath]: https://en.wikipedia.org/wiki/XPath
 
 ## Working with XML data
 
@@ -124,11 +129,106 @@ The next section will cover a bit of XPath and provide some resources on how to
 practice and learn because this comes in very handy to quickly traverse the XML
 nodes without relying on loops.
 
-## XPath
+## Using XPath to parse XML
 
-In the section, we will talk about XPath syntax. 
+### The structure of XPath
 
-BLAH BLAH BLAH STUFF FOR NERDS
+In the section, we will talk about [XPath syntax][XPath-1.0], but it will be 
+non-exhaustive. Unfortunately, good tutorials on the web are few and far between,
+but here are some that can help:
+
+ - The [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/XPath)
+   is _usually_ pretty good, but instead, it's better as a reference
+   - [MDN XPath Axes](https://developer.mozilla.org/en-US/docs/Web/XPath/Axes)
+     good for knowing how to navigate among nodes
+   - [MDN XPath
+     functions](https://developer.mozilla.org/en-US/docs/Web/XPath/Functions)
+     good for knowing how to filter node matches
+ - The [w3schools tutorial on
+   XPath](https://www.w3schools.com/xml/xpath_intro.asp) is actually one of the
+   best out there, but this is an excpetion to the rule. Other than this
+   tutorial, I would not trust any content from w3schools (they are not aligned
+   at all with the web consortium).
+ - An [XPath tester](https://extendsclass.com/xpath-tester.html) like a regex
+   tester to allow you to try out complex queries in a visual manner.
+
+It's important to remember that an XML document is a tree-like structure that
+is similar to directories or folders on your computer. For example, if you look
+at the source directory structure of this package, you would see a folder
+called `R/` and a nested folder called `tests/testhat/`. If you started from
+the root directory of this package, you would list the R files in the `R/`
+folder with `ls R/*.R` similarly, if you wanted to list the R files in the
+`tests/testthat/` folder, you would us `ls tests/testthat/*.R`. In this
+respect, XPath has a very similar syntax: to enter the next level of nesting,
+you add a slash (`/`). For example, let's take a look a what the file structure
+would look like in XML form:
+
+```{r XML-files, echo = FALSE, results = "asis"}
+x <- '<ROOT>
+  <R>
+    <file ext="R">one</file>
+    <file ext="R">two</file>
+  </R>
+  <tests>
+    <testthat>
+      <data>
+        <file ext="txt">test-data</file>
+      </data>
+      <file ext="R">test-one</file>
+      <file ext="R">test-two</file>
+    </testthat>
+  </tests>
+</ROOT>'
+writeLines(c("```xml", x, "```"))
+xml <- xml2::read_xml(gsub("\\n", "", x))
+```
+
+The XPath syntax to find all files in the the R and testthat folders would be
+the same if you started from the root: `R/file` and 
+`tests/testthat/file`
+
+```{r}
+xml2::xml_find_all(xml, "R/file")
+xml2::xml_find_all(xml, "tests/testthat/file")
+```
+
+However, XPath has one advantage that normal command line syntax doesn't have:
+you can short-cut paths, so if we wanted to find all files in any given folder,
+you can use the double slash (`//`) to recursively search through nesting:
+
+```{r}
+xml2::xml_find_all(xml, "//file")
+```
+
+Of course, this method finds _all_ files, so if you wanted to filter them, you
+can use the bracket notation to create filters for our selection:
+
+```{r}
+xml2::xml_find_all(xml, "//file[@ext='R']")
+```
+
+In this scheme, I've put the file names as the text of the nodes, so we can
+use the bracket notation again with [XPath functions](https://developer.mozilla.org/en-US/docs/Web/XPath/Functions) to filter for only files that contain "one"
+
+```{r}
+xml2::xml_find_all(xml, "//file[@ext='R'][contains(text(), 'one')]")
+```
+
+If I only wanted to extract source files that contain "one", I could also use
+the `parent::` [XPath axis](https://developer.mozilla.org/en-US/docs/Web/XPath/Axes):
+
+```{r}
+xml2::xml_find_all(xml, "//file[@ext='R'][contains(text(), 'one')][parent::R]")
+```
+
+Note that if I used a slash (`/`) instead of square brackets for the parent, I
+would get the parent back:
+
+```{r}
+xml2::xml_find_all(xml, "//file[@ext='R'][contains(text(), 'one')]/parent::R")
+```
+
+[XPath-1.0]: https://en.wikipedia.org/wiki/XPath#Syntax_and_semantics_(XPath_1.0)
 
 In the next section, I will discuss how to extract and manipulate XML that comes
 from Markdown with namespaces.
