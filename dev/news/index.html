@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pegboard</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.6.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.7.1.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,10 +51,21 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.6.1.9000" id="pegboard-0619000-unreleased">pegboard 0.6.1.9000 (unreleased)<a class="anchor" aria-label="anchor" href="#pegboard-0619000-unreleased"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.7.1.9000" id="pegboard-0719000-unreleased">pegboard 0.7.1.9000 (unreleased)<a class="anchor" aria-label="anchor" href="#pegboard-0719000-unreleased"></a></h2>
+<div class="section level3">
+<h3 id="misc-0-7-1-9000">MISC<a class="anchor" aria-label="anchor" href="#misc-0-7-1-9000"></a></h3>
+<ul><li>Snapshot update for testthat 3.2.0</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.7.1" id="pegboard-071-2023-10-03">pegboard 0.7.1 (2023-10-03)<a class="anchor" aria-label="anchor" href="#pegboard-071-2023-10-03"></a></h2>
+<ul><li>child chunk options that would fail out of context no longer cause a failure. (reported: <a href="https://github.com/trhallam" class="external-link">@trhallam</a>, <a href="https://github.com/carpentries/workbench/issues/74" class="external-link uri">https://github.com/carpentries/workbench/issues/74</a>, <a href="https://github.com/carpentries/pegboard/issues/139" class="external-link">#139</a>; fixed: <a href="https://github.com/zkamvar" class="external-link">@zkamvar</a>, <a href="https://github.com/carpentries/pegboard/issues/140" class="external-link">#140</a>)</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.7.0" id="pegboard-070-2023-10-02">pegboard 0.7.0 (2023-10-02)<a class="anchor" aria-label="anchor" href="#pegboard-070-2023-10-02"></a></h2>
 <p>This release introduces automated processing of {knitr} child files, which enables them to be automatically available for validation and processing.</p>
 <div class="section level3">
-<h3 id="new-features-0-6-1-9000">NEW FEATURES<a class="anchor" aria-label="anchor" href="#new-features-0-6-1-9000"></a></h3>
+<h3 id="new-features-0-7-0">NEW FEATURES<a class="anchor" aria-label="anchor" href="#new-features-0-7-0"></a></h3>
 <ul><li>
 <code>Episode</code> class objects gain the <code>children</code>, <code>parents</code>, and <code>build_parents</code> fields which will contain the known relationships between files. Both <code>children</code> and <code>parents</code> represent <em>immediate</em> relationships while <code>build_parents</code> represent the most distant ancestor of the object that would trigger it to build. Note that the <code>parents</code> fields are only populated for an <code>Episode</code> in the context of a <code>Lesson</code> object.</li>
 <li>
@@ -70,7 +81,7 @@
 <code>$validate_links()</code>, <code>$validate_divs()</code>, and <code>$validate_headings()</code> will now all process child files by default. Note that <code>$validate_links()</code> will report missing files <em>relative to the build parents</em>.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="bug-fix-0-6-1-9000">BUG FIX<a class="anchor" aria-label="anchor" href="#bug-fix-0-6-1-9000"></a></h3>
+<h3 id="bug-fix-0-7-0">BUG FIX<a class="anchor" aria-label="anchor" href="#bug-fix-0-7-0"></a></h3>
 <ul><li>The <code>$load_built()</code> method will now load all built markdown content, not just the episodes.</li>
 </ul></div>
 </div>
