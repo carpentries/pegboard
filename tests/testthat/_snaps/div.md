@@ -2,7 +2,7 @@
 
     Code
       expect_error(label_div_tags(ex))
-    Message <cliMessage>
+    Message
       x A section (div) tag mis-match was detected.
       x There are not enough close tags (2) for the number of open tags (3).
 
@@ -10,7 +10,7 @@
 
     Code
       expect_error(label_div_tags(ex))
-    Message <cliMessage>
+    Message
       [31mx[39m A section (div) tag mis-match was detected.
       [31mx[39m There are not enough close tags (2) for the number of open tags (3).
 
@@ -18,7 +18,7 @@
 
     Code
       expect_error(label_div_tags(ex))
-    Message <cliMessage>
+    Message
       ✖ A section (div) tag mis-match was detected.
       ✖ There are not enough close tags (2) for the number of open tags (3).
 
@@ -26,7 +26,7 @@
 
     Code
       expect_error(label_div_tags(ex))
-    Message <cliMessage>
+    Message
       [31m✖[39m A section (div) tag mis-match was detected.
       [31m✖[39m There are not enough close tags (2) for the number of open tags (3).
 

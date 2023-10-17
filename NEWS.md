@@ -1,3 +1,9 @@
+# pegboard 0.7.1.9000 (unreleased)
+
+## MISC
+
+* Snapshot update for testthat 3.2.0
+
 # pegboard 0.7.1 (2023-10-03)
 
 * child chunk options that would fail out of context no longer cause a failure.
