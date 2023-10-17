@@ -7,7 +7,7 @@
 
     Code
       vlink <- snd$validate_links()
-    Message <cliMessage>
+    Message
       ! There were errors in 2/3 links
       ( ) Links must use HTTPS <https://https.cio.gov/everything/>
       
@@ -23,7 +23,7 @@
 
     Code
       vlink <- snd$validate_links()
-    Message <cliMessage>
+    Message
       [33m![39m There were errors in 2/3 links
       ( ) Links must use HTTPS <https://https.cio.gov/everything/>
       
@@ -39,7 +39,7 @@
 
     Code
       vlink <- snd$validate_links()
-    Message <cliMessage>
+    Message
       ! There were errors in 2/3 links
       ◌ Links must use HTTPS <https://https.cio.gov/everything/>
       
@@ -55,7 +55,7 @@
 
     Code
       vlink <- snd$validate_links()
-    Message <cliMessage>
+    Message
       [33m![39m There were errors in 2/3 links
       ◌ Links must use HTTPS <https://https.cio.gov/everything/>
       
@@ -201,7 +201,7 @@
 
     Code
       vhead <- frg$validate_headings()
-    Message <cliMessage>
+    Message
       -- Heading structure -----------------------------------------------------------
     Output
       # Episode: "For Loops" 
@@ -229,7 +229,7 @@
       +-## Solution  (duplicated)
       +-## Identifying Item Errors 
       \-## Solution  (duplicated)
-    Message <cliMessage>
+    Message
       --------------------------------------------------------------------------------
       -- Heading structure -----------------------------------------------------------
     Output
@@ -244,7 +244,7 @@
       +-## Comparing Data 
       \-## Solution  (duplicated)
         \-### ZNK test links and images 
-    Message <cliMessage>
+    Message
       --------------------------------------------------------------------------------
       ! There were errors in 13/37 headings
       ( ) Headings must be unique
@@ -268,7 +268,7 @@
 
     Code
       vlink <- frg$validate_links()
-    Message <cliMessage>
+    Message
       ! There were errors in 4/14 links
       ( ) Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
       ( ) Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
@@ -282,7 +282,7 @@
 
     Code
       vhead <- frg$validate_headings()
-    Message <cliMessage>
+    Message
       -- Heading structure -----------------------------------------------------------
     Output
       # Episode: "For Loops" 
@@ -310,7 +310,7 @@
       +-## Solution  [7m(duplicated)[27m
       +-## Identifying Item Errors 
       \-## Solution  [7m(duplicated)[27m
-    Message <cliMessage>
+    Message
       --------------------------------------------------------------------------------
       -- Heading structure -----------------------------------------------------------
     Output
@@ -325,7 +325,7 @@
       +-## Comparing Data 
       \-## Solution  [7m(duplicated)[27m
         \-### ZNK test links and images 
-    Message <cliMessage>
+    Message
       --------------------------------------------------------------------------------
       [33m![39m There were errors in 13/37 headings
       ( ) Headings must be unique
@@ -349,7 +349,7 @@
 
     Code
       vlink <- frg$validate_links()
-    Message <cliMessage>
+    Message
       [33m![39m There were errors in 4/14 links
       ( ) Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
       ( ) Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
@@ -363,7 +363,7 @@
 
     Code
       vhead <- frg$validate_headings()
-    Message <cliMessage>
+    Message
       ── Heading structure ───────────────────────────────────────────────────────────
     Output
       # Episode: "For Loops" 
@@ -391,7 +391,7 @@
       ├─## Solution  (duplicated)
       ├─## Identifying Item Errors 
       └─## Solution  (duplicated)
-    Message <cliMessage>
+    Message
       ────────────────────────────────────────────────────────────────────────────────
       ── Heading structure ───────────────────────────────────────────────────────────
     Output
@@ -406,7 +406,7 @@
       ├─## Comparing Data 
       └─## Solution  (duplicated)
         └─### ZNK test links and images 
-    Message <cliMessage>
+    Message
       ────────────────────────────────────────────────────────────────────────────────
       ! There were errors in 13/37 headings
       ◌ Headings must be unique
@@ -430,7 +430,7 @@
 
     Code
       vlink <- frg$validate_links()
-    Message <cliMessage>
+    Message
       ! There were errors in 4/14 links
       ◌ Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
       ◌ Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
@@ -444,7 +444,7 @@
 
     Code
       vhead <- frg$validate_headings()
-    Message <cliMessage>
+    Message
       ── Heading structure ───────────────────────────────────────────────────────────
     Output
       # Episode: "For Loops" 
@@ -472,7 +472,7 @@
       ├─## Solution  [7m(duplicated)[27m
       ├─## Identifying Item Errors 
       └─## Solution  [7m(duplicated)[27m
-    Message <cliMessage>
+    Message
       ────────────────────────────────────────────────────────────────────────────────
       ── Heading structure ───────────────────────────────────────────────────────────
     Output
@@ -487,7 +487,7 @@
       ├─## Comparing Data 
       └─## Solution  [7m(duplicated)[27m
         └─### ZNK test links and images 
-    Message <cliMessage>
+    Message
       ────────────────────────────────────────────────────────────────────────────────
       [33m![39m There were errors in 13/37 headings
       ◌ Headings must be unique
@@ -511,7 +511,7 @@
 
     Code
       vlink <- frg$validate_links()
-    Message <cliMessage>
+    Message
       [33m![39m There were errors in 4/14 links
       ◌ Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
       ◌ Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>

@@ -2,7 +2,7 @@
 
     Code
       res <- vh$validate_headings()
-    Message <pbMessage>
+    Message
       ! There were errors in 5/7 headings
       
       - First heading must be level 2
@@ -30,7 +30,7 @@
 
     Code
       res <- loop$validate_headings()
-    Message <pbMessage>
+    Message
       ! There were errors in 3/10 headings
       
       - Headings must be unique
@@ -55,7 +55,7 @@
 
     Code
       dv$validate_divs()
-    Message <pbMessage>
+    Message
       ! There were errors in 1/5 fenced divs
       
       - The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor, spoiler
@@ -66,7 +66,7 @@
 
     Code
       cats$validate_links()
-    Message <pbMessage>
+    Message
       ! There were errors in 2/10 links
       
       - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
@@ -78,7 +78,7 @@
 
     Code
       loop$validate_links()
-    Message <pbMessage>
+    Message
       ! There were errors in 4/13 links
       
       - Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
@@ -93,7 +93,7 @@
 
     Code
       link$validate_links()
-    Message <pbMessage>
+    Message
       ! There were errors in 31/45 links
       
       - Links must have a known URL protocol (e.g. https, ftp, mailto). See <https://developer.wordpress.org/reference/functions/wp_allowed_protocols/#return> for a list of acceptable protocols.
@@ -140,7 +140,7 @@
 
     Code
       res <- vh$validate_headings()
-    Message <cliMessage>
+    Message
       ! There were errors in 5/7 headings
       ( ) First heading must be level 2
       ( ) Level 1 headings are not allowed
@@ -164,14 +164,14 @@
       | | \-### This heading is okay 
       | +-##   (no name)
       | \-## This last heading is okay 
-    Message <cliMessage>
+    Message
       --------------------------------------------------------------------------------
 
 # headings reporters will work [ansi]
 
     Code
       res <- vh$validate_headings()
-    Message <cliMessage>
+    Message
       [33m![39m There were errors in 5/7 headings
       ( ) First heading must be level 2
       ( ) Level 1 headings are not allowed
@@ -195,14 +195,14 @@
       | | \-### This heading is okay 
       | +-##   [7m(no name)[27m
       | \-## This last heading is okay 
-    Message <cliMessage>
+    Message
       --------------------------------------------------------------------------------
 
 # headings reporters will work [unicode]
 
     Code
       res <- vh$validate_headings()
-    Message <cliMessage>
+    Message
       ! There were errors in 5/7 headings
       ◌ First heading must be level 2
       ◌ Level 1 headings are not allowed
@@ -226,14 +226,14 @@
       │ │ └─### This heading is okay 
       │ ├─##   (no name)
       │ └─## This last heading is okay 
-    Message <cliMessage>
+    Message
       ────────────────────────────────────────────────────────────────────────────────
 
 # headings reporters will work [fancy]
 
     Code
       res <- vh$validate_headings()
-    Message <cliMessage>
+    Message
       [33m![39m There were errors in 5/7 headings
       ◌ First heading must be level 2
       ◌ Level 1 headings are not allowed
@@ -257,14 +257,14 @@
       │ │ └─### This heading is okay 
       │ ├─##   [7m(no name)[27m
       │ └─## This last heading is okay 
-    Message <cliMessage>
+    Message
       ────────────────────────────────────────────────────────────────────────────────
 
 # links reporters will work [plain]
 
     Code
       cats$validate_links()
-    Message <cliMessage>
+    Message
       ! There were errors in 2/10 links
       ( ) Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
@@ -275,7 +275,7 @@
 
     Code
       link$validate_links()
-    Message <cliMessage>
+    Message
       ! There were errors in 31/45 links
       ( ) Links must have a known URL protocol (e.g. https, ftp, mailto). See <https://developer.wordpress.org/reference/functions/wp_allowed_protocols/#return> for a list of acceptable protocols.
       ( ) Links must use HTTPS <https://https.cio.gov/everything/>
@@ -321,7 +321,7 @@
 
     Code
       cats$validate_links()
-    Message <cliMessage>
+    Message
       [33m![39m There were errors in 2/10 links
       ( ) Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
@@ -332,7 +332,7 @@
 
     Code
       link$validate_links()
-    Message <cliMessage>
+    Message
       [33m![39m There were errors in 31/45 links
       ( ) Links must have a known URL protocol (e.g. https, ftp, mailto). See <https://developer.wordpress.org/reference/functions/wp_allowed_protocols/#return> for a list of acceptable protocols.
       ( ) Links must use HTTPS <https://https.cio.gov/everything/>
@@ -378,7 +378,7 @@
 
     Code
       cats$validate_links()
-    Message <cliMessage>
+    Message
       ! There were errors in 2/10 links
       ◌ Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
@@ -389,7 +389,7 @@
 
     Code
       link$validate_links()
-    Message <cliMessage>
+    Message
       ! There were errors in 31/45 links
       ◌ Links must have a known URL protocol (e.g. https, ftp, mailto). See <https://developer.wordpress.org/reference/functions/wp_allowed_protocols/#return> for a list of acceptable protocols.
       ◌ Links must use HTTPS <https://https.cio.gov/everything/>
@@ -435,7 +435,7 @@
 
     Code
       cats$validate_links()
-    Message <cliMessage>
+    Message
       [33m![39m There were errors in 2/10 links
       ◌ Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
@@ -446,7 +446,7 @@
 
     Code
       link$validate_links()
-    Message <cliMessage>
+    Message
       [33m![39m There were errors in 31/45 links
       ◌ Links must have a known URL protocol (e.g. https, ftp, mailto). See <https://developer.wordpress.org/reference/functions/wp_allowed_protocols/#return> for a list of acceptable protocols.
       ◌ Links must use HTTPS <https://https.cio.gov/everything/>
@@ -492,7 +492,7 @@
 
     Code
       dv$validate_divs()
-    Message <cliMessage>
+    Message
       ! There were errors in 1/5 fenced divs
       ( ) The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor, spoiler
       
@@ -502,7 +502,7 @@
 
     Code
       dv$validate_divs()
-    Message <cliMessage>
+    Message
       [33m![39m There were errors in 1/5 fenced divs
       ( ) The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor, spoiler
       
@@ -512,7 +512,7 @@
 
     Code
       dv$validate_divs()
-    Message <cliMessage>
+    Message
       ! There were errors in 1/5 fenced divs
       ◌ The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor, spoiler
       
@@ -522,7 +522,7 @@
 
     Code
       dv$validate_divs()
-    Message <cliMessage>
+    Message
       [33m![39m There were errors in 1/5 fenced divs
       ◌ The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor, spoiler
       
@@ -532,7 +532,7 @@
 
     Code
       res <- vh$validate_headings()
-    Message <cliMessage>
+    Message
       ! There were errors in 5/7 headings
       ( ) First heading must be level 2
       ( ) Level 1 headings are not allowed
@@ -556,14 +556,14 @@
       | | \-### This heading is okay 
       | +-##   (no name)
       | \-## This last heading is okay 
-    Message <cliMessage>
+    Message
       --------------------------------------------------------------------------------
 
 ---
 
     Code
       res <- loop$validate_headings()
-    Message <cliMessage>
+    Message
       ! There were errors in 3/10 headings
       ( ) Headings must be unique
       <https://webaim.org/techniques/semanticstructure/#headings>
@@ -584,14 +584,14 @@
       +-## Comparing Data 
       \-## Solution  (duplicated)
         \-### ZNK test links and images 
-    Message <cliMessage>
+    Message
       --------------------------------------------------------------------------------
 
 # links reporters will work on CI
 
     Code
       link$validate_links()
-    Message <cliMessage>
+    Message
       ! There were errors in 31/45 links
       ( ) Links must have a known URL protocol (e.g. https, ftp, mailto). See <https://developer.wordpress.org/reference/functions/wp_allowed_protocols/#return> for a list of acceptable protocols.
       ( ) Links must use HTTPS <https://https.cio.gov/everything/>
@@ -637,7 +637,7 @@
 
     Code
       dv$validate_divs()
-    Message <cliMessage>
+    Message
       ! There were errors in 1/5 fenced divs
       ( ) The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor, spoiler
       
