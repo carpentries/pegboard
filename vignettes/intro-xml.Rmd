@@ -205,7 +205,10 @@ xml2::xml_find_all(xml, ".//file")
 ```
 
 Of course, this method finds _all_ files, so if you wanted to filter them, you
-can use the bracket notation to create filters for our selection:
+can use the bracket notation to create filters for our selection based on the
+`ext` attribute, which are prefixed by `@`. With the bracket notation, you add
+brackets to a node selection with a condition. In this case, we want to test
+that the extension is 'R', so we would use `[@ext='R']`:
 
 ```{r}
 xml2::xml_find_all(xml, ".//file[@ext='R']")
@@ -280,4 +283,140 @@ writeLines(xml_txt)
 You can see that it has successfully parsed the markdown into a paragraph and
 a list and then the various elements within. 
 
+### The default namespace
+
+Now here's the catch: The commonmark markdown always starts with this basic
+skeleton which has the root node of `<document
+xmlns="http://commonmark.org/xml/1.0">`. The `xmlns` attribute defines the
+[default XML namespace][namespace]:
+
+[namespace]: https://developer.mozilla.org/en-US/docs/Web/SVG/Namespaces_Crash_Course
+
+```{r commonmark-skel, echo = FALSE}
+lines <- strsplit(commonmark::markdown_xml("hi"), "\n")[[1]][-(4:6)]
+writeLines(append(lines, "\nMARKDOWN CONTENT HERE\n", after = 3))
+```
+
+In many XML applications, namespaces will come with prefixes, which are defined
+in the `xmlns` attribute (e.g. `xmlns:svg="http://www.w3.org/2000/svg"`). If a
+node has a namespace, it needs to be selected with the namespace prefix like
+so: `.//svg:circle`. For default namespaces, the same rule applies, but the
+question becomes: how do you know what the namespace prefix is? In {xml2}, the
+default namespace always begins with `d1` and increments up as new namespaces
+are added. You can inspect the namespace with `xml2::xml_ns()`:
+
+```{r commonmark-namespace-show}
+xml <- xml2::read_xml(xml_txt)
+xml2::xml_ns(xml)
+```
+
+Thus, the XPath query you would use to select a paragraph would be 
+`.//d1:paragraph`:
+
+```{r commonmark-namespace}
+# with namespace prefix
+xml2::xml_find_all(xml, ".//d1:paragraph")
+```
+
+Of course, having a default namespace in {xml2} has some drawbacks in that 
+[adding new nodes will duplicate the namespace with a different
+identifier](https://community.rstudio.com/t/adding-nodes-in-xml2-how-to-avoid-duplicate-default-namespaces/84870), so one way we have avoided this in {tinkr} (the
+package that does the basic conversion) is to define a namespace with a prefix
+in a function so that we can use it when querying:
+
+```{r commonmark-namespace-md}
+tinkr::md_ns()
+xml2::xml_find_all(xml, ".//md:paragraph", ns = tinkr::md_ns())
+```
+
+It's also important to remember that _all nodes_ will require this namespace
+prefix, so if we wanted to only select paragraphs that were list items, we would
+need to specify use `.//md:list/md:paragraph`:
+
+```{r commonmark-list-paragraph-select}
+xml2::xml_find_all(xml, ".//md:list/md:paragraph", ns = tinkr::md_ns())
+```
+
+### Pegboard namespace
+
+One of the reasons why we created pegboard was to handle markdown content that
+also included [fenced divs](https://pandoc.org/MANUAL.html#divs-and-spans), but
+we needed a way to programmatically label and extract them without affecting the
+stylesheet that is used to translate the XML back to Markdown (not covered in
+this tutorial). To acheive this we place nodes under a different namespace
+around the fences and define our own namespace.
+
+Here's an example:
+
+```markdown
+This is markdown with fenced divs
+
+::: discussion
+
+This is a discussion
+
+:::
+
+::: spoiler
+
+This is a spoiler that is hidden by default
+
+:::
+```
+
+When it's parsed by commonmark, the fenced divs are treated as paragraphs:
+
+```{r show-fenced-divs-paragraph}
+md <- 'This is markdown with fenced divs
+
+::: discussion
+
+This is a discussion
+
+:::
+
+::: spoiler
+
+This is a spoiler that is hidden by default
+
+:::
+'
+fences <- xml2::read_xml(commonmark::markdown_xml(md))
+fences
+```
+
+In {pegboard}, we have an internal function called `label_div_tags()` that will
+allow us to label and parse these tags without affecting the markdown document:
+
+```{r label-divs}
+pb <- asNamespace("pegboard")
+pb$label_div_tags(fences)
+fences
+```
+
+Note that we have defined a `<dtag>` XML node that is defined under the pegboard
+namespace. These sandwich the nodes that we want to query and allow us to use
+`tinkr::find_between()` to search for specific tags:
+
+```{r find-between}
+ns <- pb$get_ns()
+ns # both md and pegboard namespaces
+tinkr::find_between(fences, ns = ns, pattern = "pb:dtag[@label='div-1-discussion']")
+```
+
+This is automated in the `get_divs()` internal function:
+
+```{r get-divs}
+pb$get_divs(fences)
+```
+
+## Conclusion
+
+This is but a short introduction to using XML with {pegboard}. You now have the
+basics of what the structure of XML is, how to use XPath (with further resources),
+how to use XPath with namespaces, and how we use namespaces in {pegboard} to
+allow us to parse specific items. It is a good idea to practices working with
+XPath because it is useful not only for working with XML representations of
+markdown documents, but it is also heavily used for post-processing of HTML in
+both {pkgdown} and the {sandpaper} packages. 
 
