@@ -62,7 +62,8 @@ episode with the initialization method, `Episode$new()`, followed by
 `$confirm_sandpaper()`, a confirmation that the episode was created to work
 with [{sandpaper}], the user interface and build engine of The Carpentries
 Workbench (for information on non-workbench content, see the section on [Jekyll
-Lesson Markdown Content](#jekyll-lesson-markdown-content)
+Lesson Markdown Content](#jekyll-lesson-markdown-content)) and `$protect_math()`
+which will prevent special characters in LaTeX math from being escaped.
 
 [{sandpaper}]: https://carpentries.github.io/sandpaper/
 
@@ -70,7 +71,7 @@ Lesson Markdown Content](#jekyll-lesson-markdown-content)
 lsn <- lesson_fragment("sandpaper-fragment")
 # Read in the intro.Rmd document as an `Episode` object
 intro_path <- path(lsn, "episodes", "intro.Rmd")
-intro <- Episode$new(intro_path)$confirm_sandpaper()
+intro <- Episode$new(intro_path)$confirm_sandpaper()$protect_math()
 ```
 
 If we print out the Episode object, I'm going to get a long list of methods,
@@ -94,12 +95,118 @@ entire markdown document).
 ```{r intro-show}
 intro$head(10)
 intro$tail(10)
+intro$show()
 ```
 
 ## Analysis
 
-You can use {pegboard} to account for elements within the document. Many of
-these are embedded as 
+You can use {pegboard} to account for and manipulate elements within the
+document via special active bindings and methods:
+
+For information about the file and its relationship to other files, you can use
+the following active bindings, which are useful when working with Episodes in a
+lesson context.
+
+```{r file-active-bindings}
+intro$path
+intro$name
+intro$lesson
+# NOTE: relationships to other episodes are automatically handled in the
+#       Lesson context
+intro$has_parents
+intro$has_children
+intro$children # separate documents processed as if they were part of this document
+intro$parents  # the immediate documents that would require this document to build
+intro$build_parents # the final documents that would require this document to build
+```
+
+It is possible to find markdown elements from XPath statments:
+
+```{r xpath-active-bindings}
+xml2::xml_find_all(intro$body, ".//md:link", ns = intro$ns)
+xml2::xml_find_first(intro$body, ".//md:list[@type='ordered']", ns = intro$ns)
+```
+
+However, there are some useful elements that we want to know about, so I have
+implemented them in active bindings and methods:
+
+
+```{r active-bindings}
+# headings where level 2 headings are equivalent to sections
+intro$headings
+# all callouts/fenced divs
+intro$get_divs()
+intro$challenges
+intro$solutions
+# questions, objectives, and keypoints are standard and return char vectors
+intro$objectives 
+intro$questions
+intro$keypoints
+# code blocks and output types
+intro$code
+intro$output
+intro$warning
+intro$error
+# images and links
+intro$images
+intro$get_images() # parses images embedded in `<img>` tags
+intro$links
+```
+
+Much of these are summarized in the `$summary()` method:
+
+```{r summary}
+intro$summary()
+```
+
+## Manipulation
+
+Because everything centers around the `$body` element and is extracted with 
+{xml2}, it's possible to manipulate the elements of the document. One thing that
+is possible is that we can add new content to the document using the `$add_md()`
+method, which will add a markdown element after any paragraph in the document.
+
+For example, we can add information about pegboard with a new code block after 
+the first heading:
+
+````{r add-code-block}
+intro$head(26) # first 26 lines
+intro$body # first heading is item 11
+cb <- c("You can clone the **{pegboard} package**:
+
+```sh
+git clone https://github.com/carpentries/pegboard.git
+```
+")
+intro$add_md(cb, where = 11)
+intro$head(26) # code block has been added
+intro$code
+````
+
+You can also manipulate existing elements. For example, let's say we wanted to
+make sure all R code chunks were named. We can do so by querying and
+manipulating the code blocks:
+
+```{r update-code-block}
+code <- intro$code
+code
+# executable code chunks will have the "language" attribute
+is_chunk <- xml2::xml_has_attr(code, "language")
+chunks <- code[is_chunk]
+chunk_names <- xml2::xml_attr(chunks, "name")
+nonames <- chunk_names == ""
+chunk_names[nonames] <- paste0("chunk-", seq(sum(nonames)))
+xml2::xml_set_attr(chunks, "name", chunk_names)
+code
+```
+
+We can see that the chunks now have names, but the proof is in the rendering:
+
+```{r}
+intro$show()
+```
+
+
 
 ## Jekyll Lesson Markdown Content
 
