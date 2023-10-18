@@ -330,11 +330,11 @@ xml2::xml_find_all(xml, ".//md:paragraph", ns = tinkr::md_ns())
 ```
 
 It's also important to remember that _all nodes_ will require this namespace
-prefix, so if we wanted to only select paragraphs that were list items, we would
-need to specify use `.//md:list/md:paragraph`:
+prefix, so if we wanted to only select paragraphs that were inside of a list,
+we would need to specify use `.//md:list//md:paragraph`:
 
 ```{r commonmark-list-paragraph-select}
-xml2::xml_find_all(xml, ".//md:list/md:paragraph", ns = tinkr::md_ns())
+xml2::xml_find_all(xml, ".//md:list//md:paragraph", ns = tinkr::md_ns())
 ```
 
 ### Pegboard namespace
