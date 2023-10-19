@@ -98,10 +98,7 @@ intro$tail(10)
 intro$show()
 ```
 
-## Analysis
-
-You can use {pegboard} to account for and manipulate elements within the
-document via special active bindings and methods:
+## File information
 
 For information about the file and its relationship to other files, you can use
 the following active bindings, which are useful when working with Episodes in a
@@ -120,7 +117,11 @@ intro$parents  # the immediate documents that would require this document to bui
 intro$build_parents # the final documents that would require this document to build
 ```
 
-It is possible to find markdown elements from XPath statments:
+## Accessing Markdown Elements
+
+The `Episode` object is centered around the `$body` item, which contains the XML
+representation of document. It is possible to find markdown elements from XPath
+statments:
 
 ```{r xpath-active-bindings}
 xml2::xml_find_all(intro$body, ".//md:link", ns = intro$ns)
@@ -158,6 +159,94 @@ Much of these are summarized in the `$summary()` method:
 ```{r summary}
 intro$summary()
 ```
+
+## Code blocks and code chunks
+
+In markdown, a **code block** is written with fences of at least three backtick
+characters (`` ` ``) followed by the language for syntax highlighting:
+
+````markdown
+
+List all files in reverse temporal order, printing their sizes in
+a human-readable format:
+
+```bash
+ls -larth /path/to/folder
+```
+````
+
+> List all files in reverse temporal order, printing their sizes in
+> a human-readable format:
+> 
+> ````bash
+> ls -larth /path/to/folder
+> ````
+
+When these are processed by {pegboard}, the resulting XML has this structure
+where the backticks inform that kind of node (`code_block`) and the language
+type is known as the "info" attribute. Everything inside the code block is the
+node text and has whitespace preserved
+
+````{r show-code-block, echo = FALSE, results = 'asis'}
+cb <- "```bash
+
+ls -larth /path/to/folder
+```"
+cbx <- xml2::read_xml(commonmark::markdown_xml(cb))
+txt <- as.character(xml2::xml_find_first(cbx, ".//d1:code_block"))
+writeLines(c("```xml", txt, "```"))
+````
+
+In R Markdown, there are special code blocks that are called code chunks that
+can be dynamically evaluated. These are distinguished by the curly braces
+around the language specifier and [optional
+attributes](https://yihui.org/knitr/options/) that control the output of the
+chunk. 
+
+````{verbatim}
+
+There is a code chunk here that will produce a plot, but not show the code:
+
+```{r chunky, echo=FALSE, fig.alt="a plot of y = mx + b for m = 1 and b = 0"}
+plot(1:10, type = "l")
+```
+
+````
+
+
+> There is a code chunk here that will produce a plot, but not show the code:
+>
+> ````{r chunk-name, echo = FALSE, fig.alt="a plot of y = mx + b for m = 1 and b = 0"}
+> plot(1:10, type = "l")
+> ````
+
+When this is processed with {pegboard}, the "info" part of the code block is
+further split into "language", "name" and further attributes based on the chunk
+options:
+
+````{r show-code-chunk, echo = FALSE, results = 'asis'}
+
+chunk <- 'There is a code chunk here that will produce a plot, but not show the code:
+
+```{r chunky, echo=FALSE, fig.alt="a plot of y = mx + b for m = 1 and b = 0"}
+
+plot(1:10, type = "l")
+```'
+tmp <- tempfile()
+writeLines(chunk, tmp)
+chunky <- pegboard::Episode$new(tmp)$code[[1]]
+xml2::xml_set_attr(chunky, "sourcepos", NULL)
+txt <- as.character(chunky)
+writeLines(c("```xml", txt, "```"))
+unlink(tmp)
+````
+
+Both code blocks will be encountered, but the difference between them is that
+the R Markdown code chunks will have the "language" attribute. This is an
+important concept to know about when you are searching and manipulating R 
+Markdown documents with XPath 
+(see `vignette("intro-xml", package = "pegboard")`). The next section will walk
+through some aspects of manipulation that we can do with these documents.
 
 ## Manipulation
 
@@ -202,11 +291,17 @@ code
 
 We can see that the chunks now have names, but the proof is in the rendering:
 
-```{r}
+```{r show-updated}
 intro$show()
 ```
 
+One of the things about manipulating these documents in code is that it is 
+possible to go back and reset if things are not correct, which is why we have
+the `$reset()` method:
 
+```{r}
+intro$reset()$confirm_sandpaper()$protect_math()$head(25)
+```
 
 ## Jekyll Lesson Markdown Content
 
@@ -215,4 +310,7 @@ that was built with the former infrastructure,
 <https://github.com/carpentries/styles>, which was built using the Jekyll
 static site generator. These style lessons are no longer supported by The
 Carpentries. {pegboard} does support these lessons so that they can be 
-transitioned to use The Workbench syntax. 
+transitioned to use The Workbench syntax via [The Carpentries Lesson Transition
+Tool](https://github.com/carpentries/lesson-transition#readme).
+
+
