@@ -86,7 +86,7 @@ so that `setup.md` would look like this:
 
 `setup.md`: 
 
-````{r verbatim}
+````{verbatim}
 ## Setup Instructions
 
 ### Python
