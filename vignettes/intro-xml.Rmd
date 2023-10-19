@@ -42,16 +42,130 @@ to XML and [{xslt}] for transforming XML to Markdown.
 [{xml2}]: https://xml2.r-lib.org/
 [XPath]: https://en.wikipedia.org/wiki/XPath
 
+## Motivating Example
+
+During the lesson transition, I was often faced with situations that required
+me to perform intricate replacements in documents while preserving the structure.
+One such example is transitioning the "workshop" or "overview" lessons that did
+not have any episodes and relied on separate child documents to separate out
+redundant elements. Let's say we had a file called `setup.md` and two other
+files called `setup-python.md` and `setup-r.md` that look like this:
+
+`setup.md`: 
+
+````markdown
+## Setup Instructions
+
+### Python
+
+{% include setup-python.md%}
+
+### R
+
+{% include setup-r.md %}
+````
+
+`setup-python.md`: 
+
+````markdown
+Install _python_ from **anaconda**
+````
+
+`setup-r.md`: 
+
+````markdown
+Install _R_ from **CRAN**
+````
+
+The output of `setup.md` when its rendered would include the text from both
+`setup-python.md` and `setup-r.md`, but the thing is, the `{% include %}` tags
+are a syntax that is specific to Jekyll. Instead, for The Workbench, we wanted
+to use the [R Markdown child document
+declaration](https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html),
+so that `setup.md` would look like this:
+
+`setup.md`: 
+
+````{r verbatim}
+## Setup Instructions
+
+### Python
+
+```{r child="files/setup-python.md"}
+```
+
+### R
+
+```{r child="files/setup-r.md"}
+```
+````
+
+
+```{r setup-setup}
+setup_file <- tempfile(fileext=".md")
+stp <- "## Setup Instructions
+
+### Python
+
+{% include setup-python.md%}
+
+### R
+
+{% include setup-r.md %}
+"
+writeLines(stp, setup_file)
+```
+
+By using the following function (originally in
+[lesson-transition/datacarpentry/ecology-workshop.R](https://github.com/carpentries/lesson-transition/blob/f8edb10b2e13a926e3df9ba522983f930d0ee19b/datacarpentry/ecology-workshop.R#L23-L44)), it was possible:
+
+```{r child-from-include}
+child_from_include <- function(from, to = NULL) {
+  to <- if (is.null(to)) fs::path_ext_set(from, "Rmd") else to
+  rlang::inform(c(i = from))
+  ep <- pegboard::Episode$new(from)
+  # find all the {% include file.ext %} statements
+  includes <- xml2::xml_find_all(ep$body, 
+    ".//md:text[starts-with(text(), '{% include')]", ns = ep$ns)
+  # trim off everything but our precious file path
+  f <- gsub("[%{ }]|include", "", xml2::xml_text(includes))
+  # give it a name 
+  fname <- paste0("include-", fs::path_ext_remove(f))
+  # make sure the file path is correct
+  f <- sQuote(fs::path("files", f), q = FALSE)
+  p <- xml2::xml_parent(includes)
+  # remove text node
+  xml2::xml_remove(includes)
+  # change paragraph node to a code block and add chunk attributes
+  xml2::xml_set_name(p, "code_block")
+  xml2::xml_set_attr(p, "language", "r")
+  xml2::xml_set_attr(p, "child", f)
+  xml2::xml_set_attr(p, "name", fname)
+  fs::file_move(from, to)
+  ep$write(fs::path_dir(to), format = "Rmd")
+}
+writeLines(readLines(setup_file)) # show the file 
+child_from_include(setup_file)
+writeLines(readLines(fs::path_ext_set(setup_file, "Rmd"))) # show the file 
+```
+
+This is only a small peek of what is possible with XML data and if you are
+familiar with R, some of this may seem like strange syntax. If you would like
+to understand a bit more, read on. 
+
 ## Working with XML data
 
 Each `Episode` object contains a field (you can think of each field as a list 
 element) called `$body`, which contains an {xml2} document. This is the core of
-the `Episode` object and every function works in some way with this field. For
-the casual R user (and even for the more experienced), the way you use this
+the `Episode` object and every function works in some way with this field. 
+
+### The memory of XML objects
+
+For the casual R user (and even for the more experienced), the way you use this
 package may seem a little strange. This is because in R, functions will not
-have side effects, but the vast majority of methods in the `Episode` object will
-modify the object itself and this all has to do with the way XML data is handled
-in R by the {xml2} package. 
+have side effects, but the vast majority of methods in the `Episode` object
+will modify the object itself and this all has to do with the way XML data is
+handled in R by the {xml2} package. 
 
 Normally in R, when you pass data to a function, it will make a copy of the
 data and then apply the function to the copy of the data:
