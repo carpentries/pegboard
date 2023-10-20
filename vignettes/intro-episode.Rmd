@@ -313,5 +313,49 @@ Carpentries. {pegboard} does support these lessons so that they can be
 transitioned to use The Workbench syntax via [The Carpentries Lesson Transition
 Tool](https://github.com/carpentries/lesson-transition#readme).
 
+### The Syntax of Jekyll Lessons
+
+The former Jekyll syntax used [kramdown-flavoured
+markdown](https://kramdown.gettalong.org/syntax.html), which evolved separately
+from [commonmark](https://spec.commonmark.org/), the syntax that {pegboard} 
+knows and that Pandoc-flavoured markdown extends. One of the key differences 
+with the kramdown syntax is that it used something known as [Inline Attribute 
+Lists (IAL)](https://kramdown.gettalong.org/syntax.html#inline-attribute-lists) to
+help define classes for markdown elements. These elements were formated as
+`{: <attributes>}` where `<attributes>` is replaced by class definitions and
+key/value pairs. They always appear _after_ the relevant block which lead to
+code blocks that looked like this:
+
+````markdown
+~~~
+ls -larth /path/to/dir
+~~~
+{: .language-bash}
+````
+
+Moreover, to achieve the special callout blocks, we used blockquotes that were
+given special classes (which is an accessbility no-no because those blocks were
+not semantic HTML) and the nesting of these block quotes looked like this:
+
+
+````markdown
+> ## Challenge
+> 
+> How do you list all files in a directory in reverse order by the time it was 
+> last updated?
+> 
+> > ## Solution
+> > 
+> > ~~~
+> > ls -larth /path/to/dir
+> > ~~~
+> > {: .language-bash}
+> {: .solution}
+{: .challenge}
+````
+
+One of the biggest chalenges with this for authors was that, unless you used an
+editor like vim or emacs, this was difficult to write with all the prefixed 
+blockquote characters and keeping track of which IALs belonged to which block.
 
 
