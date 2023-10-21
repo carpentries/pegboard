@@ -311,7 +311,9 @@ that was built with the former infrastructure,
 static site generator. These style lessons are no longer supported by The
 Carpentries. {pegboard} does support these lessons so that they can be 
 transitioned to use The Workbench syntax via [The Carpentries Lesson Transition
-Tool](https://github.com/carpentries/lesson-transition#readme).
+Tool](https://github.com/carpentries/lesson-transition#readme). This
+was the _first_ syntax that was supported by {pegboard} because the package was
+written initially as a way to explore the structure of our lessons.
 
 ### The Syntax of Jekyll Lessons
 
@@ -354,8 +356,106 @@ not semantic HTML) and the nesting of these block quotes looked like this:
 {: .challenge}
 ````
 
-One of the biggest chalenges with this for authors was that, unless you used an
+One of the biggest challenges with this for authors was that, unless you used an
 editor like vim or emacs, this was difficult to write with all the prefixed 
 blockquote characters and keeping track of which IALs belonged to which block.
+
+### Special methods and active bindings
+
+```{r setup-again}
+library("pegboard")
+library("xml2")
+library("fs")
+```
+
+Episodes written in the Jekyll syntax have special functions and active bindings
+that allow them to be analyzed and transformed to Workbench episodes. Here is an
+example from a lesson fragment:
+
+
+```{r jekyll-fragment-read}
+lf <- lesson_fragment()
+ep <- Episode$new(path(lf, "_episodes", "14-looping-data-sets.md"))
+# show relevant sections of head and tail
+ep$head(29)
+ep$tail(53)
+```
+
+Notice that the questions, objectives, and keypoints are in the yaml frontmatter.
+This is why we have an accessor that returns the list instead of the node, for
+compatibility with the Jekyll lessons:
+
+```{r qok}
+ep$questions
+ep$objectives
+ep$keypoints
+```
+
+Even though the challenges are formatted differently, the accessors will still
+return them correctly:
+
+```{r challenges}
+ep$challenges
+ep$solutions
+```
+
+You can also get _all_ of the block quotes using the `$get_blocks()` method.
+NOTE: this will extract _all_ block quotes (including those that do not have
+the `ktag` attributes. 
+
+```{r get_blocks}
+ep$get_blocks() # default is all top-level blocks (challenges/callouts)
+ep$get_blocks(level = 2) # nested blocks are usually solutions
+ep$get_blocks(level = 0) # level zero is all levels
+ep$get_blocks(type = ".solution", level = 0) # filter by type
+```
+
+One of the things that was advantageous about blockquotes is that we could
+analyze the pathway through the blockquotes and figure out how they were comonly
+written in a lesson. The `$get_challenge_graph()` creates a data frame that
+describes these relationships:
+
+```{r get-challenge-graph}
+ep$get_challenge_graph()
+```
+
+You might notice that there is an attribute called `ktag`. When a
+Jekyll-formatted episode is read in, all of the IAL tags are processed and
+placed in an attribute called `ktag` (**k**ramdown **tag**), which is
+accessible via the `$tags` active binding. This is needed because commonmark
+does not know how to process postfix tags and it is important for the
+translation to commonmark syntax:
+
+```{r ktags}
+ep$tags
+xml2::xml_parent(ep$tags)
+```
+
+
+### Transformation
+
+It was always known that we would want to use a different syntax to write the
+lessons as much of the community struggled with the kramdown syntax and it
+was difficult to parse and validate. The automated transformation workflow is
+what powers the Lesson Transformation Tool and we have composed it into a few
+basic steps:
+
+1. transform block quotes to fenced divs
+2. removing the jekyll syntax, liquid templating, and fix relative links
+3. moving the yaml frontmatter
+
+The process looks like this composable chain of methods:
+
+```{r}
+ep$reset()
+ep$
+  unblock()$
+  use_sandpaper()$
+  move_questions()$
+  move_objectives()$
+  move_keypoints()
+ep$head(31)
+ep$tail(65)
+```
 
 
