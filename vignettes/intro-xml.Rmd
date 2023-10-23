@@ -1,0 +1,536 @@
+---
+title: "Working with XML data"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Working with XML data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+
+You will want to read this vignette if you are interested in contributing to
+{pegboard}, or if you would like to understand how to fine-tune the transition of
+a lesson from the styles infrastructure to The Workbench (see 
+<https://github.com/carpentries/lesson-transition#readme>), or if you want to
+know how to better inspect the output of some of {pegboard}'s accessors. In
+this vignette, I assume that you are familiar with writing R functions and that
+R will default to passing an object's _value_ to a function and not a
+_reference_ (though if you do not understand that last part, do not worry, I
+will try to dispell this). 
+
+The {pegboard} package is an enhancement of the {tinkr} package, which
+transforms Markdown to XML and back again. [XML is a markup language that
+is derived from HTML](https://www.geeksforgeeks.org/html-vs-xml/) designed to 
+handle structured data. A more modern format for storing and transporting data
+on the web is JSON, but the advantage of using XML is that we are able to use the
+[XPath] language to parse it (more on that later). Moreover, because XML has
+the same structure as HTML, it can be parsed using the same tools, which is
+advantageous for a suite of packages that transforms Markdown to HTML. This
+transformation is facilitated by the [{commonmark}] for transforming Markdown
+to XML and [{xslt}] for transforming XML to Markdown. 
+
+[{commonmark}]: https://docs.ropensci.org/commonmark/
+[{xslt}]: https://docs.ropensci.org/xslt/
+[{xml2}]: https://xml2.r-lib.org/
+[XPath]: https://en.wikipedia.org/wiki/XPath
+
+## Motivating Example
+
+During the lesson transition, I was often faced with situations that required
+me to perform intricate replacements in documents while preserving the structure.
+One such example is transitioning the "workshop" or "overview" lessons that did
+not have any episodes and relied on separate child documents to separate out
+redundant elements. Let's say we had a file called `setup.md` and two other
+files called `setup-python.md` and `setup-r.md` that look like this:
+
+`setup.md`: 
+
+````markdown
+## Setup Instructions
+
+### Python
+
+{% include setup-python.md%}
+
+### R
+
+{% include setup-r.md %}
+````
+
+`setup-python.md`: 
+
+````markdown
+Install _python_ from **anaconda**
+````
+
+`setup-r.md`: 
+
+````markdown
+Install _R_ from **CRAN**
+````
+
+The output of `setup.md` when its rendered would include the text from both
+`setup-python.md` and `setup-r.md`, but the thing is, the `{% include %}` tags
+are a syntax that is specific to Jekyll. Instead, for The Workbench, we wanted
+to use the [R Markdown child document
+declaration](https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html),
+so that `setup.md` would look like this:
+
+`setup.md`: 
+
+````{verbatim}
+## Setup Instructions
+
+### Python
+
+```{r child="files/setup-python.md"}
+```
+
+### R
+
+```{r child="files/setup-r.md"}
+```
+````
+
+
+```{r setup-setup}
+setup_file <- tempfile(fileext=".md")
+stp <- "## Setup Instructions
+
+### Python
+
+{% include setup-python.md%}
+
+### R
+
+{% include setup-r.md %}
+"
+writeLines(stp, setup_file)
+```
+
+By using the following function (originally in
+[lesson-transition/datacarpentry/ecology-workshop.R](https://github.com/carpentries/lesson-transition/blob/f8edb10b2e13a926e3df9ba522983f930d0ee19b/datacarpentry/ecology-workshop.R#L23-L44)), it was possible:
+
+```{r child-from-include}
+child_from_include <- function(from, to = NULL) {
+  to <- if (is.null(to)) fs::path_ext_set(from, "Rmd") else to
+  rlang::inform(c(i = from))
+  ep <- pegboard::Episode$new(from)
+  # find all the {% include file.ext %} statements
+  includes <- xml2::xml_find_all(ep$body, 
+    ".//md:text[starts-with(text(), '{% include')]", ns = ep$ns)
+  # trim off everything but our precious file path
+  f <- gsub("[%{ }]|include", "", xml2::xml_text(includes))
+  # give it a name 
+  fname <- paste0("include-", fs::path_ext_remove(f))
+  # make sure the file path is correct
+  f <- sQuote(fs::path("files", f), q = FALSE)
+  p <- xml2::xml_parent(includes)
+  # remove text node
+  xml2::xml_remove(includes)
+  # change paragraph node to a code block and add chunk attributes
+  xml2::xml_set_name(p, "code_block")
+  xml2::xml_set_attr(p, "language", "r")
+  xml2::xml_set_attr(p, "child", f)
+  xml2::xml_set_attr(p, "name", fname)
+  fs::file_move(from, to)
+  ep$write(fs::path_dir(to), format = "Rmd")
+}
+writeLines(readLines(setup_file)) # show the file 
+child_from_include(setup_file)
+writeLines(readLines(fs::path_ext_set(setup_file, "Rmd"))) # show the file 
+```
+
+This is only a small peek of what is possible with XML data and if you are
+familiar with R, some of this may seem like strange syntax. If you would like
+to understand a bit more, read on. 
+
+## Working with XML data
+
+Each `Episode` object contains a field (you can think of each field as a list 
+element) called `$body`, which contains an {xml2} document. This is the core of
+the `Episode` object and every function works in some way with this field. 
+
+### The memory of XML objects
+
+For the casual R user (and even for the more experienced), the way you use this
+package may seem a little strange. This is because in R, functions will not
+have side effects, but the vast majority of methods in the `Episode` object
+will modify the object itself and this all has to do with the way XML data is
+handled in R by the {xml2} package. 
+
+Normally in R, when you pass data to a function, it will make a copy of the
+data and then apply the function to the copy of the data:
+
+```{r}
+x <- 1:10
+f <- function(x) {
+  # insert 99 after the fourth position in a vector
+  return(append(x, 99, after = 4))
+}
+print(f(x))
+# note that x is not modified
+print(x)
+```
+
+When working with XML in R, the {xml2} package is unparalleled, but it leads to
+surprising outcomes because when you modify content within an XML object, you
+are modifying the object in place:
+
+```{r xml-example}
+x <- xml2::read_xml("<a><b></b></a>")
+print(x)
+f <- function(x, new = "c") {
+  xml2::xml_add_child(x, new, .where = xml2::xml_length(x))
+  return(x)
+}
+y <- f(x)
+# note that x and y are identical
+print(x)
+print(y)
+```
+
+It gets a bit stranger when you consider that in the above code, `y` and `x` are
+_exactly the same object_ as shown with the fact that if I manipulate `y`, then 
+`x` will also be modified:
+
+```{r xml-example-dup}
+f(y, "d")
+print(y)
+print(x)
+```
+
+I can even extract child elements from the XML document and manipulate _those_
+and have them be reflected in the parent. For example, if I extract the second
+child of the document, and then apply the `cool="verified"` attribute to the 
+child, it will be reflected in the parent document. 
+
+```{r xml-example-child}
+child <- xml2::xml_child(x, 2)
+xml2::xml_set_attr(child, "cool", "verified")
+print(child)
+print(x)
+print(y)
+```
+
+This persistance lends itself very well to using the {R6} package for creating
+objects that work in a more object-oriented way (where methods belong to classes
+instead of the other way around). If you are familiar with how Python methods
+work, then you will be mostly familiar with how the {R6} objects behave. It is 
+worthwhile to read the [{R6} introduction
+vignette](https://r6.r-lib.org/articles/Introduction.html) if you want to
+understand how to program and modify this package. 
+
+In the example above, you notice that I use `xml2::xml_child()` to extract child
+nodes, but the real power of XML comes with searching for items using XPath
+syntax for traversing the XML nodes where I would be able to do one of the
+following to get the child called "c"
+
+```{r xml-example-xpath}
+xml2::xml_find_first(x, ".//c")
+xml2::xml_find_first(x, "/a/c")
+```
+
+The next section will cover a bit of XPath and provide some resources on how to
+practice and learn because this comes in very handy to quickly traverse the XML
+nodes without relying on loops.
+
+## Using XPath to parse XML
+
+### The structure of XPath
+
+In the section, we will talk about [XPath syntax][XPath-1.0], but it will be 
+non-exhaustive. Unfortunately, good tutorials on the web are few and far between,
+but here are some that can help:
+
+ - The [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/XPath)
+   is _usually_ pretty good, but instead, it's better as a reference
+   - [MDN XPath Axes](https://developer.mozilla.org/en-US/docs/Web/XPath/Axes)
+     good for knowing how to navigate among nodes
+   - [MDN XPath
+     functions](https://developer.mozilla.org/en-US/docs/Web/XPath/Functions)
+     good for knowing how to filter node matches
+ - The [w3schools tutorial on
+   XPath](https://www.w3schools.com/xml/xpath_intro.asp) is actually one of the
+   best out there, but this is an excpetion to the rule. Other than this
+   tutorial, I would not trust any content from w3schools (they are not aligned
+   at all with the web consortium).
+ - An [XPath tester](https://extendsclass.com/xpath-tester.html) like a regex
+   tester to allow you to try out complex queries in a visual manner.
+
+[XPath-1.0]: https://en.wikipedia.org/wiki/XPath#Syntax_and_semantics_(XPath_1.0)
+
+It's important to remember that an XML document is a tree-like structure that
+is similar to directories or folders on your computer. For example, if you look
+at the source directory structure of this package, you would see a folder
+called `R/` and a nested folder called `tests/testhat/`. If you started from
+the root directory of this package, you would list the R files in the `R/`
+folder with `ls R/*.R` similarly, if you wanted to list the R files in the
+`tests/testthat/` folder, you would us `ls tests/testthat/*.R`. In this
+respect, XPath has a very similar syntax: to enter the next level of nesting,
+you add a slash (`/`). For example, let's take a look a what the file structure
+would look like in XML form:
+
+```{r XML-files, echo = FALSE, results = "asis"}
+x <- '<ROOT>
+  <R>
+    <file ext="R">one</file>
+    <file ext="R">two</file>
+  </R>
+  <tests>
+    <testthat>
+      <data>
+        <file ext="txt">test-data</file>
+      </data>
+      <file ext="R">test-one</file>
+      <file ext="R">test-two</file>
+    </testthat>
+  </tests>
+</ROOT>'
+writeLines(c("```xml", x, "```"))
+xml <- xml2::read_xml(gsub("\\n", "", x))
+```
+
+The XPath syntax to find all files in the the R and testthat folders would be
+the same if you started from the root: `R/file` and 
+`tests/testthat/file`.
+
+```{r}
+xml2::xml_find_all(xml, "R/file")
+xml2::xml_find_all(xml, "tests/testthat/file")
+```
+
+However, XPath has one advantage that normal command line syntax doesn't have:
+you can short-cut paths, so if we wanted to find all files in any given folder,
+you can use the double slash (`//`) to recursively search through nesting. By 
+habit, I will normally use the precede these slashes with a dot (`.`) so that
+I can be sure to start with the node that I have in my variable:
+
+```{r}
+xml2::xml_find_all(xml, ".//file")
+```
+
+Of course, this method finds _all_ files, so if you wanted to filter them, you
+can use the bracket notation to create filters for our selection based on the
+`ext` attribute, which are prefixed by `@`. With the bracket notation, you add
+brackets to a node selection with a condition. In this case, we want to test
+that the extension is 'R', so we would use `[@ext='R']`:
+
+```{r}
+xml2::xml_find_all(xml, ".//file[@ext='R']")
+```
+
+In this scheme, I've put the file names as the text of the nodes, so we can
+use the bracket notation again with [XPath functions](https://developer.mozilla.org/en-US/docs/Web/XPath/Functions) to filter for only files that contain "one"
+
+```{r}
+xml2::xml_find_all(xml, ".//file[@ext='R'][contains(text(), 'one')]")
+```
+
+If I only wanted to extract source files that contain "one", I could also use
+the `parent::` [XPath axis](https://developer.mozilla.org/en-US/docs/Web/XPath/Axes):
+
+```{r}
+xml2::xml_find_all(xml, ".//file[@ext='R'][contains(text(), 'one')][parent::R]")
+```
+
+Note that if I used a slash (`/`) instead of square brackets for the parent, I
+would get the parent back:
+
+```{r}
+xml2::xml_find_all(xml, ".//file[@ext='R'][contains(text(), 'one')]/parent::R")
+```
+
+As you an see, many times, an XPath query can get kind of hairy, which is why
+I often like to compose it into different parts during programming with {glue}:
+
+```{r}
+predicate <- "[@ext='R'][contains(text(), 'one')]"
+XPath <- glue::glue(".//file{predicate}/parent::R")
+xml2::xml_find_all(xml, XPath)
+```
+
+In the next section, I will discuss how to extract and manipulate XML that comes
+from Markdown with namespaces.
+
+## XML data from Markdown using namespaces
+
+The XML from markdown transformation is fully handled by the {commonmark}
+package, which has the convenient `commonmark::markdown_xml()` function. For
+example, this is how how the following markdown is processed:
+
+```markdown
+This is a bunch of [example markdown](https://example.com 'for example') text
+
+- this
+- is
+- a **list**
+```
+
+> This is a bunch of [example markdown](https://example.com 'for example') text
+> 
+> - this
+> - is
+> - a **list**
+
+
+```{r commonmark-ex}
+md <- c("This is a bunch of [example markdown](https://example.com 'for example') text",
+  "",
+  "- this",
+  "- is",
+  "- a **list**"
+)
+xml_txt <- commonmark::markdown_xml(paste(md, collapse = "\n"))
+class(xml_txt)
+writeLines(xml_txt)
+```
+
+You can see that it has successfully parsed the markdown into a paragraph and
+a list and then the various elements within. 
+
+### The default namespace
+
+Now here's the catch: The commonmark markdown always starts with this basic
+skeleton which has the root node of `<document
+xmlns="http://commonmark.org/xml/1.0">`. The `xmlns` attribute defines the
+[default XML namespace][namespace]:
+
+[namespace]: https://developer.mozilla.org/en-US/docs/Web/SVG/Namespaces_Crash_Course
+
+```{r commonmark-skel, echo = FALSE}
+lines <- strsplit(commonmark::markdown_xml("hi"), "\n")[[1]][-(4:6)]
+writeLines(append(lines, "\nMARKDOWN CONTENT HERE\n", after = 3))
+```
+
+In many XML applications, namespaces will come with prefixes, which are defined
+in the `xmlns` attribute (e.g. `xmlns:svg="http://www.w3.org/2000/svg"`). If a
+node has a namespace, it needs to be selected with the namespace prefix like
+so: `.//svg:circle`. For default namespaces, the same rule applies, but the
+question becomes: how do you know what the namespace prefix is? In {xml2}, the
+default namespace always begins with `d1` and increments up as new namespaces
+are added. You can inspect the namespace with `xml2::xml_ns()`:
+
+```{r commonmark-namespace-show}
+xml <- xml2::read_xml(xml_txt)
+xml2::xml_ns(xml)
+```
+
+Thus, the XPath query you would use to select a paragraph would be 
+`.//d1:paragraph`:
+
+```{r commonmark-namespace}
+# with namespace prefix
+xml2::xml_find_all(xml, ".//d1:paragraph")
+```
+
+Of course, having a default namespace in {xml2} has some drawbacks in that 
+[adding new nodes will duplicate the namespace with a different
+identifier](https://community.rstudio.com/t/adding-nodes-in-xml2-how-to-avoid-duplicate-default-namespaces/84870), so one way we have avoided this in {tinkr} (the
+package that does the basic conversion) is to define a namespace with a prefix
+in a function so that we can use it when querying:
+
+```{r commonmark-namespace-md}
+tinkr::md_ns()
+xml2::xml_find_all(xml, ".//md:paragraph", ns = tinkr::md_ns())
+```
+
+It's also important to remember that _all nodes_ will require this namespace
+prefix, so if we wanted to only select paragraphs that were inside of a list,
+we would need to specify use `.//md:list//md:paragraph`:
+
+```{r commonmark-list-paragraph-select}
+xml2::xml_find_all(xml, ".//md:list//md:paragraph", ns = tinkr::md_ns())
+```
+
+### Pegboard namespace
+
+One of the reasons why we created pegboard was to handle markdown content that
+also included [fenced divs](https://pandoc.org/MANUAL.html#divs-and-spans), but
+we needed a way to programmatically label and extract them without affecting the
+stylesheet that is used to translate the XML back to Markdown (not covered in
+this tutorial). To acheive this we place nodes under a different namespace
+around the fences and define our own namespace.
+
+Here's an example:
+
+```markdown
+This is markdown with fenced divs
+
+::: discussion
+
+This is a discussion
+
+:::
+
+::: spoiler
+
+This is a spoiler that is hidden by default
+
+:::
+```
+
+When it's parsed by commonmark, the fenced divs are treated as paragraphs:
+
+```{r show-fenced-divs-paragraph}
+md <- 'This is markdown with fenced divs
+
+::: discussion
+
+This is a discussion
+
+:::
+
+::: spoiler
+
+This is a spoiler that is hidden by default
+
+:::
+'
+fences <- xml2::read_xml(commonmark::markdown_xml(md))
+fences
+```
+
+In {pegboard}, we have an internal function called `label_div_tags()` that will
+allow us to label and parse these tags without affecting the markdown document:
+
+```{r label-divs}
+pb <- asNamespace("pegboard")
+pb$label_div_tags(fences)
+fences
+```
+
+Note that we have defined a `<dtag>` XML node that is defined under the pegboard
+namespace. These sandwich the nodes that we want to query and allow us to use
+`tinkr::find_between()` to search for specific tags:
+
+```{r find-between}
+ns <- pb$get_ns()
+ns # both md and pegboard namespaces
+tinkr::find_between(fences, ns = ns, pattern = "pb:dtag[@label='div-1-discussion']")
+```
+
+This is automated in the `get_divs()` internal function:
+
+```{r get-divs}
+pb$get_divs(fences)
+```
+
+## Conclusion
+
+This is but a short introduction to using XML with {pegboard}. You now have the
+basics of what the structure of XML is, how to use XPath (with further resources),
+how to use XPath with namespaces, and how we use namespaces in {pegboard} to
+allow us to parse specific items. It is a good idea to practices working with
+XPath because it is useful not only for working with XML representations of
+markdown documents, but it is also heavily used for post-processing of HTML in
+both {pkgdown} and the {sandpaper} packages. 
+

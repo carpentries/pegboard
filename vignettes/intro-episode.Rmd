@@ -1,0 +1,461 @@
+---
+title: "Introduction to the Episode Object"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to the Episode Object}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+
+The {pegboard} package facilitates the analysis and manipulation of Markdown and
+R Markdown files by translating them to XML and back again. This extends the
+{tinkr} package by providing additional methods that are specific for 
+Carpentries-style lessons. There are two `R6` classes defined in {pegboard}:
+
+ - `Episode` objects that contain the XML data, YAML metadata and extra fields
+   that define the child and parent files for a particular episode
+ - `Lesson` objects that contain lists of `Episode` objects categorised as 
+   "episodes", "extra", or "children"
+
+This vignette will be discussing the structure of Episode objects, how to 
+query the contents with the {xml2} package, and how to use the methods and 
+active bindings to get information about, extract, and manipulate anything
+inside of a Markdown or R Markdown document.
+
+## Reading Markdown Content
+
+Each `Episode` object starts from a Markdown file. In particular for {pegboard},
+we assume that this Markdown file is written using
+[Pandoc](https://pandoc.org/MANUAL.html) syntax (a superset of
+[CommonMark](https://commonmark.org/)). It can be any markdown file, but for us
+to explore what the `Episode` object has to offer us, let's take an example R
+Markdown file that is present in a fragment of a Carpentries Workbench lesson
+that we have in this package. We will be using the {xml2} package to explore
+the object and the {fs} package to help with constructing file paths.
+
+```{r setup}
+library("pegboard")
+library("xml2")
+library("fs")
+```
+
+This is what our lesson fragment looks like. It is a fragment because it's main
+purpose is to be used for examples and tests, but it contains the basic structure
+of a lesson that we want. 
+
+```{r intro-read-noshow, echo = FALSE}
+dir_tree(lesson_fragment("sandpaper-fragment"), recurse = 1, regex = "site/[^R].*", invert = TRUE)
+```
+
+We can retrieve it with the `lesson_fragment()` function, which loads example
+data from pegboard. Here we will take that lesson fragment and read in the first
+episode with the initialization method, `Episode$new()`, followed by
+`$confirm_sandpaper()`, a confirmation that the episode was created to work
+with [{sandpaper}], the user interface and build engine of The Carpentries
+Workbench (for information on non-workbench content, see the section on [Jekyll
+Lesson Markdown Content](#jekyll-lesson-markdown-content)) and `$protect_math()`
+which will prevent special characters in LaTeX math from being escaped.
+
+[{sandpaper}]: https://carpentries.github.io/sandpaper/
+
+```{r intro-read}
+lsn <- lesson_fragment("sandpaper-fragment")
+# Read in the intro.Rmd document as an `Episode` object
+intro_path <- path(lsn, "episodes", "intro.Rmd")
+intro <- Episode$new(intro_path)$confirm_sandpaper()$protect_math()
+```
+
+If we print out the Episode object, I'm going to get a long list of methods,
+fields and active bindings (functions that act like fields) printed:
+
+```{r intro-print}
+intro
+```
+
+The actual XML content is in the `$body` field. This contains all the data from
+the markdown document, but in XML form. 
+
+```{r intro-body}
+intro$body
+```
+
+If we want to see what the contents look like, you can use the `$show()`,
+`$head()`, or `$tail()` methods (note: the `$show()` method will print out the
+entire markdown document).
+
+```{r intro-show}
+intro$head(10)
+intro$tail(10)
+intro$show()
+```
+
+## File information
+
+For information about the file and its relationship to other files, you can use
+the following active bindings, which are useful when working with Episodes in a
+lesson context.
+
+```{r file-active-bindings}
+intro$path
+intro$name
+intro$lesson
+# NOTE: relationships to other episodes are automatically handled in the
+#       Lesson context
+intro$has_parents
+intro$has_children
+intro$children # separate documents processed as if they were part of this document
+intro$parents  # the immediate documents that would require this document to build
+intro$build_parents # the final documents that would require this document to build
+```
+
+## Accessing Markdown Elements
+
+The `Episode` object is centered around the `$body` item, which contains the XML
+representation of document. It is possible to find markdown elements from XPath
+statments:
+
+```{r xpath-active-bindings}
+xml2::xml_find_all(intro$body, ".//md:link", ns = intro$ns)
+xml2::xml_find_first(intro$body, ".//md:list[@type='ordered']", ns = intro$ns)
+```
+
+However, there are some useful elements that we want to know about, so I have
+implemented them in active bindings and methods:
+
+
+```{r active-bindings}
+# headings where level 2 headings are equivalent to sections
+intro$headings
+# all callouts/fenced divs
+intro$get_divs()
+intro$challenges
+intro$solutions
+# questions, objectives, and keypoints are standard and return char vectors
+intro$objectives 
+intro$questions
+intro$keypoints
+# code blocks and output types
+intro$code
+intro$output
+intro$warning
+intro$error
+# images and links
+intro$images
+intro$get_images() # parses images embedded in `<img>` tags
+intro$links
+```
+
+Much of these are summarized in the `$summary()` method:
+
+```{r summary}
+intro$summary()
+```
+
+## Code blocks and code chunks
+
+In markdown, a **code block** is written with fences of at least three backtick
+characters (`` ` ``) followed by the language for syntax highlighting:
+
+````markdown
+
+List all files in reverse temporal order, printing their sizes in
+a human-readable format:
+
+```bash
+ls -larth /path/to/folder
+```
+````
+
+> List all files in reverse temporal order, printing their sizes in
+> a human-readable format:
+> 
+> ````bash
+> ls -larth /path/to/folder
+> ````
+
+When these are processed by {pegboard}, the resulting XML has this structure
+where the backticks inform that kind of node (`code_block`) and the language
+type is known as the "info" attribute. Everything inside the code block is the
+node text and has whitespace preserved
+
+````{r show-code-block, echo = FALSE, results = 'asis'}
+cb <- "```bash
+
+ls -larth /path/to/folder
+```"
+cbx <- xml2::read_xml(commonmark::markdown_xml(cb))
+txt <- as.character(xml2::xml_find_first(cbx, ".//d1:code_block"))
+writeLines(c("```xml", txt, "```"))
+````
+
+In R Markdown, there are special code blocks that are called code chunks that
+can be dynamically evaluated. These are distinguished by the curly braces
+around the language specifier and [optional
+attributes](https://yihui.org/knitr/options/) that control the output of the
+chunk. 
+
+````{verbatim}
+
+There is a code chunk here that will produce a plot, but not show the code:
+
+```{r chunky, echo=FALSE, fig.alt="a plot of y = mx + b for m = 1 and b = 0"}
+plot(1:10, type = "l")
+```
+
+````
+
+
+> There is a code chunk here that will produce a plot, but not show the code:
+>
+> ````{r chunk-name, echo = FALSE, fig.alt="a plot of y = mx + b for m = 1 and b = 0"}
+> plot(1:10, type = "l")
+> ````
+
+When this is processed with {pegboard}, the "info" part of the code block is
+further split into "language", "name" and further attributes based on the chunk
+options:
+
+````{r show-code-chunk, echo = FALSE, results = 'asis'}
+
+chunk <- 'There is a code chunk here that will produce a plot, but not show the code:
+
+```{r chunky, echo=FALSE, fig.alt="a plot of y = mx + b for m = 1 and b = 0"}
+
+plot(1:10, type = "l")
+```'
+tmp <- tempfile()
+writeLines(chunk, tmp)
+chunky <- pegboard::Episode$new(tmp)$code[[1]]
+xml2::xml_set_attr(chunky, "sourcepos", NULL)
+txt <- as.character(chunky)
+writeLines(c("```xml", txt, "```"))
+unlink(tmp)
+````
+
+Both code blocks will be encountered, but the difference between them is that
+the R Markdown code chunks will have the "language" attribute. This is an
+important concept to know about when you are searching and manipulating R 
+Markdown documents with XPath 
+(see `vignette("intro-xml", package = "pegboard")`). The next section will walk
+through some aspects of manipulation that we can do with these documents.
+
+## Manipulation
+
+Because everything centers around the `$body` element and is extracted with 
+{xml2}, it's possible to manipulate the elements of the document. One thing that
+is possible is that we can add new content to the document using the `$add_md()`
+method, which will add a markdown element after any paragraph in the document.
+
+For example, we can add information about pegboard with a new code block after 
+the first heading:
+
+````{r add-code-block}
+intro$head(26) # first 26 lines
+intro$body # first heading is item 11
+cb <- c("You can clone the **{pegboard} package**:
+
+```sh
+git clone https://github.com/carpentries/pegboard.git
+```
+")
+intro$add_md(cb, where = 11)
+intro$head(26) # code block has been added
+intro$code
+````
+
+You can also manipulate existing elements. For example, let's say we wanted to
+make sure all R code chunks were named. We can do so by querying and
+manipulating the code blocks:
+
+```{r update-code-block}
+code <- intro$code
+code
+# executable code chunks will have the "language" attribute
+is_chunk <- xml2::xml_has_attr(code, "language")
+chunks <- code[is_chunk]
+chunk_names <- xml2::xml_attr(chunks, "name")
+nonames <- chunk_names == ""
+chunk_names[nonames] <- paste0("chunk-", seq(sum(nonames)))
+xml2::xml_set_attr(chunks, "name", chunk_names)
+code
+```
+
+We can see that the chunks now have names, but the proof is in the rendering:
+
+```{r show-updated}
+intro$show()
+```
+
+One of the things about manipulating these documents in code is that it is 
+possible to go back and reset if things are not correct, which is why we have
+the `$reset()` method:
+
+```{r}
+intro$reset()$confirm_sandpaper()$protect_math()$head(25)
+```
+
+## Jekyll Lesson Markdown Content
+
+This section describes the features that you would expect to find in a lesson
+that was built with the former infrastructure,
+<https://github.com/carpentries/styles>, which was built using the Jekyll
+static site generator. These style lessons are no longer supported by The
+Carpentries. {pegboard} does support these lessons so that they can be 
+transitioned to use The Workbench syntax via [The Carpentries Lesson Transition
+Tool](https://github.com/carpentries/lesson-transition#readme). This
+was the _first_ syntax that was supported by {pegboard} because the package was
+written initially as a way to explore the structure of our lessons.
+
+### The Syntax of Jekyll Lessons
+
+The former Jekyll syntax used [kramdown-flavoured
+markdown](https://kramdown.gettalong.org/syntax.html), which evolved separately
+from [commonmark](https://spec.commonmark.org/), the syntax that {pegboard} 
+knows and that Pandoc-flavoured markdown extends. One of the key differences 
+with the kramdown syntax is that it used something known as [Inline Attribute 
+Lists (IAL)](https://kramdown.gettalong.org/syntax.html#inline-attribute-lists) to
+help define classes for markdown elements. These elements were formated as
+`{: <attributes>}` where `<attributes>` is replaced by class definitions and
+key/value pairs. They always appear _after_ the relevant block which lead to
+code blocks that looked like this:
+
+````markdown
+~~~
+ls -larth /path/to/dir
+~~~
+{: .language-bash}
+````
+
+Moreover, to achieve the special callout blocks, we used blockquotes that were
+given special classes (which is an accessbility no-no because those blocks were
+not semantic HTML) and the nesting of these block quotes looked like this:
+
+
+````markdown
+> ## Challenge
+> 
+> How do you list all files in a directory in reverse order by the time it was 
+> last updated?
+> 
+> > ## Solution
+> > 
+> > ~~~
+> > ls -larth /path/to/dir
+> > ~~~
+> > {: .language-bash}
+> {: .solution}
+{: .challenge}
+````
+
+One of the biggest challenges with this for authors was that, unless you used an
+editor like vim or emacs, this was difficult to write with all the prefixed 
+blockquote characters and keeping track of which IALs belonged to which block.
+
+### Special methods and active bindings
+
+```{r setup-again}
+library("pegboard")
+library("xml2")
+library("fs")
+```
+
+Episodes written in the Jekyll syntax have special functions and active bindings
+that allow them to be analyzed and transformed to Workbench episodes. Here is an
+example from a lesson fragment:
+
+
+```{r jekyll-fragment-read}
+lf <- lesson_fragment()
+ep <- Episode$new(path(lf, "_episodes", "14-looping-data-sets.md"))
+# show relevant sections of head and tail
+ep$head(29)
+ep$tail(53)
+```
+
+Notice that the questions, objectives, and keypoints are in the yaml frontmatter.
+This is why we have an accessor that returns the list instead of the node, for
+compatibility with the Jekyll lessons:
+
+```{r qok}
+ep$questions
+ep$objectives
+ep$keypoints
+```
+
+Even though the challenges are formatted differently, the accessors will still
+return them correctly:
+
+```{r challenges}
+ep$challenges
+ep$solutions
+```
+
+You can also get _all_ of the block quotes using the `$get_blocks()` method.
+NOTE: this will extract _all_ block quotes (including those that do not have
+the `ktag` attributes. 
+
+```{r get_blocks}
+ep$get_blocks() # default is all top-level blocks (challenges/callouts)
+ep$get_blocks(level = 2) # nested blocks are usually solutions
+ep$get_blocks(level = 0) # level zero is all levels
+ep$get_blocks(type = ".solution", level = 0) # filter by type
+```
+
+One of the things that was advantageous about blockquotes is that we could
+analyze the pathway through the blockquotes and figure out how they were comonly
+written in a lesson. The `$get_challenge_graph()` creates a data frame that
+describes these relationships:
+
+```{r get-challenge-graph}
+ep$get_challenge_graph()
+```
+
+You might notice that there is an attribute called `ktag`. When a
+Jekyll-formatted episode is read in, all of the IAL tags are processed and
+placed in an attribute called `ktag` (**k**ramdown **tag**), which is
+accessible via the `$tags` active binding. This is needed because commonmark
+does not know how to process postfix tags and it is important for the
+translation to commonmark syntax:
+
+```{r ktags}
+ep$tags
+xml2::xml_parent(ep$tags)
+```
+
+
+### Transformation
+
+It was always known that we would want to use a different syntax to write the
+lessons as much of the community struggled with the kramdown syntax and it
+was difficult to parse and validate. The automated transformation workflow is
+what powers the Lesson Transformation Tool and we have composed it into a few
+basic steps:
+
+1. transform block quotes to fenced divs
+2. removing the jekyll syntax, liquid templating, and fix relative links
+3. moving the yaml frontmatter
+
+The process looks like this composable chain of methods:
+
+```{r}
+ep$reset()
+ep$
+  unblock()$
+  use_sandpaper()$
+  move_questions()$
+  move_objectives()$
+  move_keypoints()
+ep$head(31)
+ep$tail(65)
+```
+
+
