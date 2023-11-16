@@ -67,7 +67,7 @@
     Code
       cats$validate_links()
     Message
-      ! There were errors in 2/10 links
+      ! There were errors in 2/10 images
       
       - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
@@ -79,7 +79,7 @@
     Code
       loop$validate_links()
     Message
-      ! There were errors in 4/13 links
+      ! There were errors in 4/13 images
       
       - Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
        - Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
@@ -265,7 +265,7 @@
     Code
       cats$validate_links()
     Message
-      ! There were errors in 2/10 links
+      ! There were errors in 2/10 images
       ( ) Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
       image-test.md:12 [image missing alt-text]: https://placekitten.com/g/102/102
@@ -322,7 +322,7 @@
     Code
       cats$validate_links()
     Message
-      [33m![39m There were errors in 2/10 links
+      [33m![39m There were errors in 2/10 images
       ( ) Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
       image-test.md:12 [image missing alt-text]: https://placekitten.com/g/102/102
@@ -379,7 +379,7 @@
     Code
       cats$validate_links()
     Message
-      ! There were errors in 2/10 links
+      ! There were errors in 2/10 images
       ◌ Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
       image-test.md:12 [image missing alt-text]: https://placekitten.com/g/102/102
@@ -436,7 +436,7 @@
     Code
       cats$validate_links()
     Message
-      [33m![39m There were errors in 2/10 links
+      [33m![39m There were errors in 2/10 images
       ◌ Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
       image-test.md:12 [image missing alt-text]: https://placekitten.com/g/102/102
