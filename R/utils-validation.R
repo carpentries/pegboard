@@ -55,7 +55,8 @@ throw_link_warnings <- function(VAL) {
   
   reports <- line_report(msg = err$labels, err$filepath, err$sourcepos, sep = " ")
   failed <- !apply(err[names(link_tests)], MARGIN = 2, all)
-  issue_warning(what = "links",
+  types <- paste0(unique(sub("img", "image", err$type)), "s")
+  issue_warning(what = paste(types, collapse = " and "),
     cli = has_cli(), 
     n = nrow(err), 
     N = nrow(VAL), 
