@@ -38,12 +38,13 @@ dat_tests <- c(
   C = "[something else]"
 )
 # collect_labels will create the output you need:
-res <- collect_labels(dat, msg = dat_tests)
+pb <- asNamespace("pegboard")
+res <- pb$collect_labels(dat, msg = dat_tests)
 res
 writeLines(res$labels)
 if (requireNamespace("cli", quietly = TRUE)) {
   # you can also specify cli to TRUE to format with CLI
-  res <- collect_labels(dat, cli = TRUE, msg = dat_tests)
+  res <- pb$collect_labels(dat, cli = TRUE, msg = dat_tests)
   writeLines(res$labels)
 }
 }
