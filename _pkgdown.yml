@@ -30,6 +30,8 @@ reference:
    - validate_headings
    - validate_links
    - validate_divs
+   - throw_heading_warnings
+   - collect_labels
    - issue_warning
    - show_heading_tree
  - title: "Helper functions"
