@@ -269,7 +269,7 @@
     Code
       vlink <- frg$validate_links()
     Message
-      ! There were errors in 4/14 links
+      ! There were errors in 4/14 images
       ( ) Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
       ( ) Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
@@ -350,7 +350,7 @@
     Code
       vlink <- frg$validate_links()
     Message
-      [33m![39m There were errors in 4/14 links
+      [33m![39m There were errors in 4/14 images
       ( ) Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
       ( ) Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
@@ -431,7 +431,7 @@
     Code
       vlink <- frg$validate_links()
     Message
-      ! There were errors in 4/14 links
+      ! There were errors in 4/14 images
       ◌ Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
       ◌ Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       
@@ -512,7 +512,7 @@
     Code
       vlink <- frg$validate_links()
     Message
-      [33m![39m There were errors in 4/14 links
+      [33m![39m There were errors in 4/14 images
       ◌ Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
       ◌ Images need alt-text <https://webaim.org/techniques/hypertext/link_text#alt_link>
       

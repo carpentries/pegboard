@@ -16,7 +16,7 @@ a data frame containing the following columns:
 \item server The first part of the URL (e.g. doi.org or github.com)
 \item port the port number if it exists (note: liquid tags produce weird ports)
 \item user associated with port, usually blank
-\item path path to the page in question
+\item path the path element of the link
 \item query anything after a "?" in a URL
 \item fragment navigation within a page; anything after "#" in a URL
 \item orig the original, unparsed URL
@@ -26,6 +26,9 @@ a data frame containing the following columns:
 \item rel if it's a relative URL, the name of the anchor, otherwise NA.
 \item anchor logical if the URL is an anchor
 \item sourcepos the source position in the file
+\item filepath relative path to the source file
+\item parents list column of paths to the build parents
+\item node a list column of the nodes with the links
 }
 }
 \description{

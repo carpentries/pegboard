@@ -98,8 +98,10 @@ pb_message <- function (..., domain = NULL, appendLF = TRUE) {
 #'
 #' @param path path to the file to report
 #' @param pos position of the error
-#' @param type the type of warning that should be thrown (defaults to warning)
-#' @param sep a character to use to separate the human message and the line number
+#' @param type (used in the context of CI only) the type of warning that should
+#'    be thrown (defaults to warning)
+#' @param sep a character to use to separate the human message and the line
+#'   number
 #' @rdname cli_helpers
 line_report <- function(msg = "", path, pos, sep = "\t", type = "warning") {
   ci <- Sys.getenv("CI") != ""
@@ -130,7 +132,7 @@ line_report <- function(msg = "", path, pos, sep = "\t", type = "warning") {
 #'   cli = requireNamespace("cli", quietly = TRUE), 
 #'   f = "col_cyan"
 #' )
-#' cat(glue::glue("[{x}]->[{x2}]"))
+#' writeLines(glue::glue("[{x}]->[{x2}]"))
 append_labels <- function(l, i = TRUE, e = "", cli = FALSE, f = "style_inverse") {
   f <- if (cli) utils::getFromNamespace(f, "cli") else function(e) e
   l[i] <- paste(l[i], f(e))

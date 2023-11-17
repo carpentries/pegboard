@@ -4,6 +4,11 @@
 
 * Snapshot update for testthat 3.2.0
 
+## BUGFIX
+
+* `validate_links()` now differentiates between links and images in reporting
+  (reported: @joelnitta, #143; fixed: @zkamvar, #144)
+
 # pegboard 0.7.1 (2023-10-03)
 
 * child chunk options that would fail out of context no longer cause a failure.

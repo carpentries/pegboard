@@ -57,9 +57,11 @@ message_muffler(expr, keep = FALSE)
 
 \item{pos}{position of the error}
 
-\item{sep}{a character to use to separate the human message and the line number}
+\item{sep}{a character to use to separate the human message and the line
+number}
 
-\item{type}{the type of warning that should be thrown (defaults to warning)}
+\item{type}{(used in the context of CI only) the type of warning that should
+be thrown (defaults to warning)}
 
 \item{l}{a vector/list of characters}
 
@@ -99,7 +101,7 @@ x2 <- pegboard:::append_labels(x,
   cli = requireNamespace("cli", quietly = TRUE), 
   f = "col_cyan"
 )
-cat(glue::glue("[{x}]->[{x2}]"))
+writeLines(glue::glue("[{x}]->[{x2}]"))
 pegboard:::message_muffler({
   cli::cli_text("hello there! I'm staying in!")
   pegboard:::pb_message("normal looking message that's not getting through")
