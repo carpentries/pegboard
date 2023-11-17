@@ -12,7 +12,7 @@ lesson_fragment(name = "lesson-fragment")
 \item lesson-fragment
 \item rmd-lesson
 \item sandpaper-fragment
-\item sandpaper-fragment with children
+\item sandpaper-fragment with child
 }}
 }
 \value{
@@ -24,7 +24,7 @@ a path to a lesson fragment whose contents are:
 \code{01-test.Rmd}.
 \item \code{sandpaper-fragment} contains a trimmed-down Workbench lesson that
 has its R Markdown content pre-built
-\item \code{sandpaper-fragment-with-children} contains much of the same content as
+\item \code{sandpaper-fragment-with-child} contains much of the same content as
 \code{sandpaper-fragment}, but the \code{episodes/index.Rmd} file references child
 documents.
 }
@@ -40,5 +40,5 @@ lesson
 lesson_fragment()
 lesson_fragment("rmd-lesson")
 lesson_fragment("sandpaper-fragment")
-lesson_fragment("sandpaper-fragment-with-children")
+lesson_fragment("sandpaper-fragment-with-child")
 }
