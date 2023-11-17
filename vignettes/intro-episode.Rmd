@@ -16,15 +16,8 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-The {pegboard} package facilitates the analysis and manipulation of Markdown and
-R Markdown files by translating them to XML and back again. This extends the
-{tinkr} package by providing additional methods that are specific for 
-Carpentries-style lessons. There are two `R6` classes defined in {pegboard}:
-
- - `Episode` objects that contain the XML data, YAML metadata and extra fields
-   that define the child and parent files for a particular episode
- - `Lesson` objects that contain lists of `Episode` objects categorised as 
-   "episodes", "extra", or "children"
+```{r child="../man/rmd-fragments/intro-class.Rmd"}
+```
 
 This vignette will be discussing the structure of Episode objects, how to 
 query the contents with the {xml2} package, and how to use the methods and 
@@ -49,8 +42,8 @@ library("fs")
 ```
 
 This is what our lesson fragment looks like. It is a fragment because it's main
-purpose is to be used for examples and tests, but it contains the basic structure
-of a lesson that we want. 
+purpose is to be used for examples and tests, but it contains the basic
+structure of a lesson that we want. 
 
 ```{r intro-read-noshow, echo = FALSE}
 dir_tree(lesson_fragment("sandpaper-fragment"), recurse = 1, regex = "site/[^R].*", invert = TRUE)
@@ -317,48 +310,10 @@ written initially as a way to explore the structure of our lessons.
 
 ### The Syntax of Jekyll Lessons
 
-The former Jekyll syntax used [kramdown-flavoured
-markdown](https://kramdown.gettalong.org/syntax.html), which evolved separately
-from [commonmark](https://spec.commonmark.org/), the syntax that {pegboard} 
-knows and that Pandoc-flavoured markdown extends. One of the key differences 
-with the kramdown syntax is that it used something known as [Inline Attribute 
-Lists (IAL)](https://kramdown.gettalong.org/syntax.html#inline-attribute-lists) to
-help define classes for markdown elements. These elements were formated as
-`{: <attributes>}` where `<attributes>` is replaced by class definitions and
-key/value pairs. They always appear _after_ the relevant block which lead to
-code blocks that looked like this:
 
-````markdown
-~~~
-ls -larth /path/to/dir
-~~~
-{: .language-bash}
-````
+```{r child="../man/rmd-fragments/jekyll-syntax.Rmd"}
+```
 
-Moreover, to achieve the special callout blocks, we used blockquotes that were
-given special classes (which is an accessbility no-no because those blocks were
-not semantic HTML) and the nesting of these block quotes looked like this:
-
-
-````markdown
-> ## Challenge
-> 
-> How do you list all files in a directory in reverse order by the time it was 
-> last updated?
-> 
-> > ## Solution
-> > 
-> > ~~~
-> > ls -larth /path/to/dir
-> > ~~~
-> > {: .language-bash}
-> {: .solution}
-{: .challenge}
-````
-
-One of the biggest challenges with this for authors was that, unless you used an
-editor like vim or emacs, this was difficult to write with all the prefixed 
-blockquote characters and keeping track of which IALs belonged to which block.
 
 ### Special methods and active bindings
 

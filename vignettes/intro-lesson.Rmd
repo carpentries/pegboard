@@ -1,0 +1,99 @@
+---
+title: "Introduction to the Lesson Object"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to the Lesson Object}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+
+```{r child="../man/rmd-fragments/intro-class.Rmd"}
+```
+
+If you have a list of `Episode` objects, you can achieve _most_ of what you can
+with the lesson objects, because much of the `Lesson` object's function is to
+provide a methods that map over all of the `Episode` object methods. The key
+difference between `Lesson` objects and a list of `Episode` objects is that
+the `Lesson` object will collapse summaries and to map relations between 
+`Episodes` and their children or parent documents.
+
+**Before you read this vignette, please read the vignette on the `Episode` object
+(`vignette("intro-episode", package = "pegboard")`)** so that you can understand
+the methods that come from the `Episode` objects. In this vignette, we will talk
+about the structure of `Lesson` objects, how to use the basic methods of these
+objects, inspecting summaries of source vs built episodes, and assessing the
+lineage of episodes that have parents and/or children documents. But first,
+because of a default parameter, I need to explain a little bit about Jekyll,
+the former lesson infrastructure. 
+
+### A Brief Word About History and Jekyll
+
+Prior to The Workbench, we had the [styles
+repository](https://github.com/carpentries/styles/), which was an all-in-one
+toolbox that built websites with Jekyll. It was colloquially known as the 
+"Lesson Template." It has two major differences to The Workbench: folder 
+structure and syntax.
+
+#### Folder Structure
+
+The folder structure of lessons built with Jekyll was one where content and
+tooling lived side-by-side. This folder structure looked something like this:
+
+
+```{r, jekyll-folders, echo = FALSE}
+writeLines(c(
+  ".",
+  "\U{251C}\U{2500}\U{2500} Gemfile",
+  "\U{251C}\U{2500}\U{2500} Makefile",
+  "\U{251C}\U{2500}\U{2500} _config.yml",
+  "\U{251C}\U{2500}\U{2500} _episodes/",
+  "\U{251C}\U{2500}\U{2500} _episodes_rmd/",
+  "\U{251C}\U{2500}\U{2500} _extras/",
+  "\U{251C}\U{2500}\U{2500} _includes/",
+  "\U{251C}\U{2500}\U{2500} _layouts/",
+  "\U{251C}\U{2500}\U{2500} aio.md",
+  "\U{251C}\U{2500}\U{2500} assets/",
+  "\U{251C}\U{2500}\U{2500} bin/",
+  "\U{251C}\U{2500}\U{2500} fig/",
+  "\U{251C}\U{2500}\U{2500} index.md",
+  "\U{251C}\U{2500}\U{2500} reference.md",
+  "\U{251C}\U{2500}\U{2500} requirements.txt",
+  "\U{2514}\U{2500}\U{2500} setup.md"
+))
+```
+
+When {pegboard} was first written, we initially assumed this folder structure,
+where R Markdown and regular Markdown episodes lived in different folders (and
+more often than not, the outputs of the R Markdown files lived inside the 
+`_episodes/` folder. The main method of organising episodes was by numbers
+embedded in the name of the files.
+
+As The Workbench developed, it was clear that this folder structure needed to
+change, but we needed to keep compatibility with the old lessons because we
+want to ensure that people can independently convert from the old style lessons
+to the new style, thus we added the `jekyll` parameter to the `Lesson` object
+initializer method, and set `jekyll = TRUE` as the default to keep backwards
+compatibility.
+
+#### Syntax
+
+```{r child="../man/rmd-fragments/jekyll-syntax.Rmd"}
+```
+
+## Creating a New Lesson Object
+
+The `Lesson` object is invoked with the [Lesson] `$new()`, method specifying
+whether or not the lesson is derived from Jekyll. 
+
+```{r setup}
+library(pegboard)
+```

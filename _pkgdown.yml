@@ -90,6 +90,7 @@ articles:
  - title: "Developer Guides"
    navbar: ~
    contents:
-     - articles/validation
      - intro-xml
      - intro-episode
+     - intro-lesson
+     - articles/validation
