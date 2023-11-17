@@ -1,4 +1,4 @@
-# pegboard 0.7.1.9000 (unreleased)
+# pegboard 0.7.2 (2023-11-17)
 
 ## MISC
 
@@ -8,6 +8,11 @@
 
 * `validate_links()` now differentiates between links and images in reporting
   (reported: @joelnitta, #143; fixed: @zkamvar, #144)
+
+## DOCUMENTATION
+
+* Two vignettes added for XML and Episode class
+* Documentation for validation reporting added
 
 # pegboard 0.7.1 (2023-10-03)
 
