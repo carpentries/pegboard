@@ -140,11 +140,13 @@ a suggested package.</p>
 
 
 <dt>sep</dt>
-<dd><p>a character to use to separate the human message and the line number</p></dd>
+<dd><p>a character to use to separate the human message and the line
+number</p></dd>
 
 
 <dt>type</dt>
-<dd><p>the type of warning that should be thrown (defaults to warning)</p></dd>
+<dd><p>(used in the context of CI only) the type of warning that should
+be thrown (defaults to warning)</p></dd>
 
 
 <dt>l</dt>
@@ -204,8 +206,12 @@ with the elements <code>val = expr</code> and <code>msg = &lt;cliMessage&gt;s</c
 <span class="r-in"><span>  cli <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"cli"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, </span></span>
 <span class="r-in"><span>  f <span class="op">=</span> <span class="st">"col_cyan"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"[{x}]-&gt;[{x2}]"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [a]-&gt;[a <span style="color: #00BBBB;">appended</span>] [b]-&gt;[b] [c]-&gt;[c <span style="color: #00BBBB;">appended</span>] [d]-&gt;[d] [e]-&gt;[e]</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"[{x}]-&gt;[{x2}]"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [a]-&gt;[a <span style="color: #00BBBB;">appended</span>]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [b]-&gt;[b]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [c]-&gt;[c <span style="color: #00BBBB;">appended</span>]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [d]-&gt;[d]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [e]-&gt;[e]</span>
 <span class="r-in"><span><span class="fu">pegboard</span><span class="fu">:::</span><span class="fu">message_muffler</span><span class="op">(</span><span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu">cli</span><span class="fu">::</span><span class="fu"><a href="https://cli.r-lib.org/reference/cli_text.html" class="external-link">cli_text</a></span><span class="op">(</span><span class="st">"hello there! I'm staying in!"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu">pegboard</span><span class="fu">:::</span><span class="fu">pb_message</span><span class="op">(</span><span class="st">"normal looking message that's not getting through"</span><span class="op">)</span></span></span>
@@ -213,7 +219,7 @@ with the elements <code>val = expr</code> and <code>msg = &lt;cliMessage&gt;s</c
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> this message makes it out!</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.7761055</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.2423627</span>
 <span class="r-in"><span><span class="fu">pegboard</span><span class="fu">:::</span><span class="fu">message_muffler</span><span class="op">(</span><span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu">cli</span><span class="fu">::</span><span class="fu"><a href="https://cli.r-lib.org/reference/cli_text.html" class="external-link">cli_text</a></span><span class="op">(</span><span class="st">"hello there! I'm staying in!"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu">pegboard</span><span class="fu">:::</span><span class="fu">pb_message</span><span class="op">(</span><span class="st">"normal looking message that's not getting through"</span><span class="op">)</span></span></span>
@@ -222,7 +228,7 @@ with the elements <code>val = expr</code> and <code>msg = &lt;cliMessage&gt;s</c
 <span class="r-in"><span><span class="op">}</span>, keep <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> this message makes it out!</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $val</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1026343</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.6454575</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $msg</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $msg[[1]]</span>
