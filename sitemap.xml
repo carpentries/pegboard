@@ -22,6 +22,12 @@
     <loc>https://carpentries.github.io/pegboard/articles/index.html</loc>
   </url>
   <url>
+    <loc>https://carpentries.github.io/pegboard/articles/intro-episode.html</loc>
+  </url>
+  <url>
+    <loc>https://carpentries.github.io/pegboard/articles/intro-xml.html</loc>
+  </url>
+  <url>
     <loc>https://carpentries.github.io/pegboard/articles/validation.html</loc>
   </url>
   <url>
@@ -56,6 +62,9 @@
   </url>
   <url>
     <loc>https://carpentries.github.io/pegboard/reference/cli_helpers.html</loc>
+  </url>
+  <url>
+    <loc>https://carpentries.github.io/pegboard/reference/collect_labels.html</loc>
   </url>
   <url>
     <loc>https://carpentries.github.io/pegboard/reference/div_labels.html</loc>
@@ -176,6 +185,9 @@
   </url>
   <url>
     <loc>https://carpentries.github.io/pegboard/reference/test_file_existence.html</loc>
+  </url>
+  <url>
+    <loc>https://carpentries.github.io/pegboard/reference/throw_warnings.html</loc>
   </url>
   <url>
     <loc>https://carpentries.github.io/pegboard/reference/to_dovetail.html</loc>

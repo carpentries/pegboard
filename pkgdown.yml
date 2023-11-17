@@ -3,7 +3,9 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   validation: validation.html
-last_built: 2023-10-03T21:59Z
+  intro-episode: intro-episode.html
+  intro-xml: intro-xml.html
+last_built: 2023-11-17T14:57Z
 urls:
   reference: https://carpentries.github.io/pegboard/reference
   article: https://carpentries.github.io/pegboard/articles

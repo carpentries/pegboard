@@ -37,7 +37,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pegboard</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,6 +53,8 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/validation.html">Validation of Lesson Elements</a>
+    <a class="dropdown-item" href="../articles/intro-xml.html">Working with XML data</a>
+    <a class="dropdown-item" href="../articles/intro-episode.html">Introduction to the Episode Object</a>
   </div>
 </li>
 <li class="nav-item">
@@ -110,7 +112,7 @@ headings:</p>
 <span><span class="co"># validation</span></span>
 <span><span class="va">lsn</span><span class="op">$</span><span class="fu">validate_divs</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">lsn</span><span class="op">$</span><span class="fu">validate_links</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#| <span style="color: #BBBB00;">!</span> There were errors in 4/14 links</span></span>
+<span><span class="co">#| <span style="color: #BBBB00;">!</span> There were errors in 4/14 images</span></span>
 <span><span class="co">#| ◌ Some linked internal files do not exist &lt;https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration&gt;</span></span>
 <span><span class="co">#| ◌ Images need alt-text &lt;https://webaim.org/techniques/hypertext/link_text#alt_link&gt;</span></span>
 <span><span class="co">#| </span></span>
@@ -154,7 +156,7 @@ page for <code>validate_links</code> by typing
 variable:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">links</span> <span class="op">&lt;-</span> <span class="va">lsn</span><span class="op">$</span><span class="fu">validate_links</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#| <span style="color: #BBBB00;">!</span> There were errors in 4/14 links</span></span>
+<span><span class="co">#| <span style="color: #BBBB00;">!</span> There were errors in 4/14 images</span></span>
 <span><span class="co">#| ◌ Some linked internal files do not exist &lt;https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration&gt;</span></span>
 <span><span class="co">#| ◌ Images need alt-text &lt;https://webaim.org/techniques/hypertext/link_text#alt_link&gt;</span></span>
 <span><span class="co">#| </span></span>
@@ -167,7 +169,7 @@ variable:</p>
 <span><span class="co">#|  $ episodes            : chr  "12-for-loops.md" "14-looping-data-sets.md" "14-looping-data-sets.m"..</span></span>
 <span><span class="co">#|  $ scheme              : chr  "https" "https" "https" "https" ...</span></span>
 <span><span class="co">#|  $ server              : chr  "docs.python.org" "docs.python.org" "docs.python.org" "docs.python."..</span></span>
-<span><span class="co">#|  $ port                : int  NA NA NA NA NA NA NA NA 22081 1699659056 ...</span></span>
+<span><span class="co">#|  $ port                : int  NA NA NA NA NA NA NA NA 21943 1169264424 ...</span></span>
 <span><span class="co">#|  $ user                : chr  "" "" "" "" ...</span></span>
 <span><span class="co">#|  $ path                : chr  "/3/library/stdtypes.html" "/3/library/glob.html" "/3/library/glob."..</span></span>
 <span><span class="co">#|  $ query               : chr  "" "" "" "" ...</span></span>

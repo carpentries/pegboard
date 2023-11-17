@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pegboard</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,6 +25,8 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/validation.html">Validation of Lesson Elements</a>
+    <a class="dropdown-item" href="../articles/intro-xml.html">Working with XML data</a>
+    <a class="dropdown-item" href="../articles/intro-episode.html">Introduction to the Episode Object</a>
   </div>
 </li>
 <li class="active nav-item">
@@ -50,6 +52,23 @@
       <small>Source: <a href="https://github.com/carpentries/pegboard/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.7.2" id="pegboard-072-2023-11-17">pegboard 0.7.2 (2023-11-17)<a class="anchor" aria-label="anchor" href="#pegboard-072-2023-11-17"></a></h2>
+<div class="section level3">
+<h3 id="misc-0-7-2">MISC<a class="anchor" aria-label="anchor" href="#misc-0-7-2"></a></h3>
+<ul><li>Snapshot update for testthat 3.2.0</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bugfix-0-7-2">BUGFIX<a class="anchor" aria-label="anchor" href="#bugfix-0-7-2"></a></h3>
+<ul><li>
+<code><a href="../reference/validate_links.html">validate_links()</a></code> now differentiates between links and images in reporting (reported: <a href="https://github.com/joelnitta" class="external-link">@joelnitta</a>, <a href="https://github.com/carpentries/pegboard/issues/143" class="external-link">#143</a>; fixed: <a href="https://github.com/zkamvar" class="external-link">@zkamvar</a>, <a href="https://github.com/carpentries/pegboard/issues/144" class="external-link">#144</a>)</li>
+</ul></div>
+<div class="section level3">
+<h3 id="documentation-0-7-2">DOCUMENTATION<a class="anchor" aria-label="anchor" href="#documentation-0-7-2"></a></h3>
+<ul><li>Two vignettes added for XML and Episode class</li>
+<li>Documentation for validation reporting added</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.7.1" id="pegboard-071-2023-10-03">pegboard 0.7.1 (2023-10-03)<a class="anchor" aria-label="anchor" href="#pegboard-071-2023-10-03"></a></h2>
 <ul><li>child chunk options that would fail out of context no longer cause a failure. (reported: <a href="https://github.com/trhallam" class="external-link">@trhallam</a>, <a href="https://github.com/carpentries/workbench/issues/74" class="external-link uri">https://github.com/carpentries/workbench/issues/74</a>, <a href="https://github.com/carpentries/pegboard/issues/139" class="external-link">#139</a>; fixed: <a href="https://github.com/zkamvar" class="external-link">@zkamvar</a>, <a href="https://github.com/carpentries/pegboard/issues/140" class="external-link">#140</a>)</li>
