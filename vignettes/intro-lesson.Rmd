@@ -91,9 +91,102 @@ compatibility.
 
 ## Creating a New Lesson Object
 
-The `Lesson` object is invoked with the [Lesson] `$new()`, method specifying
-whether or not the lesson is derived from Jekyll. 
+The `Lesson` object is invoked with the `Lesson$new()`, method. Here, I will
+demonstrate a Workbench lesson. This is the folder structure of the workbench
+lesson:
+
+```{r intro-read-noshow, echo = FALSE}
+withr::with_dir(pegboard::lesson_fragment("sandpaper-fragment"), {
+  fs::dir_tree(regex = "site/[^R].*", invert = TRUE)
+})
+```
+
+To read it in, because we have a Workbench lesson, we need to specify `jekyll =
+FALSE` to register all the div tags and ensure that the lesson is being treated
+like a Workbench lesson.
 
 ```{r setup}
 library(pegboard)
+wbfragment <- lesson_fragment("sandpaper-fragment")
+print(wbfragment) # path to the lesson
+wb_lesson <- Lesson$new(wbfragment, jekyll = FALSE)
+print(wb_lesson)
 ```
+
+The Lesson printing here shows that it has a subset of methods that are named
+similarly to methods and active bindings from the Episode class. These are not
+inherited, but rather they are implemented across all the Episode objects. The
+Episode objects themselves are parsed into one of three elements: "episodes",
+"children", and "extra" (NOTE: the "extra" slot may be superceded by elements 
+that better match the folder structure of lessons).
+
+```{r show-episodes}
+lapply(wb_lesson$episodes, class)
+lapply(wb_lesson$children, class)
+lapply(wb_lesson$extra, class)
+```
+
+## File Information
+
+The Lesson object contains information about the file information:
+
+```{r show-files}
+# what is the root path for the lesson?
+wb_lesson$path
+# what episode files exist?
+wb_lesson$files
+# do any of the files have children (Workbench lessons only)? 
+wb_lesson$has_children
+```
+
+### For the Children
+
+The Lesson object is very useful with Lessons that contain child documents.
+Take for example the same lesson, but `episodes/intro.Rmd` has the child
+`episodes/files/cat.Rmd` which in turn has the child
+`episodes/files/session.Rmd`:
+
+```{r intro-read-noshow-children, echo = FALSE}
+withr::with_dir(lesson_fragment("sandpaper-fragment-with-child"), {
+  fs::dir_tree(regex = "site/[^R].*", invert = TRUE)
+})
+```
+
+In this case, the Lesson object will detect that at least one Episode
+references a child document and reads them in:
+
+```{r show-children-files}
+wbchild <- lesson_fragment("sandpaper-fragment-with-child")
+wb_lesson_child <- Lesson$new(wbchild, jekyll = FALSE)
+wb_lesson_child$has_children
+lapply(wb_lesson_child$children, class)
+```
+
+The reason it is useful is because if you have a child Episode object, you can
+determine its parent and its final ancestor. 
+
+```{r show-parent}
+# cat.Rmd's parent is intro.Rmd
+wb_lesson_child$children[[1]]$name
+wb_lesson_child$children[[1]]$parents
+wb_lesson_child$children[[1]]$build_parents
+
+# session.Rmd's parent is cat.Rmd
+wb_lesson_child$children[[2]]$name
+wb_lesson_child$children[[2]]$parents
+wb_lesson_child$children[[2]]$build_parents
+```
+
+If you have the name of the final ancestor, then you can determine the full
+lineage with the `$trace_lineage()` method, which is useful for determining if
+a file should be rebuilt:
+
+```{r show-lineage}
+parent <- wb_lesson_child$children[[2]]$build_parents
+print(parent)
+wb_lesson_child$trace_lineage(parent)
+```
+
+
+
+
