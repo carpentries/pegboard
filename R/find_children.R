@@ -1,4 +1,4 @@
-#' Detect the child files of an Episode object
+#' Detect the child documents of an Episode object
 #'
 #' @description 
 #'  - `find_children()` returns the _immediate_ children for any given Episode
@@ -11,7 +11,7 @@
 #' @param ancestor an [Episode] object that is used to determine the parent path
 #'   this also can be `NULL`.
 #' @param lsn a [Lesson] object that contains the `parent` and all its children.
-#' @return a character vector of the absolute paths to child files.
+#' @return a character vector of the absolute paths to child documents 
 #'
 #' @details 
 #'
@@ -43,7 +43,7 @@
 #' ## Tracing full lineages
 #'
 #' It is possible for a child document to have further children defined, but
-#' there is a caveat: The child file is going to be read from the context of
+#' there is a caveat: The child document is going to be read from the context of
 #' the `root.dir` knitr option, which in {sandpaper} is set to be `site/built`
 #' after the markdown contents and assets are copied over. 
 #'
@@ -55,25 +55,25 @@
 #' ````
 #' 
 #' When an Episode is read _in the context of a Lesson_, the children are
-#' processed with [load_children()] so that each file with children will have a
+#' processed with [load_children()] so that each document with children will have a
 #' non-zero value of the `$children` element. We recurse through the `$children`
-#' element in the [Lesson] object to exhaust the search for the children files.
+#' element in the [Lesson] object to exhaust the search for the child documents.
 #'
 #' The `trace_children()` will return the entire lineage for a given _parent_
-#' file. Which, in the case of the examples defined above would be:
+#' document. Which, in the case of the examples defined above would be:
 #' `/path/to/episodes/parent.Rmd`, `/path/to/episodes/files/the-child.Rmd`,
 #' and `/path/to/episodes/files/the-grandchild.md`. 
 #'
 #' ## NOTE
 #'
-#' For standard lessons, child files are written relative to the directory of
-#' the build  parent file. Usually, these child files will be in the `files`
-#' folder under their parent folder. Overview lessons are a little different.
-#' For overview lessons (in The Workbench, these are lessons which contain
-#' `overview: true` in config.yaml), the child files may point to
-#' `files/child.md`, but in reality, the child file is at the root of the
+#' For standard lessons, child documents are written relative to the directory
+#' of the build  parent document. Usually, these child documents will be in the
+#' `files` folder under their parent folder. Overview lessons are a little
+#' different. For overview lessons (in The Workbench, these are lessons which
+#' contain `overview: true` in config.yaml), the child documents may point to
+#' `files/child.md`, but in reality, the child document is at the root of the
 #' lesson `../files/child.md`. We correct for this by first checking that the
-#' child files exist and if they don't defaulting to the top of the lesson. 
+#' child documents exist and if they don't defaulting to the top of the lesson. 
 #'
 #' @keywords internal
 #' @rdname find_children
@@ -88,15 +88,15 @@
 #' # `find_children()` --------------------------------------------------------
 #' ex <- lesson_fragment("sandpaper-fragment-with-child")
 #' 
-#' # The introduction has a single child file
+#' # The introduction has a single child document
 #' intro <- tinkr::yarn$new(fs::path(ex, "episodes", "intro.Rmd"))
-#' intro$head(21) # show the child file
+#' intro$head(21) # show the child document 
 #' pb$find_children(intro)
 #' # this is identical to the `$children` element of an Episode object
 #' ep <- Episode$new(fs::path(ex, "episodes", "intro.Rmd"))
 #' ep$children
 #' 
-#' # Loading the child file reveals another child
+#' # Loading the child document reveals another child
 #' child <- Episode$new(ep$children[[1]])
 #' child$children
 #' child$show()
@@ -116,7 +116,7 @@
 #' )
 find_children <- function(parent, ancestor = NULL) {
   code_blocks <- get_code(parent$body, type = NULL, attr = NULL)
-  children <- child_file_from_code_blocks(code_blocks)
+  children <- child_document_from_code_blocks(code_blocks)
   any_children <- length(children) > 0L
   ancestor_has_parents <- identical(ancestor$has_parents, TRUE)
   parent_has_parents <- identical(parent$has_parents, TRUE)
@@ -160,7 +160,7 @@ find_children <- function(parent, ancestor = NULL) {
   return(children)
 }
 # get the child file from code block if it exists
-child_file_from_code_blocks <- function(nodes) {
+child_document_from_code_blocks <- function(nodes) {
   use_children <- xml2::xml_has_attr(nodes, "child")
   if (any(use_children)) {
     nodes <- nodes[use_children]
@@ -183,8 +183,8 @@ child_file_from_code_blocks <- function(nodes) {
   }
 }
 
-# trace the lineage of a source file and return a recursive list of children
-# files. This assumes that the lesson has been set up to process children
+# trace the lineage of a source file and return a recursive list of child
+# documents. This assumes that the lesson has been set up to process children
 #' @rdname find_children
 trace_children <- function(parent, lsn) {
   if (parent$has_children) {
@@ -216,11 +216,13 @@ trace_children <- function(parent, lsn) {
 #' @details
 #' 
 #' When we want to build lessons, it's important to be able to find all of the
-#' files that are necessary to build a particular file. If there is a modification in a child file, \pkg{sandpaper} needs to know that it should flag the parent
-#' for rebuilding. To do this, we need two pieces of information:
+#' documents that are necessary to build a particular file. If there is a
+#' modification in a child document, \pkg{sandpaper} needs to know that it
+#' should flag the parent for rebuilding. To do this, we need two pieces of
+#' information:
 #'
-#' 1. The earliest ancestors of a given child file
-#' 2. The full list of descendants of a given parent file
+#' 1. The earliest ancestors of a given child document.
+#' 2. The full list of descendants of a given parent document.
 #'
 #' Each Episode object only knows about itself, so it can only report its
 #' immediate children, but not the children of children, or even its parent
@@ -228,12 +230,12 @@ trace_children <- function(parent, lsn) {
 #' contains the context of all of the Episodes and can provide this information.
 #'
 #' During Lesson object initialisation, the `load_children()` function is
-#' called to process all source files for their children. This creates an 
+#' called to process all source documents for their children. This creates an
 #' empty list of children that is continuously appended to during the function
-#' call. It then calls `read_children()` on each parent file, which will append
-#' itself as a parent to any existing children in the `all_children` list, 
-#' intitialize new [Episode] objects from the unread child files, and then
-#' search those for children until there are no children left to read. 
+#' call. It then calls `read_children()` on each parent document, which will
+#' append itself as a parent to any existing children in the `all_children`
+#' list, intitialize new [Episode] objects from the unread child documents, and
+#' then search those for children until there are no children left to read. 
 #'
 #' @keywords internal
 #' @seealso [find_children()] for details on how child documents are discovered
@@ -273,7 +275,7 @@ load_children <- function(all_parents) {
   return(the_children)
 }
 
-# Read in and/or update all recursive child files for a given parent
+# Read in and/or update all recursive child documents for a given parent
 #' @rdname load_children
 read_children <- function(parent, all_children = list(), ...) {
   # if the parent has no children, return NULL. This is the exit condition
