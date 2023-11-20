@@ -26,14 +26,14 @@ difference between `Lesson` objects and a list of `Episode` objects is that
 the `Lesson` object will collapse summaries and to map relations between 
 `Episodes` and their children or parent documents.
 
-**Before you read this vignette, please read the vignette on the `Episode` object
-(`vignette("intro-episode", package = "pegboard")`)** so that you can understand
-the methods that come from the `Episode` objects. In this vignette, we will talk
-about the structure of `Lesson` objects, how to use the basic methods of these
-objects, inspecting summaries of source vs built episodes, and assessing the
-lineage of episodes that have parents and/or children documents. But first,
-because of a default parameter, I need to explain a little bit about Jekyll,
-the former lesson infrastructure. 
+**Before you read this vignette, please read the vignette on the `Episode`
+object (`vignette("intro-episode", package = "pegboard")`)** so that you can
+understand the methods that come from the `Episode` objects. In this vignette,
+we will talk about the structure of `Lesson` objects, how to use the basic
+methods of these objects, inspecting summaries of source vs built episodes, and
+assessing the lineage of episodes that have parents and/or children documents.
+But first, because of a default parameter, I need to explain a little bit about
+Jekyll, the former lesson infrastructure. 
 
 ### A Brief Word About History and Jekyll
 
@@ -110,6 +110,7 @@ like a Workbench lesson.
 ```{r setup}
 library("pegboard")
 library("glue")
+library("yaml")
 library("fs")
 wbfragment <- lesson_fragment("sandpaper-fragment")
 print(wbfragment) # path to the lesson
@@ -130,6 +131,18 @@ lapply(wb_lesson$children, class)
 lapply(wb_lesson$extra, class)
 ```
 
+Notice here that there is only one episode in the `$episodes` item, but in the
+directory tree above, we see two. This is because of the `config.yaml` file,
+which defines the order of the episodes:
+
+```{r config-order}
+read_yaml(path(wbfragment, "config.yaml"))$episodes
+```
+
+Because `episodes/nope.Rmd` is not listed, it is not read in. This is useful
+to avoid reading in content from files that are incomplete or not correctly
+formatted. 
+
 ## File Information
 
 The Lesson object contains information about the file information:
@@ -143,10 +156,71 @@ wb_lesson$files
 wb_lesson$has_children
 ```
 
+## Basic Summaries
+
+As mentioned earlier, many of the methods in a `Lesson` object are wrappers
+for methods in `Episode` objects. `challenges`, `solutions`, `summary`, and
+the `validate_*()` methods are the obvious ones:
+
+```{r challenge-solution}
+wb_lesson$challenges()
+wb_lesson$solutions()
+```
+
+For summaries, you will get a data frame of the summaries. You can also choose
+to include other collections in the summary:
+
+```{r summary}
+wb_lesson$summary() # defaults to episodes
+wb_lesson$summary(collection = c("episodes", "extra"))
+```
+
+Validation will auto-check everything:
+
+```{r validate}
+wb_lesson$validate_divs()
+wb_lesson$validate_headings()
+wb_lesson$validate_links()
+```
+
+## Loading Built Documents
+
+One thing that is very useful is to check the status of the built documents
+to ensure that everything you expect is there. You can load all of the built markdown documents with the `$load_built()` method and the built documents will
+populate the `$built` field:
+
+```{r load-built}
+wb_lesson$load_built()
+lapply(wb_lesson$built, class)
+```
+
+You can use these to inspect how the content is rendered and see that the
+code blocks render what they should render:
+
+```{r summary-built}
+to_check <- c("page", "code", "output", "images", "warning", "error")
+wb_lesson$summary(collection = c("episodes", "built"))[to_check]
+```
+
 ## Creating a New Lesson with Child Documents
 
-The Lesson object is very useful with Lessons that contain child documents
-(see the `pegboard::find_children()` documentation for details).
+If you are unfamiliar with the concept of child documents, please read
+the "Including Child Documents" vignette in the {sandpaper} package
+(`vignette("include-child-documents", package = "sandpaper")`).
+
+The `pegboard::Lesson` object is very useful with lessons that contain child
+documents because it records the relationships between documents. This is key
+for workflows determining build order of a Lesson. If a source document is
+modified, in any build system, that source document will trigger a rebuild of
+the downstream page, and _the same should happen if a child document of that
+source is modified_ (if you are interested in the build process used by
+{sandpaper}, you can read `sandpaper::build_status()` and 
+`sandpaper::hash_children()`). This functionality is implemented in the
+`pegboard::Lesson$trace_lineage()` method, which returns all documents required
+to build any given file. We will demonstrate the utility of this later, but
+first, we will demonstrate how `pegboard::Lesson$new()` auto-detects the child
+documents:
+
 Take for example the same lesson, but `episodes/intro.Rmd` has the child
 `episodes/files/cat.Rmd` which in turn has the child
 `episodes/files/session.Rmd`:
@@ -157,8 +231,21 @@ withr::with_dir(lesson_fragment("sandpaper-fragment-with-child"), {
 })
 ```
 
-In this case, the `Lesson` object will detect that at least one `Episode`
-references a child document and reads them in:
+A valid child document reference requires a code chunk with a `child` attribute
+that points to a valid file relative to the parent document, so if I have this
+code block inside `episodes/intro.Rmd`, then it will include the child document
+called `episodes/files/cat.Rmd`:
+
+````{verbatim}
+
+```{r cat-child, child="files/cat.Rmd"}
+```
+````
+
+During initialisation of a Workbench lesson (note: not currently implemented for
+Jekyll lessons), the `Lesson` object will detect that at least one `Episode`
+references at least one child document (via `find_children()`) and read them in
+(see `load_children()` for details).
 
 ```{r show-children-files}
 wbchild <- lesson_fragment("sandpaper-fragment-with-child")
@@ -207,6 +294,11 @@ glue("The lineage of {path_rel(parent, start = rel)} is:
   {pretty_lineage}")
 ```
 
+## Jekyll Lessons
 
-
-
+There are some methods that are specific to lessons that are built with Jekyll.
+In particular, the `n_problems` and `show_problems` active binding are useful
+for determining if anything went wrong with parsing the kramdown syntax,
+the `$isolate_blocks()` method was used to strip out all non-blockquote content,
+the `$blocks()` method returned all block quote with filters for types, and
+the `$rmd` field was an indicator that the lesson used R Markdown.
