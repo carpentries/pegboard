@@ -4,8 +4,8 @@ R Markdown files by translating them to XML and back again. This extends the
 additional methods that are specific for Carpentries-style lessons. There are
 two `R6` classes defined in {pegboard}:
 
- - `Episode` objects that contain the XML data, YAML metadata and extra fields
-   that define the child and parent files for a particular episode. These
-   inherit from the [tinkr::yarn] R6 class. 
-- `Lesson` objects that contain lists of `Episode` objects categorised as 
-   "episodes", "extra", or "children".
+ - `pegboard::Episode` objects that contain the XML data, YAML metadata and
+   extra fields that define the child and parent files for a particular
+   episode. These inherit from the `tinkr::yarn` R6 class. 
+- `pegboard::Lesson` objects that contain lists of `Episode` objects
+  categorised as "episodes", "extra", or "children".

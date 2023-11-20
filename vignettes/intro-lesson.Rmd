@@ -49,26 +49,28 @@ The folder structure of lessons built with Jekyll was one where content and
 tooling lived side-by-side. This folder structure looked something like this:
 
 
-```{r, jekyll-folders, echo = FALSE}
-writeLines(c(
-  ".",
-  "\U{251C}\U{2500}\U{2500} Gemfile",
-  "\U{251C}\U{2500}\U{2500} Makefile",
-  "\U{251C}\U{2500}\U{2500} _config.yml",
-  "\U{251C}\U{2500}\U{2500} _episodes/",
-  "\U{251C}\U{2500}\U{2500} _episodes_rmd/",
-  "\U{251C}\U{2500}\U{2500} _extras/",
-  "\U{251C}\U{2500}\U{2500} _includes/",
-  "\U{251C}\U{2500}\U{2500} _layouts/",
-  "\U{251C}\U{2500}\U{2500} aio.md",
-  "\U{251C}\U{2500}\U{2500} assets/",
-  "\U{251C}\U{2500}\U{2500} bin/",
-  "\U{251C}\U{2500}\U{2500} fig/",
-  "\U{251C}\U{2500}\U{2500} index.md",
-  "\U{251C}\U{2500}\U{2500} reference.md",
-  "\U{251C}\U{2500}\U{2500} requirements.txt",
-  "\U{2514}\U{2500}\U{2500} setup.md"
-))
+```{r, jekyll-folders, echo = FALSE, comment = "# "}
+writeLines(".
+├── Gemfile
+├── Makefile
+├── _config.yml
+├── \033[01;34m_episodes/\033[0m
+│   └── 01-intro.md
+├── \033[01;34m_episodes_rmd/\033[0m
+├── \033[01;34m_extras/\033[0m
+│   ├── a.md
+│   └── b.md
+├── \033[01;34m_includes/\033[0m
+├── \033[01;34m_layouts/\033[0m
+├── aio.md
+├── \033[01;34massets/\033[0m
+├── \033[01;34mbin/\033[0m
+├── \033[01;34mfig/\033[0m
+├── index.md
+├── reference.md
+├── requirements.txt
+└── setup.md
+")
 ```
 
 When {pegboard} was first written, we initially assumed this folder structure,
@@ -95,7 +97,7 @@ The `Lesson` object is invoked with the `Lesson$new()`, method. Here, I will
 demonstrate a Workbench lesson. This is the folder structure of the workbench
 lesson:
 
-```{r intro-read-noshow, echo = FALSE}
+```{r intro-read-noshow, echo = FALSE, comment = "# "}
 withr::with_dir(pegboard::lesson_fragment("sandpaper-fragment"), {
   fs::dir_tree(regex = "site/[^R].*", invert = TRUE)
 })
@@ -106,7 +108,9 @@ FALSE` to register all the div tags and ensure that the lesson is being treated
 like a Workbench lesson.
 
 ```{r setup}
-library(pegboard)
+library("pegboard")
+library("glue")
+library("fs")
 wbfragment <- lesson_fragment("sandpaper-fragment")
 print(wbfragment) # path to the lesson
 wb_lesson <- Lesson$new(wbfragment, jekyll = FALSE)
@@ -139,20 +143,21 @@ wb_lesson$files
 wb_lesson$has_children
 ```
 
-### For the Children
+## Creating a New Lesson with Child Documents
 
-The Lesson object is very useful with Lessons that contain child documents.
+The Lesson object is very useful with Lessons that contain child documents
+(see the `pegboard::find_children()` documentation for details).
 Take for example the same lesson, but `episodes/intro.Rmd` has the child
 `episodes/files/cat.Rmd` which in turn has the child
 `episodes/files/session.Rmd`:
 
-```{r intro-read-noshow-children, echo = FALSE}
+```{r intro-read-noshow-children, echo = FALSE, comment = "# "}
 withr::with_dir(lesson_fragment("sandpaper-fragment-with-child"), {
   fs::dir_tree(regex = "site/[^R].*", invert = TRUE)
 })
 ```
 
-In this case, the Lesson object will detect that at least one Episode
+In this case, the `Lesson` object will detect that at least one `Episode`
 references a child document and reads them in:
 
 ```{r show-children-files}
@@ -163,18 +168,26 @@ lapply(wb_lesson_child$children, class)
 ```
 
 The reason it is useful is because if you have a child Episode object, you can
-determine its parent and its final ancestor. 
+determine its parent and its final ancestor. Because these paths are absolute
+paths, I am going to write a function that will use the {glue} package to print
+it nicely for us: 
 
 ```{r show-parent}
+show_child_parents <- function(child) {
+  parents <- fs::path_rel(child$parents, start = child$lesson)
+  build_parents <- fs::path_rel(child$build_parents, start = child$lesson)
+
+  msg <- "Ancestors for {child$name} ---
+  Parent(s):         {parents}
+  Final ancestor(s): {build_parents}"
+  glue::glue(msg)
+}
+
 # cat.Rmd's parent is intro.Rmd
-wb_lesson_child$children[[1]]$name
-wb_lesson_child$children[[1]]$parents
-wb_lesson_child$children[[1]]$build_parents
+show_child_parents(wb_lesson_child$children[[1]])
 
 # session.Rmd's parent is cat.Rmd
-wb_lesson_child$children[[2]]$name
-wb_lesson_child$children[[2]]$parents
-wb_lesson_child$children[[2]]$build_parents
+show_child_parents(wb_lesson_child$children[[2]])
 ```
 
 If you have the name of the final ancestor, then you can determine the full
@@ -184,7 +197,14 @@ a file should be rebuilt:
 ```{r show-lineage}
 parent <- wb_lesson_child$children[[2]]$build_parents
 print(parent)
-wb_lesson_child$trace_lineage(parent)
+lineage <- wb_lesson_child$trace_lineage(parent)
+
+# printing the lineage in a presentable fashion:
+rel <- wb_lesson_child$path
+pretty_lineage <- path_rel(lineage, start = rel)
+pretty_lineage <- glue_collapse(pretty_lineage, sep = ", ", last = ", and ")
+glue("The lineage of {path_rel(parent, start = rel)} is:
+  {pretty_lineage}")
 ```
 
 
