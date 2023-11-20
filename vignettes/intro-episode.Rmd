@@ -288,6 +288,37 @@ We can see that the chunks now have names, but the proof is in the rendering:
 intro$show()
 ```
 
+## Handouts
+
+**NOTE: This will change in version 0.8.0**. It is possible to generate a code
+handout by using the `$handout()` method. This will grab all challenge blocks
+along with any code block that contains `purl = TRUE` and strip out everything
+else. You can also specifiy `solution = TRUE` to include the solutions:
+
+```{r handout-basic}
+writeLines(intro$handout())
+writeLines(intro$handout(solution = TRUE))
+```
+
+I want to show that the `purl = TRUE` method actually works, so I'll take the
+`chunks` from above and include the last one:
+
+```{r handout-purl}
+xml2::xml_set_attr(chunks[chunk_names == "pyramid"], "purl", TRUE)
+writeLines(intro$handout())
+```
+
+The `path` arguments allows this to be written to a file so that it can be
+converted to a script using `knitr::purl`
+
+```{r handout-file}
+tmp <- tempfile()
+intro$handout(path = tmp)
+writeLines(readLines(tmp))
+```
+
+## Reset
+
 One of the things about manipulating these documents in code is that it is 
 possible to go back and reset if things are not correct, which is why we have
 the `$reset()` method:

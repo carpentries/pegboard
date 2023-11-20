@@ -202,6 +202,16 @@ to_check <- c("page", "code", "output", "images", "warning", "error")
 wb_lesson$summary(collection = c("episodes", "built"))[to_check]
 ```
 
+## Handouts
+
+This is another method wrapped from the Episode method, where it combines the
+output into a single file and prepends the Episode title before each section:
+
+```{r handouts}
+writeLines(wb_lesson$handout())
+```
+
+
 ## Creating a New Lesson with Child Documents
 
 If you are unfamiliar with the concept of child documents, please read
@@ -293,6 +303,7 @@ pretty_lineage <- glue_collapse(pretty_lineage, sep = ", ", last = ", and ")
 glue("The lineage of {path_rel(parent, start = rel)} is:
   {pretty_lineage}")
 ```
+
 
 ## Jekyll Lessons
 
