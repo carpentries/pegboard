@@ -195,7 +195,8 @@ lapply(wb_lesson$built, class)
 ```
 
 You can use these to inspect how the content is rendered and see that the
-code blocks render what they should render:
+code blocks render what they should render. In thise case, `episodes/intro.Rmd`
+will render one output block and one image.
 
 ```{r summary-built}
 to_check <- c("page", "code", "output", "images", "warning", "error")

@@ -7,9 +7,10 @@
 This is a wrapper for several \link{Episode} class objects.
 }
 \details{
-Lessons are made of up several episodes within the \verb{_episodes/} directory of
-a lesson. This class keeps track of several episodes and allows us to switch
-between RMarkdown and markdown episodes
+This class contains and keeps track of relationships between \link{Episode}
+objects contained within \href{https://carpentries.github.io/workbench}{Carpentries Workbench} and \href{https://carpentries.github.io/lesson-example}{Carpentries styles} lessons.
+
+Read more about how to use this class in \code{vignette("intro-lesson", package = "pegboard")}
 }
 \examples{
 

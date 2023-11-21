@@ -7,8 +7,12 @@
 Wrapper around an xml document to manipulate and inspect Carpentries episodes
 }
 \details{
-This class is a fancy wrapper around the results of \code{\link[tinkr:to_xml]{tinkr::to_xml()}} and
-has method specific to the Carpentries episodes.
+The Episode class is a superclass of \code{\link[tinkr:yarn]{tinkr::yarn()}}, which transforms
+(commonmark-formatted) Markdown to XML and back again. The extension that
+the Episode class provides is support for both \href{https://pandoc.org}{Pandoc}
+and \href{https://kramdown.gettalong.org/}{kramdown} flavours of Markdown.
+
+Read more about this class in \verb{vignette("intro-episode", package = "pegboard)}.
 }
 \note{
 The current XLST spec for {tinkr} does not support kramdown, which

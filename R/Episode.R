@@ -2,9 +2,16 @@
 #'
 #' @description
 #' Wrapper around an xml document to manipulate and inspect Carpentries episodes
+#' 
 #' @details
-#' This class is a fancy wrapper around the results of [tinkr::to_xml()] and
-#' has method specific to the Carpentries episodes.
+#' The Episode class is a superclass of [tinkr::yarn()], which transforms 
+#' (commonmark-formatted) Markdown to XML and back again. The extension that
+#' the Episode class provides is support for both [Pandoc](https://pandoc.org) 
+#' and [kramdown](https://kramdown.gettalong.org/) flavours of Markdown. 
+#' 
+#' Read more about this class in `vignette("intro-episode", package =
+#' "pegboard)`.
+#' 
 #' @export
 Episode <- R6::R6Class("Episode",
   inherit = tinkr::yarn,
@@ -99,7 +106,12 @@ Episode <- R6::R6Class("Episode",
       self$yaml <- ep$yaml
       self$body <- ep$body
       self$ns   <- ep$ns
+      # if the parents are missing, this walk will do nothing
       purrr::walk(parents, function(parent) add_parent(self, parent))
+      # the parent here is used to determine the build path for the
+      # child document, which is dependent on the build parent, aka the final
+      # ancestor. If there is no parent, then the children are relative to the
+      # parent.
       self$children <- find_children(ep, ancestor = parents[[1]])
     },
 
