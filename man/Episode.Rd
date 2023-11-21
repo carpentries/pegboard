@@ -12,7 +12,7 @@ The Episode class is a superclass of \code{\link[tinkr:yarn]{tinkr::yarn()}}, wh
 the Episode class provides is support for both \href{https://pandoc.org}{Pandoc}
 and \href{https://kramdown.gettalong.org/}{kramdown} flavours of Markdown.
 
-Read more about this class in \verb{vignette("intro-episode", package = "pegboard)}.
+Read more about this class in \code{vignette("intro-episode", package = "pegboard")}.
 }
 \note{
 The current XLST spec for {tinkr} does not support kramdown, which

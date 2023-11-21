@@ -10,7 +10,7 @@
 #' and [kramdown](https://kramdown.gettalong.org/) flavours of Markdown. 
 #' 
 #' Read more about this class in `vignette("intro-episode", package =
-#' "pegboard)`.
+#' "pegboard")`.
 #' 
 #' @export
 Episode <- R6::R6Class("Episode",
