@@ -111,6 +111,7 @@ like a Workbench lesson.
 library("pegboard")
 library("glue")
 library("yaml")
+library("xml2")
 library("fs")
 wbfragment <- lesson_fragment("sandpaper-fragment")
 print(wbfragment) # path to the lesson
@@ -156,16 +157,33 @@ wb_lesson$files
 wb_lesson$has_children
 ```
 
-## Basic Summaries
+## Accessors
 
 As mentioned earlier, many of the methods in a `Lesson` object are wrappers
-for methods in `Episode` objects. `challenges`, `solutions`, `summary`, and
-the `validate_*()` methods are the obvious ones:
+for methods in `Episode` objects. `challenges`, `solutions` are the obvious
+ones. 
 
 ```{r challenge-solution}
 wb_lesson$challenges()
 wb_lesson$solutions()
 ```
+
+For the rest of the elements (or active bindings), you will need to use the
+`$get()` method. For example, if you wanted all code blocks from the episodes
+and the extra content, you would use:
+
+```{r get-code}
+wb_lesson$get("code", collection = c("episodes", "extra"))
+```
+
+Similarly, for links and headings you would use: 
+
+```{r get-links-headings}
+wb_lesson$get("links", collection = c("episodes", "extra"))
+wb_lesson$get("headings", collection = c("episodes", "extra"))
+```
+
+## Methods Summaries and Validation
 
 For summaries, you will get a data frame of the summaries. You can also choose
 to include other collections in the summary:
@@ -175,12 +193,18 @@ wb_lesson$summary() # defaults to episodes
 wb_lesson$summary(collection = c("episodes", "extra"))
 ```
 
-Validation will auto-check everything:
+Validation will auto-check everything and return the results as data frames. You can find more information abou the specific checks by reading `vignette("validation", package = "pegboard")`. 
+
+Details of the individual functions can be found via `?validate_links()`,
+`?validate_divs()`, and `?validate_headings()`.
 
 ```{r validate}
-wb_lesson$validate_divs()
-wb_lesson$validate_headings()
-wb_lesson$validate_links()
+divs <- wb_lesson$validate_divs()
+print(divs)
+headings <- wb_lesson$validate_headings()
+print(headings)
+links <- wb_lesson$validate_links()
+print(links)
 ```
 
 ## Loading Built Documents
@@ -211,6 +235,35 @@ output into a single file and prepends the Episode title before each section:
 ```{r handouts}
 writeLines(wb_lesson$handout())
 ```
+
+## Accessing other `Episode` methods
+
+For `pegboard::Episode` methods that are not listed above, you will need to
+manually iterate over the `Episode` objects. For example, if you wanted to
+extract all of the instructor notes in the lesson, you could use `purrr::map()`
+
+```{r callouts}
+purrr::map(c(wb_lesson$episodes, wb_lesson$extra), 
+  function(ep) ep$get_divs("instructor"))
+```
+
+If you wanted to get a specific thing from the body of the document, then you
+could use any of the functions from {xml2} such as `xml2::xml_find_first()` or
+`xml2::xml_find_all()`. Here, we are looking first the first text element that
+is not a fenced-div element:
+
+```{r body-text}
+purrr::map_chr(c(wb_lesson$episodes, wb_lesson$extra), 
+  function(ep) {
+    xpath <- ".//md:text[not(starts-with(text(), ':::'))]"
+    nodes <- xml_find_first(ep$body, xpath, ep$ns)
+    return(xml_text(nodes))
+  }
+)
+```
+
+For more information about constructing XPath queries and working with XML data,
+you can read `vignette("intro-xml", package = "pegboard")`
 
 
 ## Creating a New Lesson with Child Documents
@@ -314,3 +367,13 @@ for determining if anything went wrong with parsing the kramdown syntax,
 the `$isolate_blocks()` method was used to strip out all non-blockquote content,
 the `$blocks()` method returned all block quote with filters for types, and
 the `$rmd` field was an indicator that the lesson used R Markdown.
+
+
+```{r jekyll}
+jekyll <- Lesson$new(lesson_fragment("lesson-fragment"), jekyll = TRUE)
+jekyll$n_problems
+rmd    <- Lesson$new(lesson_fragment("rmd-lesson"), jekyll = TRUE)
+rmd$n_problems
+```
+
+
