@@ -19,11 +19,10 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![pegboard status badge](https://carpentries.r-universe.dev/badges/pegboard)](https://carpentries.r-universe.dev)
+[![R-CMD-check status](https://github.com/carpentries/pegboard/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/carpentries/pegboard/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/carpentries/pegboard/branch/main/graph/badge.svg)](https://codecov.io/gh/carpentries/pegboard?branch=main)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN status](https://www.r-pkg.org/badges/version/pegboard)](https://CRAN.R-project.org/package=pegboard)
-[![Codecov test coverage](https://codecov.io/gh/carpentries/pegboard/branch/main/graph/badge.svg)](https://codecov.io/gh/carpentries/pegboard?branch=main)
-[![R build status](https://github.com/carpentries/pegboard/workflows/R-CMD-check/badge.svg)](https://github.com/carpentries/pegboard/actions)
-[![R-CMD-check](https://github.com/carpentries/pegboard/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/carpentries/pegboard/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 > [pegboard] is tempered hardboard which is pre-drilled with evenly spaced
@@ -51,9 +50,10 @@ package:
 
  - Episode: stores the xml content of a single Markdown or R Markdown file.
    This extends the the [`tinkr::yarn`
-   class](https://docs.ropensci.org/tinkr/reference/yarn.html).
+   class](https://docs.ropensci.org/tinkr/reference/yarn.html). See
+   `vignette("intro-episode", package = "pegboard")` for more info. 
  - Lesson: stores all publishable markdown content as `Episodes` within a
-   lesson
+   lesson. See `vignette("intro-episode", package = "pegboard")` for more info.
 
 One simple usage is getting a summary of the content of an episode. Let's
 investigate the contents of [the "Episode Structure"
@@ -84,8 +84,6 @@ str(hdg, max.level = 1)
 div <- ep$validate_divs()
 str(div, max.level = 1)
 ```
-
-
 
 ## Installation
 

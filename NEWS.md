@@ -1,4 +1,4 @@
-# pegboard 0.7.2.9000 (unreleased)
+# pegboard 0.7.3 (2023-11-22)
 
 ## DOCUMENTATION
 
