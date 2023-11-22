@@ -10,21 +10,14 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "##"
 )
 ```
 
 ## Introduction
 
-The {pegboard} package facilitates the analysis and manipulation of Markdown and
-R Markdown files by translating them to XML and back again. This extends the
-{tinkr} package by providing additional methods that are specific for 
-Carpentries-style lessons. There are two `R6` classes defined in {pegboard}:
-
- - `Episode` objects that contain the XML data, YAML metadata and extra fields
-   that define the child and parent files for a particular episode
- - `Lesson` objects that contain lists of `Episode` objects categorised as 
-   "episodes", "extra", or "children"
+```{r child="../man/rmd-fragments/intro-class.Rmd"}
+```
 
 This vignette will be discussing the structure of Episode objects, how to 
 query the contents with the {xml2} package, and how to use the methods and 
@@ -49,8 +42,8 @@ library("fs")
 ```
 
 This is what our lesson fragment looks like. It is a fragment because it's main
-purpose is to be used for examples and tests, but it contains the basic structure
-of a lesson that we want. 
+purpose is to be used for examples and tests, but it contains the basic
+structure of a lesson that we want. 
 
 ```{r intro-read-noshow, echo = FALSE}
 dir_tree(lesson_fragment("sandpaper-fragment"), recurse = 1, regex = "site/[^R].*", invert = TRUE)
@@ -295,6 +288,37 @@ We can see that the chunks now have names, but the proof is in the rendering:
 intro$show()
 ```
 
+## Handouts
+
+**NOTE: This will change in version 0.8.0**. It is possible to generate a code
+handout by using the `$handout()` method. This will grab all challenge blocks
+along with any code block that contains `purl = TRUE` and strip out everything
+else. You can also specifiy `solution = TRUE` to include the solutions:
+
+```{r handout-basic}
+writeLines(intro$handout())
+writeLines(intro$handout(solution = TRUE))
+```
+
+I want to show that the `purl = TRUE` method actually works, so I'll take the
+`chunks` from above and include the last one:
+
+```{r handout-purl}
+xml2::xml_set_attr(chunks[chunk_names == "pyramid"], "purl", TRUE)
+writeLines(intro$handout())
+```
+
+The `path` arguments allows this to be written to a file so that it can be
+converted to a script using `knitr::purl`
+
+```{r handout-file}
+tmp <- tempfile()
+intro$handout(path = tmp)
+writeLines(readLines(tmp))
+```
+
+## Reset
+
 One of the things about manipulating these documents in code is that it is 
 possible to go back and reset if things are not correct, which is why we have
 the `$reset()` method:
@@ -317,48 +341,10 @@ written initially as a way to explore the structure of our lessons.
 
 ### The Syntax of Jekyll Lessons
 
-The former Jekyll syntax used [kramdown-flavoured
-markdown](https://kramdown.gettalong.org/syntax.html), which evolved separately
-from [commonmark](https://spec.commonmark.org/), the syntax that {pegboard} 
-knows and that Pandoc-flavoured markdown extends. One of the key differences 
-with the kramdown syntax is that it used something known as [Inline Attribute 
-Lists (IAL)](https://kramdown.gettalong.org/syntax.html#inline-attribute-lists) to
-help define classes for markdown elements. These elements were formated as
-`{: <attributes>}` where `<attributes>` is replaced by class definitions and
-key/value pairs. They always appear _after_ the relevant block which lead to
-code blocks that looked like this:
 
-````markdown
-~~~
-ls -larth /path/to/dir
-~~~
-{: .language-bash}
-````
+```{r child="../man/rmd-fragments/jekyll-syntax.Rmd"}
+```
 
-Moreover, to achieve the special callout blocks, we used blockquotes that were
-given special classes (which is an accessbility no-no because those blocks were
-not semantic HTML) and the nesting of these block quotes looked like this:
-
-
-````markdown
-> ## Challenge
-> 
-> How do you list all files in a directory in reverse order by the time it was 
-> last updated?
-> 
-> > ## Solution
-> > 
-> > ~~~
-> > ls -larth /path/to/dir
-> > ~~~
-> > {: .language-bash}
-> {: .solution}
-{: .challenge}
-````
-
-One of the biggest challenges with this for authors was that, unless you used an
-editor like vim or emacs, this was difficult to write with all the prefixed 
-blockquote characters and keeping track of which IALs belonged to which block.
 
 ### Special methods and active bindings
 
@@ -431,7 +417,6 @@ ep$tags
 xml2::xml_parent(ep$tags)
 ```
 
-
 ### Transformation
 
 It was always known that we would want to use a different syntax to write the
@@ -440,13 +425,16 @@ was difficult to parse and validate. The automated transformation workflow is
 what powers the Lesson Transformation Tool and we have composed it into a few
 basic steps:
 
-1. transform block quotes to fenced divs
-2. removing the jekyll syntax, liquid templating, and fix relative links
-3. moving the yaml frontmatter
+1. transform block quotes to fenced divs (via the `$unblock()` method, using
+   the internal `replace_with_div()` function).
+2. removing the jekyll syntax, liquid templating, and fix relative links (via
+   the `$use_sandpaper()` method, using the internal `use_sandpaper()`
+   function.
+3. moving the yaml frontmatter using the `$move_` methods
 
 The process looks like this composable chain of methods:
 
-```{r}
+```{r transform}
 ep$reset()
 ep$
   unblock()$
@@ -457,5 +445,62 @@ ep$
 ep$head(31)
 ep$tail(65)
 ```
+
+
+#### Transformation tip!
+
+There are times where the lesson authors forget to tag a block quote with the
+correct type of tag to make it a callout block. In this case, the block quote
+will remain unconverted in the lesson. For example let's say there was a block
+quote at the very top of the lesson that defined prerequisites, but the author accidentally had a new line between the blockquote and the IAL tag, meaning that
+the blockquote was not processed:
+
+```{r transform-prereq}
+# add a prerequisite block after the questions and objectives
+untranslated_block <- "
+> ## Barnaby
+>
+> - a barn
+> - a bee
+>
+
+{: .prereq}
+"
+ep$add_md(untranslated_block, where = 10)
+ep$head(31)
+```
+
+Notice that the block quote is picked up only as a blockquote, but not a
+_special_ block quote. 
+
+```{r block-head}
+ep$get_blocks(".prereq")
+ep$get_blocks()
+```
+
+If we set the `ktag` attribute of this block quote to "{: .prereq}", then it
+will be recognised as a special blockquote, which can be translated.
+
+```{r block-set}
+# remove the orphan prereq tag:
+orphan_tag <- xml2::xml_find_all(ep$body, 
+  ".//md:paragraph[md:text[contains(text(),'.prereq}')]]", ns = ep$ns)
+xml2::xml_remove(orphan_tag)
+ep$head(31)
+
+# set the attribute of the block quote:
+xml2::xml_set_attr(ep$get_blocks(), "ktag", "{: .prereq}")
+ep$head(31)
+ep$get_blocks(".prereq")
+```
+
+Now we can convert the block to a fenced div with `$unblock()`
+
+```{r block-unblock}
+ep$unblock(force = TRUE)$head(31)
+```
+
+
+
 
 

@@ -2,22 +2,43 @@
 % Please edit documentation in R/lesson_fragment.R
 \name{lesson_fragment}
 \alias{lesson_fragment}
-\title{An example lesson fragment}
+\title{Example Lesson Fragments}
 \usage{
 lesson_fragment(name = "lesson-fragment")
 }
 \arguments{
-\item{name}{the name of the lesson fragment}
+\item{name}{the name of the lesson fragment. Can be one of:
+\itemize{
+\item lesson-fragment
+\item rmd-lesson
+\item sandpaper-fragment
+\item sandpaper-fragment with child
+}}
 }
 \value{
-a path to a lesson fragment that contains one \verb{_episodes} directory
-with three files: "10-lunch.md", "14-looping-data-sets.md", and
-"17-scope.md"
+a path to a lesson fragment whose contents are:
+\itemize{
+\item \code{lesson-fragment} contains one \verb{_episodes} directory with three files:
+"10-lunch.md", "14-looping-data-sets.md", and "17-scope.md"
+\item \code{rmd-fragment} contains one episode under \verb{_episodes_rmd} called
+\code{01-test.Rmd}.
+\item \code{sandpaper-fragment} contains a trimmed-down Workbench lesson that
+has its R Markdown content pre-built
+\item \code{sandpaper-fragment-with-child} contains much of the same content as
+\code{sandpaper-fragment}, but the \code{episodes/index.Rmd} file references child
+documents.
+}
 }
 \description{
-This example was taken from the python novice gapminder lesson
+Partial lessons mainly used for testing and demonstration purposes
+}
+\note{
+The lesson-fragment example was taken from the python novice gapminder
+lesson
 }
 \examples{
-
 lesson_fragment()
+lesson_fragment("rmd-lesson")
+lesson_fragment("sandpaper-fragment")
+lesson_fragment("sandpaper-fragment-with-child")
 }

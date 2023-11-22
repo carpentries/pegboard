@@ -2,10 +2,17 @@
 #'
 #' @description
 #' This is a wrapper for several [Episode] class objects.
+#' 
 #' @details
-#' Lessons are made of up several episodes within the `_episodes/` directory of
-#' a lesson. This class keeps track of several episodes and allows us to switch
-#' between RMarkdown and markdown episodes
+#' 
+#' This class contains and keeps track of relationships between [Episode]
+#' objects contained within [Carpentries
+#' Workbench](https://carpentries.github.io/workbench) and [Carpentries 
+#' styles](https://carpentries.github.io/lesson-example) lessons. 
+#'
+#' Read more about how to use this class in `vignette("intro-lesson", package =
+#' "pegboard")`
+#'
 #' @export
 Lesson <- R6::R6Class("Lesson",
   public = list(

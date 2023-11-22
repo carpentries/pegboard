@@ -36,11 +36,13 @@ documents
 }
 \details{
 When we want to build lessons, it's important to be able to find all of the
-files that are necessary to build a particular file. If there is a modification in a child file, \pkg{sandpaper} needs to know that it should flag the parent
-for rebuilding. To do this, we need two pieces of information:
+documents that are necessary to build a particular file. If there is a
+modification in a child document, \pkg{sandpaper} needs to know that it
+should flag the parent for rebuilding. To do this, we need two pieces of
+information:
 \enumerate{
-\item The earliest ancestors of a given child file
-\item The full list of descendants of a given parent file
+\item The earliest ancestors of a given child document.
+\item The full list of descendants of a given parent document.
 }
 
 Each Episode object only knows about itself, so it can only report its
@@ -49,12 +51,12 @@ immediate children, but not the children of children, or even its parent
 contains the context of all of the Episodes and can provide this information.
 
 During Lesson object initialisation, the \code{load_children()} function is
-called to process all source files for their children. This creates an
+called to process all source documents for their children. This creates an
 empty list of children that is continuously appended to during the function
-call. It then calls \code{read_children()} on each parent file, which will append
-itself as a parent to any existing children in the \code{all_children} list,
-intitialize new \link{Episode} objects from the unread child files, and then
-search those for children until there are no children left to read.
+call. It then calls \code{read_children()} on each parent document, which will
+append itself as a parent to any existing children in the \code{all_children}
+list, intitialize new \link{Episode} objects from the unread child documents, and
+then search those for children until there are no children left to read.
 }
 \examples{
 # needed for using internal functions: loading the namespace

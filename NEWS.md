@@ -1,3 +1,17 @@
+# pegboard 0.7.2.9000 (unreleased)
+
+## DOCUMENTATION
+
+* New `vignette("intro-lesson", package = "pegboard")` provides information
+  about working with `pegboard::Lesson` objects.
+* Documentation for `Episode` and `Lesson` objects have been updated to be
+  a bit more descriptive and point to the vignettes.
+
+## NEW FEATURES
+
+* `Episode$unblock()` method gains the `force` argument which will allow the
+  method to run even if it has previously been run.
+
 # pegboard 0.7.2 (2023-11-17)
 
 ## MISC

@@ -3,7 +3,7 @@
 \name{find_children}
 \alias{find_children}
 \alias{trace_children}
-\title{Detect the child files of an Episode object}
+\title{Detect the child documents of an Episode object}
 \usage{
 find_children(parent, ancestor = NULL)
 
@@ -19,7 +19,7 @@ this also can be \code{NULL}.}
 \item{lsn}{a \link{Lesson} object that contains the \code{parent} and all its children.}
 }
 \value{
-a character vector of the absolute paths to child files.
+a character vector of the absolute paths to child documents
 }
 \description{
 \itemize{
@@ -55,7 +55,7 @@ known children for further processing.
 \subsection{Tracing full lineages}{
 
 It is possible for a child document to have further children defined, but
-there is a caveat: The child file is going to be read from the context of
+there is a caveat: The child document is going to be read from the context of
 the \code{root.dir} knitr option, which in {sandpaper} is set to be \code{site/built}
 after the markdown contents and assets are copied over.
 
@@ -66,26 +66,26 @@ after the markdown contents and assets are copied over.
 }\if{html}{\out{</div>}}
 
 When an Episode is read \emph{in the context of a Lesson}, the children are
-processed with \code{\link[=load_children]{load_children()}} so that each file with children will have a
+processed with \code{\link[=load_children]{load_children()}} so that each document with children will have a
 non-zero value of the \verb{$children} element. We recurse through the \verb{$children}
-element in the \link{Lesson} object to exhaust the search for the children files.
+element in the \link{Lesson} object to exhaust the search for the child documents.
 
 The \code{trace_children()} will return the entire lineage for a given \emph{parent}
-file. Which, in the case of the examples defined above would be:
+document. Which, in the case of the examples defined above would be:
 \verb{/path/to/episodes/parent.Rmd}, \verb{/path/to/episodes/files/the-child.Rmd},
 and \verb{/path/to/episodes/files/the-grandchild.md}.
 }
 
 \subsection{NOTE}{
 
-For standard lessons, child files are written relative to the directory of
-the build  parent file. Usually, these child files will be in the \code{files}
-folder under their parent folder. Overview lessons are a little different.
-For overview lessons (in The Workbench, these are lessons which contain
-\code{overview: true} in config.yaml), the child files may point to
-\code{files/child.md}, but in reality, the child file is at the root of the
+For standard lessons, child documents are written relative to the directory
+of the build  parent document. Usually, these child documents will be in the
+\code{files} folder under their parent folder. Overview lessons are a little
+different. For overview lessons (in The Workbench, these are lessons which
+contain \code{overview: true} in config.yaml), the child documents may point to
+\code{files/child.md}, but in reality, the child document is at the root of the
 lesson \code{../files/child.md}. We correct for this by first checking that the
-child files exist and if they don't defaulting to the top of the lesson.
+child documents exist and if they don't defaulting to the top of the lesson.
 }
 }
 \examples{
@@ -99,15 +99,15 @@ pb <- asNamespace("pegboard")
 # `find_children()` --------------------------------------------------------
 ex <- lesson_fragment("sandpaper-fragment-with-child")
 
-# The introduction has a single child file
+# The introduction has a single child document
 intro <- tinkr::yarn$new(fs::path(ex, "episodes", "intro.Rmd"))
-intro$head(21) # show the child file
+intro$head(21) # show the child document 
 pb$find_children(intro)
 # this is identical to the `$children` element of an Episode object
 ep <- Episode$new(fs::path(ex, "episodes", "intro.Rmd"))
 ep$children
 
-# Loading the child file reveals another child
+# Loading the child document reveals another child
 child <- Episode$new(ep$children[[1]])
 child$children
 child$show()

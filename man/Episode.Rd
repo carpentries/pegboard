@@ -7,8 +7,12 @@
 Wrapper around an xml document to manipulate and inspect Carpentries episodes
 }
 \details{
-This class is a fancy wrapper around the results of \code{\link[tinkr:to_xml]{tinkr::to_xml()}} and
-has method specific to the Carpentries episodes.
+The Episode class is a superclass of \code{\link[tinkr:yarn]{tinkr::yarn()}}, which transforms
+(commonmark-formatted) Markdown to XML and back again. The extension that
+the Episode class provides is support for both \href{https://pandoc.org}{Pandoc}
+and \href{https://kramdown.gettalong.org/}{kramdown} flavours of Markdown.
+
+Read more about this class in \code{vignette("intro-episode", package = "pegboard")}.
 }
 \note{
 The current XLST spec for {tinkr} does not support kramdown, which
@@ -795,13 +799,16 @@ scope$isolate_blocks()$body # only one challenge block_quote
 \subsection{Method \code{unblock()}}{
 convert challenge blocks to roxygen-like code blocks
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Episode$unblock(token = "#'")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Episode$unblock(token = "#'", force = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{token}}{the token to use to indicate non-code, Defaults to "#'"}
+
+\item{\code{force}}{force the conversion even if the conversion has already
+taken place}
 }
 \if{html}{\out{</div>}}
 }
