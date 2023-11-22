@@ -22,6 +22,9 @@
     <loc>https://carpentries.github.io/pegboard/dev/articles/intro-episode.html</loc>
   </url>
   <url>
+    <loc>https://carpentries.github.io/pegboard/dev/articles/intro-lesson.html</loc>
+  </url>
+  <url>
     <loc>https://carpentries.github.io/pegboard/dev/articles/intro-xml.html</loc>
   </url>
   <url>
@@ -191,6 +194,9 @@
   </url>
   <url>
     <loc>https://carpentries.github.io/pegboard/dev/reference/trim_fence.html</loc>
+  </url>
+  <url>
+    <loc>https://carpentries.github.io/pegboard/dev/reference/use_sandpaper.html</loc>
   </url>
   <url>
     <loc>https://carpentries.github.io/pegboard/dev/reference/validate_divs.html</loc>

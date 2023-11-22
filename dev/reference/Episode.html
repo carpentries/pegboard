@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pegboard</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.7.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.7.2.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,9 +24,10 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/validation.html">Validation of Lesson Elements</a>
     <a class="dropdown-item" href="../articles/intro-xml.html">Working with XML data</a>
     <a class="dropdown-item" href="../articles/intro-episode.html">Introduction to the Episode Object</a>
+    <a class="dropdown-item" href="../articles/intro-lesson.html">Introduction to the Lesson Object</a>
+    <a class="dropdown-item" href="../articles/validation.html">Validation of Lesson Elements</a>
   </div>
 </li>
 <li class="nav-item">
@@ -60,8 +61,11 @@
 
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>This class is a fancy wrapper around the results of <code><a href="https://docs.ropensci.org/tinkr/reference/to_xml.html" class="external-link">tinkr::to_xml()</a></code> and
-has method specific to the Carpentries episodes.</p>
+    <p>The Episode class is a superclass of <code><a href="https://docs.ropensci.org/tinkr/reference/yarn.html" class="external-link">tinkr::yarn()</a></code>, which transforms
+(commonmark-formatted) Markdown to XML and back again. The extension that
+the Episode class provides is support for both <a href="https://pandoc.org" class="external-link">Pandoc</a>
+and <a href="https://kramdown.gettalong.org/" class="external-link">kramdown</a> flavours of Markdown.</p>
+<p>Read more about this class in <code><a href="../articles/intro-episode.html">vignette("intro-episode", package = "pegboard")</a></code>.</p>
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
@@ -425,7 +429,7 @@ chunk, then the <code>source</code> and <code>knitr_fig_path</code> calls will b
 
 
 </div><p></p><hr><a id="method-Episode-use_sandpaper"></a><div class="section">
-<h3 id="method-use-sandpaper-">Method <code>use_sandpaper()</code><a class="anchor" aria-label="anchor" href="#method-use-sandpaper-"></a></h3>
+<h3 id="method-use-sandpaper-">Method <code><a href="use_sandpaper.html">use_sandpaper()</a></code><a class="anchor" aria-label="anchor" href="#method-use-sandpaper-"></a></h3>
 <p>Use the sandpaper package for processing</p>
 <p>This will convert your lesson to use the <code>{sandpaper}</code> R package for
 processing the lesson instead of Jekyll (default). Doing this will have
@@ -708,13 +712,18 @@ kramdown tag. Note that this is a destructive process.</p><div class="section">
 <h3 id="method-unblock-">Method <code>unblock()</code><a class="anchor" aria-label="anchor" href="#method-unblock-"></a></h3>
 <p>convert challenge blocks to roxygen-like code blocks</p><div class="section">
 <h4 id="usage-22">Usage<a class="anchor" aria-label="anchor" href="#usage-22"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Episode</span><span class="op">$</span><span class="fu">unblock</span><span class="op">(</span>token <span class="op">=</span> <span class="st">"#'"</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Episode</span><span class="op">$</span><span class="fu">unblock</span><span class="op">(</span>token <span class="op">=</span> <span class="st">"#'"</span>, force <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
 <h4 id="arguments-10">Arguments<a class="anchor" aria-label="anchor" href="#arguments-10"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>token</code></dt>
 <dd><p>the token to use to indicate non-code, Defaults to "#'"</p></dd>
+
+
+<dt><code>force</code></dt>
+<dd><p>force the conversion even if the conversion has already
+taken place</p></dd>
 
 
 </dl><p></p></div>
@@ -1119,7 +1128,7 @@ links.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">scope</span> <span class="op">&lt;-</span> <span class="va">Episode</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="lesson_fragment.html">lesson_fragment</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"_episodes"</span>, <span class="st">"17-scope.md"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">scope</span><span class="op">$</span><span class="fu">write</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Creating temporary directory '/tmp/RtmpvfH54Q/dir18f745fd957'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Creating temporary directory '/tmp/Rtmpg86cBo/dir186c6e20ff95'</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
 <span class="r-in"><span><span class="co">## Method `Episode$handout`</span></span></span>

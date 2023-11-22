@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pegboard</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.7.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.7.2.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,9 +24,10 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/validation.html">Validation of Lesson Elements</a>
     <a class="dropdown-item" href="../articles/intro-xml.html">Working with XML data</a>
     <a class="dropdown-item" href="../articles/intro-episode.html">Introduction to the Episode Object</a>
+    <a class="dropdown-item" href="../articles/intro-lesson.html">Introduction to the Lesson Object</a>
+    <a class="dropdown-item" href="../articles/validation.html">Validation of Lesson Elements</a>
   </div>
 </li>
 <li class="active nav-item">
@@ -53,15 +54,33 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.7.1.9000" id="pegboard-0719000-unreleased">pegboard 0.7.1.9000 (unreleased)<a class="anchor" aria-label="anchor" href="#pegboard-0719000-unreleased"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.7.2.9000" id="pegboard-0729000-unreleased">pegboard 0.7.2.9000 (unreleased)<a class="anchor" aria-label="anchor" href="#pegboard-0729000-unreleased"></a></h2>
 <div class="section level3">
-<h3 id="misc-0-7-1-9000">MISC<a class="anchor" aria-label="anchor" href="#misc-0-7-1-9000"></a></h3>
+<h3 id="documentation-0-7-2-9000">DOCUMENTATION<a class="anchor" aria-label="anchor" href="#documentation-0-7-2-9000"></a></h3>
+<ul><li>New <code><a href="../articles/intro-lesson.html">vignette("intro-lesson", package = "pegboard")</a></code> provides information about working with <code><a href="../reference/Lesson.html">pegboard::Lesson</a></code> objects.</li>
+<li>Documentation for <code>Episode</code> and <code>Lesson</code> objects have been updated to be a bit more descriptive and point to the vignettes.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="new-features-0-7-2-9000">NEW FEATURES<a class="anchor" aria-label="anchor" href="#new-features-0-7-2-9000"></a></h3>
+<ul><li>
+<code>Episode$unblock()</code> method gains the <code>force</code> argument which will allow the method to run even if it has previously been run.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.7.2" id="pegboard-072-2023-11-17">pegboard 0.7.2 (2023-11-17)<a class="anchor" aria-label="anchor" href="#pegboard-072-2023-11-17"></a></h2>
+<div class="section level3">
+<h3 id="misc-0-7-2">MISC<a class="anchor" aria-label="anchor" href="#misc-0-7-2"></a></h3>
 <ul><li>Snapshot update for testthat 3.2.0</li>
 </ul></div>
 <div class="section level3">
-<h3 id="bugfix-0-7-1-9000">BUGFIX<a class="anchor" aria-label="anchor" href="#bugfix-0-7-1-9000"></a></h3>
+<h3 id="bugfix-0-7-2">BUGFIX<a class="anchor" aria-label="anchor" href="#bugfix-0-7-2"></a></h3>
 <ul><li>
 <code><a href="../reference/validate_links.html">validate_links()</a></code> now differentiates between links and images in reporting (reported: <a href="https://github.com/joelnitta" class="external-link">@joelnitta</a>, <a href="https://github.com/carpentries/pegboard/issues/143" class="external-link">#143</a>; fixed: <a href="https://github.com/zkamvar" class="external-link">@zkamvar</a>, <a href="https://github.com/carpentries/pegboard/issues/144" class="external-link">#144</a>)</li>
+</ul></div>
+<div class="section level3">
+<h3 id="documentation-0-7-2">DOCUMENTATION<a class="anchor" aria-label="anchor" href="#documentation-0-7-2"></a></h3>
+<ul><li>Two vignettes added for XML and Episode class</li>
+<li>Documentation for validation reporting added</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -375,7 +394,7 @@
 <h2 class="pkg-version" data-toc-text="0.0.0.9031" id="pegboard-0009031">pegboard 0.0.0.9031<a class="anchor" aria-label="anchor" href="#pegboard-0009031"></a></h2>
 <div class="section level3">
 <h3 id="bug-fix-0-0-0-9031">BUG FIX<a class="anchor" aria-label="anchor" href="#bug-fix-0-0-0-9031"></a></h3>
-<p>Images that had attributes added are now post-processed in <code>use_sandpaper()</code> and will retain their original attributes.</p>
+<p>Images that had attributes added are now post-processed in <code><a href="../reference/use_sandpaper.html">use_sandpaper()</a></code> and will retain their original attributes.</p>
 </div>
 </div>
     <div class="section level2">
@@ -602,7 +621,7 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.0.9003" id="pegboard-0009003">pegboard 0.0.0.9003<a class="anchor" aria-label="anchor" href="#pegboard-0009003"></a></h2>
-<p>Jekyll-specific and relative links are now converted as part of <code>use_sandpaper()</code>.</p>
+<p>Jekyll-specific and relative links are now converted as part of <code><a href="../reference/use_sandpaper.html">use_sandpaper()</a></code>.</p>
 <div class="section level3">
 <h3 id="new-function-0-0-0-9003">NEW FUNCTION<a class="anchor" aria-label="anchor" href="#new-function-0-0-0-9003"></a></h3>
 <ul><li>
@@ -620,7 +639,7 @@
 <ul><li>
 <code>use_dovetail()</code> inserts a setup chunk at the top of the file</li>
 <li>
-<code>use_sandpaper()</code> converts chunks from their liquid/kramdown syntax to the commonmark or RMD syntax</li>
+<code><a href="../reference/use_sandpaper.html">use_sandpaper()</a></code> converts chunks from their liquid/kramdown syntax to the commonmark or RMD syntax</li>
 <li>
 <code>move_*()</code> will generate a dovetail block or just a plain div block depending on whether or not <code>use_dovetail()</code> has been called.</li>
 <li>
@@ -628,7 +647,7 @@
 <li>
 <code>remove_error()</code> removes error code blocks</li>
 <li>
-<code>$output</code> and <code>$error</code> can now grab output and error chunks that were converted via <code>use_sandpaper()</code>
+<code>$output</code> and <code>$error</code> can now grab output and error chunks that were converted via <code><a href="../reference/use_sandpaper.html">use_sandpaper()</a></code>
 </li>
 </ul></div>
 </div>

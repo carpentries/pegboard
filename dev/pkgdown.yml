@@ -4,8 +4,9 @@ pkgdown_sha: ~
 articles:
   validation: validation.html
   intro-episode: intro-episode.html
+  intro-lesson: intro-lesson.html
   intro-xml: intro-xml.html
-last_built: 2023-11-17T14:48Z
+last_built: 2023-11-22T19:01Z
 urls:
   reference: https://carpentries.github.io/pegboard/reference
   article: https://carpentries.github.io/pegboard/articles
