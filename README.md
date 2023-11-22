@@ -6,15 +6,14 @@
 
 [![pegboard status
 badge](https://carpentries.r-universe.dev/badges/pegboard)](https://carpentries.r-universe.dev)
+[![R-CMD-check
+status](https://github.com/carpentries/pegboard/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/carpentries/pegboard/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/carpentries/pegboard/branch/main/graph/badge.svg)](https://codecov.io/gh/carpentries/pegboard?branch=main)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/pegboard)](https://CRAN.R-project.org/package=pegboard)
-[![Codecov test
-coverage](https://codecov.io/gh/carpentries/pegboard/branch/main/graph/badge.svg)](https://codecov.io/gh/carpentries/pegboard?branch=main)
-[![R build
-status](https://github.com/carpentries/pegboard/workflows/R-CMD-check/badge.svg)](https://github.com/carpentries/pegboard/actions)
-[![R-CMD-check](https://github.com/carpentries/pegboard/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/carpentries/pegboard/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 > \[pegboard\] is tempered hardboard which is pre-drilled with evenly
@@ -43,9 +42,11 @@ the package:
 
 - Episode: stores the xml content of a single Markdown or R Markdown
   file. This extends the the [`tinkr::yarn`
-  class](https://docs.ropensci.org/tinkr/reference/yarn.html).
+  class](https://docs.ropensci.org/tinkr/reference/yarn.html). See
+  `vignette("intro-episode", package = "pegboard")` for more info.
 - Lesson: stores all publishable markdown content as `Episodes` within a
-  lesson
+  lesson. See `vignette("intro-episode", package = "pegboard")` for more
+  info.
 
 One simple usage is getting a summary of the content of an episode.
 Let’s investigate the contents of [the “Episode Structure”
@@ -66,29 +67,29 @@ ep <- Episode$new(tmp)
 # confirm that we are using sandpaper and get a summary of the contents
 ep$confirm_sandpaper()$summary()
 #|   sections   headings   callouts challenges  solutions       code     output    warning      error     images      links 
-#|         16         33         29          7          7         35          1          0          0          4         21
+#|         17         35         28          7          6         35          1          0          0          3         21
 
 # Validation ----------------------------------------------------------
 # NOTE: a lot of invalid links because files do not exist outside of
 #       the lesson context
 lnk <- ep$validate_links()
-#| ! There were errors in 12/23 links
-#| ◌ Some linked internal files do not exist
+#| ! There were errors in 12/22 links and images
+#| ◌ Some linked internal files do not exist <https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration>
 #| 
-#| file9c2d53b7cd66.Rmd:38 [missing file]: [next episode](editing.md)
-#| file9c2d53b7cd66.Rmd:51 [missing file]: [the Introduction](introduction.md)
-#| file9c2d53b7cd66.Rmd:203 [missing file]: [The Workbench Component Guide](component-guide.md)
-#| file9c2d53b7cd66.Rmd:780 [missing file]: [the setup page](../learners/setup.md)
-#| file9c2d53b7cd66.Rmd:796 [missing file]: [another episode (e.g. introduction)](introduction.md)
-#| file9c2d53b7cd66.Rmd:797 [missing file]: [the home page](../index.md)
-#| file9c2d53b7cd66.Rmd:798 [missing file]: [the setup page](../learners/setup.md)
-#| file9c2d53b7cd66.Rmd:799 [missing file]: [the "line length" section in the style guide](../learners/style.md#line-length)
-#| file9c2d53b7cd66.Rmd:805 [missing file]: [the style guide](../learners/style.md)
-#| file9c2d53b7cd66.Rmd:825 [missing file]: [internal links](../episodes/episodes.Rmd#internal-links)
-#| file9c2d53b7cd66.Rmd:860 [missing file]: [Hex sticker for The Carpentries](fig/carpentries-hex-blue.svg)
-#| file9c2d53b7cd66.Rmd:902 [missing file]: [Example of Wrapped Alt Text (with apologies to William Carlos Williams)](fig/freezer.png)
+#| fileccef6278e384.Rmd:38 [missing file]: [next episode](editing.md)
+#| fileccef6278e384.Rmd:51 [missing file]: [the Introduction](introduction.md)
+#| fileccef6278e384.Rmd:203 [missing file]: [The Workbench Component Guide](component-guide.md)
+#| fileccef6278e384.Rmd:771 [missing file]: [the setup page](../learners/setup.md)
+#| fileccef6278e384.Rmd:787 [missing file]: [another episode (e.g. introduction)](introduction.md)
+#| fileccef6278e384.Rmd:788 [missing file]: [the home page](../index.md)
+#| fileccef6278e384.Rmd:789 [missing file]: [the setup page](../learners/setup.md)
+#| fileccef6278e384.Rmd:790 [missing file]: [the "line length" section in the style guide](../learners/style.md#line-length)
+#| fileccef6278e384.Rmd:796 [missing file]: [the style guide](../learners/style.md)
+#| fileccef6278e384.Rmd:816 [missing file]: [internal links](../episodes/episodes.Rmd#internal-links)
+#| fileccef6278e384.Rmd:851 [missing file]: [Hex sticker for The Carpentries](fig/carpentries-hex-blue.svg)
+#| fileccef6278e384.Rmd:893 [missing file]: [Example of Wrapped Alt Text (with apologies to William Carlos Williams)](fig/freezer.png)
 str(lnk, max.level = 1)
-#| 'data.frame':    25 obs. of  26 variables:
+#| 'data.frame':    24 obs. of  27 variables:
 #|  $ scheme              : chr  "" "" "" "" ...
 #|  $ server              : chr  "" "" "" "" ...
 #|  $ port                : int  NA NA NA NA NA NA NA NA NA NA ...
@@ -103,9 +104,10 @@ str(lnk, max.level = 1)
 #|  $ type                : chr  "link" "link" "link" "link" ...
 #|  $ rel                 : chr  NA NA NA NA ...
 #|  $ anchor              : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
-#|  $ sourcepos           : int  38 51 168 203 318 327 468 545 550 630 ...
-#|  $ filepath            : chr  "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" ...
-#|  $ node                :List of 25
+#|  $ sourcepos           : int  38 51 168 203 320 329 536 541 621 737 ...
+#|  $ filepath            : chr  "fileccef6278e384.Rmd" "fileccef6278e384.Rmd" "fileccef6278e384.Rmd" "fileccef6278e384.Rmd" ...
+#|  $ parents             :List of 24
+#|  $ node                :List of 24
 #|   ..- attr(*, "class")= chr "AsIs"
 #|  $ known_protocol      : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...
 #|  $ enforce_https       : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...
@@ -118,29 +120,25 @@ str(lnk, max.level = 1)
 #|  $ link_length         : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...
 hdg <- ep$validate_headings()
 str(hdg, max.level = 1)
-#| 'data.frame':    33 obs. of  10 variables:
+#| 'data.frame':    35 obs. of  10 variables:
 #|  $ heading                      : chr  "Introduction" "Buoyant Barnacle" "Creating A New Episode" "What is the .Rmd extension?" ...
 #|  $ level                        : int  2 3 2 3 2 3 3 3 2 3 ...
 #|  $ pos                          : int  29 48 63 80 117 126 143 156 196 200 ...
-#|  $ node                         :List of 33
+#|  $ node                         :List of 35
 #|   ..- attr(*, "class")= chr "AsIs"
 #|  $ first_heading_is_second_level: logi  TRUE TRUE TRUE TRUE TRUE TRUE ...
 #|  $ greater_than_first_level     : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...
 #|  $ are_sequential               : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...
 #|  $ have_names                   : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...
 #|  $ are_unique                   : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...
-#|  $ path                         : chr  "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" ...
+#|  $ path                         : chr  "fileccef6278e384.Rmd" "fileccef6278e384.Rmd" "fileccef6278e384.Rmd" "fileccef6278e384.Rmd" ...
 div <- ep$validate_divs()
-#| ! There were errors in 1/29 fenced divs
-#| ◌ The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor, spoiler
-#| 
-#| file9c2d53b7cd66.Rmd:457 [unknown div] empty-div
 str(div, max.level = 1)
-#| 'data.frame':    29 obs. of  5 variables:
-#|  $ path    : chr  "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" ...
+#| 'data.frame':    28 obs. of  5 variables:
+#|  $ path    : chr  "fileccef6278e384.Rmd" "fileccef6278e384.Rmd" "fileccef6278e384.Rmd" "fileccef6278e384.Rmd" ...
 #|  $ div     : chr  "questions" "objectives" "prereq" "callout" ...
 #|  $ pb_label: chr  "div-1-questions" "div-2-objectives" "div-3-prereq" "div-4-callout" ...
-#|  $ pos     : int  9 20 46 78 141 198 226 243 253 272 ...
+#|  $ pos     : int  9 20 46 78 141 198 226 245 255 274 ...
 #|  $ is_known: logi  TRUE TRUE TRUE TRUE TRUE TRUE ...
 ```
 
@@ -165,7 +163,7 @@ a lesson handy. If you don’t have one, you can use the `get_lesson()`
 function, which will use [{gert}](https://r-lib.github.io/gert/) to
 clone a lesson repository to your computer.
 
-(NOTE: this file was last run on 2023-09-06 08:45:54.227933)
+(NOTE: this file was last run on 2023-11-22 11:15:17.770234)
 
 ``` r
 library("pegboard")
@@ -181,18 +179,20 @@ rng
 #|     blocks: function (type = NULL, level = 0, path = FALSE) 
 #|     built: NULL
 #|     challenges: function (path = FALSE, graph = FALSE, recurse = TRUE) 
+#|     children: NULL
 #|     clone: function (deep = FALSE) 
 #|     episodes: list
 #|     extra: list
 #|     files: active binding
 #|     get: function (element = NULL, collection = "episodes") 
 #|     handout: function (path = NULL, solution = FALSE) 
+#|     has_children: active binding
 #|     initialize: function (path = ".", rmd = FALSE, jekyll = TRUE, ...) 
 #|     isolate_blocks: function () 
 #|     load_built: function () 
 #|     n_problems: active binding
 #|     overview: FALSE
-#|     path: /tmp/RtmpBNM7Jl/PBREADME9c2d5fd860a1/swcarpentry--r-novi ...
+#|     path: /tmp/Rtmp40TO0e/PBREADMEccef2b02e45e/swcarpentry--r-novi ...
 #|     reset: function () 
 #|     rmd: FALSE
 #|     sandpaper: TRUE
@@ -200,6 +200,7 @@ rng
 #|     solutions: function (path = FALSE) 
 #|     summary: function (collection = "episodes") 
 #|     thin: function (verbose = TRUE) 
+#|     trace_lineage: function (episode_path) 
 #|     validate_divs: function () 
 #|     validate_headings: function (verbose = TRUE) 
 #|     validate_links: function () 
@@ -211,13 +212,13 @@ rng$summary()
 #| # A tibble: 16 × 12
 #|    page                         sections headings callouts challenges solutions  code output warning error images links
 #|    <chr>                           <int>    <int>    <int>      <int>     <int> <int>  <int>   <int> <int>  <int> <int>
-#|  1 01-rstudio-intro.Rmd               28       28       19          5         5    47      1       0     0      2     6
+#|  1 01-rstudio-intro.Rmd               28       28       19          5         5    47      1       0     0      2     7
 #|  2 02-project-intro.Rmd               12       19       12          5         1     4      0       0     0      1     3
 #|  3 03-seeking-help.Rmd                15       15       11          3         3    12      0       0     0      0     7
 #|  4 04-data-structures-part1.Rmd        2       50       31          9        15    77      0       0     0      0     1
-#|  5 05-data-structures-part2.Rmd       15       15       12          4         4    33      0       0     0      0     3
+#|  5 05-data-structures-part2.Rmd       15       15       12          4         4    32      0       0     0      0     3
 #|  6 06-data-subsetting.Rmd             33       34       26          8         8    76      0       0     0      2     0
-#|  7 07-control-flow.Rmd                15       15       17          5         5    36      0       0     0      0     0
+#|  7 07-control-flow.Rmd                15       15       17          5         5    36      0       0     0      0     2
 #|  8 08-plot-ggplot2.Rmd                20       20       18          6         6    23      0       0     0      0    12
 #|  9 09-vectorization.Rmd               11       11       14          4         4    24      0       0     0      0     1
 #| 10 10-functions.Rmd                   20       21       19          5         5    28      0       0     0      0    12
@@ -331,7 +332,7 @@ ep1$body
 #| <document sourcepos="1:1-712:0" xmlns="http://commonmark.org/xml/1.0">
 #|  [1] <dtag xmlns="http://carpentries.org/pegboard/" label="div-1-objectives"/>
 #|  [2] <paragraph sourcepos="2:1-2:50">\n  <text sourcepos="2:1-2:50" xml:space="preserve">::::::::::::::::::::::::::::::::::::::: objectives</text>\n</paragraph>
-#|  [3] <list sourcepos="4:1-12:0" type="bullet" tight="true">\n  <item sourcepos="4:1-4:62">\n    <paragraph sourcepos="4:3-4:62">\n      <text sourcepos="4:3-4:62" xml:space="preserve">Describe the purpose and use of each pane in the RStudio IDE</text>\n    </paragraph>\n  </item>\n  <item sourcep ...
+#|  [3] <list sourcepos="4:1-12:0" type="bullet" tight="true">\n  <item sourcepos="4:1-4:55">\n    <paragraph sourcepos="4:3-4:55">\n      <text sourcepos="4:3-4:54" xml:space="preserve">Describe the purpose and use of each pane in RStudio</text>\n    </paragraph>\n  </item>\n  <item sourcepos="5:1- ...
 #|  [4] <paragraph sourcepos="13:1-13:50">\n  <text sourcepos="13:1-13:50" xml:space="preserve">::::::::::::::::::::::::::::::::::::::::::::::::::</text>\n</paragraph>
 #|  [5] <dtag xmlns="http://carpentries.org/pegboard/" label="div-1-objectives"/>
 #|  [6] <dtag xmlns="http://carpentries.org/pegboard/" label="div-2-questions"/>
@@ -340,15 +341,15 @@ ep1$body
 #|  [9] <paragraph sourcepos="22:1-22:50">\n  <text sourcepos="22:1-22:50" xml:space="preserve">::::::::::::::::::::::::::::::::::::::::::::::::::</text>\n</paragraph>
 #| [10] <dtag xmlns="http://carpentries.org/pegboard/" label="div-2-questions"/>
 #| [11] <code_block sourcepos="24:1-25:3" xml:space="preserve" language="r" name="" include="FALSE"/>
-#| [12] <heading sourcepos="27:1-27:13" level="2">\n  <text sourcepos="27:4-27:13" xml:space="preserve">Motivation</text>\n</heading>
-#| [13] <paragraph sourcepos="29:1-37:45">\n  <text sourcepos="29:1-29:81" xml:space="preserve">Science is a multi-step process: once you've designed an experiment and collected</text>\n  <softbreak/>\n  <text sourcepos="30:1-30:85" xml:space="preserve">data, the real fun begins! This lesson will te ...
-#| [14] <heading sourcepos="39:1-39:31" level="2">\n  <text sourcepos="39:4-39:31" xml:space="preserve">Before Starting The Workshop</text>\n</heading>
-#| [15] <paragraph sourcepos="41:1-41:204">\n  <text sourcepos="41:1-41:204" xml:space="preserve">Please ensure you have the latest version of R and RStudio installed on your machine. This is important, as some packages used in the workshop may not install correctly (or at all) if R is not up to dat ...
-#| [16] <list sourcepos="43:1-45:0" type="bullet" tight="true">\n  <item sourcepos="43:1-43:81">\n    <paragraph sourcepos="43:3-43:81">\n      <link sourcepos="43:3-43:81" destination="https://www.r-project.org/" title="">\n        <text sourcepos="43:4-43:52" xml:space="preserve">Download and inst ...
-#| [17] <heading sourcepos="46:1-46:26" level="2">\n  <text sourcepos="46:4-46:26" xml:space="preserve">Introduction to RStudio</text>\n</heading>
-#| [18] <paragraph sourcepos="48:1-48:60">\n  <text sourcepos="48:1-48:60" xml:space="preserve">Welcome to the R portion of the Software Carpentry workshop.</text>\n</paragraph>
-#| [19] <paragraph sourcepos="50:1-52:52">\n  <text sourcepos="50:1-50:76" xml:space="preserve">Throughout this lesson, we're going to teach you some of the fundamentals of</text>\n  <softbreak/>\n  <text sourcepos="51:1-51:69" xml:space="preserve">the R language as well as some best practices for o ...
-#| [20] <paragraph sourcepos="54:1-57:31">\n  <text sourcepos="54:1-54:68" xml:space="preserve">We'll be using RStudio: a free, open-source R Integrated Development</text>\n  <softbreak/>\n  <text sourcepos="55:1-55:83" xml:space="preserve">Environment (IDE). It provides a built-in editor, works on  ...
+#| [12] <heading sourcepos="27:1-27:31" level="2">\n  <text sourcepos="27:4-27:31" xml:space="preserve">Before Starting The Workshop</text>\n</heading>
+#| [13] <paragraph sourcepos="29:1-29:204">\n  <text sourcepos="29:1-29:204" xml:space="preserve">Please ensure you have the latest version of R and RStudio installed on your machine. This is important, as some packages used in the workshop may not install correctly (or at all) if R is not up to dat ...
+#| [14] <list sourcepos="31:1-34:0" type="bullet" tight="true">\n  <item sourcepos="31:1-31:81">\n    <paragraph sourcepos="31:3-31:81">\n      <link sourcepos="31:3-31:81" destination="https://www.r-project.org/" title="">\n        <text sourcepos="31:4-31:52" xml:space="preserve">Download and inst ...
+#| [15] <heading sourcepos="35:1-35:26" level="2">\n  <text sourcepos="35:4-35:26" xml:space="preserve">Why use R and R studio?</text>\n</heading>
+#| [16] <paragraph sourcepos="37:1-37:60">\n  <text sourcepos="37:1-37:60" xml:space="preserve">Welcome to the R portion of the Software Carpentry workshop!</text>\n</paragraph>
+#| [17] <paragraph sourcepos="39:1-40:240">\n  <text sourcepos="39:1-39:81" xml:space="preserve">Science is a multi-step process: once you've designed an experiment and collected</text>\n  <softbreak/>\n  <text sourcepos="40:1-40:240" xml:space="preserve">data, the real fun begins with analysis! Thr ...
+#| [18] <paragraph sourcepos="42:1-42:370">\n  <text sourcepos="42:1-42:263" xml:space="preserve">Although we could use a spreadsheet in Microsoft Excel or Google sheets to analyze our data, these tools are limited in their flexibility and accessibility. Critically, they also are difficult to share  ...
+#| [19] <paragraph sourcepos="44:1-44:264">\n  <text sourcepos="44:1-44:263" xml:space="preserve">Therefore, this lesson will teach you how to begin exploring your data using R and RStudio. The R program is available for Windows, Mac, and Linux operating systems, and is a freely-available where you  ...
+#| [20] <paragraph sourcepos="46:1-49:31">\n  <text sourcepos="46:1-46:152" xml:space="preserve">However, to make using R easier, we will use the program RStudio, which we also downloaded above. RStudio is a free, open-source, Integrated Development</text>\n  <softbreak/>\n  <text sourcepos="47:1-47 ...
 #| ...
 ep1$head(20) # show the first 20 lines of the file
 #| ---
@@ -360,8 +361,8 @@ ep1$head(20) # show the first 20 lines of the file
 #| 
 #| ::::::::::::::::::::::::::::::::::::::: objectives
 #| 
-#| - Describe the purpose and use of each pane in the RStudio IDE
-#| - Locate buttons and options in the RStudio IDE
+#| - Describe the purpose and use of each pane in RStudio
+#| - Locate buttons and options in RStudio
 #| - Define a variable
 #| - Assign data to a variable
 #| - Manage a workspace in an interactive R session
@@ -396,8 +397,8 @@ ep1$head(20) # the new content has been added to the top
 #| 
 #| ::::::::::::::::::::::::::::::::::::::: objectives
 #| 
-#| - Describe the purpose and use of each pane in the RStudio IDE
-#| - Locate buttons and options in the RStudio IDE
+#| - Describe the purpose and use of each pane in RStudio
+#| - Locate buttons and options in RStudio
 #| - Define a variable
 #| - Assign data to a variable
 #| - Manage a workspace in an interactive R session
@@ -422,8 +423,8 @@ ep1$head(20)
 #| 
 #| ::::::::::::::::::::::::::::::::::::::: objectives
 #| 
-#| - Describe the purpose and use of each pane in the RStudio IDE
-#| - Locate buttons and options in the RStudio IDE
+#| - Describe the purpose and use of each pane in RStudio
+#| - Locate buttons and options in RStudio
 #| - Define a variable
 #| - Assign data to a variable
 #| - Manage a workspace in an interactive R session
@@ -437,6 +438,6 @@ readLines(ep1$path, 20)
 #|  [1] "---"                                                                    "title: Introduction to R and RStudio"                                   "teaching: 45"                                                           "exercises: 10"                                                         
 #|  [5] "source: Rmd"                                                            "---"                                                                    ""                                                                       "## NEW CONTENT"                                                        
 #|  [9] ""                                                                       "Hello! This is **new markdown content** generated via the"              "[{pegboard}](https://carpentries.github.io/pegboard) package that will" "appear above the objectives block!"                                    
-#| [13] ""                                                                       "::::::::::::::::::::::::::::::::::::::: objectives"                     ""                                                                       "- Describe the purpose and use of each pane in the RStudio IDE"        
-#| [17] "- Locate buttons and options in the RStudio IDE"                        "- Define a variable"                                                    "- Assign data to a variable"                                            "- Manage a workspace in an interactive R session"
+#| [13] ""                                                                       "::::::::::::::::::::::::::::::::::::::: objectives"                     ""                                                                       "- Describe the purpose and use of each pane in RStudio"                
+#| [17] "- Locate buttons and options in RStudio"                                "- Define a variable"                                                    "- Assign data to a variable"                                            "- Manage a workspace in an interactive R session"
 ```
