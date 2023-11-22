@@ -799,13 +799,16 @@ scope$isolate_blocks()$body # only one challenge block_quote
 \subsection{Method \code{unblock()}}{
 convert challenge blocks to roxygen-like code blocks
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Episode$unblock(token = "#'")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Episode$unblock(token = "#'", force = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{token}}{the token to use to indicate non-code, Defaults to "#'"}
+
+\item{\code{force}}{force the conversion even if the conversion has already
+taken place}
 }
 \if{html}{\out{</div>}}
 }

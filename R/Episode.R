@@ -488,6 +488,8 @@ Episode <- R6::R6Class("Episode",
     },
     #' @description convert challenge blocks to roxygen-like code blocks
     #' @param token the token to use to indicate non-code, Defaults to "#'"
+    #' @param force force the conversion even if the conversion has already
+    #'   taken place
     #' @return the Episode object, invisibly
     #' @examples
     #' loop <- Episode$new(file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md"))
@@ -496,8 +498,8 @@ Episode <- R6::R6Class("Episode",
     #' loop$unblock()
     #' loop$get_blocks() # no blocks
     #' loop$code # now there are two blocks with challenge tags
-    unblock = function(token = "#'") {
-      if (private$mutations['unblock']) {
+    unblock = function(token = "#'", force = FALSE) {
+      if (!force && private$mutations['unblock']) {
         return(invisible(self))
       }
       if (private$mutations['use_dovetail']) {
