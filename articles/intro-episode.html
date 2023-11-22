@@ -37,7 +37,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pegboard</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,9 +52,10 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/validation.html">Validation of Lesson Elements</a>
     <a class="dropdown-item" href="../articles/intro-xml.html">Working with XML data</a>
     <a class="dropdown-item" href="../articles/intro-episode.html">Introduction to the Episode Object</a>
+    <a class="dropdown-item" href="../articles/intro-lesson.html">Introduction to the Lesson Object</a>
+    <a class="dropdown-item" href="../articles/validation.html">Validation of Lesson Elements</a>
   </div>
 </li>
 <li class="nav-item">
@@ -98,18 +99,20 @@
 </h2>
 <p>The {pegboard} package facilitates the analysis and manipulation of
 Markdown and R Markdown files by translating them to XML and back again.
-This extends the {tinkr} package by providing additional methods that
-are specific for Carpentries-style lessons. There are two
-<code>R6</code> classes defined in {pegboard}:</p>
+This extends the {tinkr} package (see
+<code><a href="https://docs.ropensci.org/tinkr/articles/tinkr.html" class="external-link">vignette("tinkr", package = "tinkr")</a></code>) by providing
+additional methods that are specific for Carpentries-style lessons.
+There are two <code>R6</code> classes defined in {pegboard}:</p>
 <ul>
 <li>
-<code>Episode</code> objects that contain the XML data, YAML
-metadata and extra fields that define the child and parent files for a
-particular episode</li>
+<code><a href="../reference/Episode.html">pegboard::Episode</a></code> objects that contain the XML data,
+YAML metadata and extra fields that define the child and parent files
+for a particular episode. These inherit from the
+<code><a href="https://docs.ropensci.org/tinkr/reference/yarn.html" class="external-link">tinkr::yarn</a></code> R6 class.</li>
 <li>
-<code>Lesson</code> objects that contain lists of
+<code><a href="../reference/Lesson.html">pegboard::Lesson</a></code> objects that contain lists of
 <code>Episode</code> objects categorised as “episodes”, “extra”, or
-“children”</li>
+“children”.</li>
 </ul>
 <p>This vignette will be discussing the structure of Episode objects,
 how to query the contents with the {xml2} package, and how to use the
@@ -135,20 +138,20 @@ and the {fs} package to help with constructing file paths.</p>
 <p>This is what our lesson fragment looks like. It is a fragment because
 it’s main purpose is to be used for examples and tests, but it contains
 the basic structure of a lesson that we want.</p>
-<pre><code><span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">/home/runner/work/_temp/Library/pegboard/sandpaper-fragment</span></span></span>
-<span><span class="co">#&gt; ├── config.yaml</span></span>
-<span><span class="co">#&gt; ├── <span style="color: #0000BB; font-weight: bold;">episodes</span></span></span>
-<span><span class="co">#&gt; │   ├── <span style="color: #00BB00;">intro.Rmd</span></span></span>
-<span><span class="co">#&gt; │   └── nope.md</span></span>
-<span><span class="co">#&gt; ├── index.md</span></span>
-<span><span class="co">#&gt; ├── <span style="color: #0000BB; font-weight: bold;">instructors</span></span></span>
-<span><span class="co">#&gt; │   └── a.md</span></span>
-<span><span class="co">#&gt; ├── <span style="color: #0000BB; font-weight: bold;">learners</span></span></span>
-<span><span class="co">#&gt; │   └── setup.md</span></span>
-<span><span class="co">#&gt; ├── <span style="color: #0000BB; font-weight: bold;">profiles</span></span></span>
-<span><span class="co">#&gt; │   └── b.md</span></span>
-<span><span class="co">#&gt; └── <span style="color: #0000BB; font-weight: bold;">site</span></span></span>
-<span><span class="co">#&gt;     └── README.md</span></span></code></pre>
+<pre><code><span><span class="co">## <span style="color: #0000BB; font-weight: bold;">/home/runner/work/_temp/Library/pegboard/sandpaper-fragment</span></span></span>
+<span><span class="co">## ├── config.yaml</span></span>
+<span><span class="co">## ├── <span style="color: #0000BB; font-weight: bold;">episodes</span></span></span>
+<span><span class="co">## │   ├── <span style="color: #00BB00;">intro.Rmd</span></span></span>
+<span><span class="co">## │   └── nope.md</span></span>
+<span><span class="co">## ├── index.md</span></span>
+<span><span class="co">## ├── <span style="color: #0000BB; font-weight: bold;">instructors</span></span></span>
+<span><span class="co">## │   └── a.md</span></span>
+<span><span class="co">## ├── <span style="color: #0000BB; font-weight: bold;">learners</span></span></span>
+<span><span class="co">## │   └── setup.md</span></span>
+<span><span class="co">## ├── <span style="color: #0000BB; font-weight: bold;">profiles</span></span></span>
+<span><span class="co">## │   └── b.md</span></span>
+<span><span class="co">## └── <span style="color: #0000BB; font-weight: bold;">site</span></span></span>
+<span><span class="co">##     └── README.md</span></span></code></pre>
 <p>We can retrieve it with the <code><a href="../reference/lesson_fragment.html">lesson_fragment()</a></code> function,
 which loads example data from pegboard. Here we will take that lesson
 fragment and read in the first episode with the initialization method,
@@ -169,222 +172,222 @@ methods, fields and active bindings (functions that act like fields)
 printed:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">intro</span></span>
-<span><span class="co">#&gt; &lt;Episode&gt;</span></span>
-<span><span class="co">#&gt;   Inherits from: &lt;yarn&gt;</span></span>
-<span><span class="co">#&gt;   Public:</span></span>
-<span><span class="co">#&gt;     add_md: function (md, where = 0L) </span></span>
-<span><span class="co">#&gt;     body: xml_document, xml_node</span></span>
-<span><span class="co">#&gt;     build_parents: </span></span>
-<span><span class="co">#&gt;     challenges: active binding</span></span>
-<span><span class="co">#&gt;     children: </span></span>
-<span><span class="co">#&gt;     clone: function (deep = FALSE) </span></span>
-<span><span class="co">#&gt;     code: active binding</span></span>
-<span><span class="co">#&gt;     confirm_sandpaper: function () </span></span>
-<span><span class="co">#&gt;     error: active binding</span></span>
-<span><span class="co">#&gt;     get_blocks: function (type = NULL, level = 1L) </span></span>
-<span><span class="co">#&gt;     get_challenge_graph: function (recurse = TRUE) </span></span>
-<span><span class="co">#&gt;     get_divs: function (type = NULL, include = FALSE) </span></span>
-<span><span class="co">#&gt;     get_images: function (process = FALSE) </span></span>
-<span><span class="co">#&gt;     get_yaml: function () </span></span>
-<span><span class="co">#&gt;     handout: function (path = NULL, solutions = FALSE) </span></span>
-<span><span class="co">#&gt;     has_children: active binding</span></span>
-<span><span class="co">#&gt;     has_parents: active binding</span></span>
-<span><span class="co">#&gt;     head: function (n = 6L) </span></span>
-<span><span class="co">#&gt;     headings: active binding</span></span>
-<span><span class="co">#&gt;     images: active binding</span></span>
-<span><span class="co">#&gt;     initialize: function (path = NULL, process_tags = TRUE, fix_links = TRUE, </span></span>
-<span><span class="co">#&gt;     isolate_blocks: function () </span></span>
-<span><span class="co">#&gt;     keypoints: active binding</span></span>
-<span><span class="co">#&gt;     label_divs: function () </span></span>
-<span><span class="co">#&gt;     lesson: active binding</span></span>
-<span><span class="co">#&gt;     links: active binding</span></span>
-<span><span class="co">#&gt;     move_keypoints: function () </span></span>
-<span><span class="co">#&gt;     move_objectives: function () </span></span>
-<span><span class="co">#&gt;     move_questions: function () </span></span>
-<span><span class="co">#&gt;     name: active binding</span></span>
-<span><span class="co">#&gt;     ns: http://commonmark.org/xml/1.0</span></span>
-<span><span class="co">#&gt;     objectives: active binding</span></span>
-<span><span class="co">#&gt;     output: active binding</span></span>
-<span><span class="co">#&gt;     parents: </span></span>
-<span><span class="co">#&gt;     path: /home/runner/work/_temp/Library/pegboard/sandpaper-fragm ...</span></span>
-<span><span class="co">#&gt;     protect_curly: function () </span></span>
-<span><span class="co">#&gt;     protect_math: function () </span></span>
-<span><span class="co">#&gt;     protect_unescaped: function () </span></span>
-<span><span class="co">#&gt;     questions: active binding</span></span>
-<span><span class="co">#&gt;     remove_error: function () </span></span>
-<span><span class="co">#&gt;     remove_output: function () </span></span>
-<span><span class="co">#&gt;     reset: function () </span></span>
-<span><span class="co">#&gt;     show: function () </span></span>
-<span><span class="co">#&gt;     show_problems: active binding</span></span>
-<span><span class="co">#&gt;     solutions: active binding</span></span>
-<span><span class="co">#&gt;     summary: function () </span></span>
-<span><span class="co">#&gt;     tags: active binding</span></span>
-<span><span class="co">#&gt;     tail: function (n = 6L) </span></span>
-<span><span class="co">#&gt;     unblock: function (token = "#'") </span></span>
-<span><span class="co">#&gt;     use_dovetail: function () </span></span>
-<span><span class="co">#&gt;     use_sandpaper: function (rmd = FALSE, yml = list()) </span></span>
-<span><span class="co">#&gt;     validate_divs: function (warn = TRUE) </span></span>
-<span><span class="co">#&gt;     validate_headings: function (verbose = TRUE, warn = TRUE) </span></span>
-<span><span class="co">#&gt;     validate_links: function (warn = TRUE) </span></span>
-<span><span class="co">#&gt;     warning: active binding</span></span>
-<span><span class="co">#&gt;     write: function (path = NULL, format = "md", edit = FALSE) </span></span>
-<span><span class="co">#&gt;     yaml: --- title: "Using RMarkdown" teaching: 10 exercises: 2 ---</span></span>
-<span><span class="co">#&gt;   Private:</span></span>
-<span><span class="co">#&gt;     clear_yaml_item: function (what) </span></span>
-<span><span class="co">#&gt;     deep_clone: function (name, value) </span></span>
-<span><span class="co">#&gt;     encoding: UTF-8</span></span>
-<span><span class="co">#&gt;     md_lines: function (path = NULL, stylesheet = NULL) </span></span>
-<span><span class="co">#&gt;     mutations: TRUE FALSE TRUE TRUE FALSE TRUE TRUE TRUE FALSE FALSE</span></span>
-<span><span class="co">#&gt;     problems: list</span></span>
-<span><span class="co">#&gt;     record_problem: function (x) </span></span>
-<span><span class="co">#&gt;     sourcepos: TRUE</span></span></code></pre></div>
+<span><span class="co">## &lt;Episode&gt;</span></span>
+<span><span class="co">##   Inherits from: &lt;yarn&gt;</span></span>
+<span><span class="co">##   Public:</span></span>
+<span><span class="co">##     add_md: function (md, where = 0L) </span></span>
+<span><span class="co">##     body: xml_document, xml_node</span></span>
+<span><span class="co">##     build_parents: </span></span>
+<span><span class="co">##     challenges: active binding</span></span>
+<span><span class="co">##     children: </span></span>
+<span><span class="co">##     clone: function (deep = FALSE) </span></span>
+<span><span class="co">##     code: active binding</span></span>
+<span><span class="co">##     confirm_sandpaper: function () </span></span>
+<span><span class="co">##     error: active binding</span></span>
+<span><span class="co">##     get_blocks: function (type = NULL, level = 1L) </span></span>
+<span><span class="co">##     get_challenge_graph: function (recurse = TRUE) </span></span>
+<span><span class="co">##     get_divs: function (type = NULL, include = FALSE) </span></span>
+<span><span class="co">##     get_images: function (process = FALSE) </span></span>
+<span><span class="co">##     get_yaml: function () </span></span>
+<span><span class="co">##     handout: function (path = NULL, solutions = FALSE) </span></span>
+<span><span class="co">##     has_children: active binding</span></span>
+<span><span class="co">##     has_parents: active binding</span></span>
+<span><span class="co">##     head: function (n = 6L) </span></span>
+<span><span class="co">##     headings: active binding</span></span>
+<span><span class="co">##     images: active binding</span></span>
+<span><span class="co">##     initialize: function (path = NULL, process_tags = TRUE, fix_links = TRUE, </span></span>
+<span><span class="co">##     isolate_blocks: function () </span></span>
+<span><span class="co">##     keypoints: active binding</span></span>
+<span><span class="co">##     label_divs: function () </span></span>
+<span><span class="co">##     lesson: active binding</span></span>
+<span><span class="co">##     links: active binding</span></span>
+<span><span class="co">##     move_keypoints: function () </span></span>
+<span><span class="co">##     move_objectives: function () </span></span>
+<span><span class="co">##     move_questions: function () </span></span>
+<span><span class="co">##     name: active binding</span></span>
+<span><span class="co">##     ns: http://commonmark.org/xml/1.0</span></span>
+<span><span class="co">##     objectives: active binding</span></span>
+<span><span class="co">##     output: active binding</span></span>
+<span><span class="co">##     parents: </span></span>
+<span><span class="co">##     path: /home/runner/work/_temp/Library/pegboard/sandpaper-fragm ...</span></span>
+<span><span class="co">##     protect_curly: function () </span></span>
+<span><span class="co">##     protect_math: function () </span></span>
+<span><span class="co">##     protect_unescaped: function () </span></span>
+<span><span class="co">##     questions: active binding</span></span>
+<span><span class="co">##     remove_error: function () </span></span>
+<span><span class="co">##     remove_output: function () </span></span>
+<span><span class="co">##     reset: function () </span></span>
+<span><span class="co">##     show: function () </span></span>
+<span><span class="co">##     show_problems: active binding</span></span>
+<span><span class="co">##     solutions: active binding</span></span>
+<span><span class="co">##     summary: function () </span></span>
+<span><span class="co">##     tags: active binding</span></span>
+<span><span class="co">##     tail: function (n = 6L) </span></span>
+<span><span class="co">##     unblock: function (token = "#'", force = FALSE) </span></span>
+<span><span class="co">##     use_dovetail: function () </span></span>
+<span><span class="co">##     use_sandpaper: function (rmd = FALSE, yml = list()) </span></span>
+<span><span class="co">##     validate_divs: function (warn = TRUE) </span></span>
+<span><span class="co">##     validate_headings: function (verbose = TRUE, warn = TRUE) </span></span>
+<span><span class="co">##     validate_links: function (warn = TRUE) </span></span>
+<span><span class="co">##     warning: active binding</span></span>
+<span><span class="co">##     write: function (path = NULL, format = "md", edit = FALSE) </span></span>
+<span><span class="co">##     yaml: --- title: "Using RMarkdown" teaching: 10 exercises: 2 ---</span></span>
+<span><span class="co">##   Private:</span></span>
+<span><span class="co">##     clear_yaml_item: function (what) </span></span>
+<span><span class="co">##     deep_clone: function (name, value) </span></span>
+<span><span class="co">##     encoding: UTF-8</span></span>
+<span><span class="co">##     md_lines: function (path = NULL, stylesheet = NULL) </span></span>
+<span><span class="co">##     mutations: TRUE FALSE TRUE TRUE FALSE TRUE TRUE TRUE FALSE FALSE</span></span>
+<span><span class="co">##     problems: list</span></span>
+<span><span class="co">##     record_problem: function (x) </span></span>
+<span><span class="co">##     sourcepos: TRUE</span></span></code></pre></div>
 <p>The actual XML content is in the <code>$body</code> field. This
 contains all the data from the markdown document, but in XML form.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">intro</span><span class="op">$</span><span class="va">body</span></span>
-<span><span class="co">#&gt; {xml_document}</span></span>
-<span><span class="co">#&gt; &lt;document sourcepos="1:1-91:48" xmlns="http://commonmark.org/xml/1.0"&gt;</span></span>
-<span><span class="co">#&gt;  [1] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-1-questions"/&gt;</span></span>
-<span><span class="co">#&gt;  [2] &lt;paragraph sourcepos="2:1-2:49"&gt;\n  &lt;text sourcepos="2:1-2:48" xml:space ...</span></span>
-<span><span class="co">#&gt;  [3] &lt;list sourcepos="4:1-5:0" type="bullet" tight="true"&gt;\n  &lt;item sourcepos ...</span></span>
-<span><span class="co">#&gt;  [4] &lt;paragraph sourcepos="6:1-6:48"&gt;\n  &lt;text sourcepos="6:1-6:48" xml:space ...</span></span>
-<span><span class="co">#&gt;  [5] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-1-questions"/&gt;</span></span>
-<span><span class="co">#&gt;  [6] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-2-objectives"/&gt;</span></span>
-<span><span class="co">#&gt;  [7] &lt;paragraph sourcepos="8:1-8:48"&gt;\n  &lt;text sourcepos="8:1-8:48" xml:space ...</span></span>
-<span><span class="co">#&gt;  [8] &lt;list sourcepos="10:1-12:0" type="bullet" tight="true"&gt;\n  &lt;item sourcep ...</span></span>
-<span><span class="co">#&gt;  [9] &lt;paragraph sourcepos="13:1-13:48"&gt;\n  &lt;text sourcepos="13:1-13:48" xml:s ...</span></span>
-<span><span class="co">#&gt; [10] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-2-objectives"/&gt;</span></span>
-<span><span class="co">#&gt; [11] &lt;heading sourcepos="15:1-15:15" level="2"&gt;\n  &lt;text sourcepos="15:4-15:1 ...</span></span>
-<span><span class="co">#&gt; [12] &lt;paragraph sourcepos="17:1-20:78"&gt;\n  &lt;text sourcepos="17:1-17:79" xml:s ...</span></span>
-<span><span class="co">#&gt; [13] &lt;paragraph sourcepos="22:1-23:28"&gt;\n  &lt;text sourcepos="22:1-22:79" xml:s ...</span></span>
-<span><span class="co">#&gt; [14] &lt;list sourcepos="25:2-31:0" type="ordered" start="1" delim="period" tigh ...</span></span>
-<span><span class="co">#&gt; [15] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-3-challenge"/&gt;</span></span>
-<span><span class="co">#&gt; [16] &lt;paragraph sourcepos="32:1-32:48"&gt;\n  &lt;text sourcepos="32:1-32:47" xml:s ...</span></span>
-<span><span class="co">#&gt; [17] &lt;heading sourcepos="34:1-34:30" level="2"&gt;\n  &lt;text sourcepos="34:4-34:3 ...</span></span>
-<span><span class="co">#&gt; [18] &lt;paragraph sourcepos="36:1-36:35"&gt;\n  &lt;text sourcepos="36:1-36:35" xml:s ...</span></span>
-<span><span class="co">#&gt; [19] &lt;code_block sourcepos="38:1-40:3" xml:space="preserve" language="r" name ...</span></span>
-<span><span class="co">#&gt; [20] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-4-solution"/&gt;</span></span>
-<span><span class="co">#&gt; ...</span></span></code></pre></div>
+<span><span class="co">## {xml_document}</span></span>
+<span><span class="co">## &lt;document sourcepos="1:1-91:48" xmlns="http://commonmark.org/xml/1.0"&gt;</span></span>
+<span><span class="co">##  [1] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-1-questions"/&gt;</span></span>
+<span><span class="co">##  [2] &lt;paragraph sourcepos="2:1-2:49"&gt;\n  &lt;text sourcepos="2:1-2:48" xml:space ...</span></span>
+<span><span class="co">##  [3] &lt;list sourcepos="4:1-5:0" type="bullet" tight="true"&gt;\n  &lt;item sourcepos ...</span></span>
+<span><span class="co">##  [4] &lt;paragraph sourcepos="6:1-6:48"&gt;\n  &lt;text sourcepos="6:1-6:48" xml:space ...</span></span>
+<span><span class="co">##  [5] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-1-questions"/&gt;</span></span>
+<span><span class="co">##  [6] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-2-objectives"/&gt;</span></span>
+<span><span class="co">##  [7] &lt;paragraph sourcepos="8:1-8:48"&gt;\n  &lt;text sourcepos="8:1-8:48" xml:space ...</span></span>
+<span><span class="co">##  [8] &lt;list sourcepos="10:1-12:0" type="bullet" tight="true"&gt;\n  &lt;item sourcep ...</span></span>
+<span><span class="co">##  [9] &lt;paragraph sourcepos="13:1-13:48"&gt;\n  &lt;text sourcepos="13:1-13:48" xml:s ...</span></span>
+<span><span class="co">## [10] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-2-objectives"/&gt;</span></span>
+<span><span class="co">## [11] &lt;heading sourcepos="15:1-15:15" level="2"&gt;\n  &lt;text sourcepos="15:4-15:1 ...</span></span>
+<span><span class="co">## [12] &lt;paragraph sourcepos="17:1-20:78"&gt;\n  &lt;text sourcepos="17:1-17:79" xml:s ...</span></span>
+<span><span class="co">## [13] &lt;paragraph sourcepos="22:1-23:28"&gt;\n  &lt;text sourcepos="22:1-22:79" xml:s ...</span></span>
+<span><span class="co">## [14] &lt;list sourcepos="25:2-31:0" type="ordered" start="1" delim="period" tigh ...</span></span>
+<span><span class="co">## [15] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-3-challenge"/&gt;</span></span>
+<span><span class="co">## [16] &lt;paragraph sourcepos="32:1-32:48"&gt;\n  &lt;text sourcepos="32:1-32:47" xml:s ...</span></span>
+<span><span class="co">## [17] &lt;heading sourcepos="34:1-34:30" level="2"&gt;\n  &lt;text sourcepos="34:4-34:3 ...</span></span>
+<span><span class="co">## [18] &lt;paragraph sourcepos="36:1-36:35"&gt;\n  &lt;text sourcepos="36:1-36:35" xml:s ...</span></span>
+<span><span class="co">## [19] &lt;code_block sourcepos="38:1-40:3" xml:space="preserve" language="r" name ...</span></span>
+<span><span class="co">## [20] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-4-solution"/&gt;</span></span>
+<span><span class="co">## ...</span></span></code></pre></div>
 <p>If we want to see what the contents look like, you can use the
 <code>$show()</code>, <code>$head()</code>, or <code>$tail()</code>
 methods (note: the <code>$show()</code> method will print out the entire
 markdown document).</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">intro</span><span class="op">$</span><span class="fu">head</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ---</span></span>
-<span><span class="co">#&gt; title: "Using RMarkdown"</span></span>
-<span><span class="co">#&gt; teaching: 10</span></span>
-<span><span class="co">#&gt; exercises: 2</span></span>
-<span><span class="co">#&gt; ---</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; :::::::::::::::::::::::::::::::::::::: questions</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; - How do you write a lesson using RMarkdown and `{sandpaper}`?</span></span>
+<span><span class="co">## ---</span></span>
+<span><span class="co">## title: "Using RMarkdown"</span></span>
+<span><span class="co">## teaching: 10</span></span>
+<span><span class="co">## exercises: 2</span></span>
+<span><span class="co">## ---</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## :::::::::::::::::::::::::::::::::::::: questions</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## - How do you write a lesson using RMarkdown and `{sandpaper}`?</span></span>
 <span><span class="va">intro</span><span class="op">$</span><span class="fu">tail</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Cool, right?</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ::::::::::::::::::::::::::::::::::::: keypoints</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; - Use `.Rmd` files for lessons even if you don't need to generate any code</span></span>
-<span><span class="co">#&gt; - Run `sandpaper::check_lesson()` to identify any issues with your lesson</span></span>
-<span><span class="co">#&gt; - Run `sandpaper::build_lesson()` to preview your lesson locally</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
+<span><span class="co">## Cool, right?</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::: keypoints</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## - Use `.Rmd` files for lessons even if you don't need to generate any code</span></span>
+<span><span class="co">## - Run `sandpaper::check_lesson()` to identify any issues with your lesson</span></span>
+<span><span class="co">## - Run `sandpaper::build_lesson()` to preview your lesson locally</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
 <span><span class="va">intro</span><span class="op">$</span><span class="fu">show</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ---</span></span>
-<span><span class="co">#&gt; title: "Using RMarkdown"</span></span>
-<span><span class="co">#&gt; teaching: 10</span></span>
-<span><span class="co">#&gt; exercises: 2</span></span>
-<span><span class="co">#&gt; ---</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; :::::::::::::::::::::::::::::::::::::: questions</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; - How do you write a lesson using RMarkdown and `{sandpaper}`?</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ::::::::::::::::::::::::::::::::::::: objectives</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; - Explain how to use markdown with the new lesson template</span></span>
-<span><span class="co">#&gt; - Demonstrate how to include pieces of code, figures, and nested challenge blocks</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ## Introduction</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; This is the new Carpentries template. It is written in [RMarkdown][r-markdown],</span></span>
-<span><span class="co">#&gt; which is a variant of Markdown that allows you to render code inside the</span></span>
-<span><span class="co">#&gt; lesson. Please refer to the [lesson</span></span>
-<span><span class="co">#&gt; example](https://carpentries.github.io/lesson-example) for full documentation.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; What you need to know is that there are three block quotes required for a valid</span></span>
-<span><span class="co">#&gt; Carpentries lesson template:</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; 1. `questions` are displayed at the beginning of the episode to prime the</span></span>
-<span><span class="co">#&gt;   learner for the content.</span></span>
-<span><span class="co">#&gt; 2. `objectives` are the learning objectives for an episode displayed with</span></span>
-<span><span class="co">#&gt;   the questions.</span></span>
-<span><span class="co">#&gt; 3. `keypoints` are displayed at the end of the episode to reinforce the</span></span>
-<span><span class="co">#&gt;   objectives.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ::::::::::::::::::::::::::::::::::::: challenge</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ## Challenge 1: Can you do it?</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; What is the output of this command?</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ```{r, eval=FALSE}</span></span>
-<span><span class="co">#&gt; paste("This", "new", "template", "looks", "good")</span></span>
-<span><span class="co">#&gt; ```</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; :::::::::::::::::::::::: solution</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ## Output</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ```{r, echo=FALSE}</span></span>
-<span><span class="co">#&gt; paste("This", "new", "template", "looks", "good")</span></span>
-<span><span class="co">#&gt; ```</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ::::::::::::::::::::::::::::::::::</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ## Challenge 2: how do you nest solutions within challenge blocks?</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; :::::::::::::::::::::::: solution</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; You can add a line with at least three colons and a `solution` tag.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; :::::::::::::::::::::::::::::::::</span></span>
-<span><span class="co">#&gt; ::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ## Figures</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; You can also include figures:</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ```{r pyramid}</span></span>
-<span><span class="co">#&gt; pie(</span></span>
-<span><span class="co">#&gt;   c(Sky = 78, "Sunny side of pyramid" = 17, "Shady side of pyramid" = 5), </span></span>
-<span><span class="co">#&gt;   init.angle = 315, </span></span>
-<span><span class="co">#&gt;   col = c("deepskyblue", "yellow", "yellow3"), </span></span>
-<span><span class="co">#&gt;   border = FALSE</span></span>
-<span><span class="co">#&gt; )</span></span>
-<span><span class="co">#&gt; ```</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ## Math</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; One of our episodes contains $\LaTeX$ equations when describing how to create</span></span>
-<span><span class="co">#&gt; dynamic reports with {knitr}, so we now use mathjax to describe this:</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; `$\alpha = \dfrac{1}{(1 - \beta)^2}$` becomes: $\alpha = \dfrac{1}{(1 - \beta)^2}$</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Cool, right?</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ::::::::::::::::::::::::::::::::::::: keypoints</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; - Use `.Rmd` files for lessons even if you don't need to generate any code</span></span>
-<span><span class="co">#&gt; - Run `sandpaper::check_lesson()` to identify any issues with your lesson</span></span>
-<span><span class="co">#&gt; - Run `sandpaper::build_lesson()` to preview your lesson locally</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ::::::::::::::::::::::::::::::::::::::::::::::::</span></span></code></pre></div>
+<span><span class="co">## ---</span></span>
+<span><span class="co">## title: "Using RMarkdown"</span></span>
+<span><span class="co">## teaching: 10</span></span>
+<span><span class="co">## exercises: 2</span></span>
+<span><span class="co">## ---</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## :::::::::::::::::::::::::::::::::::::: questions</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## - How do you write a lesson using RMarkdown and `{sandpaper}`?</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::: objectives</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## - Explain how to use markdown with the new lesson template</span></span>
+<span><span class="co">## - Demonstrate how to include pieces of code, figures, and nested challenge blocks</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ## Introduction</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## This is the new Carpentries template. It is written in [RMarkdown][r-markdown],</span></span>
+<span><span class="co">## which is a variant of Markdown that allows you to render code inside the</span></span>
+<span><span class="co">## lesson. Please refer to the [lesson</span></span>
+<span><span class="co">## example](https://carpentries.github.io/lesson-example) for full documentation.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## What you need to know is that there are three block quotes required for a valid</span></span>
+<span><span class="co">## Carpentries lesson template:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## 1. `questions` are displayed at the beginning of the episode to prime the</span></span>
+<span><span class="co">##   learner for the content.</span></span>
+<span><span class="co">## 2. `objectives` are the learning objectives for an episode displayed with</span></span>
+<span><span class="co">##   the questions.</span></span>
+<span><span class="co">## 3. `keypoints` are displayed at the end of the episode to reinforce the</span></span>
+<span><span class="co">##   objectives.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::: challenge</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ## Challenge 1: Can you do it?</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## What is the output of this command?</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ```{r, eval=FALSE}</span></span>
+<span><span class="co">## paste("This", "new", "template", "looks", "good")</span></span>
+<span><span class="co">## ```</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## :::::::::::::::::::::::: solution</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ## Output</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ```{r, echo=FALSE}</span></span>
+<span><span class="co">## paste("This", "new", "template", "looks", "good")</span></span>
+<span><span class="co">## ```</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ## Challenge 2: how do you nest solutions within challenge blocks?</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## :::::::::::::::::::::::: solution</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## You can add a line with at least three colons and a `solution` tag.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## :::::::::::::::::::::::::::::::::</span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ## Figures</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## You can also include figures:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ```{r pyramid}</span></span>
+<span><span class="co">## pie(</span></span>
+<span><span class="co">##   c(Sky = 78, "Sunny side of pyramid" = 17, "Shady side of pyramid" = 5), </span></span>
+<span><span class="co">##   init.angle = 315, </span></span>
+<span><span class="co">##   col = c("deepskyblue", "yellow", "yellow3"), </span></span>
+<span><span class="co">##   border = FALSE</span></span>
+<span><span class="co">## )</span></span>
+<span><span class="co">## ```</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ## Math</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## One of our episodes contains $\LaTeX$ equations when describing how to create</span></span>
+<span><span class="co">## dynamic reports with {knitr}, so we now use mathjax to describe this:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## `$\alpha = \dfrac{1}{(1 - \beta)^2}$` becomes: $\alpha = \dfrac{1}{(1 - \beta)^2}$</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Cool, right?</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::: keypoints</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## - Use `.Rmd` files for lessons even if you don't need to generate any code</span></span>
+<span><span class="co">## - Run `sandpaper::check_lesson()` to identify any issues with your lesson</span></span>
+<span><span class="co">## - Run `sandpaper::build_lesson()` to preview your lesson locally</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::::::::::::</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="file-information">File information<a class="anchor" aria-label="anchor" href="#file-information"></a>
@@ -394,23 +397,23 @@ you can use the following active bindings, which are useful when working
 with Episodes in a lesson context.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">intro</span><span class="op">$</span><span class="va">path</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">/home/runner/work/_temp/Library/pegboard/sandpaper-fragment/episodes/intro.Rmd</span></span></span>
+<span><span class="co">## <span style="color: #00BB00;">/home/runner/work/_temp/Library/pegboard/sandpaper-fragment/episodes/intro.Rmd</span></span></span>
 <span><span class="va">intro</span><span class="op">$</span><span class="va">name</span></span>
-<span><span class="co">#&gt; [1] "intro.Rmd"</span></span>
+<span><span class="co">## [1] "intro.Rmd"</span></span>
 <span><span class="va">intro</span><span class="op">$</span><span class="va">lesson</span></span>
-<span><span class="co">#&gt; [1] "/home/runner/work/_temp/Library/pegboard/sandpaper-fragment"</span></span>
+<span><span class="co">## [1] "/home/runner/work/_temp/Library/pegboard/sandpaper-fragment"</span></span>
 <span><span class="co"># NOTE: relationships to other episodes are automatically handled in the</span></span>
 <span><span class="co">#       Lesson context</span></span>
 <span><span class="va">intro</span><span class="op">$</span><span class="va">has_parents</span></span>
-<span><span class="co">#&gt; [1] FALSE</span></span>
+<span><span class="co">## [1] FALSE</span></span>
 <span><span class="va">intro</span><span class="op">$</span><span class="va">has_children</span></span>
-<span><span class="co">#&gt; [1] FALSE</span></span>
+<span><span class="co">## [1] FALSE</span></span>
 <span><span class="va">intro</span><span class="op">$</span><span class="va">children</span> <span class="co"># separate documents processed as if they were part of this document</span></span>
-<span><span class="co">#&gt; character(0)</span></span>
+<span><span class="co">## character(0)</span></span>
 <span><span class="va">intro</span><span class="op">$</span><span class="va">parents</span>  <span class="co"># the immediate documents that would require this document to build</span></span>
-<span><span class="co">#&gt; character(0)</span></span>
+<span><span class="co">## character(0)</span></span>
 <span><span class="va">intro</span><span class="op">$</span><span class="va">build_parents</span> <span class="co"># the final documents that would require this document to build</span></span>
-<span><span class="co">#&gt; character(0)</span></span></code></pre></div>
+<span><span class="co">## character(0)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="accessing-markdown-elements">Accessing Markdown Elements<a class="anchor" aria-label="anchor" href="#accessing-markdown-elements"></a>
@@ -421,139 +424,139 @@ document. It is possible to find markdown elements from XPath
 statments:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">xml2</span><span class="fu">::</span><span class="fu"><a href="http://xml2.r-lib.org/reference/xml_find_all.html" class="external-link">xml_find_all</a></span><span class="op">(</span><span class="va">intro</span><span class="op">$</span><span class="va">body</span>, <span class="st">".//md:link"</span>, ns <span class="op">=</span> <span class="va">intro</span><span class="op">$</span><span class="va">ns</span><span class="op">)</span></span>
-<span><span class="co">#&gt; {xml_nodeset (1)}</span></span>
-<span><span class="co">#&gt; [1] &lt;link sourcepos="20:29-20:54" destination="https://carpentries.github.io/ ...</span></span>
+<span><span class="co">## {xml_nodeset (1)}</span></span>
+<span><span class="co">## [1] &lt;link sourcepos="20:29-20:54" destination="https://carpentries.github.io/ ...</span></span>
 <span><span class="fu">xml2</span><span class="fu">::</span><span class="fu"><a href="http://xml2.r-lib.org/reference/xml_find_all.html" class="external-link">xml_find_first</a></span><span class="op">(</span><span class="va">intro</span><span class="op">$</span><span class="va">body</span>, <span class="st">".//md:list[@type='ordered']"</span>, ns <span class="op">=</span> <span class="va">intro</span><span class="op">$</span><span class="va">ns</span><span class="op">)</span></span>
-<span><span class="co">#&gt; {xml_node}</span></span>
-<span><span class="co">#&gt; &lt;list sourcepos="25:2-31:0" type="ordered" start="1" delim="period" tight="true"&gt;</span></span>
-<span><span class="co">#&gt; [1] &lt;item sourcepos="25:2-26:28"&gt;\n  &lt;paragraph sourcepos="25:5-26:28"&gt;\n     ...</span></span>
-<span><span class="co">#&gt; [2] &lt;item sourcepos="27:2-28:18"&gt;\n  &lt;paragraph sourcepos="27:5-28:18"&gt;\n     ...</span></span>
-<span><span class="co">#&gt; [3] &lt;item sourcepos="29:2-31:0"&gt;\n  &lt;paragraph sourcepos="29:5-30:15"&gt;\n    &lt; ...</span></span></code></pre></div>
+<span><span class="co">## {xml_node}</span></span>
+<span><span class="co">## &lt;list sourcepos="25:2-31:0" type="ordered" start="1" delim="period" tight="true"&gt;</span></span>
+<span><span class="co">## [1] &lt;item sourcepos="25:2-26:28"&gt;\n  &lt;paragraph sourcepos="25:5-26:28"&gt;\n     ...</span></span>
+<span><span class="co">## [2] &lt;item sourcepos="27:2-28:18"&gt;\n  &lt;paragraph sourcepos="27:5-28:18"&gt;\n     ...</span></span>
+<span><span class="co">## [3] &lt;item sourcepos="29:2-31:0"&gt;\n  &lt;paragraph sourcepos="29:5-30:15"&gt;\n    &lt; ...</span></span></code></pre></div>
 <p>However, there are some useful elements that we want to know about,
 so I have implemented them in active bindings and methods:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># headings where level 2 headings are equivalent to sections</span></span>
 <span><span class="va">intro</span><span class="op">$</span><span class="va">headings</span></span>
-<span><span class="co">#&gt; {xml_nodeset (6)}</span></span>
-<span><span class="co">#&gt; [1] &lt;heading sourcepos="15:1-15:15" level="2"&gt;\n  &lt;text sourcepos="15:4-15:15 ...</span></span>
-<span><span class="co">#&gt; [2] &lt;heading sourcepos="34:1-34:30" level="2"&gt;\n  &lt;text sourcepos="34:4-34:30 ...</span></span>
-<span><span class="co">#&gt; [3] &lt;heading sourcepos="44:1-44:9" level="2"&gt;\n  &lt;text sourcepos="44:4-44:9"  ...</span></span>
-<span><span class="co">#&gt; [4] &lt;heading sourcepos="53:1-53:66" level="2"&gt;\n  &lt;text sourcepos="53:4-53:66 ...</span></span>
-<span><span class="co">#&gt; [5] &lt;heading sourcepos="62:1-62:10" level="2"&gt;\n  &lt;text sourcepos="62:4-62:10 ...</span></span>
-<span><span class="co">#&gt; [6] &lt;heading sourcepos="76:1-76:7" level="2"&gt;\n  &lt;text sourcepos="76:4-76:7"  ...</span></span>
+<span><span class="co">## {xml_nodeset (6)}</span></span>
+<span><span class="co">## [1] &lt;heading sourcepos="15:1-15:15" level="2"&gt;\n  &lt;text sourcepos="15:4-15:15 ...</span></span>
+<span><span class="co">## [2] &lt;heading sourcepos="34:1-34:30" level="2"&gt;\n  &lt;text sourcepos="34:4-34:30 ...</span></span>
+<span><span class="co">## [3] &lt;heading sourcepos="44:1-44:9" level="2"&gt;\n  &lt;text sourcepos="44:4-44:9"  ...</span></span>
+<span><span class="co">## [4] &lt;heading sourcepos="53:1-53:66" level="2"&gt;\n  &lt;text sourcepos="53:4-53:66 ...</span></span>
+<span><span class="co">## [5] &lt;heading sourcepos="62:1-62:10" level="2"&gt;\n  &lt;text sourcepos="62:4-62:10 ...</span></span>
+<span><span class="co">## [6] &lt;heading sourcepos="76:1-76:7" level="2"&gt;\n  &lt;text sourcepos="76:4-76:7"  ...</span></span>
 <span><span class="co"># all callouts/fenced divs</span></span>
 <span><span class="va">intro</span><span class="op">$</span><span class="fu">get_divs</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; $`div-1-questions`</span></span>
-<span><span class="co">#&gt; {xml_nodeset (3)}</span></span>
-<span><span class="co">#&gt; [1] &lt;paragraph sourcepos="2:1-2:49"&gt;\n  &lt;text sourcepos="2:1-2:48" xml:space= ...</span></span>
-<span><span class="co">#&gt; [2] &lt;list sourcepos="4:1-5:0" type="bullet" tight="true"&gt;\n  &lt;item sourcepos= ...</span></span>
-<span><span class="co">#&gt; [3] &lt;paragraph sourcepos="6:1-6:48"&gt;\n  &lt;text sourcepos="6:1-6:48" xml:space= ...</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`div-2-objectives`</span></span>
-<span><span class="co">#&gt; {xml_nodeset (3)}</span></span>
-<span><span class="co">#&gt; [1] &lt;paragraph sourcepos="8:1-8:48"&gt;\n  &lt;text sourcepos="8:1-8:48" xml:space= ...</span></span>
-<span><span class="co">#&gt; [2] &lt;list sourcepos="10:1-12:0" type="bullet" tight="true"&gt;\n  &lt;item sourcepo ...</span></span>
-<span><span class="co">#&gt; [3] &lt;paragraph sourcepos="13:1-13:48"&gt;\n  &lt;text sourcepos="13:1-13:48" xml:sp ...</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`div-3-challenge`</span></span>
-<span><span class="co">#&gt; {xml_nodeset (12)}</span></span>
-<span><span class="co">#&gt;  [1] &lt;paragraph sourcepos="32:1-32:48"&gt;\n  &lt;text sourcepos="32:1-32:47" xml:s ...</span></span>
-<span><span class="co">#&gt;  [2] &lt;heading sourcepos="34:1-34:30" level="2"&gt;\n  &lt;text sourcepos="34:4-34:3 ...</span></span>
-<span><span class="co">#&gt;  [3] &lt;paragraph sourcepos="36:1-36:35"&gt;\n  &lt;text sourcepos="36:1-36:35" xml:s ...</span></span>
-<span><span class="co">#&gt;  [4] &lt;code_block sourcepos="38:1-40:3" xml:space="preserve" language="r" name ...</span></span>
-<span><span class="co">#&gt;  [5] &lt;paragraph sourcepos="42:1-42:34"&gt;\n  &lt;text sourcepos="42:1-42:33" xml:s ...</span></span>
-<span><span class="co">#&gt;  [6] &lt;heading sourcepos="44:1-44:9" level="2"&gt;\n  &lt;text sourcepos="44:4-44:9" ...</span></span>
-<span><span class="co">#&gt;  [7] &lt;code_block sourcepos="46:1-48:3" xml:space="preserve" language="r" name ...</span></span>
-<span><span class="co">#&gt;  [8] &lt;paragraph sourcepos="50:1-50:34"&gt;\n  &lt;text sourcepos="50:1-50:34" xml:s ...</span></span>
-<span><span class="co">#&gt;  [9] &lt;heading sourcepos="53:1-53:66" level="2"&gt;\n  &lt;text sourcepos="53:4-53:6 ...</span></span>
-<span><span class="co">#&gt; [10] &lt;paragraph sourcepos="55:1-55:34"&gt;\n  &lt;text sourcepos="55:1-55:33" xml:s ...</span></span>
-<span><span class="co">#&gt; [11] &lt;paragraph sourcepos="57:1-57:67"&gt;\n  &lt;text sourcepos="57:1-57:52" xml:s ...</span></span>
-<span><span class="co">#&gt; [12] &lt;paragraph sourcepos="59:1-60:48"&gt;\n  &lt;text sourcepos="59:1-59:33" xml:s ...</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`div-4-solution`</span></span>
-<span><span class="co">#&gt; {xml_nodeset (4)}</span></span>
-<span><span class="co">#&gt; [1] &lt;paragraph sourcepos="42:1-42:34"&gt;\n  &lt;text sourcepos="42:1-42:33" xml:sp ...</span></span>
-<span><span class="co">#&gt; [2] &lt;heading sourcepos="44:1-44:9" level="2"&gt;\n  &lt;text sourcepos="44:4-44:9"  ...</span></span>
-<span><span class="co">#&gt; [3] &lt;code_block sourcepos="46:1-48:3" xml:space="preserve" language="r" name= ...</span></span>
-<span><span class="co">#&gt; [4] &lt;paragraph sourcepos="50:1-50:34"&gt;\n  &lt;text sourcepos="50:1-50:34" xml:sp ...</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`div-5-solution`</span></span>
-<span><span class="co">#&gt; {xml_nodeset (3)}</span></span>
-<span><span class="co">#&gt; [1] &lt;paragraph sourcepos="55:1-55:34"&gt;\n  &lt;text sourcepos="55:1-55:33" xml:sp ...</span></span>
-<span><span class="co">#&gt; [2] &lt;paragraph sourcepos="57:1-57:67"&gt;\n  &lt;text sourcepos="57:1-57:52" xml:sp ...</span></span>
-<span><span class="co">#&gt; [3] &lt;paragraph sourcepos="59:1-60:48"&gt;\n  &lt;text sourcepos="59:1-59:33" xml:sp ...</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`div-6-keypoints`</span></span>
-<span><span class="co">#&gt; {xml_nodeset (3)}</span></span>
-<span><span class="co">#&gt; [1] &lt;paragraph sourcepos="85:1-85:48"&gt;\n  &lt;text sourcepos="85:1-85:47" xml:sp ...</span></span>
-<span><span class="co">#&gt; [2] &lt;list sourcepos="87:1-90:0" type="bullet" tight="true"&gt;\n  &lt;item sourcepo ...</span></span>
-<span><span class="co">#&gt; [3] &lt;paragraph sourcepos="91:1-91:48"&gt;\n  &lt;text sourcepos="91:1-91:48" xml:sp ...</span></span>
+<span><span class="co">## $`div-1-questions`</span></span>
+<span><span class="co">## {xml_nodeset (3)}</span></span>
+<span><span class="co">## [1] &lt;paragraph sourcepos="2:1-2:49"&gt;\n  &lt;text sourcepos="2:1-2:48" xml:space= ...</span></span>
+<span><span class="co">## [2] &lt;list sourcepos="4:1-5:0" type="bullet" tight="true"&gt;\n  &lt;item sourcepos= ...</span></span>
+<span><span class="co">## [3] &lt;paragraph sourcepos="6:1-6:48"&gt;\n  &lt;text sourcepos="6:1-6:48" xml:space= ...</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $`div-2-objectives`</span></span>
+<span><span class="co">## {xml_nodeset (3)}</span></span>
+<span><span class="co">## [1] &lt;paragraph sourcepos="8:1-8:48"&gt;\n  &lt;text sourcepos="8:1-8:48" xml:space= ...</span></span>
+<span><span class="co">## [2] &lt;list sourcepos="10:1-12:0" type="bullet" tight="true"&gt;\n  &lt;item sourcepo ...</span></span>
+<span><span class="co">## [3] &lt;paragraph sourcepos="13:1-13:48"&gt;\n  &lt;text sourcepos="13:1-13:48" xml:sp ...</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $`div-3-challenge`</span></span>
+<span><span class="co">## {xml_nodeset (12)}</span></span>
+<span><span class="co">##  [1] &lt;paragraph sourcepos="32:1-32:48"&gt;\n  &lt;text sourcepos="32:1-32:47" xml:s ...</span></span>
+<span><span class="co">##  [2] &lt;heading sourcepos="34:1-34:30" level="2"&gt;\n  &lt;text sourcepos="34:4-34:3 ...</span></span>
+<span><span class="co">##  [3] &lt;paragraph sourcepos="36:1-36:35"&gt;\n  &lt;text sourcepos="36:1-36:35" xml:s ...</span></span>
+<span><span class="co">##  [4] &lt;code_block sourcepos="38:1-40:3" xml:space="preserve" language="r" name ...</span></span>
+<span><span class="co">##  [5] &lt;paragraph sourcepos="42:1-42:34"&gt;\n  &lt;text sourcepos="42:1-42:33" xml:s ...</span></span>
+<span><span class="co">##  [6] &lt;heading sourcepos="44:1-44:9" level="2"&gt;\n  &lt;text sourcepos="44:4-44:9" ...</span></span>
+<span><span class="co">##  [7] &lt;code_block sourcepos="46:1-48:3" xml:space="preserve" language="r" name ...</span></span>
+<span><span class="co">##  [8] &lt;paragraph sourcepos="50:1-50:34"&gt;\n  &lt;text sourcepos="50:1-50:34" xml:s ...</span></span>
+<span><span class="co">##  [9] &lt;heading sourcepos="53:1-53:66" level="2"&gt;\n  &lt;text sourcepos="53:4-53:6 ...</span></span>
+<span><span class="co">## [10] &lt;paragraph sourcepos="55:1-55:34"&gt;\n  &lt;text sourcepos="55:1-55:33" xml:s ...</span></span>
+<span><span class="co">## [11] &lt;paragraph sourcepos="57:1-57:67"&gt;\n  &lt;text sourcepos="57:1-57:52" xml:s ...</span></span>
+<span><span class="co">## [12] &lt;paragraph sourcepos="59:1-60:48"&gt;\n  &lt;text sourcepos="59:1-59:33" xml:s ...</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $`div-4-solution`</span></span>
+<span><span class="co">## {xml_nodeset (4)}</span></span>
+<span><span class="co">## [1] &lt;paragraph sourcepos="42:1-42:34"&gt;\n  &lt;text sourcepos="42:1-42:33" xml:sp ...</span></span>
+<span><span class="co">## [2] &lt;heading sourcepos="44:1-44:9" level="2"&gt;\n  &lt;text sourcepos="44:4-44:9"  ...</span></span>
+<span><span class="co">## [3] &lt;code_block sourcepos="46:1-48:3" xml:space="preserve" language="r" name= ...</span></span>
+<span><span class="co">## [4] &lt;paragraph sourcepos="50:1-50:34"&gt;\n  &lt;text sourcepos="50:1-50:34" xml:sp ...</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $`div-5-solution`</span></span>
+<span><span class="co">## {xml_nodeset (3)}</span></span>
+<span><span class="co">## [1] &lt;paragraph sourcepos="55:1-55:34"&gt;\n  &lt;text sourcepos="55:1-55:33" xml:sp ...</span></span>
+<span><span class="co">## [2] &lt;paragraph sourcepos="57:1-57:67"&gt;\n  &lt;text sourcepos="57:1-57:52" xml:sp ...</span></span>
+<span><span class="co">## [3] &lt;paragraph sourcepos="59:1-60:48"&gt;\n  &lt;text sourcepos="59:1-59:33" xml:sp ...</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $`div-6-keypoints`</span></span>
+<span><span class="co">## {xml_nodeset (3)}</span></span>
+<span><span class="co">## [1] &lt;paragraph sourcepos="85:1-85:48"&gt;\n  &lt;text sourcepos="85:1-85:47" xml:sp ...</span></span>
+<span><span class="co">## [2] &lt;list sourcepos="87:1-90:0" type="bullet" tight="true"&gt;\n  &lt;item sourcepo ...</span></span>
+<span><span class="co">## [3] &lt;paragraph sourcepos="91:1-91:48"&gt;\n  &lt;text sourcepos="91:1-91:48" xml:sp ...</span></span>
 <span><span class="va">intro</span><span class="op">$</span><span class="va">challenges</span></span>
-<span><span class="co">#&gt; $`div-3-challenge`</span></span>
-<span><span class="co">#&gt; {xml_nodeset (12)}</span></span>
-<span><span class="co">#&gt;  [1] &lt;paragraph sourcepos="32:1-32:48"&gt;\n  &lt;text sourcepos="32:1-32:47" xml:s ...</span></span>
-<span><span class="co">#&gt;  [2] &lt;heading sourcepos="34:1-34:30" level="2"&gt;\n  &lt;text sourcepos="34:4-34:3 ...</span></span>
-<span><span class="co">#&gt;  [3] &lt;paragraph sourcepos="36:1-36:35"&gt;\n  &lt;text sourcepos="36:1-36:35" xml:s ...</span></span>
-<span><span class="co">#&gt;  [4] &lt;code_block sourcepos="38:1-40:3" xml:space="preserve" language="r" name ...</span></span>
-<span><span class="co">#&gt;  [5] &lt;paragraph sourcepos="42:1-42:34"&gt;\n  &lt;text sourcepos="42:1-42:33" xml:s ...</span></span>
-<span><span class="co">#&gt;  [6] &lt;heading sourcepos="44:1-44:9" level="2"&gt;\n  &lt;text sourcepos="44:4-44:9" ...</span></span>
-<span><span class="co">#&gt;  [7] &lt;code_block sourcepos="46:1-48:3" xml:space="preserve" language="r" name ...</span></span>
-<span><span class="co">#&gt;  [8] &lt;paragraph sourcepos="50:1-50:34"&gt;\n  &lt;text sourcepos="50:1-50:34" xml:s ...</span></span>
-<span><span class="co">#&gt;  [9] &lt;heading sourcepos="53:1-53:66" level="2"&gt;\n  &lt;text sourcepos="53:4-53:6 ...</span></span>
-<span><span class="co">#&gt; [10] &lt;paragraph sourcepos="55:1-55:34"&gt;\n  &lt;text sourcepos="55:1-55:33" xml:s ...</span></span>
-<span><span class="co">#&gt; [11] &lt;paragraph sourcepos="57:1-57:67"&gt;\n  &lt;text sourcepos="57:1-57:52" xml:s ...</span></span>
-<span><span class="co">#&gt; [12] &lt;paragraph sourcepos="59:1-60:48"&gt;\n  &lt;text sourcepos="59:1-59:33" xml:s ...</span></span>
+<span><span class="co">## $`div-3-challenge`</span></span>
+<span><span class="co">## {xml_nodeset (12)}</span></span>
+<span><span class="co">##  [1] &lt;paragraph sourcepos="32:1-32:48"&gt;\n  &lt;text sourcepos="32:1-32:47" xml:s ...</span></span>
+<span><span class="co">##  [2] &lt;heading sourcepos="34:1-34:30" level="2"&gt;\n  &lt;text sourcepos="34:4-34:3 ...</span></span>
+<span><span class="co">##  [3] &lt;paragraph sourcepos="36:1-36:35"&gt;\n  &lt;text sourcepos="36:1-36:35" xml:s ...</span></span>
+<span><span class="co">##  [4] &lt;code_block sourcepos="38:1-40:3" xml:space="preserve" language="r" name ...</span></span>
+<span><span class="co">##  [5] &lt;paragraph sourcepos="42:1-42:34"&gt;\n  &lt;text sourcepos="42:1-42:33" xml:s ...</span></span>
+<span><span class="co">##  [6] &lt;heading sourcepos="44:1-44:9" level="2"&gt;\n  &lt;text sourcepos="44:4-44:9" ...</span></span>
+<span><span class="co">##  [7] &lt;code_block sourcepos="46:1-48:3" xml:space="preserve" language="r" name ...</span></span>
+<span><span class="co">##  [8] &lt;paragraph sourcepos="50:1-50:34"&gt;\n  &lt;text sourcepos="50:1-50:34" xml:s ...</span></span>
+<span><span class="co">##  [9] &lt;heading sourcepos="53:1-53:66" level="2"&gt;\n  &lt;text sourcepos="53:4-53:6 ...</span></span>
+<span><span class="co">## [10] &lt;paragraph sourcepos="55:1-55:34"&gt;\n  &lt;text sourcepos="55:1-55:33" xml:s ...</span></span>
+<span><span class="co">## [11] &lt;paragraph sourcepos="57:1-57:67"&gt;\n  &lt;text sourcepos="57:1-57:52" xml:s ...</span></span>
+<span><span class="co">## [12] &lt;paragraph sourcepos="59:1-60:48"&gt;\n  &lt;text sourcepos="59:1-59:33" xml:s ...</span></span>
 <span><span class="va">intro</span><span class="op">$</span><span class="va">solutions</span></span>
-<span><span class="co">#&gt; $`div-4-solution`</span></span>
-<span><span class="co">#&gt; {xml_nodeset (4)}</span></span>
-<span><span class="co">#&gt; [1] &lt;paragraph sourcepos="42:1-42:34"&gt;\n  &lt;text sourcepos="42:1-42:33" xml:sp ...</span></span>
-<span><span class="co">#&gt; [2] &lt;heading sourcepos="44:1-44:9" level="2"&gt;\n  &lt;text sourcepos="44:4-44:9"  ...</span></span>
-<span><span class="co">#&gt; [3] &lt;code_block sourcepos="46:1-48:3" xml:space="preserve" language="r" name= ...</span></span>
-<span><span class="co">#&gt; [4] &lt;paragraph sourcepos="50:1-50:34"&gt;\n  &lt;text sourcepos="50:1-50:34" xml:sp ...</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`div-5-solution`</span></span>
-<span><span class="co">#&gt; {xml_nodeset (3)}</span></span>
-<span><span class="co">#&gt; [1] &lt;paragraph sourcepos="55:1-55:34"&gt;\n  &lt;text sourcepos="55:1-55:33" xml:sp ...</span></span>
-<span><span class="co">#&gt; [2] &lt;paragraph sourcepos="57:1-57:67"&gt;\n  &lt;text sourcepos="57:1-57:52" xml:sp ...</span></span>
-<span><span class="co">#&gt; [3] &lt;paragraph sourcepos="59:1-60:48"&gt;\n  &lt;text sourcepos="59:1-59:33" xml:sp ...</span></span>
+<span><span class="co">## $`div-4-solution`</span></span>
+<span><span class="co">## {xml_nodeset (4)}</span></span>
+<span><span class="co">## [1] &lt;paragraph sourcepos="42:1-42:34"&gt;\n  &lt;text sourcepos="42:1-42:33" xml:sp ...</span></span>
+<span><span class="co">## [2] &lt;heading sourcepos="44:1-44:9" level="2"&gt;\n  &lt;text sourcepos="44:4-44:9"  ...</span></span>
+<span><span class="co">## [3] &lt;code_block sourcepos="46:1-48:3" xml:space="preserve" language="r" name= ...</span></span>
+<span><span class="co">## [4] &lt;paragraph sourcepos="50:1-50:34"&gt;\n  &lt;text sourcepos="50:1-50:34" xml:sp ...</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $`div-5-solution`</span></span>
+<span><span class="co">## {xml_nodeset (3)}</span></span>
+<span><span class="co">## [1] &lt;paragraph sourcepos="55:1-55:34"&gt;\n  &lt;text sourcepos="55:1-55:33" xml:sp ...</span></span>
+<span><span class="co">## [2] &lt;paragraph sourcepos="57:1-57:67"&gt;\n  &lt;text sourcepos="57:1-57:52" xml:sp ...</span></span>
+<span><span class="co">## [3] &lt;paragraph sourcepos="59:1-60:48"&gt;\n  &lt;text sourcepos="59:1-59:33" xml:sp ...</span></span>
 <span><span class="co"># questions, objectives, and keypoints are standard and return char vectors</span></span>
 <span><span class="va">intro</span><span class="op">$</span><span class="va">objectives</span> </span>
-<span><span class="co">#&gt; [1] "Explain how to use markdown with the new lesson template"                       </span></span>
-<span><span class="co">#&gt; [2] "Demonstrate how to include pieces of code, figures, and nested challenge blocks"</span></span>
+<span><span class="co">## [1] "Explain how to use markdown with the new lesson template"                       </span></span>
+<span><span class="co">## [2] "Demonstrate how to include pieces of code, figures, and nested challenge blocks"</span></span>
 <span><span class="va">intro</span><span class="op">$</span><span class="va">questions</span></span>
-<span><span class="co">#&gt; [1] "How do you write a lesson using RMarkdown and `{sandpaper}`?"</span></span>
+<span><span class="co">## [1] "How do you write a lesson using RMarkdown and `{sandpaper}`?"</span></span>
 <span><span class="va">intro</span><span class="op">$</span><span class="va">keypoints</span></span>
-<span><span class="co">#&gt; [1] "Use `.Rmd` files for lessons even if you don't need to generate any code"</span></span>
-<span><span class="co">#&gt; [2] "Run `sandpaper::check_lesson()` to identify any issues with your lesson" </span></span>
-<span><span class="co">#&gt; [3] "Run `sandpaper::build_lesson()` to preview your lesson locally"</span></span>
+<span><span class="co">## [1] "Use `.Rmd` files for lessons even if you don't need to generate any code"</span></span>
+<span><span class="co">## [2] "Run `sandpaper::check_lesson()` to identify any issues with your lesson" </span></span>
+<span><span class="co">## [3] "Run `sandpaper::build_lesson()` to preview your lesson locally"</span></span>
 <span><span class="co"># code blocks and output types</span></span>
 <span><span class="va">intro</span><span class="op">$</span><span class="va">code</span></span>
-<span><span class="co">#&gt; {xml_nodeset (3)}</span></span>
-<span><span class="co">#&gt; [1] &lt;code_block sourcepos="38:1-40:3" xml:space="preserve" language="r" name= ...</span></span>
-<span><span class="co">#&gt; [2] &lt;code_block sourcepos="46:1-48:3" xml:space="preserve" language="r" name= ...</span></span>
-<span><span class="co">#&gt; [3] &lt;code_block sourcepos="66:1-73:3" xml:space="preserve" language="r" name= ...</span></span>
+<span><span class="co">## {xml_nodeset (3)}</span></span>
+<span><span class="co">## [1] &lt;code_block sourcepos="38:1-40:3" xml:space="preserve" language="r" name= ...</span></span>
+<span><span class="co">## [2] &lt;code_block sourcepos="46:1-48:3" xml:space="preserve" language="r" name= ...</span></span>
+<span><span class="co">## [3] &lt;code_block sourcepos="66:1-73:3" xml:space="preserve" language="r" name= ...</span></span>
 <span><span class="va">intro</span><span class="op">$</span><span class="va">output</span></span>
-<span><span class="co">#&gt; {xml_nodeset (0)}</span></span>
+<span><span class="co">## {xml_nodeset (0)}</span></span>
 <span><span class="va">intro</span><span class="op">$</span><span class="va">warning</span></span>
-<span><span class="co">#&gt; {xml_nodeset (0)}</span></span>
+<span><span class="co">## {xml_nodeset (0)}</span></span>
 <span><span class="va">intro</span><span class="op">$</span><span class="va">error</span></span>
-<span><span class="co">#&gt; {xml_nodeset (0)}</span></span>
+<span><span class="co">## {xml_nodeset (0)}</span></span>
 <span><span class="co"># images and links</span></span>
 <span><span class="va">intro</span><span class="op">$</span><span class="va">images</span></span>
-<span><span class="co">#&gt; {xml_nodeset (0)}</span></span>
+<span><span class="co">## {xml_nodeset (0)}</span></span>
 <span><span class="va">intro</span><span class="op">$</span><span class="fu">get_images</span><span class="op">(</span><span class="op">)</span> <span class="co"># parses images embedded in `&lt;img&gt;` tags</span></span>
-<span><span class="co">#&gt; {xml_nodeset (0)}</span></span>
+<span><span class="co">## {xml_nodeset (0)}</span></span>
 <span><span class="va">intro</span><span class="op">$</span><span class="va">links</span></span>
-<span><span class="co">#&gt; {xml_nodeset (1)}</span></span>
-<span><span class="co">#&gt; [1] &lt;link sourcepos="20:29-20:54" destination="https://carpentries.github.io/ ...</span></span></code></pre></div>
+<span><span class="co">## {xml_nodeset (1)}</span></span>
+<span><span class="co">## [1] &lt;link sourcepos="20:29-20:54" destination="https://carpentries.github.io/ ...</span></span></code></pre></div>
 <p>Much of these are summarized in the <code>$summary()</code>
 method:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">intro</span><span class="op">$</span><span class="fu">summary</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   sections   headings   callouts challenges  solutions       code     output </span></span>
-<span><span class="co">#&gt;          6          6          6          1          2          3          0 </span></span>
-<span><span class="co">#&gt;    warning      error     images      links </span></span>
-<span><span class="co">#&gt;          0          0          0          1</span></span></code></pre></div>
+<span><span class="co">##   sections   headings   callouts challenges  solutions       code     output </span></span>
+<span><span class="co">##          6          6          6          1          2          3          0 </span></span>
+<span><span class="co">##    warning      error     images      links </span></span>
+<span><span class="co">##          0          0          0          1</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="code-blocks-and-code-chunks">Code blocks and code chunks<a class="anchor" aria-label="anchor" href="#code-blocks-and-code-chunks"></a>
@@ -622,55 +625,55 @@ a markdown element after any paragraph in the document.</p>
 block after the first heading:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">intro</span><span class="op">$</span><span class="fu">head</span><span class="op">(</span><span class="fl">26</span><span class="op">)</span> <span class="co"># first 26 lines</span></span>
-<span><span class="co">#&gt; ---</span></span>
-<span><span class="co">#&gt; title: "Using RMarkdown"</span></span>
-<span><span class="co">#&gt; teaching: 10</span></span>
-<span><span class="co">#&gt; exercises: 2</span></span>
-<span><span class="co">#&gt; ---</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; :::::::::::::::::::::::::::::::::::::: questions</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; - How do you write a lesson using RMarkdown and `{sandpaper}`?</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ::::::::::::::::::::::::::::::::::::: objectives</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; - Explain how to use markdown with the new lesson template</span></span>
-<span><span class="co">#&gt; - Demonstrate how to include pieces of code, figures, and nested challenge blocks</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ## Introduction</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; This is the new Carpentries template. It is written in [RMarkdown][r-markdown],</span></span>
-<span><span class="co">#&gt; which is a variant of Markdown that allows you to render code inside the</span></span>
-<span><span class="co">#&gt; lesson. Please refer to the [lesson</span></span>
-<span><span class="co">#&gt; example](https://carpentries.github.io/lesson-example) for full documentation.</span></span>
+<span><span class="co">## ---</span></span>
+<span><span class="co">## title: "Using RMarkdown"</span></span>
+<span><span class="co">## teaching: 10</span></span>
+<span><span class="co">## exercises: 2</span></span>
+<span><span class="co">## ---</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## :::::::::::::::::::::::::::::::::::::: questions</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## - How do you write a lesson using RMarkdown and `{sandpaper}`?</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::: objectives</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## - Explain how to use markdown with the new lesson template</span></span>
+<span><span class="co">## - Demonstrate how to include pieces of code, figures, and nested challenge blocks</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ## Introduction</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## This is the new Carpentries template. It is written in [RMarkdown][r-markdown],</span></span>
+<span><span class="co">## which is a variant of Markdown that allows you to render code inside the</span></span>
+<span><span class="co">## lesson. Please refer to the [lesson</span></span>
+<span><span class="co">## example](https://carpentries.github.io/lesson-example) for full documentation.</span></span>
 <span><span class="va">intro</span><span class="op">$</span><span class="va">body</span> <span class="co"># first heading is item 11</span></span>
-<span><span class="co">#&gt; {xml_document}</span></span>
-<span><span class="co">#&gt; &lt;document sourcepos="1:1-91:48" xmlns="http://commonmark.org/xml/1.0"&gt;</span></span>
-<span><span class="co">#&gt;  [1] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-1-questions"/&gt;</span></span>
-<span><span class="co">#&gt;  [2] &lt;paragraph sourcepos="2:1-2:49"&gt;\n  &lt;text sourcepos="2:1-2:48" xml:space ...</span></span>
-<span><span class="co">#&gt;  [3] &lt;list sourcepos="4:1-5:0" type="bullet" tight="true"&gt;\n  &lt;item sourcepos ...</span></span>
-<span><span class="co">#&gt;  [4] &lt;paragraph sourcepos="6:1-6:48"&gt;\n  &lt;text sourcepos="6:1-6:48" xml:space ...</span></span>
-<span><span class="co">#&gt;  [5] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-1-questions"/&gt;</span></span>
-<span><span class="co">#&gt;  [6] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-2-objectives"/&gt;</span></span>
-<span><span class="co">#&gt;  [7] &lt;paragraph sourcepos="8:1-8:48"&gt;\n  &lt;text sourcepos="8:1-8:48" xml:space ...</span></span>
-<span><span class="co">#&gt;  [8] &lt;list sourcepos="10:1-12:0" type="bullet" tight="true"&gt;\n  &lt;item sourcep ...</span></span>
-<span><span class="co">#&gt;  [9] &lt;paragraph sourcepos="13:1-13:48"&gt;\n  &lt;text sourcepos="13:1-13:48" xml:s ...</span></span>
-<span><span class="co">#&gt; [10] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-2-objectives"/&gt;</span></span>
-<span><span class="co">#&gt; [11] &lt;heading sourcepos="15:1-15:15" level="2"&gt;\n  &lt;text sourcepos="15:4-15:1 ...</span></span>
-<span><span class="co">#&gt; [12] &lt;paragraph sourcepos="17:1-20:78"&gt;\n  &lt;text sourcepos="17:1-17:79" xml:s ...</span></span>
-<span><span class="co">#&gt; [13] &lt;paragraph sourcepos="22:1-23:28"&gt;\n  &lt;text sourcepos="22:1-22:79" xml:s ...</span></span>
-<span><span class="co">#&gt; [14] &lt;list sourcepos="25:2-31:0" type="ordered" start="1" delim="period" tigh ...</span></span>
-<span><span class="co">#&gt; [15] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-3-challenge"/&gt;</span></span>
-<span><span class="co">#&gt; [16] &lt;paragraph sourcepos="32:1-32:48"&gt;\n  &lt;text sourcepos="32:1-32:47" xml:s ...</span></span>
-<span><span class="co">#&gt; [17] &lt;heading sourcepos="34:1-34:30" level="2"&gt;\n  &lt;text sourcepos="34:4-34:3 ...</span></span>
-<span><span class="co">#&gt; [18] &lt;paragraph sourcepos="36:1-36:35"&gt;\n  &lt;text sourcepos="36:1-36:35" xml:s ...</span></span>
-<span><span class="co">#&gt; [19] &lt;code_block sourcepos="38:1-40:3" xml:space="preserve" language="r" name ...</span></span>
-<span><span class="co">#&gt; [20] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-4-solution"/&gt;</span></span>
-<span><span class="co">#&gt; ...</span></span></code></pre></div>
+<span><span class="co">## {xml_document}</span></span>
+<span><span class="co">## &lt;document sourcepos="1:1-91:48" xmlns="http://commonmark.org/xml/1.0"&gt;</span></span>
+<span><span class="co">##  [1] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-1-questions"/&gt;</span></span>
+<span><span class="co">##  [2] &lt;paragraph sourcepos="2:1-2:49"&gt;\n  &lt;text sourcepos="2:1-2:48" xml:space ...</span></span>
+<span><span class="co">##  [3] &lt;list sourcepos="4:1-5:0" type="bullet" tight="true"&gt;\n  &lt;item sourcepos ...</span></span>
+<span><span class="co">##  [4] &lt;paragraph sourcepos="6:1-6:48"&gt;\n  &lt;text sourcepos="6:1-6:48" xml:space ...</span></span>
+<span><span class="co">##  [5] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-1-questions"/&gt;</span></span>
+<span><span class="co">##  [6] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-2-objectives"/&gt;</span></span>
+<span><span class="co">##  [7] &lt;paragraph sourcepos="8:1-8:48"&gt;\n  &lt;text sourcepos="8:1-8:48" xml:space ...</span></span>
+<span><span class="co">##  [8] &lt;list sourcepos="10:1-12:0" type="bullet" tight="true"&gt;\n  &lt;item sourcep ...</span></span>
+<span><span class="co">##  [9] &lt;paragraph sourcepos="13:1-13:48"&gt;\n  &lt;text sourcepos="13:1-13:48" xml:s ...</span></span>
+<span><span class="co">## [10] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-2-objectives"/&gt;</span></span>
+<span><span class="co">## [11] &lt;heading sourcepos="15:1-15:15" level="2"&gt;\n  &lt;text sourcepos="15:4-15:1 ...</span></span>
+<span><span class="co">## [12] &lt;paragraph sourcepos="17:1-20:78"&gt;\n  &lt;text sourcepos="17:1-17:79" xml:s ...</span></span>
+<span><span class="co">## [13] &lt;paragraph sourcepos="22:1-23:28"&gt;\n  &lt;text sourcepos="22:1-22:79" xml:s ...</span></span>
+<span><span class="co">## [14] &lt;list sourcepos="25:2-31:0" type="ordered" start="1" delim="period" tigh ...</span></span>
+<span><span class="co">## [15] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-3-challenge"/&gt;</span></span>
+<span><span class="co">## [16] &lt;paragraph sourcepos="32:1-32:48"&gt;\n  &lt;text sourcepos="32:1-32:47" xml:s ...</span></span>
+<span><span class="co">## [17] &lt;heading sourcepos="34:1-34:30" level="2"&gt;\n  &lt;text sourcepos="34:4-34:3 ...</span></span>
+<span><span class="co">## [18] &lt;paragraph sourcepos="36:1-36:35"&gt;\n  &lt;text sourcepos="36:1-36:35" xml:s ...</span></span>
+<span><span class="co">## [19] &lt;code_block sourcepos="38:1-40:3" xml:space="preserve" language="r" name ...</span></span>
+<span><span class="co">## [20] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-4-solution"/&gt;</span></span>
+<span><span class="co">## ...</span></span></code></pre></div>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"You can clone the **{pegboard} package**:</span></span>
 <span><span class="st"></span></span>
@@ -680,49 +683,49 @@ block after the first heading:</p>
 <span><span class="st">"</span><span class="op">)</span></span>
 <span><span class="va">intro</span><span class="op">$</span><span class="fu">add_md</span><span class="op">(</span><span class="va">cb</span>, where <span class="op">=</span> <span class="fl">11</span><span class="op">)</span></span>
 <span><span class="va">intro</span><span class="op">$</span><span class="fu">head</span><span class="op">(</span><span class="fl">26</span><span class="op">)</span> <span class="co"># code block has been added</span></span></code></pre></div>
-<pre><code><span><span class="co">#&gt; ---</span></span>
-<span><span class="co">#&gt; title: "Using RMarkdown"</span></span>
-<span><span class="co">#&gt; teaching: 10</span></span>
-<span><span class="co">#&gt; exercises: 2</span></span>
-<span><span class="co">#&gt; ---</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; :::::::::::::::::::::::::::::::::::::: questions</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; - How do you write a lesson using RMarkdown and `{sandpaper}`?</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ::::::::::::::::::::::::::::::::::::: objectives</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; - Explain how to use markdown with the new lesson template</span></span>
-<span><span class="co">#&gt; - Demonstrate how to include pieces of code, figures, and nested challenge blocks</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ## Introduction</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; You can clone the **{pegboard} package**:</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ```sh</span></span>
-<span><span class="co">#&gt; git clone https://github.com/carpentries/pegboard.git</span></span>
-<span><span class="co">#&gt; ```</span></span>
+<pre><code><span><span class="co">## ---</span></span>
+<span><span class="co">## title: "Using RMarkdown"</span></span>
+<span><span class="co">## teaching: 10</span></span>
+<span><span class="co">## exercises: 2</span></span>
+<span><span class="co">## ---</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## :::::::::::::::::::::::::::::::::::::: questions</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## - How do you write a lesson using RMarkdown and `{sandpaper}`?</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::: objectives</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## - Explain how to use markdown with the new lesson template</span></span>
+<span><span class="co">## - Demonstrate how to include pieces of code, figures, and nested challenge blocks</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ## Introduction</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## You can clone the **{pegboard} package**:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ```sh</span></span>
+<span><span class="co">## git clone https://github.com/carpentries/pegboard.git</span></span>
+<span><span class="co">## ```</span></span>
 <span><span class="va">intro</span><span class="op">$</span><span class="va">code</span></span>
-<span><span class="co">#&gt; {xml_nodeset (4)}</span></span>
-<span><span class="co">#&gt; [1] &lt;code_block info="sh" xml:space="preserve" name=""&gt;git clone https://gith ...</span></span>
-<span><span class="co">#&gt; [2] &lt;code_block sourcepos="38:1-40:3" xml:space="preserve" language="r" name= ...</span></span>
-<span><span class="co">#&gt; [3] &lt;code_block sourcepos="46:1-48:3" xml:space="preserve" language="r" name= ...</span></span>
-<span><span class="co">#&gt; [4] &lt;code_block sourcepos="66:1-73:3" xml:space="preserve" language="r" name= ...</span></span></code></pre>
+<span><span class="co">## {xml_nodeset (4)}</span></span>
+<span><span class="co">## [1] &lt;code_block info="sh" xml:space="preserve" name=""&gt;git clone https://gith ...</span></span>
+<span><span class="co">## [2] &lt;code_block sourcepos="38:1-40:3" xml:space="preserve" language="r" name= ...</span></span>
+<span><span class="co">## [3] &lt;code_block sourcepos="46:1-48:3" xml:space="preserve" language="r" name= ...</span></span>
+<span><span class="co">## [4] &lt;code_block sourcepos="66:1-73:3" xml:space="preserve" language="r" name= ...</span></span></code></pre>
 <p>You can also manipulate existing elements. For example, let’s say we
 wanted to make sure all R code chunks were named. We can do so by
 querying and manipulating the code blocks:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">code</span> <span class="op">&lt;-</span> <span class="va">intro</span><span class="op">$</span><span class="va">code</span></span>
 <span><span class="va">code</span></span>
-<span><span class="co">#&gt; {xml_nodeset (4)}</span></span>
-<span><span class="co">#&gt; [1] &lt;code_block info="sh" xml:space="preserve" name=""&gt;git clone https://gith ...</span></span>
-<span><span class="co">#&gt; [2] &lt;code_block sourcepos="38:1-40:3" xml:space="preserve" language="r" name= ...</span></span>
-<span><span class="co">#&gt; [3] &lt;code_block sourcepos="46:1-48:3" xml:space="preserve" language="r" name= ...</span></span>
-<span><span class="co">#&gt; [4] &lt;code_block sourcepos="66:1-73:3" xml:space="preserve" language="r" name= ...</span></span>
+<span><span class="co">## {xml_nodeset (4)}</span></span>
+<span><span class="co">## [1] &lt;code_block info="sh" xml:space="preserve" name=""&gt;git clone https://gith ...</span></span>
+<span><span class="co">## [2] &lt;code_block sourcepos="38:1-40:3" xml:space="preserve" language="r" name= ...</span></span>
+<span><span class="co">## [3] &lt;code_block sourcepos="46:1-48:3" xml:space="preserve" language="r" name= ...</span></span>
+<span><span class="co">## [4] &lt;code_block sourcepos="66:1-73:3" xml:space="preserve" language="r" name= ...</span></span>
 <span><span class="co"># executable code chunks will have the "language" attribute</span></span>
 <span><span class="va">is_chunk</span> <span class="op">&lt;-</span> <span class="fu">xml2</span><span class="fu">::</span><span class="fu"><a href="http://xml2.r-lib.org/reference/xml_attr.html" class="external-link">xml_has_attr</a></span><span class="op">(</span><span class="va">code</span>, <span class="st">"language"</span><span class="op">)</span></span>
 <span><span class="va">chunks</span> <span class="op">&lt;-</span> <span class="va">code</span><span class="op">[</span><span class="va">is_chunk</span><span class="op">]</span></span>
@@ -731,145 +734,237 @@ querying and manipulating the code blocks:</p>
 <span><span class="va">chunk_names</span><span class="op">[</span><span class="va">nonames</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"chunk-"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">nonames</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu">xml2</span><span class="fu">::</span><span class="fu"><a href="http://xml2.r-lib.org/reference/xml_attr.html" class="external-link">xml_set_attr</a></span><span class="op">(</span><span class="va">chunks</span>, <span class="st">"name"</span>, <span class="va">chunk_names</span><span class="op">)</span></span>
 <span><span class="va">code</span></span>
-<span><span class="co">#&gt; {xml_nodeset (4)}</span></span>
-<span><span class="co">#&gt; [1] &lt;code_block info="sh" xml:space="preserve" name=""&gt;git clone https://gith ...</span></span>
-<span><span class="co">#&gt; [2] &lt;code_block sourcepos="38:1-40:3" xml:space="preserve" language="r" name= ...</span></span>
-<span><span class="co">#&gt; [3] &lt;code_block sourcepos="46:1-48:3" xml:space="preserve" language="r" name= ...</span></span>
-<span><span class="co">#&gt; [4] &lt;code_block sourcepos="66:1-73:3" xml:space="preserve" language="r" name= ...</span></span></code></pre></div>
+<span><span class="co">## {xml_nodeset (4)}</span></span>
+<span><span class="co">## [1] &lt;code_block info="sh" xml:space="preserve" name=""&gt;git clone https://gith ...</span></span>
+<span><span class="co">## [2] &lt;code_block sourcepos="38:1-40:3" xml:space="preserve" language="r" name= ...</span></span>
+<span><span class="co">## [3] &lt;code_block sourcepos="46:1-48:3" xml:space="preserve" language="r" name= ...</span></span>
+<span><span class="co">## [4] &lt;code_block sourcepos="66:1-73:3" xml:space="preserve" language="r" name= ...</span></span></code></pre></div>
 <p>We can see that the chunks now have names, but the proof is in the
 rendering:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">intro</span><span class="op">$</span><span class="fu">show</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ---</span></span>
-<span><span class="co">#&gt; title: "Using RMarkdown"</span></span>
-<span><span class="co">#&gt; teaching: 10</span></span>
-<span><span class="co">#&gt; exercises: 2</span></span>
-<span><span class="co">#&gt; ---</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; :::::::::::::::::::::::::::::::::::::: questions</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; - How do you write a lesson using RMarkdown and `{sandpaper}`?</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ::::::::::::::::::::::::::::::::::::: objectives</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; - Explain how to use markdown with the new lesson template</span></span>
-<span><span class="co">#&gt; - Demonstrate how to include pieces of code, figures, and nested challenge blocks</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ## Introduction</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; You can clone the **{pegboard} package**:</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ```sh</span></span>
-<span><span class="co">#&gt; git clone https://github.com/carpentries/pegboard.git</span></span>
-<span><span class="co">#&gt; ```</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; This is the new Carpentries template. It is written in [RMarkdown][r-markdown],</span></span>
-<span><span class="co">#&gt; which is a variant of Markdown that allows you to render code inside the</span></span>
-<span><span class="co">#&gt; lesson. Please refer to the [lesson</span></span>
-<span><span class="co">#&gt; example](https://carpentries.github.io/lesson-example) for full documentation.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; What you need to know is that there are three block quotes required for a valid</span></span>
-<span><span class="co">#&gt; Carpentries lesson template:</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; 1. `questions` are displayed at the beginning of the episode to prime the</span></span>
-<span><span class="co">#&gt;   learner for the content.</span></span>
-<span><span class="co">#&gt; 2. `objectives` are the learning objectives for an episode displayed with</span></span>
-<span><span class="co">#&gt;   the questions.</span></span>
-<span><span class="co">#&gt; 3. `keypoints` are displayed at the end of the episode to reinforce the</span></span>
-<span><span class="co">#&gt;   objectives.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ::::::::::::::::::::::::::::::::::::: challenge</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ## Challenge 1: Can you do it?</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; What is the output of this command?</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ```{r chunk-1, eval=FALSE}</span></span>
-<span><span class="co">#&gt; paste("This", "new", "template", "looks", "good")</span></span>
-<span><span class="co">#&gt; ```</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; :::::::::::::::::::::::: solution</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ## Output</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ```{r chunk-2, echo=FALSE}</span></span>
-<span><span class="co">#&gt; paste("This", "new", "template", "looks", "good")</span></span>
-<span><span class="co">#&gt; ```</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ::::::::::::::::::::::::::::::::::</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ## Challenge 2: how do you nest solutions within challenge blocks?</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; :::::::::::::::::::::::: solution</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; You can add a line with at least three colons and a `solution` tag.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; :::::::::::::::::::::::::::::::::</span></span>
-<span><span class="co">#&gt; ::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ## Figures</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; You can also include figures:</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ```{r pyramid}</span></span>
-<span><span class="co">#&gt; pie(</span></span>
-<span><span class="co">#&gt;   c(Sky = 78, "Sunny side of pyramid" = 17, "Shady side of pyramid" = 5), </span></span>
-<span><span class="co">#&gt;   init.angle = 315, </span></span>
-<span><span class="co">#&gt;   col = c("deepskyblue", "yellow", "yellow3"), </span></span>
-<span><span class="co">#&gt;   border = FALSE</span></span>
-<span><span class="co">#&gt; )</span></span>
-<span><span class="co">#&gt; ```</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ## Math</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; One of our episodes contains $\LaTeX$ equations when describing how to create</span></span>
-<span><span class="co">#&gt; dynamic reports with {knitr}, so we now use mathjax to describe this:</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; `$\alpha = \dfrac{1}{(1 - \beta)^2}$` becomes: $\alpha = \dfrac{1}{(1 - \beta)^2}$</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Cool, right?</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ::::::::::::::::::::::::::::::::::::: keypoints</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; - Use `.Rmd` files for lessons even if you don't need to generate any code</span></span>
-<span><span class="co">#&gt; - Run `sandpaper::check_lesson()` to identify any issues with your lesson</span></span>
-<span><span class="co">#&gt; - Run `sandpaper::build_lesson()` to preview your lesson locally</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ::::::::::::::::::::::::::::::::::::::::::::::::</span></span></code></pre></div>
+<span><span class="co">## ---</span></span>
+<span><span class="co">## title: "Using RMarkdown"</span></span>
+<span><span class="co">## teaching: 10</span></span>
+<span><span class="co">## exercises: 2</span></span>
+<span><span class="co">## ---</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## :::::::::::::::::::::::::::::::::::::: questions</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## - How do you write a lesson using RMarkdown and `{sandpaper}`?</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::: objectives</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## - Explain how to use markdown with the new lesson template</span></span>
+<span><span class="co">## - Demonstrate how to include pieces of code, figures, and nested challenge blocks</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ## Introduction</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## You can clone the **{pegboard} package**:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ```sh</span></span>
+<span><span class="co">## git clone https://github.com/carpentries/pegboard.git</span></span>
+<span><span class="co">## ```</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## This is the new Carpentries template. It is written in [RMarkdown][r-markdown],</span></span>
+<span><span class="co">## which is a variant of Markdown that allows you to render code inside the</span></span>
+<span><span class="co">## lesson. Please refer to the [lesson</span></span>
+<span><span class="co">## example](https://carpentries.github.io/lesson-example) for full documentation.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## What you need to know is that there are three block quotes required for a valid</span></span>
+<span><span class="co">## Carpentries lesson template:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## 1. `questions` are displayed at the beginning of the episode to prime the</span></span>
+<span><span class="co">##   learner for the content.</span></span>
+<span><span class="co">## 2. `objectives` are the learning objectives for an episode displayed with</span></span>
+<span><span class="co">##   the questions.</span></span>
+<span><span class="co">## 3. `keypoints` are displayed at the end of the episode to reinforce the</span></span>
+<span><span class="co">##   objectives.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::: challenge</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ## Challenge 1: Can you do it?</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## What is the output of this command?</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ```{r chunk-1, eval=FALSE}</span></span>
+<span><span class="co">## paste("This", "new", "template", "looks", "good")</span></span>
+<span><span class="co">## ```</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## :::::::::::::::::::::::: solution</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ## Output</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ```{r chunk-2, echo=FALSE}</span></span>
+<span><span class="co">## paste("This", "new", "template", "looks", "good")</span></span>
+<span><span class="co">## ```</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ## Challenge 2: how do you nest solutions within challenge blocks?</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## :::::::::::::::::::::::: solution</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## You can add a line with at least three colons and a `solution` tag.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## :::::::::::::::::::::::::::::::::</span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ## Figures</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## You can also include figures:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ```{r pyramid}</span></span>
+<span><span class="co">## pie(</span></span>
+<span><span class="co">##   c(Sky = 78, "Sunny side of pyramid" = 17, "Shady side of pyramid" = 5), </span></span>
+<span><span class="co">##   init.angle = 315, </span></span>
+<span><span class="co">##   col = c("deepskyblue", "yellow", "yellow3"), </span></span>
+<span><span class="co">##   border = FALSE</span></span>
+<span><span class="co">## )</span></span>
+<span><span class="co">## ```</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ## Math</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## One of our episodes contains $\LaTeX$ equations when describing how to create</span></span>
+<span><span class="co">## dynamic reports with {knitr}, so we now use mathjax to describe this:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## `$\alpha = \dfrac{1}{(1 - \beta)^2}$` becomes: $\alpha = \dfrac{1}{(1 - \beta)^2}$</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Cool, right?</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::: keypoints</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## - Use `.Rmd` files for lessons even if you don't need to generate any code</span></span>
+<span><span class="co">## - Run `sandpaper::check_lesson()` to identify any issues with your lesson</span></span>
+<span><span class="co">## - Run `sandpaper::build_lesson()` to preview your lesson locally</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::::::::::::</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="handouts">Handouts<a class="anchor" aria-label="anchor" href="#handouts"></a>
+</h2>
+<p><strong>NOTE: This will change in version 0.8.0</strong>. It is
+possible to generate a code handout by using the <code>$handout()</code>
+method. This will grab all challenge blocks along with any code block
+that contains <code>purl = TRUE</code> and strip out everything else.
+You can also specifiy <code>solution = TRUE</code> to include the
+solutions:</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="va">intro</span><span class="op">$</span><span class="fu">handout</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## ## Challenge 1: Can you do it?</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## What is the output of this command?</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ```{r chunk-1, eval=FALSE}</span></span>
+<span><span class="co">## paste("This", "new", "template", "looks", "good")</span></span>
+<span><span class="co">## ```</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="va">intro</span><span class="op">$</span><span class="fu">handout</span><span class="op">(</span>solution <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## ## Challenge 1: Can you do it?</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## What is the output of this command?</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ```{r chunk-1, eval=FALSE}</span></span>
+<span><span class="co">## paste("This", "new", "template", "looks", "good")</span></span>
+<span><span class="co">## ```</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## :::::::::::::::::::::::: solution</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ## Output</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ```{r chunk-2, echo=FALSE}</span></span>
+<span><span class="co">## paste("This", "new", "template", "looks", "good")</span></span>
+<span><span class="co">## ```</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ## Challenge 2: how do you nest solutions within challenge blocks?</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## :::::::::::::::::::::::: solution</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## You can add a line with at least three colons and a `solution` tag.</span></span></code></pre></div>
+<p>I want to show that the <code>purl = TRUE</code> method actually
+works, so I’ll take the <code>chunks</code> from above and include the
+last one:</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">xml2</span><span class="fu">::</span><span class="fu"><a href="http://xml2.r-lib.org/reference/xml_attr.html" class="external-link">xml_set_attr</a></span><span class="op">(</span><span class="va">chunks</span><span class="op">[</span><span class="va">chunk_names</span> <span class="op">==</span> <span class="st">"pyramid"</span><span class="op">]</span>, <span class="st">"purl"</span>, <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="va">intro</span><span class="op">$</span><span class="fu">handout</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## ## Challenge 1: Can you do it?</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## What is the output of this command?</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ```{r chunk-1, eval=FALSE}</span></span>
+<span><span class="co">## paste("This", "new", "template", "looks", "good")</span></span>
+<span><span class="co">## ```</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ```{r pyramid, purl=TRUE}</span></span>
+<span><span class="co">## pie(</span></span>
+<span><span class="co">##   c(Sky = 78, "Sunny side of pyramid" = 17, "Shady side of pyramid" = 5), </span></span>
+<span><span class="co">##   init.angle = 315, </span></span>
+<span><span class="co">##   col = c("deepskyblue", "yellow", "yellow3"), </span></span>
+<span><span class="co">##   border = FALSE</span></span>
+<span><span class="co">## )</span></span>
+<span><span class="co">## ```</span></span></code></pre></div>
+<p>The <code>path</code> arguments allows this to be written to a file
+so that it can be converted to a script using
+<code><a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link">knitr::purl</a></code></p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">intro</span><span class="op">$</span><span class="fu">handout</span><span class="op">(</span>path <span class="op">=</span> <span class="va">tmp</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## ## Challenge 1: Can you do it?</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## What is the output of this command?</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ```{r chunk-1, eval=FALSE}</span></span>
+<span><span class="co">## paste("This", "new", "template", "looks", "good")</span></span>
+<span><span class="co">## ```</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ```{r pyramid, purl=TRUE}</span></span>
+<span><span class="co">## pie(</span></span>
+<span><span class="co">##   c(Sky = 78, "Sunny side of pyramid" = 17, "Shady side of pyramid" = 5), </span></span>
+<span><span class="co">##   init.angle = 315, </span></span>
+<span><span class="co">##   col = c("deepskyblue", "yellow", "yellow3"), </span></span>
+<span><span class="co">##   border = FALSE</span></span>
+<span><span class="co">## )</span></span>
+<span><span class="co">## ```</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="reset">Reset<a class="anchor" aria-label="anchor" href="#reset"></a>
+</h2>
 <p>One of the things about manipulating these documents in code is that
 it is possible to go back and reset if things are not correct, which is
 why we have the <code>$reset()</code> method:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">intro</span><span class="op">$</span><span class="fu">reset</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">confirm_sandpaper</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">protect_math</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">head</span><span class="op">(</span><span class="fl">25</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ---</span></span>
-<span><span class="co">#&gt; title: "Using RMarkdown"</span></span>
-<span><span class="co">#&gt; teaching: 10</span></span>
-<span><span class="co">#&gt; exercises: 2</span></span>
-<span><span class="co">#&gt; ---</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; :::::::::::::::::::::::::::::::::::::: questions</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; - How do you write a lesson using RMarkdown and `{sandpaper}`?</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ::::::::::::::::::::::::::::::::::::: objectives</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; - Explain how to use markdown with the new lesson template</span></span>
-<span><span class="co">#&gt; - Demonstrate how to include pieces of code, figures, and nested challenge blocks</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ## Introduction</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; This is the new Carpentries template. It is written in [RMarkdown][r-markdown],</span></span>
-<span><span class="co">#&gt; which is a variant of Markdown that allows you to render code inside the</span></span>
-<span><span class="co">#&gt; lesson. Please refer to the [lesson</span></span>
-<span><span class="co">#&gt; example](https://carpentries.github.io/lesson-example) for full documentation.</span></span></code></pre></div>
+<span><span class="co">## ---</span></span>
+<span><span class="co">## title: "Using RMarkdown"</span></span>
+<span><span class="co">## teaching: 10</span></span>
+<span><span class="co">## exercises: 2</span></span>
+<span><span class="co">## ---</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## :::::::::::::::::::::::::::::::::::::: questions</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## - How do you write a lesson using RMarkdown and `{sandpaper}`?</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::: objectives</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## - Explain how to use markdown with the new lesson template</span></span>
+<span><span class="co">## - Demonstrate how to include pieces of code, figures, and nested challenge blocks</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ## Introduction</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## This is the new Carpentries template. It is written in [RMarkdown][r-markdown],</span></span>
+<span><span class="co">## which is a variant of Markdown that allows you to render code inside the</span></span>
+<span><span class="co">## lesson. Please refer to the [lesson</span></span>
+<span><span class="co">## example](https://carpentries.github.io/lesson-example) for full documentation.</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="jekyll-lesson-markdown-content">Jekyll Lesson Markdown Content<a class="anchor" aria-label="anchor" href="#jekyll-lesson-markdown-content"></a>
@@ -896,27 +991,27 @@ These elements were formated as <code>{: &lt;attributes&gt;}</code>
 where <code>&lt;attributes&gt;</code> is replaced by class definitions
 and key/value pairs. They always appear <em>after</em> the relevant
 block which lead to code blocks that looked like this:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="in">~~~</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="in">ls -larth /path/to/dir</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="in">~~~</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>{: .language-bash}</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="in">~~~</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="in">ls -larth /path/to/dir</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="in">~~~</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>{: .language-bash}</span></code></pre></div>
 <p>Moreover, to achieve the special callout blocks, we used blockquotes
 that were given special classes (which is an accessbility no-no because
 those blocks were not semantic HTML) and the nesting of these block
 quotes looked like this:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ## Challenge</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; How do you list all files in a directory in reverse order by the time it was </span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; last updated?</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &gt; ## Solution</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &gt; </span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &gt; ~~~</span></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &gt; ls -larth /path/to/dir</span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &gt; ~~~</span></span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &gt; {: .language-bash}</span></span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; {: .solution}</span></span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="at">{: .challenge}</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ## Challenge</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; How do you list all files in a directory in reverse order by the time it was </span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; last updated?</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &gt; ## Solution</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &gt; </span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &gt; ~~~</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &gt; ls -larth /path/to/dir</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &gt; ~~~</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &gt; {: .language-bash}</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; {: .solution}</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="at">{: .challenge}</span></span></code></pre></div>
 <p>One of the biggest challenges with this for authors was that, unless
 you used an editor like vim or emacs, this was difficult to write with
 all the prefixed blockquote characters and keeping track of which IALs
@@ -925,187 +1020,187 @@ belonged to which block.</p>
 <div class="section level3">
 <h3 id="special-methods-and-active-bindings">Special methods and active bindings<a class="anchor" aria-label="anchor" href="#special-methods-and-active-bindings"></a>
 </h3>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://carpentries.github.io/pegboard">"pegboard"</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://xml2.r-lib.org/" class="external-link">"xml2"</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://fs.r-lib.org" class="external-link">"fs"</a></span><span class="op">)</span></span></code></pre></div>
 <p>Episodes written in the Jekyll syntax have special functions and
 active bindings that allow them to be analyzed and transformed to
 Workbench episodes. Here is an example from a lesson fragment:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lesson_fragment.html">lesson_fragment</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">ep</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/Episode.html">Episode</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://fs.r-lib.org/reference/path.html" class="external-link">path</a></span><span class="op">(</span><span class="va">lf</span>, <span class="st">"_episodes"</span>, <span class="st">"14-looping-data-sets.md"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co"># show relevant sections of head and tail</span></span>
 <span><span class="va">ep</span><span class="op">$</span><span class="fu">head</span><span class="op">(</span><span class="fl">29</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ---</span></span>
-<span><span class="co">#&gt; title: "Looping Over Data Sets"</span></span>
-<span><span class="co">#&gt; teaching: 5</span></span>
-<span><span class="co">#&gt; exercises: 10</span></span>
-<span><span class="co">#&gt; questions:</span></span>
-<span><span class="co">#&gt; - "How can I process many data sets with a single command?"</span></span>
-<span><span class="co">#&gt; objectives:</span></span>
-<span><span class="co">#&gt; - "Be able to read and write globbing expressions that match sets of files."</span></span>
-<span><span class="co">#&gt; - "Use glob to create lists of files."</span></span>
-<span><span class="co">#&gt; - "Write for loops to perform operations on files given their names in a list."</span></span>
-<span><span class="co">#&gt; keypoints:</span></span>
-<span><span class="co">#&gt; - "Use a `for` loop to process files given a list of their names."</span></span>
-<span><span class="co">#&gt; - "Use `glob.glob` to find sets of files whose names match a pattern."</span></span>
-<span><span class="co">#&gt; - "Use `glob` and `for` to process batches of files."</span></span>
-<span><span class="co">#&gt; ---</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ## Use a `for` loop to process files given a list of their names.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; - A filename is a character string.</span></span>
-<span><span class="co">#&gt; - And lists can contain character strings.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ```</span></span>
-<span><span class="co">#&gt; import pandas as pd</span></span>
-<span><span class="co">#&gt; for filename in ['data/gapminder_gdp_africa.csv', 'data/gapminder_gdp_asia.csv']:</span></span>
-<span><span class="co">#&gt;     data = pd.read_csv(filename, index_col='country')</span></span>
-<span><span class="co">#&gt;     print(filename, data.min())</span></span>
-<span><span class="co">#&gt; ```</span></span>
-<span><span class="co">#&gt; {: .language-python}</span></span>
+<span><span class="co">## ---</span></span>
+<span><span class="co">## title: "Looping Over Data Sets"</span></span>
+<span><span class="co">## teaching: 5</span></span>
+<span><span class="co">## exercises: 10</span></span>
+<span><span class="co">## questions:</span></span>
+<span><span class="co">## - "How can I process many data sets with a single command?"</span></span>
+<span><span class="co">## objectives:</span></span>
+<span><span class="co">## - "Be able to read and write globbing expressions that match sets of files."</span></span>
+<span><span class="co">## - "Use glob to create lists of files."</span></span>
+<span><span class="co">## - "Write for loops to perform operations on files given their names in a list."</span></span>
+<span><span class="co">## keypoints:</span></span>
+<span><span class="co">## - "Use a `for` loop to process files given a list of their names."</span></span>
+<span><span class="co">## - "Use `glob.glob` to find sets of files whose names match a pattern."</span></span>
+<span><span class="co">## - "Use `glob` and `for` to process batches of files."</span></span>
+<span><span class="co">## ---</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ## Use a `for` loop to process files given a list of their names.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## - A filename is a character string.</span></span>
+<span><span class="co">## - And lists can contain character strings.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ```</span></span>
+<span><span class="co">## import pandas as pd</span></span>
+<span><span class="co">## for filename in ['data/gapminder_gdp_africa.csv', 'data/gapminder_gdp_asia.csv']:</span></span>
+<span><span class="co">##     data = pd.read_csv(filename, index_col='country')</span></span>
+<span><span class="co">##     print(filename, data.min())</span></span>
+<span><span class="co">## ```</span></span>
+<span><span class="co">## {: .language-python}</span></span>
 <span><span class="va">ep</span><span class="op">$</span><span class="fu">tail</span><span class="op">(</span><span class="fl">53</span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; &gt; ## Comparing Data</span></span>
-<span><span class="co">#&gt; &gt; </span></span>
-<span><span class="co">#&gt; &gt; Write a program that reads in the regional data sets</span></span>
-<span><span class="co">#&gt; &gt; and plots the average GDP per capita for each region over time</span></span>
-<span><span class="co">#&gt; &gt; in a single chart.</span></span>
-<span><span class="co">#&gt; &gt; </span></span>
-<span><span class="co">#&gt; &gt; &gt; ## Solution</span></span>
-<span><span class="co">#&gt; &gt; &gt; </span></span>
-<span><span class="co">#&gt; &gt; &gt; This solution builds a useful legend by using the string [`split`](https://docs.python.org/3/library/stdtypes.html#str.split) method to</span></span>
-<span><span class="co">#&gt; &gt; &gt; extract the `region` from the path 'data/gapminder\_gdp\_a\_specific\_region.csv'. The [`pathlib module`]</span></span>
-<span><span class="co">#&gt; &gt; &gt; also provides useful abstractions for file and path manipulation like returning the name of a file</span></span>
-<span><span class="co">#&gt; &gt; &gt; without the file extension.</span></span>
-<span><span class="co">#&gt; &gt; &gt; </span></span>
-<span><span class="co">#&gt; &gt; &gt; ```</span></span>
-<span><span class="co">#&gt; &gt; &gt; import glob</span></span>
-<span><span class="co">#&gt; &gt; &gt; import pandas as pd</span></span>
-<span><span class="co">#&gt; &gt; &gt; import matplotlib.pyplot as plt</span></span>
-<span><span class="co">#&gt; &gt; &gt; fig, ax = plt.subplots(1,1)</span></span>
-<span><span class="co">#&gt; &gt; &gt; for filename in glob.glob('data/gapminder_gdp*.csv'):</span></span>
-<span><span class="co">#&gt; &gt; &gt;     dataframe = pd.read_csv(filename)</span></span>
-<span><span class="co">#&gt; &gt; &gt;     # extract &lt;region&gt; from the filename, expected to be in the format 'data/gapminder_gdp_&lt;region&gt;.csv'.</span></span>
-<span><span class="co">#&gt; &gt; &gt;     # we will split the string using the split method and `_` as our separator,</span></span>
-<span><span class="co">#&gt; &gt; &gt;     # retrieve the last string in the list that split returns (`&lt;region&gt;.csv`), </span></span>
-<span><span class="co">#&gt; &gt; &gt;     # and then remove the `.csv` extension from that string.</span></span>
-<span><span class="co">#&gt; &gt; &gt;     region = filename.split('_')[-1][:-4] </span></span>
-<span><span class="co">#&gt; &gt; &gt;     dataframe.mean().plot(ax=ax, label=region)</span></span>
-<span><span class="co">#&gt; &gt; &gt; plt.legend()</span></span>
-<span><span class="co">#&gt; &gt; &gt; plt.show()</span></span>
-<span><span class="co">#&gt; &gt; &gt; ```</span></span>
-<span><span class="co">#&gt; &gt; &gt; {: .language-python}</span></span>
-<span><span class="co">#&gt; &gt; {: .solution}</span></span>
-<span><span class="co">#&gt; {: .challenge}</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ### ZNK test links and images</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; &lt;img src="https://carpentries.org/assets/img/TheCarpentries.svg" alt="books as clubs"&gt;</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; &lt;img src="../no-workie.svg" alt="books as clubs"&gt;</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Link to [Home]({{ page.root }}/index.html) and to [shell]({{ site.swc_pages }}/shell-novice)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ![Carpentries logo](https://carpentries.org/assets/img/TheCarpentries.svg)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ![Non-working image](../no-workie.svg)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ![Non-working image with jekyll syntax]({{ page.root }}/no-workie.svg)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; This text includes a [link that isn't parsed correctly by commonmark]({{ page.root }}{% link index.md %})</span></span>
-<span><span class="co">#&gt; . The rest of the text should be properly parsed.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; {% include links.md %}</span></span></code></pre></div>
+<span><span class="co">## </span></span>
+<span><span class="co">## &gt; ## Comparing Data</span></span>
+<span><span class="co">## &gt; </span></span>
+<span><span class="co">## &gt; Write a program that reads in the regional data sets</span></span>
+<span><span class="co">## &gt; and plots the average GDP per capita for each region over time</span></span>
+<span><span class="co">## &gt; in a single chart.</span></span>
+<span><span class="co">## &gt; </span></span>
+<span><span class="co">## &gt; &gt; ## Solution</span></span>
+<span><span class="co">## &gt; &gt; </span></span>
+<span><span class="co">## &gt; &gt; This solution builds a useful legend by using the string [`split`](https://docs.python.org/3/library/stdtypes.html#str.split) method to</span></span>
+<span><span class="co">## &gt; &gt; extract the `region` from the path 'data/gapminder\_gdp\_a\_specific\_region.csv'. The [`pathlib module`]</span></span>
+<span><span class="co">## &gt; &gt; also provides useful abstractions for file and path manipulation like returning the name of a file</span></span>
+<span><span class="co">## &gt; &gt; without the file extension.</span></span>
+<span><span class="co">## &gt; &gt; </span></span>
+<span><span class="co">## &gt; &gt; ```</span></span>
+<span><span class="co">## &gt; &gt; import glob</span></span>
+<span><span class="co">## &gt; &gt; import pandas as pd</span></span>
+<span><span class="co">## &gt; &gt; import matplotlib.pyplot as plt</span></span>
+<span><span class="co">## &gt; &gt; fig, ax = plt.subplots(1,1)</span></span>
+<span><span class="co">## &gt; &gt; for filename in glob.glob('data/gapminder_gdp*.csv'):</span></span>
+<span><span class="co">## &gt; &gt;     dataframe = pd.read_csv(filename)</span></span>
+<span><span class="co">## &gt; &gt;     # extract &lt;region&gt; from the filename, expected to be in the format 'data/gapminder_gdp_&lt;region&gt;.csv'.</span></span>
+<span><span class="co">## &gt; &gt;     # we will split the string using the split method and `_` as our separator,</span></span>
+<span><span class="co">## &gt; &gt;     # retrieve the last string in the list that split returns (`&lt;region&gt;.csv`), </span></span>
+<span><span class="co">## &gt; &gt;     # and then remove the `.csv` extension from that string.</span></span>
+<span><span class="co">## &gt; &gt;     region = filename.split('_')[-1][:-4] </span></span>
+<span><span class="co">## &gt; &gt;     dataframe.mean().plot(ax=ax, label=region)</span></span>
+<span><span class="co">## &gt; &gt; plt.legend()</span></span>
+<span><span class="co">## &gt; &gt; plt.show()</span></span>
+<span><span class="co">## &gt; &gt; ```</span></span>
+<span><span class="co">## &gt; &gt; {: .language-python}</span></span>
+<span><span class="co">## &gt; {: .solution}</span></span>
+<span><span class="co">## {: .challenge}</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ### ZNK test links and images</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## &lt;img src="https://carpentries.org/assets/img/TheCarpentries.svg" alt="books as clubs"&gt;</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## &lt;img src="../no-workie.svg" alt="books as clubs"&gt;</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Link to [Home]({{ page.root }}/index.html) and to [shell]({{ site.swc_pages }}/shell-novice)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ![Carpentries logo](https://carpentries.org/assets/img/TheCarpentries.svg)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ![Non-working image](../no-workie.svg)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ![Non-working image with jekyll syntax]({{ page.root }}/no-workie.svg)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## This text includes a [link that isn't parsed correctly by commonmark]({{ page.root }}{% link index.md %})</span></span>
+<span><span class="co">## . The rest of the text should be properly parsed.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## {% include links.md %}</span></span></code></pre></div>
 <p>Notice that the questions, objectives, and keypoints are in the yaml
 frontmatter. This is why we have an accessor that returns the list
 instead of the node, for compatibility with the Jekyll lessons:</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ep</span><span class="op">$</span><span class="va">questions</span></span>
-<span><span class="co">#&gt; [1] "How can I process many data sets with a single command?"</span></span>
+<span><span class="co">## [1] "How can I process many data sets with a single command?"</span></span>
 <span><span class="va">ep</span><span class="op">$</span><span class="va">objectives</span></span>
-<span><span class="co">#&gt; [1] "Be able to read and write globbing expressions that match sets of files."   </span></span>
-<span><span class="co">#&gt; [2] "Use glob to create lists of files."                                         </span></span>
-<span><span class="co">#&gt; [3] "Write for loops to perform operations on files given their names in a list."</span></span>
+<span><span class="co">## [1] "Be able to read and write globbing expressions that match sets of files."   </span></span>
+<span><span class="co">## [2] "Use glob to create lists of files."                                         </span></span>
+<span><span class="co">## [3] "Write for loops to perform operations on files given their names in a list."</span></span>
 <span><span class="va">ep</span><span class="op">$</span><span class="va">keypoints</span></span>
-<span><span class="co">#&gt; [1] "Use a `for` loop to process files given a list of their names."    </span></span>
-<span><span class="co">#&gt; [2] "Use `glob.glob` to find sets of files whose names match a pattern."</span></span>
-<span><span class="co">#&gt; [3] "Use `glob` and `for` to process batches of files."</span></span></code></pre></div>
+<span><span class="co">## [1] "Use a `for` loop to process files given a list of their names."    </span></span>
+<span><span class="co">## [2] "Use `glob.glob` to find sets of files whose names match a pattern."</span></span>
+<span><span class="co">## [3] "Use `glob` and `for` to process batches of files."</span></span></code></pre></div>
 <p>Even though the challenges are formatted differently, the accessors
 will still return them correctly:</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ep</span><span class="op">$</span><span class="va">challenges</span></span>
-<span><span class="co">#&gt; {xml_nodeset (3)}</span></span>
-<span><span class="co">#&gt; [1] &lt;block_quote sourcepos="95:1-108:14" ktag="{: .challenge}"&gt;\n  &lt;heading s ...</span></span>
-<span><span class="co">#&gt; [2] &lt;block_quote sourcepos="110:1-140:14" ktag="{: .challenge}"&gt;\n  &lt;heading  ...</span></span>
-<span><span class="co">#&gt; [3] &lt;block_quote sourcepos="142:1-170:14" ktag="{: .challenge}"&gt;\n  &lt;heading  ...</span></span>
+<span><span class="co">## {xml_nodeset (3)}</span></span>
+<span><span class="co">## [1] &lt;block_quote sourcepos="95:1-108:14" ktag="{: .challenge}"&gt;\n  &lt;heading s ...</span></span>
+<span><span class="co">## [2] &lt;block_quote sourcepos="110:1-140:14" ktag="{: .challenge}"&gt;\n  &lt;heading  ...</span></span>
+<span><span class="co">## [3] &lt;block_quote sourcepos="142:1-170:14" ktag="{: .challenge}"&gt;\n  &lt;heading  ...</span></span>
 <span><span class="va">ep</span><span class="op">$</span><span class="va">solutions</span></span>
-<span><span class="co">#&gt; {xml_nodeset (3)}</span></span>
-<span><span class="co">#&gt; [1] &lt;block_quote sourcepos="104:3-108:14" ktag="{: .solution}"&gt;\n  &lt;heading s ...</span></span>
-<span><span class="co">#&gt; [2] &lt;block_quote sourcepos="128:3-140:14" ktag="{: .solution}"&gt;\n  &lt;heading s ...</span></span>
-<span><span class="co">#&gt; [3] &lt;block_quote sourcepos="147:3-170:14" ktag="{: .solution}"&gt;\n  &lt;heading s ...</span></span></code></pre></div>
+<span><span class="co">## {xml_nodeset (3)}</span></span>
+<span><span class="co">## [1] &lt;block_quote sourcepos="104:3-108:14" ktag="{: .solution}"&gt;\n  &lt;heading s ...</span></span>
+<span><span class="co">## [2] &lt;block_quote sourcepos="128:3-140:14" ktag="{: .solution}"&gt;\n  &lt;heading s ...</span></span>
+<span><span class="co">## [3] &lt;block_quote sourcepos="147:3-170:14" ktag="{: .solution}"&gt;\n  &lt;heading s ...</span></span></code></pre></div>
 <p>You can also get <em>all</em> of the block quotes using the
 <code>$get_blocks()</code> method. NOTE: this will extract <em>all</em>
 block quotes (including those that do not have the <code>ktag</code>
 attributes.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ep</span><span class="op">$</span><span class="fu">get_blocks</span><span class="op">(</span><span class="op">)</span> <span class="co"># default is all top-level blocks (challenges/callouts)</span></span>
-<span><span class="co">#&gt; {xml_nodeset (3)}</span></span>
-<span><span class="co">#&gt; [1] &lt;block_quote sourcepos="95:1-108:14" ktag="{: .challenge}"&gt;\n  &lt;heading s ...</span></span>
-<span><span class="co">#&gt; [2] &lt;block_quote sourcepos="110:1-140:14" ktag="{: .challenge}"&gt;\n  &lt;heading  ...</span></span>
-<span><span class="co">#&gt; [3] &lt;block_quote sourcepos="142:1-170:14" ktag="{: .challenge}"&gt;\n  &lt;heading  ...</span></span>
+<span><span class="co">## {xml_nodeset (3)}</span></span>
+<span><span class="co">## [1] &lt;block_quote sourcepos="95:1-108:14" ktag="{: .challenge}"&gt;\n  &lt;heading s ...</span></span>
+<span><span class="co">## [2] &lt;block_quote sourcepos="110:1-140:14" ktag="{: .challenge}"&gt;\n  &lt;heading  ...</span></span>
+<span><span class="co">## [3] &lt;block_quote sourcepos="142:1-170:14" ktag="{: .challenge}"&gt;\n  &lt;heading  ...</span></span>
 <span><span class="va">ep</span><span class="op">$</span><span class="fu">get_blocks</span><span class="op">(</span>level <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="co"># nested blocks are usually solutions</span></span>
-<span><span class="co">#&gt; {xml_nodeset (3)}</span></span>
-<span><span class="co">#&gt; [1] &lt;block_quote sourcepos="104:3-108:14" ktag="{: .solution}"&gt;\n  &lt;heading s ...</span></span>
-<span><span class="co">#&gt; [2] &lt;block_quote sourcepos="128:3-140:14" ktag="{: .solution}"&gt;\n  &lt;heading s ...</span></span>
-<span><span class="co">#&gt; [3] &lt;block_quote sourcepos="147:3-170:14" ktag="{: .solution}"&gt;\n  &lt;heading s ...</span></span>
+<span><span class="co">## {xml_nodeset (3)}</span></span>
+<span><span class="co">## [1] &lt;block_quote sourcepos="104:3-108:14" ktag="{: .solution}"&gt;\n  &lt;heading s ...</span></span>
+<span><span class="co">## [2] &lt;block_quote sourcepos="128:3-140:14" ktag="{: .solution}"&gt;\n  &lt;heading s ...</span></span>
+<span><span class="co">## [3] &lt;block_quote sourcepos="147:3-170:14" ktag="{: .solution}"&gt;\n  &lt;heading s ...</span></span>
 <span><span class="va">ep</span><span class="op">$</span><span class="fu">get_blocks</span><span class="op">(</span>level <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="co"># level zero is all levels</span></span>
-<span><span class="co">#&gt; {xml_nodeset (6)}</span></span>
-<span><span class="co">#&gt; [1] &lt;block_quote sourcepos="95:1-108:14" ktag="{: .challenge}"&gt;\n  &lt;heading s ...</span></span>
-<span><span class="co">#&gt; [2] &lt;block_quote sourcepos="104:3-108:14" ktag="{: .solution}"&gt;\n  &lt;heading s ...</span></span>
-<span><span class="co">#&gt; [3] &lt;block_quote sourcepos="110:1-140:14" ktag="{: .challenge}"&gt;\n  &lt;heading  ...</span></span>
-<span><span class="co">#&gt; [4] &lt;block_quote sourcepos="128:3-140:14" ktag="{: .solution}"&gt;\n  &lt;heading s ...</span></span>
-<span><span class="co">#&gt; [5] &lt;block_quote sourcepos="142:1-170:14" ktag="{: .challenge}"&gt;\n  &lt;heading  ...</span></span>
-<span><span class="co">#&gt; [6] &lt;block_quote sourcepos="147:3-170:14" ktag="{: .solution}"&gt;\n  &lt;heading s ...</span></span>
+<span><span class="co">## {xml_nodeset (6)}</span></span>
+<span><span class="co">## [1] &lt;block_quote sourcepos="95:1-108:14" ktag="{: .challenge}"&gt;\n  &lt;heading s ...</span></span>
+<span><span class="co">## [2] &lt;block_quote sourcepos="104:3-108:14" ktag="{: .solution}"&gt;\n  &lt;heading s ...</span></span>
+<span><span class="co">## [3] &lt;block_quote sourcepos="110:1-140:14" ktag="{: .challenge}"&gt;\n  &lt;heading  ...</span></span>
+<span><span class="co">## [4] &lt;block_quote sourcepos="128:3-140:14" ktag="{: .solution}"&gt;\n  &lt;heading s ...</span></span>
+<span><span class="co">## [5] &lt;block_quote sourcepos="142:1-170:14" ktag="{: .challenge}"&gt;\n  &lt;heading  ...</span></span>
+<span><span class="co">## [6] &lt;block_quote sourcepos="147:3-170:14" ktag="{: .solution}"&gt;\n  &lt;heading s ...</span></span>
 <span><span class="va">ep</span><span class="op">$</span><span class="fu">get_blocks</span><span class="op">(</span>type <span class="op">=</span> <span class="st">".solution"</span>, level <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="co"># filter by type</span></span>
-<span><span class="co">#&gt; {xml_nodeset (3)}</span></span>
-<span><span class="co">#&gt; [1] &lt;block_quote sourcepos="104:3-108:14" ktag="{: .solution}"&gt;\n  &lt;heading s ...</span></span>
-<span><span class="co">#&gt; [2] &lt;block_quote sourcepos="128:3-140:14" ktag="{: .solution}"&gt;\n  &lt;heading s ...</span></span>
-<span><span class="co">#&gt; [3] &lt;block_quote sourcepos="147:3-170:14" ktag="{: .solution}"&gt;\n  &lt;heading s ...</span></span></code></pre></div>
+<span><span class="co">## {xml_nodeset (3)}</span></span>
+<span><span class="co">## [1] &lt;block_quote sourcepos="104:3-108:14" ktag="{: .solution}"&gt;\n  &lt;heading s ...</span></span>
+<span><span class="co">## [2] &lt;block_quote sourcepos="128:3-140:14" ktag="{: .solution}"&gt;\n  &lt;heading s ...</span></span>
+<span><span class="co">## [3] &lt;block_quote sourcepos="147:3-170:14" ktag="{: .solution}"&gt;\n  &lt;heading s ...</span></span></code></pre></div>
 <p>One of the things that was advantageous about blockquotes is that we
 could analyze the pathway through the blockquotes and figure out how
 they were comonly written in a lesson. The
 <code>$get_challenge_graph()</code> creates a data frame that describes
 these relationships:</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ep</span><span class="op">$</span><span class="fu">get_challenge_graph</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt;    Block       from         to          pos level</span></span>
-<span><span class="co">#&gt; 1      1  challenge    heading  95:1-108:14     1</span></span>
-<span><span class="co">#&gt; 2      1    heading  paragraph   95:3-95:24     1</span></span>
-<span><span class="co">#&gt; 3      1  paragraph       list   97:3-97:87     1</span></span>
-<span><span class="co">#&gt; 4      1       list   solution   99:3-103:1     1</span></span>
-<span><span class="co">#&gt; 5      1   solution     lesson 104:3-108:14     1</span></span>
-<span><span class="co">#&gt; 6      1   solution    heading 104:3-108:14     2</span></span>
-<span><span class="co">#&gt; 7      1    heading  paragraph 104:5-104:15     2</span></span>
-<span><span class="co">#&gt; 8      1  paragraph  challenge 106:5-108:14     2</span></span>
-<span><span class="co">#&gt; 9      2  challenge    heading 110:1-140:14     1</span></span>
-<span><span class="co">#&gt; 10     2    heading  paragraph 110:3-110:22     1</span></span>
-<span><span class="co">#&gt; 11     2  paragraph code_block 112:3-113:39     1</span></span>
-<span><span class="co">#&gt; 12     2 code_block  paragraph  115:3-123:5     1</span></span>
-<span><span class="co">#&gt; 13     2  paragraph   solution 124:3-126:72     1</span></span>
-<span><span class="co">#&gt; 14     2   solution     lesson 128:3-140:14     1</span></span>
-<span><span class="co">#&gt; 15     2   solution    heading 128:3-140:14     2</span></span>
-<span><span class="co">#&gt; 16     2    heading code_block 128:5-128:15     2</span></span>
-<span><span class="co">#&gt; 17     2 code_block  challenge  129:5-137:7     2</span></span>
-<span><span class="co">#&gt; 18     3  challenge    heading 142:1-170:14     1</span></span>
-<span><span class="co">#&gt; 19     3    heading  paragraph 142:3-142:19     1</span></span>
-<span><span class="co">#&gt; 20     3  paragraph   solution 144:3-146:20     1</span></span>
-<span><span class="co">#&gt; 21     3   solution     lesson 147:3-170:14     1</span></span>
-<span><span class="co">#&gt; 22     3   solution    heading 147:3-170:14     2</span></span>
-<span><span class="co">#&gt; 23     3    heading  paragraph 147:5-147:15     2</span></span>
-<span><span class="co">#&gt; 24     3  paragraph code_block 148:5-151:31     2</span></span>
-<span><span class="co">#&gt; 25     3 code_block  challenge  152:5-167:7     2</span></span></code></pre></div>
+<span><span class="co">##    Block       from         to          pos level</span></span>
+<span><span class="co">## 1      1  challenge    heading  95:1-108:14     1</span></span>
+<span><span class="co">## 2      1    heading  paragraph   95:3-95:24     1</span></span>
+<span><span class="co">## 3      1  paragraph       list   97:3-97:87     1</span></span>
+<span><span class="co">## 4      1       list   solution   99:3-103:1     1</span></span>
+<span><span class="co">## 5      1   solution     lesson 104:3-108:14     1</span></span>
+<span><span class="co">## 6      1   solution    heading 104:3-108:14     2</span></span>
+<span><span class="co">## 7      1    heading  paragraph 104:5-104:15     2</span></span>
+<span><span class="co">## 8      1  paragraph  challenge 106:5-108:14     2</span></span>
+<span><span class="co">## 9      2  challenge    heading 110:1-140:14     1</span></span>
+<span><span class="co">## 10     2    heading  paragraph 110:3-110:22     1</span></span>
+<span><span class="co">## 11     2  paragraph code_block 112:3-113:39     1</span></span>
+<span><span class="co">## 12     2 code_block  paragraph  115:3-123:5     1</span></span>
+<span><span class="co">## 13     2  paragraph   solution 124:3-126:72     1</span></span>
+<span><span class="co">## 14     2   solution     lesson 128:3-140:14     1</span></span>
+<span><span class="co">## 15     2   solution    heading 128:3-140:14     2</span></span>
+<span><span class="co">## 16     2    heading code_block 128:5-128:15     2</span></span>
+<span><span class="co">## 17     2 code_block  challenge  129:5-137:7     2</span></span>
+<span><span class="co">## 18     3  challenge    heading 142:1-170:14     1</span></span>
+<span><span class="co">## 19     3    heading  paragraph 142:3-142:19     1</span></span>
+<span><span class="co">## 20     3  paragraph   solution 144:3-146:20     1</span></span>
+<span><span class="co">## 21     3   solution     lesson 147:3-170:14     1</span></span>
+<span><span class="co">## 22     3   solution    heading 147:3-170:14     2</span></span>
+<span><span class="co">## 23     3    heading  paragraph 147:5-147:15     2</span></span>
+<span><span class="co">## 24     3  paragraph code_block 148:5-151:31     2</span></span>
+<span><span class="co">## 25     3 code_block  challenge  152:5-167:7     2</span></span></code></pre></div>
 <p>You might notice that there is an attribute called <code>ktag</code>.
 When a Jekyll-formatted episode is read in, all of the IAL tags are
 processed and placed in an attribute called <code>ktag</code>
@@ -1113,45 +1208,45 @@ processed and placed in an attribute called <code>ktag</code>
 via the <code>$tags</code> active binding. This is needed because
 commonmark does not know how to process postfix tags and it is important
 for the translation to commonmark syntax:</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ep</span><span class="op">$</span><span class="va">tags</span></span>
-<span><span class="co">#&gt; {xml_nodeset (17)}</span></span>
-<span><span class="co">#&gt;  [1]  ktag="{: .language-python}"</span></span>
-<span><span class="co">#&gt;  [2]  ktag="{: .output}"</span></span>
-<span><span class="co">#&gt;  [3]  ktag="{: .language-python}"</span></span>
-<span><span class="co">#&gt;  [4]  ktag="{: .output}"</span></span>
-<span><span class="co">#&gt;  [5]  ktag="{: .language-python}"</span></span>
-<span><span class="co">#&gt;  [6]  ktag="{: .output}"</span></span>
-<span><span class="co">#&gt;  [7]  ktag="{: .language-python}"</span></span>
-<span><span class="co">#&gt;  [8]  ktag="{: .output}"</span></span>
-<span><span class="co">#&gt;  [9]  ktag="{: .challenge}"</span></span>
-<span><span class="co">#&gt; [10]  ktag="{: .solution}"</span></span>
-<span><span class="co">#&gt; [11]  ktag="{: .challenge}"</span></span>
-<span><span class="co">#&gt; [12]  ktag="{: .language-python}"</span></span>
-<span><span class="co">#&gt; [13]  ktag="{: .solution}"</span></span>
-<span><span class="co">#&gt; [14]  ktag="{: .language-python}"</span></span>
-<span><span class="co">#&gt; [15]  ktag="{: .challenge}"</span></span>
-<span><span class="co">#&gt; [16]  ktag="{: .solution}"</span></span>
-<span><span class="co">#&gt; [17]  ktag="{: .language-python}"</span></span>
+<span><span class="co">## {xml_nodeset (17)}</span></span>
+<span><span class="co">##  [1]  ktag="{: .language-python}"</span></span>
+<span><span class="co">##  [2]  ktag="{: .output}"</span></span>
+<span><span class="co">##  [3]  ktag="{: .language-python}"</span></span>
+<span><span class="co">##  [4]  ktag="{: .output}"</span></span>
+<span><span class="co">##  [5]  ktag="{: .language-python}"</span></span>
+<span><span class="co">##  [6]  ktag="{: .output}"</span></span>
+<span><span class="co">##  [7]  ktag="{: .language-python}"</span></span>
+<span><span class="co">##  [8]  ktag="{: .output}"</span></span>
+<span><span class="co">##  [9]  ktag="{: .challenge}"</span></span>
+<span><span class="co">## [10]  ktag="{: .solution}"</span></span>
+<span><span class="co">## [11]  ktag="{: .challenge}"</span></span>
+<span><span class="co">## [12]  ktag="{: .language-python}"</span></span>
+<span><span class="co">## [13]  ktag="{: .solution}"</span></span>
+<span><span class="co">## [14]  ktag="{: .language-python}"</span></span>
+<span><span class="co">## [15]  ktag="{: .challenge}"</span></span>
+<span><span class="co">## [16]  ktag="{: .solution}"</span></span>
+<span><span class="co">## [17]  ktag="{: .language-python}"</span></span>
 <span><span class="fu">xml2</span><span class="fu">::</span><span class="fu"><a href="http://xml2.r-lib.org/reference/xml_children.html" class="external-link">xml_parent</a></span><span class="op">(</span><span class="va">ep</span><span class="op">$</span><span class="va">tags</span><span class="op">)</span></span>
-<span><span class="co">#&gt; {xml_nodeset (17)}</span></span>
-<span><span class="co">#&gt;  [1] &lt;code_block sourcepos="7:1-12:3" xml:space="preserve" name="" ktag="{: . ...</span></span>
-<span><span class="co">#&gt;  [2] &lt;code_block sourcepos="14:1-33:3" xml:space="preserve" name="" ktag="{:  ...</span></span>
-<span><span class="co">#&gt;  [3] &lt;code_block sourcepos="48:1-51:3" xml:space="preserve" name="" ktag="{:  ...</span></span>
-<span><span class="co">#&gt;  [4] &lt;code_block sourcepos="53:1-57:3" xml:space="preserve" name="" ktag="{:  ...</span></span>
-<span><span class="co">#&gt;  [5] &lt;code_block sourcepos="60:1-62:3" xml:space="preserve" name="" ktag="{:  ...</span></span>
-<span><span class="co">#&gt;  [6] &lt;code_block sourcepos="64:1-66:3" xml:space="preserve" name="" ktag="{:  ...</span></span>
-<span><span class="co">#&gt;  [7] &lt;code_block sourcepos="74:1-78:3" xml:space="preserve" name="" ktag="{:  ...</span></span>
-<span><span class="co">#&gt;  [8] &lt;code_block sourcepos="80:1-87:3" xml:space="preserve" name="" ktag="{:  ...</span></span>
-<span><span class="co">#&gt;  [9] &lt;block_quote sourcepos="95:1-108:14" ktag="{: .challenge}"&gt;\n  &lt;heading  ...</span></span>
-<span><span class="co">#&gt; [10] &lt;block_quote sourcepos="104:3-108:14" ktag="{: .solution}"&gt;\n  &lt;heading  ...</span></span>
-<span><span class="co">#&gt; [11] &lt;block_quote sourcepos="110:1-140:14" ktag="{: .challenge}"&gt;\n  &lt;heading ...</span></span>
-<span><span class="co">#&gt; [12] &lt;code_block sourcepos="115:3-123:5" xml:space="preserve" name="" ktag="{ ...</span></span>
-<span><span class="co">#&gt; [13] &lt;block_quote sourcepos="128:3-140:14" ktag="{: .solution}"&gt;\n  &lt;heading  ...</span></span>
-<span><span class="co">#&gt; [14] &lt;code_block sourcepos="129:5-137:7" xml:space="preserve" name="" ktag="{ ...</span></span>
-<span><span class="co">#&gt; [15] &lt;block_quote sourcepos="142:1-170:14" ktag="{: .challenge}"&gt;\n  &lt;heading ...</span></span>
-<span><span class="co">#&gt; [16] &lt;block_quote sourcepos="147:3-170:14" ktag="{: .solution}"&gt;\n  &lt;heading  ...</span></span>
-<span><span class="co">#&gt; [17] &lt;code_block sourcepos="152:5-167:7" xml:space="preserve" name="" ktag="{ ...</span></span></code></pre></div>
+<span><span class="co">## {xml_nodeset (17)}</span></span>
+<span><span class="co">##  [1] &lt;code_block sourcepos="7:1-12:3" xml:space="preserve" name="" ktag="{: . ...</span></span>
+<span><span class="co">##  [2] &lt;code_block sourcepos="14:1-33:3" xml:space="preserve" name="" ktag="{:  ...</span></span>
+<span><span class="co">##  [3] &lt;code_block sourcepos="48:1-51:3" xml:space="preserve" name="" ktag="{:  ...</span></span>
+<span><span class="co">##  [4] &lt;code_block sourcepos="53:1-57:3" xml:space="preserve" name="" ktag="{:  ...</span></span>
+<span><span class="co">##  [5] &lt;code_block sourcepos="60:1-62:3" xml:space="preserve" name="" ktag="{:  ...</span></span>
+<span><span class="co">##  [6] &lt;code_block sourcepos="64:1-66:3" xml:space="preserve" name="" ktag="{:  ...</span></span>
+<span><span class="co">##  [7] &lt;code_block sourcepos="74:1-78:3" xml:space="preserve" name="" ktag="{:  ...</span></span>
+<span><span class="co">##  [8] &lt;code_block sourcepos="80:1-87:3" xml:space="preserve" name="" ktag="{:  ...</span></span>
+<span><span class="co">##  [9] &lt;block_quote sourcepos="95:1-108:14" ktag="{: .challenge}"&gt;\n  &lt;heading  ...</span></span>
+<span><span class="co">## [10] &lt;block_quote sourcepos="104:3-108:14" ktag="{: .solution}"&gt;\n  &lt;heading  ...</span></span>
+<span><span class="co">## [11] &lt;block_quote sourcepos="110:1-140:14" ktag="{: .challenge}"&gt;\n  &lt;heading ...</span></span>
+<span><span class="co">## [12] &lt;code_block sourcepos="115:3-123:5" xml:space="preserve" name="" ktag="{ ...</span></span>
+<span><span class="co">## [13] &lt;block_quote sourcepos="128:3-140:14" ktag="{: .solution}"&gt;\n  &lt;heading  ...</span></span>
+<span><span class="co">## [14] &lt;code_block sourcepos="129:5-137:7" xml:space="preserve" name="" ktag="{ ...</span></span>
+<span><span class="co">## [15] &lt;block_quote sourcepos="142:1-170:14" ktag="{: .challenge}"&gt;\n  &lt;heading ...</span></span>
+<span><span class="co">## [16] &lt;block_quote sourcepos="147:3-170:14" ktag="{: .solution}"&gt;\n  &lt;heading  ...</span></span>
+<span><span class="co">## [17] &lt;code_block sourcepos="152:5-167:7" xml:space="preserve" name="" ktag="{ ...</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="transformation">Transformation<a class="anchor" aria-label="anchor" href="#transformation"></a>
@@ -1162,13 +1257,17 @@ syntax and it was difficult to parse and validate. The automated
 transformation workflow is what powers the Lesson Transformation Tool
 and we have composed it into a few basic steps:</p>
 <ol style="list-style-type: decimal">
-<li>transform block quotes to fenced divs</li>
+<li>transform block quotes to fenced divs (via the
+<code>$unblock()</code> method, using the internal
+<code><a href="../reference/replace_with_div.html">replace_with_div()</a></code> function).</li>
 <li>removing the jekyll syntax, liquid templating, and fix relative
-links</li>
-<li>moving the yaml frontmatter</li>
+links (via the <code>$use_sandpaper()</code> method, using the internal
+<code><a href="../reference/use_sandpaper.html">use_sandpaper()</a></code> function.</li>
+<li>moving the yaml frontmatter using the <code>$move_</code>
+methods</li>
 </ol>
 <p>The process looks like this composable chain of methods:</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ep</span><span class="op">$</span><span class="fu">reset</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">ep</span><span class="op">$</span></span>
 <span>  <span class="fu">unblock</span><span class="op">(</span><span class="op">)</span><span class="op">$</span></span>
@@ -1177,102 +1276,276 @@ links</li>
 <span>  <span class="fu">move_objectives</span><span class="op">(</span><span class="op">)</span><span class="op">$</span></span>
 <span>  <span class="fu">move_keypoints</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">ep</span><span class="op">$</span><span class="fu">head</span><span class="op">(</span><span class="fl">31</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ---</span></span>
-<span><span class="co">#&gt; title: Looping Over Data Sets</span></span>
-<span><span class="co">#&gt; teaching: 5</span></span>
-<span><span class="co">#&gt; exercises: 10</span></span>
-<span><span class="co">#&gt; ---</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ::::::::::::::::::::::::::::::::::::::: objectives</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; - Be able to read and write globbing expressions that match sets of files.</span></span>
-<span><span class="co">#&gt; - Use glob to create lists of files.</span></span>
-<span><span class="co">#&gt; - Write for loops to perform operations on files given their names in a list.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ::::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; :::::::::::::::::::::::::::::::::::::::: questions</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; - How can I process many data sets with a single command?</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ::::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ## Use a `for` loop to process files given a list of their names.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; - A filename is a character string.</span></span>
-<span><span class="co">#&gt; - And lists can contain character strings.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ```python</span></span>
-<span><span class="co">#&gt; import pandas as pd</span></span>
-<span><span class="co">#&gt; for filename in ['data/gapminder_gdp_africa.csv', 'data/gapminder_gdp_asia.csv']:</span></span>
-<span><span class="co">#&gt;     data = pd.read_csv(filename, index_col='country')</span></span>
-<span><span class="co">#&gt;     print(filename, data.min())</span></span>
-<span><span class="co">#&gt; ```</span></span>
+<span><span class="co">## ---</span></span>
+<span><span class="co">## title: Looping Over Data Sets</span></span>
+<span><span class="co">## teaching: 5</span></span>
+<span><span class="co">## exercises: 10</span></span>
+<span><span class="co">## ---</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::: objectives</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## - Be able to read and write globbing expressions that match sets of files.</span></span>
+<span><span class="co">## - Use glob to create lists of files.</span></span>
+<span><span class="co">## - Write for loops to perform operations on files given their names in a list.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## :::::::::::::::::::::::::::::::::::::::: questions</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## - How can I process many data sets with a single command?</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ## Use a `for` loop to process files given a list of their names.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## - A filename is a character string.</span></span>
+<span><span class="co">## - And lists can contain character strings.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ```python</span></span>
+<span><span class="co">## import pandas as pd</span></span>
+<span><span class="co">## for filename in ['data/gapminder_gdp_africa.csv', 'data/gapminder_gdp_asia.csv']:</span></span>
+<span><span class="co">##     data = pd.read_csv(filename, index_col='country')</span></span>
+<span><span class="co">##     print(filename, data.min())</span></span>
+<span><span class="co">## ```</span></span>
 <span><span class="va">ep</span><span class="op">$</span><span class="fu">tail</span><span class="op">(</span><span class="fl">65</span><span class="op">)</span></span>
-<span><span class="co">#&gt; :::::::::::::::::::::::::::::::::::::::  challenge</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ## Comparing Data</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Write a program that reads in the regional data sets</span></span>
-<span><span class="co">#&gt; and plots the average GDP per capita for each region over time</span></span>
-<span><span class="co">#&gt; in a single chart.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; :::::::::::::::  solution</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ## Solution</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; This solution builds a useful legend by using the string [`split`](https://docs.python.org/3/library/stdtypes.html#str.split) method to</span></span>
-<span><span class="co">#&gt; extract the `region` from the path 'data/gapminder\_gdp\_a\_specific\_region.csv'. The [`pathlib module`]</span></span>
-<span><span class="co">#&gt; also provides useful abstractions for file and path manipulation like returning the name of a file</span></span>
-<span><span class="co">#&gt; without the file extension.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ```python</span></span>
-<span><span class="co">#&gt; import glob</span></span>
-<span><span class="co">#&gt; import pandas as pd</span></span>
-<span><span class="co">#&gt; import matplotlib.pyplot as plt</span></span>
-<span><span class="co">#&gt; fig, ax = plt.subplots(1,1)</span></span>
-<span><span class="co">#&gt; for filename in glob.glob('data/gapminder_gdp*.csv'):</span></span>
-<span><span class="co">#&gt;     dataframe = pd.read_csv(filename)</span></span>
-<span><span class="co">#&gt;     # extract &lt;region&gt; from the filename, expected to be in the format 'data/gapminder_gdp_&lt;region&gt;.csv'.</span></span>
-<span><span class="co">#&gt;     # we will split the string using the split method and `_` as our separator,</span></span>
-<span><span class="co">#&gt;     # retrieve the last string in the list that split returns (`&lt;region&gt;.csv`), </span></span>
-<span><span class="co">#&gt;     # and then remove the `.csv` extension from that string.</span></span>
-<span><span class="co">#&gt;     region = filename.split('_')[-1][:-4] </span></span>
-<span><span class="co">#&gt;     dataframe.mean().plot(ax=ax, label=region)</span></span>
-<span><span class="co">#&gt; plt.legend()</span></span>
-<span><span class="co">#&gt; plt.show()</span></span>
-<span><span class="co">#&gt; ```</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; :::::::::::::::::::::::::</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ::::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ### ZNK test links and images</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; &lt;img src="https://carpentries.org/assets/img/TheCarpentries.svg" alt="books as clubs"&gt;</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; &lt;img src="no-workie.svg" alt="books as clubs"&gt;</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Link to [Home](index.html) and to [shell](https://swcarpentry.github.io/shell-novice)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ![](https://carpentries.org/assets/img/TheCarpentries.svg){alt='Carpentries logo'}</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ![](no-workie.svg){alt='Non-working image'}</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ![](no-workie.svg){alt='Non-working image with jekyll syntax'}</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; This text includes a [link that isn't parsed correctly by commonmark](index.md)</span></span>
-<span><span class="co">#&gt; . The rest of the text should be properly parsed.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; :::::::::::::::::::::::::::::::::::::::: keypoints</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; - Use a `for` loop to process files given a list of their names.</span></span>
-<span><span class="co">#&gt; - Use `glob.glob` to find sets of files whose names match a pattern.</span></span>
-<span><span class="co">#&gt; - Use `glob` and `for` to process batches of files.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ::::::::::::::::::::::::::::::::::::::::::::::::::</span></span></code></pre></div>
+<span><span class="co">## :::::::::::::::::::::::::::::::::::::::  challenge</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ## Comparing Data</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Write a program that reads in the regional data sets</span></span>
+<span><span class="co">## and plots the average GDP per capita for each region over time</span></span>
+<span><span class="co">## in a single chart.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## :::::::::::::::  solution</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ## Solution</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## This solution builds a useful legend by using the string [`split`](https://docs.python.org/3/library/stdtypes.html#str.split) method to</span></span>
+<span><span class="co">## extract the `region` from the path 'data/gapminder\_gdp\_a\_specific\_region.csv'. The [`pathlib module`]</span></span>
+<span><span class="co">## also provides useful abstractions for file and path manipulation like returning the name of a file</span></span>
+<span><span class="co">## without the file extension.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ```python</span></span>
+<span><span class="co">## import glob</span></span>
+<span><span class="co">## import pandas as pd</span></span>
+<span><span class="co">## import matplotlib.pyplot as plt</span></span>
+<span><span class="co">## fig, ax = plt.subplots(1,1)</span></span>
+<span><span class="co">## for filename in glob.glob('data/gapminder_gdp*.csv'):</span></span>
+<span><span class="co">##     dataframe = pd.read_csv(filename)</span></span>
+<span><span class="co">##     # extract &lt;region&gt; from the filename, expected to be in the format 'data/gapminder_gdp_&lt;region&gt;.csv'.</span></span>
+<span><span class="co">##     # we will split the string using the split method and `_` as our separator,</span></span>
+<span><span class="co">##     # retrieve the last string in the list that split returns (`&lt;region&gt;.csv`), </span></span>
+<span><span class="co">##     # and then remove the `.csv` extension from that string.</span></span>
+<span><span class="co">##     region = filename.split('_')[-1][:-4] </span></span>
+<span><span class="co">##     dataframe.mean().plot(ax=ax, label=region)</span></span>
+<span><span class="co">## plt.legend()</span></span>
+<span><span class="co">## plt.show()</span></span>
+<span><span class="co">## ```</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## :::::::::::::::::::::::::</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ### ZNK test links and images</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## &lt;img src="https://carpentries.org/assets/img/TheCarpentries.svg" alt="books as clubs"&gt;</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## &lt;img src="no-workie.svg" alt="books as clubs"&gt;</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Link to [Home](index.html) and to [shell](https://swcarpentry.github.io/shell-novice)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ![](https://carpentries.org/assets/img/TheCarpentries.svg){alt='Carpentries logo'}</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ![](no-workie.svg){alt='Non-working image'}</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ![](no-workie.svg){alt='Non-working image with jekyll syntax'}</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## This text includes a [link that isn't parsed correctly by commonmark](index.md)</span></span>
+<span><span class="co">## . The rest of the text should be properly parsed.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## :::::::::::::::::::::::::::::::::::::::: keypoints</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## - Use a `for` loop to process files given a list of their names.</span></span>
+<span><span class="co">## - Use `glob.glob` to find sets of files whose names match a pattern.</span></span>
+<span><span class="co">## - Use `glob` and `for` to process batches of files.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::::::::::::::</span></span></code></pre></div>
+<div class="section level4">
+<h4 id="transformation-tip">Transformation tip!<a class="anchor" aria-label="anchor" href="#transformation-tip"></a>
+</h4>
+<p>There are times where the lesson authors forget to tag a block quote
+with the correct type of tag to make it a callout block. In this case,
+the block quote will remain unconverted in the lesson. For example let’s
+say there was a block quote at the very top of the lesson that defined
+prerequisites, but the author accidentally had a new line between the
+blockquote and the IAL tag, meaning that the blockquote was not
+processed:</p>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># add a prerequisite block after the questions and objectives</span></span>
+<span><span class="va">untranslated_block</span> <span class="op">&lt;-</span> <span class="st">"</span></span>
+<span><span class="st">&gt; ## Barnaby</span></span>
+<span><span class="st">&gt;</span></span>
+<span><span class="st">&gt; - a barn</span></span>
+<span><span class="st">&gt; - a bee</span></span>
+<span><span class="st">&gt;</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">{: .prereq}</span></span>
+<span><span class="st">"</span></span>
+<span><span class="va">ep</span><span class="op">$</span><span class="fu">add_md</span><span class="op">(</span><span class="va">untranslated_block</span>, where <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="va">ep</span><span class="op">$</span><span class="fu">head</span><span class="op">(</span><span class="fl">31</span><span class="op">)</span></span>
+<span><span class="co">## ---</span></span>
+<span><span class="co">## title: Looping Over Data Sets</span></span>
+<span><span class="co">## teaching: 5</span></span>
+<span><span class="co">## exercises: 10</span></span>
+<span><span class="co">## ---</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::: objectives</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## - Be able to read and write globbing expressions that match sets of files.</span></span>
+<span><span class="co">## - Use glob to create lists of files.</span></span>
+<span><span class="co">## - Write for loops to perform operations on files given their names in a list.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## :::::::::::::::::::::::::::::::::::::::: questions</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## - How can I process many data sets with a single command?</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## &gt; ## Barnaby</span></span>
+<span><span class="co">## &gt; </span></span>
+<span><span class="co">## &gt; - a barn</span></span>
+<span><span class="co">## &gt; - a bee</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## {: .prereq}</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ## Use a `for` loop to process files given a list of their names.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## - A filename is a character string.</span></span>
+<span><span class="co">## - And lists can contain character strings.</span></span></code></pre></div>
+<p>Notice that the block quote is picked up only as a blockquote, but
+not a <em>special</em> block quote.</p>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ep</span><span class="op">$</span><span class="fu">get_blocks</span><span class="op">(</span><span class="st">".prereq"</span><span class="op">)</span></span>
+<span><span class="co">## {xml_nodeset (0)}</span></span>
+<span><span class="va">ep</span><span class="op">$</span><span class="fu">get_blocks</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">## {xml_nodeset (1)}</span></span>
+<span><span class="co">## [1] &lt;block_quote&gt;\n  &lt;heading level="2"&gt;\n    &lt;text xml:space="preserve"&gt;Barn ...</span></span></code></pre></div>
+<p>If we set the <code>ktag</code> attribute of this block quote to “{:
+.prereq}”, then it will be recognised as a special blockquote, which can
+be translated.</p>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># remove the orphan prereq tag:</span></span>
+<span><span class="va">orphan_tag</span> <span class="op">&lt;-</span> <span class="fu">xml2</span><span class="fu">::</span><span class="fu"><a href="http://xml2.r-lib.org/reference/xml_find_all.html" class="external-link">xml_find_all</a></span><span class="op">(</span><span class="va">ep</span><span class="op">$</span><span class="va">body</span>, </span>
+<span>  <span class="st">".//md:paragraph[md:text[contains(text(),'.prereq}')]]"</span>, ns <span class="op">=</span> <span class="va">ep</span><span class="op">$</span><span class="va">ns</span><span class="op">)</span></span>
+<span><span class="fu">xml2</span><span class="fu">::</span><span class="fu"><a href="http://xml2.r-lib.org/reference/xml_replace.html" class="external-link">xml_remove</a></span><span class="op">(</span><span class="va">orphan_tag</span><span class="op">)</span></span>
+<span><span class="va">ep</span><span class="op">$</span><span class="fu">head</span><span class="op">(</span><span class="fl">31</span><span class="op">)</span></span>
+<span><span class="co">## ---</span></span>
+<span><span class="co">## title: Looping Over Data Sets</span></span>
+<span><span class="co">## teaching: 5</span></span>
+<span><span class="co">## exercises: 10</span></span>
+<span><span class="co">## ---</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::: objectives</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## - Be able to read and write globbing expressions that match sets of files.</span></span>
+<span><span class="co">## - Use glob to create lists of files.</span></span>
+<span><span class="co">## - Write for loops to perform operations on files given their names in a list.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## :::::::::::::::::::::::::::::::::::::::: questions</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## - How can I process many data sets with a single command?</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## &gt; ## Barnaby</span></span>
+<span><span class="co">## &gt; </span></span>
+<span><span class="co">## &gt; - a barn</span></span>
+<span><span class="co">## &gt; - a bee</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ## Use a `for` loop to process files given a list of their names.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## - A filename is a character string.</span></span>
+<span><span class="co">## - And lists can contain character strings.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ```python</span></span>
+<span></span>
+<span><span class="co"># set the attribute of the block quote:</span></span>
+<span><span class="fu">xml2</span><span class="fu">::</span><span class="fu"><a href="http://xml2.r-lib.org/reference/xml_attr.html" class="external-link">xml_set_attr</a></span><span class="op">(</span><span class="va">ep</span><span class="op">$</span><span class="fu">get_blocks</span><span class="op">(</span><span class="op">)</span>, <span class="st">"ktag"</span>, <span class="st">"{: .prereq}"</span><span class="op">)</span></span>
+<span><span class="va">ep</span><span class="op">$</span><span class="fu">head</span><span class="op">(</span><span class="fl">31</span><span class="op">)</span></span>
+<span><span class="co">## ---</span></span>
+<span><span class="co">## title: Looping Over Data Sets</span></span>
+<span><span class="co">## teaching: 5</span></span>
+<span><span class="co">## exercises: 10</span></span>
+<span><span class="co">## ---</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::: objectives</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## - Be able to read and write globbing expressions that match sets of files.</span></span>
+<span><span class="co">## - Use glob to create lists of files.</span></span>
+<span><span class="co">## - Write for loops to perform operations on files given their names in a list.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## :::::::::::::::::::::::::::::::::::::::: questions</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## - How can I process many data sets with a single command?</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## &gt; ## Barnaby</span></span>
+<span><span class="co">## &gt; </span></span>
+<span><span class="co">## &gt; - a barn</span></span>
+<span><span class="co">## &gt; - a bee</span></span>
+<span><span class="co">## {: .prereq}</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ## Use a `for` loop to process files given a list of their names.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## - A filename is a character string.</span></span>
+<span><span class="co">## - And lists can contain character strings.</span></span>
+<span><span class="va">ep</span><span class="op">$</span><span class="fu">get_blocks</span><span class="op">(</span><span class="st">".prereq"</span><span class="op">)</span></span>
+<span><span class="co">## {xml_nodeset (1)}</span></span>
+<span><span class="co">## [1] &lt;block_quote ktag="{: .prereq}"&gt;\n  &lt;heading level="2"&gt;\n    &lt;text xml:sp ...</span></span></code></pre></div>
+<p>Now we can convert the block to a fenced div with
+<code>$unblock()</code></p>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ep</span><span class="op">$</span><span class="fu">unblock</span><span class="op">(</span>force <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="fu">head</span><span class="op">(</span><span class="fl">31</span><span class="op">)</span></span>
+<span><span class="co">## ---</span></span>
+<span><span class="co">## title: Looping Over Data Sets</span></span>
+<span><span class="co">## teaching: 5</span></span>
+<span><span class="co">## exercises: 10</span></span>
+<span><span class="co">## ---</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::: objectives</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## - Be able to read and write globbing expressions that match sets of files.</span></span>
+<span><span class="co">## - Use glob to create lists of files.</span></span>
+<span><span class="co">## - Write for loops to perform operations on files given their names in a list.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## :::::::::::::::::::::::::::::::::::::::: questions</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## - How can I process many data sets with a single command?</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::::::  prereq</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ## Barnaby</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## - a barn</span></span>
+<span><span class="co">## - a bee</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ::::::::::::::::::::::::::::::::::::::::::::::::::</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ## Use a `for` loop to process files given a list of their names.</span></span></code></pre></div>
+</div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

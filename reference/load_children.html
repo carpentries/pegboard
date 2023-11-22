@@ -20,7 +20,7 @@ for each child, update the $parent and $build_parent elements
     
     <a class="navbar-brand me-2" href="../index.html">pegboard</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,9 +34,10 @@ for each child, update the $parent and $build_parent elements
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/validation.html">Validation of Lesson Elements</a>
     <a class="dropdown-item" href="../articles/intro-xml.html">Working with XML data</a>
     <a class="dropdown-item" href="../articles/intro-episode.html">Introduction to the Episode Object</a>
+    <a class="dropdown-item" href="../articles/intro-lesson.html">Introduction to the Lesson Object</a>
+    <a class="dropdown-item" href="../articles/validation.html">Validation of Lesson Elements</a>
   </div>
 </li>
 <li class="nav-item">
@@ -107,20 +108,22 @@ side-effect to update the child object and it always returns <code>NULL</code>.<
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>When we want to build lessons, it's important to be able to find all of the
-files that are necessary to build a particular file. If there is a modification in a child file, <span class="pkg">sandpaper</span> needs to know that it should flag the parent
-for rebuilding. To do this, we need two pieces of information:</p><ol><li><p>The earliest ancestors of a given child file</p></li>
-<li><p>The full list of descendants of a given parent file</p></li>
+documents that are necessary to build a particular file. If there is a
+modification in a child document, <span class="pkg">sandpaper</span> needs to know that it
+should flag the parent for rebuilding. To do this, we need two pieces of
+information:</p><ol><li><p>The earliest ancestors of a given child document.</p></li>
+<li><p>The full list of descendants of a given parent document.</p></li>
 </ol><p>Each Episode object only knows about itself, so it can only report its
 immediate children, but not the children of children, or even its parent
 (unless we explicitly tell it what its parent is). The <a href="Lesson.html">Lesson</a> object
 contains the context of all of the Episodes and can provide this information.</p>
 <p>During Lesson object initialisation, the <code>load_children()</code> function is
-called to process all source files for their children. This creates an
+called to process all source documents for their children. This creates an
 empty list of children that is continuously appended to during the function
-call. It then calls <code>read_children()</code> on each parent file, which will append
-itself as a parent to any existing children in the <code>all_children</code> list,
-intitialize new <a href="Episode.html">Episode</a> objects from the unread child files, and then
-search those for children until there are no children left to read.</p>
+call. It then calls <code>read_children()</code> on each parent document, which will
+append itself as a parent to any existing children in the <code>all_children</code>
+list, intitialize new <a href="Episode.html">Episode</a> objects from the unread child documents, and
+then search those for children until there are no children left to read.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

@@ -37,7 +37,7 @@
     
     <a class="navbar-brand me-2" href="index.html">pegboard</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,9 +52,10 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="articles/validation.html">Validation of Lesson Elements</a>
     <a class="dropdown-item" href="articles/intro-xml.html">Working with XML data</a>
     <a class="dropdown-item" href="articles/intro-episode.html">Introduction to the Episode Object</a>
+    <a class="dropdown-item" href="articles/intro-lesson.html">Introduction to the Lesson Object</a>
+    <a class="dropdown-item" href="articles/validation.html">Validation of Lesson Elements</a>
   </div>
 </li>
 <li class="nav-item">
@@ -98,8 +99,8 @@
 </ul>
 <p>There are two <a href="https://cran.r-project.org/package=R6" class="external-link">{R6}</a> objects in the package:</p>
 <ul>
-<li>Episode: stores the xml content of a single Markdown or R Markdown file. This extends the the <a href="https://docs.ropensci.org/tinkr/reference/yarn.html" class="external-link"><code>tinkr::yarn</code> class</a>.</li>
-<li>Lesson: stores all publishable markdown content as <code>Episodes</code> within a lesson</li>
+<li>Episode: stores the xml content of a single Markdown or R Markdown file. This extends the the <a href="https://docs.ropensci.org/tinkr/reference/yarn.html" class="external-link"><code>tinkr::yarn</code> class</a>. See <code><a href="articles/intro-episode.html">vignette("intro-episode", package = "pegboard")</a></code> for more info.</li>
+<li>Lesson: stores all publishable markdown content as <code>Episodes</code> within a lesson. See <code><a href="articles/intro-episode.html">vignette("intro-episode", package = "pegboard")</a></code> for more info.</li>
 </ul>
 <p>One simple usage is getting a summary of the content of an episode. Let’s investigate the contents of <a href="https://carpentries.github.io/sandpaper-docs/episodes.html" class="external-link">the “Episode Structure” episode</a> of the Workbench documentation:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -116,29 +117,29 @@
 <span><span class="co"># confirm that we are using sandpaper and get a summary of the contents</span></span>
 <span><span class="va">ep</span><span class="op">$</span><span class="fu">confirm_sandpaper</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">summary</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#|   sections   headings   callouts challenges  solutions       code     output    warning      error     images      links </span></span>
-<span><span class="co">#|         16         33         29          7          7         35          1          0          0          4         21</span></span>
+<span><span class="co">#|         17         35         28          7          6         35          1          0          0          3         21</span></span>
 <span></span>
 <span><span class="co"># Validation ----------------------------------------------------------</span></span>
 <span><span class="co"># NOTE: a lot of invalid links because files do not exist outside of</span></span>
 <span><span class="co">#       the lesson context</span></span>
 <span><span class="va">lnk</span> <span class="op">&lt;-</span> <span class="va">ep</span><span class="op">$</span><span class="fu">validate_links</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#| ! There were errors in 12/23 links</span></span>
-<span><span class="co">#| ◌ Some linked internal files do not exist</span></span>
+<span><span class="co">#| ! There were errors in 12/22 links and images</span></span>
+<span><span class="co">#| ◌ Some linked internal files do not exist &lt;https://carpentries.github.io/sandpaper/articles/include-child-documents.html#workspace-consideration&gt;</span></span>
 <span><span class="co">#| </span></span>
-<span><span class="co">#| file9c2d53b7cd66.Rmd:38 [missing file]: [next episode](editing.md)</span></span>
-<span><span class="co">#| file9c2d53b7cd66.Rmd:51 [missing file]: [the Introduction](introduction.md)</span></span>
-<span><span class="co">#| file9c2d53b7cd66.Rmd:203 [missing file]: [The Workbench Component Guide](component-guide.md)</span></span>
-<span><span class="co">#| file9c2d53b7cd66.Rmd:780 [missing file]: [the setup page](../learners/setup.md)</span></span>
-<span><span class="co">#| file9c2d53b7cd66.Rmd:796 [missing file]: [another episode (e.g. introduction)](introduction.md)</span></span>
-<span><span class="co">#| file9c2d53b7cd66.Rmd:797 [missing file]: [the home page](../index.md)</span></span>
-<span><span class="co">#| file9c2d53b7cd66.Rmd:798 [missing file]: [the setup page](../learners/setup.md)</span></span>
-<span><span class="co">#| file9c2d53b7cd66.Rmd:799 [missing file]: [the "line length" section in the style guide](../learners/style.md#line-length)</span></span>
-<span><span class="co">#| file9c2d53b7cd66.Rmd:805 [missing file]: [the style guide](../learners/style.md)</span></span>
-<span><span class="co">#| file9c2d53b7cd66.Rmd:825 [missing file]: [internal links](../episodes/episodes.Rmd#internal-links)</span></span>
-<span><span class="co">#| file9c2d53b7cd66.Rmd:860 [missing file]: [Hex sticker for The Carpentries](fig/carpentries-hex-blue.svg)</span></span>
-<span><span class="co">#| file9c2d53b7cd66.Rmd:902 [missing file]: [Example of Wrapped Alt Text (with apologies to William Carlos Williams)](fig/freezer.png)</span></span>
+<span><span class="co">#| fileccef6278e384.Rmd:38 [missing file]: [next episode](editing.md)</span></span>
+<span><span class="co">#| fileccef6278e384.Rmd:51 [missing file]: [the Introduction](introduction.md)</span></span>
+<span><span class="co">#| fileccef6278e384.Rmd:203 [missing file]: [The Workbench Component Guide](component-guide.md)</span></span>
+<span><span class="co">#| fileccef6278e384.Rmd:771 [missing file]: [the setup page](../learners/setup.md)</span></span>
+<span><span class="co">#| fileccef6278e384.Rmd:787 [missing file]: [another episode (e.g. introduction)](introduction.md)</span></span>
+<span><span class="co">#| fileccef6278e384.Rmd:788 [missing file]: [the home page](../index.md)</span></span>
+<span><span class="co">#| fileccef6278e384.Rmd:789 [missing file]: [the setup page](../learners/setup.md)</span></span>
+<span><span class="co">#| fileccef6278e384.Rmd:790 [missing file]: [the "line length" section in the style guide](../learners/style.md#line-length)</span></span>
+<span><span class="co">#| fileccef6278e384.Rmd:796 [missing file]: [the style guide](../learners/style.md)</span></span>
+<span><span class="co">#| fileccef6278e384.Rmd:816 [missing file]: [internal links](../episodes/episodes.Rmd#internal-links)</span></span>
+<span><span class="co">#| fileccef6278e384.Rmd:851 [missing file]: [Hex sticker for The Carpentries](fig/carpentries-hex-blue.svg)</span></span>
+<span><span class="co">#| fileccef6278e384.Rmd:893 [missing file]: [Example of Wrapped Alt Text (with apologies to William Carlos Williams)](fig/freezer.png)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">lnk</span>, max.level <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="co">#| 'data.frame':    25 obs. of  26 variables:</span></span>
+<span><span class="co">#| 'data.frame':    24 obs. of  27 variables:</span></span>
 <span><span class="co">#|  $ scheme              : chr  "" "" "" "" ...</span></span>
 <span><span class="co">#|  $ server              : chr  "" "" "" "" ...</span></span>
 <span><span class="co">#|  $ port                : int  NA NA NA NA NA NA NA NA NA NA ...</span></span>
@@ -153,9 +154,10 @@
 <span><span class="co">#|  $ type                : chr  "link" "link" "link" "link" ...</span></span>
 <span><span class="co">#|  $ rel                 : chr  NA NA NA NA ...</span></span>
 <span><span class="co">#|  $ anchor              : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...</span></span>
-<span><span class="co">#|  $ sourcepos           : int  38 51 168 203 318 327 468 545 550 630 ...</span></span>
-<span><span class="co">#|  $ filepath            : chr  "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" ...</span></span>
-<span><span class="co">#|  $ node                :List of 25</span></span>
+<span><span class="co">#|  $ sourcepos           : int  38 51 168 203 320 329 536 541 621 737 ...</span></span>
+<span><span class="co">#|  $ filepath            : chr  "fileccef6278e384.Rmd" "fileccef6278e384.Rmd" "fileccef6278e384.Rmd" "fileccef6278e384.Rmd" ...</span></span>
+<span><span class="co">#|  $ parents             :List of 24</span></span>
+<span><span class="co">#|  $ node                :List of 24</span></span>
 <span><span class="co">#|   ..- attr(*, "class")= chr "AsIs"</span></span>
 <span><span class="co">#|  $ known_protocol      : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span>
 <span><span class="co">#|  $ enforce_https       : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span>
@@ -168,29 +170,25 @@
 <span><span class="co">#|  $ link_length         : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span>
 <span><span class="va">hdg</span> <span class="op">&lt;-</span> <span class="va">ep</span><span class="op">$</span><span class="fu">validate_headings</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">hdg</span>, max.level <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="co">#| 'data.frame':    33 obs. of  10 variables:</span></span>
+<span><span class="co">#| 'data.frame':    35 obs. of  10 variables:</span></span>
 <span><span class="co">#|  $ heading                      : chr  "Introduction" "Buoyant Barnacle" "Creating A New Episode" "What is the .Rmd extension?" ...</span></span>
 <span><span class="co">#|  $ level                        : int  2 3 2 3 2 3 3 3 2 3 ...</span></span>
 <span><span class="co">#|  $ pos                          : int  29 48 63 80 117 126 143 156 196 200 ...</span></span>
-<span><span class="co">#|  $ node                         :List of 33</span></span>
+<span><span class="co">#|  $ node                         :List of 35</span></span>
 <span><span class="co">#|   ..- attr(*, "class")= chr "AsIs"</span></span>
 <span><span class="co">#|  $ first_heading_is_second_level: logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span>
 <span><span class="co">#|  $ greater_than_first_level     : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span>
 <span><span class="co">#|  $ are_sequential               : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span>
 <span><span class="co">#|  $ have_names                   : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span>
 <span><span class="co">#|  $ are_unique                   : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span>
-<span><span class="co">#|  $ path                         : chr  "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" ...</span></span>
+<span><span class="co">#|  $ path                         : chr  "fileccef6278e384.Rmd" "fileccef6278e384.Rmd" "fileccef6278e384.Rmd" "fileccef6278e384.Rmd" ...</span></span>
 <span><span class="va">div</span> <span class="op">&lt;-</span> <span class="va">ep</span><span class="op">$</span><span class="fu">validate_divs</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#| ! There were errors in 1/29 fenced divs</span></span>
-<span><span class="co">#| ◌ The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor, spoiler</span></span>
-<span><span class="co">#| </span></span>
-<span><span class="co">#| file9c2d53b7cd66.Rmd:457 [unknown div] empty-div</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">div</span>, max.level <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="co">#| 'data.frame':    29 obs. of  5 variables:</span></span>
-<span><span class="co">#|  $ path    : chr  "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" "file9c2d53b7cd66.Rmd" ...</span></span>
+<span><span class="co">#| 'data.frame':    28 obs. of  5 variables:</span></span>
+<span><span class="co">#|  $ path    : chr  "fileccef6278e384.Rmd" "fileccef6278e384.Rmd" "fileccef6278e384.Rmd" "fileccef6278e384.Rmd" ...</span></span>
 <span><span class="co">#|  $ div     : chr  "questions" "objectives" "prereq" "callout" ...</span></span>
 <span><span class="co">#|  $ pb_label: chr  "div-1-questions" "div-2-objectives" "div-3-prereq" "div-4-callout" ...</span></span>
-<span><span class="co">#|  $ pos     : int  9 20 46 78 141 198 226 243 253 272 ...</span></span>
+<span><span class="co">#|  $ pos     : int  9 20 46 78 141 198 226 245 255 274 ...</span></span>
 <span><span class="co">#|  $ is_known: logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -207,7 +205,7 @@
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
 <p>To use {pegboard} in the context of The Workbench, you will need to have a lesson handy. If you don’t have one, you can use the <code><a href="reference/get_lesson.html">get_lesson()</a></code> function, which will use <a href="https://r-lib.github.io/gert/" class="external-link">{gert}</a> to clone a lesson repository to your computer.</p>
-<p>(NOTE: this file was last run on 2023-09-06 08:45:54.227933)</p>
+<p>(NOTE: this file was last run on 2023-11-22 11:15:17.770234)</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://carpentries.github.io/pegboard">"pegboard"</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://purrr.tidyverse.org/" class="external-link">"purrr"</a></span><span class="op">)</span></span>
@@ -222,18 +220,20 @@
 <span><span class="co">#|     blocks: function (type = NULL, level = 0, path = FALSE) </span></span>
 <span><span class="co">#|     built: NULL</span></span>
 <span><span class="co">#|     challenges: function (path = FALSE, graph = FALSE, recurse = TRUE) </span></span>
+<span><span class="co">#|     children: NULL</span></span>
 <span><span class="co">#|     clone: function (deep = FALSE) </span></span>
 <span><span class="co">#|     episodes: list</span></span>
 <span><span class="co">#|     extra: list</span></span>
 <span><span class="co">#|     files: active binding</span></span>
 <span><span class="co">#|     get: function (element = NULL, collection = "episodes") </span></span>
 <span><span class="co">#|     handout: function (path = NULL, solution = FALSE) </span></span>
+<span><span class="co">#|     has_children: active binding</span></span>
 <span><span class="co">#|     initialize: function (path = ".", rmd = FALSE, jekyll = TRUE, ...) </span></span>
 <span><span class="co">#|     isolate_blocks: function () </span></span>
 <span><span class="co">#|     load_built: function () </span></span>
 <span><span class="co">#|     n_problems: active binding</span></span>
 <span><span class="co">#|     overview: FALSE</span></span>
-<span><span class="co">#|     path: /tmp/RtmpBNM7Jl/PBREADME9c2d5fd860a1/swcarpentry--r-novi ...</span></span>
+<span><span class="co">#|     path: /tmp/Rtmp40TO0e/PBREADMEccef2b02e45e/swcarpentry--r-novi ...</span></span>
 <span><span class="co">#|     reset: function () </span></span>
 <span><span class="co">#|     rmd: FALSE</span></span>
 <span><span class="co">#|     sandpaper: TRUE</span></span>
@@ -241,6 +241,7 @@
 <span><span class="co">#|     solutions: function (path = FALSE) </span></span>
 <span><span class="co">#|     summary: function (collection = "episodes") </span></span>
 <span><span class="co">#|     thin: function (verbose = TRUE) </span></span>
+<span><span class="co">#|     trace_lineage: function (episode_path) </span></span>
 <span><span class="co">#|     validate_divs: function () </span></span>
 <span><span class="co">#|     validate_headings: function (verbose = TRUE) </span></span>
 <span><span class="co">#|     validate_links: function () </span></span>
@@ -252,13 +253,13 @@
 <span><span class="co">#| # A tibble: 16 × 12</span></span>
 <span><span class="co">#|    page                         sections headings callouts challenges solutions  code output warning error images links</span></span>
 <span><span class="co">#|    &lt;chr&gt;                           &lt;int&gt;    &lt;int&gt;    &lt;int&gt;      &lt;int&gt;     &lt;int&gt; &lt;int&gt;  &lt;int&gt;   &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;int&gt;</span></span>
-<span><span class="co">#|  1 01-rstudio-intro.Rmd               28       28       19          5         5    47      1       0     0      2     6</span></span>
+<span><span class="co">#|  1 01-rstudio-intro.Rmd               28       28       19          5         5    47      1       0     0      2     7</span></span>
 <span><span class="co">#|  2 02-project-intro.Rmd               12       19       12          5         1     4      0       0     0      1     3</span></span>
 <span><span class="co">#|  3 03-seeking-help.Rmd                15       15       11          3         3    12      0       0     0      0     7</span></span>
 <span><span class="co">#|  4 04-data-structures-part1.Rmd        2       50       31          9        15    77      0       0     0      0     1</span></span>
-<span><span class="co">#|  5 05-data-structures-part2.Rmd       15       15       12          4         4    33      0       0     0      0     3</span></span>
+<span><span class="co">#|  5 05-data-structures-part2.Rmd       15       15       12          4         4    32      0       0     0      0     3</span></span>
 <span><span class="co">#|  6 06-data-subsetting.Rmd             33       34       26          8         8    76      0       0     0      2     0</span></span>
-<span><span class="co">#|  7 07-control-flow.Rmd                15       15       17          5         5    36      0       0     0      0     0</span></span>
+<span><span class="co">#|  7 07-control-flow.Rmd                15       15       17          5         5    36      0       0     0      0     2</span></span>
 <span><span class="co">#|  8 08-plot-ggplot2.Rmd                20       20       18          6         6    23      0       0     0      0    12</span></span>
 <span><span class="co">#|  9 09-vectorization.Rmd               11       11       14          4         4    24      0       0     0      0     1</span></span>
 <span><span class="co">#| 10 10-functions.Rmd                   20       21       19          5         5    28      0       0     0      0    12</span></span>
@@ -367,7 +368,7 @@
 <span><span class="co">#| &lt;document sourcepos="1:1-712:0" xmlns="http://commonmark.org/xml/1.0"&gt;</span></span>
 <span><span class="co">#|  [1] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-1-objectives"/&gt;</span></span>
 <span><span class="co">#|  [2] &lt;paragraph sourcepos="2:1-2:50"&gt;\n  &lt;text sourcepos="2:1-2:50" xml:space="preserve"&gt;::::::::::::::::::::::::::::::::::::::: objectives&lt;/text&gt;\n&lt;/paragraph&gt;</span></span>
-<span><span class="co">#|  [3] &lt;list sourcepos="4:1-12:0" type="bullet" tight="true"&gt;\n  &lt;item sourcepos="4:1-4:62"&gt;\n    &lt;paragraph sourcepos="4:3-4:62"&gt;\n      &lt;text sourcepos="4:3-4:62" xml:space="preserve"&gt;Describe the purpose and use of each pane in the RStudio IDE&lt;/text&gt;\n    &lt;/paragraph&gt;\n  &lt;/item&gt;\n  &lt;item sourcep ...</span></span>
+<span><span class="co">#|  [3] &lt;list sourcepos="4:1-12:0" type="bullet" tight="true"&gt;\n  &lt;item sourcepos="4:1-4:55"&gt;\n    &lt;paragraph sourcepos="4:3-4:55"&gt;\n      &lt;text sourcepos="4:3-4:54" xml:space="preserve"&gt;Describe the purpose and use of each pane in RStudio&lt;/text&gt;\n    &lt;/paragraph&gt;\n  &lt;/item&gt;\n  &lt;item sourcepos="5:1- ...</span></span>
 <span><span class="co">#|  [4] &lt;paragraph sourcepos="13:1-13:50"&gt;\n  &lt;text sourcepos="13:1-13:50" xml:space="preserve"&gt;::::::::::::::::::::::::::::::::::::::::::::::::::&lt;/text&gt;\n&lt;/paragraph&gt;</span></span>
 <span><span class="co">#|  [5] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-1-objectives"/&gt;</span></span>
 <span><span class="co">#|  [6] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-2-questions"/&gt;</span></span>
@@ -376,15 +377,15 @@
 <span><span class="co">#|  [9] &lt;paragraph sourcepos="22:1-22:50"&gt;\n  &lt;text sourcepos="22:1-22:50" xml:space="preserve"&gt;::::::::::::::::::::::::::::::::::::::::::::::::::&lt;/text&gt;\n&lt;/paragraph&gt;</span></span>
 <span><span class="co">#| [10] &lt;dtag xmlns="http://carpentries.org/pegboard/" label="div-2-questions"/&gt;</span></span>
 <span><span class="co">#| [11] &lt;code_block sourcepos="24:1-25:3" xml:space="preserve" language="r" name="" include="FALSE"/&gt;</span></span>
-<span><span class="co">#| [12] &lt;heading sourcepos="27:1-27:13" level="2"&gt;\n  &lt;text sourcepos="27:4-27:13" xml:space="preserve"&gt;Motivation&lt;/text&gt;\n&lt;/heading&gt;</span></span>
-<span><span class="co">#| [13] &lt;paragraph sourcepos="29:1-37:45"&gt;\n  &lt;text sourcepos="29:1-29:81" xml:space="preserve"&gt;Science is a multi-step process: once you've designed an experiment and collected&lt;/text&gt;\n  &lt;softbreak/&gt;\n  &lt;text sourcepos="30:1-30:85" xml:space="preserve"&gt;data, the real fun begins! This lesson will te ...</span></span>
-<span><span class="co">#| [14] &lt;heading sourcepos="39:1-39:31" level="2"&gt;\n  &lt;text sourcepos="39:4-39:31" xml:space="preserve"&gt;Before Starting The Workshop&lt;/text&gt;\n&lt;/heading&gt;</span></span>
-<span><span class="co">#| [15] &lt;paragraph sourcepos="41:1-41:204"&gt;\n  &lt;text sourcepos="41:1-41:204" xml:space="preserve"&gt;Please ensure you have the latest version of R and RStudio installed on your machine. This is important, as some packages used in the workshop may not install correctly (or at all) if R is not up to dat ...</span></span>
-<span><span class="co">#| [16] &lt;list sourcepos="43:1-45:0" type="bullet" tight="true"&gt;\n  &lt;item sourcepos="43:1-43:81"&gt;\n    &lt;paragraph sourcepos="43:3-43:81"&gt;\n      &lt;link sourcepos="43:3-43:81" destination="https://www.r-project.org/" title=""&gt;\n        &lt;text sourcepos="43:4-43:52" xml:space="preserve"&gt;Download and inst ...</span></span>
-<span><span class="co">#| [17] &lt;heading sourcepos="46:1-46:26" level="2"&gt;\n  &lt;text sourcepos="46:4-46:26" xml:space="preserve"&gt;Introduction to RStudio&lt;/text&gt;\n&lt;/heading&gt;</span></span>
-<span><span class="co">#| [18] &lt;paragraph sourcepos="48:1-48:60"&gt;\n  &lt;text sourcepos="48:1-48:60" xml:space="preserve"&gt;Welcome to the R portion of the Software Carpentry workshop.&lt;/text&gt;\n&lt;/paragraph&gt;</span></span>
-<span><span class="co">#| [19] &lt;paragraph sourcepos="50:1-52:52"&gt;\n  &lt;text sourcepos="50:1-50:76" xml:space="preserve"&gt;Throughout this lesson, we're going to teach you some of the fundamentals of&lt;/text&gt;\n  &lt;softbreak/&gt;\n  &lt;text sourcepos="51:1-51:69" xml:space="preserve"&gt;the R language as well as some best practices for o ...</span></span>
-<span><span class="co">#| [20] &lt;paragraph sourcepos="54:1-57:31"&gt;\n  &lt;text sourcepos="54:1-54:68" xml:space="preserve"&gt;We'll be using RStudio: a free, open-source R Integrated Development&lt;/text&gt;\n  &lt;softbreak/&gt;\n  &lt;text sourcepos="55:1-55:83" xml:space="preserve"&gt;Environment (IDE). It provides a built-in editor, works on  ...</span></span>
+<span><span class="co">#| [12] &lt;heading sourcepos="27:1-27:31" level="2"&gt;\n  &lt;text sourcepos="27:4-27:31" xml:space="preserve"&gt;Before Starting The Workshop&lt;/text&gt;\n&lt;/heading&gt;</span></span>
+<span><span class="co">#| [13] &lt;paragraph sourcepos="29:1-29:204"&gt;\n  &lt;text sourcepos="29:1-29:204" xml:space="preserve"&gt;Please ensure you have the latest version of R and RStudio installed on your machine. This is important, as some packages used in the workshop may not install correctly (or at all) if R is not up to dat ...</span></span>
+<span><span class="co">#| [14] &lt;list sourcepos="31:1-34:0" type="bullet" tight="true"&gt;\n  &lt;item sourcepos="31:1-31:81"&gt;\n    &lt;paragraph sourcepos="31:3-31:81"&gt;\n      &lt;link sourcepos="31:3-31:81" destination="https://www.r-project.org/" title=""&gt;\n        &lt;text sourcepos="31:4-31:52" xml:space="preserve"&gt;Download and inst ...</span></span>
+<span><span class="co">#| [15] &lt;heading sourcepos="35:1-35:26" level="2"&gt;\n  &lt;text sourcepos="35:4-35:26" xml:space="preserve"&gt;Why use R and R studio?&lt;/text&gt;\n&lt;/heading&gt;</span></span>
+<span><span class="co">#| [16] &lt;paragraph sourcepos="37:1-37:60"&gt;\n  &lt;text sourcepos="37:1-37:60" xml:space="preserve"&gt;Welcome to the R portion of the Software Carpentry workshop!&lt;/text&gt;\n&lt;/paragraph&gt;</span></span>
+<span><span class="co">#| [17] &lt;paragraph sourcepos="39:1-40:240"&gt;\n  &lt;text sourcepos="39:1-39:81" xml:space="preserve"&gt;Science is a multi-step process: once you've designed an experiment and collected&lt;/text&gt;\n  &lt;softbreak/&gt;\n  &lt;text sourcepos="40:1-40:240" xml:space="preserve"&gt;data, the real fun begins with analysis! Thr ...</span></span>
+<span><span class="co">#| [18] &lt;paragraph sourcepos="42:1-42:370"&gt;\n  &lt;text sourcepos="42:1-42:263" xml:space="preserve"&gt;Although we could use a spreadsheet in Microsoft Excel or Google sheets to analyze our data, these tools are limited in their flexibility and accessibility. Critically, they also are difficult to share  ...</span></span>
+<span><span class="co">#| [19] &lt;paragraph sourcepos="44:1-44:264"&gt;\n  &lt;text sourcepos="44:1-44:263" xml:space="preserve"&gt;Therefore, this lesson will teach you how to begin exploring your data using R and RStudio. The R program is available for Windows, Mac, and Linux operating systems, and is a freely-available where you  ...</span></span>
+<span><span class="co">#| [20] &lt;paragraph sourcepos="46:1-49:31"&gt;\n  &lt;text sourcepos="46:1-46:152" xml:space="preserve"&gt;However, to make using R easier, we will use the program RStudio, which we also downloaded above. RStudio is a free, open-source, Integrated Development&lt;/text&gt;\n  &lt;softbreak/&gt;\n  &lt;text sourcepos="47:1-47 ...</span></span>
 <span><span class="co">#| ...</span></span>
 <span><span class="va">ep1</span><span class="op">$</span><span class="fu">head</span><span class="op">(</span><span class="fl">20</span><span class="op">)</span> <span class="co"># show the first 20 lines of the file</span></span>
 <span><span class="co">#| ---</span></span>
@@ -396,8 +397,8 @@
 <span><span class="co">#| </span></span>
 <span><span class="co">#| ::::::::::::::::::::::::::::::::::::::: objectives</span></span>
 <span><span class="co">#| </span></span>
-<span><span class="co">#| - Describe the purpose and use of each pane in the RStudio IDE</span></span>
-<span><span class="co">#| - Locate buttons and options in the RStudio IDE</span></span>
+<span><span class="co">#| - Describe the purpose and use of each pane in RStudio</span></span>
+<span><span class="co">#| - Locate buttons and options in RStudio</span></span>
 <span><span class="co">#| - Define a variable</span></span>
 <span><span class="co">#| - Assign data to a variable</span></span>
 <span><span class="co">#| - Manage a workspace in an interactive R session</span></span>
@@ -432,8 +433,8 @@
 <span><span class="co">#| </span></span>
 <span><span class="co">#| ::::::::::::::::::::::::::::::::::::::: objectives</span></span>
 <span><span class="co">#| </span></span>
-<span><span class="co">#| - Describe the purpose and use of each pane in the RStudio IDE</span></span>
-<span><span class="co">#| - Locate buttons and options in the RStudio IDE</span></span>
+<span><span class="co">#| - Describe the purpose and use of each pane in RStudio</span></span>
+<span><span class="co">#| - Locate buttons and options in RStudio</span></span>
 <span><span class="co">#| - Define a variable</span></span>
 <span><span class="co">#| - Assign data to a variable</span></span>
 <span><span class="co">#| - Manage a workspace in an interactive R session</span></span>
@@ -458,8 +459,8 @@
 <span><span class="co">#| </span></span>
 <span><span class="co">#| ::::::::::::::::::::::::::::::::::::::: objectives</span></span>
 <span><span class="co">#| </span></span>
-<span><span class="co">#| - Describe the purpose and use of each pane in the RStudio IDE</span></span>
-<span><span class="co">#| - Locate buttons and options in the RStudio IDE</span></span>
+<span><span class="co">#| - Describe the purpose and use of each pane in RStudio</span></span>
+<span><span class="co">#| - Locate buttons and options in RStudio</span></span>
 <span><span class="co">#| - Define a variable</span></span>
 <span><span class="co">#| - Assign data to a variable</span></span>
 <span><span class="co">#| - Manage a workspace in an interactive R session</span></span>
@@ -473,8 +474,8 @@
 <span><span class="co">#|  [1] "---"                                                                    "title: Introduction to R and RStudio"                                   "teaching: 45"                                                           "exercises: 10"                                                         </span></span>
 <span><span class="co">#|  [5] "source: Rmd"                                                            "---"                                                                    ""                                                                       "## NEW CONTENT"                                                        </span></span>
 <span><span class="co">#|  [9] ""                                                                       "Hello! This is **new markdown content** generated via the"              "[{pegboard}](https://carpentries.github.io/pegboard) package that will" "appear above the objectives block!"                                    </span></span>
-<span><span class="co">#| [13] ""                                                                       "::::::::::::::::::::::::::::::::::::::: objectives"                     ""                                                                       "- Describe the purpose and use of each pane in the RStudio IDE"        </span></span>
-<span><span class="co">#| [17] "- Locate buttons and options in the RStudio IDE"                        "- Define a variable"                                                    "- Assign data to a variable"                                            "- Manage a workspace in an interactive R session"</span></span></code></pre></div>
+<span><span class="co">#| [13] ""                                                                       "::::::::::::::::::::::::::::::::::::::: objectives"                     ""                                                                       "- Describe the purpose and use of each pane in RStudio"                </span></span>
+<span><span class="co">#| [17] "- Locate buttons and options in RStudio"                                "- Define a variable"                                                    "- Assign data to a variable"                                            "- Manage a workspace in an interactive R session"</span></span></code></pre></div>
 </div>
 </div>
 </div>

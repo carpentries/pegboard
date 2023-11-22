@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pegboard</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,9 +24,10 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/validation.html">Validation of Lesson Elements</a>
     <a class="dropdown-item" href="../articles/intro-xml.html">Working with XML data</a>
     <a class="dropdown-item" href="../articles/intro-episode.html">Introduction to the Episode Object</a>
+    <a class="dropdown-item" href="../articles/intro-lesson.html">Introduction to the Lesson Object</a>
+    <a class="dropdown-item" href="../articles/validation.html">Validation of Lesson Elements</a>
   </div>
 </li>
 <li class="nav-item">
@@ -60,9 +61,9 @@
 
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Lessons are made of up several episodes within the <code>_episodes/</code> directory of
-a lesson. This class keeps track of several episodes and allows us to switch
-between RMarkdown and markdown episodes</p>
+    <p>This class contains and keeps track of relationships between <a href="Episode.html">Episode</a>
+objects contained within <a href="https://carpentries.github.io/workbench" class="external-link">Carpentries Workbench</a> and <a href="https://carpentries.github.io/lesson-example" class="external-link">Carpentries styles</a> lessons.</p>
+<p>Read more about how to use this class in <code><a href="../articles/intro-lesson.html">vignette("intro-lesson", package = "pegboard")</a></code></p>
     </div>
     <div class="section level2">
     <h2 id="public-fields">Public fields<a class="anchor" aria-label="anchor" href="#public-fields"></a></h2>
@@ -682,7 +683,7 @@ child files. If there are no child files, it will return the path</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     summary: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     tags: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     tail: function (n = 6L) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     unblock: function (token = "#'") </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     unblock: function (token = "#'", force = FALSE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     use_dovetail: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     use_sandpaper: function (rmd = FALSE, yml = list()) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_divs: function (warn = TRUE) </span>
@@ -753,7 +754,7 @@ child files. If there are no child files, it will return the path</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     summary: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     tags: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     tail: function (n = 6L) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     unblock: function (token = "#'") </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     unblock: function (token = "#'", force = FALSE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     use_dovetail: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     use_sandpaper: function (rmd = FALSE, yml = list()) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_divs: function (warn = TRUE) </span>
@@ -824,7 +825,7 @@ child files. If there are no child files, it will return the path</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     summary: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     tags: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     tail: function (n = 6L) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     unblock: function (token = "#'") </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     unblock: function (token = "#'", force = FALSE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     use_dovetail: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     use_sandpaper: function (rmd = FALSE, yml = list()) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_divs: function (warn = TRUE) </span>
@@ -895,7 +896,7 @@ child files. If there are no child files, it will return the path</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     summary: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     tags: active binding</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     tail: function (n = 6L) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     unblock: function (token = "#'") </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     unblock: function (token = "#'", force = FALSE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     use_dovetail: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     use_sandpaper: function (rmd = FALSE, yml = list()) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate_divs: function (warn = TRUE) </span>
