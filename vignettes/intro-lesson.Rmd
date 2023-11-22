@@ -10,7 +10,7 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "##"
 )
 ```
 
@@ -32,8 +32,10 @@ understand the methods that come from the `Episode` objects. In this vignette,
 we will talk about the structure of `Lesson` objects, how to use the basic
 methods of these objects, inspecting summaries of source vs built episodes, and
 assessing the lineage of episodes that have parents and/or children documents.
-But first, because of a default parameter, I need to explain a little bit about
-Jekyll, the former lesson infrastructure. 
+
+But first, because of a default parameter that influences what methods can be
+used depending on the lesson context, I need to explain a little bit about
+Jekyll, the former lesson infrastructure.
 
 ### A Brief Word About History and Jekyll
 
@@ -86,10 +88,6 @@ to the new style, thus we added the `jekyll` parameter to the `Lesson` object
 initializer method, and set `jekyll = TRUE` as the default to keep backwards
 compatibility.
 
-#### Syntax
-
-```{r child="../man/rmd-fragments/jekyll-syntax.Rmd"}
-```
 
 ## Creating a New Lesson Object
 
@@ -361,6 +359,20 @@ glue("The lineage of {path_rel(parent, start = rel)} is:
 
 ## Jekyll Lessons
 
+This section will talk about the peculiarities with lessons built with the
+[carpentries/styles](https://carpentries.github.io/lesson-example/) lesson
+template. Note that lesson transition methods are not implemented in the
+`Lesson` object, if you want to find out about methods for transition, please
+read the Jekyll section in `vignette("intro-episode", package = "pegboard")`.
+
+
+### Syntax
+
+```{r child="../man/rmd-fragments/jekyll-syntax.Rmd"}
+```
+
+### Methods
+
 There are some methods that are specific to lessons that are built with Jekyll.
 In particular, the `n_problems` and `show_problems` active binding are useful
 for determining if anything went wrong with parsing the kramdown syntax,
@@ -375,5 +387,25 @@ jekyll$n_problems
 rmd    <- Lesson$new(lesson_fragment("rmd-lesson"), jekyll = TRUE)
 rmd$n_problems
 ```
+
+As mentioned above, in Jekyll uses special block quotes to format callout 
+blocks. The `$challenges()` and `$solutions()` methods recognise this and will
+return the block quotes:
+
+```{r jeky-chal}
+jekyll$challenges()
+jekyll$solutions()
+```
+
+For other blocks, you can use the `$blocks()` method:
+
+```{r jeky-blocks}
+jekyll$blocks(".prereq")
+rmd$blocks(".prereq")
+```
+
+
+
+
 
 

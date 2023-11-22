@@ -10,7 +10,7 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "##"
 )
 ```
 
@@ -417,7 +417,6 @@ ep$tags
 xml2::xml_parent(ep$tags)
 ```
 
-
 ### Transformation
 
 It was always known that we would want to use a different syntax to write the
@@ -426,13 +425,16 @@ was difficult to parse and validate. The automated transformation workflow is
 what powers the Lesson Transformation Tool and we have composed it into a few
 basic steps:
 
-1. transform block quotes to fenced divs
-2. removing the jekyll syntax, liquid templating, and fix relative links
-3. moving the yaml frontmatter
+1. transform block quotes to fenced divs (via the `$unblock()` method, using
+   the internal `replace_with_div()` function).
+2. removing the jekyll syntax, liquid templating, and fix relative links (via
+   the `$use_sandpaper()` method, using the internal `use_sandpaper()`
+   function.
+3. moving the yaml frontmatter using the `$move_` methods
 
 The process looks like this composable chain of methods:
 
-```{r}
+```{r transform}
 ep$reset()
 ep$
   unblock()$
@@ -443,5 +445,62 @@ ep$
 ep$head(31)
 ep$tail(65)
 ```
+
+
+#### Transformation tip!
+
+There are times where the lesson authors forget to tag a block quote with the
+correct type of tag to make it a callout block. In this case, the block quote
+will remain unconverted in the lesson. For example let's say there was a block
+quote at the very top of the lesson that defined prerequisites, but the author accidentally had a new line between the blockquote and the IAL tag, meaning that
+the blockquote was not processed:
+
+```{r transform-prereq}
+# add a prerequisite block after the questions and objectives
+untranslated_block <- "
+> ## Barnaby
+>
+> - a barn
+> - a bee
+>
+
+{: .prereq}
+"
+ep$add_md(untranslated_block, where = 10)
+ep$head(31)
+```
+
+Notice that the block quote is picked up only as a blockquote, but not a
+_special_ block quote. 
+
+```{r block-head}
+ep$get_blocks(".prereq")
+ep$get_blocks()
+```
+
+If we set the `ktag` attribute of this block quote to "{: .prereq}", then it
+will be recognised as a special blockquote, which can be translated.
+
+```{r block-set}
+# remove the orphan prereq tag:
+orphan_tag <- xml2::xml_find_all(ep$body, 
+  ".//md:paragraph[md:text[contains(text(),'.prereq}')]]", ns = ep$ns)
+xml2::xml_remove(orphan_tag)
+ep$head(31)
+
+# set the attribute of the block quote:
+xml2::xml_set_attr(ep$get_blocks(), "ktag", "{: .prereq}")
+ep$head(31)
+ep$get_blocks(".prereq")
+```
+
+Now we can convert the block to a fenced div with `$unblock()`
+
+```{r block-unblock}
+ep$unblock(force = TRUE)$head(31)
+```
+
+
+
 
 
