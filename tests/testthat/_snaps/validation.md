@@ -58,7 +58,7 @@
     Message
       ! There were errors in 1/5 fenced divs
       
-      - The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor, spoiler, tab
+      - The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor, spoiler, tab, group-tab
       
       validation-divs.md:26  [unknown div] unknown
 
@@ -494,7 +494,7 @@
       dv$validate_divs()
     Message
       ! There were errors in 1/5 fenced divs
-      ( ) The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor, spoiler, tab
+      ( ) The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor, spoiler, tab, group-tab
       
       validation-divs.md:26 [unknown div] unknown
 
@@ -504,7 +504,7 @@
       dv$validate_divs()
     Message
       [33m![39m There were errors in 1/5 fenced divs
-      ( ) The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor, spoiler, tab
+      ( ) The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor, spoiler, tab, group-tab
       
       validation-divs.md:26 [unknown div] unknown
 
@@ -514,7 +514,7 @@
       dv$validate_divs()
     Message
       ! There were errors in 1/5 fenced divs
-      ◌ The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor, spoiler, tab
+      ◌ The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor, spoiler, tab, group-tab
       
       validation-divs.md:26 [unknown div] unknown
 
@@ -524,7 +524,7 @@
       dv$validate_divs()
     Message
       [33m![39m There were errors in 1/5 fenced divs
-      ◌ The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor, spoiler, tab
+      ◌ The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor, spoiler, tab, group-tab
       
       validation-divs.md:26 [unknown div] unknown
 
@@ -639,7 +639,7 @@
       dv$validate_divs()
     Message
       ! There were errors in 1/5 fenced divs
-      ( ) The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor, spoiler, tab
+      ( ) The Carpentries Workbench knows the following div types callout, objectives, questions, challenge, prereq, checklist, solution, hint, discussion, testimonial, keypoints, instructor, spoiler, tab, group-tab
       
       ::warning file=validation-divs.md,line=26:: [unknown div] unknown
 
