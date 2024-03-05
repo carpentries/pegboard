@@ -117,7 +117,7 @@ make_link_patterns <- function(ns = "md:") {
   predicate <- gsb("(<ctext('({{')> and <ctext('}}')>)")
   asis_nodes <- "text[@asis][text()=']']"
   destination <- glue::glue(
-    ".//{ns}{asis_nodes}/following-sibling::{ns}text[{predicate}]",
+    ".//{ns}{asis_nodes}/following-sibling::{ns}text[{predicate}]"
   )
   return(destination)
 }
