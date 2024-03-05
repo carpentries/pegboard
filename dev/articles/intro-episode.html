@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <meta property="og:title" content="Introduction to the Episode Object">
@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pegboard</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.7.2.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.7.4.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -565,36 +565,36 @@ method:</p>
 <p>In markdown, a <strong>code block</strong> is written with fences of
 at least three backtick characters (<code>`</code>) followed by the
 language for syntax highlighting:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>List all files in reverse temporal order, printing their sizes in</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>a human-readable format:</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-larth</span> /path/to/folder</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>List all files in reverse temporal order, printing their sizes in</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>a human-readable format:</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-larth</span> /path/to/folder</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 <blockquote>
 <p>List all files in reverse temporal order, printing their sizes in a
 human-readable format:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-larth</span> /path/to/folder</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-larth</span> /path/to/folder</span></code></pre></div>
 </blockquote>
 <p>When these are processed by {pegboard}, the resulting XML has this
 structure where the backticks inform that kind of node
 (<code>code_block</code>) and the language type is known as the “info”
 attribute. Everything inside the code block is the node text and has
 whitespace preserved</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">code_block</span><span class="ot"> info=</span><span class="st">"bash"</span><span class="ot"> xml:space=</span><span class="st">"preserve"</span>&gt;</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>ls -larth /path/to/folder</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">code_block</span>&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>&lt;<span class="kw">code_block</span><span class="ot"> info=</span><span class="st">"bash"</span><span class="ot"> xml:space=</span><span class="st">"preserve"</span>&gt;</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>ls -larth /path/to/folder</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>&lt;/<span class="kw">code_block</span>&gt;</span></code></pre></div>
 <p>In R Markdown, there are special code blocks that are called code
 chunks that can be dynamically evaluated. These are distinguished by the
 curly braces around the language specifier and <a href="https://yihui.org/knitr/options/" class="external-link">optional attributes</a> that
 control the output of the chunk.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>There is a code chunk here that will produce a plot, but not show the code:</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>```{r chunky, echo=FALSE, fig.alt="a plot of y = mx + b for m = 1 and b = 0"}</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>plot(1:10, type = "l")</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>There is a code chunk here that will produce a plot, but not show the code:</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>```{r chunky, echo=FALSE, fig.alt="a plot of y = mx + b for m = 1 and b = 0"}</span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>plot(1:10, type = "l")</span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>```</span></code></pre></div>
 <blockquote>
 <p>There is a code chunk here that will produce a plot, but not show the
 code:</p>
@@ -603,9 +603,9 @@ code:</p>
 <p>When this is processed with {pegboard}, the “info” part of the code
 block is further split into “language”, “name” and further attributes
 based on the chunk options:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">code_block</span><span class="ot"> xml:space=</span><span class="st">"preserve"</span><span class="ot"> language=</span><span class="st">"r"</span><span class="ot"> name=</span><span class="st">"chunky"</span><span class="ot"> echo=</span><span class="st">"FALSE"</span><span class="ot"> fig.alt=</span><span class="st">"</span><span class="dv">&amp;quot;</span><span class="st">a plot of y = mx + b for m = 1 and b = 0</span><span class="dv">&amp;quot;</span><span class="st">"</span>&gt;</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>plot(1:10, type = "l")</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">code_block</span>&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>&lt;<span class="kw">code_block</span><span class="ot"> xml:space=</span><span class="st">"preserve"</span><span class="ot"> language=</span><span class="st">"r"</span><span class="ot"> name=</span><span class="st">"chunky"</span><span class="ot"> echo=</span><span class="st">"FALSE"</span><span class="ot"> fig.alt=</span><span class="st">"</span><span class="dv">&amp;quot;</span><span class="st">a plot of y = mx + b for m = 1 and b = 0</span><span class="dv">&amp;quot;</span><span class="st">"</span>&gt;</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>plot(1:10, type = "l")</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>&lt;/<span class="kw">code_block</span>&gt;</span></code></pre></div>
 <p>Both code blocks will be encountered, but the difference between them
 is that the R Markdown code chunks will have the “language” attribute.
 This is an important concept to know about when you are searching and
@@ -992,27 +992,27 @@ These elements were formated as <code>{: &lt;attributes&gt;}</code>
 where <code>&lt;attributes&gt;</code> is replaced by class definitions
 and key/value pairs. They always appear <em>after</em> the relevant
 block which lead to code blocks that looked like this:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="in">~~~</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="in">ls -larth /path/to/dir</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="in">~~~</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>{: .language-bash}</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="in">~~~</span></span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a><span class="in">ls -larth /path/to/dir</span></span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a><span class="in">~~~</span></span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a>{: .language-bash}</span></code></pre></div>
 <p>Moreover, to achieve the special callout blocks, we used blockquotes
 that were given special classes (which is an accessbility no-no because
 those blocks were not semantic HTML) and the nesting of these block
 quotes looked like this:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; ## Challenge</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; How do you list all files in a directory in reverse order by the time it was </span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; last updated?</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &gt; ## Solution</span></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &gt; </span></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &gt; ~~~</span></span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &gt; ls -larth /path/to/dir</span></span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &gt; ~~~</span></span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &gt; {: .language-bash}</span></span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; {: .solution}</span></span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="at">{: .challenge}</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="at">&gt; ## Challenge</span></span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a><span class="at">&gt; </span></span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a><span class="at">&gt; How do you list all files in a directory in reverse order by the time it was </span></span>
+<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a><span class="at">&gt; last updated?</span></span>
+<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a><span class="at">&gt; </span></span>
+<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a><span class="at">&gt; &gt; ## Solution</span></span>
+<span id="cb26-7"><a href="#cb26-7" tabindex="-1"></a><span class="at">&gt; &gt; </span></span>
+<span id="cb26-8"><a href="#cb26-8" tabindex="-1"></a><span class="at">&gt; &gt; ~~~</span></span>
+<span id="cb26-9"><a href="#cb26-9" tabindex="-1"></a><span class="at">&gt; &gt; ls -larth /path/to/dir</span></span>
+<span id="cb26-10"><a href="#cb26-10" tabindex="-1"></a><span class="at">&gt; &gt; ~~~</span></span>
+<span id="cb26-11"><a href="#cb26-11" tabindex="-1"></a><span class="at">&gt; &gt; {: .language-bash}</span></span>
+<span id="cb26-12"><a href="#cb26-12" tabindex="-1"></a><span class="at">&gt; {: .solution}</span></span>
+<span id="cb26-13"><a href="#cb26-13" tabindex="-1"></a><span class="at">{: .challenge}</span></span></code></pre></div>
 <p>One of the biggest challenges with this for authors was that, unless
 you used an editor like vim or emacs, this was difficult to write with
 all the prefixed blockquote characters and keeping track of which IALs
