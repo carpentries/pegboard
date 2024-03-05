@@ -1,3 +1,12 @@
+# pegboard 0.7.4.9000 (2024-03-05)
+
+## BUGFIX
+
+* Hotfix for R 4.3.3 bump that results in trailing commas in glue function 
+  causing argument errors: https://github.com/tidyverse/glue/issues/320 
+  (reported: @ns-rse, #149; fixed: @Bisaloo, #150). Required for 
+  [sandpaper CSS fix](https://github.com/carpentries/sandpaper/pull/574) 
+
 # pegboard 0.7.3 (2023-11-22)
 
 ## DOCUMENTATION
