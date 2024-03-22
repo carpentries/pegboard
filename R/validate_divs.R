@@ -34,6 +34,8 @@
 #'  - discussion
 #'  - checklist
 #'  - testimonial
+#'  - tab (can only contain text, images, and code blocks)
+#'  - group-tab (can only contain text, images, and code blocks)
 #'
 #' Any other div names will produce structure in the resulting DOM, but they
 #' will not have any special visual styling.
@@ -75,7 +77,9 @@ KNOWN_DIVS <- c(
   "testimonial",
   "keypoints",
   "instructor",
-  "spoiler"
+  "spoiler",
+  "tab",
+  "group-tab"
 )
 
 #' @rdname validate_divs
