@@ -74,6 +74,7 @@ The following fenced divs can occur in the lesson, but are not required:
 \item discussion
 \item checklist
 \item testimonial
+\item tab (can only contain text, images, and code blocks)
 }
 
 Any other div names will produce structure in the resulting DOM, but they
