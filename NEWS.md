@@ -1,3 +1,16 @@
+# pegboard 0.7.5.9000 (2024-04-05)
+
+## NEW FEATURES
+
+* Add support for tabbed content in lessons
+  (reported: @astroDimitrios,
+   implemented: @astroDimitrios, @froggleston,
+   https://github.com/carpentries/pegboard/pull/148   
+   https://github.com/carpentries/sandpaper/pull/571,
+   https://github.com/carpentries/varnish/pull/121,
+  ).
+
+
 # pegboard 0.7.4 (2024-03-06)
 
 ## BUGFIX
