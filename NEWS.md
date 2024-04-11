@@ -1,4 +1,4 @@
-# pegboard 0.7.5.9000 (2024-04-05)
+# pegboard 0.7.5 (2024-04-10)
 
 ## NEW FEATURES
 
