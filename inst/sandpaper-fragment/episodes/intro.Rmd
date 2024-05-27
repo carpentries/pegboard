@@ -39,6 +39,7 @@ Carpentries lesson template:
 ## Challenge 1: Can you do it?
 
 What is the output of this command?
+Hint: it will be length 1.
 
 ```{r, eval = FALSE}
 paste("This", "new", "template", "looks", "good")

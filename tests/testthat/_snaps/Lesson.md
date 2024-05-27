@@ -126,13 +126,14 @@
     Output
       ## Using RMarkdown
       
-      ## Challenge 1: Can you do it?
-      
-      What is the output of this command?
-      
-      ```{r, eval=FALSE}
+      # ## Challenge 1: Can you do it?
+      # 
+      # What is the output of this command?
+      # Hint: it will be length 1.
+      # 
+      # ```{r, eval=FALSE}
       paste("This", "new", "template", "looks", "good")
-      ```
+      # ```
 
 ---
 
@@ -141,61 +142,71 @@
     Output
       ## Using RMarkdown
       
-      ## Challenge 1: Can you do it?
-      
-      What is the output of this command?
-      
-      ```{r, eval=FALSE}
+      # ## Challenge 1: Can you do it?
+      # 
+      # What is the output of this command?
+      # Hint: it will be length 1.
+      # 
+      # ```{r, eval=FALSE}
       paste("This", "new", "template", "looks", "good")
-      ```
-      
-      :::::::::::::::::::::::: solution
-      
-      ## Output
-      
-      ```{r, echo=FALSE}
+      # ```
+      # 
+      # :::::::::::::::::::::::: solution
+      # 
+      # ## Output
+      # 
+      # ```{r, echo=FALSE}
       paste("This", "new", "template", "looks", "good")
-      ```
-      
-      ::::::::::::::::::::::::::::::::::
-      
-      ## Challenge 2: how do you nest solutions within challenge blocks?
-      
-      :::::::::::::::::::::::: solution
-      
-      You can add a line with at least three colons and a `solution` tag.
+      # ```
+      # 
+      # ::::::::::::::::::::::::::::::::::
+      # 
+      # ## Challenge 2: how do you nest solutions within challenge blocks?
+      # 
+      # :::::::::::::::::::::::: solution
+      # 
+      # You can add a line with at least three colons and a `solution` tag.
 
 ---
 
     Code
-      cat(tinkr::yarn$new(tmp)$show(), sep = "\n")
+      writeLines(readLines(tmp))
     Output
       ## Using RMarkdown
       
-      ## Challenge 1: Can you do it?
-      
-      What is the output of this command?
-      
-      ```{r, eval=FALSE}
+      # ## Challenge 1: Can you do it?
+      # 
+      # What is the output of this command?
+      # Hint: it will be length 1.
+      # 
+      # ```{r, eval=FALSE}
       paste("This", "new", "template", "looks", "good")
-      ```
-      
-      :::::::::::::::::::::::: solution
-      
-      ## Output
-      
-      ```{r, echo=FALSE}
+      # ```
+      # 
+      # :::::::::::::::::::::::: solution
+      # 
+      # ## Output
+      # 
+      # ```{r, echo=FALSE}
       paste("This", "new", "template", "looks", "good")
-      ```
+      # ```
+      # 
+      # ::::::::::::::::::::::::::::::::::
+      # 
+      # ## Challenge 2: how do you nest solutions within challenge blocks?
+      # 
+      # :::::::::::::::::::::::: solution
+      # 
+      # You can add a line with at least three colons and a `solution` tag.
       
-      ::::::::::::::::::::::::::::::::::
-      
-      ## Challenge 2: how do you nest solutions within challenge blocks?
-      
-      :::::::::::::::::::::::: solution
-      
-      You can add a line with at least three colons and a `solution` tag.
-      
+
+---
+
+    Code
+      parse(tmp)
+    Output
+      expression(paste("This", "new", "template", "looks", "good"), 
+          paste("This", "new", "template", "looks", "good"))
 
 # Lessons can be validated [plain]
 
