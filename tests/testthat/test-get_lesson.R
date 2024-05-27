@@ -48,6 +48,10 @@ test_that("lessons can be read from local files", {
 test_that("lessons can be downloaded", {
 
   skip_if_offline()
+  skip_if(interactive())
+  skip_if(isFALSE(as.logical(Sys.getenv("CI", unset = "false"))), 
+    message = "skipped locally to avoid SSL hangups"
+  )
   skip_on_os("windows")
   expect_length(fs::dir_ls(d), 0)
   lex <- get_lesson("carpentries/lesson-example", path = d)
@@ -74,6 +78,11 @@ test_that("lessons can be downloaded", {
 test_that("lessons are accessed without re-downloading", {
 
   skip_if_offline()
+  skip_if(interactive())
+  skip_if(interactive())
+  skip_if(isFALSE(as.logical(Sys.getenv("CI", unset = "false"))), 
+    message = "skipped locally to avoid SSL hangups"
+  )
   skip_on_os("windows")
 
   # The lesson already exists in the directory
@@ -104,6 +113,10 @@ test_that("lessons are accessed without re-downloading", {
 
 test_that("overwriting is possible", {
   skip_if_offline()
+  skip_if(interactive())
+  skip_if(isFALSE(as.logical(Sys.getenv("CI", unset = "false"))), 
+    message = "skipped locally to avoid SSL hangups"
+  )
   skip_on_os("windows")
 
   expect_length(fs::dir_ls(d), 1)
@@ -133,6 +146,10 @@ test_that("overwriting is possible", {
 test_that("Lesson flags will be passed down", {
 
   skip_if_offline()
+  skip_if(interactive())
+  skip_if(isFALSE(as.logical(Sys.getenv("CI", unset = "false"))), 
+    message = "skipped locally to avoid SSL hangups"
+  )
   skip_on_os("windows")
 
   # The lesson already exists in the directory
@@ -162,6 +179,10 @@ test_that("Lesson flags will be passed down", {
 test_that("Lesson methods work as expected", {
 
   skip_if_offline()
+  skip_if(interactive())
+  skip_if(isFALSE(as.logical(Sys.getenv("CI", unset = "false"))), 
+    message = "skipped locally to avoid SSL hangups"
+  )
   skip_on_os("windows")
 
   # The lesson already exists in the directory
@@ -285,6 +306,10 @@ test_that("Lesson methods work as expected", {
 test_that("code with embedded div tags are parsed correctly", {
 
   skip_if_offline()
+  skip_if(interactive())
+  skip_if(isFALSE(as.logical(Sys.getenv("CI", unset = "false"))), 
+    message = "skipped locally to avoid SSL hangups"
+  )
   skip_on_os("windows")
 
   suppressMessages(lex <- get_lesson("carpentries/lesson-example"))
@@ -299,6 +324,10 @@ test_that("Styles lessons with Rmd sources can be downloaded", {
 
   skip("This test was from a pre-workbench lesson infrastructure")
   skip_if_offline()
+  skip_if(interactive())
+  skip_if(isFALSE(as.logical(Sys.getenv("CI", unset = "false"))), 
+    message = "skipped locally to avoid SSL hangups"
+  )
   skip_on_os("windows")
 
   expect_false(fs::dir_exists(fs::path(d, "swcarpentry--r-novice-gapminder")))
@@ -317,6 +346,10 @@ test_that("Styles lessons with Rmd sources can be downloaded", {
 test_that("Non-lessons will be downloaded but rejected", {
 
   skip_if_offline()
+  skip_if(interactive())
+  skip_if(isFALSE(as.logical(Sys.getenv("CI", unset = "false"))), 
+    message = "skipped locally to avoid SSL hangups"
+  )
   skip_on_os("windows")
 
   expect_error(
