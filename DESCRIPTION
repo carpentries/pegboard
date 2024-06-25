@@ -1,10 +1,20 @@
 Package: pegboard
 Title: Explore and Manipulate Markdown Curricula from the Carpentries
-Version: 0.7.5
+Version: 0.7.6
 Authors@R: c(
+    person(given = "Robert",
+           family = "Davey",
+           role = c("aut", "cre"),
+           email = "robertdavey@carpentries.org",
+           comment = c(ORCID = "0000-0002-5589-7754")),
+    person(given = "Erin",
+           family = "Becker",
+           role = c("aut"),
+           email = "erinbecker@carpentries.org",
+           comment = c(ORCID = "0000-0002-6832-0233")),
     person(given = "Zhian N.",
            family = "Kamvar",
-           role = c("aut", "cre"),
+           role = c("aut"),
            email = "zkamvar@carpentries.org",
            comment = c(ORCID = "0000-0003-1458-7108")),
     person(given = "Toby",

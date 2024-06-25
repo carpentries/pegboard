@@ -1,3 +1,12 @@
+# pegboard 0.7.6 (2024-06-25)
+
+## BUGFIX
+
+* Hotfix for {tinkr} bump to 0.3.0 that changes yarn$show() arguments:
+  https://github.com/ropensci/tinkr/pull/108. (reported @froggleston
+  https://github.com/carpentries/pegboard/issues/156, fixed: @froggleston)
+
+
 # pegboard 0.7.5 (2024-04-10)
 
 ## NEW FEATURES
