@@ -359,14 +359,15 @@ Episode <- R6::R6Class("Episode",
       purrr::map_dfr(self$challenges, feature_graph, recurse = recurse, .id = "Block")
     },
     #' @description show the markdown contents on the screen
+    #' @param n a subset of elements to show, default TRUE for all lines
     #' @return a character vector with one line for each line of output
     #' @examples
     #' scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
     #' scope$head()
     #' scope$tail()
     #' scope$show()
-    show = function() {
-      super$show(get_stylesheet())
+    show = function(n = TRUE) {
+      super$show(n, get_stylesheet())
     },
     #' @description show the first n lines of markdown contents on the screen
     #' @param n the number of lines to show from the top 
