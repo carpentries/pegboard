@@ -28,6 +28,7 @@
 #'
 #'  - prereq
 #'  - callout
+#'  - caution
 #'  - challenge
 #'  - solution (nested inside challenge)
 #'  - hint (nested inside challenge)
@@ -79,7 +80,8 @@ KNOWN_DIVS <- c(
   "instructor",
   "spoiler",
   "tab",
-  "group-tab"
+  "group-tab",
+  "caution"
 )
 
 #' @rdname validate_divs

@@ -244,9 +244,11 @@ files (\code{TRUE}) or their absence (\code{FALSE})}
 }
 }
 \if{html}{\out{
-<details open><summary>Inherited methods</summary>
+<details><summary>Inherited methods</summary>
 <ul>
 <li><span class="pkg-link" data-pkg="tinkr" data-topic="yarn" data-id="add_md"><a href='../../tinkr/html/yarn.html#method-yarn-add_md'><code>tinkr::yarn$add_md()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tinkr" data-topic="yarn" data-id="get_protected"><a href='../../tinkr/html/yarn.html#method-yarn-get_protected'><code>tinkr::yarn$get_protected()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="tinkr" data-topic="yarn" data-id="md_vec"><a href='../../tinkr/html/yarn.html#method-yarn-md_vec'><code>tinkr::yarn$md_vec()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tinkr" data-topic="yarn" data-id="protect_curly"><a href='../../tinkr/html/yarn.html#method-yarn-protect_curly'><code>tinkr::yarn$protect_curly()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tinkr" data-topic="yarn" data-id="protect_math"><a href='../../tinkr/html/yarn.html#method-yarn-protect_math'><code>tinkr::yarn$protect_math()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="tinkr" data-topic="yarn" data-id="protect_unescaped"><a href='../../tinkr/html/yarn.html#method-yarn-protect_unescaped'><code>tinkr::yarn$protect_unescaped()</code></a></span></li>
@@ -611,9 +613,16 @@ scope$get_challenge_graph()
 \subsection{Method \code{show()}}{
 show the markdown contents on the screen
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Episode$show()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Episode$show(n = TRUE)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{n}}{a subset of elements to show, default TRUE for all lines}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 a character vector with one line for each line of output
 }

@@ -41,8 +41,8 @@ Other div:
 \code{\link{find_div_pairs}()},
 \code{\link{label_div_tags}()},
 \code{\link{label_pairs}()},
-\code{\link{make_div_pairs}()},
 \code{\link{make_div}()},
+\code{\link{make_div_pairs}()},
 \code{\link{replace_with_div}()}
 }
 \concept{div}

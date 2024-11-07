@@ -19,13 +19,20 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Zhian N. Kamvar \email{zkamvar@carpentries.org} (\href{https://orcid.org/0000-0003-1458-7108}{ORCID})
+\strong{Maintainer}: Robert Davey \email{robertdavey@carpentries.org} (\href{https://orcid.org/0000-0002-5589-7754}{ORCID})
+
+Authors:
+\itemize{
+  \item Erin Becker \email{erinbecker@carpentries.org} (\href{https://orcid.org/0000-0002-6832-0233}{ORCID})
+  \item Zhian N. Kamvar \email{zkamvar@carpentries.org} (\href{https://orcid.org/0000-0003-1458-7108}{ORCID})
+}
 
 Other contributors:
 \itemize{
   \item Toby Hodges \email{tobyhodges@carpentries.org} [contributor]
   \item Erin Becker \email{ebecker@carpentries.org} [contributor]
   \item Kelly Barnes \email{kbarnes@carpentries.org} [contributor]
+  \item Robert Davey \email{robertdavey@carpentries.org} [contributor]
 }
 
 }

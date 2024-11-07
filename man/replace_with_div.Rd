@@ -37,8 +37,8 @@ Other div:
 \code{\link{get_divs}()},
 \code{\link{label_div_tags}()},
 \code{\link{label_pairs}()},
-\code{\link{make_div_pairs}()},
-\code{\link{make_div}()}
+\code{\link{make_div}()},
+\code{\link{make_div_pairs}()}
 }
 \concept{div}
 \keyword{div}
