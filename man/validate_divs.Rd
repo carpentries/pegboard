@@ -9,7 +9,7 @@
 \alias{div_info}
 \title{Validate Callout Blocks for sandpaper episodes}
 \format{
-An object of class \code{character} of length 13.
+An object of class \code{character} of length 16.
 
 An object of class \code{character} of length 1.
 
@@ -68,6 +68,7 @@ The following fenced divs can occur in the lesson, but are not required:
 \itemize{
 \item prereq
 \item callout
+\item caution
 \item challenge
 \item solution (nested inside challenge)
 \item hint (nested inside challenge)
@@ -75,6 +76,7 @@ The following fenced divs can occur in the lesson, but are not required:
 \item checklist
 \item testimonial
 \item tab (can only contain text, images, and code blocks)
+\item group-tab (can only contain text, images, and code blocks)
 }
 
 Any other div names will produce structure in the resulting DOM, but they
