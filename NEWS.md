@@ -1,3 +1,11 @@
+# pegboard 0.7.7 (2024-11-11)
+
+## NEW FEATURES
+
+* Add support and validation for `caution` fenced divs
+  (fixed: @froggleston #160)
+
+
 # pegboard 0.7.6 (2024-06-25)
 
 ## BUGFIX
