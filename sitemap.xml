@@ -1,216 +1,74 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://carpentries.github.io/pegboard/404.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/CODE_OF_CONDUCT.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/CONTRIBUTING.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/SUPPORT.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/articles/intro-episode.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/articles/intro-lesson.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/articles/intro-xml.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/articles/validation.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/index.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/Episode.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/Lesson.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/add_pegboard_nodes.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/after_thing.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/are_blocks.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/clean_div_tags.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/clean_fenced_divs.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/cli_helpers.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/collect_labels.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/div_labels.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/elevate_children.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/find_between_tags.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/find_children.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/find_div_pairs.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/find_node_level.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/fix_links.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/fix_liquid_relative_link.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/fix_sandpaper_links.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/get_blocks.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/get_challenges.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/get_code.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/get_divs.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/get_images.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/get_lesson.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/get_list_block.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/get_solutions.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/heading_utils.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/isolate_elements.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/isolate_kram_blocks.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/kramdown_tags.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/label_pairs.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/lesson_fragment.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/liquid_to_commonmark.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/load_children.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/make_div.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/make_div_pairs.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/make_div_table.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/make_heading_table.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/make_link_table.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/make_pandoc_alt.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/pegboard-package.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/process_images.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/read_markdown_files.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/read_sandpaper_lesson.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/replace_with_div.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/set_alt_attr.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/set_ktag_block.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/test_file_existence.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/throw_warnings.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/to_dovetail.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/trim_fence.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/use_sandpaper.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/validate_divs.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/validate_headings.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/validate_links.html</loc>
-  </url>
-  <url>
-    <loc>https://carpentries.github.io/pegboard/reference/xml_to_md.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://carpentries.github.io/pegboard/404.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/CODE_OF_CONDUCT.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/CONTRIBUTING.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/LICENSE-text.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/LICENSE.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/SUPPORT.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/articles/index.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/articles/intro-episode.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/articles/intro-lesson.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/articles/intro-xml.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/articles/validation.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/authors.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/index.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/news/index.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/Episode.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/Lesson.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/add_pegboard_nodes.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/after_thing.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/are_blocks.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/clean_div_tags.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/clean_fenced_divs.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/cli_helpers.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/collect_labels.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/div_labels.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/elevate_children.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/find_between_tags.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/find_children.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/find_div_pairs.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/find_node_level.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/fix_links.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/fix_liquid_relative_link.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/fix_sandpaper_links.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/get_blocks.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/get_challenges.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/get_code.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/get_divs.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/get_images.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/get_lesson.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/get_list_block.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/get_solutions.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/heading_utils.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/index.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/isolate_elements.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/isolate_kram_blocks.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/kramdown_tags.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/label_pairs.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/lesson_fragment.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/liquid_to_commonmark.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/load_children.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/make_div.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/make_div_pairs.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/make_div_table.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/make_heading_table.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/make_link_table.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/make_pandoc_alt.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/pegboard-package.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/process_images.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/read_markdown_files.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/read_sandpaper_lesson.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/replace_with_div.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/set_alt_attr.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/set_ktag_block.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/test_file_existence.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/throw_warnings.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/to_dovetail.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/trim_fence.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/use_sandpaper.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/validate_divs.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/validate_headings.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/validate_links.html</loc></url>
+<url><loc>https://carpentries.github.io/pegboard/reference/xml_to_md.html</loc></url>
 </urlset>
+
