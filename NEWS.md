@@ -2,8 +2,8 @@
 
 ## NEW FEATURES
 
-* Add support and validation for `caution` fenced divs
-  (fixed: @froggleston #160)
+* Add support and validation for `caution` fenced divs introduced in 
+  https://github.com/carpentries/varnish/pull/149 (@froggleston #160)
 
 
 # pegboard 0.7.6 (2024-06-25)
