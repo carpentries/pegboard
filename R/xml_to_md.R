@@ -13,7 +13,7 @@
 #' xml2::xml_add_child(cha, xml2::xml_child(sol, 1), .where =  1)
 #' xml2::xml_add_child(cha, xml2::xml_child(sol, 2), .where = 2)
 #' cat(pegboard:::xml_to_md(cha))
-xml_to_md <- function(body, stylesheet = "xml2md_gfm_kramdown.xsl", newlines = FALSE) {
+xml_to_md <- function(body, stylesheet = "xml2md_pegboard.xsl", newlines = FALSE) {
   stysh <- xml2::read_xml(get_stylesheet(stylesheet))
   is_fragment <- !inherits(body, "xml_document")
   if (is_fragment) {

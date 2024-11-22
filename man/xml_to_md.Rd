@@ -4,7 +4,7 @@
 \alias{xml_to_md}
 \title{Convert xml to markdown}
 \usage{
-xml_to_md(body, stylesheet = "xml2md_gfm_kramdown.xsl", newlines = FALSE)
+xml_to_md(body, stylesheet = "xml2md_pegboard.xsl", newlines = FALSE)
 }
 \arguments{
 \item{body}{an xml document}
