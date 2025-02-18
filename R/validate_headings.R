@@ -27,7 +27,7 @@
 #' # Our headings validators run a series of tests on headings and return a data
 #' # frame with information about the headings along with the results of the
 #' # tests
-#' v <- pegboard:::validate_headings(e$headings, e$get_yaml()$title, length(e$yaml))
+#' v <- pegboard:::validate_headings(e$headings, e$get_yaml()$title, length(e$frontmatter))
 #' names(v)
 #' v$results
 #' v$results$path <- fs::path_rel(e$path, e$lesson)

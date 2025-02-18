@@ -7,7 +7,7 @@
 #'  - pb_label: the label of the div
 #'  - line: the line number of the div label
 make_div_table <- function(yrn) {
-  yml_lines <- length(yrn$yaml)
+  yml_lines <- length(yrn$frontmatter)
   these_divs <- yrn$label_divs()$get_divs()
   labels <- names(these_divs)
   path <- fs::path_rel(yrn$path, yrn$lesson)

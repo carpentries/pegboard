@@ -103,7 +103,7 @@ Episode <- R6::R6Class("Episode",
 
       # Initialize the object
       self$path <- path
-      self$yaml <- ep$yaml
+      self$frontmatter <- ep$frontmatter
       self$body <- ep$body
       self$ns   <- ep$ns
       # if the parents are missing, this walk will do nothing
@@ -208,7 +208,7 @@ Episode <- R6::R6Class("Episode",
     #' @description
     #' Extract the yaml metadata from the episode
     get_yaml = function() {
-      yaml::yaml.load(self$yaml)
+      yaml::yaml.load(self$frontmatter)
     },
     #' @description
     #' Ammend or add a setup code block to use `{dovetail}`
@@ -270,7 +270,7 @@ Episode <- R6::R6Class("Episode",
       suppressWarnings(this_yaml <- self$get_yaml())
       this_yaml[["root"]] <- NULL
       this_yaml[["layout"]] <- NULL
-      self$yaml <- c("---", strsplit(yaml::as.yaml(this_yaml), "\n")[[1]], "---")
+      self$frontmatter <- c("---", strsplit(yaml::as.yaml(this_yaml), "\n")[[1]], "---")
 
       type <- if (rmd) 'use_sandpaper_rmd' else 'use_sandpaper_md'
       private$mutations[type] <- TRUE
@@ -448,7 +448,7 @@ Episode <- R6::R6Class("Episode",
       code <- cp$code
       code <- code[xml2::xml_attr(code, "purl") %in% "TRUE"]
       isolate_elements(cp$body, challenges, code)
-      cp$yaml <- c()
+      cp$frontmatter <- c()
       res <- tinkr::to_md(cp, path = path, stylesheet_path = get_stylesheet())
       if (is.null(path)) {
         invisible(res)
@@ -582,7 +582,7 @@ Episode <- R6::R6Class("Episode",
     validate_headings = function(verbose = TRUE, warn = TRUE) {
       out <- validate_headings(self$headings, 
         self$get_yaml()$title, 
-        offset = length(self$yaml))
+        offset = length(self$frontmatter))
       if (is.null(out)) {
         return(out)
       }
@@ -772,7 +772,7 @@ Episode <- R6::R6Class("Episode",
     clear_yaml_item = function(what) {
       yml <- self$get_yaml()
       yml[[what]] <- NULL
-      self$yaml <- c("---", strsplit(yaml::as.yaml(yml), "\n")[[1]], "---")
+      self$frontmatter <- c("---", strsplit(yaml::as.yaml(yml), "\n")[[1]], "---")
     },
     record_problem = function(x) {
       private$problems <- c(private$problems, x)
