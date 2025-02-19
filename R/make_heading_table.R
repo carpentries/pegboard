@@ -13,7 +13,7 @@
 #' @examples
 #' path <- file.path(lesson_fragment(), "_episodes", "14-looping-data-sets.md")
 #' loop <- Episode$new(path)
-#' pegboard:::make_heading_table(loop$headings, offset = length(loop$yaml))
+#' pegboard:::make_heading_table(loop$headings, offset = length(loop$frontmatter))
 make_heading_table <- function(headings, offset = 5L) {
   data.frame(
     heading = xml2::xml_text(headings),

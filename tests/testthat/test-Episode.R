@@ -272,9 +272,9 @@ test_that("isolate_blocks() method works as expected", {
   expect_equal(f[length(f) - 1], "> {: .error}")
 
   # The first thing in the episode is a block quote
-  expect_true(grepl("^>", f[length(e$yaml) + 2]))
+  expect_true(grepl("^>", f[length(e$frontmatter) + 2]))
   # There are only 50 lines beyond the yaml
-  expect_equal(length(f[-seq(length(e$yaml))]), 50)
+  expect_equal(length(f[-seq(length(e$frontmatter))]), 50)
 
 })
 

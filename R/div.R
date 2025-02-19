@@ -194,7 +194,7 @@ find_between_tags <- function(tag, body, ns = "pb", find = "dtag[@label='{tag}']
 label_div_tags <- function(body) {
   if (!inherits(body, "xml_document")) {
     path <- body$path
-    yaml <- length(body$yaml)
+    yaml <- length(body$frontmatter)
     body <- body$body
   } else {
     path <- NULL

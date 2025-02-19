@@ -26,7 +26,7 @@
 #' make_link_table(Episode$new(loop))
 make_link_table <- function(yrn) {
 
-  yml_lines <- length(yrn$yaml)
+  yml_lines <- length(yrn$frontmatter)
   # Combining nodesets forces these to be lists, meaning that we have to use
   # mappers here.
   limg      <- c(yrn$links, yrn$get_images(process = TRUE))
