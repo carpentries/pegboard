@@ -1,3 +1,11 @@
+# pegboard (development version)
+
+## MAINTENANCE
+
+* Examples, internal tests, and functions now use the `$frontmatter` element
+  over the deprecated `$yaml`. (see https://github.com/ropensci/tinkr/pull/127)
+  (@zkamvar, #163)
+
 # pegboard 0.7.7 (2024-11-11)
 
 ## NEW FEATURES
