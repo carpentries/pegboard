@@ -63,7 +63,7 @@ Episode <- R6::R6Class("Episode",
         on.exit(unlink(tmpin), add = TRUE)
       }
       default <- list(
-        yaml = NULL,
+        frontmatter = NULL,
         body = xml2::xml_missing()
       )
       TOX <- purrr::safely(super$initialize, otherwise = default, quiet = FALSE)
