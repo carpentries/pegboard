@@ -1,5 +1,12 @@
 # pegboard 0.7.8 (2025-02-19)
 
+## BUGFIX
+
+* Hotfix for #163 (@maelle, #165)
+
+
+# pegboard 0.7.8 (2025-02-19)
+
 ## MAINTENANCE
 
 * Examples, internal tests, and functions now use the `$frontmatter` element
