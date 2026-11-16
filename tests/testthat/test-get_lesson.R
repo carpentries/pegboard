@@ -10,17 +10,14 @@ withr::defer({
 
 test_that("errors are okay", {
 
-  # The locked dir thing apparently doesn't work in windows
-  testthat::skip_on_os("windows")
-
-  dd         <- fs::file_temp()
-  locked_dir <- fs::file_temp("locked")
+  dd <- fs::file_temp()
+  bad_path <- fs::file_temp()
 
   fs::dir_create(dd, "_episodes")
-  fs::dir_create(locked_dir, mode = "u=r,go=r")
+  fs::file_create(bad_path)
   withr::defer({
     fs::dir_delete(dd)
-    fs::dir_delete(locked_dir)
+    fs::file_delete(bad_path)
   })
 
   suppressMessages({
@@ -29,7 +26,8 @@ test_that("errors are okay", {
   msg <- glue::glue("directory must have \\(R\\)markdown files")
   expect_error(get_lesson(path = dd), msg)
 
-  expect_error(get_lesson("carpentries/lesson-example", path = locked_dir))
+  # error when passing a file path instead of a directory path
+  expect_error(get_lesson("carpentries/lesson-example", path = bad_path))
 
 })
 
@@ -49,7 +47,7 @@ test_that("lessons can be downloaded", {
 
   skip_if_offline()
   skip_if(interactive())
-  skip_if(isFALSE(as.logical(Sys.getenv("CI", unset = "false"))), 
+  skip_if(isFALSE(as.logical(Sys.getenv("CI", unset = "false"))),
     message = "skipped locally to avoid SSL hangups"
   )
   skip_on_os("windows")
@@ -80,7 +78,7 @@ test_that("lessons are accessed without re-downloading", {
   skip_if_offline()
   skip_if(interactive())
   skip_if(interactive())
-  skip_if(isFALSE(as.logical(Sys.getenv("CI", unset = "false"))), 
+  skip_if(isFALSE(as.logical(Sys.getenv("CI", unset = "false"))),
     message = "skipped locally to avoid SSL hangups"
   )
   skip_on_os("windows")
@@ -114,7 +112,7 @@ test_that("lessons are accessed without re-downloading", {
 test_that("overwriting is possible", {
   skip_if_offline()
   skip_if(interactive())
-  skip_if(isFALSE(as.logical(Sys.getenv("CI", unset = "false"))), 
+  skip_if(isFALSE(as.logical(Sys.getenv("CI", unset = "false"))),
     message = "skipped locally to avoid SSL hangups"
   )
   skip_on_os("windows")
@@ -147,7 +145,7 @@ test_that("Lesson flags will be passed down", {
 
   skip_if_offline()
   skip_if(interactive())
-  skip_if(isFALSE(as.logical(Sys.getenv("CI", unset = "false"))), 
+  skip_if(isFALSE(as.logical(Sys.getenv("CI", unset = "false"))),
     message = "skipped locally to avoid SSL hangups"
   )
   skip_on_os("windows")
@@ -180,7 +178,7 @@ test_that("Lesson methods work as expected", {
 
   skip_if_offline()
   skip_if(interactive())
-  skip_if(isFALSE(as.logical(Sys.getenv("CI", unset = "false"))), 
+  skip_if(isFALSE(as.logical(Sys.getenv("CI", unset = "false"))),
     message = "skipped locally to avoid SSL hangups"
   )
   skip_on_os("windows")
@@ -307,7 +305,7 @@ test_that("code with embedded div tags are parsed correctly", {
 
   skip_if_offline()
   skip_if(interactive())
-  skip_if(isFALSE(as.logical(Sys.getenv("CI", unset = "false"))), 
+  skip_if(isFALSE(as.logical(Sys.getenv("CI", unset = "false"))),
     message = "skipped locally to avoid SSL hangups"
   )
   skip_on_os("windows")
@@ -325,7 +323,7 @@ test_that("Styles lessons with Rmd sources can be downloaded", {
   skip("This test was from a pre-workbench lesson infrastructure")
   skip_if_offline()
   skip_if(interactive())
-  skip_if(isFALSE(as.logical(Sys.getenv("CI", unset = "false"))), 
+  skip_if(isFALSE(as.logical(Sys.getenv("CI", unset = "false"))),
     message = "skipped locally to avoid SSL hangups"
   )
   skip_on_os("windows")
@@ -347,7 +345,7 @@ test_that("Non-lessons will be downloaded but rejected", {
 
   skip_if_offline()
   skip_if(interactive())
-  skip_if(isFALSE(as.logical(Sys.getenv("CI", unset = "false"))), 
+  skip_if(isFALSE(as.logical(Sys.getenv("CI", unset = "false"))),
     message = "skipped locally to avoid SSL hangups"
   )
   skip_on_os("windows")
