@@ -27,9 +27,12 @@ jobs:
           - {os: macos-latest,   r: 'release'}
 
           - {os: windows-latest, r: 'release'}
+          - {os: windows-2025, r: 'release'}
+          - {os: windows-2022, r: 'release'}
 
           # use 4.1 to check with rtools40's older compiler
-          - {os: windows-latest, r: '4.1'}
+          # as of 2026-11-16, RTools requires 32-bit arch which fails lacking with openssl DLLs
+          # - {os: windows-latest, r: '4.1'}
 
           - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
           - {os: ubuntu-latest,   r: 'release'}
