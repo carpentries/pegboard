@@ -1,3 +1,12 @@
+# pegboard 0.8.0 (2026-11-16)
+
+## MAINTENANCE
+
+* Retire R4.1 on Windows support - Windows runners no longer ship with 32-bit SSL so gert install will fail.
+  Pegboard now supports R 4.2 and above.
+* Add oldrel-1 and oldrel-2 to windows-latest, and add windows-2025 and windows-2022 runners.
+
+
 # pegboard 0.7.8 (2025-02-19)
 
 ## BUGFIX
