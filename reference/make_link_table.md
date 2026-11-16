@@ -66,12 +66,12 @@ make_link_table(Episode$new(loop))
 #> 5   https   docs.python.org          NA     
 #> 9   https   carpentries.org          NA     
 #> 10                                   NA     
-#> 6                                 25434     
-#> 7                           -2106724776     
+#> 6                                 23866     
+#> 7                           -2002627320     
 #> 11  https   carpentries.org          NA     
 #> 12                                   NA     
-#> 13                                   -1     
-#> 8                                 25434     
+#> 13                          -1835058976     
+#> 8                                 23866     
 #>                                                             path query
 #> 1                                           /3/library/glob.html      
 #> 2                                           /3/library/glob.html      

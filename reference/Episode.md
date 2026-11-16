@@ -1176,7 +1176,7 @@ scope$show()
 
 scope <- Episode$new(file.path(lesson_fragment(), "_episodes", "17-scope.md"))
 scope$write()
-#> Creating temporary directory '/tmp/RtmpNdRUwF/dir1933534afadc'
+#> Creating temporary directory '/tmp/RtmpVqyDYw/dir19183e19bd39'
 
 ## ------------------------------------------------
 ## Method `Episode$handout`

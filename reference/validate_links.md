@@ -177,20 +177,20 @@ names(v)
 #> [22] "internal_file"        "internal_well_formed" "all_reachable"       
 #> [25] "img_alt_text"         "descriptive"          "link_length"         
 v
-#>    scheme            server       port user
-#> 1   https   docs.python.org         NA     
-#> 2   https   docs.python.org         NA     
-#> 3   https   docs.python.org         NA     
-#> 4   https pandas.pydata.org         NA     
-#> 5   https   docs.python.org         NA     
-#> 9   https   carpentries.org         NA     
-#> 10                                  NA     
-#> 6                                25434     
-#> 7                           2016548208     
-#> 11  https   carpentries.org         NA     
-#> 12                                  NA     
-#> 13                                  40     
-#> 8                                25434     
+#>    scheme            server        port user
+#> 1   https   docs.python.org          NA     
+#> 2   https   docs.python.org          NA     
+#> 3   https   docs.python.org          NA     
+#> 4   https pandas.pydata.org          NA     
+#> 5   https   docs.python.org          NA     
+#> 9   https   carpentries.org          NA     
+#> 10                                   NA     
+#> 6                                 23866     
+#> 7                           -1994761440     
+#> 11  https   carpentries.org          NA     
+#> 12                                   NA     
+#> 13                          -1994761048     
+#> 8                                 23866     
 #>                                                             path query
 #> 1                                           /3/library/glob.html      
 #> 2                                           /3/library/glob.html      

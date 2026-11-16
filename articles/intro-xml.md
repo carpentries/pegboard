@@ -143,7 +143,7 @@ writeLines(readLines(setup_file)) # show the file
 #> 
 #> {% include setup-r.md %}
 child_from_include(setup_file)
-#> ℹ /tmp/RtmpmuYgpS/file1e154ac2ff31.md
+#> ℹ /tmp/RtmpcLMlh6/file1df763a38283.md
 writeLines(readLines(fs::path_ext_set(setup_file, "Rmd"))) # show the file 
 ```
 

@@ -17,7 +17,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/carpentries/pegboard/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/carpentries/pegboard/blob/0.8.0/DESCRIPTION)
 
 Davey R, Becker E, Kamvar Z (2026). *pegboard: Explore and Manipulate
 Markdown Curricula from the Carpentries*. R package version 0.8.0,
